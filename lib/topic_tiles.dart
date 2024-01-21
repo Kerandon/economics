@@ -1,7 +1,4 @@
-import 'dart:typed_data';
-
 import 'package:economics_app/state/app_state.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -14,9 +11,7 @@ class TopicTiles extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     final gap = size.width * 0.01;
     final state = ref.watch(appProvider);
     return GridView.builder(
@@ -28,11 +23,9 @@ class TopicTiles extends ConsumerWidget {
         mainAxisSpacing: gap,
         crossAxisSpacing: gap,
       ),
-      itemBuilder: (context, index) =>
-          CustomTile(
-            title: state.contents[index].title ?? "",
-          ),
+      itemBuilder: (context, index) => CustomTile(
+        title: state.contents[index].title ?? "",
+      ),
     );
   }
 }
-
