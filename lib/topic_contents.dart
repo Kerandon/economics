@@ -12,31 +12,20 @@ class TopicContents extends ConsumerWidget {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: state.contents.length,
+      itemCount: state.mainTopics.length,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: Text(state.contents[index].unit.toString()),
-          title: Text(state.contents[index].title ?? ""),
+          leading: Text(state.mainTopics[index].unit.toString()),
+          title: Text(state.mainTopics[index].title ?? ""),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: state.contents[index].subtopics?.length,
+                itemCount: 0,
                 itemBuilder: (context, subIndex) {
-                  return ListTile(
-                    leading: Text(state
-                            .contents[index].subtopics?[subIndex].unit
-                            .toString() ??
-                        ""),
-                    trailing: Text(state.contents[index].subtopics?[subIndex]
-                            .level!.formattedName ??
-                        ""),
-                    title: Text(
-                        state.contents[index].subtopics?[subIndex].title ?? ""),
-                    // Additional subtopic details can be displayed here
-                  );
+                  return ListTile();
                 },
               ),
             ],

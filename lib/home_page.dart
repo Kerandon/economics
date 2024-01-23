@@ -2,6 +2,7 @@ import 'package:economics_app/state/app_state.dart';
 import 'package:economics_app/topic_contents.dart';
 import 'package:economics_app/topic_tiles.dart';
 import 'package:economics_app/utils/constants.dart';
+import 'package:economics_app/utils/enums/parent_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'utils/helper_methods/firebase_methods.dart';
@@ -19,7 +20,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   void initState() {
-    contentsFuture = getContentData();
+    contentsFuture = getData('/contents');
     super.initState();
   }
 
@@ -36,9 +37,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-              notifier.setContents(snapshot.data as List<TopicModel>);
+              notifier.setTopicData(snapshot.data!, TopicCategory.mainTopic);
             });
-
             return SingleChildScrollView(
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
@@ -49,7 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   ],
                   ...[
                     TopicContents(),
-                  ]
+                  ],
                 ],
               ),
             );

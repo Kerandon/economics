@@ -1,39 +1,44 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/utils/helper_methods/sort_string_numbers.dart';
-
 import '../../models/topic_model.dart';
 
-Future<List<TopicModel>> getContentData() async {
-  final ref = FirebaseFirestore.instance.collection('contents');
-  final data = await ref.get();
+Future<List<TopicModel>> getData(String url, {String? parent}) async {
+  /// Get a reference to firebase
+  final ref = FirebaseFirestore.instance;
 
-  List<TopicModel> topicModels = [];
+  List<TopicModel> models = [];
+
+  /// Get data
+  final data = await ref.collection(url).get();
 
   for (var d in data.docs) {
-    topicModels.add(TopicModel.fromDocumentSnapshot(d));
+    models.add(TopicModel.fromDocumentSnapshot(d, parent));
   }
 
-  for (var t in topicModels) {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('contents')
-        .doc(t.title)
-        .collection('Subtopics')
-        .get();
+  /// Sort models by [unit] property
+  models.sort((a, b) => sortStringNumbers(a.unit, b.unit));
+  return models;
+}
 
-    List<TopicModel> subTopics = [];
+Future<List<TopicModel>> getAllContentData() async {
+  List<TopicModel> mainTopicModels = [],
+      subtopicModels = [],
+      articleModels = [];
 
-    for (var d in snapshot.docs) {
-      subTopics.add(TopicModel.fromDocumentSnapshot(d));
+  mainTopicModels = await getData('/contents');
+  for (var t in mainTopicModels) {
+    subtopicModels.addAll(
+        await getData('/contents/${t.title}/Subtopics', parent: t.title));
+    for (var s in subtopicModels) {
+      articleModels.addAll(await getData(
+          '/contents/${t.title}/Subtopics/${s.title}/Articles',
+          parent: s.title));
     }
-
-    // Sort subtopics before adding them to main topic
-    subTopics.sort((a, b) => sortStringNumbers(a.unit, b.unit));
-
-    t.subtopics?.addAll(subTopics);
   }
 
-  // Sort the main topics based on the unit property
-  topicModels.sort((a, b) => sortStringNumbers(a.unit, b.unit));
+  mainTopicModels.sort((a, b) => sortStringNumbers(a.unit, b.unit));
+  subtopicModels.sort((a, b) => sortStringNumbers(a.unit, b.unit));
+  articleModels.sort((a, b) => sortStringNumbers(a.unit, b.unit));
 
-  return topicModels;
+  return mainTopicModels;
 }

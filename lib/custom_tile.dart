@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:economics_app/utils/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +7,11 @@ class CustomTile extends StatefulWidget {
   const CustomTile({
     super.key,
     required this.title,
+    required this.onTap,
   });
 
   final String title;
+  final VoidCallback onTap;
 
   @override
   State<CustomTile> createState() => _CustomTileState();
@@ -25,24 +28,50 @@ class _CustomTileState extends State<CustomTile> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return FutureBuilder<Map<String, Uint8List?>>(
         future: _imageFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final imageBytes = snapshot.data?.entries.first.value;
-            return Column(
+            return Stack(
               children: [
-                // Assuming 'imageBytes' is the Uint8List you obtained
                 if (imageBytes != null)
-                  Image.memory(
-                    imageBytes,
-                    width: 100, // Adjust the width as needed
-                    height: 100, // Adjust the height as needed
+                  SizedBox(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(kRadius),
+                      child: Image.memory(
+                        fit: BoxFit.cover,
+                        imageBytes,
+                      ),
+                    ),
                   ),
-                const SizedBox(height: 8), // Adjust spacing
-                Text(
-                  widget.title,
-                  style: const TextStyle(color: Colors.white),
+                Align(
+                  alignment: const Alignment(0, 0.80),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(kRadius)),
+                    child: Padding(
+                      padding: EdgeInsets.all(size.width * 0.02),
+                      child: Text(
+                        widget.title,
+                        style: const TextStyle(),
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        widget.onTap.call();
+                      },
+                    ),
+                  ),
                 ),
               ],
             );

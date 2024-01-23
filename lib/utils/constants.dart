@@ -1,4 +1,5 @@
 const kAppName = 'Excel in IB Economics';
+const kCategory = 'Category';
 const kUnit = 'Unit';
 const kLevel = 'Level';
 const kContents = 'Contents';

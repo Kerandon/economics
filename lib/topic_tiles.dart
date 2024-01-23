@@ -1,4 +1,5 @@
 import 'package:economics_app/state/app_state.dart';
+import 'package:economics_app/subtopics_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -14,8 +15,10 @@ class TopicTiles extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final gap = size.width * 0.01;
     final state = ref.watch(appProvider);
+    final notifier = ref.read(appProvider.notifier);
+
     return GridView.builder(
-      itemCount: state.contents.length,
+      itemCount: state.mainTopics.length,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -23,9 +26,16 @@ class TopicTiles extends ConsumerWidget {
         mainAxisSpacing: gap,
         crossAxisSpacing: gap,
       ),
-      itemBuilder: (context, index) => CustomTile(
-        title: state.contents[index].title ?? "",
-      ),
+      itemBuilder: (context, index) {
+        final mainTopic = state.mainTopics[index];
+        return CustomTile(
+          title: mainTopic.title!,
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SubtopicsPage(mainTopic)));
+          },
+        );
+      },
     );
   }
 }

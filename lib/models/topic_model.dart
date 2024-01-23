@@ -1,30 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/utils/constants.dart';
-
 import '../utils/enums/level_enum.dart';
 
 class TopicModel {
+  final String? parent;
   final String? title;
   final String? unit;
   final Level? level;
   final String? content;
-  final List<TopicModel>? subtopics;
 
-  TopicModel(
-      {this.title,
-      this.unit,
-      this.level,
-      this.content,
-      List<TopicModel>? subtopics})
-      : subtopics = subtopics ?? [];
+  TopicModel({
+    this.parent,
+    this.title,
+    this.unit,
+    this.level,
+    this.content,
+  });
 
-  factory TopicModel.fromDocumentSnapshot(QueryDocumentSnapshot doc) {
+  factory TopicModel.fromDocumentSnapshot(QueryDocumentSnapshot doc,
+      [String? parent]) {
     final data = doc.data() as Map<String, dynamic>;
 
     String? unit;
     Level? level;
     String? content;
-    List<TopicModel> subtopics = [];
 
     for (var d in data.entries) {
       if (d.key == kUnit) {
@@ -42,18 +41,31 @@ class TopicModel {
       if (d.key == kContents) {
         content = d.value;
       }
-
-      if (d.key == kSubtopics) {
-        subtopics = d.value;
-      }
     }
 
     return TopicModel(
+      parent: parent,
       title: doc.id,
       unit: unit,
       level: level,
       content: content,
-      subtopics: subtopics,
+    );
+  }
+
+  TopicModel copyWith({
+    String? parent,
+    String? title,
+    String? unit,
+    Level? level,
+    String? content,
+    List<TopicModel>? subtopics,
+  }) {
+    return TopicModel(
+      parent: parent ?? this.parent,
+      title: title ?? this.title,
+      unit: unit ?? this.unit,
+      level: level ?? this.level,
+      content: content ?? this.content,
     );
   }
 }
