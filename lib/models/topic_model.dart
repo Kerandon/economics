@@ -1,29 +1,41 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/utils/constants.dart';
 import '../utils/enums/level_enum.dart';
+import 'content_model.dart';
 
 class TopicModel {
   final String? parent;
+  final String? grandparent;
   final String? title;
+
   final String? unit;
   final Level? level;
-  final String? content;
+  final List<ContentModel>? content;
 
   TopicModel({
     this.parent,
+    this.grandparent,
     this.title,
     this.unit,
     this.level,
     this.content,
   });
 
-  factory TopicModel.fromDocumentSnapshot(QueryDocumentSnapshot doc,
-      [String? parent]) {
-    final data = doc.data() as Map<String, dynamic>;
+  factory TopicModel.fromCollection(
+      {QueryDocumentSnapshot? collection,
+      String? parent,
+      String? grandparent,
+      DocumentSnapshot? document}) {
+    Map<String, dynamic> data;
 
+    if (document == null) {
+      data = collection!.data() as Map<String, dynamic>;
+    } else {
+      data = document.data() as Map<String, dynamic>;
+    }
     String? unit;
     Level? level;
-    String? content;
+    List<ContentModel> contents = [];
 
     for (var d in data.entries) {
       if (d.key == kUnit) {
@@ -38,34 +50,31 @@ class TopicModel {
         }
       }
 
-      if (d.key == kContents) {
-        content = d.value;
+      /// Get contents. This regex checks if the pattern of "Any-Digit" + "-Content"
+      RegExp pattern = RegExp(r'^(\d+)-Content$');
+
+      /// If there is a match.
+      if (pattern.hasMatch(d.key)) {
+        Match match = pattern.firstMatch(d.key)!;
+        final index = int.parse(match.group(1)!);
+
+        String? heading = d.value[kHeading];
+        String? body = d.value[kBody];
+        String? image = d.value[kImage];
+
+        contents.add(
+          ContentModel.copyWith(
+              index: index, heading: heading, body: body, image: image),
+        );
       }
     }
-
     return TopicModel(
       parent: parent,
-      title: doc.id,
+      grandparent: grandparent,
+      title: collection?.id ?? document?.id,
       unit: unit,
       level: level,
-      content: content,
-    );
-  }
-
-  TopicModel copyWith({
-    String? parent,
-    String? title,
-    String? unit,
-    Level? level,
-    String? content,
-    List<TopicModel>? subtopics,
-  }) {
-    return TopicModel(
-      parent: parent ?? this.parent,
-      title: title ?? this.title,
-      unit: unit ?? this.unit,
-      level: level ?? this.level,
-      content: content ?? this.content,
+      content: contents,
     );
   }
 }

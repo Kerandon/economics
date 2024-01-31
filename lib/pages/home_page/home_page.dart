@@ -1,12 +1,12 @@
+import 'package:economics_app/pages/home_page/topic_tiles.dart';
+import 'package:economics_app/pages/quiz_page.dart';
 import 'package:economics_app/state/app_state.dart';
-import 'package:economics_app/topic_contents.dart';
-import 'package:economics_app/topic_tiles.dart';
 import 'package:economics_app/utils/constants.dart';
 import 'package:economics_app/utils/enums/parent_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'utils/helper_methods/firebase_methods.dart';
-import 'models/topic_model.dart';
+import '../../utils/helper_methods/firebase_methods.dart';
+import '../../models/topic_model.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -43,12 +43,18 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                children: const [
+                children: [
                   ...[
-                    TopicTiles(),
-                  ],
-                  ...[
-                    TopicContents(),
+                    const TopicTiles(),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const QuizPage(),
+                            ),
+                          );
+                        },
+                        child: const Text('Quiz Page')),
                   ],
                 ],
               ),

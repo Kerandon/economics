@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 import 'package:economics_app/utils/constants.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:economics_app/utils/helper_methods/firebase_methods.dart';
 import 'package:flutter/material.dart';
 
 class CustomTile extends StatefulWidget {
@@ -79,17 +79,4 @@ class _CustomTileState extends State<CustomTile> {
           return const Center(child: CircularProgressIndicator());
         });
   }
-}
-
-Future<Map<String, Uint8List?>> getImage(String image) async {
-  final instance = FirebaseStorage.instance;
-
-  Map<String, Uint8List?> imageBytes = {};
-
-  try {
-    final bytes = await instance.ref('$image.png').getData();
-    imageBytes.addAll({image: bytes});
-  } catch (error) {}
-
-  return imageBytes;
 }
