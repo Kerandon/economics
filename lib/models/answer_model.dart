@@ -9,6 +9,7 @@ class AnswerModel {
 
   AnswerModel copyWith(
       {String? answer, bool? isCorrect, AnswerStage? answerStage}) {
-    return AnswerModel(answer ?? this.answer, isCorrect ?? this.isCorrect, answerStage ?? this.answerStage);
+    return AnswerModel(answer ?? this.answer, isCorrect ?? this.isCorrect,
+        answerStage ?? this.answerStage);
   }
 }

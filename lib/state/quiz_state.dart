@@ -1,6 +1,5 @@
 import 'package:economics_app/models/question_model.dart';
 import 'package:economics_app/utils/enums/answer_stage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../models/answer_model.dart';
@@ -30,13 +29,12 @@ class QuizNotifier extends StateNotifier<QuizState> {
       QuestionModel q = question;
       List<AnswerModel> answersList = q.answers.toList();
 
-
       List<AnswerModel> resetAnswerList = [];
-      if(question.answerStage == AnswerStage.selected) {
+      if (question.answerStage == AnswerStage.selected) {
         for (var a in answersList) {
           resetAnswerList.add(a.copyWith(answerStage: AnswerStage.notAnswered));
         }
-      }else{
+      } else {
         resetAnswerList = question.answers.toList();
         q = q.copyWith(answerStage: AnswerStage.selected);
       }
@@ -63,24 +61,24 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
   }
 
-    void checkQuestion(QuestionModel question) {
-      print('check question ${question.question}');
-      AnswerModel a = question.answers
-          .firstWhere((element) => element.answerStage == AnswerStage.selected);
-      if (a.isCorrect) {
-        question = question.copyWith(answerStage: AnswerStage.correct);
-      } else {
-        question = question.copyWith(answerStage: AnswerStage.incorrect);
-      }
-
-      print('question answered ${question.question} and ${question.answerStage}');
-
+  void checkQuestion(QuestionModel question) {
+    AnswerModel a = question.answers
+        .firstWhere((element) => element.answerStage == AnswerStage.selected);
+    if (a.isCorrect) {
+      question = question.copyWith(answerStage: AnswerStage.correct);
+    } else {
+      question = question.copyWith(answerStage: AnswerStage.incorrect);
     }
 
+    List<QuestionModel> allQuestions = state.currentQuestions;
+    final index = allQuestions.indexOf(question);
+    allQuestions
+      ..removeAt(index)
+      ..insert(index, question);
 
-
+    state = state.copyWith(currentQuestions: allQuestions);
   }
-
+}
 
 final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
   (ref) => QuizNotifier(

@@ -1,5 +1,5 @@
 import 'package:economics_app/pages/home_page/topic_tiles.dart';
-import 'package:economics_app/pages/quiz_page.dart';
+import 'package:economics_app/pages/quiz_page/quiz_page.dart';
 import 'package:economics_app/state/app_state.dart';
 import 'package:economics_app/utils/constants.dart';
 import 'package:economics_app/utils/enums/parent_enum.dart';
