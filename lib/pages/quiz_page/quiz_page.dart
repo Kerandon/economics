@@ -5,7 +5,7 @@ import 'package:economics_app/pages/quiz_page/question_tile.dart';
 import 'package:economics_app/state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../utils/constants.dart';
+import '../../configs/constants.dart';
 
 class QuizPage extends ConsumerStatefulWidget {
   const QuizPage({super.key});
@@ -21,7 +21,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
 
   @override
   void initState() {
-    _questionsFuture = getQuizQuestions();
+    _questionsFuture = getQuizQuestions(tags: ['test']);
     super.initState();
   }
 
@@ -83,7 +83,14 @@ class _QuizPageState extends ConsumerState<QuizPage> {
   }
 }
 
-Future<QuerySnapshot<Map<String, dynamic>>> getQuizQuestions() async {
-  final document = FirebaseFirestore.instance.collection(kQuiz).get();
+Future<QuerySnapshot<Map<String, dynamic>>> getQuizQuestions({List<String>? tags}) async {
+  Query<Map<String, dynamic>> query = FirebaseFirestore.instance.collection(kQuiz);
+
+  // Conditionally add the where clause only if tags is not null
+  if (tags != null && tags.isNotEmpty) {
+    query = query.where('tags', arrayContainsAny: tags);
+  }
+
+  final document = await query.get();
   return document;
 }

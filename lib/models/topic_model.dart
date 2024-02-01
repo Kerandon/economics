@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:economics_app/utils/constants.dart';
+import 'package:economics_app/configs/constants.dart';
 import '../utils/enums/level_enum.dart';
 import 'content_model.dart';
 

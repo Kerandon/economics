@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:economics_app/utils/constants.dart';
+import 'package:economics_app/configs/constants.dart';
 import 'package:economics_app/utils/helper_methods/firebase_methods.dart';
 import 'package:flutter/material.dart';
 

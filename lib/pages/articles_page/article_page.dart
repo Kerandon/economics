@@ -1,12 +1,12 @@
 import 'package:economics_app/custom_widgets/custom_loading_screen.dart';
 import 'package:economics_app/models/topic_model.dart';
-import 'package:economics_app/utils/constants.dart';
+import 'package:economics_app/configs/constants.dart';
 import 'package:economics_app/utils/enums/firebase_type_enum.dart';
 import 'package:economics_app/utils/helper_methods/firebase_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import '../custom_widgets/display_image.dart';
+import '../../custom_widgets/display_image.dart';
 
 class ArticlePage extends StatefulWidget {
   const ArticlePage({super.key, required this.article});

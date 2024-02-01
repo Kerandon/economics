@@ -1,9 +1,10 @@
 import 'package:economics_app/models/question_model.dart';
+import 'package:economics_app/utils/enums/answer_stage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../state/quiz_state.dart';
-import '../../utils/constants.dart';
+import '../../configs/constants.dart';
 import 'answer_tile.dart';
 
 class QuestionTile extends ConsumerWidget {
@@ -17,14 +18,38 @@ class QuestionTile extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final heightPadding = size.height * 0.003;
     final widthPadding = size.width * 0.05;
+    final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
+    IconData? icon;
+    Color borderColor = Colors.transparent;
+    bool isSelected = false;
+    bool isAnswered = false;
+    if (question.answerStage == AnswerStage.selected) {
+      isSelected = true;
+    }
+    if (question.answerStage == AnswerStage.correct ||
+        question.answerStage == AnswerStage.incorrect) {
+      isAnswered = true;
+    }
+
+    if (question.answerStage == AnswerStage.correct) {
+      icon = Icons.check_circle_outline;
+      borderColor = Colors.green;
+    }
+    if (question.answerStage == AnswerStage.incorrect) {
+      icon = Icons.close_outlined;
+      borderColor = Colors.red;
+    }
     int answerIndex = 0;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(size.height * 0.01),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black12,
           borderRadius: BorderRadius.circular(kRadius),
+          border: Border.all(
+            color: borderColor,
+            width: kBorderWidth * size.height,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,18 +73,26 @@ class QuestionTile extends ConsumerWidget {
               padding: EdgeInsets.fromLTRB(
                   widthPadding, heightPadding, widthPadding, heightPadding),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
+                  if (!isAnswered) ...[
+                    OutlinedButton(
                       style: ElevatedButton.styleFrom(elevation: 0),
-                      onPressed: () {
-                        quizNotifier.checkQuestion(question);
-                      },
-                      child: const Text('Check')),
-                  Icon(
-                    Icons.check_outlined,
-                    size: size.width * 0.10,
-                  )
+                      onPressed: isSelected
+                          ? () {
+                              quizNotifier.checkQuestion(question);
+                            }
+                          : null,
+                      child: const Text('Check'),
+                    ),
+                  ],
+                  if (icon != null) ...[
+                    Icon(
+                      icon,
+                      size: size.height * 0.05,
+                      color: borderColor,
+                    ),
+                  ],
                 ],
               ),
             )

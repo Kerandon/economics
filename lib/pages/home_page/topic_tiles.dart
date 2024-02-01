@@ -1,6 +1,6 @@
-import 'package:economics_app/state/app_state.dart';
-import 'package:economics_app/pages/subtopics_page.dart';
-import 'package:economics_app/utils/constants.dart';
+import 'package:economics_app/state/content_state.dart';
+import 'package:economics_app/pages/articles_page/subtopics_page.dart';
+import 'package:economics_app/configs/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,7 +15,7 @@ class TopicTiles extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final gap = size.width * kPageIndent;
-    final state = ref.watch(appProvider);
+    final state = ref.watch(contentProvider);
 
     return GridView.builder(
       itemCount: state.mainTopics.length,

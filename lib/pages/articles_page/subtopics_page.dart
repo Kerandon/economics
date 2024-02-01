@@ -4,7 +4,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'article_page.dart';
-import '../custom_widgets/custom_loading_screen.dart';
+import '../../custom_widgets/custom_loading_screen.dart';
 
 class SubtopicsPage extends ConsumerStatefulWidget {
   const SubtopicsPage(this.mainTopic, {super.key});

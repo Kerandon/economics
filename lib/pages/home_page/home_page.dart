@@ -1,7 +1,10 @@
+import 'package:economics_app/custom_widgets/custom_loading_screen.dart';
 import 'package:economics_app/pages/home_page/topic_tiles.dart';
 import 'package:economics_app/pages/quiz_page/quiz_page.dart';
-import 'package:economics_app/state/app_state.dart';
-import 'package:economics_app/utils/constants.dart';
+import 'package:economics_app/pages/settings_page/settings_page.dart';
+import 'package:economics_app/state/content_state.dart';
+import 'package:economics_app/configs/constants.dart';
+import 'package:economics_app/state/quiz_state.dart';
 import 'package:economics_app/utils/enums/parent_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,7 +29,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = ref.read(appProvider.notifier);
+    final contentNotifier = ref.read(contentProvider.notifier);
+    final quizNotifier = ref.read(quizProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text(kAppName),
@@ -37,7 +41,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-              notifier.setTopicData(snapshot.data!, TopicCategory.mainTopic);
+              contentNotifier.setTopicData(
+                  snapshot.data!, TopicCategory.mainTopic);
             });
             return SingleChildScrollView(
               child: ListView(
@@ -46,13 +51,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                 children: [
                   ...[
                     const TopicTiles(),
-                    ElevatedButton(
+                    OutlinedButton(
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const QuizPage(),
-                            ),
-                          );
+                          quizNotifier.reset();
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((timeStamp) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const QuizPage(),
+                              ),
+                            );
+                          });
                         },
                         child: const Text('Quiz Page')),
                   ],
@@ -61,9 +70,10 @@ class _HomePageState extends ConsumerState<HomePage> {
             );
           }
 
-          return const Center(child: CircularProgressIndicator());
+          return const CustomProgressIndicator();
         },
       ),
+      drawer: SettingsPage(),
     );
   }
 }

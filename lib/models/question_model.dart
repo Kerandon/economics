@@ -1,6 +1,6 @@
 import 'package:economics_app/utils/enums/answer_stage.dart';
 import 'package:equatable/equatable.dart';
-import '../utils/constants.dart';
+import '../configs/constants.dart';
 import 'answer_model.dart';
 
 class QuestionModel extends Equatable {

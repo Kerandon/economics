@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'package:economics_app/utils/constants.dart';
+import 'package:economics_app/configs/constants.dart';
 import 'package:economics_app/utils/helper_methods/firebase_methods.dart';
 import 'package:flutter/material.dart';
 
@@ -52,13 +52,17 @@ class _CustomTileState extends State<CustomTile> {
                   alignment: const Alignment(0, 0.80),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.background,
                         borderRadius: BorderRadius.circular(kRadius)),
                     child: Padding(
                       padding: EdgeInsets.all(size.width * 0.02),
                       child: Text(
                         widget.title,
-                        style: const TextStyle(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium!
+                            .copyWith(
+                                color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
                   ),

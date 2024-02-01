@@ -78,6 +78,11 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
     state = state.copyWith(currentQuestions: allQuestions);
   }
+
+  void reset(){
+    state = state.copyWith(currentQuestions: []);
+
+  }
 }
 
 final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(

@@ -1,6 +1,6 @@
 import 'package:economics_app/models/question_model.dart';
 import 'package:economics_app/state/quiz_state.dart';
-import 'package:economics_app/utils/constants.dart';
+import 'package:economics_app/configs/constants.dart';
 import 'package:economics_app/utils/enums/answer_stage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -67,10 +67,10 @@ class AnswerTile extends ConsumerWidget {
         shape: RoundedRectangleBorder(
             side: BorderSide(
               color: borderColor,
-              width: size.width * 0.005,
+              width: size.height * kBorderWidth,
             ),
             borderRadius: BorderRadius.circular(kRadius)),
-        tileColor: Colors.black12,
+        tileColor: Colors.black.withOpacity(0.05),
         leading: Text(index),
         onTap: () {
           notifier.setQuestionAsSelected(question, answer);

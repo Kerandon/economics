@@ -1,0 +1,34 @@
+import 'package:economics_app/state/app_state.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class SettingsPage extends ConsumerWidget {
+  const SettingsPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appState = ref.watch(appProvider);
+    final appNotifier = ref.read(appProvider.notifier);
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.maybePop(context);
+          },
+          icon: const Icon(Icons.arrow_back_outlined),
+        ),
+        title: const Text('Settings'),
+      ),
+      body: ListView(
+        children: [
+          SwitchListTile(
+              title: const Text('Dark theme'),
+              value: appState.isDarkTheme,
+              onChanged: (on) {
+                appNotifier.setDarkTheme(on);
+              }),
+        ],
+      ),
+    );
+  }
+}

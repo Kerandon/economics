@@ -12,3 +12,4 @@ const kQuiz = 'quiz';
 const kTags = 'tags';
 const kRadius = 12.0;
 const kPageIndent = 0.015;
+const kBorderWidth = 0.002;
