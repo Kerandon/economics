@@ -12,6 +12,9 @@ class CustomAppTheme {
     bool isDark = state.isDarkTheme;
     Brightness brightness = Brightness.dark;
     return ThemeData(
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.defaultAppColorDarkest
+      ),
       colorScheme: ColorScheme(
         brightness: brightness,
         primary: AppColors.defaultAppColor,
