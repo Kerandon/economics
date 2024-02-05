@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:economics_app/custom_widgets/custom_loading_screen.dart';
 import 'package:economics_app/models/question_model.dart';
 import 'package:economics_app/pages/quiz_page/question_tile.dart';
 import 'package:economics_app/state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../configs/constants.dart';
+import '../../custom_widgets/loading_error/custom_progress_indicator.dart';
 
 class QuizPage extends ConsumerStatefulWidget {
   const QuizPage({super.key});
@@ -83,8 +83,10 @@ class _QuizPageState extends ConsumerState<QuizPage> {
   }
 }
 
-Future<QuerySnapshot<Map<String, dynamic>>> getQuizQuestions({List<String>? tags}) async {
-  Query<Map<String, dynamic>> query = FirebaseFirestore.instance.collection(kQuiz);
+Future<QuerySnapshot<Map<String, dynamic>>> getQuizQuestions(
+    {List<String>? tags}) async {
+  Query<Map<String, dynamic>> query =
+      FirebaseFirestore.instance.collection(kQuiz);
 
   // Conditionally add the where clause only if tags is not null
   if (tags != null && tags.isNotEmpty) {

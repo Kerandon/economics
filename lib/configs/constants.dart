@@ -1,15 +1,26 @@
 const kAppName = 'Excel in IB Economics';
-const kCategory = 'Category';
-const kUnit = 'Unit';
-const kLevel = 'Level';
-const kContents = 'Contents';
-const kSubtopics = 'Subtopics';
-const kHeading = 'Heading';
-const kBody = 'Body';
-const kImage = 'Image';
+const kUnit = 'unit';
+const kLevel = 'level';
+
+const kImage = 'image';
+
+/// Topics
+const kTags = 'tags';
+const kSections = 'sections';
+const kSummary = 'summary';
+const kTerms = 'terms';
+const kUnits = 'units';
+const kArticles = 'articles';
+const kHeading = 'heading';
+const kBody = 'body';
+const kParagraph = 'para';
+
+/// Quiz
 const kAnswers = 'answers';
 const kQuiz = 'quiz';
-const kTags = 'tags';
+
+/// Layout
 const kRadius = 12.0;
 const kPageIndent = 0.015;
 const kBorderWidth = 0.002;
+const kDividerIndent = 0.05;

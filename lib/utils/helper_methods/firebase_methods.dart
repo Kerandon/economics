@@ -1,60 +1,54 @@
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:economics_app/utils/enums/firebase_type_enum.dart';
-import 'package:economics_app/utils/helper_methods/sort_string_numbers.dart';
+import 'package:economics_app/configs/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
 import '../../models/topic_model.dart';
 
-Future<List<TopicModel>> getData(String url,
-    {String? parent,
-    String? grandparent,
-    FirebaseType firebaseType = FirebaseType.collection}) async {
-  /// Get a reference to firebase
+Future<QuerySnapshot<Map<String, dynamic>>?> getRawCollectionData(
+    String url) async {
+  QuerySnapshot<Map<String, dynamic>> data;
   final ref = FirebaseFirestore.instance;
-
-  List<TopicModel> models = [];
-
-  if (firebaseType == FirebaseType.document) {
-    final data = await ref.doc(url).get();
-    models.add(TopicModel.fromCollection(
-        parent: parent, grandparent: grandparent, document: data));
-  } else {
-    /// Get data
-    final data = await ref.collection(url).get();
-    for (var d in data.docs) {
-      models.add(TopicModel.fromCollection(
-          collection: d, parent: parent, grandparent: grandparent));
-    }
+  try {
+    data = await ref.collection(url).get();
+  } catch (e) {
+    return null;
   }
-
-  /// Sort models by [unit] property
-  models.sort((a, b) => sortStringNumbers(a.unit, b.unit));
-
-  return models;
+  return data;
 }
 
-Future<List<TopicModel>> getAllContentData() async {
-  List<TopicModel> mainTopicModels = [],
-      subtopicModels = [],
-      articleModels = [];
+/// If there is no data or error will return null
+Future<List<TopicModel>?> getSectionsAndUnitData() async {
+  try {
+    /// Get data from firebase
+    final sections = await getRawCollectionData('/$kSections');
 
-  mainTopicModels = await getData('/contents');
-  for (var t in mainTopicModels) {
-    subtopicModels.addAll(
-        await getData('/contents/${t.title}/Subtopics', parent: t.title));
-    for (var s in subtopicModels) {
-      articleModels.addAll(await getData(
-          '/contents/${t.title}/Subtopics/${s.title}/Articles',
-          parent: s.title));
+    /// Define a local variable
+    List<TopicModel> topics = [];
+    for (int i = 0; i < sections!.docs.length; i++) {
+      topics.add(TopicModel.fromMap(snapshot: sections.docs[i]));
     }
+
+    /// Iterate through the main topics and get the units for each
+    for (int i = 0; i < topics.length; i++) {
+      final unitData =
+          await getRawCollectionData('/$kSections/${topics[i].title}/$kUnits/');
+      List<TopicModel> units = [];
+      for (int j = 0; j < unitData!.docs.length; j++) {
+        units.add(TopicModel.fromMap(
+            snapshot: unitData.docs[j], parent: topics[i].title));
+      }
+
+      topics[i] = topics[i].copyWith(units: units);
+    }
+    if (topics.isEmpty) {
+      return null;
+    } else {
+      return topics;
+    }
+  } catch (e) {
+    return null;
   }
-
-  mainTopicModels.sort((a, b) => sortStringNumbers(a.unit, b.unit));
-  subtopicModels.sort((a, b) => sortStringNumbers(a.unit, b.unit));
-  articleModels.sort((a, b) => sortStringNumbers(a.unit, b.unit));
-
-  return mainTopicModels;
 }
 
 Future<Map<String, Uint8List?>> getImage(String image) async {
@@ -66,7 +60,7 @@ Future<Map<String, Uint8List?>> getImage(String image) async {
     final bytes = await instance.ref('$image.png').getData();
     imageBytes.addAll({image: bytes});
   } catch (error) {
-    ///to-do add error catcher
+    return {}; // Return null in case of an error
   }
 
   return imageBytes;

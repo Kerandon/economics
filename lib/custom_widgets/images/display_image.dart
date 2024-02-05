@@ -1,8 +1,8 @@
 import 'dart:typed_data';
-
 import 'package:economics_app/configs/constants.dart';
 import 'package:economics_app/utils/helper_methods/firebase_methods.dart';
 import 'package:flutter/material.dart';
+import '../loading_error/custom_progress_indicator.dart';
 
 class DisplayImage extends StatefulWidget {
   const DisplayImage(
@@ -35,12 +35,13 @@ class _DisplayImageState extends State<DisplayImage> {
             return Padding(
               padding: EdgeInsets.all(size.width * kPageIndent),
               child: Image.memory(
+                color: Colors.black,
                 fit: BoxFit.cover,
                 imageBytes!,
               ),
             );
           }
-          return SizedBox.fromSize();
+          return const CustomProgressIndicator();
         });
   }
 }

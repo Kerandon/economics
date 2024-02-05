@@ -18,7 +18,6 @@ class QuestionTile extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final heightPadding = size.height * 0.003;
     final widthPadding = size.width * 0.05;
-    final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
     Color borderColor = Colors.transparent;

@@ -14,7 +14,7 @@ Future<void> main() async {
     DeviceOrientation.portraitDown,
   ]);
   await Firebase.initializeApp();
-  runApp(ProviderScope(child: const EconApp()));
+  runApp(const ProviderScope(child: EconApp()));
 }
 
 class EconApp extends ConsumerWidget {
@@ -24,6 +24,7 @@ class EconApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appState = ref.watch(appProvider);
     return MaterialApp(
+        debugShowCheckedModeBanner: true,
         title: kAppName,
         theme: CustomAppTheme(appState).appTheme,
         home: const HomePage());

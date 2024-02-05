@@ -1,4 +1,0 @@
-enum FirebaseType {
-  collection,
-  document,
-}

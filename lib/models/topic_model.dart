@@ -1,80 +1,105 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/configs/constants.dart';
-import '../utils/enums/level_enum.dart';
-import 'content_model.dart';
+import 'article_model.dart';
 
 class TopicModel {
   final String? parent;
-  final String? grandparent;
   final String? title;
-
   final String? unit;
-  final Level? level;
-  final List<ContentModel>? content;
+  final bool? isHL;
+  final List<String>? summary;
+  final Map<String, String>? terms;
+  final List<TopicModel>? units;
+  final List<ArticleModel>? articles;
 
   TopicModel({
     this.parent,
-    this.grandparent,
     this.title,
     this.unit,
-    this.level,
-    this.content,
+    this.isHL,
+    this.summary,
+    this.terms,
+    this.units,
+    this.articles,
   });
 
-  factory TopicModel.fromCollection(
-      {QueryDocumentSnapshot? collection,
-      String? parent,
-      String? grandparent,
-      DocumentSnapshot? document}) {
-    Map<String, dynamic> data;
+  TopicModel copyWith({
+    String? parent,
+    String? title,
+    String? unit,
+    bool? isHL,
+    List<String>? summary,
+    Map<String, String>? terms,
+    List<TopicModel>? units,
+    List<ArticleModel>? articles,
+  }) {
+    return TopicModel(
+      title: title ?? this.title,
+      unit: unit ?? this.unit,
+      isHL: isHL ?? this.isHL,
+      summary: summary ?? this.summary,
+      terms: terms ?? this.terms,
+      units: units ?? this.units,
+      articles: articles ?? this.articles,
+    );
+  }
 
-    if (document == null) {
-      data = collection!.data() as Map<String, dynamic>;
-    } else {
-      data = document.data() as Map<String, dynamic>;
-    }
+  factory TopicModel.fromMap({
+    required QueryDocumentSnapshot<Map<String, dynamic>> snapshot,
+    String? parent,
+    String? grandparent,
+  }) {
+    /// Define variables
     String? unit;
-    Level? level;
-    List<ContentModel> contents = [];
+    bool? isHL;
+    List<String> summary = [];
+    Map<String, String> terms = {};
+    List<TopicModel> units = [];
 
-    for (var d in data.entries) {
+    /// Iterate through data and initialize variables
+    for (var d in snapshot.data().entries) {
       if (d.key == kUnit) {
         unit = d.value;
       }
 
       if (d.key == kLevel) {
-        if (d.value.toUpperCase() == Level.hL.name.toUpperCase()) {
-          level = Level.hL;
-        } else {
-          level = Level.sL; // Set a default value in case there's no match
+        isHL = true;
+      }
+
+      /// Get summary
+      if (d.key == kSummary) {
+        for (var e in d.value) {
+          summary.add(e);
         }
       }
 
-      /// Get contents. This regex checks if the pattern of "Any-Digit" + "-Content"
-      RegExp pattern = RegExp(r'^(\d+)-Content$');
-
-      /// If there is a match.
-      if (pattern.hasMatch(d.key)) {
-        Match match = pattern.firstMatch(d.key)!;
-        final index = int.parse(match.group(1)!);
-
-        String? heading = d.value[kHeading];
-        String? body = d.value[kBody];
-        String? image = d.value[kImage];
-
-        contents.add(
-          ContentModel.copyWith(
-              index: index, heading: heading, body: body, image: image),
-        );
+      if (d.key == kTerms) {
+        final t = d.value as Map<String, dynamic>;
+        for (var e in t.entries) {
+          terms.addAll({e.key: e.value});
+        }
       }
     }
     return TopicModel(
-      parent: parent,
-      grandparent: grandparent,
-      title: collection?.id ?? document?.id,
-      unit: unit,
-      level: level,
-      content: contents,
-    );
+        parent: parent,
+        title: snapshot.id,
+        unit: unit,
+        isHL: isHL,
+        summary: summary,
+        terms: terms,
+        units: units);
   }
 }
+
+// if (d.key == kUnits) {
+//   final t = d.value as Map<String, dynamic>;
+//   for (var e in t.entries) {
+//     print('entry is ${e.key} and ${e.value}');
+//   }
+// }
+// if(d.key == kArticles){
+//   final t = d.value as Map<String, dynamic>;
+//   for (var e in t.entries) {
+//     print('entry is ${e.key} and ${e.value}');
+//   }
+// }
