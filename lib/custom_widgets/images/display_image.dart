@@ -5,7 +5,8 @@ import '../loading_error/custom_progress_indicator.dart';
 
 class DisplayImage extends StatefulWidget {
   const DisplayImage(
-    this.image, {this.padding,
+    this.image, {
+    this.padding,
     super.key,
   });
 
@@ -31,17 +32,18 @@ class _DisplayImageState extends State<DisplayImage> {
         future: _imageFuture,
         builder: (context, snapshot) {
           final imageBytes = snapshot.data?.entries.first.value;
-          if(snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               return Padding(
-                padding: widget.padding != null ? EdgeInsets.all(
-                    size.width * widget.padding!) : EdgeInsets.zero,
+                padding: widget.padding != null
+                    ? EdgeInsets.all(size.width * widget.padding!)
+                    : EdgeInsets.zero,
                 child: Image.memory(
                   fit: BoxFit.cover,
                   imageBytes!,
                 ),
               );
-            }else {
+            } else {
               return Image.asset('assets/images/image_not_found.png');
             }
           }

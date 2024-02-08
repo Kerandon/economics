@@ -26,7 +26,7 @@ class EconApp extends ConsumerWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: true,
         title: kAppName,
-        theme: CustomAppTheme(appState).appTheme,
+        theme: CustomAppTheme(appState, context).appTheme,
         home: const HomePage());
   }
 }

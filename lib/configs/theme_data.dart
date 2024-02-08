@@ -5,25 +5,27 @@ import 'app_colors.dart';
 
 class CustomAppTheme {
   final AppState state;
+  final BuildContext context;
 
-  CustomAppTheme(this.state);
+  CustomAppTheme(this.state, this.context);
 
   ThemeData get appTheme {
     bool isDark = state.isDarkTheme;
     Brightness brightness = Brightness.dark;
     return ThemeData(
-      appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.defaultAppColorDarkest
-      ),
+
       colorScheme: ColorScheme(
         brightness: brightness,
         primary: AppColors.defaultAppColor,
-        secondary: isDark
-            ? AppColors.onSurfaceDarkTheme
-            : AppColors.onSurfaceLightTheme,
-        tertiary: isDark
-            ? AppColors.onSurfaceDarkTheme
-            : AppColors.onSurfaceLightTheme,
+        secondary: AppColors.defaultAppColorDarker,
+        // isDark
+        //     ? AppColors.onSurfaceDarkTheme
+        //     : AppColors.onSurfaceLightTheme,
+        tertiary: AppColors.defaultAppColorDarkest,
+
+        // isDark
+        //     ? AppColors.onSurfaceDarkTheme
+        //     : AppColors.onSurfaceLightTheme,
         background: isDark
             ? AppColors.backgroundDarkTheme
             : AppColors.backgroundLightTheme,
@@ -49,6 +51,9 @@ class CustomAppTheme {
             ? AppColors.onSurfaceDarkTheme
             : AppColors.onSurfaceLightTheme,
       ),
+      appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(color: Colors.white),
+          backgroundColor: AppColors.defaultAppColorDarkest),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: isDark ? Colors.white : Colors.black,

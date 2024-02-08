@@ -1,4 +1,4 @@
-import 'package:economics_app/configs/constants.dart';
+import 'package:economics_app/utils/helper_methods/string_extensions.dart';
 import 'package:flutter/material.dart';
 
 class CustomTable extends StatelessWidget {
@@ -11,21 +11,20 @@ class CustomTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: EdgeInsets.all(size.width * kPageIndent),
-      child: Table(
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          columnWidths: {
-            0: FractionColumnWidth(useBulletPoints ? 0.10 : 0.40),
-            1: const FlexColumnWidth()
-          },
-          children: data.entries
-              .map(
-                (e) => buildTableRow(context, size, MapEntry(e.key, e.value),
-                    useBulletPoints: useBulletPoints),
-              )
-              .toList()),
-    );
+    return Table(
+        border:
+            TableBorder.all(color: Theme.of(context).colorScheme.surfaceTint),
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        columnWidths: {
+          0: FractionColumnWidth(useBulletPoints ? 0.10 : 0.40),
+          1: const FlexColumnWidth()
+        },
+        children: data.entries
+            .map(
+              (e) => buildTableRow(context, size, MapEntry(e.key, e.value),
+                  useBulletPoints: useBulletPoints),
+            )
+            .toList());
   }
 
   TableRow buildTableRow(
@@ -37,7 +36,6 @@ class CustomTable extends StatelessWidget {
         vertical: verticalPadding, horizontal: horizontalPadding);
 
     return TableRow(
-      decoration: const BoxDecoration(),
       children: [
         TableCell(
           verticalAlignment: useBulletPoints
@@ -48,10 +46,10 @@ class CustomTable extends StatelessWidget {
             child: useBulletPoints
                 ? Icon(
                     Icons.fiber_manual_record,
-                    size: size.height * 0.01,
+                    size: size.height * 0.008,
                   )
                 : Text(
-                    row.key,
+                    row.key.capitalizeFirstLetter(),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -62,7 +60,7 @@ class CustomTable extends StatelessWidget {
           verticalAlignment: TableCellVerticalAlignment.top,
           child: Padding(
             padding: edgeInsets,
-            child: Text(row.value),
+            child: Text(row.value.capitalizeFirstLetter()),
           ),
         ),
       ],

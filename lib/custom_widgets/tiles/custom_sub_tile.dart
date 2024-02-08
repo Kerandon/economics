@@ -1,4 +1,3 @@
-
 import 'package:economics_app/custom_widgets/images/display_image.dart';
 import 'package:economics_app/models/topic_model.dart';
 import 'package:economics_app/utils/helper_methods/string_extensions.dart';
@@ -6,8 +5,8 @@ import 'package:flutter/material.dart';
 
 import '../../configs/constants.dart';
 
-class CustomListTile extends StatelessWidget {
-  const CustomListTile({
+class CustomSubTile extends StatelessWidget {
+  const CustomSubTile({
     required this.unit,
     required this.index,
     required this.unitsLength,
