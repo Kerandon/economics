@@ -13,7 +13,6 @@ class CustomAppTheme {
     bool isDark = state.isDarkTheme;
     Brightness brightness = Brightness.dark;
     return ThemeData(
-
       colorScheme: ColorScheme(
         brightness: brightness,
         primary: AppColors.defaultAppColor,
@@ -51,7 +50,7 @@ class CustomAppTheme {
             ? AppColors.onSurfaceDarkTheme
             : AppColors.onSurfaceLightTheme,
       ),
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(color: Colors.white),
           backgroundColor: AppColors.defaultAppColorDarkest),
       outlinedButtonTheme: OutlinedButtonThemeData(

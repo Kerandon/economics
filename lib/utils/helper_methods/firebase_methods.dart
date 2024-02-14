@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/configs/constants.dart';
 import 'package:economics_app/utils/helper_methods/sort_string_numbers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import '../../models/article_model.dart';
 import '../../models/topic_model.dart';
 
@@ -20,7 +19,6 @@ Future<QuerySnapshot<Map<String, dynamic>>?> getRawCollectionData(
   }
 }
 
-/// If there is no data or error will return null
 Future<List<TopicModel>?> getSectionsAndUnitData() async {
   try {
     /// Get data from firebase
@@ -54,6 +52,28 @@ Future<List<TopicModel>?> getSectionsAndUnitData() async {
   }
 }
 
+Future<List<ArticleModel>?> getArticlesData(TopicModel topic) async {
+  try {
+    /// Define a list of [ArticleModel]
+    List<ArticleModel> articles = [];
+
+    /// Get the [QuerySnapshot<Map<String, dynamic>>] from firebase
+    final snapshot = await getRawCollectionData(
+        '/$kSections/${topic.parent}/$kUnits/${topic.title}/$kArticles/');
+
+    if (snapshot != null) {
+      for (var a in snapshot.docs) {
+        articles.add(ArticleModel.fromMap(map: a.data()));
+      }
+    } else {
+      return null;
+    }
+    return articles;
+  } catch (e) {
+    return null;
+  }
+}
+
 Future<Map<String, Uint8List?>?> getImage(String image) async {
   try {
     final instance = FirebaseStorage.instance;
@@ -66,24 +86,16 @@ Future<Map<String, Uint8List?>?> getImage(String image) async {
   }
 }
 
-Future<List<ArticleModel>?> getArticlesData(TopicModel topic) async {
+Future<Map<String, String>?> getImageURLs(String path) async {
   try {
-    /// Define a list of [ArticleModel]
-    List<ArticleModel> articles = [];
-
-    /// Get the [QuerySnapshot<Map<String, dynamic>>] from firebase
-    final snapshot = await getRawCollectionData(
-        '/$kSections/${topic.parent}/$kUnits/${topic.title}/$kArticles/');
-
-    if (snapshot != null) {
-      for (var a in snapshot.docs) {
-        articles.add(
-            ArticleModel.fromMap(map: a.data(), index: int.tryParse(a.id)));
-      }
-    } else {
-      return null;
+    Map<String, String> urls = {};
+    final ref = FirebaseStorage.instance.ref(path);
+    final bucket = await ref.listAll();
+    for (var i in bucket.items) {
+      urls.addEntries(
+          [MapEntry(i.name.split('.').first, await i.getDownloadURL())]);
     }
-    return articles;
+    return urls;
   } catch (e) {
     return null;
   }

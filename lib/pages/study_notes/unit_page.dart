@@ -8,7 +8,6 @@ import 'package:economics_app/utils/helper_methods/string_extensions.dart';
 import '../../../custom_widgets/loading_error/custom_progress_indicator.dart';
 import '../../../utils/helper_methods/firebase_methods.dart';
 import '../../configs/app_colors.dart';
-import '../../custom_widgets/article/paragraph_heading.dart';
 import '../../custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
 import 'article_layout.dart';
 import '../../custom_widgets/tiles/custom_expansion_table.dart';
@@ -25,14 +24,17 @@ class UnitPage extends StatefulWidget {
 class _UnitPageState extends State<UnitPage> {
   final List<ExpansionTileController> _expansionControllers = [];
   late final Future<List<ArticleModel>?> _articlesFuture;
+  late final Future<Map<String, String>?> _imagesFuture;
 
   @override
   void initState() {
     _articlesFuture = getArticlesData(widget.topic);
-    if (widget.topic.terms != null) {
+    _imagesFuture = getImageURLs(widget.topic.unit.toString());
+
+    if (widget.topic.terms != null && widget.topic.terms!.isNotEmpty) {
       _expansionControllers.add(ExpansionTileController());
     }
-    if (widget.topic.summary != null) {
+    if (widget.topic.summary != null && widget.topic.summary!.isNotEmpty) {
       _expansionControllers.add(ExpansionTileController());
     }
     super.initState();
@@ -55,8 +57,6 @@ class _UnitPageState extends State<UnitPage> {
                 pinned: false,
                 floating: true,
                 forceElevated: innerBoxIsScrolled,
-                title: Text(
-                    '${widget.topic.unit} ${widget.topic.title!.capitalizeFirstLetter()}'),
                 actions: [
                   CustomButtonOverlayAppBar(
                       title:
@@ -68,42 +68,84 @@ class _UnitPageState extends State<UnitPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              if (widget.topic.summary != null) ...[
+              if (widget.topic.summary != null &&
+                  widget.topic.summary!.isNotEmpty) ...[
                 CustomExpansionTile(
-                  title: 'Learning objectives',
-                  expansionController: _expansionControllers[0],
-                  child:
-                        CustomTable(widget.topic.summary!.toMap(), useBulletPoints: true,)
-
-                )
+                    title: 'Learning objectives',
+                    expansionController: _expansionControllers[0],
+                    child: CustomTable(
+                      widget.topic.summary!.toMap(),
+                      useBulletPoints: true,
+                    ))
               ],
-              if (widget.topic.terms != null) ...[
+              if (widget.topic.terms != null &&
+                  widget.topic.terms!.isNotEmpty) ...[
                 CustomExpansionTile(
                   title: 'Key terms',
                   expansionController: _expansionControllers[1],
                   child: CustomTable(widget.topic.terms!),
                 ),
               ],
-              FutureBuilder<List<ArticleModel>?>(
-                future: _articlesFuture,
+              FutureBuilder(
+                future: Future.wait([
+                  _articlesFuture,
+                  _imagesFuture,
+                ]),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return const CustomErrorWidget();
                   }
                   if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                      List<ArticleModel> articles = snapshot.data!.toList();
-                      int i = 0;
-                      return Column(
-                        children: articles.map((article) {
-                          i++;
-                          _expansionControllers.add(ExpansionTileController());
-                          return ArticleLayout(
-                            article: article,
-                            expandableController: _expansionControllers[i + 1],
-                          );
-                        }).toList(),
-                      );
+                    if (snapshot.hasData) {
+                      /// Get article and image data from firebase
+                      final articles =
+                          (snapshot.data?[0] as List<ArticleModel>?)
+                                  ?.toList() ??
+                              [];
+                      List<ArticleModel> updatedArticles = [];
+                      final imageUrls =
+                          snapshot.data![1]! as Map<String, String>?;
+
+                      /// Iterate through each article
+                      for (var b in articles) {
+                        if (b.body != null) {
+                          /// Turn the body string into a list of words
+                          List<String> bodyWords =
+                              b.body!.split(RegExp(r'\s+'));
+
+                          /// Identify any matches of the body with an image
+                          for (int i = 0; i < bodyWords.length; i++) {
+                            String word = bodyWords[i];
+                            String? imageUrl =
+                                imageUrls?[word.extractStringInsideBrackets()];
+
+                            /// replace is there is a match
+                            if (imageUrl != null) {
+                              bodyWords[i] = '![Image]($imageUrl)';
+                            }
+                          }
+                          updatedArticles.add(ArticleModel.copyWith(
+                              heading: b.heading, body: bodyWords.join(' ')));
+                        }
+                      }
+
+                      if (updatedArticles.isNotEmpty) {
+                        int i = 0 + _expansionControllers.length;
+
+                        return Column(
+                          children: updatedArticles.map((article) {
+                            i++;
+                            _expansionControllers
+                                .add(ExpansionTileController());
+                            return ArticleLayout(
+                              article: article,
+                              expandableController:
+                                  _expansionControllers[i - 1],
+                            );
+                          }).toList(),
+                        );
+                      }
+                      return const SizedBox.shrink();
                     } else {
                       return const CustomErrorWidget();
                     }
