@@ -1,3 +1,5 @@
+import 'package:economics_app/configs/constants.dart';
+import 'package:economics_app/custom_widgets/images/custom_image_network.dart';
 import 'package:economics_app/custom_widgets/tiles/custom_expansion_table.dart';
 import 'package:economics_app/models/article_model.dart';
 import 'package:economics_app/utils/helper_methods/string_extensions.dart';
@@ -13,6 +15,12 @@ class ArticleLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    String updatedBody = article.body!.replaceAll(r'\n', '\n');
+    updatedBody = "> Here is a text block \n\n ==Highlighted== "
+        "and this";
+
     return Container(
       color: Theme.of(context).colorScheme.primary,
       child: CustomExpansionTile(
@@ -24,13 +32,33 @@ class ArticleLayout extends StatelessWidget {
             shrinkWrap: true,
             children: [
               Markdown(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  data: article.body ?? ""),
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * kPageIndentHorizontal,
+                    vertical: size.width * kPageIndentVertical),
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                data: updatedBody,
+                imageBuilder: (uri, _, __) {
+                  return CustomImageNetwork(uri.toString());
+                },
+                styleSheet: MarkdownStyleSheet(
+                  blockquoteDecoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
+                  blockquote: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+String parseNewlines(String input) {
+  return input.replaceAll(RegExp(r'\\n'), '\n');
 }

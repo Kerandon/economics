@@ -21,8 +21,7 @@ class EconApp extends ConsumerWidget {
   const EconApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final appState = ref.watch(appProvider);
+  Widget build(BuildContext context, WidgetRef ref) {final appState = ref.watch(appProvider);
     return MaterialApp(
         debugShowCheckedModeBanner: true,
         title: kAppName,

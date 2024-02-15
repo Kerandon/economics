@@ -13,6 +13,12 @@ extension ListToMapExtension<T> on List<T> {
   }
 }
 
+extension StringToListOfWords on String {
+  List<String> toListOfWords() {
+    return split(RegExp(r'\s+'));
+  }
+}
+
 extension BracketExtractExtension on String {
   String? extractStringInsideBrackets() {
     RegExp regExp = RegExp(r'\((.*?)\)');

@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/configs/constants.dart';
 import 'package:economics_app/utils/helper_methods/sort_string_numbers.dart';
@@ -74,19 +73,19 @@ Future<List<ArticleModel>?> getArticlesData(TopicModel topic) async {
   }
 }
 
-Future<Map<String, Uint8List?>?> getImage(String image) async {
+Future<String?> getImage(String path) async {
   try {
     final instance = FirebaseStorage.instance;
-    Map<String, Uint8List?> imageBytes = {};
-    final bytes = await instance.ref('$image.png').getData();
-    imageBytes.addAll({image: bytes});
-    return imageBytes;
+    return await instance.ref('$path.png').getDownloadURL();
   } catch (error) {
     return null;
   }
 }
 
 Future<Map<String, String>?> getImageURLs(String path) async {
+  
+  Future.delayed(const Duration(seconds: 3));
+  
   try {
     Map<String, String> urls = {};
     final ref = FirebaseStorage.instance.ref(path);

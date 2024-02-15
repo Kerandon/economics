@@ -1,4 +1,3 @@
-import 'package:economics_app/configs/constants.dart';
 import 'package:flutter/material.dart';
 import '../../configs/app_colors.dart';
 import '../article/paragraph_heading.dart';
@@ -18,8 +17,6 @@ class CustomExpansionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final horizontalPadding = size.width * kPageIndentHorizontal;
-    final verticalPadding = size.height * kPageIndentVertical * 2;
 
     return Container(
       width: size.width,
@@ -40,14 +37,7 @@ class CustomExpansionTile extends StatelessWidget {
           Container(
             width: size.width,
             color: Theme.of(context).colorScheme.background,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: verticalPadding,
-                horizontal: horizontalPadding,
-              ),
-              child: child,
-              //CustomTable(topic.terms!),
-            ),
+            child: child,
           ),
         ],
       ),

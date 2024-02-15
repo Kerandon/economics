@@ -88,8 +88,10 @@ class _UnitPageState extends State<UnitPage> {
               ],
               FutureBuilder(
                 future: Future.wait([
-                  _articlesFuture,
-                  _imagesFuture,
+                  getArticlesData(widget.topic),
+                  getImageURLs(widget.topic.unit.toString()),
+
+                  ///To-do add back in futures
                 ]),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
@@ -110,8 +112,7 @@ class _UnitPageState extends State<UnitPage> {
                       for (var b in articles) {
                         if (b.body != null) {
                           /// Turn the body string into a list of words
-                          List<String> bodyWords =
-                              b.body!.split(RegExp(r'\s+'));
+                          List<String> bodyWords = b.body!.toListOfWords();
 
                           /// Identify any matches of the body with an image
                           for (int i = 0; i < bodyWords.length; i++) {

@@ -1,11 +1,9 @@
-import 'dart:typed_data';
 import 'package:economics_app/utils/helper_methods/firebase_methods.dart';
 import 'package:flutter/material.dart';
 import '../loading_error/custom_progress_indicator.dart';
 
 class DisplayImage extends StatefulWidget {
-  const DisplayImage(
-    this.image, {
+  const DisplayImage(this.image, {
     this.padding,
     super.key,
   });
@@ -18,7 +16,8 @@ class DisplayImage extends StatefulWidget {
 }
 
 class _DisplayImageState extends State<DisplayImage> {
-  late final Future<Map<String, Uint8List?>?> _imageFuture;
+  late final Future<String?> _imageFuture;
+
   @override
   void initState() {
     _imageFuture = getImage(widget.image);
@@ -27,22 +26,32 @@ class _DisplayImageState extends State<DisplayImage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return FutureBuilder(
+    final size = MediaQuery
+        .of(context)
+        .size;
+    return FutureBuilder<String?>(
         future: _imageFuture,
         builder: (context, snapshot) {
-          final imageBytes = snapshot.data?.entries.first.value;
+          final url = snapshot.data;
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
               return Padding(
-                padding: widget.padding != null
-                    ? EdgeInsets.all(size.width * widget.padding!)
-                    : EdgeInsets.zero,
-                child: Image.memory(
-                  fit: BoxFit.cover,
-                  imageBytes!,
-                ),
-              );
+                  padding: widget.padding != null
+                      ? EdgeInsets.all(size.width * widget.padding!)
+                      : EdgeInsets.zero,
+                  child: Image.network(
+                    url.toString(), loadingBuilder: (context, child, progress) {
+                    if (progress == null) {
+                      return child;
+                    }
+                    return SizedBox(width: size.width, height: size.width,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: progress.cumulativeBytesLoaded /
+                              progress.expectedTotalBytes!,),
+                      ),
+                    );
+                  },));
             } else {
               return Image.asset('assets/images/image_not_found.png');
             }
