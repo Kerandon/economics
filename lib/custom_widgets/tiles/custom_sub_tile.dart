@@ -1,9 +1,9 @@
 import 'package:economics_app/custom_widgets/images/display_image.dart';
-import 'package:economics_app/models/topic_model.dart';
 import 'package:economics_app/utils/helper_methods/string_extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../configs/constants.dart';
+import '../../models/unit_model.dart';
 
 class CustomSubTile extends StatelessWidget {
   const CustomSubTile({
@@ -14,7 +14,7 @@ class CustomSubTile extends StatelessWidget {
     super.key,
   });
 
-  final TopicModel unit;
+  final UnitModel unit;
   final int index;
   final int unitsLength;
   final VoidCallback onTap;

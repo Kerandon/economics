@@ -3,7 +3,7 @@ import 'package:economics_app/configs/constants.dart';
 import 'package:economics_app/utils/helper_methods/sort_string_numbers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../../models/article_model.dart';
-import '../../models/topic_model.dart';
+import '../../models/unit_model.dart';
 
 Future<QuerySnapshot<Map<String, dynamic>>?> getRawCollectionData(
     String url) async {
@@ -18,24 +18,24 @@ Future<QuerySnapshot<Map<String, dynamic>>?> getRawCollectionData(
   }
 }
 
-Future<List<TopicModel>?> getSectionsAndUnitData() async {
+Future<List<UnitModel>?> getSectionsAndUnitData() async {
   try {
     /// Get data from firebase
     final sections = await getRawCollectionData('/$kSections');
 
     /// Define a local variable
-    List<TopicModel> topics = [];
+    List<UnitModel> topics = [];
     for (int i = 0; i < sections!.docs.length; i++) {
-      topics.add(TopicModel.fromMap(snapshot: sections.docs[i]));
+      topics.add(UnitModel.fromMap(snapshot: sections.docs[i]));
     }
 
     /// Iterate through the main topics and get the units for each
     for (int i = 0; i < topics.length; i++) {
       final unitData =
           await getRawCollectionData('/$kSections/${topics[i].title}/$kUnits/');
-      List<TopicModel> units = [];
+      List<UnitModel> units = [];
       for (int j = 0; j < unitData!.docs.length; j++) {
-        units.add(TopicModel.fromMap(
+        units.add(UnitModel.fromMap(
             snapshot: unitData.docs[j], parent: topics[i].title));
       }
       units.sort((a, b) => sortStringNumbers(a.unit, b.unit));
@@ -51,7 +51,7 @@ Future<List<TopicModel>?> getSectionsAndUnitData() async {
   }
 }
 
-Future<List<ArticleModel>?> getArticlesData(TopicModel topic) async {
+Future<List<ArticleModel>?> getArticlesData(UnitModel topic) async {
   try {
     /// Define a list of [ArticleModel]
     List<ArticleModel> articles = [];
@@ -62,10 +62,15 @@ Future<List<ArticleModel>?> getArticlesData(TopicModel topic) async {
 
     if (snapshot != null) {
       for (var a in snapshot.docs) {
-        articles.add(ArticleModel.fromMap(map: a.data()));
+        articles.add(ArticleModel.fromMap(map: a.data(), heading: a.id));
       }
     } else {
       return null;
+    }
+
+    if(articles.every((element) => element.index != null)) {
+
+     articles.sort((a, b) => a.index!.compareTo(b.index!));
     }
     return articles;
   } catch (e) {

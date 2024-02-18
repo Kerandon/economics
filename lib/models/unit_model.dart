@@ -2,17 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/configs/constants.dart';
 import 'article_model.dart';
 
-class TopicModel {
+class UnitModel {
   final String? parent;
   final String? title;
   final String? unit;
   final bool? isHL;
   final List<String>? summary;
   final Map<String, String>? terms;
-  final List<TopicModel>? units;
+  final List<UnitModel>? units;
   final List<ArticleModel>? articles;
 
-  TopicModel({
+  UnitModel({
     this.parent,
     this.title,
     this.unit,
@@ -23,17 +23,17 @@ class TopicModel {
     this.articles,
   });
 
-  TopicModel copyWith({
+  UnitModel copyWith({
     String? parent,
     String? title,
     String? unit,
     bool? isHL,
     List<String>? summary,
     Map<String, String>? terms,
-    List<TopicModel>? units,
+    List<UnitModel>? units,
     List<ArticleModel>? articles,
   }) {
-    return TopicModel(
+    return UnitModel(
       title: title ?? this.title,
       unit: unit ?? this.unit,
       isHL: isHL ?? this.isHL,
@@ -44,7 +44,7 @@ class TopicModel {
     );
   }
 
-  factory TopicModel.fromMap({
+  factory UnitModel.fromMap({
     required QueryDocumentSnapshot<Map<String, dynamic>> snapshot,
     String? parent,
     String? grandparent,
@@ -54,7 +54,7 @@ class TopicModel {
     bool? isHL;
     List<String> summary = [];
     Map<String, String> terms = {};
-    List<TopicModel> units = [];
+    List<UnitModel> units = [];
 
     /// Iterate through data and initialize variables
     for (var d in snapshot.data().entries) {
@@ -80,7 +80,7 @@ class TopicModel {
         }
       }
     }
-    return TopicModel(
+    return UnitModel(
         parent: parent,
         title: snapshot.id,
         unit: unit,

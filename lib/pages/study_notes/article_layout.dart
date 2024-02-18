@@ -18,13 +18,11 @@ class ArticleLayout extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     String updatedBody = article.body!.replaceAll(r'\n', '\n');
-    updatedBody = "> Here is a text block \n\n ==Highlighted== "
-        "and this";
 
     return Container(
       color: Theme.of(context).colorScheme.primary,
       child: CustomExpansionTile(
-        title: article.heading!.capitalizeFirstLetter(),
+        title: article.heading?.capitalizeFirstLetter() ?? "",
         expansionController: expandableController,
         child: SingleChildScrollView(
           child: ListView(
@@ -49,6 +47,11 @@ class ArticleLayout extends StatelessWidget {
                     fontStyle: FontStyle.italic,
                     color: Colors.white,
                   ),
+                  tableBorder: TableBorder.all(color: Colors.white, width: 1),
+                  tableColumnWidth: IntrinsicColumnWidth(),
+                  tableCellsPadding: EdgeInsets.only(bottom: 10, left: 10),
+                  tableHeadAlign: TextAlign.start,
+
                 ),
               ),
             ],
@@ -59,6 +62,36 @@ class ArticleLayout extends StatelessWidget {
   }
 }
 
-String parseNewlines(String input) {
-  return input.replaceAll(RegExp(r'\\n'), '\n');
+extension MarkdownTableFormatter on String {
+  String formatToMarkdownTable() {
+    // Remove leading and trailing whitespaces and newlines
+    var formattedText = this.trim();
+
+    // Split the text into lines
+    var lines = formattedText.split('\n');
+
+    // Remove leading and trailing whitespaces from each line
+    lines = lines.map((line) => line.trim()).toList();
+
+    // Join the lines back with '\n'
+    formattedText = lines.join('\n');
+
+    // Split the text into rows
+    var rows = formattedText.split('|');
+
+    // Remove leading and trailing whitespaces from each cell
+    rows = rows.map((row) {
+      var cells = row.split('|');
+      cells = cells.map((cell) => cell.trim()).toList();
+      return cells.join('|');
+    }).toList();
+
+    // Join the rows back with '|'
+    formattedText = rows.join('\n| ');
+
+    // Add the necessary markdown table syntax
+    formattedText = '| ' + formattedText + ' |';
+
+    return formattedText;
+  }
 }

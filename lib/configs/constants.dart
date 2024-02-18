@@ -13,7 +13,7 @@ const kUnits = 'units';
 const kArticles = 'articles';
 const kHeading = 'heading';
 const kBody = 'body';
-const kParagraph = 'para';
+const kIndex = 'index';
 
 /// Quiz
 const kAnswers = 'answers';

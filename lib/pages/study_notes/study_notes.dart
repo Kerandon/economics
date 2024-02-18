@@ -7,7 +7,7 @@ import '../../custom_widgets/loading_error/custom_error_widget.dart';
 import '../../custom_widgets/loading_error/custom_progress_indicator.dart';
 import '../../custom_widgets/tiles/custom_heading_tile.dart';
 import '../../custom_widgets/tiles/custom_sub_tile.dart';
-import '../../models/topic_model.dart';
+import '../../models/unit_model.dart';
 import '../../utils/helper_methods/firebase_methods.dart';
 import '../../utils/helper_methods/sort_string_numbers.dart';
 
@@ -20,7 +20,7 @@ class StudyNotes extends StatefulWidget {
 
 class _StudyNotesState extends State<StudyNotes> {
   final List<ExpansionTileController> _expansionControllers = [];
-  late final Future<List<TopicModel>?> sectionsAndUnitsFuture;
+  late final Future<List<UnitModel>?> sectionsAndUnitsFuture;
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _StudyNotesState extends State<StudyNotes> {
           ),
         ];
       },
-      body: FutureBuilder<List<TopicModel>?>(
+      body: FutureBuilder<List<UnitModel>?>(
         future: sectionsAndUnitsFuture,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -56,7 +56,7 @@ class _StudyNotesState extends State<StudyNotes> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              List<TopicModel> topics = [];
+              List<UnitModel> topics = [];
               topics = snapshot.data!.toList();
               topics.sort((a, b) => sortStringNumbers(a.unit, b.unit));
 
@@ -89,7 +89,7 @@ class _StudyNotesState extends State<StudyNotes> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => UnitPage(
-                                            topic: e.units![index],
+                                            unit: e.units![index],
                                           ),
                                         ),
                                       );
