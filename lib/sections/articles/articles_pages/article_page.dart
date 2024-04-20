@@ -1,3 +1,4 @@
+import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/articles/articles_models/article_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../../quizzes/quiz_widgets/quiz_page.dart';
 
 class ArticlePage extends ConsumerStatefulWidget {
-  const ArticlePage(this.articleModel, {super.key});
-
-  final ArticleModel articleModel;
+  const ArticlePage({super.key});
 
   @override
   ConsumerState<ArticlePage> createState() => _ArticlePageState();
@@ -20,6 +19,7 @@ class ArticlePage extends ConsumerStatefulWidget {
 class _ArticlePageState extends ConsumerState<ArticlePage> {
   final List<ExpansionTileController> _expansionControllers = [];
   List<QuestionModel> selectedQuestions = [];
+  ArticleModel article = ArticleModel();
 
   @override
   void initState() {
@@ -31,6 +31,8 @@ class _ArticlePageState extends ConsumerState<ArticlePage> {
     final size = MediaQuery.of(context).size;
     final paddingWidth = size.width * 0.01;
     final paddingHeight = size.height * 0.02;
+    final appState = ref.watch(appProvider);
+    article = appState.selectedArticle;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +50,7 @@ class _ArticlePageState extends ConsumerState<ArticlePage> {
               forceElevated: innerBoxIsScrolled,
               actions: [
                 CustomButtonOverlayAppBar(
-                    title: widget.articleModel.title ?? "",
+                    title: article.title ?? "",
                     expansionControllers: _expansionControllers)
               ],
             ),
@@ -60,6 +62,7 @@ class _ArticlePageState extends ConsumerState<ArticlePage> {
             shrinkWrap: true,
             children: [
               ExpansionTile(
+                initiallyExpanded: true,
                 leading: const Icon(Icons.school_outlined),
                 title: const Text('Study notes'),
                 children: [
@@ -68,11 +71,11 @@ class _ArticlePageState extends ConsumerState<ArticlePage> {
                       vertical: paddingHeight,
                       horizontal: paddingWidth,
                     ),
-                    child: HtmlWidget(widget.articleModel.body!),
+                    child: HtmlWidget(article.body!),
                   ),
                 ],
               ),
-              QuizPage(widget.articleModel),
+              QuizPage(article),
             ],
           ),
         ),

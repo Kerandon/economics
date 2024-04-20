@@ -6,35 +6,35 @@ import '../quiz_models/question_model.dart';
 
 class QuizState {
   final List<QuestionModel> allQuestions;
-  final List<QuestionModel> currentQuestions;
+  final List<QuestionModel> selectedQuestions;
   final bool questionsAllSelected;
   final bool questionsAllAnswered;
-  final bool resetQuestions;
+  final bool questionsAreSet;
   final int numberOfQuestionsCorrect;
 
   QuizState({
     required this.allQuestions,
-    required this.currentQuestions,
+    required this.selectedQuestions,
     required this.questionsAllSelected,
     required this.questionsAllAnswered,
-    required this.resetQuestions,
+    required this.questionsAreSet,
     required this.numberOfQuestionsCorrect,
   });
 
   QuizState copyWith({
     List<QuestionModel>? allQuestions,
-    List<QuestionModel>? currentQuestions,
+    List<QuestionModel>? selectedQuestions,
     bool? questionsAllSelected,
     bool? questionsAllAnswered,
-    bool? resetQuestions,
+    bool? questionsAreSet,
     int? numberOfQuestionsCorrect,
   }) {
     return QuizState(
       allQuestions: allQuestions ?? this.allQuestions,
-      currentQuestions: currentQuestions ?? this.currentQuestions,
+      selectedQuestions: selectedQuestions ?? this.selectedQuestions,
       questionsAllSelected: questionsAllSelected ?? this.questionsAllSelected,
       questionsAllAnswered: questionsAllAnswered ?? this.questionsAllAnswered,
-      resetQuestions: resetQuestions ?? this.resetQuestions,
+      questionsAreSet: questionsAreSet ?? this.questionsAreSet,
       numberOfQuestionsCorrect:
           numberOfQuestionsCorrect ?? this.numberOfQuestionsCorrect,
     );
@@ -55,7 +55,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
     // Convert the set back to a list
     List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
 
-    state = state.copyWith(currentQuestions: uniqueQuestionsList);
+    state = state.copyWith(selectedQuestions: uniqueQuestionsList);
   }
 
   void setQuestionAsSelected(QuestionModel question, AnswerModel answer) {
@@ -89,15 +89,15 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
 
     updatedQuestion = updatedQuestion.copyWith(answers: updatedAnswers);
-    List<QuestionModel> updatedCurrentQuestions = state.currentQuestions;
+    List<QuestionModel> updatedCurrentQuestions = state.selectedQuestions;
     final questionIndex = updatedCurrentQuestions.indexOf(question);
     updatedCurrentQuestions.removeAt(questionIndex);
     updatedCurrentQuestions.insert(questionIndex, updatedQuestion);
 
-    state = state.copyWith(currentQuestions: updatedCurrentQuestions);
+    state = state.copyWith(selectedQuestions: updatedCurrentQuestions);
 
     /// Check if all questions are selected (enable the user to check the answer).
-    if (state.currentQuestions
+    if (state.selectedQuestions
         .every((element) => element.answerStage == AnswerStage.selected)) {
       state = state.copyWith(questionsAllSelected: true);
     }
@@ -106,7 +106,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
   void checkAllAnswers() {
     List<QuestionModel> updatedQuestions = [];
 
-    for (var question in state.currentQuestions) {
+    for (var question in state.selectedQuestions) {
       List<AnswerModel> updatedAnswers = [];
       for (var answer in question.answers) {
         AnswerModel updatedAnswer = answer;
@@ -141,7 +141,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
     state = state.copyWith(
         questionsAllAnswered: true,
-        currentQuestions: updatedQuestions,
+        selectedQuestions: updatedQuestions,
         numberOfQuestionsCorrect: numberOfCorrect);
   }
 
@@ -153,17 +153,18 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(questionsAllAnswered: selected);
   }
 
-  void setResetQuestions(bool reset) {
-    if (reset) {
-      state = state.copyWith(
-        resetQuestions: true,
-        currentQuestions: [],
-        questionsAllSelected: false,
-        questionsAllAnswered: false,
-      );
-    } else {
-      state = state.copyWith(resetQuestions: false);
-    }
+  void setResetQuestions() {
+    state = state.copyWith(
+      selectedQuestions: [],
+      questionsAllSelected: false,
+      questionsAllAnswered: false,
+      numberOfQuestionsCorrect: 0,
+    );
+  }
+
+
+  void setQuestionsAreSet(bool set){
+    state = state.copyWith(questionsAreSet: set);
   }
 }
 
@@ -171,10 +172,10 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
   (ref) => QuizNotifier(
     QuizState(
       allQuestions: [],
-      currentQuestions: [],
+      selectedQuestions: [],
       questionsAllSelected: false,
       questionsAllAnswered: false,
-      resetQuestions: false,
+      questionsAreSet: false,
       numberOfQuestionsCorrect: 0,
     ),
   ),

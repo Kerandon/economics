@@ -6,9 +6,9 @@ class ArticleModel {
   final String? body;
 
   ArticleModel(
-      {required this.unit,
-      required this.title,
-      required this.body,});
+      {this.unit,
+      this.title,
+      this.body,});
 
   factory ArticleModel.copyWith({
     String? unit,
@@ -45,47 +45,4 @@ class ArticleModel {
 
     return articles;
   }
-
-
-  // factory ArticleModel.fromMap({
-  //   required Map<String, dynamic> map,
-  // }) {
-  //   String? unit;
-  //   String? title;
-  //   String? body;
-  //   List<QuestionModel>? questionList = [];
-  //   for (var d in map.entries) {
-  //     if (d.key == kUnit) {
-  //       unit = d.value;
-  //     }
-  //     if (d.key == kTitle) {
-  //       title = d.value;
-  //     }
-  //     if (d.key == kBody) {
-  //       body = d.value;
-  //     }
-  //     // if (d.key == 'quiz') {
-  //     //   Map<String, dynamic> jsonData = json.decode(d.value);
-  //     //   List<dynamic> questions = jsonData['questions'];
-  //     //   for (var question in questions) {
-  //     //     final answer = question['answers'] as Map<String, dynamic>;
-  //     //     List<AnswerModel> answers = [];
-  //     //     for (var e in answer.entries) {
-  //     //       answers.add(AnswerModel(e.key, e.value, AnswerStage.notAnswered));
-  //     //     }
-  //     //     final questionModel = QuestionModel(
-  //     //         question: question['question'],
-  //     //         answers: answers,
-  //     //         answerStage: AnswerStage.notAnswered);
-  //     //     questionList.add(questionModel);
-  //     //   }
-  //     // }
-  //   }
-  //
-  //   return ArticleModel(
-  //     unit: unit,
-  //     title: title,
-  //     body: body,
-  //   );
-  // }
 }

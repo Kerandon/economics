@@ -1,3 +1,4 @@
+import 'package:economics_app/app/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../articles_models/article_model.dart';
@@ -18,13 +19,15 @@ class CustomSubTile extends  ConsumerWidget {
 
     final size = MediaQuery.of(context).size;
     final width = size.width * 0.20;
+    final appState = ref.read(appProvider.notifier);
     return Column(
       children: [
         ListTile(
           onTap: () {
+            appState.setSelectedArticle(article);
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => ArticlePage(article),
+                builder: (context) => const ArticlePage(),
               ),
             );
           },

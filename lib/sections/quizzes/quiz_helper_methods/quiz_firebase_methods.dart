@@ -10,7 +10,7 @@ Future<List<QuestionModel>?> getQuestionDataFromFirebase() async {
     final snapshot =
         await FirebaseFirestore.instance.collection('quiz').doc('quiz').get();
     if (snapshot.data() != null) {
-      String rawJson = snapshot.get('multi');
+      String rawJson = snapshot.get('mcq');
 
       Map<String, dynamic> map = jsonDecode(rawJson); // import 'dart:convert';
       final questionsData = map['questions'];
