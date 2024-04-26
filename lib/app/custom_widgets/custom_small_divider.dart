@@ -10,7 +10,8 @@ class CustomSmallDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical),
+      padding:
+          EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical),
       child: Divider(
         color: Theme.of(context).colorScheme.onBackground.withOpacity(0.20),
       ),

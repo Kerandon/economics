@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
+import '../../../app/enums/sections.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_models/answer_model.dart';
 import '../quiz_models/question_model.dart';
@@ -9,16 +9,20 @@ class QuizState {
   final List<QuestionModel> selectedQuestions;
   final bool questionsAllSelected;
   final bool questionsAllAnswered;
-  final bool questionsAreSet;
   final int numberOfQuestionsCorrect;
+  final Map<Section, bool> selectedSections;
+  final int numberOfQuestionsSelected;
+  final int currentQuestionIndex;
 
   QuizState({
     required this.allQuestions,
     required this.selectedQuestions,
     required this.questionsAllSelected,
     required this.questionsAllAnswered,
-    required this.questionsAreSet,
     required this.numberOfQuestionsCorrect,
+    required this.selectedSections,
+    required this.numberOfQuestionsSelected,
+    required this.currentQuestionIndex,
   });
 
   QuizState copyWith({
@@ -26,17 +30,22 @@ class QuizState {
     List<QuestionModel>? selectedQuestions,
     bool? questionsAllSelected,
     bool? questionsAllAnswered,
-    bool? questionsAreSet,
     int? numberOfQuestionsCorrect,
+    Map<Section, bool>? selectedSections,
+    int? numberOfQuestionsSelected,
+    int? currentQuestionIndex,
   }) {
     return QuizState(
       allQuestions: allQuestions ?? this.allQuestions,
       selectedQuestions: selectedQuestions ?? this.selectedQuestions,
       questionsAllSelected: questionsAllSelected ?? this.questionsAllSelected,
       questionsAllAnswered: questionsAllAnswered ?? this.questionsAllAnswered,
-      questionsAreSet: questionsAreSet ?? this.questionsAreSet,
       numberOfQuestionsCorrect:
           numberOfQuestionsCorrect ?? this.numberOfQuestionsCorrect,
+      selectedSections: selectedSections ?? this.selectedSections,
+      numberOfQuestionsSelected:
+          numberOfQuestionsSelected ?? this.numberOfQuestionsSelected,
+      currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,
     );
   }
 }
@@ -48,7 +57,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(allQuestions: questions);
   }
 
-  void setCurrentQuestions(List<QuestionModel> questions) {
+  void setSelectedQuestions(List<QuestionModel> questions) {
     // Convert the list to a set to remove duplicates
     Set<QuestionModel> uniqueQuestions = questions.toSet();
 
@@ -101,6 +110,18 @@ class QuizNotifier extends StateNotifier<QuizState> {
         .every((element) => element.answerStage == AnswerStage.selected)) {
       state = state.copyWith(questionsAllSelected: true);
     }
+  }
+
+  void updateQuestionState(QuestionModel question) {
+    List<QuestionModel> questions = state.selectedQuestions.toList();
+
+    for (int i = 0; i < questions.length; i++) {
+      if (questions[i] == question) {
+        questions[i] = question;
+      }
+    }
+
+    state = state.copyWith(selectedQuestions: questions);
   }
 
   void checkAllAnswers() {
@@ -162,9 +183,18 @@ class QuizNotifier extends StateNotifier<QuizState> {
     );
   }
 
+  void setSectionAsSelected(Section section, bool isSelected) {
+    Map<Section, bool> sections = state.selectedSections;
+    sections.update(section, (value) => isSelected);
+    state = state.copyWith(selectedSections: sections);
+  }
 
-  void setQuestionsAreSet(bool set){
-    state = state.copyWith(questionsAreSet: set);
+  void setNumberOfQuestionsSelected(int number) {
+    state = state.copyWith(numberOfQuestionsSelected: number);
+  }
+
+  void setCurrentQuestionIndex(int index) {
+    state = state.copyWith(currentQuestionIndex: index);
   }
 }
 
@@ -175,8 +205,15 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       selectedQuestions: [],
       questionsAllSelected: false,
       questionsAllAnswered: false,
-      questionsAreSet: false,
       numberOfQuestionsCorrect: 0,
+      selectedSections: {
+        Section.intro: true,
+        Section.micro: false,
+        Section.macro: false,
+        Section.global: false,
+      },
+      numberOfQuestionsSelected: 5,
+      currentQuestionIndex: 0,
     ),
   ),
 );

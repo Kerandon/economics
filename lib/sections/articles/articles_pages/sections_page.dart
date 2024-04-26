@@ -10,15 +10,15 @@ import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_a
 import '../../quizzes/quiz_helper_methods/quiz_firebase_methods.dart';
 import '../../quizzes/quiz_models/question_model.dart';
 import '../articles_custom_widgets/custom_subtile.dart';
-import '../articles_enums/sections.dart';
+import '../../../app/enums/sections.dart';
 import '../articles_models/article_model.dart';
 import '../articles_helper_methods/firebase_methods.dart';
 
-class SectionsPage extends  ConsumerStatefulWidget {
+class SectionsPage extends ConsumerStatefulWidget {
   const SectionsPage({super.key});
 
   @override
-   ConsumerState<SectionsPage> createState() => _SectionsPageState();
+  ConsumerState<SectionsPage> createState() => _SectionsPageState();
 }
 
 class _SectionsPageState extends ConsumerState<SectionsPage> {
@@ -99,6 +99,7 @@ class _SectionsPageState extends ConsumerState<SectionsPage> {
                     shrinkWrap: true,
                     children: Section.values.map((section) {
                       return ExpansionTile(
+                          initiallyExpanded: true,
                           leading: Icon(getSectionIcon(section)),
                           title: Text(section.getSectionName()),
                           children: [
@@ -115,7 +116,6 @@ class _SectionsPageState extends ConsumerState<SectionsPage> {
                                         article,
                                         removeDivider:
                                             article == microArticles.last,
-
                                       ))
                                   .toList(),
                             if (section == Section.macro)

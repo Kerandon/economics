@@ -12,9 +12,7 @@ class AnswerModel extends Equatable {
   factory AnswerModel.fromMap(Map<String, dynamic> map) {
     return AnswerModel(map.entries.first.key, map.entries.first.value,
         AnswerStage.notSelected);
-
   }
-
 
   AnswerModel copyWith(
       {String? answer, bool? isCorrect, AnswerStage? answerStage}) {

@@ -5,10 +5,11 @@ class ArticleModel {
   final String? title;
   final String? body;
 
-  ArticleModel(
-      {this.unit,
-      this.title,
-      this.body,});
+  ArticleModel({
+    this.unit,
+    this.title,
+    this.body,
+  });
 
   factory ArticleModel.copyWith({
     String? unit,
@@ -16,16 +17,14 @@ class ArticleModel {
     String? body,
     List<QuestionModel>? questions,
   }) {
-    return ArticleModel(
-        unit: unit, title: title, body: body);
+    return ArticleModel(unit: unit, title: title, body: body);
   }
 
   List<ArticleModel> parseSections(String rawString) {
     List<ArticleModel> articles = [];
 
     // Define regex pattern to extract data between SECTION tags
-    final sectionPattern =
-    RegExp(r'<SECTION:(.*?):(.*?):(.*?)>');
+    final sectionPattern = RegExp(r'<SECTION:(.*?):(.*?):(.*?)>');
 
     // Extract matches using regex
     final sectionMatches = sectionPattern.allMatches(rawString);

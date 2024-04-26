@@ -1,9 +1,8 @@
 import 'package:economics_app/app/state/app_state.dart';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../sections/articles/articles_pages/sections_page.dart';
-
+import '../../sections/quizzes/review_section/review_page.dart';
 import '../../sections/settings/settings_page.dart';
 import '../configs/constants.dart';
 import 'custom_navigation_bar.dart';
@@ -20,7 +19,7 @@ class HomePage extends ConsumerWidget {
         title: const Text(kAppName),
         centerTitle: true,
       ),
-      body: appState.page == 0 ? const SectionsPage() : const SectionsPage(),
+      body: appState.page == 0 ? const SectionsPage() : const ReviewPage(),
       bottomNavigationBar: const CustomNavigationBar(),
       drawer: const SettingsPage(),
     );

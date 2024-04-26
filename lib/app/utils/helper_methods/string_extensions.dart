@@ -29,4 +29,3 @@ extension BracketExtractExtension on String {
     return null; // Return null if no match found
   }
 }
-

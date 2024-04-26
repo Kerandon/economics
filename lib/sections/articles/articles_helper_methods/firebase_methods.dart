@@ -33,8 +33,7 @@ Future<List<ArticleModel>?> getArticleDataFromFirebase() async {
   try {
     final ref = FirebaseFirestore.instance;
 
-    final snapshot =
-        await ref.collection('articles').doc('articles').get();
+    final snapshot = await ref.collection('articles').doc('articles').get();
 
     final rawString = snapshot.get('articles');
 
@@ -49,8 +48,7 @@ List<ArticleModel> parseSections(String rawString) {
   List<ArticleModel> articles = [];
 
   // Define regex pattern to extract data between SECTION tags
-  final sectionPattern =
-  RegExp(r'<SECT:(.*?):(.*?)>\s*<BODY>(.*?)<\/BODY>');
+  final sectionPattern = RegExp(r'<SECT:(.*?):(.*?)>\s*<BODY>(.*?)<\/BODY>');
 
   // Extract matches using regex
   final sectionMatches = sectionPattern.allMatches(rawString);

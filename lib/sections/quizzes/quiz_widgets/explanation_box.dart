@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../app/configs/constants.dart';
@@ -16,14 +15,14 @@ class ExplanationBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical),
+      padding:
+          EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical),
       child: Container(
-
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(kRadius),
-            border: Border.all(color: Theme.of(context).colorScheme.primary,
-
-            ),
+          borderRadius: BorderRadius.circular(kRadius),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
         child: Padding(
           padding: EdgeInsets.all(size.height * kPageIndentVertical),
@@ -34,7 +33,8 @@ class ExplanationBox extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Icon(
-                      Icons.info_outline, // You can replace this with any appropriate icon
+                      Icons
+                          .info_outline, // You can replace this with any appropriate icon
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -42,21 +42,19 @@ class ExplanationBox extends StatelessWidget {
                 TextSpan(
                   text: "Explanation\n", // Title text
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                 ),
                 TextSpan(
                   text: question.explanation, // Explanation text
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                 ),
               ],
             ),
           ),
-
-
         ),
       ),
     );

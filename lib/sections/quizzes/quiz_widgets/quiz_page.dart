@@ -1,5 +1,4 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/articles/articles_models/article_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_widgets/question_tile.dart';
@@ -50,27 +49,17 @@ class _ArticleQuizSectionState extends ConsumerState<QuizPage> {
           List<AnswerModel> updatedAnswers = [];
           for (var a in q.answers) {
             // Reset the AnswerStage property for each answer
-            updatedAnswers.add(a.copyWith(answerStage: AnswerStage.notSelected));
+            updatedAnswers
+                .add(a.copyWith(answerStage: AnswerStage.notSelected));
           }
           // Update the answers list for the current question
           QuestionModel updatedQuestion = q.copyWith(answers: updatedAnswers);
           updatedSelectedQuestions.add(updatedQuestion);
         }
 
-        quizNotifier.setCurrentQuestions(updatedSelectedQuestions);
-        print('REGENERATE QUESTIONS');
+        quizNotifier.setSelectedQuestions(updatedSelectedQuestions);
       });
-
-
     }
-
-    // for(var q in quizState.selectedQuestions){
-    //   print('${q.answerStage} and ${q.question}');
-    //   for(var a in q.answers){
-    //     print('answers ${a.answerStage}');
-    //   }
-    // }
-
     return ExpansionTile(
       initiallyExpanded: true,
       leading: const Icon(Icons.quiz_outlined),
@@ -81,8 +70,7 @@ class _ArticleQuizSectionState extends ConsumerState<QuizPage> {
               horizontal: size.width * kPageIndentHorizontal),
           child: Column(
             children: [
-              ...[                      SizedBox(
-          height: size.height * kPageIndentVertical * 2)],
+              ...[SizedBox(height: size.height * kPageIndentVertical * 2)],
               ...quizState.selectedQuestions.map((q) {
                 return QuestionTile(
                   index: quizState.selectedQuestions.indexOf(q),
@@ -108,14 +96,15 @@ class _ArticleQuizSectionState extends ConsumerState<QuizPage> {
                   ],
                 ],
               ),
-              if(quizState.questionsAllAnswered)...[
+              if (quizState.questionsAllAnswered) ...[
                 const QuizStats(),
               ],
-
             ],
           ),
         ),
-        SizedBox(height: size.height * 0.05,)
+        SizedBox(
+          height: size.height * 0.05,
+        )
       ],
     );
   }

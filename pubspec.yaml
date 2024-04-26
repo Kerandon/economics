@@ -46,6 +46,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   auto_size_text: ^3.0.0
   flutter_widget_from_html: ^0.14.11
+  multi_select_flutter: ^4.1.3
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,4 @@
-import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
-import 'package:economics_app/sections/articles/articles_pages/article_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -33,7 +31,6 @@ class QuizStats extends ConsumerWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-
           Padding(
             padding: EdgeInsets.all(size.height * spacing),
             child: OutlinedButton(
@@ -43,9 +40,11 @@ class QuizStats extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.refresh_outlined),
-                  SizedBox(width: size.width * spacing,),
-                  Text('Try again'),
+                  const Icon(Icons.refresh_outlined),
+                  SizedBox(
+                    width: size.width * spacing,
+                  ),
+                  const Text('Try again'),
                 ],
               ),
             ),
