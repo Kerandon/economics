@@ -8,7 +8,11 @@ import 'answer_tile.dart';
 import 'explanation_box.dart';
 
 class QuestionTile extends ConsumerWidget {
-  const QuestionTile({super.key, this.index, required this.question, this.removeEndDivider = false});
+  const QuestionTile(
+      {super.key,
+      this.index,
+      required this.question,
+      this.removeEndDivider = false});
 
   final int? index;
   final QuestionModel question;
@@ -72,7 +76,7 @@ class QuestionTile extends ConsumerWidget {
             if (question.answerStage == AnswerStage.incorrect) ...[
               ExplanationBox(question: question)
             ],
-           if(!removeEndDivider) const CustomSmallDivider(),
+            if (!removeEndDivider) const CustomSmallDivider(),
             SizedBox(
               height: size.height * kPageIndentVertical,
             ),

@@ -13,6 +13,7 @@ class QuizState {
   final Map<Section, bool> selectedSections;
   final int numberOfQuestionsSelected;
   final int currentQuestionIndex;
+  final bool checkAnswersAtEnd;
 
   QuizState({
     required this.allQuestions,
@@ -23,6 +24,7 @@ class QuizState {
     required this.selectedSections,
     required this.numberOfQuestionsSelected,
     required this.currentQuestionIndex,
+    required this.checkAnswersAtEnd,
   });
 
   QuizState copyWith({
@@ -34,6 +36,7 @@ class QuizState {
     Map<Section, bool>? selectedSections,
     int? numberOfQuestionsSelected,
     int? currentQuestionIndex,
+    bool? checkAnswersAtEnd,
   }) {
     return QuizState(
       allQuestions: allQuestions ?? this.allQuestions,
@@ -46,6 +49,7 @@ class QuizState {
       numberOfQuestionsSelected:
           numberOfQuestionsSelected ?? this.numberOfQuestionsSelected,
       currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,
+      checkAnswersAtEnd: checkAnswersAtEnd ?? this.checkAnswersAtEnd,
     );
   }
 }
@@ -124,6 +128,37 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(selectedQuestions: questions);
   }
 
+  void setCheckAnswersAtEnd(bool checkAtEnd) {
+    state = state.copyWith(checkAnswersAtEnd: checkAtEnd);
+  }
+
+  void checkAnswer(QuestionModel question) {
+    List<AnswerModel> answers = question.answers.toList();
+    for (int i = 0; i < answers.length; i++) {
+      if (answers[i].answerStage == AnswerStage.selected) {
+        if (answers[i].isCorrect) {
+          answers[i] = answers[i].copyWith(answerStage: AnswerStage.correct);
+        } else {
+          answers[i] = answers[i].copyWith(answerStage: AnswerStage.incorrect);
+        }
+      } else {
+        if (answers[i].isCorrect) {
+          answers[i] = answers[i].copyWith(answerStage: AnswerStage.incorrect);
+        }
+      }
+    }
+    question = question.copyWith(answers: answers);
+    if (question.answers
+        .any((answer) => answer.answerStage == AnswerStage.incorrect)) {
+      question = question.copyWith(answerStage: AnswerStage.incorrect);
+    } else {
+      question = question.copyWith(answerStage: AnswerStage.correct);
+    }
+
+    updateQuestionState(question);
+    //quizNotifier.updateQuestionState(question);
+  }
+
   void checkAllAnswers() {
     List<QuestionModel> updatedQuestions = [];
 
@@ -166,20 +201,13 @@ class QuizNotifier extends StateNotifier<QuizState> {
         numberOfQuestionsCorrect: numberOfCorrect);
   }
 
-  void setQuestionsAllSelected(bool selected) {
-    state = state.copyWith(questionsAllSelected: selected);
-  }
-
-  void setQuestionsAllAnswered(bool selected) {
-    state = state.copyWith(questionsAllAnswered: selected);
-  }
-
   void setResetQuestions() {
     state = state.copyWith(
       selectedQuestions: [],
       questionsAllSelected: false,
       questionsAllAnswered: false,
       numberOfQuestionsCorrect: 0,
+      currentQuestionIndex: 0,
     );
   }
 
@@ -214,6 +242,7 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       },
       numberOfQuestionsSelected: 5,
       currentQuestionIndex: 0,
+      checkAnswersAtEnd: true,
     ),
   ),
 );

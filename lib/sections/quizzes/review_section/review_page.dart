@@ -89,8 +89,16 @@ class _ReviewPageState extends ConsumerState<ReviewPage> {
                           quizNotifier.setNumberOfQuestionsSelected(number);
                         });
                   }).toList()),
-              SizedBox(
-                height: size.height * 0.15,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: size.height * kDividerIndent,
+                ),
+                child: SwitchListTile(
+                    title: const Text('Check answers at end'),
+                    value: quizState.checkAnswersAtEnd,
+                    onChanged: (on) {
+                      quizNotifier.setCheckAnswersAtEnd(on);
+                    }),
               ),
               CustomBigButton(
                 text: 'Start',
@@ -99,24 +107,14 @@ class _ReviewPageState extends ConsumerState<ReviewPage> {
                     ? null
                     : () {
                         List<QuestionModel> selectedQuestions = [];
+
                         for (var q in quizState.allQuestions) {
-                          selectedQuestions.add(q);
+                          {
+                            selectedQuestions.add(q.shuffleAnswers());
+                          }
                         }
-                        quizNotifier.setSelectedQuestions(selectedQuestions);
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const QuestionPage()));
-                      },
-              ),
-              CustomBigButton(
-                text: 'Start',
-                onPressed: quizState.selectedSections.values
-                        .every((element) => element == false)
-                    ? null
-                    : () {
-                        List<QuestionModel> selectedQuestions = [];
-                        for (var q in quizState.allQuestions) {
-                          selectedQuestions.add(q);
-                        }
+                        selectedQuestions.shuffle();
+
                         quizNotifier.setSelectedQuestions(selectedQuestions);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const QuestionPage()));

@@ -48,11 +48,9 @@ class _ArticleQuizSectionState extends ConsumerState<QuizPage> {
         for (var q in selectedQuestions) {
           List<AnswerModel> updatedAnswers = [];
           for (var a in q.answers) {
-            // Reset the AnswerStage property for each answer
             updatedAnswers
                 .add(a.copyWith(answerStage: AnswerStage.notSelected));
           }
-          // Update the answers list for the current question
           QuestionModel updatedQuestion = q.copyWith(answers: updatedAnswers);
           updatedSelectedQuestions.add(updatedQuestion);
         }
