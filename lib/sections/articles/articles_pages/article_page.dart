@@ -1,6 +1,10 @@
+import 'dart:typed_data';
+
+import 'package:economics_app/app/custom_paint/custom_paint_diagrams.dart';
 import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/articles/articles_models/article_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/app_colors.dart';
@@ -71,7 +75,7 @@ class _ArticlePageState extends ConsumerState<ArticlePage> {
                       vertical: paddingHeight,
                       horizontal: paddingWidth,
                     ),
-                    child: HtmlWidget(article.body!),
+                    child: ArticleContent(article: article),
                   ),
                 ],
               ),
@@ -83,3 +87,72 @@ class _ArticlePageState extends ConsumerState<ArticlePage> {
     );
   }
 }
+
+class ArticleContent extends StatefulWidget {
+  const ArticleContent({
+    super.key,
+    required this.article,
+  });
+
+  final ArticleModel article;
+
+  @override
+  State<ArticleContent> createState() => _ArticleContentState();
+}
+
+class _ArticleContentState extends State<ArticleContent> {
+
+  late final Future<Uint8List?> _imageFuture;
+
+  @override
+  void initState() {
+    _imageFuture = getImage('aggregate_demand');
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return FutureBuilder<Uint8List?>(
+      future: _imageFuture,
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+        return HtmlWidget(widget.article.body!,
+        customWidgetBuilder: (element){
+          return Container(height: size.width,width: size.width,
+          child: CustomPaintDiagrams(),
+          );
+        } ,
+
+        );
+      }    return Container(height: 200,width: 200,color: Colors.red,);
+      }
+    );
+  }
+}
+
+Future<Uint8List?> getImage(String path) async {
+  try {
+    final instance = FirebaseStorage.instance;
+    return await instance.ref('$path.png').getData();
+  } catch (error) {
+    return null;
+  }
+}
+//
+// Future<Map<String, String>?> getImageURLs(String path) async {
+//   Future.delayed(const Duration(seconds: 3));
+//
+//   try {
+//     Map<String, String> urls = {};
+//     final ref = FirebaseStorage.instance.ref(path);
+//     final bucket = await ref.listAll();
+//     for (var i in bucket.items) {
+//       urls.addEntries(
+//           [MapEntry(i.name.split('.').first, await i.getDownloadURL())]);
+//     }
+//     return urls;
+//   } catch (e) {
+//     return null;
+//   }
+// }

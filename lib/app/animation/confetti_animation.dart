@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ConfettiAnimation extends ConsumerStatefulWidget {
-  const ConfettiAnimation({super.key, required this.animate});
+  const ConfettiAnimation({super.key, this.animate});
 
-  final bool animate;
+  final bool? animate;
 
   @override
   ConsumerState<ConfettiAnimation> createState() => _ConfettiAnimationState();
@@ -18,7 +18,10 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
   @override
   void initState() {
     _controller =
-        ConfettiController(duration: const Duration(milliseconds: 500));
+        ConfettiController(duration: const Duration(milliseconds: 200));
+    if(widget.animate == null){
+      _controller.play();
+    }
     super.initState();
   }
 
@@ -30,7 +33,7 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
 
   @override
   void didUpdateWidget(covariant ConfettiAnimation oldWidget) {
-    if (widget.animate) {
+    if (widget.animate != null && widget.animate == true) {
       _controller.play();
     }
     super.didUpdateWidget(oldWidget);
@@ -49,11 +52,11 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
               Theme.of(context).colorScheme.tertiary,
             ],
             blastDirectionality: BlastDirectionality.explosive,
-            numberOfParticles: 15,
-            maxBlastForce: 90,
-            gravity: 0.90,
-            minimumSize: const Size(15, 20),
-            maximumSize: const Size(20, 25),
+            numberOfParticles: 10,
+            maxBlastForce: 40,
+            gravity: 0.60,
+            minimumSize: const Size(45, 55),
+            maximumSize: const Size(55, 60),
             shouldLoop: false,
             confettiController: _controller,
             createParticlePath: drawStar,

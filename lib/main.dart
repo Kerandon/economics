@@ -1,3 +1,4 @@
+import 'package:economics_app/app/custom_paint/custom_paint_diagrams.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,12 +23,18 @@ class EconApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
     final appState = ref.watch(appProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       title: kAppName,
       theme: CustomAppTheme(appState, context).appTheme,
-      home: const HomePage(),
+      home: Center(child: Container(
+        width: size.width,
+          height: size.width,
+          color: Colors.grey.withOpacity(0.20),
+          child: CustomPaintDiagrams()))
+      //const HomePage(),
     );
   }
 }

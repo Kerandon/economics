@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+
+void paintArrow(Size size, Canvas canvas, Offset position,
+    {Color color = Colors.white, scale = 0.08, double angle = 0}) {
+  final Paint axisPaint = Paint()..color = color;
+  final width = size.width;
+  final height = size.height;
+
+  const double arrowHeadWidth = 0.50;
+  const double arrowHeadHeight = 0.30;
+  const double arrowHeadIndent = 0.10;
+  const double arrowStickWidth = 0.03;
+
+  final path = Path()
+    ..moveTo(width * arrowHeadWidth, height * arrowHeadHeight)
+    ..lineTo(width, height * 0.50)
+    ..lineTo(width * arrowHeadWidth, height * (1 - arrowHeadHeight))
+    ..lineTo(width * arrowHeadWidth + (width * arrowHeadIndent), height * 0.50)
+    ..close();
+  path.addRect(Rect.fromPoints(
+      Offset(width * arrowHeadWidth + (width * arrowHeadIndent),
+          height * (0.50 + arrowStickWidth)),
+      Offset(0, height * (0.50 - arrowStickWidth))));
+  canvas.save();
+  canvas.translate(position.dx, position.dy);
+  canvas.scale(scale);
+  rotate(canvas, width * 0.50, height * 0.50, angle);
+  canvas.drawPath(path, axisPaint);
+  canvas.restore();
+}
+
+void rotate(Canvas canvas, double cx, double cy, double angle) {
+  canvas.translate(cx, cy);
+  canvas.rotate(angle);
+  canvas.translate(-cx, -cy);
+}
+

@@ -1,3 +1,5 @@
+import 'package:economics_app/app/animation/confetti_animation.dart';
+import 'package:economics_app/app/animation/pop_out_animation.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
@@ -78,7 +80,14 @@ class AnswerTile extends ConsumerWidget {
                                 .start, // Align the text to the start (left) side
                           ),
                         ),
-                        Expanded(flex: 2, child: Icon(icon))
+                        if (icon != null) ...[
+                          Expanded(
+                            flex: 2,
+                            child: PopOutAnimation(
+                              child: Icon(icon),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ],
