@@ -1,9 +1,14 @@
 const kCurveHeightTop = 0.20;
-const kCurveHeightBottom = 0.80;
-const kCurveRight = 0.20;
+const kCurveHeightBottom = 0.70;
+const kCurveRight = 0.25;
 const kCurveLeft = 0.80;
+const kCurveWidth = 1.5;
+const kCurveLabelAdjustment = 12.0;
+const kLabelLineWidth = 1.0;
 
 /// Axis
 const kAxisIndent = 0.14;
-const kTextLineAdjustment = kAxisStrokeWidth * 1.5;
-const kAxisStrokeWidth = 2.0;
+const kTextLineAdjustment = kAxisWidth * 3;
+const kAxisWidth = 1.0;
+const kDashedLineWidth = 1.0;
+const kAxisArrowHeadWidth = 0.010;

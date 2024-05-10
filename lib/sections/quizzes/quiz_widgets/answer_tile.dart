@@ -1,4 +1,3 @@
-import 'package:economics_app/app/animation/confetti_animation.dart';
 import 'package:economics_app/app/animation/pop_out_animation.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';

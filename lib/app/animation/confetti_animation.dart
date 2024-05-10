@@ -19,7 +19,7 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
   void initState() {
     _controller =
         ConfettiController(duration: const Duration(milliseconds: 200));
-    if(widget.animate == null){
+    if (widget.animate == null) {
       _controller.play();
     }
     super.initState();

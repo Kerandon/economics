@@ -101,7 +101,6 @@ class ArticleContent extends StatefulWidget {
 }
 
 class _ArticleContentState extends State<ArticleContent> {
-
   late final Future<Uint8List?> _imageFuture;
 
   @override
@@ -114,20 +113,26 @@ class _ArticleContentState extends State<ArticleContent> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return FutureBuilder<Uint8List?>(
-      future: _imageFuture,
-      builder: (context, snapshot) {
-        if(snapshot.hasData){
-        return HtmlWidget(widget.article.body!,
-        customWidgetBuilder: (element){
-          return Container(height: size.width,width: size.width,
-          child: CustomPaintDiagrams(),
+        future: _imageFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return HtmlWidget(
+              widget.article.body!,
+              customWidgetBuilder: (element) {
+                return SizedBox(
+                  height: size.width,
+                  width: size.width,
+                  child: const CustomPaintDiagrams(),
+                );
+              },
+            );
+          }
+          return Container(
+            height: 200,
+            width: 200,
+            color: Colors.red,
           );
-        } ,
-
-        );
-      }    return Container(height: 200,width: 200,color: Colors.red,);
-      }
-    );
+        });
   }
 }
 

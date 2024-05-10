@@ -1,4 +1,3 @@
-import 'package:economics_app/app/animation/confetti_animation.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
@@ -26,20 +25,18 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     QuestionModel? currentQuestion;
     int questionIndex = 0;
     if (quizState.selectedQuestions.isNotEmpty) {
       currentQuestion =
-      quizState.selectedQuestions[quizState.currentQuestionIndex];
+          quizState.selectedQuestions[quizState.currentQuestionIndex];
     }
 
     if (quizState.selectedQuestions.every((question) =>
-    question.answerStage == AnswerStage.correct ||
+        question.answerStage == AnswerStage.correct ||
         question.answerStage == AnswerStage.incorrect)) {
       if (!_hasShownCompletedDialog) {
         _hasShownCompletedDialog = true;
@@ -49,7 +46,6 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
         });
       }
     }
-
 
     /// Directional buttons
     /// Left button
@@ -107,8 +103,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   actions: [
                     CustomButtonOverlayAppBar(
                       title:
-                      'Question ${quizState.currentQuestionIndex +
-                          1} / ${quizState.numberOfQuestionsSelected}',
+                          'Question ${quizState.currentQuestionIndex + 1} / ${quizState.numberOfQuestionsSelected}',
                     )
                   ],
                 ),
@@ -123,19 +118,22 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: quizState.selectedQuestions.map(
-                    (question) {
+                (question) {
                   questionIndex++;
                   return Stack(
                     children: [
                       QuestionTile(
                         question:
-                        quizState.selectedQuestions[questionIndex - 1],
+                            quizState.selectedQuestions[questionIndex - 1],
                         removeEndDivider: true,
                       ),
-                      OutlinedButton(onPressed: () {
-                     showDialog(context: context, builder: (context) =>
-                         CompletionPage());
-                      }, child: Text('show')),
+                      OutlinedButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => const CompletionPage());
+                          },
+                          child: const Text('show')),
                       if (question.answerStage != AnswerStage.correct &&
                           question.answerStage != AnswerStage.incorrect)
                         Align(
@@ -144,23 +142,23 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                             width: size.width * 0.80,
                             child: showCheckAnswersButton
                                 ? OutlinedButton(
-                              onPressed: question.answerStage ==
-                                  AnswerStage.selected
-                                  ? () {
-                                if (quizState.checkAnswersAtEnd) {
-                                  quizNotifier.checkAllAnswers();
-                                } else {
-                                  quizNotifier
-                                      .checkAnswer(question);
-                                }
-                              }
-                                  : null,
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: size.height * 0.02),
-                                child: Text(checkButtonText),
-                              ),
-                            )
+                                    onPressed: question.answerStage ==
+                                            AnswerStage.selected
+                                        ? () {
+                                            if (quizState.checkAnswersAtEnd) {
+                                              quizNotifier.checkAllAnswers();
+                                            } else {
+                                              quizNotifier
+                                                  .checkAnswer(question);
+                                            }
+                                          }
+                                        : null,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: size.height * 0.02),
+                                      child: Text(checkButtonText),
+                                    ),
+                                  )
                                 : const SizedBox.shrink(),
                           ),
                         )
@@ -180,7 +178,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                     _pageController.animateToPage(
                         quizState.currentQuestionIndex - 1,
                         duration:
-                        const Duration(milliseconds: kPageChangeAnimation),
+                            const Duration(milliseconds: kPageChangeAnimation),
                         curve: Curves.easeInOutCirc);
                   },
                   iconData: Icons.arrow_back_outlined,
@@ -194,7 +192,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                     _pageController.animateToPage(
                         quizState.currentQuestionIndex + 1,
                         duration:
-                        const Duration(milliseconds: kPageChangeAnimation),
+                            const Duration(milliseconds: kPageChangeAnimation),
                         curve: Curves.easeInOutCirc);
                   },
                   iconData: Icons.arrow_forward_outlined,
@@ -204,9 +202,8 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             ),
           ),
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerFloat,
         ),
-
       ],
     );
   }

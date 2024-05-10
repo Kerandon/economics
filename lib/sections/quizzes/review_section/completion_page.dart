@@ -64,9 +64,10 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                     child: FittedBox(
                       child: Text(
                         '${(percentCorrect * 100).round()}%',
-                        style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                              fontSize: 2000,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.displayLarge?.copyWith(
+                                  fontSize: 2000,
+                                ),
                       ),
                     ),
                   ),
@@ -81,8 +82,8 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical),
+              padding: EdgeInsets.symmetric(
+                  vertical: size.height * kPageIndentVertical),
               child: Column(
                 children: [
                   OutlinedButton(
@@ -109,7 +110,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
             ),
           ],
         ),
-        ConfettiAnimation(),
+        const ConfettiAnimation(),
       ],
     );
   }

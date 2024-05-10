@@ -1,7 +1,8 @@
-
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+
+import '../painter_constants.dart';
 
 void paintDashedLine({
   required Canvas canvas,
@@ -9,15 +10,17 @@ void paintDashedLine({
   required Offset p2,
   Iterable<double>? pattern,
   Color color = Colors.white,
-  double strokeWidth = 1,
+  double strokeWidth = kDashedLineWidth,
 }) {
-  pattern ??= [5, 8]; // Default pattern if not provided
+  pattern ??= [3, 5]; // Default pattern if not provided
   assert(pattern.length.isEven);
   final distance = (p2 - p1).distance;
   final normalizedPattern = pattern.map((width) => width / distance).toList();
   final points = <Offset>[];
 
-  final paint = Paint()..color = color..strokeWidth = strokeWidth;
+  final paint = Paint()
+    ..color = color
+    ..strokeWidth = strokeWidth;
 
   double t = 0;
   int i = 0;

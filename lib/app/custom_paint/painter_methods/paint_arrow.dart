@@ -6,21 +6,34 @@ void paintArrow(Size size, Canvas canvas, Offset position,
   final width = size.width;
   final height = size.height;
 
-  const double arrowHeadWidth = 0.50;
-  const double arrowHeadHeight = 0.30;
+  const double arrowHeadWidth = 0.70;
+  const double arrowHeadHeight = 0.35;
   const double arrowHeadIndent = 0.10;
-  const double arrowStickWidth = 0.03;
+  const double arrowStickWidth = 0.02;
 
+  /// Arrow-head
   final path = Path()
     ..moveTo(width * arrowHeadWidth, height * arrowHeadHeight)
     ..lineTo(width, height * 0.50)
     ..lineTo(width * arrowHeadWidth, height * (1 - arrowHeadHeight))
-    ..lineTo(width * arrowHeadWidth + (width * arrowHeadIndent), height * 0.50)
+
+    /// Arrow head base slopes in
+    //..lineTo(width * arrowHeadWidth + (width * arrowHeadIndent), height * 0.50)
     ..close();
-  path.addRect(Rect.fromPoints(
+
+  /// Add the arrow stick
+  path.addRect(
+    Rect.fromPoints(
       Offset(width * arrowHeadWidth + (width * arrowHeadIndent),
           height * (0.50 + arrowStickWidth)),
-      Offset(0, height * (0.50 - arrowStickWidth))));
+      Offset(
+        0,
+        height * (0.50 - arrowStickWidth),
+      ),
+    ),
+  );
+
+  /// Change position, scale, rotation
   canvas.save();
   canvas.translate(position.dx, position.dy);
   canvas.scale(scale);
@@ -34,4 +47,3 @@ void rotate(Canvas canvas, double cx, double cy, double angle) {
   canvas.rotate(angle);
   canvas.translate(-cx, -cy);
 }
-

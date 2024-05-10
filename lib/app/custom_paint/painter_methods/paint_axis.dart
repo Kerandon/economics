@@ -9,8 +9,9 @@ void paintAxis(
   final width = size.width;
   final height = size.height;
   paintAxisLines(size, canvas, color: color);
-  paintText(size, canvas, 'Real GDP', Offset(width * 0.50, height * 0.96),
-      color: color);
-  paintText(size, canvas, 'Price Level', Offset(width * 0.04, height * 0.50),
+
+  paintText(size, canvas, verticalLabel, Offset(width * 0.05, height * 0.50),
       angle: math.pi / -2, color: color);
+  paintText(size, canvas, horizontalLabel, Offset(width * 0.50, height * 0.94),
+      color: color);
 }

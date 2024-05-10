@@ -1,11 +1,8 @@
 import 'package:economics_app/app/custom_paint/painter_constants.dart';
-import 'package:economics_app/app/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:economics_app/app/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:flutter/material.dart';
-
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_curve.dart';
-import '../painter_methods/paint_text.dart';
 
 class ClassicalADAS extends CustomPainter {
   final Color axisColor;
@@ -20,7 +17,8 @@ class ClassicalADAS extends CustomPainter {
     final height = size.height;
 
     paintDiagramDashedLines(size, canvas,
-        yAxisStartPos: 0.50, xAxisEndPos: 0.36);
+        yAxisStartPos: 0.45, xAxisEndPos: 0.385, xLabel: 'Ye', yLabel: 'Pe');
+
     paintAxis(size, canvas, 'Price Level', 'Real GDP', color: axisColor);
 
     /// AD
@@ -29,21 +27,18 @@ class ClassicalADAS extends CustomPainter {
         canvas,
         Offset(width * kCurveRight, height * kCurveHeightTop),
         Offset(width * kCurveLeft, height * kCurveHeightBottom),
-        color: primaryColor);
-    paintText(
-        size, canvas, 'AD', Offset(width * 0.60, height * 0.82),
-        color: axisColor);
+        color: primaryColor,
+        label: 'AD');
 
-    /// AS
+    /// SRAS
     paintCurve(
         size,
         canvas,
         Offset(width * kCurveRight, height * kCurveHeightBottom),
         Offset(width * kCurveLeft, height * kCurveHeightTop),
-        color: primaryColor);
-    paintText(
-        size, canvas, 'SRAS', Offset(width * 0.60, height * 0.12),
-        color: axisColor);
+        color: primaryColor,
+        label: 'SRAS',
+        adjustLabelY: -kCurveLabelAdjustment);
   }
 
   @override
