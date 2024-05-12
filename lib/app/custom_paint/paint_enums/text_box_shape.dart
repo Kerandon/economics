@@ -1,0 +1,4 @@
+enum TextBoxShape {
+  rectangle,
+  diamond,
+}

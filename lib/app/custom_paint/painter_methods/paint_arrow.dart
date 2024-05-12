@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../custom_rotate.dart';
+
 void paintArrow(Size size, Canvas canvas, Offset position,
     {Color color = Colors.white, scale = 0.08, double angle = 0}) {
   final Paint axisPaint = Paint()..color = color;
@@ -37,13 +39,7 @@ void paintArrow(Size size, Canvas canvas, Offset position,
   canvas.save();
   canvas.translate(position.dx, position.dy);
   canvas.scale(scale);
-  rotate(canvas, width * 0.50, height * 0.50, angle);
+  customRotate(canvas, width * 0.50, height * 0.50, angle);
   canvas.drawPath(path, axisPaint);
   canvas.restore();
-}
-
-void rotate(Canvas canvas, double cx, double cy, double angle) {
-  canvas.translate(cx, cy);
-  canvas.rotate(angle);
-  canvas.translate(-cx, -cy);
 }

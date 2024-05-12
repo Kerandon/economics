@@ -1,7 +1,7 @@
 import 'package:economics_app/app/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
-import '../custom_align.dart';
+import '../paint_enums/custom_align.dart';
 import '../painter_constants.dart';
 
 void paintLabelLine(Canvas canvas, Size size, String text, Offset p1, Offset p2,

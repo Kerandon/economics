@@ -1,3 +1,4 @@
+import 'package:economics_app/app/custom_paint/diagrams/circular_flow_closed.dart';
 import 'package:economics_app/app/custom_paint/diagrams/classical_equilibrium.dart';
 import 'package:flutter/material.dart';
 import 'diagrams/ad.dart';
@@ -15,6 +16,7 @@ class CustomPaintDiagrams extends StatefulWidget {
 
 class _CustomPaintGraphsState extends State<CustomPaintDiagrams> {
   final List<CustomPainter> _diagrams = [
+    CircularFlowClosed(),
     ClassicalEquilibrium(),
     BusinessCycle(),
     KeynesianADAS(),

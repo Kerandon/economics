@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../custom_align.dart';
+import '../paint_enums/custom_align.dart';
+import '../painter_constants.dart';
 
 void paintText(Size size, Canvas canvas, String text, Offset position,
     {Color color = Colors.white,
-    double fontSize = 15,
+    double fontSize = kFontSize,
     double angle = 0,
     CustomAlign align = CustomAlign.center}) {
   final textStyle = TextStyle(

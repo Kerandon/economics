@@ -1,4 +1,4 @@
-import 'package:economics_app/app/custom_paint/custom_align.dart';
+import 'package:economics_app/app/custom_paint/paint_enums/custom_align.dart';
 import 'package:economics_app/app/custom_paint/painter_constants.dart';
 import 'package:economics_app/app/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/app/custom_paint/painter_methods/paint_dashed_line.dart';
