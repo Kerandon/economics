@@ -8,7 +8,7 @@ import 'diagrams/business_cycle.dart';
 import 'diagrams/keynesian_adas.dart';
 
 class CustomPaintDiagrams extends StatefulWidget {
-  const CustomPaintDiagrams({Key? key}) : super(key: key);
+  const CustomPaintDiagrams({super.key});
 
   @override
   State<CustomPaintDiagrams> createState() => _CustomPaintGraphsState();
@@ -17,7 +17,7 @@ class CustomPaintDiagrams extends StatefulWidget {
 class _CustomPaintGraphsState extends State<CustomPaintDiagrams> {
   final List<CustomPainter> _diagrams = [
     CircularFlowClosed(),
-    ClassicalEquilibrium(),
+    // ClassicalEquilibrium(),
     BusinessCycle(),
     KeynesianADAS(),
     AD(),

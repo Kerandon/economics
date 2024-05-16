@@ -8,7 +8,7 @@ import '../configs/constants.dart';
 import 'custom_navigation_bar.dart';
 
 class HomePage extends ConsumerWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

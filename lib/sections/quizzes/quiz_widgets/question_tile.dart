@@ -71,7 +71,7 @@ class QuestionTile extends ConsumerWidget {
                         answer: answer,
                         question: question,
                       ))
-                  .toList()
+                  
             ],
             if (question.answerStage == AnswerStage.incorrect) ...[
               ExplanationBox(question: question)

@@ -74,7 +74,7 @@ class _ArticleQuizSectionState extends ConsumerState<QuizPage> {
                   index: quizState.selectedQuestions.indexOf(q),
                   question: q,
                 );
-              }).toList(),
+              }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -109,7 +109,7 @@ class _SectionsPageState extends ConsumerState<SectionsPage> {
                                   article,
                                   removeDivider: true,
                                 );
-                              }).toList(),
+                              }),
                             if (section == Section.micro)
                               ...microArticles
                                   .map((article) => CustomSubTile(
@@ -117,19 +117,19 @@ class _SectionsPageState extends ConsumerState<SectionsPage> {
                                         removeDivider:
                                             article == microArticles.last,
                                       ))
-                                  .toList(),
+                                  ,
                             if (section == Section.macro)
                               ...macroArticles
                                   .map((article) => CustomSubTile(article,
                                       removeDivider:
                                           article == macroArticles.last))
-                                  .toList(),
+                                  ,
                             if (section == Section.global)
                               ...globalArticles
                                   .map((article) => CustomSubTile(article,
                                       removeDivider:
                                           article == globalArticles.last))
-                                  .toList(),
+                                  ,
                           ]);
                     }).toList()),
               );

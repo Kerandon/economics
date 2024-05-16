@@ -18,4 +18,5 @@ const kAxisArrowHeadWidth = 0.010;
 const kTextBoxLineWidth = 4.0;
 
 /// Text
-const kFontSize = 11.0;
+const kLabelFontSize = 8.0;
+const kFontSize = 9.0;

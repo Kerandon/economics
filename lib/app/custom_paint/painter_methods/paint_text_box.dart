@@ -11,12 +11,12 @@ void paintTextBox(
   required String text,
   required Offset position,
   TextBoxShape shape = TextBoxShape.rectangle,
-  double topHeight = 5,
+  double topHeight = 3,
   Color lineColor = Colors.white,
   Color fontColor = Colors.white,
   scale = 0.60,
   double angle = 0,
-  double fontSizeAdjustment = 2.5,
+  double fontSizeAdjustment = 2.2,
 }) {
   final width = size.width;
   final height = size.height;
@@ -37,7 +37,7 @@ void paintTextBox(
         ..addRect(Rect.fromCenter(
             center: Offset(width / 2, height / 2),
             width: width,
-            height: height / 2));
+            height: height / 2 - (halfWidth / verticalAdjustment)));
 
     case TextBoxShape.diamond:
       path = Path()
