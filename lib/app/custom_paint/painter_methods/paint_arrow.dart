@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 
 import '../custom_rotate.dart';
 
-void paintArrow(Size size, Canvas canvas, Offset position,
-    {Color color = Colors.white, scale = 0.08, double angle = 0, bool hideArrowStick = false}) {
+void paintArrow(
+  Size size,
+  Canvas canvas,
+  Offset position, {
+  Color color = Colors.white,
+  scale = 0.08,
+  double angle = 0,
+  bool hideArrowStick = false,
+  double arrowStickLength = 0,
+  double arrowStickExtension = 0,
+}) {
   final Paint axisPaint = Paint()..color = color;
   final width = size.width;
   final height = size.height;
@@ -23,14 +32,14 @@ void paintArrow(Size size, Canvas canvas, Offset position,
     //..lineTo(width * arrowHeadWidth + (width * arrowHeadIndent), height * 0.50)
     ..close();
 
-  if(!hideArrowStick) {
+  if (!hideArrowStick) {
     /// Add the arrow stick
     path.addRect(
       Rect.fromPoints(
         Offset(width * arrowHeadWidth + (width * arrowHeadIndent),
             height * (0.50 + arrowStickWidth)),
         Offset(
-          0,
+          -arrowStickExtension * width,
           height * (0.50 - arrowStickWidth),
         ),
       ),

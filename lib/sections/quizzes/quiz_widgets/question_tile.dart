@@ -65,13 +65,11 @@ class QuestionTile extends ConsumerWidget {
               color: Theme.of(context).colorScheme.primary,
             ),
             ...[
-              ...answers
-                  .map((answer) => AnswerTile(
-                        answerIndex: answers.indexOf(answer),
-                        answer: answer,
-                        question: question,
-                      ))
-                  
+              ...answers.map((answer) => AnswerTile(
+                    answerIndex: answers.indexOf(answer),
+                    answer: answer,
+                    question: question,
+                  ))
             ],
             if (question.answerStage == AnswerStage.incorrect) ...[
               ExplanationBox(question: question)

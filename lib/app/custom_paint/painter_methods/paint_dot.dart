@@ -1,0 +1,18 @@
+import 'package:economics_app/app/custom_paint/painter_methods/paint_text.dart';
+import 'package:flutter/material.dart';
+
+import '../painter_constants.dart';
+
+void paintDot(
+  Canvas canvas,
+  Size size, {
+  required Offset pos,
+  double radius = kDotRadius,
+  Color color = Colors.white,
+}) {
+  final paint = Paint()
+    ..color = color
+    ..style = PaintingStyle.fill;
+  canvas.drawCircle(pos, radius, paint);
+  paintText(size, canvas, 'fkbj', pos);
+}

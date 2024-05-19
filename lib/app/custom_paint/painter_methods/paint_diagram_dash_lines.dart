@@ -8,8 +8,8 @@ import 'package:economics_app/app/custom_paint/painter_methods/paint_text.dart';
 void paintDiagramDashedLines(Size size, Canvas canvas,
     {required double yAxisStartPos,
     required double xAxisEndPos,
-    required yLabel,
-    required xLabel}) {
+    String? yLabel,
+    String? xLabel}) {
   final width = size.width;
   final height = size.height;
 
@@ -20,15 +20,17 @@ void paintDiagramDashedLines(Size size, Canvas canvas,
       p2: Offset(
           width * kAxisIndent + (width * xAxisEndPos), height * yAxisStartPos));
 
-  /// Y axis label
-  paintText(
-    size,
-    canvas,
-    yLabel,
-    fontSize: 12,
-    Offset(width * kAxisIndent - kTextLineAdjustment, height * yAxisStartPos),
-    align: CustomAlign.centerLeft,
-  );
+  if (yLabel != null) {
+    /// Y axis label
+    paintText(
+      size,
+      canvas,
+      yLabel,
+      fontSize: kLabelFontSize,
+      Offset(width * kAxisIndent - kTextLineAdjustment, height * yAxisStartPos),
+      align: CustomAlign.centerLeft,
+    );
+  }
 
   /// Dashed line to X axis
   paintDashedLine(
@@ -42,15 +44,17 @@ void paintDiagramDashedLines(Size size, Canvas canvas,
   );
 
   /// X axis label
-  paintText(
-    size,
-    canvas,
-    xLabel,
-    fontSize: 12,
-    Offset(
-      (width * kAxisIndent) + width * xAxisEndPos,
-      height - (height * kAxisIndent) + kTextLineAdjustment,
-    ),
-    align: CustomAlign.centerBottom,
-  );
+  if (xLabel != null) {
+    paintText(
+      size,
+      canvas,
+      xLabel,
+      fontSize: kLabelFontSize,
+      Offset(
+        (width * kAxisIndent) + width * xAxisEndPos,
+        height - (height * kAxisIndent) + kTextLineAdjustment,
+      ),
+      align: CustomAlign.centerBottom,
+    );
+  }
 }

@@ -18,5 +18,4 @@ void paintCurve(Size size, Canvas canvas, Offset startPos, Offset endPos,
     paintText(size, canvas, label,
         Offset(endPos.dx + adjustLabelX, endPos.dy + adjustLabelY));
   }
-
 }

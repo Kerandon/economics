@@ -1,11 +1,12 @@
 import 'package:economics_app/app/custom_paint/diagrams/circular_flow_closed.dart';
-import 'package:economics_app/app/custom_paint/diagrams/classical_equilibrium.dart';
+import 'package:economics_app/app/custom_paint/paint_enums/ppc_types.dart';
 import 'package:flutter/material.dart';
 import 'diagrams/ad.dart';
 import 'diagrams/ad_increase.dart';
 import 'diagrams/adsras.dart';
 import 'diagrams/business_cycle.dart';
 import 'diagrams/keynesian_adas.dart';
+import 'diagrams/ppc.dart';
 
 class CustomPaintDiagrams extends StatefulWidget {
   const CustomPaintDiagrams({super.key});
@@ -16,6 +17,8 @@ class CustomPaintDiagrams extends StatefulWidget {
 
 class _CustomPaintGraphsState extends State<CustomPaintDiagrams> {
   final List<CustomPainter> _diagrams = [
+    PPC(type: PPCType.standard),
+    PPC(type: PPCType.growth),
     CircularFlowClosed(),
     // ClassicalEquilibrium(),
     BusinessCycle(),

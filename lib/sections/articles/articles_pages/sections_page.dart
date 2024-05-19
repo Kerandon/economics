@@ -111,25 +111,21 @@ class _SectionsPageState extends ConsumerState<SectionsPage> {
                                 );
                               }),
                             if (section == Section.micro)
-                              ...microArticles
-                                  .map((article) => CustomSubTile(
-                                        article,
-                                        removeDivider:
-                                            article == microArticles.last,
-                                      ))
-                                  ,
+                              ...microArticles.map((article) => CustomSubTile(
+                                    article,
+                                    removeDivider:
+                                        article == microArticles.last,
+                                  )),
                             if (section == Section.macro)
-                              ...macroArticles
-                                  .map((article) => CustomSubTile(article,
-                                      removeDivider:
-                                          article == macroArticles.last))
-                                  ,
+                              ...macroArticles.map((article) => CustomSubTile(
+                                  article,
+                                  removeDivider:
+                                      article == macroArticles.last)),
                             if (section == Section.global)
-                              ...globalArticles
-                                  .map((article) => CustomSubTile(article,
-                                      removeDivider:
-                                          article == globalArticles.last))
-                                  ,
+                              ...globalArticles.map((article) => CustomSubTile(
+                                  article,
+                                  removeDivider:
+                                      article == globalArticles.last)),
                           ]);
                     }).toList()),
               );

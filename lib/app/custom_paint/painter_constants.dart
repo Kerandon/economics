@@ -3,7 +3,7 @@ const kCurveHeightTop = 0.20;
 const kCurveHeightBottom = 0.70;
 const kCurveRight = 0.25;
 const kCurveLeft = 0.80;
-const kCurveWidth = 1.5;
+const kCurveWidth = 1.2;
 const kCurveLabelAdjustment = 12.0;
 const kLabelLineWidth = 1.0;
 
@@ -20,3 +20,6 @@ const kTextBoxLineWidth = 4.0;
 /// Text
 const kLabelFontSize = 8.0;
 const kFontSize = 9.0;
+
+/// Dot
+const kDotRadius = 3.0;
