@@ -3,15 +3,15 @@ const kCurveHeightTop = 0.20;
 const kCurveHeightBottom = 0.70;
 const kCurveRight = 0.25;
 const kCurveLeft = 0.80;
-const kCurveWidth = 1.2;
+const kCurveWidth = 1.0;
 const kCurveLabelAdjustment = 12.0;
-const kLabelLineWidth = 1.0;
+const kLabelLineWidth = 0.90;
 
 /// Axis
 const kAxisIndent = 0.14;
 const kTextLineAdjustment = kAxisWidth * 3;
-const kAxisWidth = 1.0;
-const kDashedLineWidth = 1.0;
+const kAxisWidth = 0.60;
+const kDashedLineWidth = 0.80;
 const kAxisArrowHeadWidth = 0.010;
 
 /// Text-box

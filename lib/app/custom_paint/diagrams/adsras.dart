@@ -28,7 +28,7 @@ class ClassicalADAS extends CustomPainter {
         Offset(width * kCurveRight, height * kCurveHeightTop),
         Offset(width * kCurveLeft, height * kCurveHeightBottom),
         color: primaryColor,
-        label: 'AD');
+        label1: 'AD');
 
     /// SRAS
     paintCurve(
@@ -37,8 +37,7 @@ class ClassicalADAS extends CustomPainter {
         Offset(width * kCurveRight, height * kCurveHeightBottom),
         Offset(width * kCurveLeft, height * kCurveHeightTop),
         color: primaryColor,
-        label: 'SRAS',
-        adjustLabelY: -kCurveLabelAdjustment);
+        label1: 'SRAS');
   }
 
   @override

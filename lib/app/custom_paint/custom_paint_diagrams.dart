@@ -7,6 +7,7 @@ import 'diagrams/adsras.dart';
 import 'diagrams/business_cycle.dart';
 import 'diagrams/keynesian_adas.dart';
 import 'diagrams/ppc.dart';
+import 'diagrams/world_trade.dart';
 
 class CustomPaintDiagrams extends StatefulWidget {
   const CustomPaintDiagrams({super.key});
@@ -17,6 +18,7 @@ class CustomPaintDiagrams extends StatefulWidget {
 
 class _CustomPaintGraphsState extends State<CustomPaintDiagrams> {
   final List<CustomPainter> _diagrams = [
+    WorldTrade(),
     PPC(type: PPCType.standard),
     PPC(type: PPCType.growth),
     CircularFlowClosed(),

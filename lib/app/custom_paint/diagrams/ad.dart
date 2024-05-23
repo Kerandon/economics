@@ -16,7 +16,7 @@ class AD extends CustomPainter {
     paintAxis(size, canvas, 'Price Level', 'Real GDP', color: axisColor);
     paintCurve(size, canvas, Offset(width * 0.25, height * 0.20),
         Offset(width * 0.80, height * 0.70),
-        color: primaryColor, label: 'AD');
+        color: primaryColor, label1: 'AD');
   }
 
   @override

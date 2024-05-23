@@ -12,7 +12,7 @@ void paintDashedLine({
   Color color = Colors.white,
   double strokeWidth = kDashedLineWidth,
 }) {
-  pattern ??= [3, 5]; // Default pattern if not provided
+  pattern ??= [4, 5]; // Default pattern if not provided
   assert(pattern.length.isEven);
   final distance = (p2 - p1).distance;
   final normalizedPattern = pattern.map((width) => width / distance).toList();

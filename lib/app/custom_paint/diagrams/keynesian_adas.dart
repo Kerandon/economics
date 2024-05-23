@@ -26,7 +26,7 @@ class KeynesianADAS extends CustomPainter {
 
     paintCurve(size, canvas, Offset(width * 0.30, height * 0.30),
         Offset(width * 0.80, height * 0.750),
-        color: primaryColor, label: 'AD');
+        color: primaryColor, label1: 'AD');
   }
 
   @override

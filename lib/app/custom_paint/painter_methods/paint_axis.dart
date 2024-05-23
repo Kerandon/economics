@@ -7,8 +7,8 @@ import 'dart:math' as math;
 void paintAxis(
   Size size,
   Canvas canvas,
-  String verticalLabel,
-  String horizontalLabel, {
+  String? verticalLabel,
+  String? horizontalLabel, {
   Color color = Colors.white,
   bool addNumericalAxis = false,
 }) {
@@ -16,10 +16,15 @@ void paintAxis(
   final height = size.height;
   paintAxisLines(size, canvas, color: color);
 
-  paintText(size, canvas, verticalLabel, Offset(width * 0.05, height * 0.50),
-      angle: math.pi / -2, color: color);
-  paintText(size, canvas, horizontalLabel, Offset(width * 0.50, height * 0.94),
-      color: color);
+  if(verticalLabel != null) {
+    paintText(size, canvas, verticalLabel, Offset(width * 0.05, height * 0.30),
+        angle: math.pi / -2, color: color);
+  }
+  if(horizontalLabel != null) {
+    paintText(
+        size, canvas, horizontalLabel, Offset(width * 0.80, height * 0.94),
+        color: color);
+  }
   if (addNumericalAxis == true) {
     _addAxisNumericalLabels(canvas, size,
         axis: Axis.horizontal, incrementValue: 50, totalIncrements: 5);

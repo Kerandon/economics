@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../paint_enums/custom_align.dart';
 import '../painter_constants.dart';
 
@@ -33,19 +32,18 @@ void paintText(Size size, Canvas canvas, String text, Offset position,
       yAlign = -textPainter.height / 2;
       break;
     case CustomAlign.centerLeft:
-      xAlign = -textPainter.width;
+      xAlign = -textPainter.width * 1.5;
       yAlign = -textPainter.height / 2;
       break;
     case CustomAlign.centerRight:
-      xAlign = 0;
+      xAlign = textPainter.width / 4;
       yAlign = -textPainter.height / 2;
     case CustomAlign.centerTop:
       xAlign = -textPainter.width / 2;
-      yAlign = -textPainter.height;
-
+      yAlign = -textPainter.height * 1.3;
     case CustomAlign.centerBottom:
-      xAlign = -textPainter.width / 2;
-      yAlign = 0;
+      xAlign = -textPainter.width / 4;
+      yAlign = textPainter.height * 0.3;
   }
 
   final offset = Offset(position.dx + xAlign, position.dy + yAlign);
