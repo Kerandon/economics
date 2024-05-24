@@ -1,5 +1,6 @@
 import 'package:economics_app/app/custom_paint/diagrams/circular_flow_closed.dart';
 import 'package:economics_app/app/custom_paint/diagrams/world_trade_quotas.dart';
+import 'package:economics_app/app/custom_paint/diagrams/world_trade_subsidies.dart';
 import 'package:economics_app/app/custom_paint/paint_enums/ppc_types.dart';
 import 'package:economics_app/app/custom_paint/paint_enums/world_trade_types.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class CustomPaintDiagrams extends StatefulWidget {
 
 class _CustomPaintGraphsState extends State<CustomPaintDiagrams> {
   final List<CustomPainter> _diagrams = [
+    WorldTradeSubsidies(WorldTradeType.subsidiesProductionStandard),
+    WorldTradeSubsidies(WorldTradeType.subsidiesExportCalculation),
     WorldTradeQuotas(WorldTradeType.quotaStandard),
     WorldTradeQuotas(WorldTradeType.quotaLabels),
     WorldTradeQuotas(WorldTradeType.quotaCalculation),

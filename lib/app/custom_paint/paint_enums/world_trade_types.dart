@@ -5,4 +5,8 @@ enum WorldTradeType {
   quotaStandard,
   quotaLabels,
   quotaCalculation,
+  subsidiesProductionStandard,
+  subsidiesProductionCalculation,
+  subsidiesExportStandard,
+  subsidiesExportCalculation,
 }

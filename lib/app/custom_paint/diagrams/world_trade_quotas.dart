@@ -111,42 +111,21 @@ class WorldTradeQuotas extends CustomPainter {
     const q3Height = 0.52;
     paintDiagramDashedLines(size, canvas,
         yAxisStartPos: q3Height, xAxisEndPos: 0.425, xLabel: q3, yLabel: pWQ);
-    paintCurve(
-        size,
-        canvas,
-        Offset(width * 0.23, height - (height * kAxisIndent)),
-        Offset(
-          width * 0.23,
-          height * q3Height,
-        ),
-        makeDashed: true,
-        color: color,
-        label1: q1,
-        label1Align: CustomAlign.centerBottom);
-    paintCurve(
-        size,
-        canvas,
-        Offset(width * 0.40, height - (height * kAxisIndent)),
-        Offset(
-          width * 0.40,
-          height * q3Height,
-        ),
-        makeDashed: true,
-        color: color,
-        label1: q2,
-        label1Align: CustomAlign.centerBottom);
-    paintCurve(
-        size,
-        canvas,
-        Offset(width * 0.72, height - (height * kAxisIndent)),
-        Offset(
-          width * 0.72,
-          height * 0.70,
-        ),
-        makeDashed: true,
-        color: color,
-        label1: q4,
-        label1Align: CustomAlign.centerBottom);
+    paintDiagramDashedLines(size, canvas,
+        yAxisStartPos: 0.52, xAxisEndPos: 0.09,
+        hideYLine: true,
+        xLabel: 'Q2'
+    );
+    paintDiagramDashedLines(size, canvas,
+        yAxisStartPos: 0.52, xAxisEndPos: 0.26,
+        hideYLine: true,
+        xLabel: 'Q2'
+    );
+    paintDiagramDashedLines(size, canvas,
+        yAxisStartPos: 0.70, xAxisEndPos: 0.57,
+        hideYLine: true,
+        xLabel: 'Q2'
+    );
 
     /// Label letters
     if (type == WorldTradeType.quotaLabels) {

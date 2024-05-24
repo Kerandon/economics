@@ -26,24 +26,25 @@ void paintText(Size size, Canvas canvas, String text, Offset position,
 
   double xAlign = 0;
   double yAlign = 0;
+  const adjustment = 10.0;
   switch (align) {
     case CustomAlign.center:
       xAlign = -textPainter.width / 2;
       yAlign = -textPainter.height / 2;
       break;
     case CustomAlign.centerLeft:
-      xAlign = -textPainter.width * 1.5;
+      xAlign = -textPainter.width - adjustment;
       yAlign = -textPainter.height / 2;
       break;
     case CustomAlign.centerRight:
-      xAlign = textPainter.width / 4;
+      xAlign = adjustment;
       yAlign = -textPainter.height / 2;
     case CustomAlign.centerTop:
       xAlign = -textPainter.width / 2;
-      yAlign = -textPainter.height * 1.3;
+      yAlign = -textPainter.height - adjustment;
     case CustomAlign.centerBottom:
       xAlign = -textPainter.width / 2;
-      yAlign = textPainter.height * 0.3;
+      yAlign = textPainter.height;
   }
 
   final offset = Offset(position.dx + xAlign, position.dy + yAlign);

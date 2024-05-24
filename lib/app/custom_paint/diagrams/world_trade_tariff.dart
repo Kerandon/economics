@@ -9,6 +9,8 @@ import 'package:economics_app/app/custom_paint/painter_methods/paint_curve.dart'
 import 'package:economics_app/app/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
+import '../painter_methods/paint_diagram_dash_lines.dart';
+
 class WorldTradeTariff extends CustomPainter {
   final WorldTradeType type;
   final Color color;
@@ -103,54 +105,26 @@ class WorldTradeTariff extends CustomPainter {
     );
 
     /// Vertical lines
-    paintCurve(
-        size,
-        canvas,
-        Offset(width * 0.29, height - (height * kAxisIndent)),
-        Offset(
-          width * 0.29,
-          height * 0.70,
-        ),
-        makeDashed: true,
-        color: color,
-        label1: q1,
-        label1Align: CustomAlign.centerBottom);
-    paintCurve(
-        size,
-        canvas,
-        Offset(width * 0.41, height - (height * kAxisIndent)),
-        Offset(
-          width * 0.41,
-          height * 0.58,
-        ),
-        makeDashed: true,
-        color: color,
-        label1: q2,
-        label1Align: CustomAlign.centerBottom);
-    paintCurve(
-        size,
-        canvas,
-        Offset(width * 0.62, height - (height * kAxisIndent)),
-        Offset(
-          width * 0.62,
-          height * 0.58,
-        ),
-        makeDashed: true,
-        color: color,
-        label1: q3,
-        label1Align: CustomAlign.centerBottom);
-    paintCurve(
-        size,
-        canvas,
-        Offset(width * 0.72, height - (height * kAxisIndent)),
-        Offset(
-          width * 0.72,
-          height * 0.70,
-        ),
-        makeDashed: true,
-        color: color,
-        label1: q4,
-        label1Align: CustomAlign.centerBottom);
+    paintDiagramDashedLines(size, canvas,
+        yAxisStartPos: 0.70, xAxisEndPos: 0.155,
+        hideYLine: true,
+        xLabel: 'Q1'
+    );
+    paintDiagramDashedLines(size, canvas,
+        yAxisStartPos: 0.59, xAxisEndPos: 0.26,
+        hideYLine: true,
+        xLabel: 'Q2'
+    );
+    paintDiagramDashedLines(size, canvas,
+        yAxisStartPos: 0.59, xAxisEndPos: 0.48,
+        hideYLine: true,
+        xLabel: 'Q3'
+    );
+    paintDiagramDashedLines(size, canvas,
+        yAxisStartPos: 0.70, xAxisEndPos: 0.58,
+        hideYLine: true,
+        xLabel: 'Q4'
+    );
 
     /// Label letters
     if (type == WorldTradeType.tariffLabels) {
