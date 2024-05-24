@@ -23,7 +23,7 @@ class AppState {
 }
 
 class AppNotifier extends StateNotifier<AppState> {
-  AppNotifier(state) : super(state);
+  AppNotifier(super.state);
 
   void setDarkTheme(bool isDark) {
     state = state.copyWith(isDarkTheme: isDark);

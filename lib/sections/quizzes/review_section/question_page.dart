@@ -20,7 +20,6 @@ class QuestionPage extends ConsumerStatefulWidget {
 class _QuestionPageState extends ConsumerState<QuestionPage> {
   final _pageController = PageController();
 
-  bool _animateConfetti = false;
   bool _hasShownCompletedDialog = false;
 
   @override
@@ -111,7 +110,6 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             },
             body: PageView(
               onPageChanged: (index) {
-                _animateConfetti = false;
                 setState(() {});
                 quizNotifier.setCurrentQuestionIndex(index);
               },

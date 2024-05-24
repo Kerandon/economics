@@ -16,13 +16,13 @@ void paintAxis(
   final height = size.height;
   paintAxisLines(size, canvas, color: color);
 
-  if(verticalLabel != null) {
-    paintText(size, canvas, verticalLabel, Offset(width * 0.05, height * 0.30),
+  if (verticalLabel != null) {
+    paintText(size, canvas, verticalLabel, Offset(width * 0.03, height * 0.30),
         angle: math.pi / -2, color: color);
   }
-  if(horizontalLabel != null) {
+  if (horizontalLabel != null) {
     paintText(
-        size, canvas, horizontalLabel, Offset(width * 0.80, height * 0.94),
+        size, canvas, horizontalLabel, Offset(width * 0.70, height * 0.97),
         color: color);
   }
   if (addNumericalAxis == true) {

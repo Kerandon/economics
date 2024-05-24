@@ -42,7 +42,7 @@ void paintText(Size size, Canvas canvas, String text, Offset position,
       xAlign = -textPainter.width / 2;
       yAlign = -textPainter.height * 1.3;
     case CustomAlign.centerBottom:
-      xAlign = -textPainter.width / 4;
+      xAlign = -textPainter.width / 2;
       yAlign = textPainter.height * 0.3;
   }
 

@@ -2,44 +2,36 @@ import 'package:flutter/material.dart';
 
 import '../custom_rotate.dart';
 
-void paintArrow(
-  Size size,
-  Canvas canvas,
-  Offset position, {
-  Color color = Colors.white,
-  scale = 0.08,
-  double angle = 0,
-  bool hideArrowStick = false,
-  double arrowStickLength = 0,
-  double arrowStickExtension = 0,
-}) {
-  final Paint axisPaint = Paint()..color = color;
+void paintArrow(Size size, Canvas canvas, Offset position,
+    {Color color = Colors.white,
+    scale = 0.10,
+    double angle = 0,
+    bool hideArrowStick = false,
+    double arrowStickExtension = 0,
+    bool oppositeArrowHead = false}) {
+  final Paint paint = Paint()..color = color;
   final width = size.width;
   final height = size.height;
 
-  const double arrowHeadWidth = 0.70;
-  const double arrowHeadHeight = 0.35;
-  const double arrowHeadIndent = 0.10;
-  const double arrowStickWidth = 0.02;
+  const double arrowStickWidth = 0.01;
+  final double extension = (arrowStickExtension * width) / 2;
 
   /// Arrow-head
-  final path = Path()
-    ..moveTo(width * arrowHeadWidth, height * arrowHeadHeight)
-    ..lineTo(width, height * 0.50)
-    ..lineTo(width * arrowHeadWidth, height * (1 - arrowHeadHeight))
 
-    /// Arrow head base slopes in
-    //..lineTo(width * arrowHeadWidth + (width * arrowHeadIndent), height * 0.50)
-    ..close();
+  const double arrowHeadWidth = 0.20;
+  Path path = paintArrowHead(canvas, size, paint,
+      extension: extension,
+      arrowHeadWidth: arrowHeadWidth,
+      drawOpposite: oppositeArrowHead);
 
   if (!hideArrowStick) {
     /// Add the arrow stick
     path.addRect(
       Rect.fromPoints(
-        Offset(width * arrowHeadWidth + (width * arrowHeadIndent),
+        Offset(width - (width * arrowHeadWidth) + extension,
             height * (0.50 + arrowStickWidth)),
         Offset(
-          -arrowStickExtension * width,
+          (width * arrowHeadWidth) - extension,
           height * (0.50 - arrowStickWidth),
         ),
       ),
@@ -51,6 +43,33 @@ void paintArrow(
   canvas.translate(position.dx, position.dy);
   canvas.scale(scale);
   customRotate(canvas, width * 0.50, height * 0.50, angle);
-  canvas.drawPath(path, axisPaint);
+  canvas.drawPath(path, paint);
   canvas.restore();
+}
+
+Path paintArrowHead(Canvas canvas, Size size, Paint paint,
+    {required double extension,
+    required double arrowHeadWidth,
+    required bool drawOpposite}) {
+  final width = size.width;
+  final height = size.height;
+  final endWidth = (1 - arrowHeadWidth) * width;
+  final headHeight = width * (arrowHeadWidth / 2.5);
+
+  final path = Path()
+    ..moveTo(width + extension, height / 2)
+    ..lineTo(endWidth + extension, (height / 2) - headHeight)
+    ..lineTo(endWidth + extension, (height / 2) + headHeight)
+    ..close(); // Close the path for the arrowhead
+
+// If drawOpposite is true, draw an arrow facing the opposite direction
+  if (drawOpposite) {
+    path
+      ..moveTo(-extension, height / 2)
+      ..lineTo((width * arrowHeadWidth) - extension, (height / 2) - headHeight)
+      ..lineTo((width * arrowHeadWidth - extension), (height / 2) + headHeight)
+      ..close(); // Close the path for the opposite arrowhead
+  }
+
+  return path;
 }

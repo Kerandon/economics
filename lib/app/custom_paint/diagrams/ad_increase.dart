@@ -17,27 +17,15 @@ class ADIncrease extends CustomPainter {
 
     /// AD1
     paintAxis(size, canvas, 'Price Level', 'Real GDP', color: axisColor);
-    paintCurve(
-      size,
-      canvas,
-      Offset(width * 0.20, height * 0.30),
-      Offset(width * 0.50, height * 0.70),
-      color: primaryColor,
-      label1: 'AD1',
-      label1Align: CustomAlign.centerTop
-    );
+    paintCurve(size, canvas, Offset(width * 0.20, height * 0.30),
+        Offset(width * 0.50, height * 0.70),
+        color: primaryColor, label1: 'AD1', label1Align: CustomAlign.centerTop);
 
     /// AD2
     paintAxis(size, canvas, 'Price Level', 'Real GDP', color: axisColor);
-    paintCurve(
-      size,
-      canvas,
-      Offset(width * 0.45, height * 0.30),
-      Offset(width * 0.75, height * 0.70),
-      color: primaryColor,
-      label1: 'AD2',
-        label1Align: CustomAlign.centerTop
-    );
+    paintCurve(size, canvas, Offset(width * 0.45, height * 0.30),
+        Offset(width * 0.75, height * 0.70),
+        color: primaryColor, label1: 'AD2', label1Align: CustomAlign.centerTop);
     paintArrow(size, canvas, Offset(width * 0.47, height * 0.50));
   }
 

@@ -55,7 +55,7 @@ class QuizState {
 }
 
 class QuizNotifier extends StateNotifier<QuizState> {
-  QuizNotifier(state) : super(state);
+  QuizNotifier(super._state);
 
   void setAllQuestions(List<QuestionModel> questions) {
     state = state.copyWith(allQuestions: questions);
