@@ -1,8 +1,9 @@
 import 'package:economics_app/app/custom_paint/painter_constants.dart';
 import 'package:economics_app/app/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:flutter/material.dart';
-import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_curve.dart';
+
+import '../../painter_methods/paint_axis.dart';
+import '../../painter_methods/paint_curve.dart';
 
 class ClassicalADAS extends CustomPainter {
   final Color axisColor;
@@ -19,7 +20,8 @@ class ClassicalADAS extends CustomPainter {
     paintDiagramDashedLines(size, canvas,
         yAxisStartPos: 0.45, xAxisEndPos: 0.385, xLabel: 'Ye', yLabel: 'Pe');
 
-    paintAxis(size, canvas, 'Price Level', 'Real GDP', color: axisColor);
+    paintAxis(size, canvas,
+        xAxisLabel: kXLabelADAS, yAxisLabel: kYLabelADAS, color: axisColor);
 
     /// AD
     paintCurve(

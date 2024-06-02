@@ -3,7 +3,7 @@ import 'package:economics_app/app/custom_paint/painter_constants.dart';
 import 'package:economics_app/app/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/app/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:flutter/material.dart';
-import '../painter_methods/path_label_line.dart';
+import '../../painter_methods/path_label_line.dart';
 
 class BusinessCycle extends CustomPainter {
   final Color axisColor;
@@ -19,7 +19,7 @@ class BusinessCycle extends CustomPainter {
 
     /// Axis
 
-    paintAxis(size, canvas, 'Real GDP', 'Time (years)');
+    paintAxis(size, canvas, xAxisLabel: kXLabelADAS, yAxisLabel: kYLabelADAS);
 
     /// Trend line
     paintDashedLine(

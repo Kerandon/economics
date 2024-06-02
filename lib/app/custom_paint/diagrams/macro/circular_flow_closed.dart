@@ -4,8 +4,8 @@ import 'package:economics_app/app/custom_paint/painter_methods/paint_curve.dart'
 import 'package:economics_app/app/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
-import '../painter_methods/paint_right_angle_curves.dart';
-import '../painter_methods/paint_text_box.dart';
+import '../../painter_methods/paint_right_angle_curves.dart';
+import '../../painter_methods/paint_text_box.dart';
 
 class CircularFlowClosed extends CustomPainter {
   @override

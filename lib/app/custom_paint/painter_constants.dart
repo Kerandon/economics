@@ -3,8 +3,8 @@ const kCurveHeightTop = 0.20;
 const kCurveHeightBottom = 0.70;
 const kCurveRight = 0.25;
 const kCurveLeft = 0.80;
-const kCurveWidth = 1.0;
-const kHighlightedStrokeWidth = 4.0;
+const kCurveWidth = 3.0;
+const kHighlightedStrokeWidth = 6.0;
 const kCurveLabelAdjustment = 12.0;
 const kLabelLineWidth = 0.90;
 
@@ -25,3 +25,14 @@ const kLabelLetterFontSize = 12.0;
 
 /// Dot
 const kDotRadius = 3.0;
+
+/// Labels
+const kXLabelRice = 'Price of rice (\$)';
+const kYLabelRice = 'Quantity supplied of rice (\'000 kg)';
+const kXLabelWine = 'Price of wine (\$)';
+const kYLabelWine = 'Quantity supplied of wine (\'000 bottles)';
+const kYLabelADAS = 'Average Price Level';
+const kXLabelADAS = 'Real GDP';
+const kSDomestic = 'S domestic';
+const kDDomestic = 'D domestic';
+const kSupplyWorld = 'S world';

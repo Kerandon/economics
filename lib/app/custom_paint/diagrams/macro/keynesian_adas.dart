@@ -3,7 +3,8 @@ import 'package:economics_app/app/custom_paint/painter_methods/paint_curve.dart'
 import 'package:economics_app/app/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:flutter/material.dart';
 
-import '../painter_methods/paint_keyensian_curve.dart';
+import '../../painter_constants.dart';
+import '../../painter_methods/paint_keyensian_curve.dart';
 
 class KeynesianADAS extends CustomPainter {
   final Color axisColor;
@@ -19,7 +20,8 @@ class KeynesianADAS extends CustomPainter {
 
     paintDiagramDashedLines(size, canvas,
         yAxisStartPos: 0.65, xAxisEndPos: 0.55, xLabel: 'Ye', yLabel: 'PL');
-    paintAxis(size, canvas, 'Price Level', 'Real GDP', color: axisColor);
+    paintAxis(size, canvas,
+        xAxisLabel: kXLabelADAS, yAxisLabel: kYLabelADAS, color: axisColor);
 
     paintKeynesianCurve(size, canvas,
         totalWidth: 0.80, label: 'AS', color: primaryColor);

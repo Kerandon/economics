@@ -1,16 +1,10 @@
-import 'package:economics_app/app/custom_paint/diagrams/circular_flow_closed.dart';
-import 'package:economics_app/app/custom_paint/diagrams/world_trade_quotas.dart';
-import 'package:economics_app/app/custom_paint/diagrams/world_trade_subsidies.dart';
-import 'package:economics_app/app/custom_paint/paint_enums/ppc_types.dart';
 import 'package:economics_app/app/custom_paint/paint_enums/world_trade_types.dart';
 import 'package:flutter/material.dart';
-import 'diagrams/ad.dart';
-import 'diagrams/ad_increase.dart';
-import 'diagrams/adsras.dart';
-import 'diagrams/business_cycle.dart';
-import 'diagrams/keynesian_adas.dart';
-import 'diagrams/ppc.dart';
-import 'diagrams/world_trade_tariff.dart';
+
+import 'diagrams/global/world_trade_export_subsidies.dart';
+import 'diagrams/global/world_trade_production_subsidies.dart';
+import 'diagrams/global/world_trade_quotas.dart';
+import 'diagrams/global/world_trade_tariff.dart';
 
 class CustomPaintDiagrams extends StatefulWidget {
   const CustomPaintDiagrams({super.key});
@@ -21,23 +15,16 @@ class CustomPaintDiagrams extends StatefulWidget {
 
 class _CustomPaintGraphsState extends State<CustomPaintDiagrams> {
   final List<CustomPainter> _diagrams = [
-    WorldTradeSubsidies(WorldTradeType.subsidiesProductionStandard),
-    WorldTradeSubsidies(WorldTradeType.subsidiesExportCalculation),
+    WorldTradeExportSubsidies(WorldTradeType.subsidiesExportStandard),
+    WorldTradeProductionSubsidies(WorldTradeType.subsidiesProductionStandard),
+    WorldTradeProductionSubsidies(
+        WorldTradeType.subsidiesProductionCalculation),
     WorldTradeQuotas(WorldTradeType.quotaStandard),
     WorldTradeQuotas(WorldTradeType.quotaLabels),
     WorldTradeQuotas(WorldTradeType.quotaCalculation),
     WorldTradeTariff(WorldTradeType.tariffStandard),
     WorldTradeTariff(WorldTradeType.tariffLabels),
     WorldTradeTariff(WorldTradeType.tariffCalculation),
-    PPC(type: PPCType.standard),
-    PPC(type: PPCType.growth),
-    CircularFlowClosed(),
-    // ClassicalEquilibrium(),
-    BusinessCycle(),
-    KeynesianADAS(),
-    AD(),
-    ADIncrease(),
-    ClassicalADAS(),
   ];
 
   @override

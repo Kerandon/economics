@@ -9,7 +9,7 @@ import 'package:economics_app/app/custom_paint/painter_methods/paint_curve.dart'
 import 'package:economics_app/app/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
-import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../../painter_methods/paint_diagram_dash_lines.dart';
 
 class WorldTradeTariff extends CustomPainter {
   final WorldTradeType type;
@@ -39,18 +39,17 @@ class WorldTradeTariff extends CustomPainter {
       pW = '\$8';
       q1 = '500';
       q2 = '600';
-      q3 = '800';
-      q4 = '900';
+      q3 = '1200';
+      q4 = '1300';
     }
 
-    paintAxis(size, canvas, 'Price of cheese (\$)',
-        'Quantity supplied of cheese (\'000 kg)');
+    paintAxis(size, canvas, xAxisLabel: kXLabelWine, yAxisLabel: kYLabelWine);
     paintCurve(
       size,
       canvas,
       Offset(width * 0.20, height * 0.80),
       Offset(width * 0.85, height * 0.10),
-      label2: 'S domestic',
+      label2: kSDomestic,
       label2Align: CustomAlign.centerTop,
       color: color,
     );
@@ -59,7 +58,7 @@ class WorldTradeTariff extends CustomPainter {
       canvas,
       Offset(width * 0.22, height * 0.10),
       Offset(width * 0.80, height * 0.80),
-      label2: 'D domestic',
+      label2: kDDomestic,
       label2Align: CustomAlign.centerBottom,
       color: color,
     );
@@ -83,7 +82,7 @@ class WorldTradeTariff extends CustomPainter {
       ),
       label1: pW,
       label1Align: CustomAlign.centerLeft,
-      label2: 'S world',
+      label2: kSupplyWorld,
       label2Align: CustomAlign.centerRight,
       color: color,
     );
@@ -106,25 +105,13 @@ class WorldTradeTariff extends CustomPainter {
 
     /// Vertical lines
     paintDiagramDashedLines(size, canvas,
-        yAxisStartPos: 0.70, xAxisEndPos: 0.155,
-        hideYLine: true,
-        xLabel: 'Q1'
-    );
+        yAxisStartPos: 0.70, xAxisEndPos: 0.155, hideYLine: true, xLabel: q1);
     paintDiagramDashedLines(size, canvas,
-        yAxisStartPos: 0.59, xAxisEndPos: 0.26,
-        hideYLine: true,
-        xLabel: 'Q2'
-    );
+        yAxisStartPos: 0.59, xAxisEndPos: 0.26, hideYLine: true, xLabel: q2);
     paintDiagramDashedLines(size, canvas,
-        yAxisStartPos: 0.59, xAxisEndPos: 0.48,
-        hideYLine: true,
-        xLabel: 'Q3'
-    );
+        yAxisStartPos: 0.59, xAxisEndPos: 0.48, hideYLine: true, xLabel: q3);
     paintDiagramDashedLines(size, canvas,
-        yAxisStartPos: 0.70, xAxisEndPos: 0.58,
-        hideYLine: true,
-        xLabel: 'Q4'
-    );
+        yAxisStartPos: 0.70, xAxisEndPos: 0.58, hideYLine: true, xLabel: q4);
 
     /// Label letters
     if (type == WorldTradeType.tariffLabels) {
@@ -134,11 +121,11 @@ class WorldTradeTariff extends CustomPainter {
           fontSize: kLabelLetterFontSize);
       paintText(size, canvas, 'c', Offset(width * 0.25, height * 0.64),
           fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'd', Offset(width * 0.38, height * 0.66),
+      paintText(size, canvas, 'd', Offset(width * 0.37, height * 0.66),
           fontSize: kLabelLetterFontSize);
       paintText(size, canvas, 'e', Offset(width * 0.52, height * 0.64),
           fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'f', Offset(width * 0.65, height * 0.66),
+      paintText(size, canvas, 'f', Offset(width * 0.64, height * 0.66),
           fontSize: kLabelLetterFontSize);
       paintText(size, canvas, 'g', Offset(width * 0.20, height * 0.74),
           fontSize: kLabelLetterFontSize);

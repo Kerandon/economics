@@ -8,7 +8,7 @@ import 'package:economics_app/app/custom_paint/painter_methods/paint_diagram_das
 import 'package:economics_app/app/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
-import '../painter_methods/paint_dot.dart';
+import '../../painter_methods/paint_dot.dart';
 
 class PPC extends CustomPainter {
   final Color color;
@@ -38,7 +38,9 @@ class PPC extends CustomPainter {
       paintDiagramDashedLines(size, canvas,
           yAxisStartPos: 0.70, xAxisEndPos: 0.62);
 
-      paintAxis(size, canvas, 'Consumer goods', 'Capital goods',
+      paintAxis(size, canvas,
+          xAxisLabel: 'Consumer goods',
+          yAxisLabel: 'Capital goods',
           addNumericalAxis: true);
 
       path
@@ -51,7 +53,8 @@ class PPC extends CustomPainter {
         ..moveTo(width * kAxisIndent, height * 0.30)
         ..quadraticBezierTo(width * 0.70, height * 0.30, width * 0.80,
             height * (1 - kAxisIndent));
-      paintAxis(size, canvas, 'Consumer goods', 'Capital goods');
+      paintAxis(size, canvas,
+          xAxisLabel: 'Consumer goods', yAxisLabel: 'Capital goods');
       paintArrow(size, canvas, Offset(width * 0.40, height * 0.60),
           angle: math.pi / -6, arrowStickExtension: 1);
       paintText(size, canvas, 'A', Offset(width * 0.30, height * 0.72));
