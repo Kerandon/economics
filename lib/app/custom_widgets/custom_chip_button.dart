@@ -19,9 +19,16 @@ class CustomChipButton extends StatelessWidget {
             side: BorderSide(
           color: isSelected
               ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.onBackground,
+              : Theme.of(context).colorScheme.onBackground.withOpacity(0.50),
         )),
         onPressed: onPressed,
-        child: Text(text));
+        child: Text(
+          text,
+          style: TextStyle(
+            color: isSelected
+                ? Theme.of(context).colorScheme.onBackground
+                : Theme.of(context).colorScheme.onBackground.withOpacity(0.50),
+          ),
+        ));
   }
 }

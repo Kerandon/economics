@@ -1,4 +1,4 @@
-import 'package:economics_app/app/custom_paint/custom_paint_diagrams.dart';
+import 'package:economics_app/sections/diagrams/all_diagrams_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +27,7 @@ class EconApp extends ConsumerWidget {
         debugShowCheckedModeBanner: true,
         title: kAppName,
         theme: CustomAppTheme(appState, context).appTheme,
-        home: const CustomPaintDiagrams()
+        home: const AllDiagramsPage()
         //const HomePage(),
         );
   }

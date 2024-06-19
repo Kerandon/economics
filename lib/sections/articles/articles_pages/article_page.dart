@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:economics_app/app/custom_paint/custom_paint_diagrams.dart';
 import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/articles/articles_models/article_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
@@ -11,6 +10,7 @@ import '../../../app/configs/app_colors.dart';
 import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
+import '../../diagrams/custom_paint/custom_paint_diagrams.dart';
 import '../../quizzes/quiz_widgets/quiz_page.dart';
 
 class ArticlePage extends ConsumerStatefulWidget {
