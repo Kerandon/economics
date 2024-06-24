@@ -12,15 +12,18 @@ void paintAxis(
   String? xAxisLabel,
   Color color = Colors.white,
   bool addNumericalAxis = false,
+  double labelXIndent = kTextLineAdjustmentCenter,
+  double labelYIndent = kTextLineAdjustmentCenter,
 }) {
   paintAxisLines(size, canvas, color: color);
 
   if (yAxisLabel != null) {
-    paintText(size, canvas, yAxisLabel, const Offset(0.03, 0.30),
+    paintText(size, canvas, yAxisLabel, Offset(labelXIndent, 0.30),
         angle: math.pi / -2, color: color);
   }
   if (xAxisLabel != null) {
-    paintText(size, canvas, xAxisLabel, const Offset(0.70, 0.97), color: color);
+    paintText(size, canvas, xAxisLabel, Offset(0.70, 1 - labelYIndent),
+        color: color);
   }
   if (addNumericalAxis == true) {
     _addAxisNumericalLabels(canvas, size,

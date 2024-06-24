@@ -16,7 +16,7 @@ class MacroBusinessCycle extends CustomPainter with NameMixin {
   final Color primaryColor;
 
   MacroBusinessCycle(
-      {this.type = DiagramType.macroBusinessCycleDefault,
+      {this.type = DiagramType.macro_BusinessCycle_Default,
       this.axisColor = Colors.white,
       this.primaryColor = Colors.green});
 
@@ -26,7 +26,6 @@ class MacroBusinessCycle extends CustomPainter with NameMixin {
     final height = size.height;
 
     /// Axis
-
     paintAxis(size, canvas, xAxisLabel: kXLabelADAS, yAxisLabel: kYLabelADAS);
 
     /// Trend line
@@ -66,57 +65,54 @@ class MacroBusinessCycle extends CustomPainter with NameMixin {
     canvas.restore();
 
     /// Labels
-    paintLabelLine(canvas, size, 'Peak', Offset(width * 0.24, height * 0.52),
-        Offset(width * 0.24, height * 0.40),
-        textAlign: CustomAlign.centerTop,
-        lineColor: Colors.blue,
-        fontColor: Colors.blue);
-
-    paintLabelLine(canvas, size, 'Trough', Offset(width * 0.38, height * 0.59),
-        Offset(width * 0.38, height * 0.70),
-        textAlign: CustomAlign.centerBottom,
-        lineColor: Colors.blue,
-        fontColor: Colors.blue);
+    paintLabelLine(
+      canvas,
+      size,
+      'Peak',
+      const Offset(0.24, 0.52),
+      const Offset(0.24, 0.40),
+      textAlign: CustomAlign.centerTop,
+    );
 
     paintLabelLine(
-        canvas,
-        size,
-        'Expansion',
-        Offset(width * 0.45, height * 0.50),
-        Offset(width * 0.45, height * 0.30),
-        textAlign: CustomAlign.centerTop,
-        lineColor: Colors.blue,
-        fontColor: Colors.blue);
+      canvas,
+      size,
+      'Trough',
+      const Offset(0.38, 0.59),
+      const Offset(0.38, 0.70),
+      textAlign: CustomAlign.centerBottom,
+    );
 
     paintLabelLine(
-        canvas,
-        size,
-        'Contraction',
-        Offset(width * 0.62, height * 0.50),
-        Offset(width * 0.62, height * 0.70),
-        textAlign: CustomAlign.centerBottom,
-        lineColor: Colors.blue,
-        fontColor: Colors.blue);
+      canvas,
+      size,
+      'Expansion',
+      const Offset(0.45, 0.50),
+      const Offset(0.45, 0.30),
+      textAlign: CustomAlign.centerTop,
+    );
 
     paintLabelLine(
-        canvas,
-        size,
-        'Long-term growth\n  (potential GDP)',
-        Offset(width * 0.88, height * 0.42),
-        Offset(width * 0.80, height * 0.20),
-        textAlign: CustomAlign.centerTop,
-        lineColor: Colors.blue,
-        fontColor: Colors.blue);
+      canvas,
+      size,
+      'Contraction',
+      const Offset(0.62, 0.50),
+      const Offset(0.62, 0.70),
+      textAlign: CustomAlign.centerBottom,
+    );
+
+    paintLabelLine(canvas, size, 'Long-term growth\n  (potential GDP)',
+        const Offset(0.88, 0.42), const Offset(0.80, 0.20),
+        textAlign: CustomAlign.centerTop);
 
     paintLabelLine(
-        canvas,
-        size,
-        'Actual growth\n    (real GDP)',
-        Offset(width * 0.88, height * 0.46),
-        Offset(width * 0.86, height * 0.60),
-        textAlign: CustomAlign.centerBottom,
-        lineColor: Colors.blue,
-        fontColor: Colors.blue);
+      canvas,
+      size,
+      'Actual growth\n    (real GDP)',
+      const Offset(0.88, 0.46),
+      const Offset(0.86, 0.60),
+      textAlign: CustomAlign.centerBottom,
+    );
   }
 
   @override

@@ -8,17 +8,20 @@ void paintLabelLine(Canvas canvas, Size size, String text, Offset p1, Offset p2,
     Color fontColor = Colors.white,
     CustomAlign textAlign = CustomAlign.center,
     bool removeDot = false}) {
+  final width = size.width;
+  final height = size.height;
   final paint = Paint()
     ..strokeCap = StrokeCap.round
-    ..strokeWidth = kLabelLineWidth
+    ..strokeWidth = kLabelLineWidth / 2
     ..color = lineColor;
   canvas.save();
-  canvas.drawLine(p1, p2, paint);
+  canvas.drawLine(Offset(p1.dx * width, p1.dy * height),
+      Offset(p2.dx * width, p2.dy * height), paint);
   paintText(size, canvas, text, Offset(p2.dx, p2.dy),
       align: textAlign, color: fontColor);
 
   if (!removeDot) {
-    canvas.drawCircle(p1, 3, paint);
+    canvas.drawCircle(Offset(p1.dx * width, p1.dy * height), 3, paint);
   }
 
   canvas.restore();

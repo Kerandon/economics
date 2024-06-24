@@ -15,7 +15,7 @@ class MacroPPC extends CustomPainter {
   final DiagramType type;
 
   MacroPPC(
-      {this.type = DiagramType.macroPPCDefault, this.color = Colors.white});
+      {this.type = DiagramType.macro_PPC_Default, this.color = Colors.white});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -33,7 +33,7 @@ class MacroPPC extends CustomPainter {
       ..strokeWidth = kCurveWidth
       ..style = PaintingStyle.stroke;
 
-    if (type == DiagramType.macroPPCDefault) {
+    if (type == DiagramType.macro_PPC_Default) {
       paintDiagramDashedLines(size, canvas,
           yAxisStartPos: 0.40, xAxisEndPos: 0.38);
       paintDiagramDashedLines(size, canvas,
@@ -49,7 +49,7 @@ class MacroPPC extends CustomPainter {
         ..quadraticBezierTo(width * 0.70, height * 0.30, width * 0.80,
             height * (1 - kAxisIndent));
     }
-    if (type == DiagramType.macroPPCGrowth) {
+    if (type == DiagramType.macro_PPC_Growth) {
       path
         ..moveTo(width * kAxisIndent, height * 0.30)
         ..quadraticBezierTo(width * 0.70, height * 0.30, width * 0.80,

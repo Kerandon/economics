@@ -8,13 +8,14 @@ import '../painter_methods/paint_right_angle_curves.dart';
 import '../painter_methods/paint_text.dart';
 import '../painter_methods/paint_text_box.dart';
 
-class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
+class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
   final Color color;
   final Color primaryColor;
+  final DiagramType type;
 
-  MacroCircularFlowOfIncomeOpen({
+  MacroCircularFlowOfIncome({
     super.repaint,
-    this.type = DiagramType.macroCircularFlowOfIncomeDefault,
+    this.type = DiagramType.macro_CircularFlowOfIncome_Default,
     this.color = Colors.white,
     this.primaryColor = Colors.green,
   });
@@ -22,11 +23,10 @@ class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
   @override
   String get name => type.name;
 
-  final DiagramType type;
-
   @override
   void paint(Canvas canvas, Size size) {
-    if (type == DiagramType.macroCircularFlowOfIncomeDefault) {
+    final primaryColorAdjusted = primaryColor.withOpacity(0.20);
+    if (type == DiagramType.macro_CircularFlowOfIncome_Default) {
       paintTextBox(
         canvas,
         size,
@@ -34,7 +34,7 @@ class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
         position: const Offset(0.15, 0.30),
         shape: TextBoxShape.diamond,
         color: Colors.white,
-        fillColor: primaryColor,
+        fillColor: primaryColorAdjusted,
         lineColor: color,
       );
 
@@ -44,7 +44,7 @@ class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
         text: 'Firms',
         position: const Offset(0.85, 0.30),
         shape: TextBoxShape.diamond,
-        fillColor: primaryColor,
+        fillColor: primaryColorAdjusted,
         lineColor: color,
       );
 
@@ -75,8 +75,7 @@ class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
         color: color,
       );
 
-      paintText(size, canvas, 'Factor Incomes (rent, wages, interest, profit)',
-          const Offset(0.50, 0.10));
+      paintText(size, canvas, 'Factor payments', const Offset(0.50, 0.10));
       paintText(
           size, canvas, 'Household expenditure', const Offset(0.50, 0.40));
 
@@ -88,7 +87,7 @@ class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
         text: 'Financial sector',
         position: const Offset(0.50, 0.65),
         lineColor: color,
-        fillColor: primaryColor,
+        fillColor: primaryColorAdjusted,
       );
       paintTextBox(
         canvas,
@@ -96,7 +95,7 @@ class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
         text: 'Government',
         position: const Offset(0.50, 0.75),
         lineColor: color,
-        fillColor: primaryColor,
+        fillColor: primaryColorAdjusted,
       );
       paintTextBox(
         canvas,
@@ -104,7 +103,7 @@ class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
         text: 'Foreign sector',
         position: const Offset(0.50, 0.85),
         lineColor: color,
-        fillColor: primaryColor,
+        fillColor: primaryColorAdjusted,
       );
 
       paintRightAngleArrowCurves(canvas, size,
@@ -182,40 +181,124 @@ class MacroCircularFlowOfIncomeOpen extends CustomPainter with NameMixin {
         size,
         canvas,
         'Investment',
-        const Offset(0.26, 0.62),
+        const Offset(0.26, 0.60),
       );
       paintText(
         size,
         canvas,
-        'Govt. spending',
-        const Offset(0.26, 0.72),
+        'Govt. expenditure',
+        const Offset(0.26, 0.70),
       );
       paintText(
         size,
         canvas,
         'Export revenue',
-        const Offset(0.26, 0.82),
+        const Offset(0.26, 0.80),
       );
       paintText(
         size,
         canvas,
-        'Saving',
-        const Offset(0.72, 0.62),
+        'Savings',
+        const Offset(0.74, 0.60),
       );
       paintText(
         size,
         canvas,
         'Taxation',
-        const Offset(0.72, 0.72),
+        const Offset(0.74, 0.70),
       );
       paintText(
         size,
         canvas,
-        'Imports',
-        const Offset(0.72, 0.82),
+        'Import expenditure',
+        const Offset(0.74, 0.80),
       );
     }
-    if (type == DiagramType.macroCircularFlowOfIncomeClosed) {}
+    if (type == DiagramType.macro_CircularFlowOfIncome_Closed) {
+      paintTextBox(
+        canvas,
+        size,
+        text: 'Households',
+        position: const Offset(0.20, 0.50),
+        shape: TextBoxShape.diamond,
+        color: Colors.white,
+        fillColor: primaryColorAdjusted,
+        lineColor: color,
+      );
+      paintTextBox(
+        canvas,
+        size,
+        text: 'Firms',
+        position: const Offset(0.80, 0.50),
+        shape: TextBoxShape.diamond,
+        color: Colors.white,
+        fillColor: primaryColorAdjusted,
+        lineColor: color,
+      );
+
+      /// Top curves
+      paintRightAngleArrowCurves(
+        canvas,
+        size,
+        xPosR: 0.25,
+        xPosL: 0.75,
+        yPos: 0.40,
+        showRightArrow: true,
+        angle: math.pi * -2,
+        curveHeight: 0.10,
+        color: color,
+      );
+      paintRightAngleArrowCurves(
+        canvas,
+        size,
+        xPosR: 0.15,
+        xPosL: 0.85,
+        yPos: 0.40,
+        showLeftArrow: true,
+        angle: math.pi * 2,
+        curveHeight: 0.20,
+        color: color,
+      );
+
+      /// Bottom curves
+
+      paintRightAngleArrowCurves(
+        canvas,
+        size,
+        xPosR: 0.25,
+        xPosL: 0.75,
+        yPos: 0.40,
+        showRightArrow: true,
+        angle: math.pi,
+        curveHeight: 0.10,
+        color: color,
+      );
+      paintRightAngleArrowCurves(
+        canvas,
+        size,
+        xPosR: 0.15,
+        xPosL: 0.85,
+        yPos: 0.40,
+        showLeftArrow: true,
+        angle: math.pi,
+        curveHeight: 0.20,
+        color: color,
+      );
+
+      paintText(
+          size,
+          canvas,
+          'Factors of production (labor, land, capital, entrepreneurship)',
+          const Offset(0.50, 0.15));
+      paintText(
+          size,
+          canvas,
+          'Factors payments (wages, rent, interest, profit)',
+          const Offset(0.50, 0.25));
+      paintText(
+          size, canvas, 'Household expenditure', const Offset(0.50, 0.75));
+      paintText(size, canvas, 'Goods & services', const Offset(0.50, 0.85));
+    }
   }
 
   @override

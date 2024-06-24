@@ -21,59 +21,34 @@ extension CustomStringExtension on String {
       }
     }
 
-    // If no capital letter found, return the input
     return this;
   }
 
-  String getFirstTwoWords() {
-    RegExp regExp = RegExp(r'^[a-z]+|[A-Z][a-z]*');
-    Iterable<Match> matches = regExp.allMatches(this);
-    if (matches.isNotEmpty) {
-      int count = 0;
-      String result = '';
-      for (Match match in matches) {
-        if (count == 2) break;
-        result += match.group(0)!;
-        count++;
-      }
-      return result;
-    }
-    return '';
-  }
+  String getWordsBetweenFirstAndSecondUnderscores() {
+    List<String> parts = split('_');
 
-  String removeLastWord() {
-    if (isEmpty) return '';
-
-    final lastCapitalIndex = lastIndexOf(RegExp(r'[A-Z]'));
-    if (lastCapitalIndex == -1) return this;
-
-    return substring(0, lastCapitalIndex).trim();
-  }
-
-  String extractMiddleWords() {
-    // Regular expression to match camelCase words
-    RegExp regExp = RegExp(r'(?<=[a-z])(?=[A-Z])');
-    // Split the camelCase string into individual words
-    List<String> words = split(regExp);
-    // If there are 2 or fewer words, return an empty string as there are no middle words
-    if (words.length <= 2) {
+    if (parts.length < 3) {
+      // Return an empty string if there are not enough parts
       return '';
     }
-    // Join the middle words with a space
-    return words.sublist(1, words.length - 1).join(' ');
+
+    List<String> words = parts[1].split(RegExp(r'(?=[A-Z])'));
+
+    // Join the words with spaces
+    return words.join(' ');
   }
 
-  String getLastWord() {
-    // Regular expression to match camelCase words
-    RegExp regExp = RegExp(r'(?<=[a-z])(?=[A-Z])');
-    // Split the camelCase string into individual words
-    List<String> words = split(regExp);
-    // If there are no words, return an empty string
-    if (words.isEmpty) {
+  String getWordsAfterSecondUnderscore() {
+    List<String> parts = split('_');
+
+    if (parts.length < 3) {
+      // Return an empty string if there are not enough parts
       return '';
     }
-    // Get the last word and capitalize it
-    String lastWord = words.last;
-    return lastWord[0].toUpperCase() + lastWord.substring(1);
+
+    List<String> words = parts[2].split(RegExp(r'(?=[A-Z])'));
+
+    // Join the words with spaces
+    return words.join(' ');
   }
 }

@@ -12,6 +12,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/enums/sections.dart';
 import 'custom_paint/custom_paint_diagrams.dart';
 import 'custom_paint/diagrams/global_export_subsidies.dart';
+import 'custom_paint/painter_constants.dart';
 
 class AllDiagramsPage extends ConsumerWidget {
   const AllDiagramsPage({super.key});
@@ -27,14 +28,16 @@ class AllDiagramsPage extends ConsumerWidget {
 
     for (var d in allDiagrams) {
       if (d.name.getFirstWord() == diagramsState.diagram.name.getFirstWord()) {
-        if (d.name.contains('Default')) {
+        if (d.name.contains(kDefault)) {
           selectedDiagrams.add(d);
         }
       }
     }
 
     for (var d in allDiagrams) {
-      if (d.name.contains(diagramsState.diagram.name.removeLastWord())) {
+      if (d.name.getWordsBetweenFirstAndSecondUnderscores().contains(
+          diagramsState.diagram.name
+              .getWordsBetweenFirstAndSecondUnderscores())) {
         subDiagrams.add(d);
       }
     }
@@ -47,6 +50,7 @@ class AllDiagramsPage extends ConsumerWidget {
         child: Column(
           children: [
             Wrap(
+              alignment: WrapAlignment.center,
               spacing: kWrapSpacing * size.width,
               children: Section.values.map((section) {
                 bool selected = false;
@@ -77,17 +81,20 @@ class AllDiagramsPage extends ConsumerWidget {
             ),
             const CustomSmallDivider(),
             Wrap(
+                alignment: WrapAlignment.center,
                 spacing: kWrapSpacing * size.width,
                 children: selectedDiagrams.map((diagram) {
                   bool selected = false;
 
-                  if (diagram.name.getFirstTwoWords() ==
-                      diagramsState.diagram.name.getFirstTwoWords()) {
+                  if (diagram.name.getWordsBetweenFirstAndSecondUnderscores() ==
+                      diagramsState.diagram.name
+                          .getWordsBetweenFirstAndSecondUnderscores()) {
                     selected = true;
                   }
 
                   return CustomChipButton(
-                      text: diagram.name.extractMiddleWords(),
+                      text: diagram.name
+                          .getWordsBetweenFirstAndSecondUnderscores(),
                       isSelected: selected,
                       onPressed: () {
                         diagramsNotifier.setDiagramSelected(diagram);
@@ -95,16 +102,18 @@ class AllDiagramsPage extends ConsumerWidget {
                 }).toList()),
             DiagramBox(customPainter: diagramsState.diagram),
             Wrap(
+              alignment: WrapAlignment.center,
               spacing: kWrapSpacing * size.width,
               children: [
                 ...subDiagrams.map((diagram) {
                   bool selected = false;
+
                   if (diagram.name == diagramsState.diagram.name) {
                     selected = true;
                   }
 
                   return CustomChipButton(
-                      text: diagram.name.getLastWord(),
+                      text: diagram.name.getWordsAfterSecondUnderscore(),
                       isSelected: selected,
                       onPressed: () {
                         diagramsNotifier.setDiagramSelected(diagram);
@@ -114,7 +123,7 @@ class AllDiagramsPage extends ConsumerWidget {
             ),
             ...[
               const Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(58.0),
                 child: HtmlWidget('<strong> a, b </strong> consumer surplus; '),
               ),
             ]

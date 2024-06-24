@@ -1,4 +1,5 @@
 import 'package:economics_app/sections/diagrams/diagram_enums/diagram_type.dart';
+import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../diagram_enums/custom_align.dart';
 import '../../diagram_enums/shade_type.dart';
@@ -10,13 +11,16 @@ import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_text.dart';
 
-class GlobalQuotas extends CustomPainter {
+class GlobalQuotas extends CustomPainter with NameMixin {
+  @override
+  String get name => type.name;
+
   final DiagramType type;
   final Color color;
   final Color highlightedColor;
 
-  GlobalQuotas(
-    this.type, {
+  GlobalQuotas({
+    this.type = DiagramType.global_Quotas_Default,
     this.color = Colors.white,
     this.highlightedColor = Colors.green,
   });
@@ -36,7 +40,7 @@ class GlobalQuotas extends CustomPainter {
     String q3 = 'Q3';
     String q4 = 'Q4';
 
-    if (type == DiagramType.globalQuotaCalculation) {
+    if (type == DiagramType.global_Quotas_Calculation) {
       pWQ = '\$110';
       pW = '\$60';
       q1 = '150';
@@ -127,7 +131,7 @@ class GlobalQuotas extends CustomPainter {
         yAxisStartPos: 0.70, xAxisEndPos: 0.57, hideYLine: true, xLabel: q4);
 
     /// Label letters
-    if (type == DiagramType.globalQuotaLabels) {
+    if (type == DiagramType.global_Quotas_Labels) {
       paintText(size, canvas, 'a', const Offset(0.18, 0.60),
           fontSize: kLabelLetterFontSize);
       paintText(size, canvas, 'b', const Offset(0.28, 0.58),

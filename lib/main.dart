@@ -24,11 +24,11 @@ class EconApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appState = ref.watch(appProvider);
     return MaterialApp(
-        debugShowCheckedModeBanner: true,
-        title: kAppName,
-        theme: CustomAppTheme(appState, context).appTheme,
-        home: const AllDiagramsPage()
-        //const HomePage(),
-        );
+      debugShowCheckedModeBanner: true,
+      title: kAppName,
+      theme: CustomAppTheme(appState, context).appTheme,
+      home: const AllDiagramsPage(),
+      //const HomePage(),
+    );
   }
 }

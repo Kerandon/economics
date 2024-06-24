@@ -19,7 +19,7 @@ class GlobalTariffs extends CustomPainter with NameMixin {
   final Color highlightedColor;
 
   GlobalTariffs({
-    this.type = DiagramType.globalTariffsDefault,
+    this.type = DiagramType.global_Tariffs_Default,
     this.color = Colors.white,
     this.highlightedColor = Colors.green,
   });
@@ -33,7 +33,7 @@ class GlobalTariffs extends CustomPainter with NameMixin {
     String q3 = 'Q3';
     String q4 = 'Q4';
 
-    if (type == DiagramType.globalTariffsCalculation) {
+    if (type == DiagramType.global_Tariffs_Calculation) {
       pWT = '\$12';
       pW = '\$8';
       q1 = '500';
@@ -61,7 +61,7 @@ class GlobalTariffs extends CustomPainter with NameMixin {
       label2Align: CustomAlign.centerBottom,
       color: color,
     );
-    if (type == DiagramType.globalTariffsDefault) {
+    if (type == DiagramType.global_Tariffs_Default) {
       paintCurve(size, canvas, const Offset(kAxisIndent, 0.46),
           const Offset(0.52, 0.46),
           label1: 'Pd', label1Align: CustomAlign.centerLeft, makeDashed: true);
@@ -111,7 +111,7 @@ class GlobalTariffs extends CustomPainter with NameMixin {
         yAxisStartPos: 0.70, xAxisEndPos: 0.58, hideYLine: true, xLabel: q4);
 
     /// Label letters
-    if (type == DiagramType.globalTariffsLabels) {
+    if (type == DiagramType.global_Tariffs_Labels) {
       paintText(size, canvas, 'a', const Offset(0.25, 0.40),
           fontSize: kLabelLetterFontSize);
       paintText(size, canvas, 'b', const Offset(0.52, 0.53),

@@ -22,7 +22,7 @@ class GlobalProductionSubsidies extends CustomPainter with NameMixin {
   final Color highlightedColor;
 
   GlobalProductionSubsidies({
-    this.type = DiagramType.globalProductionSubsidiesDefault,
+    this.type = DiagramType.global_ProductionSubsidies_Default,
     this.color = Colors.white,
     this.highlightedColor = Colors.green,
   });
@@ -42,7 +42,7 @@ class GlobalProductionSubsidies extends CustomPainter with NameMixin {
     String q2 = 'Q2';
     String q3 = 'Q3';
 
-    if (type == DiagramType.globalProductionSubsidiesCalculation) {
+    if (type == DiagramType.global_ProductionSubsidies_Calculation) {
       pWS = '\$12';
       pW = '\$8';
       q1 = '500';
@@ -137,7 +137,7 @@ class GlobalProductionSubsidies extends CustomPainter with NameMixin {
     );
 
     /// Label letters
-    if (type == DiagramType.globalProductionSubsidiesDefault) {
+    if (type == DiagramType.global_ProductionSubsidies_Default) {
       paintText(size, canvas, 'a', Offset(width * 0.20, height * 0.62),
           fontSize: kLabelLetterFontSize);
       paintText(size, canvas, 'b', Offset(width * 0.35, height * 0.65),

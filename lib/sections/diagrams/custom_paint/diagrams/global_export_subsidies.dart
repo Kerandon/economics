@@ -21,7 +21,7 @@ class GlobalExportSubsidies extends CustomPainter with NameMixin {
   GlobalExportSubsidies(
       {this.color = Colors.white,
       this.highlightedColor = Colors.green,
-      this.type = DiagramType.globalExportSubsidiesDefault});
+      this.type = DiagramType.global_ExportSubsidies_Default});
 
   @override
   void paint(Canvas canvas, Size size) {

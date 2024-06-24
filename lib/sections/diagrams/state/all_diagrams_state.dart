@@ -1,5 +1,4 @@
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_tariffs.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

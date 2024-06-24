@@ -19,7 +19,7 @@ void paintArrow(Size size, Canvas canvas, Offset position,
   /// Arrow-head
 
   const double arrowHeadWidth = 0.20;
-  Path path = paintArrowHead(canvas, size, paint,
+  Path path = _paintArrowHead(canvas, size, paint,
       extension: extension,
       arrowHeadWidth: arrowHeadWidth,
       drawOpposite: oppositeArrowHead);
@@ -47,7 +47,7 @@ void paintArrow(Size size, Canvas canvas, Offset position,
   canvas.restore();
 }
 
-Path paintArrowHead(Canvas canvas, Size size, Paint paint,
+Path _paintArrowHead(Canvas canvas, Size size, Paint paint,
     {required double extension,
     required double arrowHeadWidth,
     required bool drawOpposite}) {
