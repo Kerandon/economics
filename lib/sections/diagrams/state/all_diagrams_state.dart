@@ -1,8 +1,8 @@
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_tariffs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../../app/enums/sections.dart';
+import '../enums/diagram_type.dart';
 
 class DiagramsState {
   // final Section section;
@@ -36,7 +36,7 @@ final diagramsProvider = StateNotifierProvider<DiagramsNotifier, DiagramsState>(
   (ref) => DiagramsNotifier(
     DiagramsState(
       // section: Section.global,
-      diagram: GlobalTariffs(),
+      diagram: GlobalTariffs(type: DiagramType.global_Tariffs_Standard_Default),
     ),
   ),
 );

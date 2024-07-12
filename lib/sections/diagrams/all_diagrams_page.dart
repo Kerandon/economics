@@ -3,6 +3,7 @@ import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_small_divider.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/macro_business_cycle.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/micro_monopolistic_competition.dart';
 import 'package:economics_app/sections/diagrams/data/all_diagrams.dart';
 import 'package:economics_app/sections/diagrams/state/all_diagrams_state.dart';
 import 'package:economics_app/sections/diagrams/utils/extensions.dart';
@@ -13,6 +14,7 @@ import '../../app/enums/sections.dart';
 import 'custom_paint/custom_paint_diagrams.dart';
 import 'custom_paint/diagrams/global_export_subsidies.dart';
 import 'custom_paint/painter_constants.dart';
+import 'enums/diagram_type.dart';
 
 class AllDiagramsPage extends ConsumerWidget {
   const AllDiagramsPage({super.key});
@@ -28,7 +30,7 @@ class AllDiagramsPage extends ConsumerWidget {
 
     for (var d in allDiagrams) {
       if (d.name.getFirstWord() == diagramsState.diagram.name.getFirstWord()) {
-        if (d.name.contains(kDefault)) {
+        if (d.name.getWordsAfterThirdUnderscore() == kDefault) {
           selectedDiagrams.add(d);
         }
       }
@@ -41,6 +43,9 @@ class AllDiagramsPage extends ConsumerWidget {
         subDiagrams.add(d);
       }
     }
+
+    final selectedDiagram = DiagramType.values
+        .firstWhere((element) => element.name == diagramsState.diagram.name);
 
     return Scaffold(
       appBar: AppBar(
@@ -67,8 +72,8 @@ class AllDiagramsPage extends ConsumerWidget {
                           diagramsNotifier
                               .setDiagramSelected(GlobalExportSubsidies());
                         case Section.micro:
-                          diagramsNotifier
-                              .setDiagramSelected(GlobalExportSubsidies());
+                          diagramsNotifier.setDiagramSelected(
+                              MicroMonopolisticCompetition());
                         case Section.macro:
                           diagramsNotifier
                               .setDiagramSelected(MacroBusinessCycle());
@@ -122,9 +127,9 @@ class AllDiagramsPage extends ConsumerWidget {
               ],
             ),
             ...[
-              const Padding(
-                padding: EdgeInsets.all(58.0),
-                child: HtmlWidget('<strong> a, b </strong> consumer surplus; '),
+              Padding(
+                padding: const EdgeInsets.all(28.0),
+                child: HtmlWidget(selectedDiagram.explanation()),
               ),
             ]
           ],

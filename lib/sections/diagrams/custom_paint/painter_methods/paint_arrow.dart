@@ -4,7 +4,7 @@ import '../custom_rotate.dart';
 
 void paintArrow(Size size, Canvas canvas, Offset position,
     {Color color = Colors.white,
-    scale = 0.10,
+    scale = 0.05,
     double angle = 0,
     bool hideArrowStick = false,
     double arrowStickExtension = 0,
@@ -13,12 +13,12 @@ void paintArrow(Size size, Canvas canvas, Offset position,
   final width = size.width;
   final height = size.height;
 
-  const double arrowStickWidth = 0.01;
+  const double arrowStickWidth = 0.03;
   final double extension = (arrowStickExtension * width) / 2;
 
   /// Arrow-head
 
-  const double arrowHeadWidth = 0.20;
+  const double arrowHeadWidth = 0.30;
   Path path = _paintArrowHead(canvas, size, paint,
       extension: extension,
       arrowHeadWidth: arrowHeadWidth,
@@ -54,7 +54,7 @@ Path _paintArrowHead(Canvas canvas, Size size, Paint paint,
   final width = size.width;
   final height = size.height;
   final endWidth = (1 - arrowHeadWidth) * width;
-  final headHeight = width * (arrowHeadWidth / 2.5);
+  final headHeight = width * (arrowHeadWidth / 2);
 
   final path = Path()
     ..moveTo(width + extension, height / 2)

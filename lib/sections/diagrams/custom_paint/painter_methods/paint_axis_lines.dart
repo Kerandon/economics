@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../painter_constants.dart';
 
 void paintAxisLines(Size size, Canvas canvas,

@@ -1,9 +1,7 @@
 import 'dart:math' as math;
-
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
-
-import '../../diagram_enums/diagram_type.dart';
+import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_arrow.dart';
 import '../painter_methods/paint_axis.dart';

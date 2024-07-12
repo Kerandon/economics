@@ -13,6 +13,6 @@ void paintDot(
   final paint = Paint()
     ..color = color
     ..style = PaintingStyle.fill;
-  canvas.drawCircle(pos, radius, paint);
-  paintText(size, canvas, 'fkbj', pos);
+  canvas.drawCircle(
+      Offset(pos.dx * size.width, pos.dy * size.height), radius, paint);
 }

@@ -1,14 +1,12 @@
-import 'package:economics_app/sections/diagrams/diagram_enums/diagram_type.dart';
 import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
-import '../../diagram_enums/custom_align.dart';
-import '../../diagram_enums/shade_type.dart';
+import '../../enums/curve_align.dart';
+import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_arrow.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_curve.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_text.dart';
 
 class GlobalQuotas extends CustomPainter with NameMixin {
@@ -20,7 +18,7 @@ class GlobalQuotas extends CustomPainter with NameMixin {
   final Color highlightedColor;
 
   GlobalQuotas({
-    this.type = DiagramType.global_Quotas_Default,
+    this.type = DiagramType.global_Quotas_Standard_Default,
     this.color = Colors.white,
     this.highlightedColor = Colors.green,
   });
@@ -28,10 +26,6 @@ class GlobalQuotas extends CustomPainter with NameMixin {
   @override
   void paint(Canvas canvas, Size size) {
     /// Welfare Loss
-    paintShading(canvas, size, ShadeType.welfareLoss, const Offset(0.23, 0.70),
-        const Offset(0.40, 0.51), const Offset(0.40, 0.70));
-    paintShading(canvas, size, ShadeType.welfareLoss, const Offset(0.565, 0.70),
-        const Offset(0.565, 0.52), const Offset(0.72, 0.70));
 
     String pWQ = 'Pq';
     String pW = 'Pw';
@@ -56,7 +50,7 @@ class GlobalQuotas extends CustomPainter with NameMixin {
       const Offset(0.18, 0.75),
       const Offset(0.75, 0.15),
       label2: kSDomestic,
-      label2Align: CustomAlign.centerTop,
+      label2Align: CurveAlign.centerTop,
       color: color,
     );
     paintCurve(
@@ -65,7 +59,7 @@ class GlobalQuotas extends CustomPainter with NameMixin {
       const Offset(0.2, 0.10),
       const Offset(0.80, 0.80),
       label2: kDDomestic,
-      label2Align: CustomAlign.centerBottom,
+      label2Align: CurveAlign.centerBottom,
       color: color,
     );
 
@@ -95,18 +89,18 @@ class GlobalQuotas extends CustomPainter with NameMixin {
         0.70,
       ),
       label1: pW,
-      label1Align: CustomAlign.centerLeft,
+      label1Align: CurveAlign.centerLeft,
       label2: kSupplyWorld,
-      label2Align: CustomAlign.centerRight,
+      label2Align: CurveAlign.centerRight,
       color: color,
     );
 
     /// Quota curve
 
     paintCurve(size, canvas, const Offset(0.40, 0.70), const Offset(0.86, 0.20),
-        label1Align: CustomAlign.centerLeft,
+        label1Align: CurveAlign.centerLeft,
         label2: 'S domestic + quota',
-        label2Align: CustomAlign.centerTop,
+        label2Align: CurveAlign.centerTop,
         color: highlightedColor,
         strokeWidth: kCurveWidth);
     paintCurve(size, canvas, const Offset(kAxisIndent, 0.70),

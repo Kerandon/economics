@@ -51,4 +51,17 @@ extension CustomStringExtension on String {
     // Join the words with spaces
     return words.join(' ');
   }
+  String getWordsAfterThirdUnderscore() {
+    List<String> parts = split('_');
+
+    if (parts.length < 4) {
+      // Return an empty string if there are not enough parts
+      return '';
+    }
+
+    List<String> words = parts[3].split(RegExp(r'(?=[A-Z])'));
+
+    // Join the words with spaces
+    return words.join(' ');
+  }
 }

@@ -1,5 +1,5 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/sections/diagrams/diagram_enums/text_box_shape.dart';
+import 'package:economics_app/sections/diagrams/enums/text_box_shape.dart';
 import 'package:flutter/material.dart';
 import '../custom_rotate.dart';
 import '../painter_constants.dart';

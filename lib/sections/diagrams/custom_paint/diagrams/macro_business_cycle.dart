@@ -1,7 +1,7 @@
 import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
-import '../../diagram_enums/custom_align.dart';
-import '../../diagram_enums/diagram_type.dart';
+import '../../enums/curve_align.dart';
+import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_dashed_line.dart';
@@ -71,7 +71,7 @@ class MacroBusinessCycle extends CustomPainter with NameMixin {
       'Peak',
       const Offset(0.24, 0.52),
       const Offset(0.24, 0.40),
-      textAlign: CustomAlign.centerTop,
+      textAlign: CurveAlign.centerTop,
     );
 
     paintLabelLine(
@@ -80,7 +80,7 @@ class MacroBusinessCycle extends CustomPainter with NameMixin {
       'Trough',
       const Offset(0.38, 0.59),
       const Offset(0.38, 0.70),
-      textAlign: CustomAlign.centerBottom,
+      textAlign: CurveAlign.centerBottom,
     );
 
     paintLabelLine(
@@ -89,7 +89,7 @@ class MacroBusinessCycle extends CustomPainter with NameMixin {
       'Expansion',
       const Offset(0.45, 0.50),
       const Offset(0.45, 0.30),
-      textAlign: CustomAlign.centerTop,
+      textAlign: CurveAlign.centerTop,
     );
 
     paintLabelLine(
@@ -98,12 +98,12 @@ class MacroBusinessCycle extends CustomPainter with NameMixin {
       'Contraction',
       const Offset(0.62, 0.50),
       const Offset(0.62, 0.70),
-      textAlign: CustomAlign.centerBottom,
+      textAlign: CurveAlign.centerBottom,
     );
 
     paintLabelLine(canvas, size, 'Long-term growth\n  (potential GDP)',
         const Offset(0.88, 0.42), const Offset(0.80, 0.20),
-        textAlign: CustomAlign.centerTop);
+        textAlign: CurveAlign.centerTop);
 
     paintLabelLine(
       canvas,
@@ -111,7 +111,7 @@ class MacroBusinessCycle extends CustomPainter with NameMixin {
       'Actual growth\n    (real GDP)',
       const Offset(0.88, 0.46),
       const Offset(0.86, 0.60),
-      textAlign: CustomAlign.centerBottom,
+      textAlign: CurveAlign.centerBottom,
     );
   }
 

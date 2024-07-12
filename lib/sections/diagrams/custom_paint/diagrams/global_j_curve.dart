@@ -2,11 +2,10 @@ import 'dart:math' as math;
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/sections/diagrams/diagram_enums/custom_align.dart';
 import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
-
-import '../../diagram_enums/diagram_type.dart';
+import '../../enums/curve_align.dart';
+import '../../enums/diagram_type.dart';
 
 class GlobalJCurve extends CustomPainter with NameMixin {
   @override
@@ -18,7 +17,7 @@ class GlobalJCurve extends CustomPainter with NameMixin {
 
   GlobalJCurve(
       {super.repaint,
-      this.type = DiagramType.global_JCurve_Default,
+      this.type = DiagramType.global_JCurve_CorrectingTradeDeficit_Default,
       this.onBackgroundColor = Colors.white,
       this.highlightedColor = Colors.green});
 
@@ -34,18 +33,11 @@ class GlobalJCurve extends CustomPainter with NameMixin {
         const Offset(1 - kAxisIndent, 0.50),
         drawArrowAtEnd: true,
         label2: 'Time',
-        label2Align: CustomAlign.centerRight);
+        label2Align: CurveAlign.centerRight);
     paintText(
-        size, canvas, '(X=M)', const Offset(kTextLineAdjustmentCenter, 0.50),
+        size, canvas, '(X=M)', const Offset(kAxisLabelAdjustmentCenter, 0.50),
         angle: math.pi * -0.50);
-    paintText(size, canvas, '0', const Offset(kTextLineAdjustmentIn, 0.50),
-        angle: math.pi * -0.50);
-    paintText(size, canvas, 'Trade deficit (X < M)',
-        const Offset(kTextLineAdjustmentIn, 0.70),
-        angle: math.pi * -0.50);
-    paintText(size, canvas, 'Trade surplus (X > M)',
-        const Offset(kTextLineAdjustmentIn, 0.30),
-        angle: math.pi * -0.50);
+
 
     final paint = Paint()
       ..color = highlightedColor
@@ -54,7 +46,7 @@ class GlobalJCurve extends CustomPainter with NameMixin {
 
     final path = Path()..moveTo(kAxisIndent * width, 0.50 * height);
 
-    if (type == DiagramType.global_JCurve_Inverse) {
+    if (type == DiagramType.global_JCurve_CorrectingTradeSurplus) {
       // Inverted curve
       path
         ..lineTo(width * 0.20, 0.50 * height)

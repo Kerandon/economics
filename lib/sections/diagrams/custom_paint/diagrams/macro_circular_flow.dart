@@ -1,14 +1,17 @@
 import 'dart:math' as math;
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
-import 'package:economics_app/sections/diagrams/diagram_enums/text_box_shape.dart';
 import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
-import '../../diagram_enums/diagram_type.dart';
+import '../../enums/diagram_type.dart';
+import '../../enums/text_box_shape.dart';
 import '../painter_methods/paint_right_angle_curves.dart';
 import '../painter_methods/paint_text.dart';
 import '../painter_methods/paint_text_box.dart';
 
 class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
+
+  @override
+  String get name => type.name;
   final Color color;
   final Color primaryColor;
   final DiagramType type;
@@ -20,8 +23,6 @@ class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
     this.primaryColor = Colors.green,
   });
 
-  @override
-  String get name => type.name;
 
   @override
   void paint(Canvas canvas, Size size) {

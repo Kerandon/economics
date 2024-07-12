@@ -1,8 +1,8 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/sections/diagrams/diagram_enums/custom_align.dart';
 import 'package:flutter/material.dart';
+import '../../enums/curve_align.dart';
 import '../painter_constants.dart';
 
 void paintCurve(
@@ -13,9 +13,9 @@ void paintCurve(
   Color color = Colors.white,
   double strokeWidth = kCurveWidth,
   String? label1,
-  CustomAlign label1Align = CustomAlign.center,
-  CustomAlign label2Align = CustomAlign.center,
   String? label2,
+  CurveAlign label1Align = CurveAlign.center,
+  CurveAlign label2Align = CurveAlign.center,
   bool makeDashed = false,
   bool drawArrowAtStart = false,
   bool drawArrowAtEnd = false,
@@ -41,10 +41,10 @@ void paintCurve(
   }
 
   if (label1 != null) {
-    paintText(size, canvas, label1, Offset(p1.dx, p1.dy), align: label1Align);
+    paintText(size, canvas, label1, Offset(p1.dx, p1.dy), customAlign: label1Align);
   }
   if (label2 != null) {
-    paintText(size, canvas, label2, Offset(p2.dx, p2.dy), align: label2Align);
+    paintText(size, canvas, label2, Offset(p2.dx, p2.dy), customAlign: label2Align);
   }
 
   if (drawArrowAtStart) {
