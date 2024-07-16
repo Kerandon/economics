@@ -17,7 +17,7 @@ class CustomButtonOverlayAppBar extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {
+          onTap: expansionControllers == null ? null : () {
             WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               if (expansionControllers != null &&
                   expansionControllers!.isNotEmpty) {
@@ -32,7 +32,9 @@ class CustomButtonOverlayAppBar extends StatelessWidget {
           child: Center(
             child: AutoSizeText(
               title,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Colors.white
+              ),
             ),
           ),
         ),

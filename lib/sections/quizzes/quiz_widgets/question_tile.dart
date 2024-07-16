@@ -61,23 +61,24 @@ class QuestionTile extends ConsumerWidget {
                 ],
               ),
             ),
-            Divider(
-              color: Theme.of(context).colorScheme.primary,
-            ),
-            ...[
-              ...answers.map((answer) => AnswerTile(
+            Column(
+              children: [
+                ...[
+                  ...answers.map((answer) => AnswerTile(
                     answerIndex: answers.indexOf(answer),
                     answer: answer,
                     question: question,
                   ))
-            ],
-            if (question.answerStage == AnswerStage.incorrect) ...[
-              ExplanationBox(question: question)
-            ],
-            if (!removeEndDivider) const CustomSmallDivider(),
-            SizedBox(
-              height: size.height * kPageIndentVertical,
-            ),
+                ],
+                if (question.answerStage == AnswerStage.incorrect) ...[
+                  ExplanationBox(question: question)
+                ],
+                if (!removeEndDivider) const CustomSmallDivider(),
+                SizedBox(
+                  height: size.height * kPageIndentVertical,
+                ),
+              ],
+            )
           ],
         ),
       ),

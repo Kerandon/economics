@@ -17,9 +17,6 @@ class CustomAppTheme {
         brightness: brightness,
         primary: AppColors.defaultAppColor,
         secondary: AppColors.defaultAppColorDarker,
-        // isDark
-        //     ? AppColors.onSurfaceDarkTheme
-        //     : AppColors.onSurfaceLightTheme,
         tertiary: AppColors.defaultAppColorDarkest,
 
         // isDark
@@ -39,9 +36,7 @@ class CustomAppTheme {
         error: Colors.red,
         onPrimary: isDark ? Colors.black : Colors.white,
         onBackground: isDark ? Colors.white : Colors.black,
-        onSurface: isDark
-            ? AppColors.onSurfaceDarkTheme
-            : AppColors.onSurfaceLightTheme,
+        onSurface: isDark ? AppColors.onSurfaceDarkTheme : Colors.black,
         onSurfaceVariant: isDark
             ? AppColors.onSurfaceVariantDarkTheme
             : AppColors.onSurfaceVariantLightTheme,
@@ -51,11 +46,25 @@ class CustomAppTheme {
             : AppColors.onSurfaceLightTheme,
       ),
       appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(color: Colors.white),
-          backgroundColor: AppColors.defaultAppColorDarkest),
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+        ),
+        backgroundColor: AppColors.defaultAppColorDarkest,
+      ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: isDark ? Colors.white : Colors.black,
+        ),
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        indicatorColor: Colors.blue,
+        iconTheme: MaterialStateProperty.resolveWith<IconThemeData>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.selected)) {
+              return IconThemeData(color: Colors.white);
+            }
+            return IconThemeData(color: Colors.grey);
+          },
         ),
       ),
     );

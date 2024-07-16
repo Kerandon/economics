@@ -22,8 +22,11 @@ const kRadius = 12.0;
 const kPageIndentHorizontal = 0.03;
 const kPageIndentVertical = 0.02;
 const kBorderWidth = 0.0015;
-const kDividerIndent = 0.05;
+const kDividerIndent = 0.03;
 const kWrapSpacing = 0.015;
 
 /// Animation
 const kPageChangeAnimation = 400;
+
+/// Colors
+const kBackgroundOpacity = 0.10;

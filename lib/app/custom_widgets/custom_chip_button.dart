@@ -16,6 +16,9 @@ class CustomChipButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
         style: OutlinedButton.styleFrom(
+          backgroundColor: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : null,
             side: BorderSide(
           color: isSelected
               ? Theme.of(context).colorScheme.primary
@@ -26,7 +29,7 @@ class CustomChipButton extends StatelessWidget {
           text,
           style: TextStyle(
             color: isSelected
-                ? Theme.of(context).colorScheme.onBackground
+                ? Colors.white
                 : Theme.of(context).colorScheme.onBackground.withOpacity(0.50),
           ),
         ));

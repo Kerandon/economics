@@ -24,13 +24,13 @@ class AnswerTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    Color borderColor = Colors.transparent;
+    Color borderColor = Theme.of(context).colorScheme.primary.withOpacity(0.50);
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
 
     if (answer.answerStage == AnswerStage.selected) {
-      borderColor = Colors.white;
+      borderColor = Theme.of(context).colorScheme.primary;
     }
     if (answer.answerStage == AnswerStage.correct) {
       borderColor = AppColors.defaultAppColor;
@@ -47,48 +47,64 @@ class AnswerTile extends ConsumerWidget {
 
     return Padding(
       padding:
-          EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical / 4),
+          EdgeInsets.symmetric(
+          vertical:  size.height * kPageIndentVertical / 4
+          ),
       child: Stack(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(kRadius),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(kRadius),
-                border: Border.all(
-                  color: borderColor,
-                ),
+                color: Theme.of(context).colorScheme.background,
               ),
               child: Padding(
                 padding: EdgeInsets.all(size.height * 0.015),
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            ((answerIndex + 1).toAlphabet()),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 12,
-                          child: Text(
-                            answer.answer,
-                            textAlign: TextAlign
-                                .start, // Align the text to the start (left) side
-                          ),
-                        ),
-                        if (icon != null) ...[
-                          Expanded(
-                            flex: 2,
-                            child: PopOutAnimation(
-                              child: Icon(icon),
-                            ),
-                          ),
-                        ],
-                      ],
+                    ListTile(
+                      leading: Text(
+                          ((answerIndex + 1).toAlphabet()),),
+                      title: Text(
+                                answer.answer,
+                                textAlign: TextAlign
+                                    .start, // Align the text to the start (left) side
+                              ),
+                      trailing:
+                          icon != null ?
+                            Expanded(
+                              flex: 2,
+                              child: PopOutAnimation(
+                                child: Icon(icon),
+                              ),
+                            ) : null,
                     ),
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       child: Text(
+                    //         ((answerIndex + 1).toAlphabet()),
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       flex: 12,
+                    //       child: Text(
+                    //         answer.answer,
+                    //         textAlign: TextAlign
+                    //             .start, // Align the text to the start (left) side
+                    //       ),
+                    //     ),
+                    //     if (icon != null) ...[
+                    //       Expanded(
+                    //         flex: 2,
+                    //         child: PopOutAnimation(
+                    //           child: Icon(icon),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ],
+                    // ),
                   ],
                 ),
               ),

@@ -29,13 +29,6 @@ class GlobalExportSubsidies extends CustomPainter with NameMixin {
     String q3 = kQ3;
     String q4 = kQ4;
 
-    /// Shading
-
-    // paintShading(canvas, size, ShadeType.welfareLoss, const Offset(0.295, 0.28),
-    //     const Offset(0.295, 0.35), const Offset(0.38, 0.35));
-    // paintShading(canvas, size, ShadeType.welfareLoss, const Offset(0.69, 0.27),
-    //     const Offset(0.60, 0.35), const Offset(0.69, 0.35));
-
     /// Domestic supply & demand
     paintCurve(size, canvas, const Offset(0.20, 0.20), const Offset(0.80, 0.70),
         label2: kDDomestic, label2Align: CurveAlign.centerBottom);

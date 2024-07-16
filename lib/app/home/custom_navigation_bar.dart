@@ -1,5 +1,4 @@
 import 'package:economics_app/app/state/app_state.dart';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -19,8 +18,24 @@ class CustomNavigationBar extends ConsumerWidget {
         appNotifier.setPage(index);
       },
       destinations: const [
-        NavigationDestination(icon: Icon(Icons.style_outlined), label: 'Units'),
-        NavigationDestination(icon: Icon(Icons.quiz_outlined), label: 'Review'),
+        NavigationDestination(
+          icon: Icon(
+            Icons.style_outlined,
+          ),
+          label: 'Notes',
+        ),
+        NavigationDestination(
+          icon: Icon(
+            Icons.ssid_chart,
+          ),
+          label: 'Diagrams',
+        ),
+        NavigationDestination(
+          icon: Icon(
+            Icons.quiz_outlined,
+          ),
+          label: 'Quiz',
+        ),
       ],
     );
   }

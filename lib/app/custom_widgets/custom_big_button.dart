@@ -18,23 +18,33 @@ class CustomBigButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
           vertical: size.height * kDividerIndent,
-          horizontal: size.width * 0.10),
+          horizontal: size.width * 0.15),
       child: SizedBox(
         width: size.width,
         child: OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              backgroundColor: onPressed == null
+          style: OutlinedButton.styleFrom(
+            backgroundColor: onPressed == null
+                ? Theme.of(context).colorScheme.shadow
+                : Theme.of(context).colorScheme.primary,
+            side: BorderSide(
+              color: onPressed == null
                   ? Theme.of(context).colorScheme.shadow
                   : Theme.of(context).colorScheme.primary,
             ),
-            onPressed: onPressed,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
-              child: Text(
-                text,
-                style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          onPressed: onPressed,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.white
               ),
-            )),
+            ),
+          ),
+        ),
+
       ),
     );
   }

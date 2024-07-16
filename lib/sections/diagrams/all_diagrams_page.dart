@@ -50,6 +50,7 @@ class AllDiagramsPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('All diagrams'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(

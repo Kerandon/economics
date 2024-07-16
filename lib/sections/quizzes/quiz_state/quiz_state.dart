@@ -13,7 +13,7 @@ class QuizState {
   final Map<Section, bool> selectedSections;
   final int numberOfQuestionsSelected;
   final int currentQuestionIndex;
-  final bool checkAnswersAtEnd;
+  final bool showAnswersAsIGo;
 
   QuizState({
     required this.allQuestions,
@@ -24,7 +24,7 @@ class QuizState {
     required this.selectedSections,
     required this.numberOfQuestionsSelected,
     required this.currentQuestionIndex,
-    required this.checkAnswersAtEnd,
+    required this.showAnswersAsIGo,
   });
 
   QuizState copyWith({
@@ -36,7 +36,7 @@ class QuizState {
     Map<Section, bool>? selectedSections,
     int? numberOfQuestionsSelected,
     int? currentQuestionIndex,
-    bool? checkAnswersAtEnd,
+    bool? showAnswersAsIGo,
   }) {
     return QuizState(
       allQuestions: allQuestions ?? this.allQuestions,
@@ -49,7 +49,7 @@ class QuizState {
       numberOfQuestionsSelected:
           numberOfQuestionsSelected ?? this.numberOfQuestionsSelected,
       currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,
-      checkAnswersAtEnd: checkAnswersAtEnd ?? this.checkAnswersAtEnd,
+      showAnswersAsIGo: showAnswersAsIGo ?? this.showAnswersAsIGo,
     );
   }
 }
@@ -129,7 +129,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
   }
 
   void setCheckAnswersAtEnd(bool checkAtEnd) {
-    state = state.copyWith(checkAnswersAtEnd: checkAtEnd);
+    state = state.copyWith(showAnswersAsIGo: checkAtEnd);
   }
 
   void checkAnswer(QuestionModel question) {
@@ -242,7 +242,7 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       },
       numberOfQuestionsSelected: 5,
       currentQuestionIndex: 0,
-      checkAnswersAtEnd: true,
+      showAnswersAsIGo: true,
     ),
   ),
 );
