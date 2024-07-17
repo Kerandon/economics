@@ -29,4 +29,5 @@ const kWrapSpacing = 0.015;
 const kPageChangeAnimation = 400;
 
 /// Colors
-const kBackgroundOpacity = 0.10;
+const kBackgroundOpacity = 0.08;
+const kNotSelectedOpacity = 0.25;

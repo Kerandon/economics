@@ -49,7 +49,6 @@ class QuestionTile extends ConsumerWidget {
                     ),
                   ],
                   Expanded(
-                    // Wrap the Text widget with Expanded
                     child: Text(
                       question.question,
                       style: Theme.of(context)
@@ -65,10 +64,10 @@ class QuestionTile extends ConsumerWidget {
               children: [
                 ...[
                   ...answers.map((answer) => AnswerTile(
-                    answerIndex: answers.indexOf(answer),
-                    answer: answer,
-                    question: question,
-                  ))
+                        answerIndex: answers.indexOf(answer),
+                        answer: answer,
+                        question: question,
+                      ))
                 ],
                 if (question.answerStage == AnswerStage.incorrect) ...[
                   ExplanationBox(question: question)

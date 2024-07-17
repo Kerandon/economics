@@ -2,9 +2,7 @@ import 'package:economics_app/sections/quizzes/quiz_data/number_of_questions.dar
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_section/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/app_colors.dart';
 import '../../../app/configs/constants.dart';
@@ -135,13 +133,13 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                         ),
                         value: quizState.showAnswersAsIGo,
                         onChanged: (on) {
-                          quizNotifier.setCheckAnswersAtEnd(on);
+                          quizNotifier.setShowAnswersAsIGo(on);
                         }),
                   ],
                 ),
                 AnimatedContainer(
                   height: _showIcon ? height * 0.22 : height * 0.02,
-                  duration: Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 200),
                   curve: Curves.easeInOut,
                 ),
                 CustomBigButton(

@@ -59,13 +59,13 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
         quizState.selectedQuestions.length - 1) {
       disableButtonRight = true;
     }
-    if (quizState.showAnswersAsIGo &&
+    if (!quizState.showAnswersAsIGo &&
         currentQuestion?.answerStage == AnswerStage.notSelected) {
       disableButtonRight = true;
     }
 
     /// Check answers one by one
-    if (!quizState.showAnswersAsIGo) {
+    if (quizState.showAnswersAsIGo) {
       if (currentQuestion?.answerStage == AnswerStage.notSelected ||
           currentQuestion?.answerStage == AnswerStage.selected) {
         disableButtonRight = true;
@@ -74,7 +74,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     String checkButtonText = "Check all answers";
 
     bool showCheckAnswersButton = false;
-    if (quizState.showAnswersAsIGo) {
+    if (!quizState.showAnswersAsIGo) {
       if (quizState.selectedQuestions
           .every((question) => question.answerStage == AnswerStage.selected)) {
         showCheckAnswersButton = true;
@@ -102,16 +102,21 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   actions: [
                     CustomButtonOverlayAppBar(
                       title:
-                          'Question ${quizState.currentQuestionIndex + 1} / ${quizState.numberOfQuestionsSelected}',
+                          'Question ${quizState.currentQuestionIndex + 1} of ${quizState.numberOfQuestionsSelected}',
                     )
                   ],
                 ),
               ];
             },
             body: Container(
-              color:  Theme.of(context).colorScheme.onBackground.withOpacity(kBackgroundOpacity),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onBackground
+                  .withOpacity(kBackgroundOpacity),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * kPageIndentHorizontal),
+                padding: EdgeInsets.symmetric(
+                  horizontal: size.width * kPageIndentHorizontal,
+                ),
                 child: PageView(
                   onPageChanged: (index) {
                     setState(() {});
@@ -122,49 +127,46 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   children: quizState.selectedQuestions.map(
                     (question) {
                       questionIndex++;
-                      return Stack(
-                        children: [
-                          QuestionTile(
-                            question:
-                                quizState.selectedQuestions[questionIndex - 1],
-                            removeEndDivider: true,
-                          ),
-                          OutlinedButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => const CompletionPage());
-                              },
-                              child: const Text('show')),
-                          if (question.answerStage != AnswerStage.correct &&
-                              question.answerStage != AnswerStage.incorrect)
-                            Align(
-                              alignment: const Alignment(0, 0.60),
-                              child: SizedBox(
-                                width: size.width * 0.80,
-                                child: showCheckAnswersButton
-                                    ? OutlinedButton(
-                                        onPressed: question.answerStage ==
-                                                AnswerStage.selected
-                                            ? () {
-                                                if (quizState.showAnswersAsIGo) {
-                                                  quizNotifier.checkAllAnswers();
-                                                } else {
-                                                  quizNotifier
-                                                      .checkAnswer(question);
+                      return SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            QuestionTile(
+                              question: quizState
+                                  .selectedQuestions[questionIndex - 1],
+                              removeEndDivider: true,
+                            ),
+                            if (question.answerStage != AnswerStage.correct &&
+                                question.answerStage != AnswerStage.incorrect)
+                              Align(
+                                alignment: const Alignment(0, 0.60),
+                                child: SizedBox(
+                                  width: size.width * 0.80,
+                                  child: showCheckAnswersButton
+                                      ? OutlinedButton(
+                                          onPressed: question.answerStage ==
+                                                  AnswerStage.selected
+                                              ? () {
+                                                  if (!quizState
+                                                      .showAnswersAsIGo) {
+                                                    quizNotifier
+                                                        .checkAllAnswers();
+                                                  } else {
+                                                    quizNotifier
+                                                        .checkAnswer(question);
+                                                  }
                                                 }
-                                              }
-                                            : null,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: size.height * 0.02),
-                                          child: Text(checkButtonText),
-                                        ),
-                                      )
-                                    : const SizedBox.shrink(),
-                              ),
-                            )
-                        ],
+                                              : null,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: size.height * 0.02),
+                                            child: Text(checkButtonText, style: Theme.of(context).textTheme.bodyMedium,),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ),
+                              )
+                          ],
+                        ),
                       );
                     },
                   ).toList(),
@@ -172,39 +174,37 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               ),
             ),
           ),
-          floatingActionButton: Container(
-            child: SizedBox(
-              width: size.width * 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomPageChangeButton(
-                    onPressed: () {
-                      _pageController.animateToPage(
-                          quizState.currentQuestionIndex - 1,
-                          duration:
-                              const Duration(milliseconds: kPageChangeAnimation),
-                          curve: Curves.easeInOutCirc);
-                    },
-                    iconData: Icons.arrow_back_outlined,
-                    disable: disableButtonLeft,
-                  ),
-                  SizedBox(
-                    width: size.width * 0.25,
-                  ),
-                  CustomPageChangeButton(
-                    onPressed: () {
-                      _pageController.animateToPage(
-                          quizState.currentQuestionIndex + 1,
-                          duration:
-                              const Duration(milliseconds: kPageChangeAnimation),
-                          curve: Curves.easeInOutCirc);
-                    },
-                    iconData: Icons.arrow_forward_outlined,
-                    disable: disableButtonRight,
-                  ),
-                ],
-              ),
+          floatingActionButton: SizedBox(
+            width: size.width * 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomPageChangeButton(
+                  onPressed: () {
+                    _pageController.animateToPage(
+                        quizState.currentQuestionIndex - 1,
+                        duration:
+                            const Duration(milliseconds: kPageChangeAnimation),
+                        curve: Curves.easeInOutCirc);
+                  },
+                  iconData: Icons.arrow_back_outlined,
+                  disable: disableButtonLeft,
+                ),
+                SizedBox(
+                  width: size.width * 0.25,
+                ),
+                CustomPageChangeButton(
+                  onPressed: () {
+                    _pageController.animateToPage(
+                        quizState.currentQuestionIndex + 1,
+                        duration:
+                            const Duration(milliseconds: kPageChangeAnimation),
+                        curve: Curves.easeInOutCirc,);
+                  },
+                  iconData: Icons.arrow_forward_outlined,
+                  disable: disableButtonRight,
+                ),
+              ],
             ),
           ),
           floatingActionButtonLocation:

@@ -24,39 +24,37 @@ class AnswerTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    Color borderColor = Theme.of(context).colorScheme.primary.withOpacity(0.50);
+    Color backgroundColor = Theme.of(context).colorScheme.background;
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
 
     if (answer.answerStage == AnswerStage.selected) {
-      borderColor = Theme.of(context).colorScheme.primary;
+      backgroundColor = Colors.indigo;
     }
     if (answer.answerStage == AnswerStage.correct) {
-      borderColor = AppColors.defaultAppColor;
+      backgroundColor = Theme.of(context).colorScheme.primary;
       icon = Icons.check_circle_outline;
     }
     if (answer.answerStage == AnswerStage.incorrect) {
-      borderColor = Colors.red;
+      backgroundColor = Colors.red;
       icon = Icons.clear_outlined;
     }
     if (answer.isCorrect && answer.answerStage == AnswerStage.incorrect) {
-      borderColor = Theme.of(context).colorScheme.onSurfaceVariant;
+      backgroundColor = Theme.of(context).colorScheme.primary;
       icon = Icons.check_circle_outline;
     }
 
     return Padding(
       padding:
-          EdgeInsets.symmetric(
-          vertical:  size.height * kPageIndentVertical / 4
-          ),
+          EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical / 6),
       child: Stack(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(kRadius),
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.background,
+                color: backgroundColor,
               ),
               child: Padding(
                 padding: EdgeInsets.all(size.height * 0.015),
@@ -65,46 +63,29 @@ class AnswerTile extends ConsumerWidget {
                   children: [
                     ListTile(
                       leading: Text(
-                          ((answerIndex + 1).toAlphabet()),),
+                        ((answerIndex + 1).toAlphabet()),
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
                       title: Text(
-                                answer.answer,
-                                textAlign: TextAlign
-                                    .start, // Align the text to the start (left) side
-                              ),
-                      trailing:
-                          icon != null ?
-                            Expanded(
-                              flex: 2,
-                              child: PopOutAnimation(
-                                child: Icon(icon),
-                              ),
-                            ) : null,
+                        answer.answer,
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: answer.answerStage != AnswerStage.selected
+                                ? Theme.of(context).textTheme.bodyMedium!.color
+                                : Colors
+                                    .white,), // Align the text to the start (left) side
+                      ),
+                      trailing: SizedBox(
+                        child: icon != null
+                            ? PopOutAnimation(
+                                child: Icon(
+                                  icon,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : null,
+                      ),
                     ),
-                    // Row(
-                    //   children: [
-                    //     Expanded(
-                    //       child: Text(
-                    //         ((answerIndex + 1).toAlphabet()),
-                    //       ),
-                    //     ),
-                    //     Expanded(
-                    //       flex: 12,
-                    //       child: Text(
-                    //         answer.answer,
-                    //         textAlign: TextAlign
-                    //             .start, // Align the text to the start (left) side
-                    //       ),
-                    //     ),
-                    //     if (icon != null) ...[
-                    //       Expanded(
-                    //         flex: 2,
-                    //         child: PopOutAnimation(
-                    //           child: Icon(icon),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ],
-                    // ),
                   ],
                 ),
               ),

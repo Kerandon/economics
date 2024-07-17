@@ -24,7 +24,7 @@ class CustomBigButton extends StatelessWidget {
         child: OutlinedButton(
           style: OutlinedButton.styleFrom(
             backgroundColor: onPressed == null
-                ? Theme.of(context).colorScheme.shadow
+                ? Theme.of(context).colorScheme.onSecondary.withOpacity(kBackgroundOpacity)
                 : Theme.of(context).colorScheme.primary,
             side: BorderSide(
               color: onPressed == null
@@ -39,7 +39,9 @@ class CustomBigButton extends StatelessWidget {
               text,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.white
+                color: onPressed == null
+                    ? Theme.of(context).colorScheme.onBackground.withOpacity(kNotSelectedOpacity)
+                    : Colors.white,
               ),
             ),
           ),

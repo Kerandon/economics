@@ -128,7 +128,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(selectedQuestions: questions);
   }
 
-  void setCheckAnswersAtEnd(bool checkAtEnd) {
+  void setShowAnswersAsIGo(bool checkAtEnd) {
     state = state.copyWith(showAnswersAsIGo: checkAtEnd);
   }
 
