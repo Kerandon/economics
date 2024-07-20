@@ -8,7 +8,6 @@ class QuizState {
   final List<QuestionModel> allQuestions;
   final List<QuestionModel> selectedQuestions;
   final bool questionsAllSelected;
-  final bool questionsAllAnswered;
   final int numberOfQuestionsCorrect;
   final Map<Section, bool> selectedSections;
   final int numberOfQuestionsSelected;
@@ -19,7 +18,6 @@ class QuizState {
     required this.allQuestions,
     required this.selectedQuestions,
     required this.questionsAllSelected,
-    required this.questionsAllAnswered,
     required this.numberOfQuestionsCorrect,
     required this.selectedSections,
     required this.numberOfQuestionsSelected,
@@ -31,7 +29,6 @@ class QuizState {
     List<QuestionModel>? allQuestions,
     List<QuestionModel>? selectedQuestions,
     bool? questionsAllSelected,
-    bool? questionsAllAnswered,
     int? numberOfQuestionsCorrect,
     Map<Section, bool>? selectedSections,
     int? numberOfQuestionsSelected,
@@ -42,7 +39,6 @@ class QuizState {
       allQuestions: allQuestions ?? this.allQuestions,
       selectedQuestions: selectedQuestions ?? this.selectedQuestions,
       questionsAllSelected: questionsAllSelected ?? this.questionsAllSelected,
-      questionsAllAnswered: questionsAllAnswered ?? this.questionsAllAnswered,
       numberOfQuestionsCorrect:
           numberOfQuestionsCorrect ?? this.numberOfQuestionsCorrect,
       selectedSections: selectedSections ?? this.selectedSections,
@@ -156,7 +152,6 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
 
     updateQuestionState(question);
-    //quizNotifier.updateQuestionState(question);
   }
 
   void checkAllAnswers() {
@@ -196,19 +191,8 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
 
     state = state.copyWith(
-        questionsAllAnswered: true,
         selectedQuestions: updatedQuestions,
         numberOfQuestionsCorrect: numberOfCorrect);
-  }
-
-  void setResetQuestions() {
-    state = state.copyWith(
-      selectedQuestions: [],
-      questionsAllSelected: false,
-      questionsAllAnswered: false,
-      numberOfQuestionsCorrect: 0,
-      currentQuestionIndex: 0,
-    );
   }
 
   void setSectionAsSelected(Section section, bool isSelected) {
@@ -224,6 +208,15 @@ class QuizNotifier extends StateNotifier<QuizState> {
   void setCurrentQuestionIndex(int index) {
     state = state.copyWith(currentQuestionIndex: index);
   }
+
+  void setResetQuestions() {
+    state = state.copyWith(
+      selectedQuestions: [],
+      questionsAllSelected: false,
+      numberOfQuestionsCorrect: 0,
+      currentQuestionIndex: 0,
+    );
+  }
 }
 
 final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
@@ -232,7 +225,6 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       allQuestions: [],
       selectedQuestions: [],
       questionsAllSelected: false,
-      questionsAllAnswered: false,
       numberOfQuestionsCorrect: 0,
       selectedSections: {
         Section.intro: true,

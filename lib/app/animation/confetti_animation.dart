@@ -44,19 +44,19 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
     return Stack(
       children: [
         Align(
-          alignment: const Alignment(0, -0.50),
+          alignment: const Alignment(0, 0),
           child: ConfettiWidget(
-            colors: [
-              Theme.of(context).colorScheme.primary,
-              Theme.of(context).colorScheme.secondary,
-              Theme.of(context).colorScheme.tertiary,
+            colors: const [
+              Colors.amberAccent,
+              Colors.redAccent,
+              Colors.pinkAccent
             ],
             blastDirectionality: BlastDirectionality.explosive,
-            numberOfParticles: 10,
-            maxBlastForce: 40,
-            gravity: 0.60,
-            minimumSize: const Size(45, 55),
-            maximumSize: const Size(55, 60),
+            numberOfParticles: 5,
+            maxBlastForce: 90,
+            gravity: 0.50,
+            minimumSize: const Size(30, 35),
+            maximumSize: const Size(35, 40),
             shouldLoop: false,
             confettiController: _controller,
             createParticlePath: drawStar,

@@ -8,7 +8,6 @@ import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_keyensian_curve.dart';
 
 class MacroKeynesianADAS extends CustomPainter with NameMixin {
-
   final DiagramType type;
 
   @override
@@ -18,7 +17,9 @@ class MacroKeynesianADAS extends CustomPainter with NameMixin {
   final Color primaryColor;
 
   MacroKeynesianADAS(
-      {required this.type, this.axisColor = Colors.white, this.primaryColor = Colors.green});
+      {required this.type,
+      this.axisColor = Colors.white,
+      this.primaryColor = Colors.green});
 
   @override
   void paint(Canvas canvas, Size size) {

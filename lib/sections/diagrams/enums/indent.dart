@@ -1,4 +1,3 @@
-
 enum Indent {
   start,
   center,

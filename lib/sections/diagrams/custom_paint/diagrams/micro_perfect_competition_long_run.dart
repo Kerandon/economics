@@ -4,7 +4,6 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
-import 'package:economics_app/sections/diagrams/enums/axis_label_margin.dart';
 import 'package:economics_app/sections/diagrams/enums/curve_align.dart';
 import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:economics_app/sections/diagrams/models.dart';
@@ -49,9 +48,11 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
     paintCustomBezier(
       size,
       canvas,
-      startPos: Offset(0.20, 0.60),
+      startPos: const Offset(0.20, 0.60),
       points: [
-        CustomBezier(control: Offset(0.35, 0.90), endPoint: Offset(0.65, 0.20))
+        CustomBezier(
+            control: const Offset(0.35, 0.90),
+            endPoint: const Offset(0.65, 0.20))
       ],
       label1: kMC,
       label1Align: CurveAlign.centerTop,
@@ -61,60 +62,66 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       paintCustomBezier(
         size,
         canvas,
-        startPos: Offset(0.18, 0.30),
+        startPos: const Offset(0.18, 0.30),
         points: [
           CustomBezier(
-              control: Offset(0.50, 0.70), endPoint: Offset(0.82, 0.30))
+              control: const Offset(0.50, 0.70),
+              endPoint: const Offset(0.82, 0.30))
         ],
         label1: kAC,
         label1Align: CurveAlign.centerTop,
       );
-    }  if (type == DiagramType.micro_PerfectCompetition_AbnormalProfits) {
+    }
+    if (type == DiagramType.micro_PerfectCompetition_AbnormalProfits) {
       /// AC
       paintCustomBezier(
         size,
         canvas,
-        startPos: Offset(0.18, 0.40),
+        startPos: const Offset(0.18, 0.40),
         points: [
           CustomBezier(
-              control: Offset(0.40, 0.80), endPoint: Offset(0.72, 0.40))
+              control: const Offset(0.40, 0.80),
+              endPoint: const Offset(0.72, 0.40))
         ],
         label1: kAC,
         label1Align: CurveAlign.centerTop,
       );
       paintShading(canvas, size, ShadeType.abnormalProfits, [
-        Offset(kAxisIndent,0.50),Offset(0.50,0.50),
-        Offset(0.50,0.59),
-        Offset(kAxisIndent,0.59)
+        const Offset(kAxisIndent, 0.50),
+        const Offset(0.50, 0.50),
+        const Offset(0.50, 0.59),
+        const Offset(kAxisIndent, 0.59)
       ]);
-      paintDot(canvas, size, pos: Offset(0.50, 0.59), color: highlightedColor);
-
+      paintDot(canvas, size,
+          pos: const Offset(0.50, 0.59), color: highlightedColor);
     }
-
 
     if (type == DiagramType.micro_PerfectCompetition_EconomicLosses) {
       /// AC
       paintCustomBezier(
         size,
         canvas,
-        startPos: Offset(0.20, 0.20),
+        startPos: const Offset(0.20, 0.20),
         points: [
           CustomBezier(
-              control: Offset(0.55, 0.60), endPoint: Offset(0.90, 0.20))
+              control: const Offset(0.55, 0.60),
+              endPoint: const Offset(0.90, 0.20))
         ],
         label1: kAC,
         label1Align: CurveAlign.centerTop,
       );
       paintShading(canvas, size, ShadeType.losses, [
-        Offset(kAxisIndent,0.50),Offset(0.50,0.50),
-        Offset(0.50,0.395),
-        Offset(kAxisIndent,0.395)
+        const Offset(kAxisIndent, 0.50),
+        const Offset(0.50, 0.50),
+        const Offset(0.50, 0.395),
+        const Offset(kAxisIndent, 0.395)
       ]);
-      paintDot(canvas, size, pos: Offset(0.50, 0.395), color: highlightedColor);
-
+      paintDot(canvas, size,
+          pos: const Offset(0.50, 0.395), color: highlightedColor);
     }
 
-    paintDot(canvas, size, pos: Offset(0.50, 0.50), color: highlightedColor);
+    paintDot(canvas, size,
+        pos: const Offset(0.50, 0.50), color: highlightedColor);
   }
 
   @override

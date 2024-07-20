@@ -11,7 +11,7 @@ import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_a
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../diagrams/custom_paint/custom_paint_diagrams.dart';
-import '../../quizzes/quiz_widgets/quiz_page.dart';
+import '../../quizzes/quiz_widgets/quiz_page_for_notes.dart';
 
 class ArticlePage extends ConsumerStatefulWidget {
   const ArticlePage({super.key});
@@ -79,7 +79,7 @@ class _ArticlePageState extends ConsumerState<ArticlePage> {
                   ),
                 ],
               ),
-              QuizPage(article),
+              QuizPageForNotes(article),
             ],
           ),
         ),

@@ -1,4 +1,3 @@
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
 import '../painter_constants.dart';

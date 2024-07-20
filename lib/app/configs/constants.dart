@@ -24,6 +24,7 @@ const kPageIndentVertical = 0.02;
 const kBorderWidth = 0.0015;
 const kDividerIndent = 0.03;
 const kWrapSpacing = 0.015;
+const kBottomIndent = 0.05;
 
 /// Animation
 const kPageChangeAnimation = 400;

@@ -5,7 +5,6 @@ import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/app_colors.dart';
 import '../../../app/configs/constants.dart';
 import '../quiz_models/answer_model.dart';
 
@@ -25,7 +24,6 @@ class AnswerTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     Color backgroundColor = Theme.of(context).colorScheme.background;
-    final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
 
@@ -70,10 +68,13 @@ class AnswerTile extends ConsumerWidget {
                         answer.answer,
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: answer.answerStage != AnswerStage.selected
-                                ? Theme.of(context).textTheme.bodyMedium!.color
-                                : Colors
-                                    .white,), // Align the text to the start (left) side
+                              color: answer.answerStage != AnswerStage.selected
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .color
+                                  : Colors.white,
+                            ), // Align the text to the start (left) side
                       ),
                       trailing: SizedBox(
                         child: icon != null
@@ -96,11 +97,9 @@ class AnswerTile extends ConsumerWidget {
               color: Colors.transparent,
               child: InkWell(
                   borderRadius: BorderRadius.circular(kRadius),
-                  onTap: quizState.questionsAllAnswered
-                      ? null
-                      : () {
-                          quizNotifier.setQuestionAsSelected(question, answer);
-                        }),
+                  onTap: () {
+                    quizNotifier.setQuestionAsSelected(question, answer);
+                  }),
             ),
           ),
         ],

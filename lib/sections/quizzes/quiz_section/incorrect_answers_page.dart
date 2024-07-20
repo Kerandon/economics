@@ -1,3 +1,4 @@
+import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../app/configs/app_colors.dart';
+import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
 
 class IncorrectAnswersPage extends ConsumerStatefulWidget {
@@ -20,6 +22,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
   @override
   Widget build(BuildContext context) {
     final quizState = ref.watch(quizProvider);
+    final size = MediaQuery.of(context).size;
     Map<int, QuestionModel> incorrectQuestions = {};
 
     for (int i = 0; i < quizState.selectedQuestions.length; i++) {
@@ -51,12 +54,18 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
         },
         body: SingleChildScrollView(
           child: Column(
-            children: incorrectQuestions.entries
-                .map((question) => QuestionTile(
-                      question: question.value,
-                      index: question.key,
-                    ))
-                .toList(),
+            children: [
+              ...incorrectQuestions.entries.map((question) => QuestionTile(
+                    question: question.value,
+                    index: question.key,
+                  )),
+              CustomBigButton(
+                  text: 'Close',
+                  onPressed: () => Navigator.of(context).maybePop()),
+              SizedBox(
+                height: size.height * kBottomIndent,
+              ),
+            ],
           ),
         ),
       ),

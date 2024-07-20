@@ -59,11 +59,11 @@ class CustomAppTheme {
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: Colors.blue,
         iconTheme: MaterialStateProperty.resolveWith<IconThemeData>(
-              (Set<MaterialState> states) {
+          (Set<MaterialState> states) {
             if (states.contains(MaterialState.selected)) {
-              return IconThemeData(color: Colors.white);
+              return const IconThemeData(color: Colors.white);
             }
-            return IconThemeData(color: Colors.grey);
+            return const IconThemeData(color: Colors.grey);
           },
         ),
       ),

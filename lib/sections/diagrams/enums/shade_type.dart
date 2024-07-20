@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
-enum ShadeType { consumerSurplus, producerSurplus, welfareLoss, abnormalProfits, losses}
+enum ShadeType {
+  consumerSurplus,
+  producerSurplus,
+  welfareLoss,
+  abnormalProfits,
+  losses
+}
 
 extension Shade on ShadeType {
-
   Color setShadeColor() {
     switch (this) {
       case ShadeType.consumerSurplus:

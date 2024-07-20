@@ -53,7 +53,6 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                 actions: const [
                   CustomButtonOverlayAppBar(
                     title: 'Quiz',
-                    // expansionControllers: _expansionControllers,
                   )
                 ],
               ),
@@ -138,8 +137,8 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                   ],
                 ),
                 AnimatedContainer(
-                  height: _showIcon ? height * 0.22 : height * 0.02,
-                  duration: const Duration(milliseconds: 200),
+                  height: _showIcon ? height * 0.45 : height * 0.06,
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
                 ),
                 CustomBigButton(
@@ -148,6 +147,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                           .every((element) => element == false)
                       ? null
                       : () {
+                          quizNotifier.setResetQuestions();
                           List<QuestionModel> selectedQuestions = [];
 
                           for (var q in quizState.allQuestions) {

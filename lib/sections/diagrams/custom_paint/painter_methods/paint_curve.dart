@@ -41,10 +41,12 @@ void paintCurve(
   }
 
   if (label1 != null) {
-    paintText(size, canvas, label1, Offset(p1.dx, p1.dy), customAlign: label1Align);
+    paintText(size, canvas, label1, Offset(p1.dx, p1.dy),
+        customAlign: label1Align);
   }
   if (label2 != null) {
-    paintText(size, canvas, label2, Offset(p2.dx, p2.dy), customAlign: label2Align);
+    paintText(size, canvas, label2, Offset(p2.dx, p2.dy),
+        customAlign: label2Align);
   }
 
   if (drawArrowAtStart) {

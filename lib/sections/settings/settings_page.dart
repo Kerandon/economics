@@ -16,7 +16,10 @@ class SettingsPage extends ConsumerWidget {
             onPressed: () {
               Navigator.maybePop(context);
             },
-            icon: const Icon(Icons.arrow_back_outlined, color: Colors.white,),
+            icon: const Icon(
+              Icons.arrow_back_outlined,
+              color: Colors.white,
+            ),
           ),
           title: const Text('Settings'),
         ),

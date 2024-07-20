@@ -16,14 +16,16 @@ class CustomChipButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
         style: OutlinedButton.styleFrom(
-          backgroundColor: isSelected
-              ? Theme.of(context).colorScheme.primary
-              : null,
+            backgroundColor:
+                isSelected ? Theme.of(context).colorScheme.primary : null,
             side: BorderSide(
-          color: isSelected
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.onBackground.withOpacity(0.50),
-        )),
+              color: isSelected
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context)
+                      .colorScheme
+                      .onBackground
+                      .withOpacity(0.50),
+            )),
         onPressed: onPressed,
         child: Text(
           text,

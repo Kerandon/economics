@@ -27,7 +27,7 @@ class GlobalTariffs extends CustomPainter with NameMixin {
   @override
   void paint(Canvas canvas, Size size) {
     String pWT = kPWT;
-    String pW =  kPW;
+    String pW = kPW;
     String q1 = kQ1;
     String q2 = kQ2;
     String q3 = kQ3;

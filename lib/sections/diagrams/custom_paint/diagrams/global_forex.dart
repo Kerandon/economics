@@ -27,22 +27,23 @@ class GlobalForex extends CustomPainter with NameMixin {
     paintDiagramDashedLines(size, canvas,
         yAxisStartPos: 0.455, xAxisEndPos: 0.36, yLabel: kP1, xLabel: kQ1);
 
-
     paintAxis(size, canvas, yAxisLabel: kYLabelForex, xAxisLabel: kXLabelForex);
-    paintCurve(
-
-        size, canvas, const Offset(0.20, 0.75), const Offset(0.75, 0.20),
+    paintCurve(size, canvas, const Offset(0.20, 0.75), const Offset(0.75, 0.20),
         label2: kS, label2Align: CurveAlign.centerRight);
     paintCurve(size, canvas, const Offset(0.80, 0.75), const Offset(0.30, 0.25),
         label1: kD1, label1Align: CurveAlign.centerBottom);
     if (type == DiagramType.global_Forex_DemandIncrease) {
       paintCurve(
-        color: highlightedColor,
-          size, canvas, const Offset(0.90, 0.70), const Offset(0.40, 0.20),
-          label1: kD2, label1Align: CurveAlign.centerBottom);
+          color: highlightedColor,
+          size,
+          canvas,
+          const Offset(0.90, 0.70),
+          const Offset(0.40, 0.20),
+          label1: kD2,
+          label1Align: CurveAlign.centerBottom);
       paintDiagramDashedLines(size, canvas,
           yAxisStartPos: 0.38, xAxisEndPos: 0.435, yLabel: kP2, xLabel: kQ2);
-      paintArrow(size, canvas, const Offset(0.71,0.60));
+      paintArrow(size, canvas, const Offset(0.71, 0.60));
     }
     if (type == DiagramType.global_Forex_DemandDecrease) {
       paintDiagramDashedLines(size, canvas,
@@ -50,9 +51,13 @@ class GlobalForex extends CustomPainter with NameMixin {
 
       paintCurve(
           color: highlightedColor,
-          size, canvas, const Offset(0.65, 0.75), const Offset(0.20, 0.30),
-          label1: kD2, label1Align: CurveAlign.centerBottom);
-      paintArrow(size, canvas, const Offset(0.66,0.60));
+          size,
+          canvas,
+          const Offset(0.65, 0.75),
+          const Offset(0.20, 0.30),
+          label1: kD2,
+          label1Align: CurveAlign.centerBottom);
+      paintArrow(size, canvas, const Offset(0.66, 0.60));
     }
   }
 

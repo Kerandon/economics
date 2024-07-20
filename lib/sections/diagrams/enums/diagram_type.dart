@@ -1,8 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-/// Each item is designed to be split by underscore.
-/// If the item is appended with [_default] it is the default diagram for its category
-
 enum DiagramType {
   micro_PerfectCompetition_LongRun_Default,
   micro_PerfectCompetition_AbnormalProfits,

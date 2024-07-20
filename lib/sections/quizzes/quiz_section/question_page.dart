@@ -1,5 +1,8 @@
+import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
+import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_section/completion_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_widgets/question_tile.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +11,7 @@ import '../../../app/configs/app_colors.dart';
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_change_button.dart';
 import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
-import 'completion_page.dart';
+import '../quiz_widgets/custom_slider.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -34,17 +37,9 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
           quizState.selectedQuestions[quizState.currentQuestionIndex];
     }
 
-    if (quizState.selectedQuestions.every((question) =>
-        question.answerStage == AnswerStage.correct ||
-        question.answerStage == AnswerStage.incorrect)) {
-      if (!_hasShownCompletedDialog) {
-        _hasShownCompletedDialog = true;
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          showDialog(
-              context: context, builder: (context) => const CompletionPage());
-        });
-      }
-    }
+    final allQuestionsAnswered = quizState.selectedQuestions.every((element) =>
+        element.answerStage == AnswerStage.correct ||
+        element.answerStage == AnswerStage.incorrect);
 
     /// Directional buttons
     /// Left button
@@ -83,11 +78,32 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
       showCheckAnswersButton = true;
       checkButtonText = "Check answer";
     }
+    if (quizState.allQuestions.every((element) =>
+            element.answerStage == AnswerStage.correct ||
+            element.answerStage == AnswerStage.incorrect) &&
+        !_hasShownCompletedDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        showDialog(
+            context: context, builder: (context) => const CompletionPage());
+      });
+      _hasShownCompletedDialog = true;
+    }
 
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_outlined),
+              onPressed: () {
+                quizNotifier.setResetQuestions();
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return const HomePage();
+                }));
+              },
+            ),
+          ),
           body: NestedScrollView(
             floatHeaderSlivers: true,
             headerSliverBuilder:
@@ -100,9 +116,13 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   floating: true,
                   forceElevated: innerBoxIsScrolled,
                   actions: [
+                    SizedBox(
+                      width: size.width * 0.05,
+                    ),
+                    const CustomSlider(),
                     CustomButtonOverlayAppBar(
                       title:
-                          'Question ${quizState.currentQuestionIndex + 1} of ${quizState.numberOfQuestionsSelected}',
+                          'Qn ${quizState.currentQuestionIndex + 1} of ${quizState.numberOfQuestionsSelected}',
                     )
                   ],
                 ),
@@ -139,32 +159,42 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                 question.answerStage != AnswerStage.incorrect)
                               Align(
                                 alignment: const Alignment(0, 0.60),
-                                child: SizedBox(
-                                  width: size.width * 0.80,
-                                  child: showCheckAnswersButton
-                                      ? OutlinedButton(
-                                          onPressed: question.answerStage ==
-                                                  AnswerStage.selected
-                                              ? () {
-                                                  if (!quizState
-                                                      .showAnswersAsIGo) {
-                                                    quizNotifier
-                                                        .checkAllAnswers();
-                                                  } else {
-                                                    quizNotifier
-                                                        .checkAnswer(question);
-                                                  }
+                                child: showCheckAnswersButton
+                                    ? CustomBigButton(
+                                        text: checkButtonText,
+                                        onPressed: question.answerStage ==
+                                                AnswerStage.selected
+                                            ? () {
+                                                if (!quizState
+                                                    .showAnswersAsIGo) {
+                                                  quizNotifier
+                                                      .checkAllAnswers();
+                                                } else {
+                                                  quizNotifier
+                                                      .checkAnswer(question);
                                                 }
-                                              : null,
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: size.height * 0.02),
-                                            child: Text(checkButtonText, style: Theme.of(context).textTheme.bodyMedium,),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
-                                ),
-                              )
+                                              }
+                                            : null,
+                                      )
+                                    : const SizedBox.shrink(),
+                              ),
+                            allQuestionsAnswered
+                                ? Column(
+                                    children: [
+                                      CustomBigButton(
+                                          text: 'Quiz results',
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    const CompletionPage());
+                                          }),
+                                      SizedBox(
+                                        height: size.height * 0.20,
+                                      ),
+                                    ],
+                                  )
+                                : const SizedBox()
                           ],
                         ),
                       );
@@ -191,15 +221,16 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   disable: disableButtonLeft,
                 ),
                 SizedBox(
-                  width: size.width * 0.25,
+                  width: size.width * 0.65,
                 ),
                 CustomPageChangeButton(
                   onPressed: () {
                     _pageController.animateToPage(
-                        quizState.currentQuestionIndex + 1,
-                        duration:
-                            const Duration(milliseconds: kPageChangeAnimation),
-                        curve: Curves.easeInOutCirc,);
+                      quizState.currentQuestionIndex + 1,
+                      duration:
+                          const Duration(milliseconds: kPageChangeAnimation),
+                      curve: Curves.easeInOutCirc,
+                    );
                   },
                   iconData: Icons.arrow_forward_outlined,
                   disable: disableButtonRight,

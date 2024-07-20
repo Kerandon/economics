@@ -20,8 +20,10 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
     final size = MediaQuery.of(context).size;
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
+    const spacing = 0.01;
     int numberCorrect = 0;
     int totalQuestions = quizState.selectedQuestions.length;
+
     for (var q in quizState.selectedQuestions) {
       if (q.answerStage == AnswerStage.correct) {
         numberCorrect++;
@@ -31,86 +33,179 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
     if (totalQuestions > 1) {
       percentCorrect = numberCorrect / totalQuestions;
     }
+    String emoji = '';
+    if (percentCorrect == 0) {
+      emoji = '😓';
+    } else if (percentCorrect > 0 && percentCorrect < 50) {
+      emoji = '😬';
+    } else if (percentCorrect >= 50 && percentCorrect < 90) {
+      emoji = '💪';
+    } else if (percentCorrect >= 90 && percentCorrect <= 99) {
+      emoji = '🤩';
+    } else if (percentCorrect == 100) {
+      emoji = '🎯';
+    }
+
     return Stack(
       children: [
-        AlertDialog(
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close the dialog
-                    },
-                    icon: const Icon(Icons.close), // Close icon
-                  ),
-                ],
-              ),
-              const Text(
-                'Quiz Completed',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(size.height * 0.05),
-                  child: SizedBox(
-                    height: size.height * 0.20,
-                    child: FittedBox(
+        Center(
+          child: IntrinsicWidth(
+            child: IntrinsicHeight(
+              child: AlertDialog(
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          icon: const Icon(Icons.close), // Close icon
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * spacing,
+                    ),
+                    Text(
+                      'Quiz completed',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: size.height * spacing,
+                      ),
                       child: Text(
-                        '${(percentCorrect * 100).round()}%',
-                        style:
-                            Theme.of(context).textTheme.displayLarge?.copyWith(
-                                  fontSize: 2000,
-                                ),
+                        emoji,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontSize: 60,
+                            ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                Text(
-                  '$numberCorrect / $totalQuestions',
-                  style: Theme.of(context).textTheme.titleLarge,
-                )
-              ],
-            ),
-          ),
-          actionsAlignment: MainAxisAlignment.center,
-          actions: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: size.height * kPageIndentVertical),
-              child: Column(
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const IncorrectAnswersPage()));
-                    },
-                    child: const Text('Review incorrect answers'),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: size.height * kPageIndentVertical),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        quizNotifier.setResetQuestions();
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const HomePage()));
-                      },
-                      child: const Text('New Quiz'),
-                    ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onBackground
+                              .withOpacity(kBackgroundOpacity),
+                          borderRadius: BorderRadius.circular(20),
+                          border: const Border()),
+                      child: Padding(
+                        padding: EdgeInsets.all(size.height * 0.03),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(size.height * 0.01),
+                              child: FittedBox(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      'Your score',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                    SizedBox(
+                                      height: size.height * spacing,
+                                    ),
+                                    Text('${(percentCorrect * 100).round()}%',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            )),
+                                    SizedBox(
+                                      height: size.height * spacing,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                style: Theme.of(context).textTheme.titleLarge,
+                                children: [
+                                  TextSpan(
+                                    text: '$numberCorrect',
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const TextSpan(
+                                    text: ' of ',
+                                  ),
+                                  TextSpan(
+                                    text: '$totalQuestions',
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: ' questions were answered correctly',
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                actionsAlignment: MainAxisAlignment.center,
+                actions: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const IncorrectAnswersPage()));
+                            },
+                            child: const Text(
+                              'Review incorrect answers',
+                              textAlign: TextAlign.center,
+                            )),
+                      ),
+                      Expanded(
+                          child: TextButton(
+                              onPressed: () {
+                                quizNotifier.setResetQuestions();
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomePage()));
+                              },
+                              child: const Text(
+                                'New Quiz',
+                                textAlign: TextAlign.center,
+                              )))
+                    ],
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
-        const ConfettiAnimation(),
+        if (percentCorrect == 100) ...[const ConfettiAnimation()],
       ],
     );
   }

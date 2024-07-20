@@ -7,19 +7,18 @@ import '../painter_constants.dart';
 void paintDiagramDashedLines(
   Size size,
   Canvas canvas, {
-
   required double yAxisStartPos,
   required double xAxisEndPos,
   String? yLabel,
   String? xLabel,
   bool hideYLine = false,
   bool hideXLine = false,
-      Color color = Colors.white,
+  Color color = Colors.white,
 }) {
   if (!hideYLine) {
     /// Dashed line from Y axis
     paintDashedLine(
-      color: color,
+        color: color,
         size: size,
         canvas: canvas,
         p1: Offset(kAxisIndent, yAxisStartPos),

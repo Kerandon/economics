@@ -9,7 +9,6 @@ import '../painter_methods/paint_text.dart';
 import '../painter_methods/paint_text_box.dart';
 
 class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
-
   @override
   String get name => type.name;
   final Color color;
@@ -22,7 +21,6 @@ class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
     this.color = Colors.white,
     this.primaryColor = Colors.green,
   });
-
 
   @override
   void paint(Canvas canvas, Size size) {

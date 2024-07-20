@@ -38,7 +38,6 @@ class GlobalJCurve extends CustomPainter with NameMixin {
         size, canvas, '(X=M)', const Offset(kAxisLabelAdjustmentCenter, 0.50),
         angle: math.pi * -0.50);
 
-
     final paint = Paint()
       ..color = highlightedColor
       ..style = PaintingStyle.stroke

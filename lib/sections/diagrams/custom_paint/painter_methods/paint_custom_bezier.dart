@@ -31,7 +31,6 @@ void paintCustomBezier(Size size, Canvas canvas,
 
   canvas.drawPath(path, paint);
   if (label1 != null) {
-
     paintText(
         size,
         canvas,

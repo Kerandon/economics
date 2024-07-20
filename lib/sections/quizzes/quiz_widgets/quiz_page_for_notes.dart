@@ -9,8 +9,8 @@ import '../quiz_models/answer_model.dart';
 import '../quiz_models/question_model.dart';
 import '../quiz_state/quiz_state.dart';
 
-class QuizPage extends ConsumerStatefulWidget {
-  const QuizPage(
+class QuizPageForNotes extends ConsumerStatefulWidget {
+  const QuizPageForNotes(
     this.articleModel, {
     super.key,
   });
@@ -18,10 +18,10 @@ class QuizPage extends ConsumerStatefulWidget {
   final ArticleModel articleModel;
 
   @override
-  ConsumerState<QuizPage> createState() => _ArticleQuizSectionState();
+  ConsumerState<QuizPageForNotes> createState() => _ArticleQuizSectionState();
 }
 
-class _ArticleQuizSectionState extends ConsumerState<QuizPage> {
+class _ArticleQuizSectionState extends ConsumerState<QuizPageForNotes> {
   List<QuestionModel> selectedQuestions = [];
 
   @override
@@ -77,7 +77,7 @@ class _ArticleQuizSectionState extends ConsumerState<QuizPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (!quizState.questionsAllAnswered) ...[
+                  if (true) ...[
                     Padding(
                       padding:
                           EdgeInsets.all(size.height * kPageIndentVertical),
@@ -93,7 +93,7 @@ class _ArticleQuizSectionState extends ConsumerState<QuizPage> {
                   ],
                 ],
               ),
-              if (quizState.questionsAllAnswered) ...[
+              if (true) ...[
                 const QuizStats(),
               ],
             ],

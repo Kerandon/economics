@@ -1,4 +1,3 @@
-
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +5,9 @@ import '../painter_constants.dart';
 
 void addAxisNumericalLabels(Canvas canvas, Size size,
     {required Axis axis,
-      int initialValue = 0,
-      int incrementValue = 1,
-      totalIncrements = 10}) {
+    int initialValue = 0,
+    int incrementValue = 1,
+    totalIncrements = 10}) {
   final width = size.width;
   final height = size.height;
 
