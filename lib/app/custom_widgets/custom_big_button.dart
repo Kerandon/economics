@@ -21,9 +21,7 @@ class CustomBigButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           backgroundColor: onPressed == null
               ? Theme.of(context)
-                  .colorScheme
-                  .onSecondary
-                  .withOpacity(kBackgroundOpacity)
+                  .colorScheme.scrim
               : Theme.of(context).colorScheme.primary,
           side: BorderSide(
             color: onPressed == null

@@ -1,5 +1,6 @@
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/home/home_page.dart';
+import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_section/completion_page.dart';
@@ -10,8 +11,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/app_colors.dart';
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_change_button.dart';
+import '../../../app/custom_widgets/custom_small_divider.dart';
 import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
 import '../quiz_widgets/custom_slider.dart';
+import '../quiz_widgets/explanation_box.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -28,6 +31,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final appState = ref.watch(appProvider);
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     QuestionModel? currentQuestion;
@@ -94,7 +98,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
         Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_outlined),
+              icon: const Icon(
+                Icons.arrow_back_outlined,
+                color: Colors.white,
+              ),
               onPressed: () {
                 quizNotifier.setResetQuestions();
                 Navigator.of(context)
@@ -129,77 +136,112 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               ];
             },
             body: Container(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onBackground
-                  .withOpacity(kBackgroundOpacity),
+              color: Theme.of(context).colorScheme.background,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: size.width * kPageIndentHorizontal,
-                ),
-                child: PageView(
-                  onPageChanged: (index) {
-                    setState(() {});
-                    quizNotifier.setCurrentQuestionIndex(index);
-                  },
-                  controller: _pageController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: quizState.selectedQuestions.map(
-                    (question) {
-                      questionIndex++;
-                      return SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            QuestionTile(
-                              question: quizState
-                                  .selectedQuestions[questionIndex - 1],
-                              removeEndDivider: true,
-                            ),
-                            if (question.answerStage != AnswerStage.correct &&
-                                question.answerStage != AnswerStage.incorrect)
-                              Align(
-                                alignment: const Alignment(0, 0.60),
-                                child: showCheckAnswersButton
-                                    ? CustomBigButton(
-                                        text: checkButtonText,
-                                        onPressed: question.answerStage ==
-                                                AnswerStage.selected
-                                            ? () {
-                                                if (!quizState
-                                                    .showAnswersAsIGo) {
-                                                  quizNotifier
-                                                      .checkAllAnswers();
-                                                } else {
-                                                  quizNotifier
-                                                      .checkAnswer(question);
-                                                }
-                                              }
-                                            : null,
-                                      )
-                                    : const SizedBox.shrink(),
-                              ),
-                            allQuestionsAnswered
-                                ? Column(
-                                    children: [
-                                      CustomBigButton(
-                                          text: 'Quiz results',
-                                          onPressed: () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    const CompletionPage());
-                                          }),
-                                      SizedBox(
-                                        height: size.height * 0.20,
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox()
-                          ],
+                padding: EdgeInsets.only(top: size.height * 0.01),
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(kBackgroundOpacity),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                         ),
-                      );
-                    },
-                  ).toList(),
+                      ),
+                      child: PageView(
+                        onPageChanged: (index) {
+                          setState(() {});
+                          quizNotifier.setCurrentQuestionIndex(index);
+                        },
+                        controller: _pageController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: quizState.selectedQuestions.map(
+                          (question) {
+                            questionIndex++;
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: size.width * kPageIndentHorizontal,
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: size.height * 0.01,
+                                    ),
+                                    ...[
+
+                                      QuestionTile(
+                                        question: quizState.selectedQuestions[
+                                            questionIndex - 1],
+                                      ),
+
+                                      if (question.answerStage ==
+                                          AnswerStage.incorrect) ...[
+                                        ExplanationBox(question: question)
+                                      ],
+                                      if (question.answerStage !=
+                                              AnswerStage.correct &&
+                                          question.answerStage !=
+                                              AnswerStage.incorrect)
+                                        Align(
+                                          alignment: const Alignment(0, 0.60),
+                                          child: showCheckAnswersButton
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: size.height * 0.03),
+                                                  child: CustomBigButton(
+                                                    text: checkButtonText,
+                                                    onPressed: question
+                                                                .answerStage ==
+                                                            AnswerStage.selected
+                                                        ? () {
+                                                            if (!quizState
+                                                                .showAnswersAsIGo) {
+                                                              quizNotifier
+                                                                  .checkAllAnswers();
+                                                            } else {
+                                                              quizNotifier
+                                                                  .checkAnswer(
+                                                                      question);
+                                                            }
+                                                          }
+                                                        : null,
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink(),
+                                        ),
+
+                                    ],
+                                    SizedBox(height: size.height * 0.03,),
+                                    allQuestionsAnswered
+                                        ? Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: size.height * 0.20,
+                                          ),
+                                          child: CustomBigButton(
+                                              text: 'Quiz results',
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                    const CompletionPage());
+                                              }),
+                                        )
+                                        : const SizedBox()
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -19,9 +19,10 @@ class CustomAppTheme {
         secondary: AppColors.defaultAppColorDarker,
         tertiary: AppColors.defaultAppColorDarkest,
 
-        // isDark
-        //     ? AppColors.onSurfaceDarkTheme
-        //     : AppColors.onSurfaceLightTheme,
+        /// Use Scrim as a 'Not Selected' Color
+        scrim: isDark
+            ? Color(0xFF2e2e2e)
+            : Color(0xFFcfcfcf),
         background: isDark
             ? AppColors.backgroundDarkTheme
             : AppColors.backgroundLightTheme,

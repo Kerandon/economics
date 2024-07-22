@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 class PopOutAnimation extends StatefulWidget {
-  const PopOutAnimation({super.key, required this.child, this.animate});
+  const PopOutAnimation({
+    super.key,
+    required this.child,
+    this.animate,
+    this.onAnimationEnd,
+  });
 
   final Widget child;
   final bool? animate;
+  final VoidCallback? onAnimationEnd;
 
   @override
   State<PopOutAnimation> createState() => _PopOutAnimationState();
@@ -29,11 +34,18 @@ class _PopOutAnimationState extends State<PopOutAnimation>
           tween: Tween<double>(begin: 1.1, end: 1.0)
               .chain(CurveTween(curve: Curves.bounceInOut)),
           weight: 30),
-      // TweenSequenceItem(tween: Tween<double>(begin: 0.0, end: 0.0), weight: 40),
     ]).animate(_controller);
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed && widget.onAnimationEnd != null) {
+        widget.onAnimationEnd!();
+      }
+    });
+
     if (widget.animate == null) {
       _controller.forward();
     }
+
     super.initState();
   }
 

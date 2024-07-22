@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/constants.dart';
 import '../quiz_models/answer_model.dart';
 
-class AnswerTile extends ConsumerWidget {
+class AnswerTile extends ConsumerStatefulWidget {
   const AnswerTile({
     super.key,
     required this.answer,
@@ -21,24 +21,30 @@ class AnswerTile extends ConsumerWidget {
   final int answerIndex;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AnswerTile> createState() => _AnswerTileState();
+}
+
+class _AnswerTileState extends ConsumerState<AnswerTile> {
+  @override
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     Color backgroundColor = Theme.of(context).colorScheme.background;
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
 
-    if (answer.answerStage == AnswerStage.selected) {
+    if (widget.answer.answerStage == AnswerStage.selected) {
       backgroundColor = Colors.indigo;
     }
-    if (answer.answerStage == AnswerStage.correct) {
+    if (widget.answer.answerStage == AnswerStage.correct) {
       backgroundColor = Theme.of(context).colorScheme.primary;
       icon = Icons.check_circle_outline;
     }
-    if (answer.answerStage == AnswerStage.incorrect) {
+    if (widget.answer.answerStage == AnswerStage.incorrect) {
       backgroundColor = Colors.red;
       icon = Icons.clear_outlined;
     }
-    if (answer.isCorrect && answer.answerStage == AnswerStage.incorrect) {
+    if (widget.answer.isCorrect &&
+        widget.answer.answerStage == AnswerStage.incorrect) {
       backgroundColor = Theme.of(context).colorScheme.primary;
       icon = Icons.check_circle_outline;
     }
@@ -61,14 +67,15 @@ class AnswerTile extends ConsumerWidget {
                   children: [
                     ListTile(
                       leading: Text(
-                        ((answerIndex + 1).toAlphabet()),
+                        ((widget.answerIndex + 1).toAlphabet()),
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
                       title: Text(
-                        answer.answer,
+                        widget.answer.answer,
                         textAlign: TextAlign.start,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: answer.answerStage != AnswerStage.selected
+                              color: widget.answer.answerStage !=
+                                      AnswerStage.selected
                                   ? Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -76,16 +83,15 @@ class AnswerTile extends ConsumerWidget {
                                   : Colors.white,
                             ), // Align the text to the start (left) side
                       ),
-                      trailing: SizedBox(
-                        child: icon != null
-                            ? PopOutAnimation(
-                                child: Icon(
-                                  icon,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : null,
-                      ),
+                      trailing: PopOutAnimation(
+                        animate: icon != null,
+                              onAnimationEnd: () {
+                              },
+                              child: Icon(
+                                icon,
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ],
                 ),
@@ -98,7 +104,8 @@ class AnswerTile extends ConsumerWidget {
               child: InkWell(
                   borderRadius: BorderRadius.circular(kRadius),
                   onTap: () {
-                    quizNotifier.setQuestionAsSelected(question, answer);
+                    quizNotifier.setQuestionAsSelected(
+                        widget.question, widget.answer);
                   }),
             ),
           ),

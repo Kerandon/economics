@@ -11,12 +11,10 @@ class QuestionTile extends ConsumerWidget {
   const QuestionTile(
       {super.key,
       this.index,
-      required this.question,
-      this.removeEndDivider = false});
+      required this.question,});
 
   final int? index;
   final QuestionModel question;
-  final bool removeEndDivider;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,13 +67,6 @@ class QuestionTile extends ConsumerWidget {
                         question: question,
                       ))
                 ],
-                if (question.answerStage == AnswerStage.incorrect) ...[
-                  ExplanationBox(question: question)
-                ],
-                if (!removeEndDivider) const CustomSmallDivider(),
-                SizedBox(
-                  height: size.height * kPageIndentVertical,
-                ),
               ],
             )
           ],
