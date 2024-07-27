@@ -3,7 +3,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 class RotateAroundAnimation extends StatefulWidget {
-  const RotateAroundAnimation({super.key, required this.child, this.beginValue = 0.20, this.delay = 200});
+  const RotateAroundAnimation(
+      {super.key,
+      required this.child,
+      this.beginValue = 0.20,
+      this.delay = 200});
 
   final Widget child;
   final double beginValue;
@@ -24,8 +28,8 @@ class _RotateAroundAnimationState extends State<RotateAroundAnimation>
         duration: const Duration(milliseconds: 600), vsync: this);
     _animation = Tween<double>(begin: widget.beginValue, end: 0.0).animate(
         CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine));
-    Future.delayed(Duration(milliseconds: widget.delay),(){
-      if(mounted) {
+    Future.delayed(Duration(milliseconds: widget.delay), () {
+      if (mounted) {
         _controller.forward();
       }
     });

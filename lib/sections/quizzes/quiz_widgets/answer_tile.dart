@@ -1,5 +1,4 @@
 import 'package:economics_app/app/animation/pop_out_animation.dart';
-import 'package:economics_app/app/animation/rotate_around_animation.dart';
 import 'package:economics_app/app/animation/shake_animation.dart';
 import 'package:economics_app/app/animation/slide_in_animation.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
@@ -56,7 +55,9 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
     }
 
     return SlideAnimation(
-      direction: widget.answerIndex % 2 == 0 ? SlideDirection.rightIn : SlideDirection.leftIn,
+      direction: widget.answerIndex % 2 == 0
+          ? SlideDirection.rightIn
+          : SlideDirection.leftIn,
       animateOnStart: true,
       child: ShakeAnimation(
         animate: _animate,
@@ -89,16 +90,18 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                           title: Text(
                             widget.answer.answer,
                             textAlign: TextAlign.start,
-                            style:
-                                Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: widget.answer.answerStage !=
-                                              AnswerStage.selected
-                                          ? Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .color
-                                          : Colors.white,
-                                    ), // Align the text to the start (left) side
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: widget.answer.answerStage !=
+                                          AnswerStage.selected
+                                      ? Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .color
+                                      : Colors.white,
+                                ), // Align the text to the start (left) side
                           ),
                           trailing: PopOutAnimation(
                             animate: icon != null,

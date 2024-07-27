@@ -1,4 +1,3 @@
-
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -47,11 +46,10 @@ class _ShakeAnimationState extends State<ShakeAnimation>
               .chain(CurveTween(curve: Curves.bounceInOut)),
           weight: 30),
     ]).animate(_controller);
-    _scaleAnimation =  TweenSequence<double>([
+    _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.03), weight: 1),
       TweenSequenceItem(tween: Tween(begin: 1.03, end: 1.0), weight: 1),
-    ]).animate(CurvedAnimation(
-        parent: _controller, curve: Curves.bounceInOut));
+    ]).animate(CurvedAnimation(parent: _controller, curve: Curves.bounceInOut));
     super.initState();
   }
 
@@ -78,7 +76,7 @@ class _ShakeAnimationState extends State<ShakeAnimation>
               alignment: Alignment.center,
               transform: Matrix4.identity()
                 ..rotateZ(_shakeAnimation.value * math.pi)
-          ..scale(_scaleAnimation.value),
+                ..scale(_scaleAnimation.value),
               child: widget.child,
             ));
   }

@@ -221,9 +221,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                                       const CompletionPage());
                                             })
                                         : const SizedBox(),
-                                    SizedBox(height: size.height * 0.15,),
+                                    SizedBox(
+                                      height: size.height * 0.15,
+                                    ),
                                   ],
-
                                 ),
                               ),
                             );

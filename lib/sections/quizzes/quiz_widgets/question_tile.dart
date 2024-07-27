@@ -1,5 +1,4 @@
 import 'package:economics_app/app/animation/rotate_around_animation.dart';
-import 'package:economics_app/app/animation/shake_animation.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:flutter/material.dart';
