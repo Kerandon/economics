@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 class PopOutAnimation extends StatefulWidget {
   const PopOutAnimation({
     super.key,
@@ -37,7 +38,8 @@ class _PopOutAnimationState extends State<PopOutAnimation>
     ]).animate(_controller);
 
     _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed && widget.onAnimationEnd != null) {
+      if (status == AnimationStatus.completed &&
+          widget.onAnimationEnd != null) {
         widget.onAnimationEnd!();
       }
     });

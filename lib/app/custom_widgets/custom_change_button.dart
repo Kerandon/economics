@@ -15,8 +15,9 @@ class CustomPageChangeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor:
-      disable ? Theme.of(context).colorScheme.scrim : Theme.of(context).colorScheme.primary,
+      backgroundColor: disable
+          ? Theme.of(context).colorScheme.scrim
+          : Theme.of(context).colorScheme.primary,
       heroTag: null,
       onPressed: disable ? null : onPressed,
       child: Icon(iconData),

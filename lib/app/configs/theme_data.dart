@@ -20,9 +20,7 @@ class CustomAppTheme {
         tertiary: AppColors.defaultAppColorDarkest,
 
         /// Use Scrim as a 'Not Selected' Color
-        scrim: isDark
-            ? Color(0xFF2e2e2e)
-            : Color(0xFFcfcfcf),
+        scrim: isDark ? const Color(0xFF2e2e2e) : const Color(0xFFcfcfcf),
         background: isDark
             ? AppColors.backgroundDarkTheme
             : AppColors.backgroundLightTheme,

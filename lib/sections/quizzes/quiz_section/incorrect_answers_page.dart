@@ -32,7 +32,17 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
     }
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_outlined,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).maybePop();
+          },
+        ),
         title: const Text('Quiz Review'),
       ),
       body: NestedScrollView(
@@ -53,19 +63,43 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
           ];
         },
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              ...incorrectQuestions.entries.map((question) => QuestionTile(
-                    question: question.value,
-                    index: question.key,
-                  )),
-              CustomBigButton(
-                  text: 'Close',
-                  onPressed: () => Navigator.of(context).maybePop()),
-              SizedBox(
-                height: size.height * kBottomIndent,
-              ),
-            ],
+          child: Padding(
+            padding: EdgeInsets.all(size.width * kPageIndentHorizontal / 2),
+            child: Column(
+              children: [
+                ...incorrectQuestions.entries.map((question) => Padding(
+                      padding: EdgeInsets.all(
+                          size.width * kPageIndentHorizontal / 5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onBackground
+                              .withOpacity(
+                                kBackgroundOpacity,
+                              ),
+                          borderRadius: BorderRadius.circular(kRadiusBig),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(
+                              size.width * kPageIndentHorizontal),
+                          child: QuestionTile(
+                            question: question.value,
+                            index: question.key,
+                          ),
+                        ),
+                      ),
+                    )),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: size.height * kBottomIndent,
+                  ),
+                  child: CustomBigButton(
+                      text: 'Close',
+                      onPressed: () => Navigator.of(context).maybePop()),
+                ),
+              ],
+            ),
           ),
         ),
       ),

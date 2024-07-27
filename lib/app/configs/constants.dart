@@ -19,6 +19,7 @@ const kQuiz = 'quiz';
 
 /// Layout
 const kRadius = 12.0;
+const kRadiusBig = 30.0;
 const kPageIndentHorizontal = 0.03;
 const kPageIndentVertical = 0.02;
 const kBorderWidth = 0.0015;

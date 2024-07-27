@@ -1,4 +1,3 @@
-import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_data/number_of_questions.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_section/question_page.dart';
@@ -29,7 +28,6 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final height = size.height;
-    final appState = ref.watch(appProvider);
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
 
@@ -145,16 +143,17 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                   curve: Curves.easeInOutCirc,
                 ),
                 AnimatedContainer(
-                    height: _showIcon ? height * 0.50 : height * 0.10,
-                    duration: const Duration(
-                      milliseconds: 300,
-                    ),
-                    curve: Curves.easeInOutCirc,
-                    child: Icon(
-                      Icons.quiz_outlined,
-                      size: _showIcon ? 180 : 50,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),),
+                  height: _showIcon ? height * 0.50 : height * 0.10,
+                  duration: const Duration(
+                    milliseconds: 300,
+                  ),
+                  curve: Curves.easeInOutCirc,
+                  child: Icon(
+                    Icons.quiz_outlined,
+                    size: _showIcon ? 180 : 50,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
                 CustomBigButton(
                   text: 'Start Quiz!',
                   onPressed: quizState.selectedSections.values

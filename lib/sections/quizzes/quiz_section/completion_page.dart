@@ -70,9 +70,9 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                       height: size.height * spacing,
                     ),
                     Text(
-                      'Quiz completed',
+                      'Quiz summary',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
