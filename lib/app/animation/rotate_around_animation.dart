@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/material.dart';
 
 class RotateAroundAnimation extends StatefulWidget {
@@ -7,11 +8,11 @@ class RotateAroundAnimation extends StatefulWidget {
       {super.key,
       required this.child,
       this.beginValue = 0.20,
-      this.delay = 200});
+      this.duration = kAnimationDuration});
 
   final Widget child;
   final double beginValue;
-  final int delay;
+  final int duration;
 
   @override
   State<RotateAroundAnimation> createState() => _RotateAroundAnimationState();
@@ -25,14 +26,13 @@ class _RotateAroundAnimationState extends State<RotateAroundAnimation>
   @override
   void initState() {
     _controller = AnimationController(
-        duration: const Duration(milliseconds: 600), vsync: this);
+        duration: Duration(milliseconds: widget.duration), vsync: this);
     _animation = Tween<double>(begin: widget.beginValue, end: 0.0).animate(
         CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine));
-    Future.delayed(Duration(milliseconds: widget.delay), () {
-      if (mounted) {
-        _controller.forward();
-      }
-    });
+
+    if (mounted) {
+      _controller.forward();
+    }
 
     super.initState();
   }

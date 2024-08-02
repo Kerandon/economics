@@ -10,7 +10,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/app_colors.dart';
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_change_button.dart';
-import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
 import '../quiz_widgets/custom_slider.dart';
 import '../quiz_widgets/explanation_box.dart';
 
@@ -76,17 +75,26 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
         showCheckAnswersButton = true;
       }
     } else {
-      showCheckAnswersButton = true;
-      checkButtonText = "Check answer";
+      if (quizState.selectedQuestions
+          .any((element) => element.answerStage == AnswerStage.selected)) {
+        showCheckAnswersButton = true;
+        checkButtonText = "Check answer";
+      }
     }
-    if (quizState.allQuestions.every((element) =>
+    if (quizState.selectedQuestions.every((element) =>
             element.answerStage == AnswerStage.correct ||
             element.answerStage == AnswerStage.incorrect) &&
-        !_hasShownCompletedDialog) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        showDialog(
-            context: context, builder: (context) => const CompletionPage());
+        !_hasShownCompletedDialog &&
+        quizState.selectedQuestions.isNotEmpty) {
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        if (mounted) {
+          if (quizState.selectedQuestions.isNotEmpty) {
+            showDialog(
+                context: context, builder: (context) => const CompletionPage());
+          }
+        }
       });
+
       _hasShownCompletedDialog = true;
     }
 
@@ -124,16 +132,15 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                       width: size.width * 0.05,
                     ),
                     const CustomSlider(),
-                    CustomButtonOverlayAppBar(
-                      title:
-                          'Qn ${quizState.currentQuestionIndex + 1} of ${quizState.numberOfQuestionsSelected}',
+                    Text(
+                      'Qn ${quizState.currentQuestionIndex + 1} of ${quizState.numberOfQuestionsSelected}',
                     )
                   ],
                 ),
               ];
             },
             body: Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               child: Padding(
                 padding: EdgeInsets.only(top: size.height * 0.01),
                 child: Stack(
@@ -142,7 +149,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                       decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
-                            .onBackground
+                            .onSurface
                             .withOpacity(kBackgroundOpacity),
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(kRadiusBig),

@@ -5,10 +5,8 @@ import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_widgets/question_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../../app/configs/app_colors.dart';
 import '../../../app/configs/constants.dart';
-import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
 
 class IncorrectAnswersPage extends ConsumerStatefulWidget {
   const IncorrectAnswersPage({super.key});
@@ -32,7 +30,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
     }
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.onSurface,
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
@@ -55,9 +53,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
               floating: true,
               forceElevated: innerBoxIsScrolled,
               actions: const [
-                CustomButtonOverlayAppBar(
-                  title: 'Incorrect answers',
-                )
+                Text('Incorrect answers'),
               ],
             ),
           ];
@@ -74,7 +70,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                         decoration: BoxDecoration(
                           color: Theme.of(context)
                               .colorScheme
-                              .onBackground
+                              .onSurface
                               .withOpacity(
                                 kBackgroundOpacity,
                               ),

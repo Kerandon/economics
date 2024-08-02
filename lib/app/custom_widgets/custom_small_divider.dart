@@ -8,7 +8,7 @@ class CustomSmallDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: Theme.of(context).colorScheme.onBackground.withOpacity(0.20),
+      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.20),
     );
   }
 }

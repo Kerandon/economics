@@ -47,11 +47,20 @@ class AllDiagramsPage extends ConsumerWidget {
     final selectedDiagram = DiagramType.values
         .firstWhere((element) => element.name == diagramsState.diagram.name);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('All diagrams'),
-        centerTitle: true,
-      ),
+    return NestedScrollView(
+      floatHeaderSlivers: true,
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return <Widget>[
+          SliverAppBar(
+            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
+            automaticallyImplyLeading: false,
+            pinned: false,
+            floating: true,
+            forceElevated: innerBoxIsScrolled,
+            actions: [Text('Study notes')],
+          ),
+        ];
+      },
       body: SingleChildScrollView(
         child: Column(
           children: [

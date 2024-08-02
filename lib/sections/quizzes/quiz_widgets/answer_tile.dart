@@ -29,11 +29,12 @@ class AnswerTile extends ConsumerStatefulWidget {
 
 class _AnswerTileState extends ConsumerState<AnswerTile> {
   bool _animate = false;
+  bool _hasAnimatedWhenCorrect = false;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    Color backgroundColor = Theme.of(context).colorScheme.background;
+    Color backgroundColor = Theme.of(context).colorScheme.surface;
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
 
@@ -43,6 +44,10 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
     if (widget.answer.answerStage == AnswerStage.correct) {
       backgroundColor = Theme.of(context).colorScheme.primary;
       icon = Icons.check_circle_outline;
+      if (!_hasAnimatedWhenCorrect) {
+        _animate = true;
+        _hasAnimatedWhenCorrect = true;
+      }
     }
     if (widget.answer.answerStage == AnswerStage.incorrect) {
       backgroundColor = Colors.red;
@@ -104,6 +109,8 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                                 ), // Align the text to the start (left) side
                           ),
                           trailing: PopOutAnimation(
+                            duration: 300,
+                            addPop: true,
                             animate: icon != null,
                             child: Icon(
                               icon,

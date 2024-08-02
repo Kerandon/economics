@@ -2,7 +2,7 @@ import 'package:economics_app/app/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../articles_models/article_model.dart';
-import '../articles_pages/article_page.dart';
+import '../articles_pages/study_contents.dart';
 
 class CustomSubTile extends ConsumerWidget {
   const CustomSubTile(
@@ -26,7 +26,7 @@ class CustomSubTile extends ConsumerWidget {
               appState.setSelectedArticle(article);
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const ArticlePage(),
+                  builder: (context) => const ContentsPage(),
                 ),
               );
             },

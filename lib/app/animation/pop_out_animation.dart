@@ -1,3 +1,4 @@
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,11 +7,17 @@ class PopOutAnimation extends StatefulWidget {
     super.key,
     required this.child,
     this.animate,
+    this.startPos = 0.0,
+    this.duration = kAnimationDuration,
+    this.addPop = false,
     this.onAnimationEnd,
   });
 
   final Widget child;
   final bool? animate;
+  final double startPos;
+  final int duration;
+  final bool addPop;
   final VoidCallback? onAnimationEnd;
 
   @override
@@ -25,16 +32,27 @@ class _PopOutAnimationState extends State<PopOutAnimation>
   @override
   void initState() {
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1200));
+        vsync: this,
+        duration: Duration(
+          milliseconds: widget.duration,
+        ));
     _animation = TweenSequence<double>([
-      TweenSequenceItem(
-          tween: Tween<double>(begin: 0.0, end: 1.1)
-              .chain(CurveTween(curve: Curves.bounceInOut)),
-          weight: 80),
-      TweenSequenceItem(
-          tween: Tween<double>(begin: 1.1, end: 1.0)
-              .chain(CurveTween(curve: Curves.bounceInOut)),
-          weight: 30),
+      if (!widget.addPop) ...[
+        TweenSequenceItem(
+            tween: Tween<double>(begin: widget.startPos, end: 1.0)
+                .chain(CurveTween(curve: Curves.bounceInOut)),
+            weight: 80),
+      ],
+      if (widget.addPop) ...[
+        TweenSequenceItem(
+            tween: Tween<double>(begin: widget.startPos, end: 1.3)
+                .chain(CurveTween(curve: Curves.bounceOut)),
+            weight: 40),
+        TweenSequenceItem(
+            tween: Tween<double>(begin: 1.3, end: 1.0)
+                .chain(CurveTween(curve: Curves.bounceIn)),
+            weight: 80),
+      ]
     ]).animate(_controller);
 
     _controller.addStatusListener((status) {

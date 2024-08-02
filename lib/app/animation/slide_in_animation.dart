@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../enums/slide_direction.dart';
 
 class SlideAnimation extends StatefulWidget {
@@ -8,7 +7,7 @@ class SlideAnimation extends StatefulWidget {
       required this.direction,
       this.animate = false,
       this.animateOnStart = false,
-      this.animationDuration = 800,
+      this.animationDuration = 900,
       this.reset,
       this.onAnimationComplete,
       this.animationDelay = 0,

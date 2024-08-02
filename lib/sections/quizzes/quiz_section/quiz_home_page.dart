@@ -10,7 +10,6 @@ import '../../../app/custom_widgets/custom_big_button.dart';
 import '../../../app/custom_widgets/custom_chip_button.dart';
 import '../../../app/custom_widgets/custom_heading.dart';
 import '../../../app/custom_widgets/custom_small_divider.dart';
-import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
 import '../../../app/enums/sections.dart';
 import '../quiz_enums/answer_stage.dart';
 
@@ -51,8 +50,8 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                 floating: true,
                 forceElevated: innerBoxIsScrolled,
                 actions: const [
-                  CustomButtonOverlayAppBar(
-                    title: 'Quiz',
+                  Text(
+                    'Quiz',
                   )
                 ],
               ),

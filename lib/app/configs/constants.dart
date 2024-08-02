@@ -29,6 +29,7 @@ const kBottomIndent = 0.05;
 
 /// Animation
 const kPageChangeAnimation = 400;
+const kAnimationDuration = 500;
 
 /// Colors
 const kBackgroundOpacity = 0.08;

@@ -1,8 +1,8 @@
 import 'package:economics_app/app/state/app_state.dart';
+import 'package:economics_app/sections/articles/articles_pages/study_notes.dart';
 import 'package:economics_app/sections/diagrams/all_diagrams_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../sections/articles/articles_pages/sections_page.dart';
 import '../../sections/quizzes/quiz_section/quiz_home_page.dart';
 import '../../sections/settings/settings_page.dart';
 import '../configs/constants.dart';
@@ -14,9 +14,9 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appState = ref.watch(appProvider);
-    Widget page = const SectionsPage();
+    Widget page = const StudyNotes();
     if (appState.page == 0) {
-      page = const SectionsPage();
+      page = const StudyNotes();
     } else if (appState.page == 1) {
       page = const AllDiagramsPage();
     } else if (appState.page == 2) {

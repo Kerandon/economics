@@ -7,20 +7,19 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/app_colors.dart';
-import '../../../app/custom_widgets/nested_scroll_custom/custon_button_overlay_appbar.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../diagrams/custom_paint/custom_paint_diagrams.dart';
 import '../../quizzes/quiz_widgets/quiz_page_for_notes.dart';
 
-class ArticlePage extends ConsumerStatefulWidget {
-  const ArticlePage({super.key});
+class ContentsPage extends ConsumerStatefulWidget {
+  const ContentsPage({super.key});
 
   @override
-  ConsumerState<ArticlePage> createState() => _ArticlePageState();
+  ConsumerState<ContentsPage> createState() => _ArticlePageState();
 }
 
-class _ArticlePageState extends ConsumerState<ArticlePage> {
+class _ArticlePageState extends ConsumerState<ContentsPage> {
   final List<ExpansionTileController> _expansionControllers = [];
   List<QuestionModel> selectedQuestions = [];
   ArticleModel article = ArticleModel();
@@ -47,17 +46,15 @@ class _ArticlePageState extends ConsumerState<ArticlePage> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              backgroundColor: AppColors.defaultAppColorDarker,
-              automaticallyImplyLeading: false,
-              pinned: false,
-              floating: true,
-              forceElevated: innerBoxIsScrolled,
-              actions: [
-                CustomButtonOverlayAppBar(
-                    title: article.title ?? "",
-                    expansionControllers: _expansionControllers)
-              ],
+              title: TextButton(onPressed: () {  }, child: Text('Expand'),),
             ),
+            // SliverAppBar(
+            //   backgroundColor: AppColors.defaultAppColorDarker,
+            //   automaticallyImplyLeading: false,
+            //   pinned: false,
+            //   floating: true,
+            //   forceElevated: innerBoxIsScrolled,
+            // ),
           ];
         },
         body: SingleChildScrollView(
@@ -144,20 +141,3 @@ Future<Uint8List?> getImage(String path) async {
     return null;
   }
 }
-//
-// Future<Map<String, String>?> getImageURLs(String path) async {
-//   Future.delayed(const Duration(seconds: 3));
-//
-//   try {
-//     Map<String, String> urls = {};
-//     final ref = FirebaseStorage.instance.ref(path);
-//     final bucket = await ref.listAll();
-//     for (var i in bucket.items) {
-//       urls.addEntries(
-//           [MapEntry(i.name.split('.').first, await i.getDownloadURL())]);
-//     }
-//     return urls;
-//   } catch (e) {
-//     return null;
-//   }
-// }

@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/material.dart';
 
 class ShakeAnimation extends StatefulWidget {
@@ -24,11 +25,11 @@ class _ShakeAnimationState extends State<ShakeAnimation>
   void initState() {
     _controller = AnimationController(
         duration: const Duration(
-          milliseconds: 500,
+          milliseconds: kAnimationDuration,
         ),
         vsync: this)
       ..addListener(() {
-        if (_controller.value != 0.0) {
+        if (_controller.value != 0) {
           widget.onComplete?.call();
         }
       });
