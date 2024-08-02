@@ -45,16 +45,7 @@ class _ArticlePageState extends ConsumerState<ContentsPage> {
         floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverAppBar(
-              title: TextButton(onPressed: () {  }, child: Text('Expand'),),
-            ),
-            // SliverAppBar(
-            //   backgroundColor: AppColors.defaultAppColorDarker,
-            //   automaticallyImplyLeading: false,
-            //   pinned: false,
-            //   floating: true,
-            //   forceElevated: innerBoxIsScrolled,
-            // ),
+           
           ];
         },
         body: SingleChildScrollView(

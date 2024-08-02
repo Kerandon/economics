@@ -1,6 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
-import 'package:economics_app/app/custom_widgets/custom_small_divider.dart';
+import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/macro_business_cycle.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/micro_monopolistic_competition.dart';
@@ -10,6 +10,7 @@ import 'package:economics_app/sections/diagrams/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../app/custom_widgets/custom_divider.dart';
 import '../../app/enums/sections.dart';
 import 'custom_paint/custom_paint_diagrams.dart';
 import 'custom_paint/diagrams/global_export_subsidies.dart';
@@ -51,13 +52,9 @@ class AllDiagramsPage extends ConsumerWidget {
       floatHeaderSlivers: true,
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
-          SliverAppBar(
-            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-            automaticallyImplyLeading: false,
-            pinned: false,
-            floating: true,
-            forceElevated: innerBoxIsScrolled,
-            actions: [Text('Study notes')],
+          const CustomPageHeading(
+            icon: Icon(Icons.ssid_chart,),
+            title: 'Diagrams',
           ),
         ];
       },
@@ -94,7 +91,7 @@ class AllDiagramsPage extends ConsumerWidget {
                     });
               }).toList(),
             ),
-            const CustomSmallDivider(),
+            const CustomDivider(),
             Wrap(
                 alignment: WrapAlignment.center,
                 spacing: kWrapSpacing * size.width,

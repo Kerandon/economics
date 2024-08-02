@@ -1,3 +1,4 @@
+import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/sections/quizzes/quiz_data/number_of_questions.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_section/question_page.dart';
@@ -8,8 +9,8 @@ import '../../../app/configs/app_colors.dart';
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_big_button.dart';
 import '../../../app/custom_widgets/custom_chip_button.dart';
+import '../../../app/custom_widgets/custom_divider.dart';
 import '../../../app/custom_widgets/custom_heading.dart';
-import '../../../app/custom_widgets/custom_small_divider.dart';
 import '../../../app/enums/sections.dart';
 import '../quiz_enums/answer_stage.dart';
 
@@ -43,18 +44,9 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
           floatHeaderSlivers: true,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              SliverAppBar(
-                backgroundColor: AppColors.defaultAppColorDarker,
-                automaticallyImplyLeading: false,
-                pinned: false,
-                floating: true,
-                forceElevated: innerBoxIsScrolled,
-                actions: const [
-                  Text(
-                    'Quiz',
-                  )
-                ],
-              ),
+           CustomPageHeading(
+               icon: Icon(Icons.quiz_outlined,),
+               title: 'Quiz')
             ];
           },
           body: SingleChildScrollView(
@@ -63,7 +55,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: height * 0.03,
+                  height: height * 0.01,
                 ),
                 ExpansionTile(
                   onExpansionChanged: (open) {
@@ -98,7 +90,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                     SizedBox(
                       height: height * 0.02,
                     ),
-                    const CustomSmallDivider(),
+                    const CustomDivider(),
                     const CustomHeading('Number of questions'),
                     Wrap(
                       spacing: size.width * kWrapSpacing,
@@ -120,7 +112,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                     SizedBox(
                       height: height * 0.02,
                     ),
-                    const CustomSmallDivider(),
+                    const CustomDivider(),
                     SwitchListTile(
                         title: Text(
                           'Show answers as I go',

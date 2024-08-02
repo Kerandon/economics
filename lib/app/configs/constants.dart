@@ -1,4 +1,4 @@
-const kAppName = 'Excel in IB Economics';
+const kAppName = 'Econ Pro';
 const kLevel = 'level';
 
 const kImage = 'image';
