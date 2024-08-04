@@ -29,11 +29,14 @@ class DiagramBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return SizedBox(
-      width: size.width,
-      height: size.width,
-      child: CustomPaint(
-        painter: customPainter,
+    return Padding(
+      padding: EdgeInsets.all(size.width * 0.02),
+      child: SizedBox(
+        width: size.width,
+        height: size.width,
+        child: CustomPaint(
+          painter: customPainter,
+        ),
       ),
     );
   }

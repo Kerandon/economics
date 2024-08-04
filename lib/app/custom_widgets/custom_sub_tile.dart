@@ -2,8 +2,8 @@
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 
-class SubTile extends StatelessWidget {
-  const SubTile({
+class CustomSubTile extends StatelessWidget {
+  const CustomSubTile({
     super.key,
     required this.leadingText,
     required this.title,

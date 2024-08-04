@@ -1,4 +1,3 @@
-
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +10,9 @@ class CustomPageHeading extends StatelessWidget {
     required this.icon,
     this.expandableControllers,
     this.allTilesCollapsed,
-  });
+  }) : assert((expandableControllers != null && allTilesCollapsed != null) ||
+      (expandableControllers == null && allTilesCollapsed == null),
+  'Both expandableControllers and allTilesCollapsed must be either both null or both non-null.');
 
   final String title;
   final Icon icon;
@@ -34,7 +35,10 @@ class CustomPageHeading extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(icon: icon, onPressed: null,),
+              IconButton(
+                icon: icon,
+                onPressed: null,
+              ),
               Padding(
                 padding: EdgeInsets.all(size.width * 0.04),
                 child: Text(
@@ -45,7 +49,8 @@ class CustomPageHeading extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-              if(expandableControllers != null && expandableControllers!.isNotEmpty) ... [IconButton(
+              if (expandableControllers != null) ...[
+                IconButton(
                   onPressed: () {
                     if (expandableControllers!.any((c) => c.expanded)) {
                       for (var c in expandableControllers!) {
@@ -65,9 +70,15 @@ class CustomPageHeading extends StatelessWidget {
                         ? Icons.expand
                         : Icons.close_fullscreen_outlined,
                     color: Theme.of(context).colorScheme.primary,
-                  )),],
-              if(expandableControllers == null || expandableControllers!.isEmpty)...[
-                IconButton(onPressed: (){}, icon: icon, color: Colors.transparent,)
+                  ),
+                ),
+              ],
+              if (expandableControllers == null) ...[
+                IconButton(
+                  onPressed: () {},
+                  icon: icon,
+                  color: Colors.transparent,
+                )
               ]
             ],
           ),

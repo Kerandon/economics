@@ -1,4 +1,5 @@
 import 'package:economics_app/app/home/home_page.dart';
+import 'package:expandable/expandable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +28,8 @@ class EconApp extends ConsumerWidget {
       debugShowCheckedModeBanner: true,
       title: kAppName,
       theme: CustomAppTheme(appState, context).appTheme,
-      home: const HomePage(),
+      home:
+          const HomePage(),
       //const HomePage(),
     );
   }

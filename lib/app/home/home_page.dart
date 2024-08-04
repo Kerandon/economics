@@ -1,6 +1,7 @@
 import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/articles/articles_pages/study_notes.dart';
 import 'package:economics_app/sections/diagrams/all_diagrams_page.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../sections/quizzes/quiz_section/quiz_home_page.dart';
@@ -28,7 +29,15 @@ class HomePage extends ConsumerWidget {
         title: const Text(kAppName),
         centerTitle: true,
       ),
-      body: page,
+      body: ExpandableTheme(
+    data: ExpandableThemeData(
+    animationDuration: Duration(milliseconds: kAnimationDuration),
+    useInkWell: true,
+    iconColor: Theme.of(context).colorScheme.primary,
+    headerAlignment:
+    ExpandablePanelHeaderAlignment.center,
+    tapBodyToCollapse: true,),
+          child: page),
       bottomNavigationBar: const CustomNavigationBar(),
       drawer: const SettingsPage(),
     );

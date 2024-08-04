@@ -14,6 +14,7 @@ class CustomAppTheme {
     bool isDark = state.isDarkTheme;
     Brightness brightness = Brightness.dark;
     return ThemeData(
+
       fontFamily: GoogleFonts.robotoCondensed().fontFamily,
       colorScheme: ColorScheme(
         brightness: brightness,
@@ -63,6 +64,7 @@ class CustomAppTheme {
           },
         ),
       ),
+
     );
   }
 }
