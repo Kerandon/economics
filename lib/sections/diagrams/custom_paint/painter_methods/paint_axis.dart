@@ -30,20 +30,20 @@ void paintAxis(
       angle: math.pi / -2,
       color: color,
       axis: Axis.vertical,
-      axisMargin: axisMargin,
-      indent: indent,
+      axisLabelMargin: axisMargin,
+      axisIndent: indent,
     );
   }
   if (xAxisLabel != null) {
     paintText(
-      size,
+     size,
       canvas,
       xAxisLabel,
       const Offset(0, 0),
       color: color,
       axis: Axis.horizontal,
-      axisMargin: axisMargin,
-      indent: indent,
+      axisLabelMargin: axisMargin,
+      axisIndent: indent,
     );
   }
   if (addNumericalAxis == true) {

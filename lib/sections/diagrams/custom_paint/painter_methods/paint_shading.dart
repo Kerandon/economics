@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../enums/shade_type.dart';
-import '../../models.dart'; // Ensure this contains the definition for CustomBezier
+import '../../models/models.dart'; // Ensure this contains the definition for CustomBezier
 
 /// for pointsAndBeziers, takes [Offset] and [CustomBezier]
 void paintShading(

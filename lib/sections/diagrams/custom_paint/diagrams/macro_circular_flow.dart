@@ -1,12 +1,12 @@
-import 'dart:math' as math;
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_type.dart';
 import '../../enums/text_box_shape.dart';
-import '../painter_methods/paint_right_angle_curves.dart';
-import '../painter_methods/paint_text.dart';
+import '../../models/models.dart';
+import '../painter_methods/paint_custom_bezier.dart';
 import '../painter_methods/paint_text_box.dart';
+import 'dart:math' as math;
 
 class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
   @override
@@ -19,21 +19,19 @@ class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
     super.repaint,
     this.type = DiagramType.macro_CircularFlowOfIncome_Default,
     this.color = Colors.white,
-    this.primaryColor = Colors.green,
+    this.primaryColor = Colors.transparent,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    final primaryColorAdjusted = primaryColor.withOpacity(0.20);
     if (type == DiagramType.macro_CircularFlowOfIncome_Default) {
       paintTextBox(
         canvas,
         size,
         text: 'Households',
         position: const Offset(0.15, 0.30),
-        shape: TextBoxShape.diamond,
-        color: Colors.white,
-        fillColor: primaryColorAdjusted,
+        shape: TextBoxShape.oval,
+        fillColor: primaryColor,
         lineColor: color,
       );
 
@@ -42,51 +40,48 @@ class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
         size,
         text: 'Firms',
         position: const Offset(0.85, 0.30),
-        shape: TextBoxShape.diamond,
-        fillColor: primaryColorAdjusted,
+        shape: TextBoxShape.oval,
+        fillColor: primaryColor,
         lineColor: color,
       );
 
-      /// Top curve
-
-      paintRightAngleArrowCurves(
-        canvas,
+      paintCustomBezier(
         size,
-        xPosR: 0.15,
-        xPosL: 0.85,
-        yPos: 0.20,
-        showRightArrow: true,
-        curveHeight: 0.05,
-        color: color,
+        canvas,
+        startPos: const Offset(0.15, 0.20),
+        points: [
+          CustomBezier(
+            control: const Offset(0.50, 0.05),
+            endPoint: const Offset(0.85, 0.20),
+          ),
+        ],
+        drawArrowOnStart: true,
+        arrowOnStartAngle: math.pi * 1.2,
       );
 
-      /// Bottom curves
-
-      paintRightAngleArrowCurves(
-        canvas,
+      paintCustomBezier(
         size,
-        xPosR: 0.15,
-        xPosL: 0.85,
-        yPos: 0.60,
-        showRightArrow: true,
-        angle: math.pi,
-        curveHeight: 0.05,
-        color: color,
+        canvas,
+        startPos: const Offset(0.15, 0.40),
+        points: [
+          CustomBezier(
+            control: const Offset(0.50, 0.55),
+            endPoint: const Offset(0.85, 0.40),
+          ),
+        ],
+        drawArrowOnEnd: true,
+        arrowOnEndAngle: math.pi * 0.20,
       );
-
-      paintText(size, canvas, 'Factor payments', const Offset(0.50, 0.10));
-      paintText(
-          size, canvas, 'Household expenditure', const Offset(0.50, 0.40));
 
       /// Injections & Leakages
 
       paintTextBox(
         canvas,
         size,
-        text: 'Financial sector',
+        text: 'Financial',
         position: const Offset(0.50, 0.65),
         lineColor: color,
-        fillColor: primaryColorAdjusted,
+        fillColor: primaryColor,
       );
       paintTextBox(
         canvas,
@@ -94,210 +89,103 @@ class MacroCircularFlowOfIncome extends CustomPainter with NameMixin {
         text: 'Government',
         position: const Offset(0.50, 0.75),
         lineColor: color,
-        fillColor: primaryColorAdjusted,
+        fillColor: primaryColor,
       );
       paintTextBox(
         canvas,
         size,
-        text: 'Foreign sector',
+        text: 'Foreign',
         position: const Offset(0.50, 0.85),
         lineColor: color,
-        fillColor: primaryColorAdjusted,
-      );
-
-      paintRightAngleArrowCurves(canvas, size,
-          xPosR: 0.60,
-          xPosL: 0.85,
-          yPos: 0.45,
-          flipVertically: true,
-          curveHeight: 0.30,
-          removeFirstAngle: true,
-          removeSecondAngle: true);
-
-      paintRightAngleArrowCurves(canvas, size,
-          xPosR: 0.65,
-          xPosL: 0.85,
-          yPos: 0.45,
-          showLeftArrow: true,
-          flipVertically: true,
-          flipHorizontally: true,
-          curveHeight: 0.30,
-          removeSecondAngle: true);
-
-      paintCurve(
-        size,
-        canvas,
-        const Offset(0.35, 0.65),
-        const Offset(0.15, 0.65),
-        strokeWidth: 1,
-      );
-
-      paintCurve(
-        size,
-        canvas,
-        const Offset(0.35, 0.75),
-        const Offset(0.15, 0.75),
-        strokeWidth: 1,
-      );
-      paintRightAngleArrowCurves(canvas, size,
-          xPosR: 0,
-          xPosL: 0.750,
-          yPos: 0.35,
-          showLeftArrow: true,
-          curveHeight: 0.20,
-          removeFirstAngle: true,
-          removeSecondAngle: true,
-          angle: math.pi / 2);
-
-      paintRightAngleArrowCurves(canvas, size,
-          xPosR: 0,
-          xPosL: 0.65,
-          yPos: 0.35,
-          showLeftArrow: true,
-          curveHeight: 0.20,
-          removeFirstAngle: true,
-          removeSecondAngle: true,
-          angle: math.pi / 2);
-
-      paintRightAngleArrowCurves(canvas, size,
-          xPosR: 0,
-          xPosL: 0.85,
-          yPos: 0.35,
-          showLeftArrow: true,
-          curveHeight: 0.20,
-          removeFirstAngle: true,
-          removeSecondAngle: true,
-          angle: math.pi / 2);
-
-      /// Injections and withdrawals labels
-
-      paintText(size, canvas, 'Injections', const Offset(0.12, 0.70),
-          angle: math.pi / -2);
-      paintText(size, canvas, 'Leakages', const Offset(0.88, 0.70),
-          angle: math.pi / 2);
-
-      paintText(
-        size,
-        canvas,
-        'Investment',
-        const Offset(0.26, 0.60),
-      );
-      paintText(
-        size,
-        canvas,
-        'Govt. expenditure',
-        const Offset(0.26, 0.70),
-      );
-      paintText(
-        size,
-        canvas,
-        'Export revenue',
-        const Offset(0.26, 0.80),
-      );
-      paintText(
-        size,
-        canvas,
-        'Savings',
-        const Offset(0.74, 0.60),
-      );
-      paintText(
-        size,
-        canvas,
-        'Taxation',
-        const Offset(0.74, 0.70),
-      );
-      paintText(
-        size,
-        canvas,
-        'Import expenditure',
-        const Offset(0.74, 0.80),
+        fillColor: primaryColor,
       );
     }
-    if (type == DiagramType.macro_CircularFlowOfIncome_Closed) {
-      paintTextBox(
-        canvas,
-        size,
-        text: 'Households',
-        position: const Offset(0.20, 0.50),
-        shape: TextBoxShape.diamond,
-        color: Colors.white,
-        fillColor: primaryColorAdjusted,
-        lineColor: color,
-      );
-      paintTextBox(
-        canvas,
-        size,
-        text: 'Firms',
-        position: const Offset(0.80, 0.50),
-        shape: TextBoxShape.diamond,
-        color: Colors.white,
-        fillColor: primaryColorAdjusted,
-        lineColor: color,
-      );
 
-      /// Top curves
-      paintRightAngleArrowCurves(
-        canvas,
-        size,
-        xPosR: 0.25,
-        xPosL: 0.75,
-        yPos: 0.40,
-        showRightArrow: true,
-        angle: math.pi * -2,
-        curveHeight: 0.10,
-        color: color,
-      );
-      paintRightAngleArrowCurves(
-        canvas,
-        size,
-        xPosR: 0.15,
-        xPosL: 0.85,
-        yPos: 0.40,
-        showLeftArrow: true,
-        angle: math.pi * 2,
-        curveHeight: 0.20,
-        color: color,
-      );
+    /// Leakages
 
-      /// Bottom curves
 
-      paintRightAngleArrowCurves(
-        canvas,
-        size,
-        xPosR: 0.25,
-        xPosL: 0.75,
-        yPos: 0.40,
-        showRightArrow: true,
-        angle: math.pi,
-        curveHeight: 0.10,
-        color: color,
-      );
-      paintRightAngleArrowCurves(
-        canvas,
-        size,
-        xPosR: 0.15,
-        xPosL: 0.85,
-        yPos: 0.40,
-        showLeftArrow: true,
-        angle: math.pi,
-        curveHeight: 0.20,
-        color: color,
-      );
 
-      paintText(
-          size,
-          canvas,
-          'Factors of production (labor, land, capital, entrepreneurship)',
-          const Offset(0.50, 0.15));
-      paintText(
-          size,
-          canvas,
-          'Factors payments (wages, rent, interest, profit)',
-          const Offset(0.50, 0.25));
-      paintText(
-          size, canvas, 'Household expenditure', const Offset(0.50, 0.75));
-      paintText(size, canvas, 'Goods & services', const Offset(0.50, 0.85));
-    }
+    paintCustomBezier(
+      size,
+      canvas,
+      startPos: const Offset(0.10, 0.55),
+      points: [
+        CustomBezier(
+          control: const Offset(0.10, 0.85),
+          endPoint: const Offset(0.35, 0.85),
+        ),
+      ],
+      drawArrowOnEnd: true,
+      arrowOnEndAngle: math.pi / 2,
+    );
+    paintCustomBezier(
+      size,
+      canvas,
+      startPos: const Offset(0.30, 0.55),
+      points: [
+        CustomBezier(
+          control: const Offset(0.30, 0.65),
+          endPoint: const Offset(0.35, 0.65),
+        ),
+      ],
+      drawArrowOnEnd: true,
+      arrowOnEndAngle: math.pi / 2,
+    );
+    paintCustomBezier(
+      size,
+      canvas,
+      startPos: const Offset(0.20, 0.55),
+      points: [
+        CustomBezier(
+          control: const Offset(0.20, 0.75),
+          endPoint: const Offset(0.35, 0.75),
+        ),
+      ],
+      drawArrowOnEnd: true,
+      arrowOnEndAngle: math.pi / 2,
+    );
+
+    /// Injections
+
+    paintCustomBezier(
+      size,
+      canvas,
+      startPos: const Offset(0.90, 0.55),
+      points: [
+        CustomBezier(
+          control: const Offset(0.90, 0.85),
+          endPoint: const Offset(0.65, 0.85),
+        ),
+      ],
+      drawArrowOnStart: true,
+    );
+
+    paintText(size, canvas, 'Imports', Offset(0.10, 1.20));
+
+    paintCustomBezier(
+      size,
+      canvas,
+      startPos: const Offset(0.80, 0.55),
+      points: [
+        CustomBezier(
+          control: const Offset(0.80, 0.75),
+          endPoint: const Offset(0.65, 0.75),
+        ),
+      ],
+      drawArrowOnStart: true,
+    );
+    paintCustomBezier(
+      size,
+      canvas,
+      startPos: const Offset(0.70, 0.55),
+      points: [
+        CustomBezier(
+          control: const Offset(0.70, 0.65),
+          endPoint: const Offset(0.65, 0.65),
+        ),
+      ],
+      drawArrowOnStart: true,
+    );
   }
 
   @override

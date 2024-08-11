@@ -6,7 +6,7 @@ import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/app_colors.dart';
+
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../../diagrams/custom_paint/custom_paint_diagrams.dart';
@@ -20,7 +20,6 @@ class ContentsPage extends ConsumerStatefulWidget {
 }
 
 class _ArticlePageState extends ConsumerState<ContentsPage> {
-  final List<ExpansionTileController> _expansionControllers = [];
   List<QuestionModel> selectedQuestions = [];
   ArticleModel article = ArticleModel();
 
@@ -44,9 +43,7 @@ class _ArticlePageState extends ConsumerState<ContentsPage> {
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-           
-          ];
+          return <Widget>[];
         },
         body: SingleChildScrollView(
           child: ListView(

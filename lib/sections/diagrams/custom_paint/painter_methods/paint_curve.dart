@@ -1,4 +1,7 @@
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
+import 'dart:math';
+
+
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
@@ -42,17 +45,24 @@ void paintCurve(
 
   if (label1 != null) {
     paintText(size, canvas, label1, Offset(p1.dx, p1.dy),
-        customAlign: label1Align);
+        curveAlign: label1Align);
   }
   if (label2 != null) {
     paintText(size, canvas, label2, Offset(p2.dx, p2.dy),
-        customAlign: label2Align);
+        curveAlign: label2Align);
   }
-
+  double angle = atan2(p2.dy - p1.dy, p2.dx - p1.dx) - (pi / 2);
   if (drawArrowAtStart) {
-    paintArrowHead(canvas, size, p1, p2, color, true);
+    /// work out the angle of the curve, (assume points upwards, and subtracts
+    /// half pi to make a base point of zero)
+
+    paintArrow(canvas,
+        positionOfArrow: Offset(p1.dx * width, p1.dy * height),
+        rotationAngle: angle);
   }
   if (drawArrowAtEnd) {
-    paintArrowHead(canvas, size, p2, p1, color, false);
+    paintArrow(canvas,
+        positionOfArrow: Offset(p2.dx * width, p2.dy * height),
+        rotationAngle: angle + pi);
   }
 }

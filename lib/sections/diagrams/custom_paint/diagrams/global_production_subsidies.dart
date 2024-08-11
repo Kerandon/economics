@@ -1,10 +1,8 @@
-import 'dart:math' as math;
 import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
 import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
-import '../painter_methods/paint_arrow.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_curve.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
@@ -95,8 +93,7 @@ class GlobalProductionSubsidies extends CustomPainter with NameMixin {
 
     /// Paint Arrows
 
-    paintArrow(size, canvas, Offset(width * 0.60, height * 0.34),
-        angle: math.pi / 2, oppositeArrowHead: true);
+
     paintText(size, canvas, 'subsidy', Offset(width * 0.70, height * 0.35));
 
     /// Vertical lines

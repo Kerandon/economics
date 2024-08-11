@@ -1,9 +1,7 @@
-import 'dart:math' as math;
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
-import '../painter_methods/paint_arrow.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_dot.dart';
@@ -54,8 +52,7 @@ class MacroPPC extends CustomPainter {
             height * (1 - kAxisIndent));
       paintAxis(size, canvas,
           xAxisLabel: 'Consumer goods', yAxisLabel: 'Capital goods');
-      paintArrow(size, canvas, Offset(width * 0.40, height * 0.60),
-          angle: math.pi / -6, arrowStickExtension: 1);
+
       paintText(size, canvas, 'A', Offset(width * 0.30, height * 0.72));
       paintText(size, canvas, 'B', Offset(width * 0.50, height * 0.60));
       paintDot(canvas, size, pos: Offset(width / 2, height / 2));

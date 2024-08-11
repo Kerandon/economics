@@ -1,9 +1,9 @@
 import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/articles/articles_pages/study_notes.dart';
-import 'package:economics_app/sections/diagrams/all_diagrams_page.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../sections/diagrams/sections/all_diagrams_page.dart';
 import '../../sections/quizzes/quiz_section/quiz_home_page.dart';
 import '../../sections/settings/settings_page.dart';
 import '../configs/constants.dart';
@@ -30,13 +30,13 @@ class HomePage extends ConsumerWidget {
         centerTitle: true,
       ),
       body: ExpandableTheme(
-    data: ExpandableThemeData(
-    animationDuration: Duration(milliseconds: kAnimationDuration),
-    useInkWell: true,
-    iconColor: Theme.of(context).colorScheme.primary,
-    headerAlignment:
-    ExpandablePanelHeaderAlignment.center,
-    tapBodyToCollapse: true,),
+          data: ExpandableThemeData(
+            animationDuration: const Duration(milliseconds: 300),
+            useInkWell: true,
+            iconColor: Theme.of(context).colorScheme.primary,
+            headerAlignment: ExpandablePanelHeaderAlignment.center,
+            tapBodyToCollapse: true,
+          ),
           child: page),
       bottomNavigationBar: const CustomNavigationBar(),
       drawer: const SettingsPage(),

@@ -1,5 +1,3 @@
-
-
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +26,6 @@ class _SectionsPageState extends ConsumerState<StudyNotes> {
   late final Future<List<QuestionModel>?> _questionsFuture;
   final List<ExpandableController> _expandableControllers = [];
 
-  bool allTilesCollapsed = true;
-
   @override
   void initState() {
     _articlesFuture = getArticleDataFromFirebase();
@@ -37,13 +33,6 @@ class _SectionsPageState extends ConsumerState<StudyNotes> {
 
     for (int i = 0; i < 4; i++) {
       _expandableControllers.add(ExpandableController());
-      _expandableControllers[i].addListener(() {
-        if (_expandableControllers.any((c) => c.expanded)) {
-          allTilesCollapsed = false;
-        } else {
-          allTilesCollapsed = true;
-        }
-      });
     }
 
     super.initState();
@@ -51,17 +40,24 @@ class _SectionsPageState extends ConsumerState<StudyNotes> {
 
   @override
   Widget build(BuildContext context) {
-
     final quizNotifier = ref.read(quizProvider.notifier);
+
     return NestedScrollView(
       floatHeaderSlivers: true,
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
           CustomPageHeading(
             expandableControllers: _expandableControllers,
-            allTilesCollapsed: allTilesCollapsed,
             icon: const Icon(Icons.style_outlined),
             title: 'Study Notes',
+            //allTilesCollapsed: appState.showExpanded.entries.elementAt(0).value,
+            // expandableChanged: (){
+            //   if(_expandableControllers.any((c) => c.expanded)){
+            //     appNotifier.setShowExpanded(0, true);
+            //   }else{
+            //     appNotifier.setShowExpanded(0, false);
+            //   }
+            // },
           ),
         ];
       },
@@ -78,7 +74,7 @@ class _SectionsPageState extends ConsumerState<StudyNotes> {
                 snapshot.data![1] != null) {
               /// Sort article data
               List<ArticleModel> allArticles =
-              snapshot.data![0]!.toList() as List<ArticleModel>;
+                  snapshot.data![0]!.toList() as List<ArticleModel>;
               List<ArticleModel> introArticles = [];
               List<ArticleModel> microArticles = [];
               List<ArticleModel> macroArticles = [];
@@ -118,9 +114,7 @@ class _SectionsPageState extends ConsumerState<StudyNotes> {
                             title: Text(section.getSectionName()),
                           ),
                           collapsed: const SizedBox.shrink(),
-                          expanded:
-
-                          Column(
+                          expanded: Column(
                             children: <Widget>[
                               ...[
                                 ..._buildUnitsTile(section, [
@@ -146,8 +140,6 @@ class _SectionsPageState extends ConsumerState<StudyNotes> {
       ),
     );
   }
-
-
 }
 
 List<Widget> _buildUnitsTile(
@@ -155,47 +147,39 @@ List<Widget> _buildUnitsTile(
   switch (section) {
     case Section.intro:
       return [
-        ...articles[0]
-            .map(
-              (m) => CustomSubTile(
+        ...articles[0].map(
+          (m) => CustomSubTile(
             leadingText: m.unit.toString(),
             title: m.title!,
           ),
-        )
-            .toList(),
+        ),
       ];
     case Section.micro:
       return [
-        ...articles[1]
-            .map(
-              (m) => CustomSubTile(
+        ...articles[1].map(
+          (m) => CustomSubTile(
             leadingText: m.unit.toString(),
             title: m.title!,
           ),
-        )
-            .toList(),
+        ),
       ];
     case Section.macro:
       return [
-        ...articles[2]
-            .map(
-              (m) => CustomSubTile(
+        ...articles[2].map(
+          (m) => CustomSubTile(
             leadingText: m.unit.toString(),
             title: m.title!,
           ),
-        )
-            .toList(),
+        ),
       ];
     case Section.global:
       return [
-        ...articles[3]
-            .map(
-              (m) => CustomSubTile(
+        ...articles[3].map(
+          (m) => CustomSubTile(
             leadingText: m.unit.toString(),
             title: m.title!,
           ),
-        )
-            .toList(),
+        ),
       ];
   }
 }

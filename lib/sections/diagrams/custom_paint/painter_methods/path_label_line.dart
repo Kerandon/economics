@@ -18,7 +18,7 @@ void paintLabelLine(Canvas canvas, Size size, String text, Offset p1, Offset p2,
   canvas.drawLine(Offset(p1.dx * width, p1.dy * height),
       Offset(p2.dx * width, p2.dy * height), paint);
   paintText(size, canvas, text, Offset(p2.dx, p2.dy),
-      customAlign: textAlign, color: fontColor);
+      curveAlign: textAlign, color: fontColor);
 
   if (!removeDot) {
     canvas.drawCircle(Offset(p1.dx * width, p1.dy * height), 3, paint);

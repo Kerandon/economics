@@ -1,5 +1,4 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
@@ -43,7 +42,7 @@ class GlobalForex extends CustomPainter with NameMixin {
           label1Align: CurveAlign.centerBottom);
       paintDiagramDashedLines(size, canvas,
           yAxisStartPos: 0.38, xAxisEndPos: 0.435, yLabel: kP2, xLabel: kQ2);
-      paintArrow(size, canvas, const Offset(0.71, 0.60));
+
     }
     if (type == DiagramType.global_Forex_DemandDecrease) {
       paintDiagramDashedLines(size, canvas,
@@ -57,7 +56,7 @@ class GlobalForex extends CustomPainter with NameMixin {
           const Offset(0.20, 0.30),
           label1: kD2,
           label1Align: CurveAlign.centerBottom);
-      paintArrow(size, canvas, const Offset(0.66, 0.60));
+
     }
   }
 

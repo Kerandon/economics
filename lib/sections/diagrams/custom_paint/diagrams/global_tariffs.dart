@@ -1,10 +1,8 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
 import '../../enums/diagram_type.dart';
 import '../../utils/mixins.dart';
 import '../painter_constants.dart';
-import '../painter_methods/paint_arrow.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_curve.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
@@ -66,8 +64,6 @@ class GlobalTariffs extends CustomPainter with NameMixin {
           const Offset(0.52, 0.46),
           label1: 'Pd', label1Align: CurveAlign.centerLeft, makeDashed: true);
 
-      paintArrow(size, canvas, const Offset(0.18, 0.60), angle: math.pi / -2);
-      paintArrow(size, canvas, const Offset(0.72, 0.60), angle: math.pi / -2);
     }
     paintCurve(
       size,

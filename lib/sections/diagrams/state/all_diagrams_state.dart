@@ -1,42 +1,36 @@
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_tariffs.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/enums/sections.dart';
 import '../enums/diagram_type.dart';
 
 class DiagramsState {
-  // final Section section;
-  final CustomPainter diagram;
+  final List<DiagramType> selectedDiagrams;
 
-  DiagramsState(
-      {
-      // required this.section,
-      required this.diagram});
+  DiagramsState({required this.selectedDiagrams});
 
-  DiagramsState copyWith({Section? section, CustomPainter? diagram}) {
+  DiagramsState copyWith({List<DiagramType>? selectedDiagrams}) {
     return DiagramsState(
-        // section: section ?? this.section,
-        diagram: diagram ?? this.diagram);
+        selectedDiagrams: selectedDiagrams ?? this.selectedDiagrams);
   }
 }
 
 class DiagramsNotifier extends StateNotifier<DiagramsState> {
   DiagramsNotifier(super.state);
 
-  // void setSectionSelected(Section section) {
-  //   state = state.copyWith(section: section);
-  // }
-
-  void setDiagramSelected(CustomPainter diagram) {
-    state = state.copyWith(diagram: diagram);
+  void setDiagramSelected(DiagramType diagram, int index) {
+    List<DiagramType> diagrams = state.selectedDiagrams.toList();
+    diagrams.replaceRange(index, index, [diagram]);
+    state = state.copyWith(selectedDiagrams: diagrams);
   }
 }
 
 final diagramsProvider = StateNotifierProvider<DiagramsNotifier, DiagramsState>(
   (ref) => DiagramsNotifier(
     DiagramsState(
-      // section: Section.global,
-      diagram: GlobalTariffs(type: DiagramType.global_Tariffs_Standard_Default),
-    ),
+        // section: Section.global,
+        selectedDiagrams: [
+          DiagramType.global_ExportSubsidies_Calculation,
+          DiagramType.global_ExportSubsidies_Calculation,
+          DiagramType.macro_BusinessCycle_Default,
+          DiagramType.global_Tariffs_Standard_Default,
+        ]),
   ),
 );

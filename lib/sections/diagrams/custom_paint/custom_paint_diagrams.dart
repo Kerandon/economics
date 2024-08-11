@@ -30,7 +30,7 @@ class DiagramBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.all(size.width * 0.02),
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.02, vertical: size.height * 0.01),
       child: SizedBox(
         width: size.width,
         height: size.width,

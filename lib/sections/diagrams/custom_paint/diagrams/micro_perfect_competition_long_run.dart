@@ -6,7 +6,7 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
 import 'package:economics_app/sections/diagrams/enums/curve_align.dart';
 import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
-import 'package:economics_app/sections/diagrams/models.dart';
+import 'package:economics_app/sections/diagrams/models/models.dart';
 import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_type.dart';

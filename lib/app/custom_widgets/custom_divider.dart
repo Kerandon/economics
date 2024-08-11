@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CustomDivider extends StatelessWidget {
@@ -8,7 +7,8 @@ class CustomDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Divider(color: Theme.of(context)
-        .colorScheme.scrim,);
+    return Divider(
+      color: Theme.of(context).colorScheme.scrim,
+    );
   }
 }

@@ -1,17 +1,25 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/sections/diagrams/models.dart';
+import 'package:economics_app/sections/diagrams/models/models.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
 
-void paintCustomBezier(Size size, Canvas canvas,
-    {required Offset startPos,
-    required List<CustomBezier> points,
-    Color? color,
-    String? label1,
-    String? label2,
-    CurveAlign label1Align = CurveAlign.center,
-    CurveAlign label2Align = CurveAlign.center}) {
+void paintCustomBezier(
+  Size size,
+  Canvas canvas, {
+  required Offset startPos,
+  required List<CustomBezier> points,
+  Color? color,
+  String? label1,
+  String? label2,
+  CurveAlign label1Align = CurveAlign.center,
+  CurveAlign label2Align = CurveAlign.center,
+  bool drawArrowOnStart = false,
+  bool drawArrowOnEnd = false,
+  double arrowOnStartAngle = 0,
+  double arrowOnEndAngle = 0,
+}) {
   final width = size.width;
   final height = size.height;
   final paint = Paint()
@@ -37,10 +45,25 @@ void paintCustomBezier(Size size, Canvas canvas,
         label1,
         Offset(points[points.length - 1].endPoint.dx,
             points[points.length - 1].endPoint.dy),
-        customAlign: label1Align);
+        curveAlign: label1Align);
   }
   if (label2 != null) {
     paintText(size, canvas, label2, Offset(startPos.dx, startPos.dy),
-        customAlign: label2Align);
+        curveAlign: label2Align);
+  }
+  if (drawArrowOnStart) {
+    paintArrow(
+      canvas,
+      positionOfArrow: Offset(startPos.dx * width, startPos.dy * height),
+      rotationAngle: arrowOnStartAngle,
+    );
+  }
+  if (drawArrowOnEnd) {
+    paintArrow(
+      canvas,
+      positionOfArrow: Offset(
+          points.last.endPoint.dx * width, points.last.endPoint.dy * height),
+      rotationAngle: arrowOnEndAngle,
+    );
   }
 }

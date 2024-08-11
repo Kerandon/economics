@@ -32,7 +32,7 @@ void paintDiagramDashedLines(
         yLabel,
         fontSize: kLabelFontSize,
         Offset(kAxisIndent, yAxisStartPos),
-        customAlign: CurveAlign.centerLeft,
+        curveAlign: CurveAlign.centerLeft,
       );
     }
   }
@@ -58,7 +58,7 @@ void paintDiagramDashedLines(
         xLabel,
         fontSize: kLabelFontSize,
         Offset(kAxisIndent + xAxisEndPos, 1 - kAxisIndent),
-        customAlign: CurveAlign.centerBottom,
+        curveAlign: CurveAlign.centerBottom,
       );
     }
   }

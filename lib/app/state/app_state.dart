@@ -7,13 +7,17 @@ class AppState {
   final int page;
   final ArticleModel selectedArticle;
 
-  AppState(
-      {required this.isDarkTheme,
-      required this.page,
-      required this.selectedArticle});
+  AppState({
+    required this.isDarkTheme,
+    required this.page,
+    required this.selectedArticle,
+  });
 
   AppState copyWith(
-      {bool? isDarkTheme, int? page, ArticleModel? selectedArticle}) {
+      {bool? isDarkTheme,
+      int? page,
+      ArticleModel? selectedArticle,
+      Map<int, bool>? showExpanded}) {
     return AppState(
       isDarkTheme: isDarkTheme ?? this.isDarkTheme,
       page: page ?? this.page,
@@ -36,14 +40,18 @@ class AppNotifier extends StateNotifier<AppState> {
   void setSelectedArticle(ArticleModel article) {
     state = state.copyWith(selectedArticle: article);
   }
+
+  /// Triggers a rebuild of the widget tree (used for expanded icon to update)
+
+  void toggleToRebuildWidgetTree() {
+    state = state.copyWith();
+  }
 }
 
 final appProvider = StateNotifierProvider<AppNotifier, AppState>(
-  (ref) => AppNotifier(
-    AppState(
-      isDarkTheme: true,
-      page: 0,
-      selectedArticle: ArticleModel(),
-    ),
-  ),
+  (ref) => AppNotifier(AppState(
+    isDarkTheme: true,
+    page: 0,
+    selectedArticle: ArticleModel(),
+  )),
 );

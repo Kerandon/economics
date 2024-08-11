@@ -1,26 +1,36 @@
+import 'package:economics_app/app/state/app_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../configs/constants.dart';
 
-class CustomPageHeading extends StatelessWidget {
+class CustomPageHeading extends ConsumerWidget {
   const CustomPageHeading({
     super.key,
     required this.title,
     required this.icon,
     this.expandableControllers,
-    this.allTilesCollapsed,
-  }) : assert((expandableControllers != null && allTilesCollapsed != null) ||
-      (expandableControllers == null && allTilesCollapsed == null),
-  'Both expandableControllers and allTilesCollapsed must be either both null or both non-null.');
+  });
 
   final String title;
   final Icon icon;
   final List<ExpandableController>? expandableControllers;
-  final bool? allTilesCollapsed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appNotifier = ref.read(appProvider.notifier);
+    bool showExpanded = false;
+    if (expandableControllers != null) {
+      if (expandableControllers!.any((c) => c.expanded)) {
+        showExpanded = true;
+      } else {
+        showExpanded = false;
+      }
+      WidgetsBinding.instance.addPostFrameCallback((t) {
+        appNotifier.toggleToRebuildWidgetTree();
+      });
+    }
     final size = MediaQuery.of(context).size;
     return SliverToBoxAdapter(
       child: Padding(
@@ -66,9 +76,9 @@ class CustomPageHeading extends StatelessWidget {
                     }
                   },
                   icon: Icon(
-                    allTilesCollapsed!
-                        ? Icons.expand
-                        : Icons.close_fullscreen_outlined,
+                    showExpanded
+                        ? Icons.expand_more_outlined
+                        : Icons.expand_less_outlined,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:flutter/material.dart';
 
 import '../custom_rotate.dart';
@@ -9,7 +10,7 @@ void paintRightAngleArrowCurves(
   required double xPosR,
   required double yPos,
   Color color = Colors.white,
-  double strokeWidth = 2,
+  double strokeWidth = kCurveWidth,
   double curveHeight = 0.20,
   double angle = 0,
   double scale = 1,
@@ -59,30 +60,13 @@ void paintRightAngleArrowCurves(
   canvas.scale(scale);
 
   if (showLeftArrow) {
-    _paintArrowHead(canvas, size,
-        xPos: widthL, yPos: heightPoints, color: color);
+
   }
   if (showRightArrow) {
-    _paintArrowHead(canvas, size,
-        xPos: widthR, yPos: heightPoints, color: color);
+
   }
   canvas.drawPath(path, linePaint);
 
   canvas.restore();
 }
 
-void _paintArrowHead(Canvas canvas, Size size,
-    {required double xPos, required double yPos, Color color = Colors.white}) {
-  final width = size.width;
-
-  final arrowHeadAdjustment = width * 0.015;
-
-  final arrowPaint = Paint()
-    ..color = color
-    ..style = PaintingStyle.fill;
-  final arrowPath = Path()
-    ..moveTo(xPos, yPos + arrowHeadAdjustment)
-    ..lineTo(xPos - arrowHeadAdjustment, yPos)
-    ..lineTo(xPos + arrowHeadAdjustment, yPos);
-  canvas.drawPath(arrowPath, arrowPaint);
-}

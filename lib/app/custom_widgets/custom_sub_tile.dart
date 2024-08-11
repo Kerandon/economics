@@ -1,4 +1,3 @@
-
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +27,7 @@ class CustomSubTile extends StatelessWidget {
             size: 18,
           ),
         ),
-        if (!removeDivider) CustomDivider(),
+        if (!removeDivider) const CustomDivider(),
       ],
     );
   }

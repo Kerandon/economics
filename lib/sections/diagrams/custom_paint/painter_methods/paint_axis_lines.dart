@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
 import 'package:flutter/material.dart';
 import '../painter_constants.dart';
 
@@ -14,30 +16,22 @@ void paintAxisLines(Size size, Canvas canvas,
   final endYOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
   final startXOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
   final endXOffset =
-      Offset(width * (1 - kAxisIndent / 2), height * (1 - kAxisIndent));
-  canvas
-    ..drawLine(startYOffset, endYOffset, axisPaint)
-    ..drawLine(startXOffset, endXOffset, axisPaint);
+  Offset(width * (1 - kAxisIndent / 2), height * (1 - kAxisIndent));
+  canvas..drawLine(startYOffset, endYOffset, axisPaint)..drawLine(
+      startXOffset, endXOffset, axisPaint);
 
   /// Arrow-head
 
   final path = Path();
-  final paint = Paint()..color = Colors.white;
+  final paint = Paint()
+    ..color = Colors.white;
 
-  final arrowWidth = kAxisArrowHeadWidth * size.width;
-  final arrowHeight = (kAxisArrowHeadWidth * 1.5) * size.width;
 
   /// Y Axis Arrow
-  path
-    ..moveTo(startYOffset.dx, startYOffset.dy - arrowHeight)
-    ..lineTo(startYOffset.dx + arrowWidth, startYOffset.dy)
-    ..lineTo(startYOffset.dx - arrowWidth, startYOffset.dy);
+  paintArrow(canvas, positionOfArrow: startYOffset);
 
   /// X Axis Arrow
-  path
-    ..moveTo(endXOffset.dx + arrowHeight, endXOffset.dy)
-    ..lineTo(endXOffset.dx, endXOffset.dy + arrowWidth)
-    ..lineTo(endXOffset.dx, endXOffset.dy - arrowWidth);
+  paintArrow(canvas, positionOfArrow: endXOffset, rotationAngle: pi / 2);
 
   canvas.save();
   canvas.drawPath(path, paint);

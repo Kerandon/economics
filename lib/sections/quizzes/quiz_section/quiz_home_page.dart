@@ -5,7 +5,7 @@ import 'package:economics_app/sections/quizzes/quiz_section/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/app_colors.dart';
+
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_big_button.dart';
 import '../../../app/custom_widgets/custom_chip_button.dart';
@@ -44,9 +44,11 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
           floatHeaderSlivers: true,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-           CustomPageHeading(
-               icon: Icon(Icons.quiz_outlined,),
-               title: 'Quiz')
+              const CustomPageHeading(
+                  icon: Icon(
+                    Icons.quiz_outlined,
+                  ),
+                  title: 'Quiz')
             ];
           },
           body: SingleChildScrollView(

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
 import '../../enums/diagram_type.dart';
 import '../../enums/shade_type.dart';
-import '../../models.dart';
+import '../../models/models.dart';
 import '../painter_methods/paint_custom_bezier.dart';
 
 class MicroMonopolisticCompetition extends CustomPainter with NameMixin {

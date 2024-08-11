@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
 import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
-import '../painter_methods/paint_arrow.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_curve.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
@@ -70,14 +69,14 @@ class GlobalQuotas extends CustomPainter with NameMixin {
       'quota',
       const Offset(0.66, 0.32),
     );
-    paintArrow(size, canvas, const Offset(0.59, 0.30), oppositeArrowHead: true);
+
     paintText(
       size,
       canvas,
       'quota',
       const Offset(0.48, 0.93),
     );
-    paintArrow(size, canvas, const Offset(0.43, 0.85), oppositeArrowHead: true);
+
 
     /// World Supply Curve
     paintCurve(
