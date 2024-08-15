@@ -33,7 +33,6 @@ class _AllDiagramsPageState extends ConsumerState<AllDiagramsPage>
 
   @override
   Widget build(BuildContext context) {
-
     /// To-do can this code be optimized?
     List<List<DiagramType>> subDiagrams = [[], [], [], []];
 
@@ -52,7 +51,6 @@ class _AllDiagramsPageState extends ConsumerState<AllDiagramsPage>
         subDiagrams[3].add(d);
       }
     }
-
     return NestedScrollView(
       floatHeaderSlivers: true,
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -71,9 +69,11 @@ class _AllDiagramsPageState extends ConsumerState<AllDiagramsPage>
           dividerColor: Theme.of(context).colorScheme.scrim,
           controller: _tabController,
           tabs: [
-            ...Section.values.map((s) => Tab(
-                  text: s.name.capitalizeFirstLetter(),
-                ))
+            ...Section.values.map(
+              (s) => Tab(
+                text: s.name.capitalizeFirstLetter(),
+              ),
+            ),
           ],
         ),
         body: TabBarView(

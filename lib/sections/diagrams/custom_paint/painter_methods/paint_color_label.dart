@@ -6,7 +6,7 @@ void paintColorLabel(Canvas canvas, Size size,
     {required Offset pos,
     String? text,
     Color color = Colors.green,
-    double radius = 8,
+    double radius = 10,
     Offset? lineEndPoint}) {
   final width = size.width;
   final height = size.height;

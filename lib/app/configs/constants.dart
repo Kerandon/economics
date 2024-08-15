@@ -32,5 +32,5 @@ const kPageChangeAnimation = 400;
 const kAnimationDuration = 500;
 
 /// Colors
-const kBackgroundOpacity = 0.08;
+const kBackgroundOpacity = 0.06;
 const kNotSelectedOpacity = 0.25;

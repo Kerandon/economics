@@ -36,7 +36,7 @@ void paintAxis(
   }
   if (xAxisLabel != null) {
     paintText(
-     size,
+      size,
       canvas,
       xAxisLabel,
       const Offset(0, 0),

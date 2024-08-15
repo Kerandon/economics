@@ -5,27 +5,23 @@ import '../../enums/indent.dart';
 import '../painter_constants.dart';
 
 void paintText(
+  Size size,
+  Canvas canvas,
+  String label,
+  Offset position, {
+  Color color = Colors.white,
+  double fontSize = kFontSize,
+  double angle = 0,
 
-      Size size,
-      Canvas canvas,
-      String label,
-      Offset position,{
+  // /// To align the label at the end of a curve
+  CurveAlign curveAlign = CurveAlign.center,
 
-
-      Color color = Colors.white,
-      double fontSize = kFontSize,
-      double angle = 0,
-
-      // /// To align the label at the end of a curve
-      CurveAlign? curveAlign,
-
-      /// To label chart axis
-      Axis? axis,
-      AxisLabelMargin? axisLabelMargin,
-      Indent? axisIndent,
-    }) {
-
-  if(axis != null){
+  /// To label chart axis
+  Axis? axis,
+  AxisLabelMargin? axisLabelMargin,
+  Indent? axisIndent,
+}) {
+  if (axis != null) {
     axisLabelMargin = AxisLabelMargin.far;
     axisIndent = Indent.end;
   }
@@ -54,36 +50,34 @@ void paintText(
   /// Aligns the labels on the end of curves
   Offset offset = Offset(position.dx * width, position.dy);
 
-  if (curveAlign != null) {
-    double xAlign = 0;
-    double yAlign = 0;
-    const adjustment = 6.0;
-    switch (curveAlign) {
-      case CurveAlign.center:
-        xAlign = -textPainter.width / 2;
-        yAlign = -textPainter.height / 2;
-        break;
-      case CurveAlign.centerLeft:
-        xAlign = -textPainter.width - adjustment;
-        yAlign = -textPainter.height / 2;
-        break;
-      case CurveAlign.centerRight:
-        xAlign = adjustment;
-        yAlign = -textPainter.height / 2;
-      case CurveAlign.centerTop:
-        xAlign = -textPainter.width / 2;
-        yAlign = -textPainter.height - adjustment;
-      case CurveAlign.centerBottom:
-        xAlign = -textPainter.width / 2;
-        yAlign = textPainter.height - adjustment;
-    }
-    offset = Offset(
-      (position.dx * size.width) + xAlign,
-      (position.dy * size.height) + yAlign,
-    );
+  double xAlign = 0;
+  double yAlign = 0;
+  const adjustment = 6.0;
+  switch (curveAlign) {
+    case CurveAlign.center:
+      xAlign = -textPainter.width / 2;
+      yAlign = -textPainter.height / 2;
+      break;
+    case CurveAlign.centerLeft:
+      xAlign = -textPainter.width - adjustment;
+      yAlign = -textPainter.height / 2;
+      break;
+    case CurveAlign.centerRight:
+      xAlign = adjustment;
+      yAlign = -textPainter.height / 2;
+    case CurveAlign.centerTop:
+      xAlign = -textPainter.width / 2;
+      yAlign = -textPainter.height - adjustment;
+    case CurveAlign.centerBottom:
+      xAlign = -textPainter.width / 2;
+      yAlign = textPainter.height - adjustment;
   }
+  offset = Offset(
+    (position.dx * size.width) + xAlign,
+    (position.dy * size.height) + yAlign,
+  );
 
-  if(axis != null) {
+  if (axis != null) {
     final widthIndent = kAxisIndent * width;
     final heightIndent = kAxisIndent * height;
     final textWidth = textPainter.width;
@@ -134,7 +128,6 @@ void paintText(
           horizontalAxis = horizontalAxis + textHeight * 2.6;
       }
 
-
       /// Centers text
       final centerTextOnHorizontalAxis =
           ((width - (widthIndent * 1.5) - textWidth) / 2) + widthIndent;
@@ -153,10 +146,13 @@ void paintText(
 
   canvas.save();
   final pivot = textPainter.size.centerLeft(offset);
+
   canvas.translate(pivot.dx, pivot.dy);
   canvas.rotate(angle);
   canvas.translate(-pivot.dx, -pivot.dy);
+
   canvas.translate(position.dx, position.dy);
+
   textPainter.paint(canvas, offset);
   canvas.restore();
 }

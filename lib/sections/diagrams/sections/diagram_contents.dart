@@ -37,11 +37,22 @@ class DiagramContents extends ConsumerWidget {
       }
     }
 
+    List<DiagramType> subDiagramTypes = [];
+    for (var d in DiagramType.values) {
+      if (d.name.getWordsBetweenFirstAndSecondUnderscores() ==
+          diagramState.selectedDiagrams[index].name
+              .getWordsBetweenFirstAndSecondUnderscores()) {
+        subDiagramTypes.add(d);
+      }
+    }
+
+    subDiagramTypes.sort((a, b) => a.name.compareTo(b.name));
+
     return SingleChildScrollView(
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: size.width * 0.04),
+            padding: EdgeInsets.only(top: size.height * 0.01),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -68,11 +79,31 @@ class DiagramContents extends ConsumerWidget {
                 expanded: Column(
                   children: [
                     DiagramBox(customPainter: selectedDiagramPainter),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ...subDiagramTypes.map(
+                            (d) => CustomChipButton(
+                              text: d.name.getWordsAfterSecondUnderscore(),
+                              isSelected:
+                                  diagramState.selectedDiagrams[index].name ==
+                                      d.name,
+                              onPressed: () {
+                                diagramNotifier.setDiagramSelected(d, index);
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: size.width * 0.01,
                           horizontal: size.width * kPageIndentHorizontal),
-                      child: HtmlWidget(subDiagrams[index].explanation()),
+                      child: HtmlWidget(
+                          diagramState.selectedDiagrams[index].explanation()),
                     ),
                     SizedBox(
                       height: size.height * 0.05,

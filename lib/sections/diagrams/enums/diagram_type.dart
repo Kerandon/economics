@@ -9,8 +9,9 @@ enum DiagramType {
   micro_MonopolisticCompetition_AbnormalProfits,
   micro_MonopolisticCompetition_EconomicLosses,
   micro_MonopolisticCompetition_WelfareAnalysis,
-  macro_CircularFlowOfIncome_Default,
-  macro_CircularFlowOfIncome_Closed,
+  macro_CircularFlowOfIncome_Closed_Default,
+  macro_CircularFlowOfIncome_Equivalence,
+  macro_CircularFlowOfIncome_Open,
   macro_BusinessCycle_Default,
   macro_PPC_Default,
   macro_PPC_Growth,
@@ -48,10 +49,37 @@ extension DiagramExplainer on DiagramType {
             'where MR = MC.'
             'Point b - the price charged will be at the point directly above MC=MR which intersects with the demand curve'
             'In the long-run, firms produce where P = AC. Because P, D, AR are all represented by the same curve, this means AR = AC, and the firm makes normal (zero) economic profit in the long-run.';
-      case DiagramType.macro_CircularFlowOfIncome_Default:
-      // TODO: Handle this case.
-      case DiagramType.macro_CircularFlowOfIncome_Closed:
-      // TODO: Handle this case.
+      case DiagramType.macro_CircularFlowOfIncome_Closed_Default:
+        return '<h3> Closed economy </h3>'
+            'This model represents a simple economy of only two economic units: '
+            '<strong>households</strong> and <strong>firms</strong>. '
+            'Households own the factors of production (labor, land, capital, enterprise), '
+            'which they sell to firms '
+            'in exchange for <strong>factor payments</strong>. '
+            'Households use factor payments to buy products (goods and services)';
+      case DiagramType.macro_CircularFlowOfIncome_Equivalence:
+        return '<h3>In balance</h3>'
+            'A key idea shown in the closed circular flow of model is '
+            '<strong>income</strong> = <strong>spending</strong> = <strong>output</strong>. '
+            'Because each measure is the same, <strong>GDP</strong> '
+            'can be calculated via measuring any one of these flows. <ol>'
+            '<li>National income (is the sum of all factor payments)</li>'
+            '<li>Total output of all final goods & services produced</li>'
+            '<li>Total spending on all final goods and services</li>'
+            '</ol>';
+      case DiagramType.macro_CircularFlowOfIncome_Open:
+        return '<h3> Interdependent sectors in an economy </h3>'
+            'In the real-world, there are more economic actors than just <strong> households </strong> and '
+            '<strong> firms </strong>. '
+            'The three main sectors are <ul><li>Financial Sector</li>'
+            '<li>Government / Public Sector</li>'
+            '<li>Foreign / International Sector </li></ul>'
+            'Each of these three sectors can grow or shrink the size of the economy via leakages and injections.'
+            '<h3> Injections </h3>'
+            '<strong> Private Investment </strong> - '
+            'Firms taking out loans from banks and using these funds to invest in capital, represents an injection into the economy '
+            'On the other hand, if consumers save part of their wages in banks, this shrinks economic activity, and is a leakage.';
+
       case DiagramType.macro_BusinessCycle_Default:
       // TODO: Handle this case.
       case DiagramType.macro_PPC_Default:
@@ -111,7 +139,7 @@ extension DiagramExplainer on DiagramType {
             '<h3>Economic Losses</h3>'
             'Profit maximizing firm produces where MR=MC'
             'However at this quantity (q1), AC is higher than AR'
-            'The difference between AC-AR (rectangle) represents the economic losses'
+            'The difference betw  MacroCircularFlow(),een AC-AR (rectangle) represents the economic losses'
             'in the short-run. However, in the long-run, some firms will exit'
             'the industry, and the remaining firms will pick-up new customers. '
             'This will in effect shift the demand curve right until it is at a'

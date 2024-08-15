@@ -16,16 +16,15 @@ void paintAxisLines(Size size, Canvas canvas,
   final endYOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
   final startXOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
   final endXOffset =
-  Offset(width * (1 - kAxisIndent / 2), height * (1 - kAxisIndent));
-  canvas..drawLine(startYOffset, endYOffset, axisPaint)..drawLine(
-      startXOffset, endXOffset, axisPaint);
+      Offset(width * (1 - kAxisIndent / 2), height * (1 - kAxisIndent));
+  canvas
+    ..drawLine(startYOffset, endYOffset, axisPaint)
+    ..drawLine(startXOffset, endXOffset, axisPaint);
 
   /// Arrow-head
 
   final path = Path();
-  final paint = Paint()
-    ..color = Colors.white;
-
+  final paint = Paint()..color = Colors.white;
 
   /// Y Axis Arrow
   paintArrow(canvas, positionOfArrow: startYOffset);

@@ -9,7 +9,7 @@ class QuizState {
   final List<QuestionModel> selectedQuestions;
   final bool questionsAllSelected;
   final int numberOfQuestionsCorrect;
-  final Map<Section, bool> selectedSections;
+  final List<Section> selectedSections;
   final int numberOfQuestionsSelected;
   final int currentQuestionIndex;
   final bool showAnswersAsIGo;
@@ -30,7 +30,7 @@ class QuizState {
     List<QuestionModel>? selectedQuestions,
     bool? questionsAllSelected,
     int? numberOfQuestionsCorrect,
-    Map<Section, bool>? selectedSections,
+    List<Section>? selectedSections,
     int? numberOfQuestionsSelected,
     int? currentQuestionIndex,
     bool? showAnswersAsIGo,
@@ -195,10 +195,15 @@ class QuizNotifier extends StateNotifier<QuizState> {
         numberOfQuestionsCorrect: numberOfCorrect);
   }
 
-  void setSectionAsSelected(Section section, bool isSelected) {
-    Map<Section, bool> sections = state.selectedSections;
-    sections.update(section, (value) => isSelected);
+  void setSectionAsSelected(Section section) {
+    List<Section> sections = state.selectedSections;
+    if(sections.contains(section)){
+      sections.remove(section);
+    }else{
+      sections.add(section);
+    }
     state = state.copyWith(selectedSections: sections);
+
   }
 
   void setNumberOfQuestionsSelected(int number) {
@@ -226,12 +231,7 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       selectedQuestions: [],
       questionsAllSelected: false,
       numberOfQuestionsCorrect: 0,
-      selectedSections: {
-        Section.intro: true,
-        Section.micro: false,
-        Section.macro: false,
-        Section.global: false,
-      },
+      selectedSections: [Section.intro],
       numberOfQuestionsSelected: 5,
       currentQuestionIndex: 0,
       showAnswersAsIGo: true,

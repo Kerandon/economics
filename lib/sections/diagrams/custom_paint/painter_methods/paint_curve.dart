@@ -1,6 +1,5 @@
 import 'dart:math';
 
-
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';

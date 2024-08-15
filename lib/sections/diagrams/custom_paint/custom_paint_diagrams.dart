@@ -1,3 +1,4 @@
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomPaintDiagrams extends StatefulWidget {
@@ -30,8 +31,15 @@ class DiagramBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.02, vertical: size.height * 0.01),
-      child: SizedBox(
+      padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.02, vertical: size.height * 0.01),
+      child: Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context)
+                .colorScheme
+                .onSurface
+                .withOpacity(kBackgroundOpacity),
+            borderRadius: BorderRadius.circular(kRadius)),
         width: size.width,
         height: size.width,
         child: CustomPaint(

@@ -6,15 +6,17 @@ class QuestionModel extends Equatable {
   final String question;
   final List<AnswerModel> answers;
   final AnswerStage answerStage;
-  final String explanation;
-  final List<String>? tags;
+  final String? explanation;  // Nullable
+  final String? unit;         // Nullable string for unit
+  final bool isHLOnly;        // Boolean flag for HL only
 
   const QuestionModel({
     required this.question,
     required this.answers,
-    required this.answerStage,
-    required this.explanation,
-    this.tags,
+    this.answerStage = AnswerStage.notSelected,  // Default value
+    this.explanation,  // Nullable, default is null
+    this.unit,         // Nullable, default is null
+    this.isHLOnly = false,  // Default to false
   });
 
   QuestionModel copyWith({
@@ -22,14 +24,16 @@ class QuestionModel extends Equatable {
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
     String? explanation,
-    List<String>? tags,
+    String? unit,
+    bool? isHLOnly,
   }) {
     return QuestionModel(
       question: question ?? this.question,
       answers: answers ?? this.answers,
-      explanation: explanation ?? this.explanation,
       answerStage: answerStage ?? this.answerStage,
-      tags: tags,
+      explanation: explanation ?? this.explanation,
+      unit: unit ?? this.unit,
+      isHLOnly: isHLOnly ?? this.isHLOnly,  // Preserve existing value if not provided
     );
   }
 
@@ -40,18 +44,13 @@ class QuestionModel extends Equatable {
       answers.add(AnswerModel.fromMap(e));
     }
 
-    final t = map['tags'];
-    List<String>? tags;
-    if (t != null) {
-      tags = List<String>.from(t);
-    }
-
     return QuestionModel(
       question: map['question'],
       answers: answers,
-      answerStage: AnswerStage.notSelected,
-      explanation: map['explanation'] ?? "",
-      tags: tags,
+      answerStage: AnswerStage.notSelected,  // Default value
+      explanation: map['explanation'],  // Nullable field
+      unit: map['unit'],  // Nullable field
+      isHLOnly: map['isHLOnly'] ?? false,  // Default to false if not provided
     );
   }
 
@@ -61,5 +60,5 @@ class QuestionModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [question];
+  List<Object?> get props => [question, answers, answerStage, explanation, unit, isHLOnly];
 }

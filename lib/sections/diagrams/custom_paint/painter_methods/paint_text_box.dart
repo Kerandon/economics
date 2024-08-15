@@ -25,8 +25,6 @@ void paintTextBox(
   final verticalAdjustment = halfWidth / 2;
   final fontAdjustment = fontSizeAdjustment;
 
-
-
   final fillPaint = Paint()
     ..style = PaintingStyle.fill
     ..color = fillColor ?? Colors.transparent;
@@ -57,15 +55,12 @@ void paintTextBox(
     case TextBoxShape.oval:
       path = Path()
         ..addOval(Rect.fromCenter(
-            center: const Offset(0, 0),
-            width: width,
-            height: width / 2 ));
+            center: const Offset(0, 0), width: width, height: width / 2));
       break;
   }
 
   /// Change position, scale, rotation
   canvas.save();
-
 
   canvas.translate(position.dx * width, position.dy * height);
   canvas.scale(scale);
@@ -78,13 +73,9 @@ void paintTextBox(
     canvas.drawPath(path, linePaint);
   }
 
-
   canvas.restore();
-  paintText(size, canvas, text, Offset(position.dx,position.dy),
+  paintText(size, canvas, text, Offset(position.dx, position.dy),
       color: color,
-      fontSize: (scale  * kDefaultFontSize * 1.5) * fontAdjustment,
-      curveAlign: CurveAlign.center
-  );
-
-
+      fontSize: (scale * kDefaultFontSize * 1.5) * fontAdjustment,
+      curveAlign: CurveAlign.center);
 }

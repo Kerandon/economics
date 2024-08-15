@@ -63,7 +63,6 @@ class GlobalTariffs extends CustomPainter with NameMixin {
       paintCurve(size, canvas, const Offset(kAxisIndent, 0.46),
           const Offset(0.52, 0.46),
           label1: 'Pd', label1Align: CurveAlign.centerLeft, makeDashed: true);
-
     }
     paintCurve(
       size,

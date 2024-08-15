@@ -93,7 +93,6 @@ class GlobalProductionSubsidies extends CustomPainter with NameMixin {
 
     /// Paint Arrows
 
-
     paintText(size, canvas, 'subsidy', Offset(width * 0.70, height * 0.35));
 
     /// Vertical lines

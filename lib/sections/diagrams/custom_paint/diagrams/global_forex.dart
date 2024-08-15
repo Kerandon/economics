@@ -42,7 +42,6 @@ class GlobalForex extends CustomPainter with NameMixin {
           label1Align: CurveAlign.centerBottom);
       paintDiagramDashedLines(size, canvas,
           yAxisStartPos: 0.38, xAxisEndPos: 0.435, yLabel: kP2, xLabel: kQ2);
-
     }
     if (type == DiagramType.global_Forex_DemandDecrease) {
       paintDiagramDashedLines(size, canvas,
@@ -56,7 +55,6 @@ class GlobalForex extends CustomPainter with NameMixin {
           const Offset(0.20, 0.30),
           label1: kD2,
           label1Align: CurveAlign.centerBottom);
-
     }
   }
 

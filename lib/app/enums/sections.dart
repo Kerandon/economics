@@ -15,4 +15,18 @@ extension GetSection on Section {
         return '';
     }
   }
+  String getSectionShortName() {
+    switch (this) {
+      case Section.intro:
+        return 'Intro';
+      case Section.micro:
+        return 'Micro';
+      case Section.macro:
+        return 'Macro';
+      case Section.global:
+        return 'Global';
+      default:
+        return '';
+    }
+  }
 }

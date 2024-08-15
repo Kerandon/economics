@@ -77,7 +77,6 @@ class GlobalQuotas extends CustomPainter with NameMixin {
       const Offset(0.48, 0.93),
     );
 
-
     /// World Supply Curve
     paintCurve(
       size,

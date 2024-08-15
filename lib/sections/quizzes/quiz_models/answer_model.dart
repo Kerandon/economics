@@ -7,20 +7,32 @@ class AnswerModel extends Equatable {
   final bool isCorrect;
   final AnswerStage answerStage;
 
-  const AnswerModel(this.answer, this.isCorrect, this.answerStage);
+  const AnswerModel(
+      this.answer, {
+        this.isCorrect = false,
+        this.answerStage = AnswerStage.notSelected,
+      });
 
   factory AnswerModel.fromMap(Map<String, dynamic> map) {
-    return AnswerModel(map.entries.first.key, map.entries.first.value,
-        AnswerStage.notSelected);
+    return AnswerModel(
+      map.entries.first.key,
+      isCorrect: map.entries.first.value,
+      answerStage: AnswerStage.notSelected,
+    );
   }
 
-  AnswerModel copyWith(
-      {String? answer, bool? isCorrect, AnswerStage? answerStage}) {
-    return AnswerModel(answer ?? this.answer, isCorrect ?? this.isCorrect,
-        answerStage ?? this.answerStage);
+  AnswerModel copyWith({
+    String? answer,
+    bool? isCorrect,
+    AnswerStage? answerStage,
+  }) {
+    return AnswerModel(
+      answer ?? this.answer,
+      isCorrect: isCorrect ?? this.isCorrect,
+      answerStage: answerStage ?? this.answerStage,
+    );
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [answer];
+  List<Object?> get props => [answer, isCorrect, answerStage];
 }

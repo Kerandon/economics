@@ -5,11 +5,10 @@ import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_pro
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_quotas.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_tariffs.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/macro_business_cycle.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/macro_circular_flow.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/micro_monopolistic_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/micro_perfect_competition_long_run.dart';
 import 'package:flutter/material.dart';
-
+import '../custom_paint/diagrams/macro_circular_flow.dart';
 import '../enums/diagram_type.dart';
 
 List<CustomPainter> allDiagrams = [
@@ -29,7 +28,10 @@ List<CustomPainter> allDiagrams = [
   MicroMonopolisticCompetition(
       type: DiagramType.micro_MonopolisticCompetition_WelfareAnalysis),
   MacroBusinessCycle(),
-  MacroCircularFlowOfIncome(),
+  MacroCircularFlow(
+      type: DiagramType.macro_CircularFlowOfIncome_Closed_Default),
+  MacroCircularFlow(type: DiagramType.macro_CircularFlowOfIncome_Equivalence),
+  MacroCircularFlow(type: DiagramType.macro_CircularFlowOfIncome_Open),
   GlobalTariffs(type: DiagramType.global_Tariffs_Standard_Default),
   GlobalTariffs(type: DiagramType.global_Tariffs_Calculation),
   GlobalTariffs(type: DiagramType.global_Tariffs_Labels),

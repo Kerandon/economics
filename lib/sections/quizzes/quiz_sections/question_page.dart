@@ -1,17 +1,16 @@
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
+import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_section/completion_page.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/question_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
-import 'package:economics_app/sections/quizzes/quiz_widgets/question_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/app_colors.dart';
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_change_button.dart';
-import '../quiz_widgets/custom_slider.dart';
-import '../quiz_widgets/explanation_box.dart';
+import 'completion_page.dart';
+import 'explanation_box.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -121,22 +120,26 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                SliverAppBar(
-                  backgroundColor: AppColors.defaultAppColorDarker,
-                  automaticallyImplyLeading: false,
-                  pinned: false,
-                  floating: true,
-                  forceElevated: innerBoxIsScrolled,
-                  actions: [
-                    SizedBox(
-                      width: size.width * 0.05,
-                    ),
-                    const CustomSlider(),
-                    Text(
-                      'Qn ${quizState.currentQuestionIndex + 1} of ${quizState.numberOfQuestionsSelected}',
-                    )
-                  ],
+                const CustomPageHeading(
+                  title: 'Quiz',
+                  icon: Icon(Icons.question_answer_outlined),
                 ),
+                // SliverAppBar(
+                //   backgroundColor: AppColors.defaultAppColorDarker,
+                //   automaticallyImplyLeading: false,
+                //   pinned: false,
+                //   floating: true,
+                //   forceElevated: innerBoxIsScrolled,
+                //   actions: [
+                //     SizedBox(
+                //       width: size.width * 0.05,
+                //     ),
+                //     const CustomSlider(),
+                //     Text(
+                //       'Qn ${quizState.currentQuestionIndex + 1} of ${quizState.numberOfQuestionsSelected}',
+                //     )
+                //   ],
+                // ),
               ];
             },
             body: Container(

@@ -1,27 +1,26 @@
+import 'package:economics_app/sections/notes/models/unit_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../sections/articles/articles_models/article_model.dart';
 
 class AppState {
   final bool isDarkTheme;
   final int page;
-  final ArticleModel selectedArticle;
+  final UnitModel selectedUnit;
 
   AppState({
     required this.isDarkTheme,
     required this.page,
-    required this.selectedArticle,
+    required this.selectedUnit,
   });
 
   AppState copyWith(
       {bool? isDarkTheme,
       int? page,
-      ArticleModel? selectedArticle,
+      UnitModel? selectedUnit,
       Map<int, bool>? showExpanded}) {
     return AppState(
       isDarkTheme: isDarkTheme ?? this.isDarkTheme,
       page: page ?? this.page,
-      selectedArticle: selectedArticle ?? this.selectedArticle,
+      selectedUnit: selectedUnit ?? this.selectedUnit,
     );
   }
 }
@@ -37,8 +36,8 @@ class AppNotifier extends StateNotifier<AppState> {
     state = state.copyWith(page: page);
   }
 
-  void setSelectedArticle(ArticleModel article) {
-    state = state.copyWith(selectedArticle: article);
+  void setSelectedUnit(UnitModel unit) {
+    state = state.copyWith(selectedUnit: unit);
   }
 
   /// Triggers a rebuild of the widget tree (used for expanded icon to update)
@@ -52,6 +51,6 @@ final appProvider = StateNotifierProvider<AppNotifier, AppState>(
   (ref) => AppNotifier(AppState(
     isDarkTheme: true,
     page: 0,
-    selectedArticle: ArticleModel(),
+    selectedUnit: UnitModel(id: '', unit: ''),
   )),
 );
