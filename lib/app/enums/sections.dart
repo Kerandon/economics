@@ -15,6 +15,7 @@ extension GetSection on Section {
         return '';
     }
   }
+
   String getSectionShortName() {
     switch (this) {
       case Section.intro:

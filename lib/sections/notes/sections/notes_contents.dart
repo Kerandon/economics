@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../app/custom_widgets/custom_page_heading.dart';
+import '../../../app/custom_widgets/under_construction_page.dart';
 import '../../../app/state/app_state.dart';
 
 class NotesContents extends ConsumerStatefulWidget {
@@ -18,8 +19,10 @@ class _NotesContentsState extends ConsumerState<NotesContents> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final appState = ref.watch(appProvider);
-    final contents =
-        articleData.firstWhere((e) => e.key == appState.selectedUnit.id);
+    MapEntry<String, Widget> contents = articleData
+        .firstWhere((e) => e.key == appState.selectedUnit.id, orElse: () {
+      return const MapEntry('No item found', UnderConstructionPage());
+    });
 
     return Scaffold(
       appBar: AppBar(),

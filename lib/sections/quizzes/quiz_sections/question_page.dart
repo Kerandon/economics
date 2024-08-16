@@ -1,8 +1,8 @@
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
-import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/custom_slider.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/question_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_change_button.dart';
 import 'completion_page.dart';
-import 'explanation_box.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -29,6 +28,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     final size = MediaQuery.of(context).size;
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
+    final customButtonGap = size.height * 0.04;
     QuestionModel? currentQuestion;
     int questionIndex = 0;
     if (quizState.selectedQuestions.isNotEmpty) {
@@ -85,16 +85,8 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             element.answerStage == AnswerStage.incorrect) &&
         !_hasShownCompletedDialog &&
         quizState.selectedQuestions.isNotEmpty) {
-      Future.delayed(const Duration(milliseconds: 1500), () {
-        if (mounted) {
-          if (quizState.selectedQuestions.isNotEmpty) {
-            showDialog(
-                context: context, builder: (context) => const CompletionPage());
-          }
-        }
-      });
-
       _hasShownCompletedDialog = true;
+      _showCompletionBox(context: context, quizState: quizState);
     }
 
     return Stack(
@@ -120,32 +112,25 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                const CustomPageHeading(
-                  title: 'Quiz',
-                  icon: Icon(Icons.question_answer_outlined),
-                ),
-                // SliverAppBar(
-                //   backgroundColor: AppColors.defaultAppColorDarker,
-                //   automaticallyImplyLeading: false,
-                //   pinned: false,
-                //   floating: true,
-                //   forceElevated: innerBoxIsScrolled,
-                //   actions: [
-                //     SizedBox(
-                //       width: size.width * 0.05,
-                //     ),
-                //     const CustomSlider(),
-                //     Text(
-                //       'Qn ${quizState.currentQuestionIndex + 1} of ${quizState.numberOfQuestionsSelected}',
-                //     )
-                //   ],
-                // ),
+                SliverToBoxAdapter(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Expanded(child: SizedBox.shrink()),
+                    const Expanded(
+                        flex: 6, child: ListTile(title: CustomSlider())),
+                    Expanded(
+                        child: Text(
+                            '${quizState.currentQuestionIndex + 1}/${quizState.selectedSections.length}'))
+                  ],
+                ))
               ];
             },
             body: Container(
               color: Theme.of(context).colorScheme.surface,
               child: Padding(
-                padding: EdgeInsets.only(top: size.height * 0.01),
+                padding: EdgeInsets.only(top: size.height * 0.001),
                 child: Stack(
                   children: [
                     Container(
@@ -177,50 +162,39 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    SizedBox(
-                                      height: size.height * 0.01,
-                                    ),
                                     ...[
                                       QuestionTile(
                                         question: quizState.selectedQuestions[
                                             questionIndex - 1],
                                       ),
-                                      if (question.answerStage ==
-                                          AnswerStage.incorrect) ...[
-                                        ExplanationBox(question: question)
-                                      ],
+                                      SizedBox(
+                                        height: customButtonGap,
+                                      ),
                                       if (question.answerStage !=
                                               AnswerStage.correct &&
                                           question.answerStage !=
                                               AnswerStage.incorrect)
                                         showCheckAnswersButton
-                                            ? Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: size.height * 0.03),
-                                                child: CustomBigButton(
-                                                  text: checkButtonText,
-                                                  onPressed: question
-                                                              .answerStage ==
-                                                          AnswerStage.selected
-                                                      ? () {
-                                                          if (!quizState
-                                                              .showAnswersAsIGo) {
-                                                            quizNotifier
-                                                                .checkAllAnswers();
-                                                          } else {
-                                                            quizNotifier
-                                                                .checkAnswer(
-                                                                    question);
+                                            ? CustomBigButton(
+                                                text: checkButtonText,
+                                                onPressed:
+                                                    question.answerStage ==
+                                                            AnswerStage.selected
+                                                        ? () {
+                                                            if (!quizState
+                                                                .showAnswersAsIGo) {
+                                                              quizNotifier
+                                                                  .checkAllAnswers();
+                                                            } else {
+                                                              quizNotifier
+                                                                  .checkAnswer(
+                                                                      question);
+                                                            }
                                                           }
-                                                        }
-                                                      : null,
-                                                ),
+                                                        : null,
                                               )
                                             : const SizedBox.shrink(),
                                     ],
-                                    SizedBox(
-                                      height: size.height * 0.03,
-                                    ),
                                     allQuestionsAnswered
                                         ? CustomBigButton(
                                             text: 'Quiz results',
@@ -287,4 +261,16 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
       ],
     );
   }
+}
+
+void _showCompletionBox(
+    {required BuildContext context, required QuizState quizState}) {
+  Future.delayed(const Duration(milliseconds: 1200), () async {
+    if (context.mounted) {
+      if (quizState.selectedQuestions.isNotEmpty) {
+        await showDialog(
+            context: context, builder: (context) => const CompletionPage());
+      }
+    }
+  });
 }

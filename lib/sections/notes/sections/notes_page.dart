@@ -2,6 +2,7 @@ import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import '../../../app/custom_widgets/custom_page_heading.dart';
+import '../../../app/enums/get_custom_icon.dart';
 import '../../../app/enums/sections.dart';
 import '../data/units_contents.dart';
 import '../models/unit_model.dart';
@@ -94,9 +95,7 @@ class _NotesPageState extends State<NotesPage>
         return <Widget>[
           CustomPageHeading(
             expandableControllers: currentControllers,
-            icon: const Icon(
-              Icons.ssid_chart,
-            ),
+            icon: getCustomIcon(CustomIcon.notes),
             title: 'Notes',
           ),
         ];

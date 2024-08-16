@@ -1,8 +1,8 @@
 import 'package:economics_app/sections/diagrams/state/all_diagrams_state.dart';
 import 'package:economics_app/sections/diagrams/utils/extensions.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/explanation_box.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../app/configs/constants.dart';
@@ -31,12 +31,15 @@ class DiagramContents extends ConsumerWidget {
 
     CustomPainter? selectedDiagramPainter;
 
-    for (var d in allDiagrams) {
+    AllDiagrams allDiagrams = AllDiagrams(
+      onSurfaceColor: Theme.of(context).colorScheme.onSurface,
+      primaryColor: Theme.of(context).colorScheme.primary,
+    );
+    for (var d in allDiagrams.getAllDiagrams()) {
       if (d.name == diagramState.selectedDiagrams[index].name) {
         selectedDiagramPainter = d;
       }
     }
-
     List<DiagramType> subDiagramTypes = [];
     for (var d in DiagramType.values) {
       if (d.name.getWordsBetweenFirstAndSecondUnderscores() ==
@@ -100,10 +103,11 @@ class DiagramContents extends ConsumerWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          vertical: size.width * 0.01,
+                          vertical: size.width * 0.03,
                           horizontal: size.width * kPageIndentHorizontal),
-                      child: HtmlWidget(
-                          diagramState.selectedDiagrams[index].explanation()),
+                      child: ExplanationBox(
+                          explanation: diagramState.selectedDiagrams[index]
+                              .explanation()),
                     ),
                     SizedBox(
                       height: size.height * 0.05,

@@ -7,10 +7,10 @@ import '../../enums/curve_align.dart';
 
 void paintCustomBezier(
   Size size,
-  Canvas canvas, {
+  Canvas canvas,
+  Color color, {
   required Offset startPos,
   required List<CustomBezier> points,
-  Color? color,
   String? label1,
   String? label2,
   CurveAlign label1Align = CurveAlign.center,
@@ -24,7 +24,7 @@ void paintCustomBezier(
   final height = size.height;
   final paint = Paint()
     ..style = PaintingStyle.stroke
-    ..color = color ?? Colors.white
+    ..color = color
     ..strokeWidth = kCurveWidth;
   final path = Path();
   path.moveTo(startPos.dx * width, startPos.dy * height);
@@ -42,6 +42,7 @@ void paintCustomBezier(
     paintText(
         size,
         canvas,
+        color: color,
         label1,
         Offset(points[points.length - 1].endPoint.dx,
             points[points.length - 1].endPoint.dy),
@@ -54,6 +55,7 @@ void paintCustomBezier(
   if (drawArrowOnStart) {
     paintArrow(
       canvas,
+      color,
       positionOfArrow: Offset(startPos.dx * width, startPos.dy * height),
       rotationAngle: arrowOnStartAngle,
     );
@@ -61,6 +63,7 @@ void paintCustomBezier(
   if (drawArrowOnEnd) {
     paintArrow(
       canvas,
+      color,
       positionOfArrow: Offset(
           points.last.endPoint.dx * width, points.last.endPoint.dy * height),
       rotationAngle: arrowOnEndAngle,

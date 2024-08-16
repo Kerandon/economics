@@ -1,6 +1,6 @@
-import 'package:economics_app/app/animation/rotate_around_animation.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/explanation_box.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../quiz_models/question_model.dart';
@@ -32,27 +32,15 @@ class QuestionTile extends ConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: [
-                RotateAroundAnimation(
-                  beginValue: 0.50,
-                  child: Padding(
-                    padding: EdgeInsets.all(size.height * kPageIndentVertical),
-                    child: Row(
-                      children: [
-                        if (index != null) ...[
-                          SizedBox(
-                            width: size.width * 0.05,
-                            child: Text(
-                              (index! + 1).toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                        Expanded(
+                Padding(
+                  padding: EdgeInsets.all(size.height * kPageIndentVertical),
+                  child: Row(
+                    children: [
+                      if (index != null) ...[
+                        SizedBox(
+                          width: size.width * 0.05,
                           child: Text(
-                            question.question,
+                            (index! + 1).toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium
@@ -60,18 +48,47 @@ class QuestionTile extends ConsumerWidget {
                           ),
                         ),
                       ],
-                    ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            if (question.item != null)
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(bottom: size.height * 0.01),
+                                child: question.item!,
+                              ),
+                            Text(
+                              question.question,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Column(
                   children: [
                     ...[
-                      ...answers.map((answer) => AnswerTile(
-                            answerIndex: answers.indexOf(answer),
-                            answer: answer,
-                            question: question,
-                          ))
+                      ...answers.map(
+                        (answer) => AnswerTile(
+                          answerIndex: answers.indexOf(answer),
+                          answer: answer,
+                          question: question,
+                        ),
+                      )
                     ],
+                    if (question.answerStage == AnswerStage.incorrect &&
+                        question.explanation != null)
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: size.height * 0.01),
+                        child:
+                            ExplanationBox(explanation: question.explanation!),
+                      )
                   ],
                 )
               ],

@@ -63,6 +63,10 @@ class CustomAppTheme {
           },
         ),
       ),
+      listTileTheme: const ListTileThemeData(
+        titleTextStyle:
+            TextStyle(color: AppColors.defaultAppColor, fontSize: 12),
+      ),
     );
   }
 }

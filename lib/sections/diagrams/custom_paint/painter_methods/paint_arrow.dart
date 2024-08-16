@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void paintArrow(
-  Canvas canvas, {
+  Canvas canvas,
+  Color color, {
   required Offset positionOfArrow,
   double size = 5,
   double rotationAngle = 0.0,
-  Color color = Colors.white, // Rotation angle in radians
 }) {
   final path = Path();
   final paint = Paint()..color = color;

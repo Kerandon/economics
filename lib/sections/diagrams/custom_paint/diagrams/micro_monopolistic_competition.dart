@@ -42,14 +42,13 @@ class MicroMonopolisticCompetition extends CustomPainter with NameMixin {
           hideXLine: true);
 
       /// Average Cost
-      paintCustomBezier(size, canvas,
+      paintCustomBezier(size, canvas, onBackgroundColor,
           startPos: const Offset(0.27, 0.22),
           points: [
             CustomBezier(
                 control: const Offset(0.55, 0.81),
                 endPoint: const Offset(0.83, 0.22))
           ],
-          color: onBackgroundColor,
           label1: kAC,
           label1Align: CurveAlign.centerTop);
     }
@@ -65,14 +64,13 @@ class MicroMonopolisticCompetition extends CustomPainter with NameMixin {
           yAxisStartPos: 0.29, xAxisEndPos: 0.285, yLabel: kAC);
 
       /// Average Cost
-      paintCustomBezier(size, canvas,
+      paintCustomBezier(size, canvas, onBackgroundColor,
           startPos: const Offset(0.27, 0.10),
           points: [
             CustomBezier(
                 control: const Offset(0.55, 0.55),
                 endPoint: const Offset(0.83, 0.10))
           ],
-          color: onBackgroundColor,
           label1: kAC,
           label1Align: CurveAlign.centerTop);
     }
@@ -118,14 +116,13 @@ class MicroMonopolisticCompetition extends CustomPainter with NameMixin {
         yAxisStartPos: 0.38, xAxisEndPos: 0.285, yLabel: kP, xLabel: kQ1);
 
     /// Marginal Cost
-    paintCustomBezier(size, canvas,
+    paintCustomBezier(size, canvas, onBackgroundColor,
         startPos: const Offset(0.18, 0.70),
         points: [
           CustomBezier(
               control: const Offset(0.35, 0.90),
               endPoint: const Offset(0.70, 0.10))
         ],
-        color: onBackgroundColor,
         label1: kMC,
         label1Align: CurveAlign.centerTop);
 
@@ -133,14 +130,13 @@ class MicroMonopolisticCompetition extends CustomPainter with NameMixin {
         type == DiagramType.micro_MonopolisticCompetition_WelfareLoss ||
         type == DiagramType.micro_MonopolisticCompetition_WelfareAnalysis) {
       /// Average Cost
-      paintCustomBezier(size, canvas,
+      paintCustomBezier(size, canvas, onBackgroundColor,
           startPos: const Offset(0.27, 0.15),
           points: [
             CustomBezier(
                 control: const Offset(0.55, 0.70),
                 endPoint: const Offset(0.83, 0.15))
           ],
-          color: onBackgroundColor,
           label1: kAC,
           label1Align: CurveAlign.centerTop);
     }

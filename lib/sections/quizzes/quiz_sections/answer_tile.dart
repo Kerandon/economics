@@ -1,6 +1,6 @@
 import 'package:economics_app/app/animation/pop_out_animation.dart';
+import 'package:economics_app/app/animation/rotate_around_animation.dart';
 import 'package:economics_app/app/animation/shake_animation.dart';
-import 'package:economics_app/app/animation/slide_in_animation.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
@@ -8,7 +8,6 @@ import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/constants.dart';
-import '../../../app/enums/slide_direction.dart';
 import '../quiz_models/answer_model.dart';
 
 class AnswerTile extends ConsumerStatefulWidget {
@@ -59,11 +58,9 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
       icon = Icons.check_circle_outline;
     }
 
-    return SlideAnimation(
-      direction: widget.answerIndex % 2 == 0
-          ? SlideDirection.rightIn
-          : SlideDirection.leftIn,
-      animateOnStart: true,
+    return RotateAroundAnimation(
+      beginValue: widget.answerIndex % 2 == 0 ? 0.50 : -0.50,
+      duration: 800,
       child: ShakeAnimation(
         animate: _animate,
         onComplete: () {
@@ -88,6 +85,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                       shrinkWrap: true,
                       children: [
                         ListTile(
+                          dense: true,
                           leading: Text(
                             ((widget.answerIndex + 1).toAlphabet()),
                             style: Theme.of(context).textTheme.labelLarge,

@@ -53,10 +53,6 @@ class QuizState {
 class QuizNotifier extends StateNotifier<QuizState> {
   QuizNotifier(super._state);
 
-  void setAllQuestions(List<QuestionModel> questions) {
-    state = state.copyWith(allQuestions: questions);
-  }
-
   void setSelectedQuestions(List<QuestionModel> questions) {
     // Convert the list to a set to remove duplicates
     Set<QuestionModel> uniqueQuestions = questions.toSet();
@@ -116,12 +112,15 @@ class QuizNotifier extends StateNotifier<QuizState> {
     List<QuestionModel> questions = state.selectedQuestions.toList();
 
     for (int i = 0; i < questions.length; i++) {
-      if (questions[i] == question) {
+      if (questions[i].question == question.question) {
         questions[i] = question;
       }
     }
 
     state = state.copyWith(selectedQuestions: questions);
+    // for(var q in state.selectedQuestions){
+    //   print('after question is ${q.question} and answer stage ${q.answerStage}');
+    // }
   }
 
   void setShowAnswersAsIGo(bool checkAtEnd) {
@@ -150,7 +149,6 @@ class QuizNotifier extends StateNotifier<QuizState> {
     } else {
       question = question.copyWith(answerStage: AnswerStage.correct);
     }
-
     updateQuestionState(question);
   }
 
@@ -197,13 +195,12 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
   void setSectionAsSelected(Section section) {
     List<Section> sections = state.selectedSections;
-    if(sections.contains(section)){
+    if (sections.contains(section)) {
       sections.remove(section);
-    }else{
+    } else {
       sections.add(section);
     }
     state = state.copyWith(selectedSections: sections);
-
   }
 
   void setNumberOfQuestionsSelected(int number) {

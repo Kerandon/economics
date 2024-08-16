@@ -8,10 +8,10 @@ class AnswerModel extends Equatable {
   final AnswerStage answerStage;
 
   const AnswerModel(
-      this.answer, {
-        this.isCorrect = false,
-        this.answerStage = AnswerStage.notSelected,
-      });
+    this.answer, {
+    this.isCorrect = false,
+    this.answerStage = AnswerStage.notSelected,
+  });
 
   factory AnswerModel.fromMap(Map<String, dynamic> map) {
     return AnswerModel(

@@ -45,11 +45,11 @@ class _PopOutAnimationState extends State<PopOutAnimation>
       ],
       if (widget.addPop) ...[
         TweenSequenceItem(
-            tween: Tween<double>(begin: widget.startPos, end: 1.3)
+            tween: Tween<double>(begin: widget.startPos, end: 1.1)
                 .chain(CurveTween(curve: Curves.bounceOut)),
             weight: 40),
         TweenSequenceItem(
-            tween: Tween<double>(begin: 1.3, end: 1.0)
+            tween: Tween<double>(begin: 1.1, end: 1.0)
                 .chain(CurveTween(curve: Curves.bounceIn)),
             weight: 80),
       ]

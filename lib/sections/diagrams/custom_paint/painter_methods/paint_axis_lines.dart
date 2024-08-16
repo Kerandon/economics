@@ -27,10 +27,10 @@ void paintAxisLines(Size size, Canvas canvas,
   final paint = Paint()..color = Colors.white;
 
   /// Y Axis Arrow
-  paintArrow(canvas, positionOfArrow: startYOffset);
+  paintArrow(canvas, color, positionOfArrow: startYOffset);
 
   /// X Axis Arrow
-  paintArrow(canvas, positionOfArrow: endXOffset, rotationAngle: pi / 2);
+  paintArrow(canvas, color, positionOfArrow: endXOffset, rotationAngle: pi / 2);
 
   canvas.save();
   canvas.drawPath(path, paint);

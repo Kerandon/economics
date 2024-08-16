@@ -48,6 +48,7 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
     paintCustomBezier(
       size,
       canvas,
+      onBackgroundColor,
       startPos: const Offset(0.20, 0.60),
       points: [
         CustomBezier(
@@ -62,6 +63,7 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       paintCustomBezier(
         size,
         canvas,
+        onBackgroundColor,
         startPos: const Offset(0.18, 0.30),
         points: [
           CustomBezier(
@@ -77,6 +79,7 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       paintCustomBezier(
         size,
         canvas,
+        onBackgroundColor,
         startPos: const Offset(0.18, 0.40),
         points: [
           CustomBezier(
@@ -101,6 +104,7 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       paintCustomBezier(
         size,
         canvas,
+        onBackgroundColor,
         startPos: const Offset(0.20, 0.20),
         points: [
           CustomBezier(

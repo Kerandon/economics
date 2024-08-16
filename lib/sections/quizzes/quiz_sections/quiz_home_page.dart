@@ -1,12 +1,12 @@
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/sections/quizzes/quiz_data/number_of_questions.dart';
+import 'package:economics_app/sections/quizzes/quiz_data/questions_bank/questions_bank.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/custom_big_button.dart';
 import '../../../app/custom_widgets/custom_chip_button.dart';
@@ -21,22 +21,18 @@ class QuizHomePage extends ConsumerStatefulWidget {
 }
 
 class _ReviewPageState extends ConsumerState<QuizHomePage> {
-
   final ExpandableController _expandableController =
-    ExpandableController(initialExpanded: false);
+      ExpandableController(initialExpanded: false);
 
-  bool _initializedListener = false;
   bool _expanded = false; // Move _expanded outside of the build method
 
   @override
   void initState() {
     super.initState();
 
-    // Listen to changes in the expandable controller
     _expandableController.addListener(() {
       setState(() {
         _expanded = _expandableController.expanded;
-        print('is expanded $_expanded');
       });
     });
   }
@@ -56,7 +52,6 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
           question.answerStage == AnswerStage.incorrect)) {}
     }
 
-
     // if(!_initializedListener) {
     //   _initializedListener = true;
     //   _expandableController.addListener(() {
@@ -70,8 +65,8 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
           floatHeaderSlivers: true,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              CustomPageHeading(
-                icon: const Icon(
+              const CustomPageHeading(
+                icon: Icon(
                   Icons.question_answer_outlined,
                 ),
                 title: 'Quiz',
@@ -84,7 +79,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height:  kVerticalSettingsGap,
+                  height: kVerticalSettingsGap,
                 ),
                 ExpandableNotifier(
                   controller: _expandableController,
@@ -118,7 +113,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: kVerticalSettingsGap),
-                          child: CustomDivider(),
+                          child: const CustomDivider(),
                         ),
                         const ListTile(
                           title: Text('Number of questions'),
@@ -147,22 +142,21 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: kVerticalSettingsGap),
-                          child: CustomDivider(),
+                          child: const CustomDivider(),
                         ),
                         SwitchListTile(
-                            title: Text('Check answers as I go'),
-                            value: quizState.showAnswersAsIGo, onChanged: (on) {
-                          quizNotifier.setShowAnswersAsIGo(on);
-                        }),
-                        CustomDivider(),
+                            title: const Text('Check answers as I go'),
+                            value: quizState.showAnswersAsIGo,
+                            onChanged: (on) {
+                              quizNotifier.setShowAnswersAsIGo(on);
+                            }),
+                        const CustomDivider(),
                       ],
                     ),
                   ),
                 ),
                 AnimatedContainer(
-                  height: _expanded
-                      ? size.height * 0.15
-                      : size.height * 0.30,
+                  height: _expanded ? size.height * 0.15 : size.height * 0.30,
                   duration: const Duration(
                     milliseconds: 200,
                   ),
@@ -176,7 +170,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                           quizNotifier.setResetQuestions();
                           List<QuestionModel> selectedQuestions = [];
 
-                          for (var q in quizState.allQuestions) {
+                          for (var q in questionsBank) {
                             {
                               selectedQuestions.add(q.shuffleAnswers());
                             }

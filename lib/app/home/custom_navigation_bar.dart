@@ -2,6 +2,8 @@ import 'package:economics_app/app/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../enums/get_custom_icon.dart';
+
 class CustomNavigationBar extends ConsumerWidget {
   const CustomNavigationBar({
     super.key,
@@ -17,23 +19,17 @@ class CustomNavigationBar extends ConsumerWidget {
       onDestinationSelected: (index) {
         appNotifier.setPage(index);
       },
-      destinations: const [
+      destinations: [
         NavigationDestination(
-          icon: Icon(
-            Icons.style_outlined,
-          ),
+          icon: getCustomIcon(CustomIcon.notes),
           label: 'Notes',
         ),
         NavigationDestination(
-          icon: Icon(
-            Icons.ssid_chart,
-          ),
+          icon: getCustomIcon(CustomIcon.diagrams),
           label: 'Diagrams',
         ),
         NavigationDestination(
-          icon: Icon(
-            Icons.quiz_outlined,
-          ),
+          icon: getCustomIcon(CustomIcon.quiz),
           label: 'Quiz',
         ),
       ],

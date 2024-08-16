@@ -10,7 +10,7 @@ enum DiagramType {
   micro_MonopolisticCompetition_EconomicLosses,
   micro_MonopolisticCompetition_WelfareAnalysis,
   macro_CircularFlowOfIncome_Closed_Default,
-  macro_CircularFlowOfIncome_Equivalence,
+  macro_CircularFlowOfIncome_IncomeOutputExpenditure,
   macro_CircularFlowOfIncome_Open,
   macro_BusinessCycle_Default,
   macro_PPC_Default,
@@ -57,7 +57,7 @@ extension DiagramExplainer on DiagramType {
             'which they sell to firms '
             'in exchange for <strong>factor payments</strong>. '
             'Households use factor payments to buy products (goods and services)';
-      case DiagramType.macro_CircularFlowOfIncome_Equivalence:
+      case DiagramType.macro_CircularFlowOfIncome_IncomeOutputExpenditure:
         return '<h3>In balance</h3>'
             'A key idea shown in the closed circular flow of model is '
             '<strong>income</strong> = <strong>spending</strong> = <strong>output</strong>. '

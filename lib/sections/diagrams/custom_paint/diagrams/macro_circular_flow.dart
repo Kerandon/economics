@@ -13,15 +13,15 @@ import 'dart:math' as math;
 class MacroCircularFlow extends CustomPainter with NameMixin {
   @override
   String get name => type.name;
-  final Color color;
+  final Color onSurfaceColor;
   final Color primaryColor;
   final DiagramType type;
 
   MacroCircularFlow({
     super.repaint,
     this.type = DiagramType.macro_CircularFlowOfIncome_Open,
-    this.color = Colors.white,
-    this.primaryColor = Colors.green,
+    required this.onSurfaceColor,
+    required this.primaryColor,
   });
 
   @override
@@ -30,25 +30,29 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
       paintTextBox(
         canvas,
         size,
+        color: onSurfaceColor,
         text: 'Households',
         position: const Offset(0.15, 0.30),
         shape: TextBoxShape.oval,
-        lineColor: color,
+        lineColor: onSurfaceColor,
       );
 
       paintTextBox(
         canvas,
         size,
+        color: onSurfaceColor,
         text: 'Firms',
         position: const Offset(0.85, 0.30),
         shape: TextBoxShape.oval,
-        lineColor: color,
+        lineColor: onSurfaceColor,
       );
 
-      paintText(size, canvas, 'Factor payments', const Offset(0.50, 0.12));
+      paintText(size, canvas, 'Factor payments', const Offset(0.50, 0.12),
+          color: onSurfaceColor);
       paintCustomBezier(
         size,
         canvas,
+        onSurfaceColor,
         startPos: const Offset(0.15, 0.22),
         points: [
           CustomBezier(
@@ -61,10 +65,16 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
       );
 
       paintText(
-          size, canvas, 'Household expenditure', const Offset(0.50, 0.49));
+        size,
+        canvas,
+        color: onSurfaceColor,
+        'Household expenditure',
+        const Offset(0.50, 0.49),
+      );
       paintCustomBezier(
         size,
         canvas,
+        onSurfaceColor,
         startPos: const Offset(0.15, 0.38),
         points: [
           CustomBezier(
@@ -81,46 +91,49 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
       paintTextBox(
         canvas,
         size,
+        color: onSurfaceColor,
         text: 'Financial',
         position: const Offset(0.50, 0.65),
-        lineColor: color,
+        lineColor: onSurfaceColor,
       );
       paintTextBox(
         canvas,
         size,
+        color: onSurfaceColor,
         text: 'Government',
         position: const Offset(0.50, 0.75),
-        lineColor: color,
+        lineColor: onSurfaceColor,
       );
       paintTextBox(
         canvas,
         size,
+        color: onSurfaceColor,
         text: 'Foreign',
         position: const Offset(0.50, 0.85),
-        lineColor: color,
+        lineColor: onSurfaceColor,
       );
 
       /// Leakages & injections
 
-      _drawLeakagesAndInjections(size, canvas,
+      _drawLeakagesAndInjections(size, canvas, onSurfaceColor,
           label: 'Imports', isLeakage: true, xPosStart: 0.10, yPosEnd: 0.85);
-      _drawLeakagesAndInjections(size, canvas,
+      _drawLeakagesAndInjections(size, canvas, onSurfaceColor,
           label: 'Taxation', isLeakage: true, xPosStart: 0.20, yPosEnd: 0.75);
-      _drawLeakagesAndInjections(size, canvas,
+      _drawLeakagesAndInjections(size, canvas, onSurfaceColor,
           label: 'Savings', isLeakage: true, xPosStart: 0.30, yPosEnd: 0.65);
-      _drawLeakagesAndInjections(size, canvas,
+      _drawLeakagesAndInjections(size, canvas, onSurfaceColor,
           label: 'Exports',
           isLeakage: false,
           xPosStart: 0.90,
           yPosEnd: 0.85,
           labelAdjustment: 0.12);
-      _drawLeakagesAndInjections(size, canvas,
+      _drawLeakagesAndInjections(size, canvas, onSurfaceColor,
           label: 'Govt. Spending',
           isLeakage: false,
           xPosStart: 0.80,
           yPosEnd: 0.75,
           labelAdjustment: 0.20);
-      _drawLeakagesAndInjections(size, canvas,
+      _drawLeakagesAndInjections(size, canvas, onSurfaceColor,
           label: 'Investment',
           isLeakage: false,
           xPosStart: 0.70,
@@ -130,24 +143,32 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
 
     /// CLOSED MODEL
     if (type == DiagramType.macro_CircularFlowOfIncome_Closed_Default ||
-        type == DiagramType.macro_CircularFlowOfIncome_Equivalence) {
+        type ==
+            DiagramType.macro_CircularFlowOfIncome_IncomeOutputExpenditure) {
       paintTextBox(canvas, size,
+          color: onSurfaceColor,
           text: 'Households',
           position: const Offset(0.15, 0.50),
-          lineColor: color,
+          lineColor: onSurfaceColor,
           shape: TextBoxShape.oval,
           scale: 0.25);
       paintTextBox(canvas, size,
+          color: onSurfaceColor,
           text: 'Firms',
           position: const Offset(0.85, 0.50),
-          lineColor: color,
+          lineColor: onSurfaceColor,
           shape: TextBoxShape.oval,
           scale: 0.25);
-      paintText(size, canvas, 'Wages, rent, interest, profit',
+      paintText(
+          size,
+          canvas,
+          color: onSurfaceColor,
+          'Wages, rent, interest, profit',
           const Offset(0.50, 0.15));
       paintCustomBezier(
         size,
         canvas,
+        onSurfaceColor,
         startPos: const Offset(0.10, 0.40),
         points: [
           CustomBezier(
@@ -158,11 +179,16 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
         drawArrowOnStart: true,
         arrowOnStartAngle: math.pi * 1.1,
       );
-      paintText(size, canvas, 'Labor, land, capital, enterprise',
+      paintText(
+          size,
+          canvas,
+          color: onSurfaceColor,
+          'Labor, land, capital, enterprise',
           const Offset(0.50, 0.35));
       paintCustomBezier(
         size,
         canvas,
+        onSurfaceColor,
         startPos: const Offset(0.20, 0.40),
         points: [
           CustomBezier(
@@ -173,10 +199,16 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
         drawArrowOnEnd: true,
         arrowOnEndAngle: math.pi * 0.90,
       );
-      paintText(size, canvas, 'Goods & services', const Offset(0.50, 0.65));
+      paintText(
+          size,
+          canvas,
+          color: onSurfaceColor,
+          'Goods & services',
+          const Offset(0.50, 0.65));
       paintCustomBezier(
         size,
         canvas,
+        onSurfaceColor,
         startPos: const Offset(0.20, 0.60),
         points: [
           CustomBezier(
@@ -187,11 +219,16 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
         drawArrowOnStart: true,
         arrowOnStartAngle: math.pi * -0.10,
       );
-      paintText(size, canvas, 'Household expenditure / Firm Revenue',
+      paintText(
+          size,
+          canvas,
+          color: onSurfaceColor,
+          'Household expenditure / Firm Revenue',
           const Offset(0.50, 0.85));
       paintCustomBezier(
         size,
         canvas,
+        onSurfaceColor,
         startPos: const Offset(0.10, 0.60),
         points: [
           CustomBezier(
@@ -203,10 +240,14 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
         arrowOnEndAngle: math.pi * 0.10,
       );
     }
-    if (type == DiagramType.macro_CircularFlowOfIncome_Equivalence) {
-      paintColorLabel(canvas, size, pos: const Offset(0.50, 0.20), text: 'A');
-      paintColorLabel(canvas, size, pos: const Offset(0.50, 0.72), text: 'B');
-      paintColorLabel(canvas, size, pos: const Offset(0.50, 0.80), text: 'C');
+    if (type ==
+        DiagramType.macro_CircularFlowOfIncome_IncomeOutputExpenditure) {
+      paintColorLabel(canvas, size,
+          color: primaryColor, pos: const Offset(0.50, 0.20), text: 'A');
+      paintColorLabel(canvas, size,
+          color: primaryColor, pos: const Offset(0.50, 0.72), text: 'B');
+      paintColorLabel(canvas, size,
+          color: primaryColor, pos: const Offset(0.50, 0.80), text: 'C');
     }
   }
 
@@ -216,17 +257,28 @@ class MacroCircularFlow extends CustomPainter with NameMixin {
   }
 }
 
-void _drawLeakagesAndInjections(Size size, Canvas canvas,
-    {required bool isLeakage,
-    required String label,
-    required double xPosStart,
-    required yPosEnd,
-    double labelAdjustment = 0.07}) {
-  paintText(size, canvas, label, Offset(xPosStart + labelAdjustment, 0.65),
-      curveAlign: CurveAlign.centerLeft, angle: math.pi / -2);
+void _drawLeakagesAndInjections(
+  Size size,
+  Canvas canvas,
+  Color color, {
+  required bool isLeakage,
+  required String label,
+  required double xPosStart,
+  required yPosEnd,
+  double labelAdjustment = 0.07,
+}) {
+  paintText(
+      size,
+      canvas,
+      color: color,
+      label,
+      Offset(xPosStart + labelAdjustment, 0.65),
+      curveAlign: CurveAlign.centerLeft,
+      angle: math.pi / -2);
   paintCustomBezier(
     size,
     canvas,
+    color,
     startPos: Offset(xPosStart, 0.52),
     points: [
       CustomBezier(

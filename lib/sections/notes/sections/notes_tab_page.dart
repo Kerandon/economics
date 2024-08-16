@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../app/custom_widgets/custom_chip_button.dart';
 
+import '../data/article_data.dart';
 import '../models/unit_model.dart';
 
 class NotesTabPage extends ConsumerWidget {
@@ -20,6 +21,7 @@ class NotesTabPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
     final appState = ref.watch(appProvider);
     final appNotifier = ref.read(appProvider.notifier);
     return SingleChildScrollView(
@@ -44,19 +46,42 @@ class NotesTabPage extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ...sectionNotes.entries.elementAt(index).value.map(
-                            (e) => CustomChipButton(
-                              removeShadingOfText: true,
-                              text: e.unit,
-                              isSelected: appState.selectedUnit == e,
-                              onPressed: () {
-                                appNotifier.setSelectedUnit(e);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const NotesContents()));
-                              },
-                              leading: e.hlOnly ? const Text('HL only') : null,
+                        (e) {
+                          // print('e ${e.id}');
+                          bool hasContent = false;
+                          for (var i in articleData) {
+                            if (e.id == i.key) {
+                              hasContent = true;
+                            }
+                          }
+
+                          return CustomChipButton(
+                            removeShadingOfText: true,
+                            text: e.unit,
+                            isSelected: appState.selectedUnit == e,
+                            onPressed: !hasContent
+                                ? null
+                                : () {
+                                    appNotifier.setSelectedUnit(e);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const NotesContents()));
+                                  },
+                            leading: Row(
+                              children: [
+                                if (!hasContent)
+                                  const Icon(Icons.construction_outlined),
+                                if (!hasContent && e.hlOnly)
+                                  SizedBox(
+                                    width: size.width * 0.02,
+                                  ),
+                                if (e.hlOnly) const Text('HL only'),
+                              ],
                             ),
-                          )
+                          );
+                        },
+                      )
                     ],
                   ),
                 ),

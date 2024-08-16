@@ -55,12 +55,12 @@ void paintCurve(
     /// work out the angle of the curve, (assume points upwards, and subtracts
     /// half pi to make a base point of zero)
 
-    paintArrow(canvas,
+    paintArrow(canvas, color,
         positionOfArrow: Offset(p1.dx * width, p1.dy * height),
         rotationAngle: angle);
   }
   if (drawArrowAtEnd) {
-    paintArrow(canvas,
+    paintArrow(canvas, color,
         positionOfArrow: Offset(p2.dx * width, p2.dy * height),
         rotationAngle: angle + pi);
   }

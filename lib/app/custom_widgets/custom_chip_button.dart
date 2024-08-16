@@ -6,7 +6,7 @@ class CustomChipButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.isSelected,
-    required this.onPressed,
+    this.onPressed,
     this.icon,
     this.padding,
     this.leading,
@@ -15,7 +15,7 @@ class CustomChipButton extends StatelessWidget {
 
   final String text;
   final bool isSelected;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final IconData? icon;
   final EdgeInsets? padding;
   final Widget? leading;
@@ -55,7 +55,7 @@ class CustomChipButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 color: isSelected || removeShadingOfText
-                    ? Colors.white
+                    ? Theme.of(context).colorScheme.onSurface
                     : Theme.of(context).colorScheme.onSurface.withOpacity(0.50),
               ),
             ),
