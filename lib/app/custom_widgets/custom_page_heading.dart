@@ -11,11 +11,13 @@ class CustomPageHeading extends ConsumerWidget {
     required this.title,
     required this.icon,
     this.expandableControllers,
+    this.trailing,
   });
 
   final String title;
   final Icon icon;
   final List<ExpandableController>? expandableControllers;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,52 +45,64 @@ class CustomPageHeading extends ConsumerWidget {
                   .withOpacity(kBackgroundOpacity),
               borderRadius: BorderRadius.circular(kRadius)),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
-                icon: icon,
-                onPressed: null,
-              ),
-              Padding(
-                padding: EdgeInsets.all(size.width * 0.04),
-                child: Text(
-                  title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
+              Expanded(
+                child: IconButton(
+                  icon: icon,
+                  onPressed: null,
                 ),
               ),
-              if (expandableControllers != null) ...[
-                IconButton(
-                  onPressed: () {
-                    if (expandableControllers!.any((c) => c.expanded)) {
-                      for (var c in expandableControllers!) {
-                        if (c.expanded) {
-                          c.toggle();
-                        }
-                      }
-                    } else if (expandableControllers!
-                        .every((c) => !c.expanded)) {
-                      for (var c in expandableControllers!) {
-                        c.toggle();
-                      }
-                    }
-                  },
-                  icon: Icon(
-                    showExpanded
-                        ? Icons.expand_more_outlined
-                        : Icons.expand_less_outlined,
-                    color: Theme.of(context).colorScheme.primary,
+              Expanded(
+                flex: 5,
+                child: Padding(
+                  padding: EdgeInsets.all(size.width * 0.04),
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              if (trailing != null) ...[
+                Expanded(
+                  child: SizedBox(
+                    width: 100,
+                    child: Container(color: Colors.red, child: trailing!),
                   ),
                 ),
               ],
-              if (expandableControllers == null) ...[
-                IconButton(
-                  onPressed: () {},
-                  icon: icon,
-                  color: Colors.transparent,
-                )
+              if (expandableControllers != null) ...[
+                Expanded(
+                  child: IconButton(
+                    onPressed: () {
+                      if (expandableControllers!.any((c) => c.expanded)) {
+                        for (var c in expandableControllers!) {
+                          if (c.expanded) {
+                            c.toggle();
+                          }
+                        }
+                      } else if (expandableControllers!
+                          .every((c) => !c.expanded)) {
+                        for (var c in expandableControllers!) {
+                          c.toggle();
+                        }
+                      }
+                    },
+                    icon: Icon(
+                      showExpanded
+                          ? Icons.expand_more_outlined
+                          : Icons.expand_less_outlined,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ],
+              if (expandableControllers == null && trailing == null) ...[
+                const Expanded(child: SizedBox.shrink()),
               ]
             ],
           ),

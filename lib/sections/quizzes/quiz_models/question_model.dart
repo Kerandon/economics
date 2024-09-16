@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import '../quiz_enums/answer_stage.dart';
 import 'answer_model.dart';
 
-class QuestionModel extends Equatable {
+class QuestionModelMulti extends Equatable {
   final String question;
   final Widget? item;
-  final List<AnswerModel> answers;
+  final List<MultiAnswerModel> answers;
   final AnswerStage answerStage;
   final String? explanation; // Nullable
   final String? unit; // Nullable string for unit
   final bool isHLOnly; // Boolean flag for HL only
 
-  const QuestionModel({
+  const QuestionModelMulti({
     required this.question,
     required this.answers,
     this.item,
@@ -22,15 +22,15 @@ class QuestionModel extends Equatable {
     this.isHLOnly = false, // Default to false
   });
 
-  QuestionModel copyWith({
+  QuestionModelMulti copyWith({
     String? question,
-    List<AnswerModel>? answers,
+    List<MultiAnswerModel>? answers,
     AnswerStage? answerStage,
     String? explanation,
     String? unit,
     bool? isHLOnly,
   }) {
-    return QuestionModel(
+    return QuestionModelMulti(
       question: question ?? this.question,
       answers: answers ?? this.answers,
       answerStage: answerStage ?? this.answerStage,
@@ -41,14 +41,14 @@ class QuestionModel extends Equatable {
     );
   }
 
-  factory QuestionModel.fromMap(Map<String, dynamic> map) {
+  factory QuestionModelMulti.fromMap(Map<String, dynamic> map) {
     final a = map['answers'];
-    List<AnswerModel> answers = [];
+    List<MultiAnswerModel> answers = [];
     for (var e in a) {
-      answers.add(AnswerModel.fromMap(e));
+      answers.add(MultiAnswerModel.fromMap(e));
     }
 
-    return QuestionModel(
+    return QuestionModelMulti(
       question: map['question'],
       answers: answers,
       answerStage: AnswerStage.notSelected, // Default value
@@ -58,8 +58,8 @@ class QuestionModel extends Equatable {
     );
   }
 
-  QuestionModel shuffleAnswers() {
-    List<AnswerModel> shuffledAnswers = List.from(answers)..shuffle();
+  QuestionModelMulti shuffleAnswers() {
+    List<MultiAnswerModel> shuffledAnswers = List.from(answers)..shuffle();
     return copyWith(answers: shuffledAnswers);
   }
 

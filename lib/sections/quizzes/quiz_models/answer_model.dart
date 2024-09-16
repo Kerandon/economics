@@ -2,31 +2,31 @@ import 'package:equatable/equatable.dart';
 
 import '../quiz_enums/answer_stage.dart';
 
-class AnswerModel extends Equatable {
+class MultiAnswerModel extends Equatable {
   final String answer;
   final bool isCorrect;
   final AnswerStage answerStage;
 
-  const AnswerModel(
+  const MultiAnswerModel(
     this.answer, {
     this.isCorrect = false,
     this.answerStage = AnswerStage.notSelected,
   });
 
-  factory AnswerModel.fromMap(Map<String, dynamic> map) {
-    return AnswerModel(
+  factory MultiAnswerModel.fromMap(Map<String, dynamic> map) {
+    return MultiAnswerModel(
       map.entries.first.key,
       isCorrect: map.entries.first.value,
       answerStage: AnswerStage.notSelected,
     );
   }
 
-  AnswerModel copyWith({
+  MultiAnswerModel copyWith({
     String? answer,
     bool? isCorrect,
     AnswerStage? answerStage,
   }) {
-    return AnswerModel(
+    return MultiAnswerModel(
       answer ?? this.answer,
       isCorrect: isCorrect ?? this.isCorrect,
       answerStage: answerStage ?? this.answerStage,

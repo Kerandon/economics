@@ -29,7 +29,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     final customButtonGap = size.height * 0.04;
-    QuestionModel? currentQuestion;
+    QuestionModelMulti? currentQuestion;
     int questionIndex = 0;
     if (quizState.selectedQuestions.isNotEmpty) {
       currentQuestion =

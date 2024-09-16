@@ -1,15 +1,15 @@
-enum Section { intro, micro, macro, global }
+enum IBSectionOld { intro, micro, macro, global }
 
-extension GetSection on Section {
+extension GetSection on IBSectionOld {
   String getSectionName() {
     switch (this) {
-      case Section.intro:
+      case IBSectionOld.intro:
         return 'Introduction to Economics';
-      case Section.micro:
+      case IBSectionOld.micro:
         return 'Microeconomics';
-      case Section.macro:
+      case IBSectionOld.macro:
         return 'Macroeconomics';
-      case Section.global:
+      case IBSectionOld.global:
         return 'Global Economics';
       default:
         return '';
@@ -18,13 +18,13 @@ extension GetSection on Section {
 
   String getSectionShortName() {
     switch (this) {
-      case Section.intro:
+      case IBSectionOld.intro:
         return 'Intro';
-      case Section.micro:
+      case IBSectionOld.micro:
         return 'Micro';
-      case Section.macro:
+      case IBSectionOld.macro:
         return 'Macro';
-      case Section.global:
+      case IBSectionOld.global:
         return 'Global';
       default:
         return '';

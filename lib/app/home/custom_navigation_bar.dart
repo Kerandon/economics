@@ -21,16 +21,12 @@ class CustomNavigationBar extends ConsumerWidget {
       },
       destinations: [
         NavigationDestination(
-          icon: getCustomIcon(CustomIcon.notes),
-          label: 'Notes',
+          icon: getCustomIcon(CustomIcon.quiz),
+          label: 'Quiz',
         ),
         NavigationDestination(
           icon: getCustomIcon(CustomIcon.diagrams),
           label: 'Diagrams',
-        ),
-        NavigationDestination(
-          icon: getCustomIcon(CustomIcon.quiz),
-          label: 'Quiz',
         ),
       ],
     );

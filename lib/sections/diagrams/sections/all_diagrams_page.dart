@@ -4,7 +4,8 @@ import 'package:economics_app/sections/diagrams/utils/extensions.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/enums/sections.dart';
+
+import '../../../app/enums/sections_replace_me.dart';
 import '../custom_paint/painter_constants.dart';
 import 'diagram_contents.dart';
 import '../enums/diagram_type.dart';
@@ -37,16 +38,16 @@ class _AllDiagramsPageState extends ConsumerState<AllDiagramsPage>
     List<List<DiagramType>> subDiagrams = [[], [], [], []];
 
     for (var d in DiagramType.values) {
-      if (d.name.getFirstWord() == Section.intro.name &&
+      if (d.name.getFirstWord() == IBSectionOld.intro.name &&
           d.name.contains(kDefault)) {
         subDiagrams[0].add(d);
-      } else if (d.name.getFirstWord() == Section.micro.name &&
+      } else if (d.name.getFirstWord() == IBSectionOld.micro.name &&
           d.name.contains(kDefault)) {
         subDiagrams[1].add(d);
-      } else if (d.name.getFirstWord() == Section.macro.name &&
+      } else if (d.name.getFirstWord() == IBSectionOld.macro.name &&
           d.name.contains(kDefault)) {
         subDiagrams[2].add(d);
-      } else if (d.name.getFirstWord() == Section.global.name &&
+      } else if (d.name.getFirstWord() == IBSectionOld.global.name &&
           d.name.contains(kDefault)) {
         subDiagrams[3].add(d);
       }
@@ -69,7 +70,7 @@ class _AllDiagramsPageState extends ConsumerState<AllDiagramsPage>
           dividerColor: Theme.of(context).colorScheme.scrim,
           controller: _tabController,
           tabs: [
-            ...Section.values.map(
+            ...IBSectionOld.values.map(
               (s) => Tab(
                 text: s.name.capitalizeFirstLetter(),
               ),

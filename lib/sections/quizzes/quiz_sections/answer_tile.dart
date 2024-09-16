@@ -18,8 +18,8 @@ class AnswerTile extends ConsumerStatefulWidget {
     required this.answerIndex,
   });
 
-  final AnswerModel answer;
-  final QuestionModel question;
+  final MultiAnswerModel answer;
+  final QuestionModelMulti question;
   final int answerIndex;
 
   @override

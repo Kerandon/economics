@@ -4,22 +4,22 @@ import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 
 final questionsBank = [
-  QuestionModel(
+  QuestionModelMulti(
       unit: '4.1',
       question: 'What fruit is yellow?',
       item: DiagramBox(customPainter: MacroBusinessCycle()),
       answers: const [
-        AnswerModel(
+        MultiAnswerModel(
           'Banana',
           isCorrect: true,
         ),
-        AnswerModel(
+        MultiAnswerModel(
           'Apple',
         ),
-        AnswerModel(
+        MultiAnswerModel(
           'Orange',
         ),
-        AnswerModel(
+        MultiAnswerModel(
           'Pear',
         ),
       ],

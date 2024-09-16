@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "792487374827",
-    "project_id": "economics-cbb82",
-    "storage_bucket": "economics-cbb82.appspot.com"
+    "project_number": "449972201177",
+    "project_id": "economics-app",
+    "storage_bucket": "economics-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:792487374827:android:b4a4cca6eb5eec966b33ae",
+        "mobilesdk_app_id": "1:449972201177:android:e4822b19783ef4b5e940c8",
         "android_client_info": {
           "package_name": "com.zenbition.economics_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAXGGdTHvKHDaVs7Mv8IHIMOmhfR5s7uzA"
+          "current_key": "AIzaSyC472NXE9et1_X9kE2CTgTG961EHnwdERw"
         }
       ],
       "services": {

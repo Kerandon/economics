@@ -1,17 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/sections/quizzes/quiz_data/number_of_questions.dart';
-import 'package:economics_app/sections/quizzes/quiz_data/questions_bank/questions_bank.dart';
-import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/question_page.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz_widget.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/custom_widgets/custom_big_button.dart';
 import '../../../app/custom_widgets/custom_chip_button.dart';
-import '../../../app/enums/sections.dart';
+import '../../../app/enums/ib_section.dart';
 import '../quiz_enums/answer_stage.dart';
+import 'add_question/add_question_page.dart';
 
 class QuizHomePage extends ConsumerStatefulWidget {
   const QuizHomePage({super.key});
@@ -51,25 +50,23 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
           question.answerStage == AnswerStage.correct ||
           question.answerStage == AnswerStage.incorrect)) {}
     }
-
-    // if(!_initializedListener) {
-    //   _initializedListener = true;
-    //   _expandableController.addListener(() {
-    //     _expanded = _expandableController.expanded;
-    //   });
-    // }
-
     return Stack(
       children: [
         NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              const CustomPageHeading(
-                icon: Icon(
+              CustomPageHeading(
+                icon: const Icon(
                   Icons.question_answer_outlined,
                 ),
                 title: 'Quiz',
+                trailing: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const AddQuestionPage()));
+                    },
+                    icon: const Icon(Icons.add)),
               ),
             ];
           },
@@ -96,10 +93,10 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              ...Section.values.map(
+                              ...IBSection.values.map(
                                 (s) {
                                   return CustomChipButton(
-                                    text: s.getSectionShortName(),
+                                    text: s.name,
                                     isSelected:
                                         quizState.selectedSections.contains(s),
                                     onPressed: () {
@@ -162,34 +159,25 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                   ),
                   curve: Curves.easeInOut,
                 ),
-                CustomBigButton(
-                  text: 'Start Quiz!',
-                  onPressed: quizState.selectedSections.isEmpty
-                      ? null
-                      : () {
-                          quizNotifier.setResetQuestions();
-                          List<QuestionModel> selectedQuestions = [];
-
-                          for (var q in questionsBank) {
-                            {
-                              selectedQuestions.add(q.shuffleAnswers());
-                            }
-                          }
-                          selectedQuestions.shuffle();
-
-                          quizNotifier.setSelectedQuestions(selectedQuestions);
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const QuestionPage(),
-                            ),
-                          );
-                        },
-                ),
+                const StartQuizWidget(),
               ],
             ),
           ),
         ),
       ],
     );
+  }
+}
+
+Future<dynamic> getQuestions() async {
+  final instance = FirebaseFirestore.instance;
+  final collectionSnapshot = await instance.collection('quiz-ib').get();
+  if (collectionSnapshot.docs.isNotEmpty) {
+    for (var d in collectionSnapshot.docs) {
+      print('document is ${d.data()}');
+    }
+  }
+  if (collectionSnapshot.docs.isEmpty) {
+    print('empty');
   }
 }

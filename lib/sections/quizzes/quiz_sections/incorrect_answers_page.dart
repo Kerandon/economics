@@ -20,7 +20,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
   Widget build(BuildContext context) {
     final quizState = ref.watch(quizProvider);
     final size = MediaQuery.of(context).size;
-    Map<int, QuestionModel> incorrectQuestions = {};
+    Map<int, QuestionModelMulti> incorrectQuestions = {};
 
     for (int i = 0; i < quizState.selectedQuestions.length; i++) {
       if (quizState.selectedQuestions[i].answerStage == AnswerStage.incorrect) {

@@ -14,7 +14,7 @@ class QuestionTile extends ConsumerWidget {
   });
 
   final int? index;
-  final QuestionModel question;
+  final QuestionModelMulti question;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
