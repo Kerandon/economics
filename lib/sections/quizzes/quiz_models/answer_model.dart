@@ -1,36 +1,44 @@
 import 'package:equatable/equatable.dart';
 
 import '../quiz_enums/answer_stage.dart';
-
-class MultiAnswerModel extends Equatable {
+class AnswerModel extends Equatable {
   final String answer;
   final bool isCorrect;
   final AnswerStage answerStage;
 
-  const MultiAnswerModel(
-    this.answer, {
-    this.isCorrect = false,
-    this.answerStage = AnswerStage.notSelected,
-  });
+  const AnswerModel(
+      this.answer, {
+        this.isCorrect = false,
+        this.answerStage = AnswerStage.notSelected,
+      });
 
-  factory MultiAnswerModel.fromMap(Map<String, dynamic> map) {
-    return MultiAnswerModel(
+  factory AnswerModel.fromMap(Map<String, dynamic> map) {
+    return AnswerModel(
       map.entries.first.key,
       isCorrect: map.entries.first.value,
       answerStage: AnswerStage.notSelected,
     );
   }
 
-  MultiAnswerModel copyWith({
+  AnswerModel copyWith({
     String? answer,
     bool? isCorrect,
     AnswerStage? answerStage,
   }) {
-    return MultiAnswerModel(
+    return AnswerModel(
       answer ?? this.answer,
       isCorrect: isCorrect ?? this.isCorrect,
       answerStage: answerStage ?? this.answerStage,
     );
+  }
+
+  // Add the toMap method to serialize AnswerModel
+  Map<String, dynamic> toMap() {
+    return {
+      'answer': answer,
+      'isCorrect': isCorrect,
+      'answerStage': answerStage.toString(), // Assuming it's an enum
+    };
   }
 
   @override

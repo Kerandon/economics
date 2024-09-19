@@ -14,7 +14,7 @@ class QuestionTile extends ConsumerWidget {
   });
 
   final int? index;
-  final QuestionModelMulti question;
+  final QuestionModel question;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,7 +58,7 @@ class QuestionTile extends ConsumerWidget {
                                 child: question.item!,
                               ),
                             Text(
-                              question.question,
+                              question.question ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -73,7 +73,7 @@ class QuestionTile extends ConsumerWidget {
                 Column(
                   children: [
                     ...[
-                      ...answers.map(
+                      ...answers!.map(
                         (answer) => AnswerTile(
                           answerIndex: answers.indexOf(answer),
                           answer: answer,

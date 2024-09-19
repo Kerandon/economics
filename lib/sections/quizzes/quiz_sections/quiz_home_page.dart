@@ -50,6 +50,9 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
           question.answerStage == AnswerStage.correct ||
           question.answerStage == AnswerStage.incorrect)) {}
     }
+
+
+
     return Stack(
       children: [
         NestedScrollView(
@@ -174,7 +177,7 @@ Future<dynamic> getQuestions() async {
   final collectionSnapshot = await instance.collection('quiz-ib').get();
   if (collectionSnapshot.docs.isNotEmpty) {
     for (var d in collectionSnapshot.docs) {
-      print('document is ${d.data()}');
+
     }
   }
   if (collectionSnapshot.docs.isEmpty) {

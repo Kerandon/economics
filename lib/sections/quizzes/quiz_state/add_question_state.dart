@@ -5,19 +5,21 @@ import '../../../app/enums/course.dart';
 import '../../../app/enums/ib_section.dart';
 import '../../../app/utils/mixins/section_mixin.dart';
 import '../../../app/enums/ig_units.dart';
-import '../../../app/enums/unit_mixin.dart';
+import '../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_models/answer_model.dart';
 
 class AddQuestionState {
   final Course course;
   final QuestionType questionType;
   final String newQuestionText;
-  final List<MultiAnswerModel> newMultiAnswers;
+  final List<AnswerModel> newMultiAnswers;
   final String explanation;
   final List<DropdownMenuItem> sections;
   final SectionMixin section;
   final List<DropdownMenuItem> units;
   final UnitMixin unit;
+  final Map<String, bool> fieldValidation;
+  final bool allFieldsAreValidated;
 
   AddQuestionState({
     required this.course,
@@ -29,18 +31,22 @@ class AddQuestionState {
     required this.section,
     required this.units,
     required this.unit,
+    required this.fieldValidation,
+    required this.allFieldsAreValidated,
   });
 
   AddQuestionState copyWith({
     Course? course,
     QuestionType? questionType,
     String? newQuestionText,
-    List<MultiAnswerModel>? newMultiAnswers,
+    List<AnswerModel>? newMultiAnswers,
     String? explanation,
     List<DropdownMenuItem>? sections,
     SectionMixin? section,
     List<DropdownMenuItem>? units,
     UnitMixin? unit,
+    bool? allFieldsAreValidated,
+    Map<String, bool>? fieldValidation,
   }) {
     return AddQuestionState(
       course: course ?? this.course,
@@ -52,6 +58,8 @@ class AddQuestionState {
       section: section ?? this.section,
       units: units ?? this.units,
       unit: unit ?? this.unit,
+      fieldValidation: fieldValidation ?? this.fieldValidation,
+      allFieldsAreValidated: allFieldsAreValidated ?? this.allFieldsAreValidated,
     );
   }
 }
@@ -82,7 +90,7 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
         DropdownMenuItem(
           value: s,
           child: Text(
-            s.toString(),
+            s.name,
           ),
         ),
       );
@@ -122,6 +130,21 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
   void setUnit(UnitMixin unit) {
     state = state.copyWith(unit: unit);
   }
+
+
+  void updateValidation(MapEntry entry) {
+    Map<String, bool> fields = state.fieldValidation;
+    fields.update(
+      entry.key,
+          (oldValue) => entry.value as bool,
+      ifAbsent: () => entry.value as bool, // This adds the key if it doesn't exist
+    );
+
+    final allValidated = fields.entries.every((e) => e.value == true);
+    state = state.copyWith(fieldValidation: fields, allFieldsAreValidated: allValidated);
+  }
+
+
 }
 
 final addQuestionProvider =
@@ -137,6 +160,8 @@ final addQuestionProvider =
       section: IBSection.intro,
       units: [],
       unit: IntroUnits.whatIsEconomics,
+      fieldValidation: {},
+      allFieldsAreValidated: false,
     ),
   ),
 );

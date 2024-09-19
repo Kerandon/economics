@@ -2,61 +2,30 @@ import 'package:economics_app/sections/diagrams/custom_paint/custom_paint_diagra
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/macro_business_cycle.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_models/unit_model.dart';
+
+import '../../../../app/enums/course.dart';
 
 final questionsBank = [
-  QuestionModelMulti(
-      unit: '4.1',
+  QuestionModel(
+      course: Course.ib,
+      unit: UnitModel(id: '4.1', unit: 'specific unit'),
       question: 'What fruit is yellow?',
       item: DiagramBox(customPainter: MacroBusinessCycle()),
       answers: const [
-        MultiAnswerModel(
+        AnswerModel(
           'Banana',
           isCorrect: true,
         ),
-        MultiAnswerModel(
+        AnswerModel(
           'Apple',
         ),
-        MultiAnswerModel(
+        AnswerModel(
           'Orange',
         ),
-        MultiAnswerModel(
+        AnswerModel(
           'Pear',
         ),
       ],
       explanation: 'because bananas are yellow'),
-  // const QuestionModel(
-  //   unit: '4.1',
-  //   question: 'What is the highest mountain in the world?',
-  //   answers: [
-  //     AnswerModel(
-  //       'Mount Everest',
-  //       isCorrect: true,
-  //     ),
-  //     AnswerModel(
-  //       'Mount Cook',
-  //     ),
-  //     AnswerModel(
-  //       'Mount Fuji',
-  //     ),
-  //     AnswerModel(
-  //       'Mount Rushmore',
-  //     ),
-  //   ],
-  // ),
-  // const QuestionModel(
-  //   unit: '4.1',
-  //   question: 'What is the biggest animal in the World',
-  //   answers: [
-  //     AnswerModel('Elephant', isCorrect: true),
-  //     AnswerModel(
-  //       'Lion',
-  //     ),
-  //     AnswerModel(
-  //       'Tiger',
-  //     ),
-  //     AnswerModel(
-  //       'Hippo',
-  //     ),
-  //   ],
-  // ),
 ];

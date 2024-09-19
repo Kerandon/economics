@@ -7,12 +7,14 @@ class AnswerRow extends StatelessWidget {
     super.key,
     required this.controller,
     required this.index,
-    this.hintText,
+    required this.hintText,
+    this.requireValidation,
   });
 
   final TextEditingController controller;
   final int index;
-  final String? hintText;
+  final String hintText;
+  final bool? requireValidation;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class AnswerRow extends StatelessWidget {
           Expanded(
             flex: 5,
             child: CustomTextField(
+              requireValidation: requireValidation ?? false,
               controller: controller,
               hintText: hintText,
             ),

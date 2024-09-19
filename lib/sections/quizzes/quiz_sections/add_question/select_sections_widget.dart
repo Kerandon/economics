@@ -1,4 +1,5 @@
 import 'package:economics_app/app/enums/course.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/add_question/custom_drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -32,7 +33,7 @@ class _SelectSectionsWidgetState extends ConsumerState<SelectSectionsWidget> {
 
     return Column(
       children: [
-        DropdownButton(
+        CustomDropDown(
           value: addQuestionState.section,
           items: addQuestionState.sections,
           onChanged: (e) {
@@ -44,7 +45,13 @@ class _SelectSectionsWidgetState extends ConsumerState<SelectSectionsWidget> {
               units.add(
                 DropdownMenuItem(
                   value: u,
-                  child: Text(u.unit),
+                  child: Row(
+                    children: [
+                      Text(u.id),
+                      SizedBox(width: 8,),
+                      Text(u.unit),
+                    ],
+                  ),
                 ),
               );
             }
@@ -54,7 +61,7 @@ class _SelectSectionsWidgetState extends ConsumerState<SelectSectionsWidget> {
           },
         ),
         const Gap(),
-        DropdownButton(
+        CustomDropDown(
           value: addQuestionState.unit,
           items: addQuestionState.units,
           onChanged: (e) {

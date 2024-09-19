@@ -34,7 +34,7 @@ class _StartQuizWidgetState extends ConsumerState<StartQuizWidget> {
         future: _quizFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print('got data!');
+
           }
 
           return CustomBigButton(
@@ -43,7 +43,7 @@ class _StartQuizWidgetState extends ConsumerState<StartQuizWidget> {
                 ? null
                 : () {
                     quizNotifier.setResetQuestions();
-                    List<QuestionModelMulti> selectedQuestions = [];
+                    List<QuestionModel> selectedQuestions = [];
 
                     for (var q in questionsBank) {
                       {

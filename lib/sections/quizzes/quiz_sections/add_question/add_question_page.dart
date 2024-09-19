@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
+import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_models/unit_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/select_sections_widget.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +39,7 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
       final c = TextEditingController();
       _answerRows.add(
         AnswerRow(
+            requireValidation: true,
             index: i,
             controller: c,
             hintText: i == 0
@@ -108,6 +114,7 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
               ),
               const Gap(),
               CustomTextField(
+                requireValidation: true,
                 controller: _questionController,
                 hintText: 'Type your question here...',
               ),
@@ -184,6 +191,7 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                 showDivider: true,
               ),
               CustomTextField(
+                requireValidation: false,
                 controller: _explanationController,
                 hintText: 'Type an optional answer explanation here...',
               ),
@@ -192,7 +200,47 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
               SizedBox(
                 height: size.height * 0.10,
               ),
-              CustomBigButton(text: 'Add Question', onPressed: () {}),
+              CustomBigButton(
+                text: 'Add Question',
+                onPressed: addQuestionState.allFieldsAreValidated
+                    ? () async {
+                        final course = addQuestionState.course;
+                        final type = addQuestionState.questionType;
+                        final question = _questionController.text;
+                        List<AnswerModel> answers = [];
+                        for (int i = 0; i < _answerControllers.length; i++) {
+                          answers.add(AnswerModel(_answerControllers[i].text,
+                              isCorrect: i == 0));
+                        }
+                        final explanation = _explanationController.text;
+                        final section = addQuestionState.section;
+                        final unit = UnitModel(
+                            id: addQuestionState.unit.id,
+                            unit: addQuestionState.unit.unit);
+
+                        print(
+                          'course is $course'
+                          'type is $type'
+                          'question is $question'
+                          'answers are ${answers.length} ${answers}'
+                          'explanation is $explanation'
+                          'section is $section'
+                          'unit is $unit',
+                        );
+
+                        final q = QuestionModel().copyWith(
+                          course: course,
+                          type: type,
+                          question: question,
+                          answers: answers,
+                          explanation: explanation,
+                          section: section,
+                          unit: unit,
+                        );
+                        _sendToFirebase(question: q);
+                      }
+                    : null,
+              ),
               const Gap(),
               SizedBox(
                 height: size.height * 0.10,
@@ -202,5 +250,17 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
         ),
       ),
     );
+  }
+}
+
+Future<void> _sendToFirebase({required QuestionModel question}) async {
+  final instance = FirebaseFirestore.instance;
+
+  try {
+    await instance.collection('quiz').doc().set(question.toMap());
+    print('Added question to Firestore successfully.');
+  } catch (e) {
+    print('Failed to add question: $e');
+    // You can also handle specific error types if needed
   }
 }

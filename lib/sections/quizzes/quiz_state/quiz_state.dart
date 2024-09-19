@@ -5,8 +5,8 @@ import '../quiz_models/answer_model.dart';
 import '../quiz_models/question_model.dart';
 
 class QuizState {
-  final List<QuestionModelMulti> allQuestions;
-  final List<QuestionModelMulti> selectedQuestions;
+  final List<QuestionModel> allQuestions;
+  final List<QuestionModel> selectedQuestions;
   final bool questionsAllSelected;
   final int numberOfQuestionsCorrect;
   final List<IBSection> selectedSections;
@@ -26,8 +26,8 @@ class QuizState {
   });
 
   QuizState copyWith({
-    List<QuestionModelMulti>? allQuestions,
-    List<QuestionModelMulti>? selectedQuestions,
+    List<QuestionModel>? allQuestions,
+    List<QuestionModel>? selectedQuestions,
     bool? questionsAllSelected,
     int? numberOfQuestionsCorrect,
     List<IBSection>? selectedSections,
@@ -52,20 +52,20 @@ class QuizState {
 class QuizNotifier extends StateNotifier<QuizState> {
   QuizNotifier(super._state);
 
-  void setSelectedQuestions(List<QuestionModelMulti> questions) {
+  void setSelectedQuestions(List<QuestionModel> questions) {
     // Convert the list to a set to remove duplicates
-    Set<QuestionModelMulti> uniqueQuestions = questions.toSet();
+    Set<QuestionModel> uniqueQuestions = questions.toSet();
 
     // Convert the set back to a list
-    List<QuestionModelMulti> uniqueQuestionsList = uniqueQuestions.toList();
+    List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
 
     state = state.copyWith(selectedQuestions: uniqueQuestionsList);
   }
 
   void setQuestionAsSelected(
-      QuestionModelMulti question, MultiAnswerModel answer) {
+      QuestionModel question, AnswerModel answer) {
     /// Create a question variable that can be updated
-    QuestionModelMulti updatedQuestion = question;
+    QuestionModel updatedQuestion = question;
 
     /// Change [AnswerStage] to [selected] (if not yet).
     if (updatedQuestion.answerStage == AnswerStage.notSelected) {
@@ -74,9 +74,9 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
 
     /// Create an [AnswerModel] variable
-    List<MultiAnswerModel> updatedAnswers = updatedQuestion.answers;
+    List<AnswerModel> updatedAnswers = updatedQuestion.answers!;
 
-    for (var a in question.answers) {
+    for (var a in question.answers!) {
       if (a.answerStage == AnswerStage.selected && a != answer) {
         final i = updatedAnswers.indexOf(a);
         updatedAnswers.removeAt(i);
@@ -94,7 +94,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
 
     updatedQuestion = updatedQuestion.copyWith(answers: updatedAnswers);
-    List<QuestionModelMulti> updatedCurrentQuestions = state.selectedQuestions;
+    List<QuestionModel> updatedCurrentQuestions = state.selectedQuestions;
     final questionIndex = updatedCurrentQuestions.indexOf(question);
     updatedCurrentQuestions.removeAt(questionIndex);
     updatedCurrentQuestions.insert(questionIndex, updatedQuestion);
@@ -108,8 +108,8 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
   }
 
-  void updateQuestionState(QuestionModelMulti question) {
-    List<QuestionModelMulti> questions = state.selectedQuestions.toList();
+  void updateQuestionState(QuestionModel question) {
+    List<QuestionModel> questions = state.selectedQuestions.toList();
 
     for (int i = 0; i < questions.length; i++) {
       if (questions[i].question == question.question) {
@@ -122,8 +122,8 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(showAnswersAsIGo: checkAtEnd);
   }
 
-  void checkAnswer(QuestionModelMulti question) {
-    List<MultiAnswerModel> answers = question.answers.toList();
+  void checkAnswer(QuestionModel question) {
+    List<AnswerModel> answers = question.answers!.toList();
     for (int i = 0; i < answers.length; i++) {
       if (answers[i].answerStage == AnswerStage.selected) {
         if (answers[i].isCorrect) {
@@ -138,7 +138,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
       }
     }
     question = question.copyWith(answers: answers);
-    if (question.answers
+    if (question.answers!
         .any((answer) => answer.answerStage == AnswerStage.incorrect)) {
       question = question.copyWith(answerStage: AnswerStage.incorrect);
     } else {
@@ -148,12 +148,12 @@ class QuizNotifier extends StateNotifier<QuizState> {
   }
 
   void checkAllAnswers() {
-    List<QuestionModelMulti> updatedQuestions = [];
+    List<QuestionModel> updatedQuestions = [];
 
     for (var question in state.selectedQuestions) {
-      List<MultiAnswerModel> updatedAnswers = [];
-      for (var answer in question.answers) {
-        MultiAnswerModel updatedAnswer = answer;
+      List<AnswerModel> updatedAnswers = [];
+      for (var answer in question.answers!) {
+        AnswerModel updatedAnswer = answer;
         if (answer.answerStage == AnswerStage.selected) {
           if (answer.isCorrect) {
             updatedAnswer =
@@ -167,7 +167,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
       }
       final questionIsCorrectlyAnswered = updatedAnswers
           .any((answer) => answer.answerStage == AnswerStage.correct);
-      QuestionModelMulti updatedQuestion = question.copyWith(
+      QuestionModel updatedQuestion = question.copyWith(
           answerStage: questionIsCorrectlyAnswered
               ? AnswerStage.correct
               : AnswerStage.incorrect,

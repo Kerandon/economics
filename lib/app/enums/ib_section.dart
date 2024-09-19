@@ -1,5 +1,5 @@
 // Enum for IB Sections
-import 'package:economics_app/app/enums/unit_mixin.dart';
+import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 
 import '../../../app/utils/mixins/section_mixin.dart';
 
