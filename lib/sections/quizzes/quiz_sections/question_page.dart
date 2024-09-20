@@ -181,11 +181,15 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                                     question.answerStage ==
                                                             AnswerStage.selected
                                                         ? () {
+
+
+
                                                             if (!quizState
                                                                 .showAnswersAsIGo) {
                                                               quizNotifier
                                                                   .checkAllAnswers();
                                                             } else {
+
                                                               quizNotifier
                                                                   .checkAnswer(
                                                                       question);

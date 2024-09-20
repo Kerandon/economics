@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/unit_model.dart';
@@ -60,9 +59,12 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(
-          Icons.arrow_back_outlined,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_outlined),
           color: Colors.white,
+          onPressed: () async {
+            await Navigator.of(context).maybePop();
+          },
         ),
         title: const Text('Add quiz question'),
         centerTitle: true,
@@ -217,18 +219,7 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                         final unit = UnitModel(
                             id: addQuestionState.unit.id,
                             unit: addQuestionState.unit.unit);
-
-                        print(
-                          'course is $course'
-                          'type is $type'
-                          'question is $question'
-                          'answers are ${answers.length} ${answers}'
-                          'explanation is $explanation'
-                          'section is $section'
-                          'unit is $unit',
-                        );
-
-                        final q = QuestionModel().copyWith(
+                        final q = const QuestionModel().copyWith(
                           course: course,
                           type: type,
                           question: question,
@@ -258,9 +249,8 @@ Future<void> _sendToFirebase({required QuestionModel question}) async {
 
   try {
     await instance.collection('quiz').doc().set(question.toMap());
-    print('Added question to Firestore successfully.');
   } catch (e) {
-    print('Failed to add question: $e');
+    ///ToDo add error catching here
     // You can also handle specific error types if needed
   }
 }

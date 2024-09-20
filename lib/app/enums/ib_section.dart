@@ -1,4 +1,6 @@
 // Enum for IB Sections
+// ignore_for_file: unused_element
+
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 
 import '../../../app/utils/mixins/section_mixin.dart';
@@ -27,7 +29,12 @@ enum IntroUnits with UnitMixin {
   @override
   final String unit;
 
-  const IntroUnits(this.id, this.unit);
+  const IntroUnits(this.id, this.unit, {this.topics = const []});
+
+ @override
+  final List<String> topics;
+
+
 }
 
 // Enum for IB Micro section
@@ -51,8 +58,13 @@ enum MicroUnits with UnitMixin {
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
+  const MicroUnits(this.id, this.unit, {this.topics = const []});
 
-  const MicroUnits(this.id, this.unit);
+
+
+
 }
 
 // Enum for IB Macro section
@@ -72,30 +84,31 @@ enum MacroUnits with UnitMixin {
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
+  const MacroUnits(this.id, this.unit, {this.topics = const []});
 
-  const MacroUnits(this.id, this.unit);
+
 }
-
 // Enum for IB Global section
 enum GlobalUnits with UnitMixin {
-  benefitsOfInternationalTrade('4.1', 'Benefits of international trade'),
-  typesOfTradeProtection('4.2', 'Types of trade protection'),
-  argumentsForTradeProtection(
-      '4.3', 'Arguments for and against trade control/protection'),
-  economicIntegration('4.4', 'Economic integration'),
-  exchangeRates('4.5', 'Exchange rates'),
-  balanceOfPayments('4.6', 'Balance of payments'),
-  sustainableDevelopment('4.7', 'Sustainable development'),
-  measuringDevelopment('4.8', 'Measuring development'),
-  barriersToGrowth(
-      '4.9', 'Barriers to economic growth and/or economic development'),
-  growthAndDevelopmentStrategies(
-      '4.10', 'Economic growth and/or economic development strategies');
+  benefitsOfInternationalTrade('4.1', 'Benefits of international trade', ['trade', 'international']),
+  typesOfTradeProtection('4.2', 'Types of trade protection', ['trade', 'protection']),
+  argumentsForTradeProtection('4.3', 'Arguments for and against trade control/protection', ['protection', 'arguments']),
+  economicIntegration('4.4', 'Economic integration', ['integration', 'economic']),
+  exchangeRates('4.5', 'Exchange rates', ['exchange', 'rates']),
+  balanceOfPayments('4.6', 'Balance of payments', ['balance', 'payments']),
+  sustainableDevelopment('4.7', 'Sustainable development', ['sustainable', 'development']),
+  measuringDevelopment('4.8', 'Measuring development', ['measuring', 'development']),
+  barriersToGrowth('4.9', 'Barriers to economic growth and/or economic development', ['barriers', 'growth', 'development']),
+  growthAndDevelopmentStrategies('4.10', 'Economic growth and/or economic development strategies', ['growth', 'development', 'strategies']);
 
   @override
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
 
-  const GlobalUnits(this.id, this.unit);
+  const GlobalUnits(this.id, this.unit, this.topics);
 }

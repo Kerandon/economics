@@ -1,4 +1,6 @@
 // Enum for IGCSE Sections
+// ignore_for_file: unused_element
+
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 
 import '../utils/mixins/section_mixin.dart';
@@ -34,8 +36,11 @@ enum IGBasicProblemUnits with UnitMixin {
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
 
-  const IGBasicProblemUnits(this.id, this.unit);
+  const IGBasicProblemUnits(this.id, this.unit,{this.topics = const []});
+
 }
 
 // Enum for IGCSE Allocation of Resources section
@@ -55,8 +60,10 @@ enum IGAllocationOfResourcesUnits with UnitMixin {
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
 
-  const IGAllocationOfResourcesUnits(this.id, this.unit);
+  const IGAllocationOfResourcesUnits(this.id, this.unit,{this.topics = const []});
 }
 
 // Enum for IGCSE Microeconomic Decision Makers section
@@ -73,8 +80,12 @@ enum IGMicroDecisionMakersUnits with UnitMixin {
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
 
-  const IGMicroDecisionMakersUnits(this.id, this.unit);
+  const IGMicroDecisionMakersUnits(this.id, this.unit, {this.topics = const []});
+
+
 }
 
 // Enum for IGCSE Macro Economy section
@@ -91,8 +102,12 @@ enum IGMacroEconomyUnits with UnitMixin {
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
 
-  const IGMacroEconomyUnits(this.id, this.unit);
+  const IGMacroEconomyUnits(this.id, this.unit,{this.topics = const []});
+
+
 }
 
 // Enum for IGCSE Economic Development section
@@ -107,8 +122,12 @@ enum IGEconomicDevelopmentUnits with UnitMixin {
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
 
-  const IGEconomicDevelopmentUnits(this.id, this.unit);
+  const IGEconomicDevelopmentUnits(this.id, this.unit,{this.topics = const []});
+
+
 }
 
 // Enum for IGCSE International Trade section
@@ -122,6 +141,8 @@ enum IGInternationalTradeUnits with UnitMixin {
   final String id;
   @override
   final String unit;
+  @override
+  final List<String> topics;
+  const IGInternationalTradeUnits(this.id, this.unit,{this.topics = const []});
 
-  const IGInternationalTradeUnits(this.id, this.unit);
 }

@@ -1,6 +1,6 @@
 import 'unit_mixin.dart';
 
 mixin SectionMixin {
-  String get name; // Adding the name property
+  String get name;
   List<UnitMixin> get units;
 }

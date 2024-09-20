@@ -1,21 +1,23 @@
 import 'package:equatable/equatable.dart';
 
 import '../quiz_enums/answer_stage.dart';
+
 class AnswerModel extends Equatable {
   final String answer;
   final bool isCorrect;
   final AnswerStage answerStage;
 
   const AnswerModel(
-      this.answer, {
-        this.isCorrect = false,
-        this.answerStage = AnswerStage.notSelected,
-      });
+    this.answer, {
+    this.isCorrect = false,
+    this.answerStage = AnswerStage.notSelected,
+  });
 
   factory AnswerModel.fromMap(Map<String, dynamic> map) {
+
     return AnswerModel(
-      map.entries.first.key,
-      isCorrect: map.entries.first.value,
+      map['answer'],
+      isCorrect: map['isCorrect'] ?? true,
       answerStage: AnswerStage.notSelected,
     );
   }
@@ -37,7 +39,7 @@ class AnswerModel extends Equatable {
     return {
       'answer': answer,
       'isCorrect': isCorrect,
-      'answerStage': answerStage.toString(), // Assuming it's an enum
+      'answerStage': answerStage.name, // Assuming it's an enum
     };
   }
 

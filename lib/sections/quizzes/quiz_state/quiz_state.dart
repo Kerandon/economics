@@ -1,10 +1,19 @@
+import 'package:economics_app/app/utils/mixins/section_mixin.dart';
+import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../app/enums/course.dart';
 import '../../../app/enums/ib_section.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_models/answer_model.dart';
 import '../quiz_models/question_model.dart';
 
 class QuizState {
+  final Course course;
+  final SectionMixin section;
+  final List<DropdownMenuItem> sections;
+  final UnitMixin unit;
+  final List<DropdownMenuItem> units;
   final List<QuestionModel> allQuestions;
   final List<QuestionModel> selectedQuestions;
   final bool questionsAllSelected;
@@ -15,6 +24,11 @@ class QuizState {
   final bool showAnswersAsIGo;
 
   QuizState({
+    required this.course,
+    required this.section,
+    required this.sections,
+    required this.unit,
+    required this.units,
     required this.allQuestions,
     required this.selectedQuestions,
     required this.questionsAllSelected,
@@ -26,6 +40,11 @@ class QuizState {
   });
 
   QuizState copyWith({
+    Course? course,
+    SectionMixin? section,
+    List<DropdownMenuItem>? sections,
+    UnitMixin? unit,
+    List<DropdownMenuItem>? units,
     List<QuestionModel>? allQuestions,
     List<QuestionModel>? selectedQuestions,
     bool? questionsAllSelected,
@@ -36,6 +55,11 @@ class QuizState {
     bool? showAnswersAsIGo,
   }) {
     return QuizState(
+        course: course ?? this.course,
+        section: section ?? this.section,
+        sections: sections ?? this.sections,
+        unit: unit ?? this.unit,
+        units: units ?? this.units,
         allQuestions: allQuestions ?? this.allQuestions,
         selectedQuestions: selectedQuestions ?? this.selectedQuestions,
         questionsAllSelected: questionsAllSelected ?? this.questionsAllSelected,
@@ -52,6 +76,26 @@ class QuizState {
 class QuizNotifier extends StateNotifier<QuizState> {
   QuizNotifier(super._state);
 
+  void setCourse(Course course) {
+    state = state.copyWith(course: course);
+  }
+
+  void setSection(SectionMixin section) {
+    state = state.copyWith(section: section);
+  }
+
+  void setSections(List<DropdownMenuItem> sections) {
+    state = state.copyWith(sections: sections);
+  }
+
+  void setUnit(UnitMixin unit) {
+    state = state.copyWith(unit: unit);
+  }
+
+  void setUnits(List<DropdownMenuItem> units) {
+    state = state.copyWith(units: units);
+  }
+
   void setSelectedQuestions(List<QuestionModel> questions) {
     // Convert the list to a set to remove duplicates
     Set<QuestionModel> uniqueQuestions = questions.toSet();
@@ -59,11 +103,10 @@ class QuizNotifier extends StateNotifier<QuizState> {
     // Convert the set back to a list
     List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
 
-    state = state.copyWith(selectedQuestions: uniqueQuestionsList);
+    state = state.copyWith(selectedQuestions: uniqueQuestionsList..shuffle());
   }
 
-  void setQuestionAsSelected(
-      QuestionModel question, AnswerModel answer) {
+  void setQuestionAsSelected(QuestionModel question, AnswerModel answer) {
     /// Create a question variable that can be updated
     QuestionModel updatedQuestion = question;
 
@@ -108,16 +151,6 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
   }
 
-  void updateQuestionState(QuestionModel question) {
-    List<QuestionModel> questions = state.selectedQuestions.toList();
-
-    for (int i = 0; i < questions.length; i++) {
-      if (questions[i].question == question.question) {
-        questions[i] = question;
-      }
-    }
-  }
-
   void setShowAnswersAsIGo(bool checkAtEnd) {
     state = state.copyWith(showAnswersAsIGo: checkAtEnd);
   }
@@ -144,8 +177,19 @@ class QuizNotifier extends StateNotifier<QuizState> {
     } else {
       question = question.copyWith(answerStage: AnswerStage.correct);
     }
-    updateQuestionState(question);
+
+    /// Update state
+    List<QuestionModel> questions = state.selectedQuestions.toList();
+
+    for (int i = 0; i < questions.length; i++) {
+      if (questions[i].question == question.question) {
+        questions[i] = question;
+      }
+    }
+    state = state.copyWith(selectedQuestions: questions);
   }
+
+  void updateQuestionState(QuestionModel question) {}
 
   void checkAllAnswers() {
     List<QuestionModel> updatedQuestions = [];
@@ -208,6 +252,9 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
   void setResetQuestions() {
     state = state.copyWith(
+      course: Course.ib,
+      section: IBSection.intro,
+      unit: IBSection.intro.units.first,
       selectedQuestions: [],
       questionsAllSelected: false,
       numberOfQuestionsCorrect: 0,
@@ -219,6 +266,11 @@ class QuizNotifier extends StateNotifier<QuizState> {
 final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
   (ref) => QuizNotifier(
     QuizState(
+      course: Course.ib,
+      sections: [],
+      section: IBSection.intro,
+      units: [],
+      unit: IBSection.intro.units.first,
       allQuestions: [],
       selectedQuestions: [],
       questionsAllSelected: false,

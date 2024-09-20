@@ -1,12 +1,11 @@
 import 'package:economics_app/sections/quizzes/quiz_sections/question_page.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/quiz_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../app/custom_widgets/custom_big_button.dart';
-import '../quiz_data/questions_bank/questions_bank.dart';
 import '../quiz_models/question_model.dart';
 import '../quiz_state/quiz_state.dart';
+import 'methods/get_questions_from_firebase.dart';
 
 class StartQuizWidget extends ConsumerStatefulWidget {
   const StartQuizWidget({
@@ -18,48 +17,45 @@ class StartQuizWidget extends ConsumerStatefulWidget {
 }
 
 class _StartQuizWidgetState extends ConsumerState<StartQuizWidget> {
-  late final Future<dynamic> _quizFuture;
+  late final Future<List<QuestionModel>> _quizFuture;
 
   @override
   void initState() {
-    _quizFuture = getQuestions();
+    _quizFuture = getQuestionsFromFirebase();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final quizState = ref.watch(quizProvider);
+
     final quizNotifier = ref.read(quizProvider.notifier);
-    return FutureBuilder<dynamic>(
-        future: _quizFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+    return CustomBigButton(
+      text: 'Start Quiz!',
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => FutureBuilder<List<QuestionModel>>(
+                future: _quizFuture,
+                builder: (context, snapshot) {
 
-          }
+                  if(snapshot.hasData){
 
-          return CustomBigButton(
-            text: 'Start Quiz!',
-            onPressed: quizState.selectedSections.isEmpty
-                ? null
-                : () {
-                    quizNotifier.setResetQuestions();
-                    List<QuestionModel> selectedQuestions = [];
+                    List<QuestionModel> questions = snapshot.data!.toList();
 
-                    for (var q in questionsBank) {
-                      {
-                        selectedQuestions.add(q.shuffleAnswers());
-                      }
-                    }
-                    selectedQuestions.shuffle();
+                    WidgetsBinding.instance.addPostFrameCallback((t){
+                      quizNotifier.setSelectedQuestions(questions);
+                    });
 
-                    quizNotifier.setSelectedQuestions(selectedQuestions);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const QuestionPage(),
-                      ),
-                    );
-                  },
-          );
-        });
+
+                    return const QuestionPage();
+                  }
+                  return const Center(child: CircularProgressIndicator());
+
+
+                }),
+          ),
+        );
+      },
+    );
   }
 }

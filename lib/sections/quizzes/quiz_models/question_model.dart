@@ -128,14 +128,14 @@ class QuestionModel extends Equatable {
   factory QuestionModel.fromMap(Map<String, dynamic> map) {
     List<AnswerModel> answers = (map['answers'] as List)
         .map((e) => AnswerModel.fromMap(e))
-        .toList();
+        .toList()..shuffle();
 
     return QuestionModel(
-      type: map['type'],
-      course: map['course'],
+      type: QuestionTypeExtension.fromText(map['type']),
       question: map['question'],
+      course: CourseExtension.fromText(map['course']),
       answers: answers,
-      answerStage: AnswerStage.notSelected, // Default value
+      answerStage: AnswerStage.notSelected,
       explanation: map['explanation'],
       unit: UnitModel.fromMap(map['unit']),
       hl: map['hl'] ?? false,
@@ -145,13 +145,13 @@ class QuestionModel extends Equatable {
   // Converts QuestionModel to a map that can be sent to Firebase
   Map<String, dynamic> toMap() {
     return {
-      'type': type?.toString(), // Assuming QuestionType is an enum
-      'course': course?.toString(), // Assuming Course is an enum
+      'type': type?.name,
+      'course': course?.name,
       'question': question,
       'answers': answers?.map((e) => e.toMap()).toList(),
-      'answerStage': answerStage.toString(), // Enum
+      'answerStage': answerStage.name, // Enum
       'explanation': explanation,
-      'section': section?.toString(), // Assuming section has a toString() method or needs special handling
+      'section': section?.name, // Assuming section has a toString() method or needs special handling
       'unit': unit?.toMap(), // Assuming UnitModel has a toMap() method
       'hl': hl,
     };

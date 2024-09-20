@@ -27,7 +27,6 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final addQuestionState = ref.watch(addQuestionProvider);
     final addQuestionNotifier = ref.read(addQuestionProvider.notifier);
     if (widget.requireValidation) {
       if (!_addedToValidationOnInit) {
@@ -61,7 +60,7 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
                     _validateInput(
                         notifier: addQuestionNotifier,
                         controller: widget.controller,
-                        hintText: widget.hintText!);
+                        hintText: widget.hintText);
 
                     return null;
                   }
@@ -93,7 +92,7 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
                 _validateInput(
                     controller: widget.controller,
                     notifier: addQuestionNotifier,
-                    hintText: widget.hintText!);
+                    hintText: widget.hintText);
               },
               icon: const Icon(Icons.clear_outlined),
             ),

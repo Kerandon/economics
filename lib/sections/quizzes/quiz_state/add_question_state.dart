@@ -159,7 +159,7 @@ final addQuestionProvider =
       sections: [],
       section: IBSection.intro,
       units: [],
-      unit: IntroUnits.whatIsEconomics,
+      unit: IBSection.intro.units.first,
       fieldValidation: {},
       allFieldsAreValidated: false,
     ),
