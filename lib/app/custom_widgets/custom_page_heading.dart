@@ -39,7 +39,7 @@ class CustomPageHeading extends ConsumerWidget {
       child: Padding(
         padding: EdgeInsets.all(size.width * 0.01),
         child: Container(
-          height: size.height * 0.05,
+          height: size.height * 0.08,
           decoration: BoxDecoration(
               color: Theme.of(context)
                   .colorScheme
@@ -55,15 +55,18 @@ class CustomPageHeading extends ConsumerWidget {
                 ),
               ),
               Expanded(
-                flex: 5,
+                flex: 12,
 
-                  child: AutoSizeText(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayLarge
-                        ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white,),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AutoSizeText(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall
+                          ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white,),
+                    ),
                   ),
                 ),
 

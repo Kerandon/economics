@@ -7,6 +7,7 @@ import 'package:economics_app/sections/quizzes/quiz_sections/add_question/select
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../app/custom_widgets/building_helper.dart';
 import '../../../../app/custom_widgets/custom_chip_button.dart';
 import '../../../../app/custom_widgets/custom_icon_button.dart';
 import '../../../../app/custom_widgets/custom_pop_up.dart';
@@ -228,7 +229,19 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                           section: section,
                           unit: unit,
                         );
-                        _sendToFirebase(question: q);
+                        print('here');
+                        showDialog(context: context, builder: (context) => BuilderHelper(future:
+                        _sendToFirebase(question: q),
+                          result: (result) {
+                          WidgetsBinding.instance.addPostFrameCallback((t){
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Question added')));
+                          });
+
+
+                          print('RESULT ${result} ${result.runtimeType}');
+
+                          },));
+
                       }
                     : null,
               ),

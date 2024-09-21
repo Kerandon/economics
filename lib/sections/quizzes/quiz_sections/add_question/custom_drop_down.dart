@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../app/state/app_state.dart';
+
 class CustomDropDown<T> extends ConsumerWidget {
   const CustomDropDown({
     required this.value,
@@ -9,18 +11,34 @@ class CustomDropDown<T> extends ConsumerWidget {
     super.key,
   });
 
-  final T? value; // Specify the type for value
-  final List<DropdownMenuItem<T>> items; // Specify the type for items
-  final Function(T?)? onChanged; // Specify the type for the onChanged callback
+  final T? value;
+  final List<DropdownMenuItem<T>> items;
+  final Function(T?)? onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Determine if dropdown is disabled (i.e., if items are empty)
+    final appState = ref.watch(appProvider);
+    final isDarkTheme = appState.isDarkTheme; // Detect if dark theme is enabled
     bool isDisabled = items.isEmpty;
+
+// Colors for light and dark themes
+    Color? backgroundColor = isDisabled ? Colors.grey.shade200 : Colors.white;
+    Color? dropdownColor = Colors.white;
+    Color? iconColor = isDisabled ? Colors.grey.shade200 : Colors.black;
+    Color textColor = Colors.black;
+
+    if(isDarkTheme){
+      backgroundColor = isDisabled ? Colors.black54 : dropdownColor = Colors.grey[900];
+        dropdownColor = Colors.grey[900]; // Dark dropdown color
+        iconColor = isDisabled ? Colors.black54 : Colors.white;
+        textColor = Colors.white;
+
+    }
+
 
     return Container(
       decoration: BoxDecoration(
-        color: isDisabled ? Colors.grey[300] : Colors.white, // Greyed-out if disabled
+        color: backgroundColor, // Set background color based on theme and selection
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
@@ -39,7 +57,7 @@ class CustomDropDown<T> extends ConsumerWidget {
           onChanged: isDisabled ? null : onChanged, // Disable onChanged if disabled
           decoration: InputDecoration(
             filled: true,
-            fillColor: isDisabled ? Colors.grey[300] : Colors.white, // Greyed-out if disabled
+            fillColor: backgroundColor, // Set fill color based on theme and selection
             contentPadding:
             const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             enabledBorder: OutlineInputBorder(
@@ -53,13 +71,13 @@ class CustomDropDown<T> extends ConsumerWidget {
               borderSide: const BorderSide(color: Colors.transparent),
             ),
           ),
-          dropdownColor: isDisabled ? Colors.grey[300] : Colors.white, // Grey dropdown if disabled
+          dropdownColor: dropdownColor, // Set dropdown color based on theme
           icon: Icon(
             Icons.arrow_drop_down,
-            color: isDisabled ? Colors.grey : Colors.black, // Grey arrow icon if disabled
+            color: iconColor, // Set icon color based on theme
           ),
           style: TextStyle(
-            color: isDisabled ? Colors.grey : Colors.black, // Grey text if disabled
+            color: textColor, // Set text color based on theme
             fontSize: 16,
           ),
           isExpanded: true,

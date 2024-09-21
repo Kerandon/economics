@@ -1,5 +1,6 @@
 import 'package:economics_app/app/utils/mixins/section_mixin.dart';
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/enums/course.dart';
@@ -11,6 +12,7 @@ import '../quiz_models/question_model.dart';
 
 class QuizState {
   final Course course;
+  final QuestionType questionType;
   final SectionMixin section;
   final List<DropdownMenuItem> sections;
   final UnitMixin unit;
@@ -26,6 +28,7 @@ class QuizState {
 
   QuizState({
     required this.course,
+    required this.questionType,
     required this.section,
     required this.sections,
     required this.unit,
@@ -42,6 +45,7 @@ class QuizState {
 
   QuizState copyWith({
     Course? course,
+    QuestionType? questionType,
     SectionMixin? section,
     List<DropdownMenuItem>? sections,
     UnitMixin? unit,
@@ -57,6 +61,7 @@ class QuizState {
   }) {
     return QuizState(
         course: course ?? this.course,
+        questionType: questionType ?? this.questionType,
         section: section ?? this.section,
         sections: sections ?? this.sections,
         unit: unit ?? this.unit,
@@ -86,6 +91,10 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(course: course);
   }
 
+  void setQuestionType(QuestionType type) {
+    state = state.copyWith(questionType: type);
+  }
+
   void changeToNewSections({required List<SectionMixin> sectionValues}) {
     List<SectionMixin> selectedSection = sectionValues;
     List<DropdownMenuItem> sections = [];
@@ -103,11 +112,11 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
     List<DropdownMenuItem> units = [];
 
-    print('selected section is ${selectedSection} and first ${selectedSection.first}');
+    print(
+        'selected section is ${selectedSection} and first ${selectedSection.first}');
     // Check if "Everything" or "All Sections" is selected, and set units accordingly
-    if (selectedSection.first == IBSection.all || selectedSection.first == IGSection.all) {
-
-
+    if (selectedSection.first == IBSection.all ||
+        selectedSection.first == IGSection.all) {
       print('RETURN EMPTY UNITS');
       units = []; // No units when "All Sections" is selected
     } else {
@@ -122,21 +131,20 @@ class QuizNotifier extends StateNotifier<QuizState> {
       }
     }
 
-    print('ARE UNITS EMPTY? ${units.isEmpty} and ${selectedSection.first.units.first}');
+    print(
+        'ARE UNITS EMPTY? ${units.isEmpty} and ${selectedSection.first.units.first}');
     // Update state based on whether "Everything" or a specific section is selected
     state = state.copyWith(
       sections: sections,
       section: selectedSection.first,
       units: units.isEmpty ? [] : units, // Handle empty units
-      unit: units.isEmpty ? null :  selectedSection.first.units.first,
+      unit: units.isEmpty ? null : selectedSection.first.units.first,
     );
   }
-
 
   void setSection(SectionMixin section) {
     state = state.copyWith(section: section);
   }
-
 
   void setUnit(UnitMixin unit) {
     state = state.copyWith(unit: unit);
@@ -315,6 +323,7 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
   (ref) => QuizNotifier(
     QuizState(
       course: Course.ib,
+      questionType: QuestionType.multi,
       sections: [],
       section: IBSection.intro,
       units: [],

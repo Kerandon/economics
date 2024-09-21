@@ -1,6 +1,7 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/custom_drop_down.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz_widget.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
@@ -66,27 +67,23 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                   color: Colors.white,
                 ),
                 title: 'Quiz',
-                trailing: IconButton(
-                  onPressed: () {
-                    // Your onPressed logic here
-                  },
-                  icon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white, // Background color
-                        shape: BoxShape.circle, // Make the shape a circle
-                      ),
-                      child: Center(
-                        child: IconButton(
-                          onPressed: (){},
-                          icon: Icon(Icons.add_outlined,   ),
-                          color: Theme.of(context).colorScheme.primary, // Icon color
-                        ),
+                trailing: Padding(
+                  padding: EdgeInsets.all(size.height * 0.005),
+                  child: SizedBox(
+                    height: size.height * 0.06,
+                    width: size.height * 0.06,
+                    child: FittedBox(
+                      fit: BoxFit.contain,  // Ensures the icon scales down to fit inside
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddQuestionPage()));
+                        },
+                        icon: Icon(Icons.add_outlined, color: Colors.white, size: size.width * 0.20), // Icon size can be large
                       ),
                     ),
                   ),
                 ),
+
               ),
             ];
           },
@@ -142,6 +139,27 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                       expanded: Column(
                         children: [
                           const Gap(),
+                          Wrap(
+                            spacing: size.width * kWrapSpacing,
+                            children: [
+                              CustomChipButton(
+                                text: QuestionType.multi.toText(),
+                                onPressed: () {
+                                  quizNotifier.setQuestionType(QuestionType.multi);
+                                },
+                                isSelected: quizState.questionType == QuestionType.multi,
+                              ),
+                              CustomChipButton(
+                                text: QuestionType.flip.toText(),
+                                onPressed: () {
+                                  quizNotifier.setQuestionType(QuestionType.flip);
+                                },
+                                isSelected: quizState.questionType == QuestionType.flip,
+                              ),
+                            ],
+                          ),
+                          const Gap(),
+
                           CustomDropDown(
                             value: quizState.section,
                             items: quizState.sections,
@@ -170,35 +188,48 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                             child: const CustomDivider(),
                           ),
                           ListTile(
-                            title: Text(
+                            leading: Text(
                               'Number of questions',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.labelLarge,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
                             ),
-                          ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Wrap(
-                              spacing: size.width * kWrapSpacing,
-                              children: [
-                                ...NumberOfQuestions.values.map(
+                            /// Todo fix this hack solution to the wrap to center noting leading has size
+                            trailing: Text(
+                              'Number of questions',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                    color: Colors.transparent,
+                                  ),
+                            ),
+                          title: Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: size.width * kWrapSpacing,
+                            children: [
+                            ...NumberOfQuestions.values.map(
                                   (q) {
-                                    return CustomChipButton(
-                                      text: q.name,
-                                      isSelected:
-                                          quizState.numberOfQuestionsSelected ==
-                                              q.value,
-                                      onPressed: () {
-                                        quizNotifier
-                                            .setNumberOfQuestionsSelected(
-                                                q.value);
-                                      },
-                                    );
+                                return CustomChipButton(
+                                  text: q.name,
+                                  isSelected:
+                                  quizState.numberOfQuestionsSelected ==
+                                      q.value,
+                                  onPressed: () {
+                                    quizNotifier
+                                        .setNumberOfQuestionsSelected(
+                                        q.value);
                                   },
-                                )
-                              ],
+                                );
+                              },
                             ),
+                          ],),
                           ),
+
                           Padding(
                             padding: EdgeInsets.only(top: kVerticalSettingsGap),
                             child: const CustomDivider(),
@@ -214,13 +245,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                       ),
                     ),
                   ),
-                  AnimatedContainer(
-                    height: size.height * 0.03,
-                    duration: const Duration(
-                      milliseconds: 200,
-                    ),
-                    curve: Curves.easeInOut,
-                  ),
+                  const Gap(),
                   const StartQuizWidget(),
                   SizedBox(
                     height: size.height * 0.10,
