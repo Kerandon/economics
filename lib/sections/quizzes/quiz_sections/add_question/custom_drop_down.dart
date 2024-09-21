@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CustomDropDown extends ConsumerWidget {
+class CustomDropDown<T> extends ConsumerWidget {
   const CustomDropDown({
     required this.value,
     required this.items,
@@ -9,19 +9,19 @@ class CustomDropDown extends ConsumerWidget {
     super.key,
   });
 
-  final dynamic value;
-  final List<DropdownMenuItem> items;
-  final Function(dynamic) onChanged;
+  final T? value; // Specify the type for value
+  final List<DropdownMenuItem<T>> items; // Specify the type for items
+  final Function(T?)? onChanged; // Specify the type for the onChanged callback
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
+    // Determine if dropdown is disabled (i.e., if items are empty)
+    bool isDisabled = items.isEmpty;
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDisabled ? Colors.grey[300] : Colors.white, // Greyed-out if disabled
         borderRadius: BorderRadius.circular(12.0),
-        // Rounded corners for the dropdown button
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1), // Light shadow
@@ -33,39 +33,38 @@ class CustomDropDown extends ConsumerWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: DropdownButtonHideUnderline(
-        child: DropdownButtonFormField(
-          value: value,
-          items: items,
-          onChanged: (e) {
-            onChanged.call(e);
-          },
+        child: DropdownButtonFormField<T>(
+          value: isDisabled ? null : value,
+          items: isDisabled ? null : items, // Use null when disabled
+          onChanged: isDisabled ? null : onChanged, // Disable onChanged if disabled
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.white,
+            fillColor: isDisabled ? Colors.grey[300] : Colors.white, // Greyed-out if disabled
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
-              // Rounded edges for the button
               borderSide: const BorderSide(
-                  color: Colors.transparent), // No visible border
+                color: Colors.transparent,
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               borderSide: const BorderSide(color: Colors.transparent),
             ),
           ),
-          dropdownColor: Colors.white,
-          // Background color for the dropdown menu
-          icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-          // Arrow icon color
-          style: const TextStyle(color: Colors.black, fontSize: 16),
-          // Text style
+          dropdownColor: isDisabled ? Colors.grey[300] : Colors.white, // Grey dropdown if disabled
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: isDisabled ? Colors.grey : Colors.black, // Grey arrow icon if disabled
+          ),
+          style: TextStyle(
+            color: isDisabled ? Colors.grey : Colors.black, // Grey text if disabled
+            fontSize: 16,
+          ),
           isExpanded: true,
           menuMaxHeight: 300,
-          // Max height for dropdown menu
-          borderRadius: BorderRadius.circular(
-              12.0), // Rounded corners for the dropdown menu
+          borderRadius: BorderRadius.circular(12.0),
         ),
       ),
     );

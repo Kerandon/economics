@@ -5,14 +5,21 @@ import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 
 import '../../../app/utils/mixins/section_mixin.dart';
 
+// Enum for IB Sections
 enum IBSection with SectionMixin {
+  all('All sections', [
+    ...IntroUnits.values,
+    ...MicroUnits.values,
+    ...MacroUnits.values,
+    ...GlobalUnits.values,
+  ]),
   intro('Introduction', IntroUnits.values),
   micro('Microeconomics', MicroUnits.values),
   macro('Macroeconomics', MacroUnits.values),
   global('Global Economics', GlobalUnits.values);
 
   @override
-  final String name; // Defining the name property
+  final String name;
   @override
   final List<UnitMixin> units;
 

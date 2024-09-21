@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/enums/course.dart';
 import '../../../app/enums/ib_section.dart';
+import '../../../app/enums/ig_units.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_models/answer_model.dart';
 import '../quiz_models/question_model.dart';
@@ -77,16 +78,65 @@ class QuizNotifier extends StateNotifier<QuizState> {
   QuizNotifier(super._state);
 
   void setCourse(Course course) {
+    if (course == Course.ib) {
+      changeToNewSections(sectionValues: IBSection.values);
+    } else if (course == Course.igcse) {
+      changeToNewSections(sectionValues: IGSection.values);
+    }
     state = state.copyWith(course: course);
   }
+
+  void changeToNewSections({required List<SectionMixin> sectionValues}) {
+    List<SectionMixin> selectedSection = sectionValues;
+    List<DropdownMenuItem> sections = [];
+
+    for (var s in selectedSection) {
+      sections.add(
+        DropdownMenuItem(
+          value: s,
+          child: Text(
+            s.name,
+          ),
+        ),
+      );
+    }
+
+    List<DropdownMenuItem> units = [];
+
+    print('selected section is ${selectedSection} and first ${selectedSection.first}');
+    // Check if "Everything" or "All Sections" is selected, and set units accordingly
+    if (selectedSection.first == IBSection.all || selectedSection.first == IGSection.all) {
+
+
+      print('RETURN EMPTY UNITS');
+      units = []; // No units when "All Sections" is selected
+    } else {
+      for (var u in selectedSection.first.units) {
+        print('RETURN FULL UNITS');
+        units.add(
+          DropdownMenuItem(
+            value: u,
+            child: Text(u.unit),
+          ),
+        );
+      }
+    }
+
+    print('ARE UNITS EMPTY? ${units.isEmpty} and ${selectedSection.first.units.first}');
+    // Update state based on whether "Everything" or a specific section is selected
+    state = state.copyWith(
+      sections: sections,
+      section: selectedSection.first,
+      units: units.isEmpty ? [] : units, // Handle empty units
+      unit: units.isEmpty ? null :  selectedSection.first.units.first,
+    );
+  }
+
 
   void setSection(SectionMixin section) {
     state = state.copyWith(section: section);
   }
 
-  void setSections(List<DropdownMenuItem> sections) {
-    state = state.copyWith(sections: sections);
-  }
 
   void setUnit(UnitMixin unit) {
     state = state.copyWith(unit: unit);
@@ -188,8 +238,6 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
     state = state.copyWith(selectedQuestions: questions);
   }
-
-  void updateQuestionState(QuestionModel question) {}
 
   void checkAllAnswers() {
     List<QuestionModel> updatedQuestions = [];

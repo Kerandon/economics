@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/state/app_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +39,11 @@ class CustomPageHeading extends ConsumerWidget {
       child: Padding(
         padding: EdgeInsets.all(size.width * 0.01),
         child: Container(
+          height: size.height * 0.05,
           decoration: BoxDecoration(
               color: Theme.of(context)
                   .colorScheme
-                  .onSurface
-                  .withOpacity(kBackgroundOpacity),
+                  .primary,
               borderRadius: BorderRadius.circular(kRadius)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -55,25 +56,19 @@ class CustomPageHeading extends ConsumerWidget {
               ),
               Expanded(
                 flex: 5,
-                child: Padding(
-                  padding: EdgeInsets.all(size.width * 0.04),
-                  child: Text(
+
+                  child: AutoSizeText(
                     title,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                        .displayLarge
+                        ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white,),
                   ),
                 ),
-              ),
+
               if (trailing != null) ...[
-                Expanded(
-                  child: SizedBox(
-                    width: 100,
-                    child: Container(color: Colors.red, child: trailing!),
-                  ),
-                ),
+                Expanded(child: trailing!),
               ],
               if (expandableControllers != null) ...[
                 Expanded(

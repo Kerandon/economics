@@ -30,7 +30,7 @@ class _StartQuizWidgetState extends ConsumerState<StartQuizWidget> {
 
     final quizNotifier = ref.read(quizProvider.notifier);
     return CustomBigButton(
-      text: 'Start Quiz!',
+      text: 'Start Quiz',
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute(

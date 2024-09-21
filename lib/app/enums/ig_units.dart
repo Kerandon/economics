@@ -4,8 +4,15 @@
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 
 import '../utils/mixins/section_mixin.dart';
-
 enum IGSection with SectionMixin {
+  all('All sections', [
+    ...IGBasicProblemUnits.values,
+    ...IGAllocationOfResourcesUnits.values,
+    ...IGMicroDecisionMakersUnits.values,
+    ...IGMacroEconomyUnits.values,
+    ...IGEconomicDevelopmentUnits.values,
+    ...IGInternationalTradeUnits.values,
+  ]),
   basicProblem('The Basic Economic Problem', IGBasicProblemUnits.values),
   allocationOfResources(
       'The Allocation of Resources', IGAllocationOfResourcesUnits.values),
@@ -18,12 +25,14 @@ enum IGSection with SectionMixin {
       IGInternationalTradeUnits.values);
 
   @override
-  final String name; // Defining the name property
+  final String name;
   @override
   final List<UnitMixin> units;
 
   const IGSection(this.name, this.units);
 }
+
+
 
 // Enum for IGCSE Basic Economic Problem section
 enum IGBasicProblemUnits with UnitMixin {

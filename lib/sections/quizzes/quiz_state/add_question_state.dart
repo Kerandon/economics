@@ -115,9 +115,9 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
     );
   }
 
-  void setSections(List<DropdownMenuItem> sections) {
-    state = state.copyWith(sections: sections.toList());
-  }
+  // void setSections(List<DropdownMenuItem> sections) {
+  //   state = state.copyWith(sections: sections.toList());
+  // }
 
   void setSection(SectionMixin section) {
     state = state.copyWith(section: section);
