@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../../app/utils/mixins/section_mixin.dart';
 
 List<DropdownMenuItem<dynamic>> createUnitsDropdownMenuItems(SectionMixin s) {
-  print('section is ${s.name}');
+
   List<DropdownMenuItem> units = [];
   if(s == IBSection.all || s == IGSection.all){
     return [];

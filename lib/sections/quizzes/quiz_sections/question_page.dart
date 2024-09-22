@@ -31,6 +31,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     final customButtonGap = size.height * 0.04;
     QuestionModel? currentQuestion;
     int questionIndex = 0;
+
     if (quizState.selectedQuestions.isNotEmpty) {
       currentQuestion =
           quizState.selectedQuestions[quizState.currentQuestionIndex];
@@ -119,7 +120,11 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   children: [
                     const Expanded(child: SizedBox.shrink()),
                     const Expanded(
-                        flex: 6, child: ListTile(title: CustomSlider())),
+                      flex: 6,
+                      child: ListTile(
+                        title: CustomSlider(),
+                      ),
+                    ),
                     Expanded(
                         child: Text(
                             '${quizState.currentQuestionIndex + 1}/${quizState.selectedSections.length}'))
@@ -181,15 +186,11 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                                     question.answerStage ==
                                                             AnswerStage.selected
                                                         ? () {
-
-
-
                                                             if (!quizState
                                                                 .showAnswersAsIGo) {
                                                               quizNotifier
                                                                   .checkAllAnswers();
                                                             } else {
-
                                                               quizNotifier
                                                                   .checkAnswer(
                                                                       question);
@@ -269,7 +270,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
 
 void _showCompletionBox(
     {required BuildContext context, required QuizState quizState}) {
-  Future.delayed(const Duration(milliseconds: 1200), () async {
+  Future.delayed(const Duration(milliseconds: 600), () async {
     if (context.mounted) {
       if (quizState.selectedQuestions.isNotEmpty) {
         await showDialog(

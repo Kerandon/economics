@@ -39,15 +39,16 @@ class QuestionTile extends ConsumerWidget {
                       if (index != null) ...[
                         SizedBox(
                           width: size.width * 0.05,
-                          child: Text(
-                            (index! + 1).toString(),
+                          child: Text('Q${
+                            (index! + 1).toString()}',
                             style: Theme.of(context)
                                 .textTheme
-                                .titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
+                                .displaySmall
+                                ?.copyWith(color: Colors.grey.shade700),
                           ),
                         ),
                       ],
+                      SizedBox(width: size.width * 0.02,),
                       Expanded(
                         child: Column(
                           children: [
@@ -61,7 +62,7 @@ class QuestionTile extends ConsumerWidget {
                               question.question ?? "",
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleMedium
+                                  .displaySmall
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -81,8 +82,8 @@ class QuestionTile extends ConsumerWidget {
                         ),
                       )
                     ],
-                    if (question.answerStage == AnswerStage.incorrect &&
-                        question.explanation != null)
+                    if (question.answerStage == AnswerStage.incorrect && question.explanation != null &&
+                        question.explanation!.isNotEmpty)
                       Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: size.height * 0.01),

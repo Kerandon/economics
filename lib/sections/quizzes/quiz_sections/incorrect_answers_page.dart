@@ -1,3 +1,4 @@
+import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/question_tile.dart';
@@ -30,7 +31,17 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
 
     return Material(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.arrow_back_outlined,
+              color: Colors.white,
+            ),
+          ),
+        ),
         body: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -38,7 +49,6 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
               CustomPageHeading(
                 title:
                     'Review incorrect answers (${incorrectQuestions.length.toString()})',
-                icon: const Icon(Icons.question_answer_outlined),
               ),
             ];
           },
@@ -47,8 +57,10 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
               children: [
                 ...incorrectQuestions.entries.map(
                   (question) => Padding(
-                    padding:
-                        EdgeInsets.all(size.width * kPageIndentHorizontal / 5),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * kPageIndentHorizontal,
+                      vertical: size.height * 0.01,
+                    ),
                     child: Container(
                       decoration: BoxDecoration(
                         color:
@@ -59,7 +71,9 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: size.width * kPageIndentHorizontal),
+                            horizontal: size.width * kPageIndentHorizontal
+                        ,vertical: size.height * 0.02,
+                        ),
                         child: Column(
                           children: [
                             QuestionTile(
@@ -76,12 +90,12 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                   padding: EdgeInsets.symmetric(
                     vertical: size.height * kBottomIndent,
                   ),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).maybePop();
-                    },
-                    icon: const Icon(Icons.keyboard_return_outlined),
-                  ),
+                  child: CustomChipButton(
+                      text: 'Close',
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      isSelected: true),
                 ),
               ],
             ),

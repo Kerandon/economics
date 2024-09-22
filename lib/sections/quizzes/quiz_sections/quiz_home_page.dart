@@ -1,9 +1,10 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/app/custom_widgets/custom_divider.dart';
+import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/custom_drop_down.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz_widget.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import '../../../app/enums/course.dart';
 import '../../../app/utils/mixins/section_mixin.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_enums/number_of_questions.dart';
+import '../quiz_models/question_model.dart';
 import 'add_question/add_question_page.dart';
 import 'methods/create_units_dropdown_menu_items.dart';
 
@@ -26,19 +28,21 @@ class QuizHomePage extends ConsumerStatefulWidget {
 
 class _ReviewPageState extends ConsumerState<QuizHomePage> {
   final ExpandableController _expandableController =
-      ExpandableController(initialExpanded: true);
+      ExpandableController(initialExpanded: false);
   bool _setSectionsOnInit = false;
+  bool _downloadedAllQuestionsOnInit = false;
+  late final Future<List<QuestionModel>> _questionFuture;
 
   @override
   void initState() {
+    _questionFuture = getQuestionsFromFirebase();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final height = size.height;
-    final kVerticalSettingsGap = height * 0.01;
+
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     if (!_setSectionsOnInit) {
@@ -73,187 +77,260 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                     height: size.height * 0.06,
                     width: size.height * 0.06,
                     child: FittedBox(
-                      fit: BoxFit.contain,  // Ensures the icon scales down to fit inside
+                      fit: BoxFit.contain,
+                      // Ensures the icon scales down to fit inside
                       child: IconButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddQuestionPage()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddQuestionPage()));
                         },
-                        icon: Icon(Icons.add_outlined, color: Colors.white, size: size.width * 0.20), // Icon size can be large
+                        icon: Icon(Icons.add_outlined,
+                            color: Colors.white,
+                            size: size.width * 0.20), // Icon size can be large
                       ),
                     ),
                   ),
                 ),
-
               ),
             ];
           },
-          body: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: size.width * kPageIndentHorizontal),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: kVerticalSettingsGap,
-                  ),
-                  Wrap(
-                    spacing: size.width * kWrapSpacing,
-                    children: [
-                      CustomChipButton(
-                        text: Course.ib.toText(),
-                        onPressed: () {
-                          quizNotifier.setCourse(Course.ib);
-                        },
-                        isSelected: quizState.course == Course.ib,
-                      ),
-                      CustomChipButton(
-                        text: Course.igcse.toText(),
-                        onPressed: () {
-                          quizNotifier.setCourse(Course.igcse);
-                        },
-                        isSelected: quizState.course == Course.igcse,
-                      ),
-                    ],
-                  ),
-                  const Gap(),
-                  ExpandableNotifier(
-                    controller: _expandableController,
-                    child: ExpandablePanel(
-                      header: ListTile(
-                        title: Row(
+          body: FutureBuilder<List<QuestionModel>>(
+              future: _questionFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    if (!_downloadedAllQuestionsOnInit) {
+                      _downloadedAllQuestionsOnInit = true;
+                      WidgetsBinding.instance.addPostFrameCallback((t) {
+                        quizNotifier
+                            .setAllQuestions(snapshot.data!.toList());
+                      });
+                    }
+
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * kPageIndentHorizontal,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.settings_outlined,
-                              color: Theme.of(context).colorScheme.primary,
+                            const Gap(),
+                            ExpandableNotifier(
+                              controller: _expandableController,
+                              child: ExpandablePanel(
+                                header: ListTile(
+                                  title: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.settings_outlined,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      const Text('Quiz options'),
+                                    ],
+                                  ),
+                                ),
+                                collapsed: const SizedBox.shrink(),
+                                expanded: Column(
+                                  children: [
+                                    const Gap(),
+                                    ListTile(
+                                      leading: Text(
+                                        'Quiz type',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                      ),
+                                      title: Wrap(
+                                        alignment: WrapAlignment.start,
+                                        spacing: size.width * kWrapSpacing,
+                                        children: [
+                                          CustomChipButton(
+                                            text: QuestionType.multi.toText(),
+                                            onPressed: () {
+                                              quizNotifier.setQuestionType(
+                                                  QuestionType.multi);
+                                            },
+                                            isSelected:
+                                                quizState.questionType ==
+                                                    QuestionType.multi,
+                                          ),
+                                          CustomChipButton(
+                                            text: QuestionType.flip.toText(),
+                                            onPressed: () {
+                                              quizNotifier.setQuestionType(
+                                                  QuestionType.flip);
+                                            },
+                                            isSelected:
+                                                quizState.questionType ==
+                                                    QuestionType.flip,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const Gap(
+                                      showDivider: true,
+                                    ),
+                                    ListTile(
+                                      leading: Text(
+                                        'Course',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                      ),
+                                      title: Wrap(
+                                        spacing: size.width * kWrapSpacing,
+                                        children: [
+                                          CustomChipButton(
+                                            text: Course.ib.toText(),
+                                            onPressed: () {
+                                              quizNotifier.setCourse(Course.ib);
+                                            },
+                                            isSelected:
+                                                quizState.course == Course.ib,
+                                          ),
+                                          CustomChipButton(
+                                            text: Course.igcse.toText(),
+                                            onPressed: () {
+                                              quizNotifier
+                                                  .setCourse(Course.igcse);
+                                            },
+                                            isSelected: quizState.course ==
+                                                Course.igcse,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const Gap(),
+                                    CustomDropDown(
+                                      value: quizState.section,
+                                      items: quizState.sections,
+                                      onChanged: (e) {
+                                        final s = e as SectionMixin;
+
+                                        quizNotifier.setSection(s);
+                                        List<DropdownMenuItem<dynamic>> units =
+                                            createUnitsDropdownMenuItems(s);
+
+                                        quizNotifier
+                                          ..setUnit(e.units.first)
+                                          ..setUnits(units);
+                                      },
+                                    ),
+                                    const Gap(),
+                                    CustomDropDown(
+                                      value: quizState.unit,
+                                      items: quizState.units,
+                                      onChanged: (e) {
+                                        quizNotifier.setUnit(e);
+                                      },
+                                    ),
+                                    const Gap(
+                                      showDivider: true,
+                                    ),
+                                    ListTile(
+                                      leading: Text(
+                                        'Number of questions',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                      ),
+                                      title: Wrap(
+                                        alignment: WrapAlignment.start,
+                                        spacing: size.width * kWrapSpacing,
+                                        children: [
+                                          ...NumberOfQuestions.values.map(
+                                            (q) {
+                                              return CustomChipButton(
+                                                text: q.name,
+                                                isSelected: quizState
+                                                        .numberOfQuestionsSelected ==
+                                                    q.value,
+                                                onPressed: () {
+                                                  quizNotifier
+                                                      .setNumberOfQuestionsSelected(
+                                                          q.value);
+                                                },
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const Gap(
+                                      showDivider: true,
+                                    ),
+                                    SwitchListTile(
+                                        title: const Text(
+                                            'Check answers one by one'),
+                                        value: quizState.showAnswersAsIGo,
+                                        onChanged: (on) {
+                                          quizNotifier.setShowAnswersAsIGo(on);
+                                        }),
+                                    const Gap(
+                                      showDivider: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            const SizedBox(
-                              width: 8,
+                            SizedBox(height: size.height * 0.20,),
+                            CustomBigButton(
+                                text: 'Start Quiz',
+                                onPressed: () {
+                                  quizNotifier.setSelectedQuestions(
+                                      quizState.allQuestions.toList());
+WidgetsBinding.instance.addPostFrameCallback((t){
+  Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) =>
+      const QuestionPage()));
+});
+
+                                }),
+                            SizedBox(
+                              height: size.height * 0.20,
                             ),
-                            const Text('More quiz options'),
                           ],
                         ),
                       ),
-                      collapsed: const SizedBox.shrink(),
-                      expanded: Column(
-                        children: [
-                          const Gap(),
-                          Wrap(
-                            spacing: size.width * kWrapSpacing,
-                            children: [
-                              CustomChipButton(
-                                text: QuestionType.multi.toText(),
-                                onPressed: () {
-                                  quizNotifier.setQuestionType(QuestionType.multi);
-                                },
-                                isSelected: quizState.questionType == QuestionType.multi,
-                              ),
-                              CustomChipButton(
-                                text: QuestionType.flip.toText(),
-                                onPressed: () {
-                                  quizNotifier.setQuestionType(QuestionType.flip);
-                                },
-                                isSelected: quizState.questionType == QuestionType.flip,
-                              ),
-                            ],
-                          ),
-                          const Gap(),
-
-                          CustomDropDown(
-                            value: quizState.section,
-                            items: quizState.sections,
-                            onChanged: (e) {
-                              final s = e as SectionMixin;
-
-                              quizNotifier.setSection(s);
-                              List<DropdownMenuItem<dynamic>> units =
-                                  createUnitsDropdownMenuItems(s);
-
-                              quizNotifier
-                                ..setUnit(e.units.first)
-                                ..setUnits(units);
-                            },
-                          ),
-                          const Gap(),
-                          CustomDropDown(
-                            value: quizState.unit,
-                            items: quizState.units,
-                            onChanged: (e) {
-                              quizNotifier.setUnit(e);
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: kVerticalSettingsGap),
-                            child: const CustomDivider(),
-                          ),
-                          ListTile(
-                            leading: Text(
-                              'Number of questions',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                  ),
-                            ),
-                            /// Todo fix this hack solution to the wrap to center noting leading has size
-                            trailing: Text(
-                              'Number of questions',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                    color: Colors.transparent,
-                                  ),
-                            ),
-                          title: Wrap(
-                            alignment: WrapAlignment.center,
-                            spacing: size.width * kWrapSpacing,
-                            children: [
-                            ...NumberOfQuestions.values.map(
-                                  (q) {
-                                return CustomChipButton(
-                                  text: q.name,
-                                  isSelected:
-                                  quizState.numberOfQuestionsSelected ==
-                                      q.value,
-                                  onPressed: () {
-                                    quizNotifier
-                                        .setNumberOfQuestionsSelected(
-                                        q.value);
-                                  },
-                                );
-                              },
-                            ),
-                          ],),
-                          ),
-
-                          Padding(
-                            padding: EdgeInsets.only(top: kVerticalSettingsGap),
-                            child: const CustomDivider(),
-                          ),
-                          SwitchListTile(
-                              title: const Text('Check answers one by one'),
-                              value: quizState.showAnswersAsIGo,
-                              onChanged: (on) {
-                                quizNotifier.setShowAnswersAsIGo(on);
-                              }),
-                          const CustomDivider(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Gap(),
-                  const StartQuizWidget(),
-                  SizedBox(
-                    height: size.height * 0.10,
-                  ),
-                ],
-              ),
-            ),
-          ),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(
+                        child: Text('An error occured, please try again'));
+                  }
+                  if (snapshot.data == null || snapshot.data!.isEmpty) {
+                    return const Center(
+                        child: Text(
+                            'No question data found, check the internet connection & try again'));
+                  }
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return const CircularProgressIndicator();
+              }),
         ),
       ],
     );

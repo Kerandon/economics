@@ -10,13 +10,13 @@ class CustomPageHeading extends ConsumerWidget {
   const CustomPageHeading({
     super.key,
     required this.title,
-    required this.icon,
+    this.icon,
     this.expandableControllers,
     this.trailing,
   });
 
   final String title;
-  final Icon icon;
+  final Icon? icon;
   final List<ExpandableController>? expandableControllers;
   final Widget? trailing;
 
@@ -49,10 +49,10 @@ class CustomPageHeading extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                child: IconButton(
-                  icon: icon,
+                child: icon != null ? IconButton(
+                  icon: icon!,
                   onPressed: null,
-                ),
+                ) : SizedBox.shrink(),
               ),
               Expanded(
                 flex: 12,

@@ -112,16 +112,13 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
     List<DropdownMenuItem> units = [];
 
-    print(
-        'selected section is ${selectedSection} and first ${selectedSection.first}');
-    // Check if "Everything" or "All Sections" is selected, and set units accordingly
     if (selectedSection.first == IBSection.all ||
         selectedSection.first == IGSection.all) {
-      print('RETURN EMPTY UNITS');
+
       units = []; // No units when "All Sections" is selected
     } else {
       for (var u in selectedSection.first.units) {
-        print('RETURN FULL UNITS');
+
         units.add(
           DropdownMenuItem(
             value: u,
@@ -131,9 +128,6 @@ class QuizNotifier extends StateNotifier<QuizState> {
       }
     }
 
-    print(
-        'ARE UNITS EMPTY? ${units.isEmpty} and ${selectedSection.first.units.first}');
-    // Update state based on whether "Everything" or a specific section is selected
     state = state.copyWith(
       sections: sections,
       section: selectedSection.first,
@@ -154,6 +148,18 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(units: units);
   }
 
+  void setAllQuestions(List<QuestionModel> questions){
+    // Convert the list to a set to remove duplicates
+    Set<QuestionModel> uniqueQuestions = questions.toSet();
+
+    // Convert the set back to a list
+    List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
+
+    state = state.copyWith(allQuestions: uniqueQuestionsList);
+
+
+  }
+
   void setSelectedQuestions(List<QuestionModel> questions) {
     // Convert the list to a set to remove duplicates
     Set<QuestionModel> uniqueQuestions = questions.toSet();
@@ -162,6 +168,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
     List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
 
     state = state.copyWith(selectedQuestions: uniqueQuestionsList..shuffle());
+    print('selected questions set ${state.selectedQuestions.length}');
   }
 
   void setQuestionAsSelected(QuestionModel question, AnswerModel answer) {
@@ -307,6 +314,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
   }
 
   void setResetQuestions() {
+    print('reset');
     state = state.copyWith(
       course: Course.ib,
       section: IBSection.intro,

@@ -229,16 +229,13 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                           section: section,
                           unit: unit,
                         );
-                        print('here');
                         showDialog(context: context, builder: (context) => BuilderHelper(future:
                         _sendToFirebase(question: q),
                           result: (result) {
                           WidgetsBinding.instance.addPostFrameCallback((t){
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Question added')));
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Question added')));
                           });
 
-
-                          print('RESULT ${result} ${result.runtimeType}');
 
                           },));
 

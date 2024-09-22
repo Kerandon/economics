@@ -70,7 +70,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
         },
         child: Padding(
           padding: EdgeInsets.symmetric(
-              vertical: size.height * kPageIndentVertical / 6),
+              vertical: size.height * 0.01),
           child: Stack(
             children: [
               ClipRRect(
@@ -88,20 +88,22 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                           dense: true,
                           leading: Text(
                             ((widget.answerIndex + 1).toAlphabet()),
-                            style: Theme.of(context).textTheme.labelLarge,
+                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.70)
+                            ),
                           ),
                           title: Text(
                             widget.answer.answer,
                             textAlign: TextAlign.start,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyMedium
+                                .displaySmall
                                 ?.copyWith(
-                                  color: widget.answer.answerStage !=
-                                          AnswerStage.selected
+                                  color: widget.answer.answerStage ==
+                                          AnswerStage.notSelected
                                       ? Theme.of(context)
                                           .textTheme
-                                          .bodyMedium!
+                                          .displayMedium!
                                           .color
                                       : Colors.white,
                                 ), // Align the text to the start (left) side

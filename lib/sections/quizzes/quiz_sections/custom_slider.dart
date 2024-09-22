@@ -68,7 +68,7 @@ class _CustomSliderState extends ConsumerState<CustomSlider>
         builder: (context, child) => ClipRRect(
           borderRadius: BorderRadius.circular(kRadius),
           child: LinearProgressIndicator(
-            backgroundColor: Colors.grey,
+            backgroundColor: Colors.grey.shade300,
             color: Theme.of(context).colorScheme.primary,
             minHeight: size.height * 0.001,
             value: animation.value,

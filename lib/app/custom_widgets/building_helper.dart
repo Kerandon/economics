@@ -1,4 +1,3 @@
-import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/material.dart';
 
 class BuilderHelper extends StatelessWidget {
@@ -15,7 +14,7 @@ class BuilderHelper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+
     return AlertDialog(
       backgroundColor: Colors.transparent,
       content: SizedBox(
@@ -25,7 +24,7 @@ class BuilderHelper extends StatelessWidget {
           future: future,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Column(
+              return const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
@@ -47,7 +46,7 @@ class BuilderHelper extends StatelessWidget {
                 Navigator.of(context).pop(); // Close the dialog
               });
             }
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           },
         ),
       ),

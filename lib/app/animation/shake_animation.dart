@@ -35,21 +35,21 @@ class _ShakeAnimationState extends State<ShakeAnimation>
       });
     _shakeAnimation = TweenSequence<double>([
       TweenSequenceItem(
-          tween: Tween<double>(begin: 0.0, end: 0.005)
+          tween: Tween<double>(begin: 0.0, end: 0.002)
               .chain(CurveTween(curve: Curves.bounceInOut)),
           weight: 10),
       TweenSequenceItem(
-          tween: Tween<double>(begin: 0.005, end: -0.003)
+          tween: Tween<double>(begin: 0.002, end: -0.001)
               .chain(CurveTween(curve: Curves.bounceInOut)),
           weight: 20),
       TweenSequenceItem(
-          tween: Tween<double>(begin: -0.003, end: 0.0)
+          tween: Tween<double>(begin: -0.001, end: 0.0)
               .chain(CurveTween(curve: Curves.bounceInOut)),
           weight: 30),
     ]).animate(_controller);
     _scaleAnimation = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.03), weight: 1),
-      TweenSequenceItem(tween: Tween(begin: 1.03, end: 1.0), weight: 1),
+      TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.01), weight: 1),
+      TweenSequenceItem(tween: Tween(begin: 1.01, end: 1.0), weight: 1),
     ]).animate(CurvedAnimation(parent: _controller, curve: Curves.bounceInOut));
     super.initState();
   }
