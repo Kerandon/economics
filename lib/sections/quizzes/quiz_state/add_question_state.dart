@@ -73,9 +73,9 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
 
   void setCourse(Course course) {
     if (course == Course.ib) {
-      changeToNewSections(sectionValues: IBSection.values);
+      changeToNewSections(sectionValues: IBSection.values.skip(1).toList());
     } else if (course == Course.igcse) {
-      changeToNewSections(sectionValues: IGSection.values);
+      changeToNewSections(sectionValues: IGSection.values.skip(1).toList());
     }
 
     state = state.copyWith(course: course);
@@ -115,9 +115,6 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
     );
   }
 
-  // void setSections(List<DropdownMenuItem> sections) {
-  //   state = state.copyWith(sections: sections.toList());
-  // }
 
   void setSection(SectionMixin section) {
     state = state.copyWith(section: section);

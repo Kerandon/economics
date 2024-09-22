@@ -12,7 +12,11 @@ class CustomAppTheme {
 
   ThemeData get appTheme {
     bool isDark = state.isDarkTheme;
-    Brightness brightness = Brightness.dark;
+    Brightness brightness = isDark ? Brightness.dark : Brightness.light;
+
+    // Text color for typography
+    final displayColor = isDark ? Colors.white : Colors.black;
+
     return ThemeData(
       fontFamily: GoogleFonts.robotoCondensed().fontFamily,
       colorScheme: ColorScheme(
@@ -20,9 +24,9 @@ class CustomAppTheme {
         primary: AppColors.defaultAppColor,
         secondary: AppColors.defaultAppColorDarker,
         tertiary: AppColors.defaultAppColorDarkest,
-
-        /// Use Scrim as a 'Not Selected' Color
-        scrim: isDark ? const Color(0xFF2e2e2e) : const Color(0xFFcfcfcf),
+        /// Use [scrim] and [surfaceDim] for disabled
+        scrim: isDark ? Colors.grey.shade900 : Colors.grey.shade300,
+        surfaceDim: isDark ? Colors.grey.shade800 : Colors.grey.shade400,
         surface: isDark
             ? AppColors.backgroundDarkTheme
             : AppColors.backgroundLightTheme,
@@ -30,7 +34,7 @@ class CustomAppTheme {
             ? AppColors.surfaceVariantDarkTheme
             : AppColors.surfaceVariantLightTheme,
         surfaceTint:
-            isDark ? AppColors.dialogDarkTheme : AppColors.dialogLightTheme,
+        isDark ? AppColors.dialogDarkTheme : AppColors.dialogLightTheme,
         shadow: isDark ? AppColors.shadowDarkTheme : AppColors.shadowLightTheme,
         error: Colors.red,
         onPrimary: isDark ? Colors.black : Colors.white,
@@ -52,11 +56,16 @@ class CustomAppTheme {
           foregroundColor: isDark ? Colors.white : Colors.black,
         ),
       ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: AppColors.defaultAppColor,
+        foregroundColor: Colors.white,
+        disabledElevation: 0
+      ),
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: Colors.blue,
         iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
-          (Set<WidgetState> states) {
-            if (states.contains(WidgetState.selected)) {
+              (Set<WidgetState> states) {
+            if (states.contains(MaterialState.selected)) {
               return const IconThemeData(color: Colors.white);
             }
             return const IconThemeData(color: Colors.grey);
@@ -65,8 +74,36 @@ class CustomAppTheme {
       ),
       listTileTheme: const ListTileThemeData(
         titleTextStyle:
-            TextStyle(color: AppColors.defaultAppColor, fontSize: 12),
+        TextStyle(color: AppColors.defaultAppColor, fontSize: 12),
       ),
+      // Adding the textTheme for display styles
+      textTheme: GoogleFonts.robotoCondensedTextTheme().copyWith(
+        displaySmall: TextStyle(color: displayColor),
+        displayMedium: TextStyle(color: displayColor),
+        displayLarge: TextStyle(color: displayColor),
+        headlineSmall: TextStyle(color: displayColor),
+        headlineMedium: TextStyle(color: displayColor),
+        headlineLarge: TextStyle(color: displayColor),
+        titleLarge: TextStyle(color: displayColor),
+      ),
+      // IconButton theme
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return isDark ? Colors.grey.shade700 : Colors.grey.shade400; // Disabled color with shading
+            }
+            return isDark ? Colors.white : Colors.black; // Enabled color
+          }),
+          shadowColor: WidgetStateProperty.resolveWith<Color>((states) {
+            return isDark ? Colors.grey.shade900 : Colors.grey.shade200; // Shadow for both light and dark theme
+          }),
+        ),
+      ),
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        linearTrackColor: isDark ? Colors.grey.shade900 : Colors.grey.shade300,
+        color: AppColors.defaultAppColor
+      )
     );
   }
 }

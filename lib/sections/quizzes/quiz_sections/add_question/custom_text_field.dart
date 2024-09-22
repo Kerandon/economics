@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../app/configs/constants.dart';
+import '../../../../app/state/app_state.dart';
 
 class CustomTextField extends ConsumerStatefulWidget {
   const CustomTextField({
@@ -21,13 +22,14 @@ class CustomTextField extends ConsumerStatefulWidget {
 }
 
 class _CustomTextFieldState extends ConsumerState<CustomTextField> {
-
-
   bool _addedToValidationOnInit = false;
 
   @override
   Widget build(BuildContext context) {
+    final appState = ref.watch(appProvider);
     final addQuestionNotifier = ref.read(addQuestionProvider.notifier);
+    final isDarkTheme = appState.isDarkTheme;
+
     if (widget.requireValidation) {
       if (!_addedToValidationOnInit) {
         _addedToValidationOnInit = true;
@@ -38,67 +40,75 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
       }
     }
 
-
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1), // Shadow color with transparency
+            offset: const Offset(0, 2), // Offset of the shadow (x, y)
+            blurRadius: 6, // How much the shadow should blur
+            spreadRadius: 1, // Spread radius of the shadow
+          ),
+        ],
+        color: isDarkTheme ? Colors.grey[900] : Colors.white,
         borderRadius: BorderRadius.circular(kRadius),
-        border: Border.all(
-          color: Theme.of(context).colorScheme.primary, // Red border for validation failure
-        ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: Stack(
-        children: [
-          TextFormField(
-            controller: widget.controller,
-            maxLines: 8,
-            minLines: 3,
-            maxLength: 500,
-            validator: widget.requireValidation
-                ? (value) {
-                    _validateInput(
-                        notifier: addQuestionNotifier,
-                        controller: widget.controller,
-                        hintText: widget.hintText);
+      child: IntrinsicHeight(
+        child: Stack(
+          children: [
+            TextFormField(
+              controller: widget.controller,
+              maxLines: 8,
+              minLines: 3,
+              maxLength: 500,
+              validator: widget.requireValidation
+                  ? (value) {
+                _validateInput(
+                    notifier: addQuestionNotifier,
+                    controller: widget.controller,
+                    hintText: widget.hintText);
 
-                    return null;
-                  }
-                : null,
-            onChanged: widget.requireValidation
-                ? (value) {
-                    _validateInput(
-                        controller: widget.controller,
-                        notifier: addQuestionNotifier,
-                        hintText: widget
-                            .hintText); // Update the validation on every input
-                  }
-                : null,
-            decoration: InputDecoration(
-              labelText: widget.requireValidation ? '*${widget.hintText}' : widget.hintText,
-              border: InputBorder.none, // No visible border
-              counterText: '', // Hide character counter text
-            ),
-            style: TextStyle(
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-          Align(
-            alignment: const Alignment(1.0, 0.50),
-            child: IconButton(
-              onPressed: () {
-                widget.controller.clear();
+                return null;
+              }
+                  : null,
+              onChanged: widget.requireValidation
+                  ? (value) {
                 _validateInput(
                     controller: widget.controller,
                     notifier: addQuestionNotifier,
                     hintText: widget.hintText);
-              },
-              icon: const Icon(Icons.clear_outlined),
+              }
+                  : null,
+              decoration: InputDecoration(
+                labelText: widget.requireValidation
+                    ? '*${widget.hintText}'
+                    : widget.hintText,
+                border: InputBorder.none,
+                counterText: '',
+              ),
+              style: TextStyle(
+                fontSize: 16,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
-          ),
-        ],
-      ),
+            Align(
+              alignment: const Alignment(1.0, 0.0), // Centered vertically
+              child: IconButton(
+                onPressed: () {
+                  widget.controller.clear();
+                  _validateInput(
+                      controller: widget.controller,
+                      notifier: addQuestionNotifier,
+                      hintText: widget.hintText);
+                },
+                icon: const Icon(Icons.clear_outlined),
+              ),
+            ),
+          ],
+        ),
+      )
+
     );
   }
 }

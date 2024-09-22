@@ -17,12 +17,13 @@ class CustomPageChangeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: disable
-          ? Colors.grey.shade300
-          : Theme.of(context).colorScheme.primary,
+          ? Theme.of(context).colorScheme.scrim
+          : Theme.of(context).floatingActionButtonTheme.backgroundColor,
       heroTag: null,
       onPressed: disable ? null : onPressed,
       child: Icon(iconData,
-      color: disable ? Colors.grey.shade400 : Colors.white,
+      color: disable ? Theme.of(context).colorScheme.surfaceDim :
+      Theme.of(context).floatingActionButtonTheme.foregroundColor
       ),
     );
   }

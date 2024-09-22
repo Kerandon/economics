@@ -18,36 +18,36 @@ class CustomBigButton extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return PopOutAnimation(
       duration: 300,
-      startPos: 0.90,
-      child: SizedBox(
-        width: size.width * 0.60, // Minimum width of 70% of screen width
-        child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            backgroundColor: onPressed == null
-                ? Theme.of(context).colorScheme.scrim
+      startPos: 0.95,
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          backgroundColor: onPressed == null
+              ? Theme.of(context).colorScheme.scrim
+              : Theme.of(context).colorScheme.primary,
+          side: BorderSide(
+            color: onPressed == null
+                ? Theme.of(context).colorScheme.shadow
                 : Theme.of(context).colorScheme.primary,
-            side: BorderSide(
-              color: onPressed == null
-                  ? Theme.of(context).colorScheme.shadow
-                  : Theme.of(context).colorScheme.primary,
-            ),
           ),
-          onPressed: onPressed,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                text,
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      color: onPressed == null
-                          ? Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(kNotSelectedOpacity)
-                          : Colors.white,
-                    ),
-              ),
+        ),
+        onPressed: onPressed,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: size.width * 0.10,
+            vertical: size.height * 0.02,
+          ),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: onPressed == null
+                        ? Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(kNotSelectedOpacity)
+                        : Colors.white,
+                  ),
             ),
           ),
         ),

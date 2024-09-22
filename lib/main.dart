@@ -1,5 +1,6 @@
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'app/configs/constants.dart';
@@ -18,12 +19,14 @@ Future<void> main() async {
       appId: "1:449972201177:web:079dc531240152efe940c8",
       measurementId: "G-769JN4PQ14");
 
-  await Firebase.initializeApp(name: 'economics-app', options: firebaseOptions);
+  if(kIsWeb){
 
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown,
-  // ]);
+    await Firebase.initializeApp(
+      options: firebaseOptions,
+    );
+  }else{
+    await Firebase.initializeApp();
+  }
 
   runApp(const ProviderScope(child: EconApp()));
 }
