@@ -52,7 +52,7 @@ class CustomPageHeading extends ConsumerWidget {
                 child: icon != null ? IconButton(
                   icon: icon!,
                   onPressed: null,
-                ) : SizedBox.shrink(),
+                ) : const SizedBox.shrink(),
               ),
               Expanded(
                 flex: 12,

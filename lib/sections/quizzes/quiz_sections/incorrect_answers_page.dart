@@ -36,7 +36,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_outlined,
               color: Colors.white,
             ),

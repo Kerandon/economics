@@ -13,7 +13,7 @@ class Gap extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+      padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
       child: showDivider ? Divider(color: Theme.of(context).colorScheme.onSurface.withOpacity(kBackgroundOpacity),) : null,
     );
   }

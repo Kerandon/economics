@@ -65,7 +65,7 @@ class CustomAppTheme {
         indicatorColor: Colors.blue,
         iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
               (Set<WidgetState> states) {
-            if (states.contains(MaterialState.selected)) {
+            if (states.contains(WidgetState.selected)) {
               return const IconThemeData(color: Colors.white);
             }
             return const IconThemeData(color: Colors.grey);

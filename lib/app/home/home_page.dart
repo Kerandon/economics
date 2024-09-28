@@ -27,14 +27,15 @@ class HomePage extends ConsumerWidget {
         centerTitle: true,
       ),
       body: ExpandableTheme(
-          data: ExpandableThemeData(
-            animationDuration: const Duration(milliseconds: 300),
-            useInkWell: true,
-            iconColor: Theme.of(context).colorScheme.primary,
-            headerAlignment: ExpandablePanelHeaderAlignment.center,
-            tapBodyToCollapse: true,
-          ),
-          child: page),
+        data: ExpandableThemeData(
+          animationDuration: const Duration(milliseconds: 300),
+          useInkWell: true,
+          iconColor: Theme.of(context).colorScheme.primary,
+          headerAlignment: ExpandablePanelHeaderAlignment.center,
+          tapBodyToCollapse: true,
+        ),
+        child: page,
+      ),
       bottomNavigationBar: const CustomNavigationBar(),
       drawer: const SettingsPage(),
     );

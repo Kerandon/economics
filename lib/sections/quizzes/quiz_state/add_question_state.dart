@@ -11,8 +11,8 @@ import '../quiz_models/answer_model.dart';
 class AddQuestionState {
   final Course course;
   final QuestionType questionType;
-  final String newQuestionText;
-  final List<AnswerModel> newMultiAnswers;
+  final String questionText;
+  final List<AnswerModel> multiAnswers;
   final String explanation;
   final List<DropdownMenuItem> sections;
   final SectionMixin section;
@@ -24,8 +24,8 @@ class AddQuestionState {
   AddQuestionState({
     required this.course,
     required this.questionType,
-    required this.newQuestionText,
-    required this.newMultiAnswers,
+    required this.questionText,
+    required this.multiAnswers,
     required this.explanation,
     required this.sections,
     required this.section,
@@ -38,8 +38,8 @@ class AddQuestionState {
   AddQuestionState copyWith({
     Course? course,
     QuestionType? questionType,
-    String? newQuestionText,
-    List<AnswerModel>? newMultiAnswers,
+    String? questionText,
+    List<AnswerModel>? multiAnswers,
     String? explanation,
     List<DropdownMenuItem>? sections,
     SectionMixin? section,
@@ -51,15 +51,16 @@ class AddQuestionState {
     return AddQuestionState(
       course: course ?? this.course,
       questionType: questionType ?? this.questionType,
-      newQuestionText: newQuestionText ?? this.newQuestionText,
-      newMultiAnswers: newMultiAnswers ?? this.newMultiAnswers,
+      questionText: questionText ?? this.questionText,
+      multiAnswers: multiAnswers ?? this.multiAnswers,
       explanation: explanation ?? this.explanation,
       sections: sections ?? this.sections,
       section: section ?? this.section,
       units: units ?? this.units,
       unit: unit ?? this.unit,
       fieldValidation: fieldValidation ?? this.fieldValidation,
-      allFieldsAreValidated: allFieldsAreValidated ?? this.allFieldsAreValidated,
+      allFieldsAreValidated:
+          allFieldsAreValidated ?? this.allFieldsAreValidated,
     );
   }
 }
@@ -115,7 +116,6 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
     );
   }
 
-
   void setSection(SectionMixin section) {
     state = state.copyWith(section: section);
   }
@@ -128,20 +128,44 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
     state = state.copyWith(unit: unit);
   }
 
-
-  void updateValidation(MapEntry entry) {
+  void addQuestionAndAnswer(MapEntry field) {
     Map<String, bool> fields = state.fieldValidation;
     fields.update(
-      entry.key,
-          (oldValue) => entry.value as bool,
-      ifAbsent: () => entry.value as bool, // This adds the key if it doesn't exist
+      field.key,
+      (oldValue) => field.value as bool,
+      ifAbsent: () =>
+          field.value as bool, // This adds the key if it doesn't exist
     );
-
-    final allValidated = fields.entries.every((e) => e.value == true);
-    state = state.copyWith(fieldValidation: fields, allFieldsAreValidated: allValidated);
+    validateInput(field: MapEntry(field.key, field.value),);
+    state = state.copyWith(fieldValidation: fields);
   }
 
+  void removeLastAnswer() {
+    Map<String, bool> fields = state.fieldValidation;
 
+    if (fields.isNotEmpty) {
+      String lastKey = fields.keys.last;
+      fields.remove(lastKey);
+    }
+
+    state = state.copyWith(fieldValidation: fields);
+  }
+
+  void validateInput({required MapEntry<String, bool> field}) {
+    Map<String, bool> fields = state.fieldValidation;
+
+    fields.update(field.key, (value) => field.value,
+        ifAbsent: () => field.value);
+
+    final allValidated = fields.values.every((value) => value == true);
+
+    state = state.copyWith(
+        fieldValidation: fields, allFieldsAreValidated: allValidated);
+  }
+
+  void resetState() {
+    state = state.copyWith(questionText: '', multiAnswers: [], explanation: '');
+  }
 }
 
 final addQuestionProvider =
@@ -150,8 +174,8 @@ final addQuestionProvider =
     AddQuestionState(
       course: Course.ib,
       questionType: QuestionType.multi,
-      newQuestionText: "",
-      newMultiAnswers: [],
+      questionText: "",
+      multiAnswers: [],
       explanation: "",
       sections: [],
       section: IBSection.intro,

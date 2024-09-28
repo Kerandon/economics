@@ -1,10 +1,10 @@
-import 'package:economics_app/app/home/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'app/configs/constants.dart';
 import 'app/configs/theme_data.dart';
+import 'app/home/home_page.dart';
 import 'app/state/app_state.dart';
 
 Future<void> main() async {
@@ -19,12 +19,11 @@ Future<void> main() async {
       appId: "1:449972201177:web:079dc531240152efe940c8",
       measurementId: "G-769JN4PQ14");
 
-  if(kIsWeb){
-
+  if (kIsWeb) {
     await Firebase.initializeApp(
       options: firebaseOptions,
     );
-  }else{
+  } else {
     await Firebase.initializeApp();
   }
 
@@ -42,7 +41,6 @@ class EconApp extends ConsumerWidget {
       title: kAppName,
       theme: CustomAppTheme(appState, context).appTheme,
       home: const HomePage(),
-      //const HomePage(),
     );
   }
 }

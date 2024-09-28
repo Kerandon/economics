@@ -168,7 +168,6 @@ class QuizNotifier extends StateNotifier<QuizState> {
     List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
 
     state = state.copyWith(selectedQuestions: uniqueQuestionsList..shuffle());
-    print('selected questions set ${state.selectedQuestions.length}');
   }
 
   void setQuestionAsSelected(QuestionModel question, AnswerModel answer) {

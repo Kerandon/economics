@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
+import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/unit_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/select_sections_widget.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/quiz_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,9 +16,7 @@ import '../../../../app/custom_widgets/custom_icon_button.dart';
 import '../../../../app/custom_widgets/custom_pop_up.dart';
 import '../../../../app/custom_widgets/gap.dart';
 import '../../../../app/enums/course.dart';
-import 'answer_row.dart';
 import 'custom_text_field.dart';
-
 import '../../quiz_enums/question_type.dart';
 
 class AddQuestionPage extends ConsumerStatefulWidget {
@@ -29,25 +29,31 @@ class AddQuestionPage extends ConsumerStatefulWidget {
 }
 
 class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
-  final _questionController = TextEditingController();
   final _explanationController = TextEditingController();
-  final List<AnswerRow> _answerRows = [];
-  final List<TextEditingController> _answerControllers = [];
+  final List<CustomTextField> _questionAndAnswerRows = [];
+  final List<TextEditingController> _questionAndAnswerControllers = [];
+  bool _setUpStateOnInit = false;
+  final minNumberOfAnswers = 2;
+  final maxNumberOfAnswers = 4;
+  final numberOfAnswersOnInit = 4;
 
   @override
   initState() {
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < numberOfAnswersOnInit + 1; i++) {
       final c = TextEditingController();
-      _answerRows.add(
-        AnswerRow(
-            requireValidation: true,
-            index: i,
-            controller: c,
-            hintText: i == 0
-                ? 'Type the correct answer here...'
-                : 'Type incorrect answer $i here...'),
+      _questionAndAnswerRows.add(
+        CustomTextField(
+          requireValidation: true,
+          id: i == 0 ? 'question' : 'answer${i - 1}',
+          controller: c,
+          label: i == 0
+              ? 'Type your question'
+              : i == 1
+                  ? '*Type the CORRECT answer...'
+                  : '*Type incorrect answer ${i - 1}...',
+        ),
       );
-      _answerControllers.add(c);
+      _questionAndAnswerControllers.add(c);
     }
 
     super.initState();
@@ -59,33 +65,48 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
     final addQuestionState = ref.watch(addQuestionProvider);
     final addQuestionNotifier = ref.read(addQuestionProvider.notifier);
 
+    if (!_setUpStateOnInit) {
+      _setUpStateOnInit = true;
+      WidgetsBinding.instance.addPostFrameCallback((t) {
+        addQuestionNotifier.resetState();
+        for (int i = 0; i < numberOfAnswersOnInit + 1; i++) {
+          addQuestionNotifier.addQuestionAndAnswer(
+              MapEntry(i == 0 ? 'question' : 'answer${i - 1}', false));
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_outlined),
           color: Colors.white,
           onPressed: () async {
-            await Navigator.of(context).maybePop();
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
           },
         ),
         title: const Text('Add quiz question'),
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: size.width * kPageIndentHorizontal),
+        padding: EdgeInsets.symmetric(
+            horizontal: size.width * kPageIndentHorizontal),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * kPageIndentHorizontal),
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * kPageIndentHorizontal),
             child: Column(
               children: [
-                SizedBox(height: size.height * 0.05,),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
                 Wrap(
                   spacing: 20,
                   children: [
                     CustomChipButton(
                       text: QuestionType.multi.toText(),
-                      onPressed: () =>
-                          addQuestionNotifier.setQuestionType(QuestionType.multi),
+                      onPressed: () => addQuestionNotifier
+                          .setQuestionType(QuestionType.multi),
                       isSelected:
                           addQuestionState.questionType == QuestionType.multi,
                     ),
@@ -119,70 +140,65 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                   ],
                 ),
                 const Gap(),
-                CustomTextField(
-                  requireValidation: true,
-                  controller: _questionController,
-                  hintText: 'Type your question here...',
+                ..._questionAndAnswerRows,
+                SizedBox(
+                  height: size.height * 0.01,
                 ),
-                const Gap(
-                  showDivider: true,
-                ),
-                ..._answerRows,
-                const Gap(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: size.width * 0.03,
                     ),
-                    Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary, // Green background color
-                          shape: BoxShape.circle, // Circular shape
-                        ),
-                        child: CustomIconButton(
-                          onPressed: () {
-                            if (_answerRows.length < 4) {
-                              final c = TextEditingController();
-                              _answerRows.add(
-                                AnswerRow(
-                                  index: _answerRows.length + 1,
-                                  controller: c,
-                                  hintText:
-                                      'Type incorrect answer ${_answerRows.length} here...',
-                                ),
-                              );
-                              _answerControllers.add(c);
-                              setState(() {});
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const CustomPopUp(
-                                  title: 'Cannot add answer',
-                                  subtitle:
-                                      'Multi-choice questions must have between 2 to 4 answers',
-                                ),
-                              );
-                            }
-                          },
-                          icon: Icons.add,
-                        )),
+                    CustomIconButton(
+                      onPressed: () {
+                        if (_questionAndAnswerRows.length <
+                            maxNumberOfAnswers + 1) {
+                          final c = TextEditingController();
+                          _questionAndAnswerRows.add(
+                            CustomTextField(
+                              requireValidation: true,
+                              controller: c,
+                              label:
+                                  '*Type incorrect answer ${_questionAndAnswerRows.length - 1}...',
+                              id: 'answer${_questionAndAnswerRows.length - 1}',
+                            ),
+                          );
+                          _questionAndAnswerControllers.add(c);
+                          addQuestionNotifier.addQuestionAndAnswer(MapEntry(
+                              'answer${_questionAndAnswerRows.length - 2}',
+                              false));
+                          setState(() {});
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                const CustomPopUp(
+                              title: 'Cannot add answer',
+                              subtitle:
+                                  'Multi-choice questions must have between 2 to 4 answers',
+                            ),
+                          );
+                        }
+                      },
+                      icon: Icons.add,
+                    ),
                     SizedBox(
                       width: size.width * 0.03,
                     ),
                     CustomIconButton(
                       onPressed: () {
-                        if (_answerRows.length > 2) {
-                          _answerRows.removeLast();
+                        if (_questionAndAnswerRows.length >
+                            minNumberOfAnswers + 1) {
+                          _questionAndAnswerRows.removeLast();
+                          addQuestionNotifier.removeLastAnswer();
                           setState(() {});
                         } else {
                           showDialog(
                             context: context,
-                            builder: (BuildContext context) => const CustomPopUp(
-                              title: 'Cannot add answer',
+                            builder: (BuildContext context) =>
+                                const CustomPopUp(
+                              title: 'Cannot remove answer',
                               subtitle:
                                   'Multi-choice questions must have between 2 to 4 answers',
                             ),
@@ -197,11 +213,11 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                   showDivider: true,
                 ),
                 CustomTextField(
-                  requireValidation: false,
+                  padding: 0.0,
                   controller: _explanationController,
-                  hintText: 'Type an optional answer explanation here...',
+                  label: 'Type an explanation to the answer (optional)...',
                 ),
-                const Gap(),
+                const Gap(showDivider: true,),
                 const SelectSectionsWidget(),
                 SizedBox(
                   height: size.height * 0.10,
@@ -212,10 +228,14 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                       ? () async {
                           final course = addQuestionState.course;
                           final type = addQuestionState.questionType;
-                          final question = _questionController.text;
+                          final question =
+                              _questionAndAnswerControllers[0].text;
                           List<AnswerModel> answers = [];
-                          for (int i = 0; i < _answerControllers.length; i++) {
-                            answers.add(AnswerModel(_answerControllers[i].text,
+                          for (int i = 0;
+                              i < _questionAndAnswerControllers.length;
+                              i++) {
+                            answers.add(AnswerModel(
+                                _questionAndAnswerControllers[i].text,
                                 isCorrect: i == 0));
                           }
                           final explanation = _explanationController.text;
@@ -232,16 +252,32 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                             section: section,
                             unit: unit,
                           );
-                          showDialog(context: context, builder: (context) => BuilderHelper(future:
-                          _sendToFirebase(question: q),
-                            result: (result) {
-                            WidgetsBinding.instance.addPostFrameCallback((t){
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Question added')));
-                            });
-
-
-                            },));
-
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => BuilderHelper(
+                                  future: _sendToFirebase(question: q),
+                                  loadingText:
+                                      'Adding question...please wait a moment',
+                                  onButtonPressed: {
+                                    'Add another question': () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AddQuestionPage(),
+                                        ),
+                                      );
+                                    },
+                                    'Close': () {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomePage(),
+                                        ),
+                                      );
+                                    },
+                                  }),
+                            ),
+                          );
                         }
                       : null,
                 ),

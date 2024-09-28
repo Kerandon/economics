@@ -1,4 +1,3 @@
-import 'package:economics_app/app/animation/rotate_around_animation.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/home/home_page.dart';
@@ -36,7 +35,6 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
     if (totalQuestions > 1) {
       percentCorrect = numberCorrect / totalQuestions;
     }
-    print('percent correct $percentCorrect');
 
     String emoji = '';
     if (percentCorrect < 0.50) {
@@ -179,7 +177,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
 
               Column(
                 children: [
-                  Gap(),
+                  const Gap(),
                   Wrap(
                     alignment: WrapAlignment.start,
                     spacing: size.width * kWrapSpacing,
@@ -210,7 +208,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                       ),
                     ],
                   ),
-                  Gap(),
+                  const Gap(),
                 ],
               ),
 

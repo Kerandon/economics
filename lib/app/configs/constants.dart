@@ -16,6 +16,7 @@ const kBody = 'body';
 /// Quiz
 const kAnswers = 'answers';
 const kQuiz = 'quiz';
+const kFormSpacing = 0.005;
 
 /// Layout
 const kRadius = 12.0;

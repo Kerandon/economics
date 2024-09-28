@@ -1,7 +1,9 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
+
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/add_question/add_question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/custom_drop_down.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/question_page.dart';
@@ -16,7 +18,6 @@ import '../../../app/utils/mixins/section_mixin.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_enums/number_of_questions.dart';
 import '../quiz_models/question_model.dart';
-import 'add_question/add_question_page.dart';
 import 'methods/create_units_dropdown_menu_items.dart';
 
 class QuizHomePage extends ConsumerStatefulWidget {
@@ -83,8 +84,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                         // Ensures the icon scales down to fit inside
                         child: IconButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const AddQuestionPage()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddQuestionPage(),),);
                           },
                           icon: Icon(Icons.add_outlined,
                               color: Colors.white,
@@ -100,7 +100,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                 future: _questionFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       if (!_downloadedAllQuestionsOnInit) {
                         _downloadedAllQuestionsOnInit = true;
                         WidgetsBinding.instance.addPostFrameCallback((t) {
@@ -321,15 +321,17 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                       );
                     }
                     if (snapshot.hasError) {
-                      print('error is ${snapshot.error}');
                       return Center(
-                          child: Text('An error occurred, please try again: error is: ${snapshot.error}'));
+                          child: Text('An error occurred. \n\n'
+                              'Please check your internet connection and try again. \n\n', textAlign: TextAlign.center,));
 
                     }
                     if (snapshot.data == null || snapshot.data!.isEmpty) {
-                      return const Center(
+                      return Center(
                           child: Text(
-                              'No question data found, check the internet connection & try again'));
+                              'No questions\n\nUpload a quiz question (plus icon in the top right) to begin!',
+                          style: Theme.of(context).textTheme.displaySmall, textAlign: TextAlign.center,
+                          ));
                     }
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {

@@ -8,125 +8,111 @@ import '../../../../app/state/app_state.dart';
 class CustomTextField extends ConsumerStatefulWidget {
   const CustomTextField({
     required this.controller,
-    required this.hintText,
+    required this.label,
     super.key,
     this.requireValidation = false,
-  });
+    this.id,
+    this.padding = kFormSpacing,
+  }) : assert(!requireValidation || id != null,
+            'ID must not be null if validation is required');
 
   final TextEditingController controller;
-  final String hintText;
+  final String label;
   final bool requireValidation;
+  final String? id;
+  final double padding;
 
   @override
   ConsumerState<CustomTextField> createState() => _CustomTextFieldState();
 }
 
 class _CustomTextFieldState extends ConsumerState<CustomTextField> {
-  bool _addedToValidationOnInit = false;
+  bool isValidated = false;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final appState = ref.watch(appProvider);
     final addQuestionNotifier = ref.read(addQuestionProvider.notifier);
     final isDarkTheme = appState.isDarkTheme;
 
-    if (widget.requireValidation) {
-      if (!_addedToValidationOnInit) {
-        _addedToValidationOnInit = true;
-        WidgetsBinding.instance.addPostFrameCallback((t) {
-          addQuestionNotifier
-              .updateValidation(MapEntry(widget.hintText, false));
-        });
-      }
-    }
-
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1), // Shadow color with transparency
-            offset: const Offset(0, 2), // Offset of the shadow (x, y)
-            blurRadius: 6, // How much the shadow should blur
-            spreadRadius: 1, // Spread radius of the shadow
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: size.height * widget.padding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16, bottom: 4),
+            child: Text(
+              widget.label,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                color: isValidated || !widget.requireValidation ? Theme.of(context).colorScheme.primary : Colors.red
+              ),
+            ),
           ),
-        ],
-        color: isDarkTheme ? Colors.grey[900] : Colors.white,
-        borderRadius: BorderRadius.circular(kRadius),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: IntrinsicHeight(
-        child: Stack(
-          children: [
-            TextFormField(
-              controller: widget.controller,
-              maxLines: 8,
-              minLines: 3,
-              maxLength: 500,
-              validator: widget.requireValidation
-                  ? (value) {
-                _validateInput(
-                    notifier: addQuestionNotifier,
-                    controller: widget.controller,
-                    hintText: widget.hintText);
-
-                return null;
-              }
-                  : null,
-              onChanged: widget.requireValidation
-                  ? (value) {
-                _validateInput(
-                    controller: widget.controller,
-                    notifier: addQuestionNotifier,
-                    hintText: widget.hintText);
-              }
-                  : null,
-              decoration: InputDecoration(
-                labelText: widget.requireValidation
-                    ? '*${widget.hintText}'
-                    : widget.hintText,
-                border: InputBorder.none,
-                counterText: '',
+          Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    // Shadow color with transparency
+                    offset: const Offset(0, 2),
+                    // Offset of the shadow (x, y)
+                    blurRadius: 6,
+                    // How much the shadow should blur
+                    spreadRadius: 1, // Spread radius of the shadow
+                  ),
+                ],
+                color: isDarkTheme
+                    ? Theme.of(context).colorScheme.surfaceDim
+                    : Colors.white,
+                borderRadius: BorderRadius.circular(kRadius),
               ),
-              style: TextStyle(
-                fontSize: 16,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-            Align(
-              alignment: const Alignment(1.0, 0.0), // Centered vertically
-              child: IconButton(
-                onPressed: () {
-                  widget.controller.clear();
-                  _validateInput(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: IntrinsicHeight(
+                child: Stack(
+                  children: [
+                    TextFormField(
                       controller: widget.controller,
-                      notifier: addQuestionNotifier,
-                      hintText: widget.hintText);
-                },
-                icon: const Icon(Icons.clear_outlined),
-              ),
-            ),
-          ],
-        ),
-      )
-
+                      maxLines: 8,
+                      minLines: 1,
+                      maxLength: 500,
+                      onChanged: widget.requireValidation
+                          ? (value) {
+                              isValidated = value.trim() != "";
+                              addQuestionNotifier.validateInput(
+                                  field: MapEntry(widget.id!, isValidated));
+                              setState(() {});
+                            }
+                          : null,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(10, 5, 50, 5),
+                        border: InputBorder.none,
+                        counterText: '',
+                      ),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
+                    Align(
+                      alignment: const Alignment(1.0, 0.0),
+                      // Centered vertically
+                      child: IconButton(
+                        onPressed: () {
+                          widget.controller.clear();
+                        },
+                        icon: Icon(
+                          Icons.clear_outlined,
+                          color: Theme.of(context).colorScheme.surfaceDim,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+        ],
+      ),
     );
   }
-}
-
-void _validateInput({
-  required AddQuestionNotifier notifier,
-  required TextEditingController controller,
-  required String hintText,
-}) {
-  bool valid = false;
-
-  if (controller.text.isEmpty) {
-    valid = false; // Set validation status to false
-  } else {
-    valid = true; // Set validation status to true
-  }
-
-  WidgetsBinding.instance.addPostFrameCallback((t) {
-    notifier.updateValidation(MapEntry(hintText, valid));
-  });
 }
