@@ -164,7 +164,9 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
   }
 
   void resetState() {
-    state = state.copyWith(questionText: '', multiAnswers: [], explanation: '');
+    state = state.copyWith(
+        questionType: state.questionType,
+        questionText: '', multiAnswers: [], explanation: '');
   }
 }
 

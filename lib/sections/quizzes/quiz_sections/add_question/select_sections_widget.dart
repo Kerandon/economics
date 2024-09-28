@@ -1,4 +1,3 @@
-import 'package:economics_app/app/enums/course.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/custom_drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -27,7 +26,9 @@ class _SelectSectionsWidgetState extends ConsumerState<SelectSectionsWidget> {
       _setSectionsOnInit = true;
 
       WidgetsBinding.instance.addPostFrameCallback((e) {
-       // addQuestionNotifier.setCourse(Course.ib);
+       addQuestionNotifier.setCourse(addQuestionState.course);
+       addQuestionNotifier.setUnits(addQuestionState.units);
+       addQuestionNotifier.setUnit(addQuestionState.unit);
       });
     }
 
