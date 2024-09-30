@@ -124,15 +124,17 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                       child: RichText(
                         text: TextSpan(
                           text: 'Quizzing ',
-                          style: TextStyle(color: Colors.black, fontSize: 18),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 18),
                           // Default text style
                           children: <TextSpan>[
                             TextSpan(
-                              text: ' ${quizState.section.unit}, ${quizState.unit}',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,),
+                              text:
+                                  ' ${quizState.section.unit}, ${quizState.unit}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-
                           ],
                         ),
                       ),

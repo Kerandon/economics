@@ -132,6 +132,7 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
     validateInput(
       field: MapEntry(field.key, field.value),
     );
+
     state = state.copyWith(fieldValidation: fields);
   }
 
@@ -142,7 +143,7 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
       String lastKey = fields.keys.last;
       fields.remove(lastKey);
     }
-
+    validateInput(field: fields.entries.last);
     state = state.copyWith(fieldValidation: fields);
   }
 

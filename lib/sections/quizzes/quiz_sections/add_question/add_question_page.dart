@@ -4,7 +4,6 @@ import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_models/unit_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/select_sections_widget.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
 import 'package:flutter/material.dart';
@@ -181,6 +180,7 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                           _questionAndAnswerRows.length > minNumberOfAnswers + 1
                               ? () {
                                   _questionAndAnswerRows.removeLast();
+                                  _questionAndAnswerControllers.removeLast();
                                   addQuestionNotifier.removeLastAnswer();
                                   setState(() {});
                                 }
@@ -222,18 +222,14 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                           }
                           final explanation = _explanationController.text;
                           final section = addQuestionState.section;
-                          final unit = UnitModel(
-                              id: addQuestionState.unit.id ?? "",
-                              unit: addQuestionState.unit.unit);
                           final q = const QuestionModel().copyWith(
-                            course: course,
-                            type: type,
-                            question: question,
-                            answers: answers,
-                            explanation: explanation,
-                            section: section,
-                            unit: unit,
-                          );
+                              course: course,
+                              type: type,
+                              question: question,
+                              answers: answers,
+                              explanation: explanation,
+                              section: section,
+                              unit: addQuestionState.unit);
 
                           Navigator.of(context).push(
                             MaterialPageRoute(

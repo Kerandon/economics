@@ -68,7 +68,6 @@
 // }
 
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:economics_app/sections/quizzes/quiz_models/unit_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import '../../../app/enums/course.dart';
@@ -86,7 +85,7 @@ class QuestionModel extends Equatable {
   final String? explanation;
   final UnitMixin?
       section; // Needs special handling, depending on its structure
-  final UnitModel? unit;
+  final UnitMixin? unit;
   final bool? hl;
 
   const QuestionModel({
@@ -110,7 +109,7 @@ class QuestionModel extends Equatable {
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
     UnitMixin? section,
-    UnitModel? unit,
+    UnitMixin? unit,
     String? explanation,
     bool? hl,
   }) {
@@ -140,7 +139,6 @@ class QuestionModel extends Equatable {
       answers: answers,
       answerStage: AnswerStage.notSelected,
       explanation: map['explanation'],
-      unit: UnitModel.fromMap(map['unit']),
       hl: map['hl'] ?? false,
     );
   }
@@ -154,9 +152,7 @@ class QuestionModel extends Equatable {
       'answers': answers?.map((e) => e.toMap()).toList(),
       'answerStage': answerStage.name, // Enum
       'explanation': explanation,
-      'section': section
-          ?.unit, // Assuming section has a toString() method or needs special handling
-      'unit': unit?.toMap(), // Assuming UnitModel has a toMap() method
+      'section': section?.unit,
       'hl': hl,
     };
   }
