@@ -4,7 +4,7 @@ import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/add_question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/question_page.dart';
+import 'package:economics_app/sections/quizzes/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/quiz_options/quiz_options.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';

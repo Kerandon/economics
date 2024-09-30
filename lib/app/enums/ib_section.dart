@@ -16,11 +16,13 @@ enum IBSection with UnitMixin {
   @override
   final String id; // Section number
   @override
-  final String unit; // Section name
+  final String unit;
   @override
-  final List<UnitMixin> subUnits; // Subunits (list of units)
+  final List<UnitMixin> subUnits;
+  @override
+  final int? numberOfQuestions;
 
-  const IBSection(this.id, this.unit, this.subUnits);
+  const IBSection(this.id, this.unit, this.subUnits, {this.numberOfQuestions});
 }
 
 // Enum for IB Intro section
@@ -34,9 +36,12 @@ enum IntroUnits with UnitMixin {
   @override
   final String unit;
   @override
-  final List<UnitMixin> subUnits; // No further subunits for intro units
+  final List<UnitMixin> subUnits;
+  @override
+  final int? numberOfQuestions;
 
-  const IntroUnits(this.id, this.unit, {this.subUnits = const []});
+  const IntroUnits(this.id, this.unit,
+      {this.subUnits = const [], this.numberOfQuestions});
 }
 
 // Enum for IB Micro section
@@ -63,8 +68,11 @@ enum MicroUnits with UnitMixin {
   final String unit;
   @override
   final List<UnitMixin> subUnits;
+  @override
+  final int? numberOfQuestions;
 
-  const MicroUnits(this.id, this.unit, {this.subUnits = const []});
+  const MicroUnits(this.id, this.unit,
+      {this.subUnits = const [], this.numberOfQuestions});
 }
 
 // Enum for IB Macro section
@@ -87,8 +95,11 @@ enum MacroUnits with UnitMixin {
   final String unit;
   @override
   final List<UnitMixin> subUnits;
+  @override
+  final int? numberOfQuestions;
 
-  const MacroUnits(this.id, this.unit, {this.subUnits = const []});
+  const MacroUnits(this.id, this.unit,
+      {this.subUnits = const [], this.numberOfQuestions});
 }
 
 // Enum for IB Global section
@@ -114,6 +125,9 @@ enum GlobalUnits with UnitMixin {
   final String unit;
   @override
   final List<UnitMixin> subUnits;
+  @override
+  final int? numberOfQuestions;
 
-  const GlobalUnits(this.id, this.unit, {this.subUnits = const []});
+  const GlobalUnits(this.id, this.unit,
+      {this.subUnits = const [], this.numberOfQuestions});
 }

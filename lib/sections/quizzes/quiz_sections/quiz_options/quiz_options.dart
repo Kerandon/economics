@@ -32,15 +32,13 @@ class _QuizOptionsDropdownState extends ConsumerState<QuizOptions> {
     if (!_setSectionsOnInit) {
       _setSectionsOnInit = true;
 
-
       WidgetsBinding.instance.addPostFrameCallback((t) {
-        if(quizState.units.isNotEmpty){
+        if (quizState.units.isNotEmpty) {
           quizNotifier
             ..setSection(quizState.section)
             ..setUnits(quizState.units.toList())
             ..setUnit(quizState.unit);
-
-        }else {
+        } else {
           quizNotifier.setCourse(Course.ib);
         }
       });

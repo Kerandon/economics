@@ -34,10 +34,12 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     Color backgroundColor = Theme.of(context).colorScheme.surface;
+
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
     bool isSelected = widget.answer.answerStage == AnswerStage.selected;
-
+    Color answerTextColor = Theme.of(context).colorScheme.onSurface;
+    Color indexColor = Theme.of(context).colorScheme.onSecondary;
     if (widget.answer.answerStage == AnswerStage.selected) {
       backgroundColor = Colors.indigo;
     }
@@ -57,6 +59,13 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
         widget.answer.answerStage == AnswerStage.incorrect) {
       backgroundColor = Theme.of(context).colorScheme.primary;
       icon = Icons.check_circle_outline;
+    }
+
+    if (isSelected ||
+        widget.answer.answerStage == AnswerStage.correct ||
+        widget.answer.answerStage == AnswerStage.incorrect) {
+      indexColor = Colors.white70;
+      answerTextColor = Colors.white;
     }
 
     return RotateAroundAnimation(
@@ -92,11 +101,8 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                                 .textTheme
                                 .titleLarge
                                 ?.copyWith(
-                                    color: isSelected
-                                        ? Theme.of(context).colorScheme.scrim
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .onSurface),
+                                  color: indexColor,
+                                ),
                           ),
                           title: Text(
                             widget.answer.answer,
@@ -105,13 +111,8 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                                 .textTheme
                                 .displaySmall
                                 ?.copyWith(
-                                  color: isSelected
-                                      ? Colors.white
-                                      : Theme.of(context)
-                                          .textTheme
-                                          .displayMedium!
-                                          .color,
-                                ), // Align the text to the start (left) side
+                                    color:
+                                        answerTextColor), // Align the text to the start (left) side
                           ),
                           trailing: PopOutAnimation(
                             duration: 300,

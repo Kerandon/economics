@@ -7,9 +7,9 @@ import 'package:economics_app/sections/quizzes/quiz_sections/multi_choice/questi
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/constants.dart';
-import '../../../app/custom_widgets/custom_change_button.dart';
-import 'completion/completion_page.dart';
+import '../../app/configs/constants.dart';
+import '../../app/custom_widgets/custom_change_button.dart';
+import 'quiz_sections/completion/completion_page.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -115,20 +115,50 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverToBoxAdapter(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                    child: Column(
                   children: [
-                    const Expanded(child: SizedBox.shrink()),
-                    const Expanded(
-                      flex: 6,
-                      child: ListTile(
-                        title: CustomSlider(),
+                    Container(
+                      color: Colors.red,
+                      width: size.width,
+                      height: size.height * 0.05,
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Quizzing ',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                          // Default text style
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: ' ${quizState.section.unit}, ${quizState.unit}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,),
+                            ),
+
+                          ],
+                        ),
                       ),
                     ),
-                    Expanded(
-                        child: Text(
-                            '${quizState.currentQuestionIndex + 1}/${quizState.selectedSections.length}'))
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Expanded(child: SizedBox.shrink()),
+                        const Expanded(
+                          flex: 6,
+                          child: ListTile(
+                            title: CustomSlider(),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${quizState.currentQuestionIndex + 1}/${quizState.selectedSections.length}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(),
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ))
               ];
