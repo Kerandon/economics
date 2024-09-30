@@ -24,11 +24,11 @@ class QuestionTile extends ConsumerWidget {
     return IgnorePointer(
       ignoring: question.answerStage == AnswerStage.correct ||
           question.answerStage == AnswerStage.incorrect,
-      child: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
-            child: ListView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Stack(
+          children: [
+            ListView(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: [
@@ -94,8 +94,8 @@ class QuestionTile extends ConsumerWidget {
                 )
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

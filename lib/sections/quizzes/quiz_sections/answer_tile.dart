@@ -27,6 +27,7 @@ class AnswerTile extends ConsumerStatefulWidget {
 }
 
 class _AnswerTileState extends ConsumerState<AnswerTile> {
+
   bool _animate = false;
   bool _hasAnimatedWhenCorrect = false;
 
@@ -36,6 +37,8 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
     Color backgroundColor = Theme.of(context).colorScheme.surface;
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
+    bool isSelected = widget.answer.answerStage ==
+        AnswerStage.selected;
 
     if (widget.answer.answerStage == AnswerStage.selected) {
       backgroundColor = Colors.indigo;
@@ -60,7 +63,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
 
     return RotateAroundAnimation(
       beginValue: widget.answerIndex % 2 == 0 ? 0.50 : -0.50,
-      duration: 800,
+      duration: 600,
       child: ShakeAnimation(
         animate: _animate,
         onComplete: () {
@@ -70,7 +73,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
         },
         child: Padding(
           padding: EdgeInsets.symmetric(
-              vertical: size.height * 0.01),
+              vertical: size.height * kFormSpacing),
           child: Stack(
             children: [
               ClipRRect(
@@ -80,7 +83,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                     color: backgroundColor,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.all(size.height * 0.015),
+                    padding: EdgeInsets.all(size.height * 0.005),
                     child: ListView(
                       shrinkWrap: true,
                       children: [
@@ -89,7 +92,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                           leading: Text(
                             ((widget.answerIndex + 1).toAlphabet()),
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.70)
+                              color: isSelected ? Theme.of(context).colorScheme.scrim : Theme.of(context).colorScheme.onSurface
                             ),
                           ),
                           title: Text(
@@ -99,13 +102,12 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                                 .textTheme
                                 .displaySmall
                                 ?.copyWith(
-                                  color: widget.answer.answerStage ==
-                                          AnswerStage.notSelected
-                                      ? Theme.of(context)
-                                          .textTheme
-                                          .displayMedium!
-                                          .color
-                                      : Colors.white,
+                                  color:
+                                      isSelected ?
+                                      Colors.white : Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .color,
                                 ), // Align the text to the start (left) side
                           ),
                           trailing: PopOutAnimation(

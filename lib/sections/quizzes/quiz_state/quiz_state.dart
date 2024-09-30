@@ -1,8 +1,8 @@
-import 'package:economics_app/app/utils/mixins/section_mixin.dart';
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../app/configs/constants.dart';
 import '../../../app/enums/course.dart';
 import '../../../app/enums/ib_section.dart';
 import '../../../app/enums/ig_units.dart';
@@ -13,7 +13,7 @@ import '../quiz_models/question_model.dart';
 class QuizState {
   final Course course;
   final QuestionType questionType;
-  final SectionMixin section;
+  final UnitMixin section;
   final List<DropdownMenuItem> sections;
   final UnitMixin unit;
   final List<DropdownMenuItem> units;
@@ -46,7 +46,7 @@ class QuizState {
   QuizState copyWith({
     Course? course,
     QuestionType? questionType,
-    SectionMixin? section,
+    UnitMixin? section,
     List<DropdownMenuItem>? sections,
     UnitMixin? unit,
     List<DropdownMenuItem>? units,
@@ -95,18 +95,23 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(questionType: type);
   }
 
-  void changeToNewSections({required List<SectionMixin> sectionValues}) {
-    List<SectionMixin> selectedSection = sectionValues;
+  void changeToNewSections({required List<UnitMixin> sectionValues}) {
+    List<UnitMixin> selectedSection = sectionValues;
     List<DropdownMenuItem> sections = [];
 
     for (var s in selectedSection) {
       sections.add(
         DropdownMenuItem(
-          value: s,
-          child: Text(
-            s.name,
-          ),
-        ),
+            value: s,
+            child: Row(
+              children: [
+                if (s.id != null) Text(s.id!),
+                const SizedBox(
+                  width: kDropdownMenuItemGap,
+                ),
+                Text(s.unit),
+              ],
+            )),
       );
     }
 
@@ -114,11 +119,9 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
     if (selectedSection.first == IBSection.all ||
         selectedSection.first == IGSection.all) {
-
-      units = []; // No units when "All Sections" is selected
+      units = [];
     } else {
-      for (var u in selectedSection.first.units) {
-
+      for (var u in selectedSection.first.subUnits) {
         units.add(
           DropdownMenuItem(
             value: u,
@@ -132,11 +135,11 @@ class QuizNotifier extends StateNotifier<QuizState> {
       sections: sections,
       section: selectedSection.first,
       units: units.isEmpty ? [] : units, // Handle empty units
-      unit: units.isEmpty ? null : selectedSection.first.units.first,
+      unit: units.isEmpty ? null : selectedSection.first.subUnits.first,
     );
   }
 
-  void setSection(SectionMixin section) {
+  void setSection(UnitMixin section) {
     state = state.copyWith(section: section);
   }
 
@@ -148,7 +151,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(units: units);
   }
 
-  void setAllQuestions(List<QuestionModel> questions){
+  void setAllQuestions(List<QuestionModel> questions) {
     // Convert the list to a set to remove duplicates
     Set<QuestionModel> uniqueQuestions = questions.toSet();
 
@@ -156,8 +159,6 @@ class QuizNotifier extends StateNotifier<QuizState> {
     List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
 
     state = state.copyWith(allQuestions: uniqueQuestionsList);
-
-
   }
 
   void setSelectedQuestions(List<QuestionModel> questions) {
@@ -313,11 +314,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
   }
 
   void setResetQuestions() {
-    print('reset');
     state = state.copyWith(
-      course: Course.ib,
-      section: IBSection.intro,
-      unit: IBSection.intro.units.first,
       selectedQuestions: [],
       questionsAllSelected: false,
       numberOfQuestionsCorrect: 0,
@@ -334,7 +331,7 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       sections: [],
       section: IBSection.intro,
       units: [],
-      unit: IBSection.intro.units.first,
+      unit: IBSection.intro.subUnits.first,
       allQuestions: [],
       selectedQuestions: [],
       questionsAllSelected: false,

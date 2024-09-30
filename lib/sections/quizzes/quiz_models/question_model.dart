@@ -67,12 +67,12 @@
 //   List<Object?> get props => [question];
 // }
 
-import 'package:economics_app/app/utils/mixins/section_mixin.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/unit_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import '../../../app/enums/course.dart';
+import '../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_enums/answer_stage.dart';
 import 'answer_model.dart';
 class QuestionModel extends Equatable {
@@ -83,7 +83,7 @@ class QuestionModel extends Equatable {
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
-  final SectionMixin? section; // Needs special handling, depending on its structure
+  final UnitMixin? section; // Needs special handling, depending on its structure
   final UnitModel? unit;
   final bool? hl;
 
@@ -107,7 +107,7 @@ class QuestionModel extends Equatable {
     String? question,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
-    SectionMixin? section,
+    UnitMixin? section,
     UnitModel? unit,
     String? explanation,
     bool? hl,
@@ -151,7 +151,7 @@ class QuestionModel extends Equatable {
       'answers': answers?.map((e) => e.toMap()).toList(),
       'answerStage': answerStage.name, // Enum
       'explanation': explanation,
-      'section': section?.name, // Assuming section has a toString() method or needs special handling
+      'section': section?.unit, // Assuming section has a toString() method or needs special handling
       'unit': unit?.toMap(), // Assuming UnitModel has a toMap() method
       'hl': hl,
     };

@@ -1,11 +1,9 @@
+
 // Enum for IGCSE Sections
-// ignore_for_file: unused_element
+import '../utils/mixins/unit_mixin.dart';
 
-import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
-
-import '../utils/mixins/section_mixin.dart';
-enum IGSection with SectionMixin {
-  all('All sections', [
+enum IGSection with UnitMixin {
+  all('All sections', '', [
     ...IGBasicProblemUnits.values,
     ...IGAllocationOfResourcesUnits.values,
     ...IGMicroDecisionMakersUnits.values,
@@ -13,29 +11,29 @@ enum IGSection with SectionMixin {
     ...IGEconomicDevelopmentUnits.values,
     ...IGInternationalTradeUnits.values,
   ]),
-  basicProblem('The Basic Economic Problem', IGBasicProblemUnits.values),
+  basicProblem('1', 'The Basic Economic Problem', IGBasicProblemUnits.values),
   allocationOfResources(
-      'The Allocation of Resources', IGAllocationOfResourcesUnits.values),
+      '2', 'The Allocation of Resources', IGAllocationOfResourcesUnits.values),
   microDecisionMakers(
-      'Microeconomic Decision-Makers', IGMicroDecisionMakersUnits.values),
-  macroEconomy('Government and the Macroeconomy', IGMacroEconomyUnits.values),
-  economicDevelopment(
-      'Economic Development', IGEconomicDevelopmentUnits.values),
-  internationalTrade('International Trade and Globalisation',
-      IGInternationalTradeUnits.values);
+      '3', 'Microeconomic Decision-Makers', IGMicroDecisionMakersUnits.values),
+  macroEconomy('4', 'Government and the Macroeconomy', IGMacroEconomyUnits.values),
+  economicDevelopment('5', 'Economic Development', IGEconomicDevelopmentUnits.values),
+  internationalTrade(
+      '6', 'International Trade and Globalisation', IGInternationalTradeUnits.values);
 
   @override
-  final String name;
+  final String id; // Section number
   @override
-  final List<UnitMixin> units;
+  final String unit; // Section name
+  @override
+  final List<UnitMixin> subUnits; // Subunits (list of units)
 
-  const IGSection(this.name, this.units);
+  const IGSection(this.id, this.unit, this.subUnits);
 }
-
-
 
 // Enum for IGCSE Basic Economic Problem section
 enum IGBasicProblemUnits with UnitMixin {
+  all('All units', ''),
   natureOfProblem('1.1', 'The nature of the basic economic problem'),
   factorsOfProduction('1.2', 'Factors of production'),
   opportunityCost('1.3', 'Opportunity cost'),
@@ -46,14 +44,14 @@ enum IGBasicProblemUnits with UnitMixin {
   @override
   final String unit;
   @override
-  final List<String> topics;
+  final List<UnitMixin> subUnits; // No further subunits for basic problem units
 
-  const IGBasicProblemUnits(this.id, this.unit,{this.topics = const []});
-
+  const IGBasicProblemUnits(this.id, this.unit, {this.subUnits = const []});
 }
 
 // Enum for IGCSE Allocation of Resources section
 enum IGAllocationOfResourcesUnits with UnitMixin {
+  all('All units', ''),
   roleOfMarkets('2.1', 'The role of markets in allocating resources'),
   demand('2.2', 'Demand'),
   supply('2.3', 'Supply'),
@@ -70,13 +68,14 @@ enum IGAllocationOfResourcesUnits with UnitMixin {
   @override
   final String unit;
   @override
-  final List<String> topics;
+  final List<UnitMixin> subUnits;
 
-  const IGAllocationOfResourcesUnits(this.id, this.unit,{this.topics = const []});
+  const IGAllocationOfResourcesUnits(this.id, this.unit, {this.subUnits = const []});
 }
 
 // Enum for IGCSE Microeconomic Decision Makers section
 enum IGMicroDecisionMakersUnits with UnitMixin {
+  all('All units', ''),
   moneyAndBanking('3.1', 'Money and banking'),
   households('3.2', 'Households'),
   workers('3.3', 'Workers'),
@@ -90,15 +89,14 @@ enum IGMicroDecisionMakersUnits with UnitMixin {
   @override
   final String unit;
   @override
-  final List<String> topics;
+  final List<UnitMixin> subUnits;
 
-  const IGMicroDecisionMakersUnits(this.id, this.unit, {this.topics = const []});
-
-
+  const IGMicroDecisionMakersUnits(this.id, this.unit, {this.subUnits = const []});
 }
 
 // Enum for IGCSE Macro Economy section
 enum IGMacroEconomyUnits with UnitMixin {
+  all('All units', ''),
   governmentIntervention('4.1', 'Government macroeconomic intervention'),
   fiscalPolicy('4.2', 'Fiscal policy'),
   monetaryPolicy('4.3', 'Monetary policy'),
@@ -112,15 +110,14 @@ enum IGMacroEconomyUnits with UnitMixin {
   @override
   final String unit;
   @override
-  final List<String> topics;
+  final List<UnitMixin> subUnits;
 
-  const IGMacroEconomyUnits(this.id, this.unit,{this.topics = const []});
-
-
+  const IGMacroEconomyUnits(this.id, this.unit, {this.subUnits = const []});
 }
 
 // Enum for IGCSE Economic Development section
 enum IGEconomicDevelopmentUnits with UnitMixin {
+  all('All units', ''),
   livingStandards('5.1', 'Living standards'),
   poverty('5.2', 'Poverty'),
   population('5.3', 'Population'),
@@ -132,15 +129,14 @@ enum IGEconomicDevelopmentUnits with UnitMixin {
   @override
   final String unit;
   @override
-  final List<String> topics;
+  final List<UnitMixin> subUnits;
 
-  const IGEconomicDevelopmentUnits(this.id, this.unit,{this.topics = const []});
-
-
+  const IGEconomicDevelopmentUnits(this.id, this.unit, {this.subUnits = const []});
 }
 
 // Enum for IGCSE International Trade section
 enum IGInternationalTradeUnits with UnitMixin {
+  all('All units', ''),
   specialisationFreeTrade('6.1', 'Specialisation and free trade'),
   globalisationTradeRestrictions('6.2', 'Globalisation and trade restrictions'),
   foreignExchangeRates('6.3', 'Foreign exchange rates'),
@@ -151,7 +147,7 @@ enum IGInternationalTradeUnits with UnitMixin {
   @override
   final String unit;
   @override
-  final List<String> topics;
-  const IGInternationalTradeUnits(this.id, this.unit,{this.topics = const []});
+  final List<UnitMixin> subUnits;
 
+  const IGInternationalTradeUnits(this.id, this.unit, {this.subUnits = const []});
 }

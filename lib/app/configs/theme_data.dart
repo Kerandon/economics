@@ -25,8 +25,8 @@ class CustomAppTheme {
         secondary: AppColors.defaultAppColorDarker,
         tertiary: AppColors.defaultAppColorDarkest,
         /// Use [scrim] and [surfaceDim] for disabled
-        scrim: isDark ? Colors.grey.shade900 : Colors.grey.shade300,
-        surfaceDim: isDark ? Colors.grey.shade800 : Colors.grey.shade400,
+        scrim: isDark ? Colors.grey.shade900 : Colors.grey.shade400,
+        surfaceDim: isDark ? Colors.grey.shade800 : Colors.grey.shade500,
         surface: isDark
             ? AppColors.backgroundDarkTheme
             : AppColors.backgroundLightTheme,

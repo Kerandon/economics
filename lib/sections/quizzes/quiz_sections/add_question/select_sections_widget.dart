@@ -2,7 +2,7 @@ import 'package:economics_app/sections/quizzes/quiz_sections/add_question/custom
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/custom_widgets/gap.dart';
-import '../../../../app/utils/mixins/section_mixin.dart';
+import '../../../../app/utils/mixins/unit_mixin.dart';
 import '../../quiz_state/add_question_state.dart';
 import '../methods/create_units_dropdown_menu_items.dart';
 
@@ -25,10 +25,15 @@ class _SelectSectionsWidgetState extends ConsumerState<SelectSectionsWidget> {
     if (!_setSectionsOnInit) {
       _setSectionsOnInit = true;
 
-      WidgetsBinding.instance.addPostFrameCallback((e) {
-       addQuestionNotifier.setCourse(addQuestionState.course);
-       addQuestionNotifier.setUnits(addQuestionState.units);
-       addQuestionNotifier.setUnit(addQuestionState.unit);
+      WidgetsBinding.instance.addPostFrameCallback((t) {
+        if (addQuestionState.units.isEmpty) {
+          addQuestionNotifier.setCourseOnFirstInit();
+        } else {
+          addQuestionNotifier
+            ..setSection(addQuestionState.section)
+            ..setUnits(addQuestionState.units.toList())
+            ..setUnit(addQuestionState.unit);
+        }
       });
     }
 
@@ -38,13 +43,14 @@ class _SelectSectionsWidgetState extends ConsumerState<SelectSectionsWidget> {
           value: addQuestionState.section,
           items: addQuestionState.sections,
           onChanged: (e) {
-            final s = e as SectionMixin;
+            final s = e as UnitMixin;
             addQuestionNotifier.setSection(s);
 
-            List<DropdownMenuItem<dynamic>> units = createUnitsDropdownMenuItems(s);
+            List<DropdownMenuItem<dynamic>> units =
+                createUnitsDropdownMenuItems(s);
             addQuestionNotifier
               ..setUnits(units)
-              ..setUnit(e.units.first);
+              ..setUnit(e.subUnits.skip(1).first);
           },
         ),
         const Gap(),

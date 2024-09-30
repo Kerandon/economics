@@ -26,6 +26,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    const borderPadding = 0.01;
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     final customButtonGap = size.height * 0.04;
@@ -134,25 +135,27 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             },
             body: Container(
               color: Theme.of(context).colorScheme.surface,
-              child: Padding(
-                padding: EdgeInsets.only(top: size.height * 0.001),
-                child: Stack(
-                  children: [
-                    Container(
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: size.width * borderPadding, right: size.width *borderPadding, bottom: size.height * borderPadding),
+                    child: Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
                             .onSurface
                             .withOpacity(kBackgroundOpacity),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(kRadiusBig),
-                          topRight: Radius.circular(kRadiusBig),
+                        borderRadius: const BorderRadius.all(
+                           Radius.circular(kRadiusBig),
                         ),
                       ),
                       child: PageView(
                         onPageChanged: (index) {
-                          setState(() {});
-                          quizNotifier.setCurrentQuestionIndex(index);
+                          WidgetsBinding.instance.addPostFrameCallback((t){
+                            setState(() {});
+                            quizNotifier.setCurrentQuestionIndex(index);
+                          });
+
                         },
                         controller: _pageController,
                         physics: const NeverScrollableScrollPhysics(),
@@ -221,8 +224,8 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                         ).toList(),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

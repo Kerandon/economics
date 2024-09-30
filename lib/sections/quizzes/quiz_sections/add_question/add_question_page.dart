@@ -6,14 +6,12 @@ import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/unit_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/select_sections_widget.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/quiz_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/custom_widgets/building_helper.dart';
 import '../../../../app/custom_widgets/custom_chip_button.dart';
 import '../../../../app/custom_widgets/custom_icon_button.dart';
-import '../../../../app/custom_widgets/custom_pop_up.dart';
 import '../../../../app/custom_widgets/gap.dart';
 import '../../../../app/enums/course.dart';
 import 'custom_text_field.dart';
@@ -82,7 +80,8 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
           icon: const Icon(Icons.arrow_back_outlined),
           color: Colors.white,
           onPressed: () async {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const HomePage()));
           },
         ),
         title: const Text('Add quiz question'),
@@ -128,13 +127,13 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                   children: [
                     CustomChipButton(
                       text: Course.ib.toText(),
-                      onPressed: () => addQuestionNotifier.setCourse(Course.ib),
+                      onPressed: () => addQuestionNotifier.setCourseChange(Course.ib),
                       isSelected: addQuestionState.course == Course.ib,
                     ),
                     CustomChipButton(
                       text: Course.igcse.toText(),
                       onPressed: () =>
-                          addQuestionNotifier.setCourse(Course.igcse),
+                          addQuestionNotifier.setCourseChange(Course.igcse),
                       isSelected: addQuestionState.course == Course.igcse,
                     ),
                   ],
@@ -151,60 +150,40 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                       width: size.width * 0.03,
                     ),
                     CustomIconButton(
-                      onPressed: () {
-                        if (_questionAndAnswerRows.length <
-                            maxNumberOfAnswers + 1) {
-                          final c = TextEditingController();
-                          _questionAndAnswerRows.add(
-                            CustomTextField(
-                              requireValidation: true,
-                              controller: c,
-                              label:
-                                  '*Type incorrect answer ${_questionAndAnswerRows.length - 1}...',
-                              id: 'answer${_questionAndAnswerRows.length - 1}',
-                            ),
-                          );
-                          _questionAndAnswerControllers.add(c);
-                          addQuestionNotifier.addQuestionAndAnswer(MapEntry(
-                              'answer${_questionAndAnswerRows.length - 2}',
-                              false));
-                          setState(() {});
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                const CustomPopUp(
-                              title: 'Cannot add answer',
-                              subtitle:
-                                  'Multi-choice questions must have between 2 to 4 answers',
-                            ),
-                          );
-                        }
-                      },
+                      onPressed:
+                          _questionAndAnswerRows.length < maxNumberOfAnswers + 1
+                              ? () {
+                                  final c = TextEditingController();
+                                  _questionAndAnswerRows.add(
+                                    CustomTextField(
+                                      requireValidation: true,
+                                      controller: c,
+                                      label:
+                                          '*Type incorrect answer ${_questionAndAnswerRows.length - 1}...',
+                                      id: 'answer${_questionAndAnswerRows.length - 1}',
+                                    ),
+                                  );
+                                  _questionAndAnswerControllers.add(c);
+                                  addQuestionNotifier.addQuestionAndAnswer(MapEntry(
+                                      'answer${_questionAndAnswerRows.length - 2}',
+                                      false));
+                                  setState(() {});
+                                }
+                              : null,
                       icon: Icons.add,
                     ),
                     SizedBox(
                       width: size.width * 0.03,
                     ),
                     CustomIconButton(
-                      onPressed: () {
-                        if (_questionAndAnswerRows.length >
-                            minNumberOfAnswers + 1) {
-                          _questionAndAnswerRows.removeLast();
-                          addQuestionNotifier.removeLastAnswer();
-                          setState(() {});
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                const CustomPopUp(
-                              title: 'Cannot remove answer',
-                              subtitle:
-                                  'Multi-choice questions must have between 2 to 4 answers',
-                            ),
-                          );
-                        }
-                      },
+                      onPressed:
+                          _questionAndAnswerRows.length > minNumberOfAnswers + 1
+                              ? () {
+                                  _questionAndAnswerRows.removeLast();
+                                  addQuestionNotifier.removeLastAnswer();
+                                  setState(() {});
+                                }
+                              : null,
                       icon: Icons.remove,
                     ),
                   ],
@@ -217,7 +196,9 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                   controller: _explanationController,
                   label: 'Type an explanation to the answer (optional)...',
                 ),
-                const Gap(showDivider: true,),
+                const Gap(
+                  showDivider: true,
+                ),
                 const SelectSectionsWidget(),
                 SizedBox(
                   height: size.height * 0.10,
@@ -231,17 +212,17 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                           final question =
                               _questionAndAnswerControllers[0].text;
                           List<AnswerModel> answers = [];
-                          for (int i = 0;
+                          for (int i = 1;
                               i < _questionAndAnswerControllers.length;
                               i++) {
                             answers.add(AnswerModel(
                                 _questionAndAnswerControllers[i].text,
-                                isCorrect: i == 0));
+                                isCorrect: i == 1));
                           }
                           final explanation = _explanationController.text;
                           final section = addQuestionState.section;
                           final unit = UnitModel(
-                              id: addQuestionState.unit.id,
+                              id: addQuestionState.unit.id ?? "",
                               unit: addQuestionState.unit.unit);
                           final q = const QuestionModel().copyWith(
                             course: course,
@@ -252,6 +233,7 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                             section: section,
                             unit: unit,
                           );
+
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => BuilderHelper(

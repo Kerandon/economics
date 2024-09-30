@@ -14,7 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/custom_chip_button.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/enums/course.dart';
-import '../../../app/utils/mixins/section_mixin.dart';
+import '../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_enums/number_of_questions.dart';
 import '../quiz_models/question_model.dart';
@@ -223,14 +223,14 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                                         value: quizState.section,
                                         items: quizState.sections,
                                         onChanged: (e) {
-                                          final s = e as SectionMixin;
+                                          final s = e as UnitMixin;
 
                                           quizNotifier.setSection(s);
                                           List<DropdownMenuItem<dynamic>> units =
                                               createUnitsDropdownMenuItems(s);
 
                                           quizNotifier
-                                            ..setUnit(e.units.first)
+                                            ..setUnit(e.subUnits.first)
                                             ..setUnits(units);
                                         },
                                       ),
@@ -302,8 +302,18 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                               CustomBigButton(
                                   text: 'Start Quiz',
                                   onPressed: () {
+
+
+
+
                                     quizNotifier.setSelectedQuestions(
                                         quizState.allQuestions.toList());
+
+
+
+
+
+
                                     WidgetsBinding.instance
                                         .addPostFrameCallback((t) {
                                       Navigator.of(context).push(
@@ -321,7 +331,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                       );
                     }
                     if (snapshot.hasError) {
-                      return Center(
+                      return const Center(
                           child: Text('An error occurred. \n\n'
                               'Please check your internet connection and try again. \n\n', textAlign: TextAlign.center,));
 
@@ -329,7 +339,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                     if (snapshot.data == null || snapshot.data!.isEmpty) {
                       return Center(
                           child: Text(
-                              'No questions\n\nUpload a quiz question (plus icon in the top right) to begin!',
+                              'No questions found!\n\nUpload a quiz question to begin! (top-right plus icon)',
                           style: Theme.of(context).textTheme.displaySmall, textAlign: TextAlign.center,
                           ));
                     }

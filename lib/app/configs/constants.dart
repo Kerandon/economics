@@ -17,6 +17,7 @@ const kBody = 'body';
 const kAnswers = 'answers';
 const kQuiz = 'quiz';
 const kFormSpacing = 0.005;
+const kDropdownMenuItemGap = 10.0;
 
 /// Layout
 const kRadius = 12.0;
