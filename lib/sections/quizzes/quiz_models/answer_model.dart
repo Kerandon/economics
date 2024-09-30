@@ -14,7 +14,6 @@ class AnswerModel extends Equatable {
   });
 
   factory AnswerModel.fromMap(Map<String, dynamic> map) {
-
     return AnswerModel(
       map['answer'],
       isCorrect: map['isCorrect'] ?? true,

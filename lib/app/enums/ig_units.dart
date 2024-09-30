@@ -1,4 +1,3 @@
-
 // Enum for IGCSE Sections
 import '../utils/mixins/unit_mixin.dart';
 
@@ -16,10 +15,12 @@ enum IGSection with UnitMixin {
       '2', 'The Allocation of Resources', IGAllocationOfResourcesUnits.values),
   microDecisionMakers(
       '3', 'Microeconomic Decision-Makers', IGMicroDecisionMakersUnits.values),
-  macroEconomy('4', 'Government and the Macroeconomy', IGMacroEconomyUnits.values),
-  economicDevelopment('5', 'Economic Development', IGEconomicDevelopmentUnits.values),
-  internationalTrade(
-      '6', 'International Trade and Globalisation', IGInternationalTradeUnits.values);
+  macroEconomy(
+      '4', 'Government and the Macroeconomy', IGMacroEconomyUnits.values),
+  economicDevelopment(
+      '5', 'Economic Development', IGEconomicDevelopmentUnits.values),
+  internationalTrade('6', 'International Trade and Globalisation',
+      IGInternationalTradeUnits.values);
 
   @override
   final String id; // Section number
@@ -70,7 +71,8 @@ enum IGAllocationOfResourcesUnits with UnitMixin {
   @override
   final List<UnitMixin> subUnits;
 
-  const IGAllocationOfResourcesUnits(this.id, this.unit, {this.subUnits = const []});
+  const IGAllocationOfResourcesUnits(this.id, this.unit,
+      {this.subUnits = const []});
 }
 
 // Enum for IGCSE Microeconomic Decision Makers section
@@ -91,7 +93,8 @@ enum IGMicroDecisionMakersUnits with UnitMixin {
   @override
   final List<UnitMixin> subUnits;
 
-  const IGMicroDecisionMakersUnits(this.id, this.unit, {this.subUnits = const []});
+  const IGMicroDecisionMakersUnits(this.id, this.unit,
+      {this.subUnits = const []});
 }
 
 // Enum for IGCSE Macro Economy section
@@ -131,7 +134,8 @@ enum IGEconomicDevelopmentUnits with UnitMixin {
   @override
   final List<UnitMixin> subUnits;
 
-  const IGEconomicDevelopmentUnits(this.id, this.unit, {this.subUnits = const []});
+  const IGEconomicDevelopmentUnits(this.id, this.unit,
+      {this.subUnits = const []});
 }
 
 // Enum for IGCSE International Trade section
@@ -149,5 +153,6 @@ enum IGInternationalTradeUnits with UnitMixin {
   @override
   final List<UnitMixin> subUnits;
 
-  const IGInternationalTradeUnits(this.id, this.unit, {this.subUnits = const []});
+  const IGInternationalTradeUnits(this.id, this.unit,
+      {this.subUnits = const []});
 }

@@ -46,8 +46,9 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
             child: Text(
               widget.label,
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                color: isValidated || !widget.requireValidation ? Theme.of(context).colorScheme.primary : Colors.red
-              ),
+                  color: isValidated || !widget.requireValidation
+                      ? Theme.of(context).colorScheme.primary
+                      : Colors.red),
             ),
           ),
           Container(

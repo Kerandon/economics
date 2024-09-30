@@ -1,12 +1,12 @@
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/question_tile.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/multi_choice/question_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/constants.dart';
-import '../../../app/custom_widgets/custom_page_heading.dart';
+import '../../../../app/configs/constants.dart';
+import '../../../../app/custom_widgets/custom_page_heading.dart';
 
 class IncorrectAnswersPage extends ConsumerStatefulWidget {
   const IncorrectAnswersPage({super.key});
@@ -71,8 +71,8 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: size.width * kPageIndentHorizontal
-                        ,vertical: size.height * 0.02,
+                          horizontal: size.width * kPageIndentHorizontal,
+                          vertical: size.height * 0.02,
                         ),
                         child: Column(
                           children: [

@@ -4,9 +4,9 @@ import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/animation/confetti_animation.dart';
-import '../../../app/custom_widgets/gap.dart';
-import '../quiz_state/quiz_state.dart';
+import '../../../../app/animation/confetti_animation.dart';
+import '../../../../app/custom_widgets/gap.dart';
+import '../../quiz_state/quiz_state.dart';
 import 'incorrect_answers_page.dart';
 
 class CompletionPage extends ConsumerStatefulWidget {
@@ -174,7 +174,6 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
             }),
             actionsAlignment: MainAxisAlignment.center,
             actions: [
-
               Column(
                 children: [
                   const Gap(),
@@ -182,25 +181,26 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                     alignment: WrapAlignment.start,
                     spacing: size.width * kWrapSpacing,
                     children: [
-                      if(percentCorrect != 1.0)...[CustomChipButton(
-                        text: 'Review incorrect answers',
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const IncorrectAnswersPage()));
-                        },
-                        isSelected: true,
-                      ),],
+                      if (percentCorrect != 1.0) ...[
+                        CustomChipButton(
+                          text: 'Review incorrect answers',
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    const IncorrectAnswersPage()));
+                          },
+                          isSelected: true,
+                        ),
+                      ],
                       CustomChipButton(
                         text: 'New quiz',
                         onPressed: () {
-
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) => const HomePage(),
                             ),
                           );
                           WidgetsBinding.instance.addPostFrameCallback((t) {
-
                             quizNotifier.setResetQuestions();
                           });
                         },
@@ -211,12 +211,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                   const Gap(),
                 ],
               ),
-
-
-
-
             ],
-
           ),
         ),
         if (percentCorrect == 100) ...[const ConfettiAnimation()],

@@ -5,15 +5,14 @@ Future<List<QuestionModel>> getQuestionsFromFirebase() async {
   final instance = FirebaseFirestore.instance;
   final collectionSnapshot = await instance.collection('quiz').get();
   List<QuestionModel> questions = [];
- try {
-
-   if (collectionSnapshot.docs.isNotEmpty) {
-     for (var d in collectionSnapshot.docs) {
-       questions.add(QuestionModel.fromMap(d.data()));
-     }
-   }
- } catch (e){
-   throw Exception(e);
- }
-return questions;
+  try {
+    if (collectionSnapshot.docs.isNotEmpty) {
+      for (var d in collectionSnapshot.docs) {
+        questions.add(QuestionModel.fromMap(d.data()));
+      }
+    }
+  } catch (e) {
+    throw Exception(e);
+  }
+  return questions;
 }

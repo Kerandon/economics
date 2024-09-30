@@ -127,7 +127,8 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                   children: [
                     CustomChipButton(
                       text: Course.ib.toText(),
-                      onPressed: () => addQuestionNotifier.setCourseChange(Course.ib),
+                      onPressed: () =>
+                          addQuestionNotifier.setCourseChange(Course.ib),
                       isSelected: addQuestionState.course == Course.ib,
                     ),
                     CustomChipButton(

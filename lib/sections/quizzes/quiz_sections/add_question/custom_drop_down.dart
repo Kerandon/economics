@@ -27,18 +27,18 @@ class CustomDropDown<T> extends ConsumerWidget {
     Color? iconColor = isDisabled ? Colors.grey.shade200 : Colors.black;
     Color textColor = Colors.black;
 
-    if(isDarkTheme){
-      backgroundColor = isDisabled ? Colors.black54 : dropdownColor = Colors.grey[900];
-        dropdownColor = Colors.grey[900]; // Dark dropdown color
-        iconColor = isDisabled ? Colors.black54 : Colors.white;
-        textColor = Colors.white;
-
+    if (isDarkTheme) {
+      backgroundColor =
+          isDisabled ? Colors.black54 : dropdownColor = Colors.grey[900];
+      dropdownColor = Colors.grey[900]; // Dark dropdown color
+      iconColor = isDisabled ? Colors.black54 : Colors.white;
+      textColor = Colors.white;
     }
-
 
     return Container(
       decoration: BoxDecoration(
-        color: backgroundColor, // Set background color based on theme and selection
+        color:
+            backgroundColor, // Set background color based on theme and selection
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
@@ -54,12 +54,14 @@ class CustomDropDown<T> extends ConsumerWidget {
         child: DropdownButtonFormField<T>(
           value: isDisabled ? null : value,
           items: isDisabled ? null : items, // Use null when disabled
-          onChanged: isDisabled ? null : onChanged, // Disable onChanged if disabled
+          onChanged:
+              isDisabled ? null : onChanged, // Disable onChanged if disabled
           decoration: InputDecoration(
             filled: true,
-            fillColor: backgroundColor, // Set fill color based on theme and selection
+            fillColor:
+                backgroundColor, // Set fill color based on theme and selection
             contentPadding:
-            const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               borderSide: const BorderSide(

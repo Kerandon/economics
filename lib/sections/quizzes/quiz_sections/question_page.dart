@@ -2,14 +2,14 @@ import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/custom_slider.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/question_tile.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/custom_widgets/custom_slider.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/multi_choice/question_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_change_button.dart';
-import 'completion_page.dart';
+import 'completion/completion_page.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -138,7 +138,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               child: Stack(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: size.width * borderPadding, right: size.width *borderPadding, bottom: size.height * borderPadding),
+                    padding: EdgeInsets.only(
+                        left: size.width * borderPadding,
+                        right: size.width * borderPadding,
+                        bottom: size.height * borderPadding),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context)
@@ -146,16 +149,15 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                             .onSurface
                             .withOpacity(kBackgroundOpacity),
                         borderRadius: const BorderRadius.all(
-                           Radius.circular(kRadiusBig),
+                          Radius.circular(kRadiusBig),
                         ),
                       ),
                       child: PageView(
                         onPageChanged: (index) {
-                          WidgetsBinding.instance.addPostFrameCallback((t){
+                          WidgetsBinding.instance.addPostFrameCallback((t) {
                             setState(() {});
                             quizNotifier.setCurrentQuestionIndex(index);
                           });
-
                         },
                         controller: _pageController,
                         physics: const NeverScrollableScrollPhysics(),

@@ -1,4 +1,3 @@
-
 // Enum for IB Sections
 import '../utils/mixins/unit_mixin.dart';
 
@@ -97,14 +96,17 @@ enum GlobalUnits with UnitMixin {
   all('All units', ''),
   benefitsOfInternationalTrade('4.1', 'Benefits of international trade'),
   typesOfTradeProtection('4.2', 'Types of trade protection'),
-  argumentsForTradeProtection('4.3', 'Arguments for and against trade control/protection'),
+  argumentsForTradeProtection(
+      '4.3', 'Arguments for and against trade control/protection'),
   economicIntegration('4.4', 'Economic integration'),
   exchangeRates('4.5', 'Exchange rates'),
   balanceOfPayments('4.6', 'Balance of payments'),
   sustainableDevelopment('4.7', 'Sustainable development'),
   measuringDevelopment('4.8', 'Measuring development'),
-  barriersToGrowth('4.9', 'Barriers to economic growth and/or economic development'),
-  growthAndDevelopmentStrategies('4.10', 'Economic growth and/or economic development strategies');
+  barriersToGrowth(
+      '4.9', 'Barriers to economic growth and/or economic development'),
+  growthAndDevelopmentStrategies(
+      '4.10', 'Economic growth and/or economic development strategies');
 
   @override
   final String id;

@@ -1,9 +1,10 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/explanation_box.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../quiz_models/question_model.dart';
+import '../../quiz_models/question_model.dart';
+import '../completion/explanation_box.dart';
 import 'answer_tile.dart';
 
 class QuestionTile extends ConsumerWidget {
@@ -39,8 +40,8 @@ class QuestionTile extends ConsumerWidget {
                       if (index != null) ...[
                         SizedBox(
                           width: size.width * 0.05,
-                          child: Text('Q${
-                            (index! + 1).toString()}',
+                          child: Text(
+                            'Q${(index! + 1).toString()}',
                             style: Theme.of(context)
                                 .textTheme
                                 .displaySmall
@@ -48,7 +49,9 @@ class QuestionTile extends ConsumerWidget {
                           ),
                         ),
                       ],
-                      SizedBox(width: size.width * 0.02,),
+                      SizedBox(
+                        width: size.width * 0.02,
+                      ),
                       Expanded(
                         child: Column(
                           children: [
@@ -82,7 +85,8 @@ class QuestionTile extends ConsumerWidget {
                         ),
                       )
                     ],
-                    if (question.answerStage == AnswerStage.incorrect && question.explanation != null &&
+                    if (question.answerStage == AnswerStage.incorrect &&
+                        question.explanation != null &&
                         question.explanation!.isNotEmpty)
                       Padding(
                         padding:

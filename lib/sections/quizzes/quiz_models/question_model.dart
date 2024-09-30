@@ -75,6 +75,7 @@ import '../../../app/enums/course.dart';
 import '../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_enums/answer_stage.dart';
 import 'answer_model.dart';
+
 class QuestionModel extends Equatable {
   final QuestionType? type;
   final Course? course;
@@ -83,7 +84,8 @@ class QuestionModel extends Equatable {
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
-  final UnitMixin? section; // Needs special handling, depending on its structure
+  final UnitMixin?
+      section; // Needs special handling, depending on its structure
   final UnitModel? unit;
   final bool? hl;
 
@@ -128,7 +130,8 @@ class QuestionModel extends Equatable {
   factory QuestionModel.fromMap(Map<String, dynamic> map) {
     List<AnswerModel> answers = (map['answers'] as List)
         .map((e) => AnswerModel.fromMap(e))
-        .toList()..shuffle();
+        .toList()
+      ..shuffle();
 
     return QuestionModel(
       type: QuestionTypeExtension.fromText(map['type']),
@@ -151,7 +154,8 @@ class QuestionModel extends Equatable {
       'answers': answers?.map((e) => e.toMap()).toList(),
       'answerStage': answerStage.name, // Enum
       'explanation': explanation,
-      'section': section?.unit, // Assuming section has a toString() method or needs special handling
+      'section': section
+          ?.unit, // Assuming section has a toString() method or needs special handling
       'unit': unit?.toMap(), // Assuming UnitModel has a toMap() method
       'hl': hl,
     };

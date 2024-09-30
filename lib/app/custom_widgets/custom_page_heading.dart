@@ -41,35 +41,33 @@ class CustomPageHeading extends ConsumerWidget {
         child: Container(
           height: size.height * 0.08,
           decoration: BoxDecoration(
-              color: Theme.of(context)
-                  .colorScheme
-                  .primary,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(kRadius)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
-                child: icon != null ? IconButton(
-                  icon: icon!,
-                  onPressed: null,
-                ) : const SizedBox.shrink(),
+                child: icon != null
+                    ? IconButton(
+                        icon: icon!,
+                        onPressed: null,
+                      )
+                    : const SizedBox.shrink(),
               ),
               Expanded(
                 flex: 12,
-
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AutoSizeText(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .displaySmall
-                          ?.copyWith(fontWeight: FontWeight.bold, color: Colors.white,),
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AutoSizeText(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                   ),
                 ),
-
+              ),
               if (trailing != null) ...[
                 Expanded(child: trailing!),
               ],

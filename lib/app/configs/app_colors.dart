@@ -28,8 +28,4 @@ class AppColors {
 
   static const shadowLightTheme = Color(0xffdde3ec);
   static const shadowDarkTheme = Color(0xff3c3c3a);
-
-
-
-
 }

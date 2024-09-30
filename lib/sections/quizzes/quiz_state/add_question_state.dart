@@ -1,6 +1,5 @@
-import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/methods/create_units_dropdown_menu_items.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/enums/course.dart';
@@ -9,6 +8,8 @@ import '../../../app/enums/ib_section.dart';
 import '../../../app/enums/ig_units.dart';
 import '../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_models/answer_model.dart';
+import '../quiz_sections/methods/add_dropdown_menu_item.dart';
+import '../quiz_sections/methods/create_sub_units_dropdown.dart';
 
 class AddQuestionState {
   final Course course;
@@ -105,63 +106,15 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
     List<DropdownMenuItem> sections = [];
 
     for (var s in selectedSection) {
-      sections.add(
-        DropdownMenuItem(
-          value: s,
-          child: Row(
-            children: [
-              if (s.id != null && s.id!.isNotEmpty) ...[
-                Text(s.id!),
-                const SizedBox(
-                  width: kDropdownMenuItemGap,
-                ),
-              ],
-              Text(
-                s.unit,
-              ),
-            ],
-          ),
-        ),
-      );
+      sections.add(addDropdownMenuItem(s));
     }
 
-    List<DropdownMenuItem> units = [];
-
-    for (var u in selectedSection.first.subUnits.skip(1)) {
-      units.add(
-        DropdownMenuItem(
-          value: u,
-          child: Row(
-            children: [
-              if (u.id != null && u.id!.isNotEmpty) ...[
-                Text(u.id!),
-                const SizedBox(
-                  width: kDropdownMenuItemGap,
-                ),
-              ],
-              Text(
-                u.unit,
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    for (var s in sections) {
-      print(
-          'Selected is ${selectedSection.first.unit} && Section is ${s.value}');
-    }
-
-    for (var u in units) {
-      print(
-          'selected unit is ${selectedSection.first.subUnits.first} unit is ${u.value}');
-    }
-
+    List<DropdownMenuItem> units =
+        createSubUnitsDropdown(selectedSection.first);
     state = state.copyWith(
       sections: sections,
       section: selectedSection.first,
-      units: units,
+      units: units.skip(1).toList(),
       unit: selectedSection.first.subUnits
           .skip(1)
           .first, // Skip the first subunit

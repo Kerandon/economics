@@ -11,14 +11,25 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: onPressed != null ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.scrim, width: 2),
+        border: Border.all(
+            color: onPressed != null
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.scrim,
+            width: 2),
         shape: BoxShape.circle, // Circular shape
       ),
       child: IconButton(
-        onPressed: onPressed != null ? () {
-          onPressed?.call();
-        } : null,
-        icon: Icon(icon, color: onPressed != null ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.scrim ,),
+        onPressed: onPressed != null
+            ? () {
+                onPressed?.call();
+              }
+            : null,
+        icon: Icon(
+          icon,
+          color: onPressed != null
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.scrim,
+        ),
         color: Colors.white, // White icon color for contrast
       ),
     );

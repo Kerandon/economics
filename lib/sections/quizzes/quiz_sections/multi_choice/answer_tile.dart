@@ -7,8 +7,8 @@ import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/constants.dart';
-import '../quiz_models/answer_model.dart';
+import '../../../../app/configs/constants.dart';
+import '../../quiz_models/answer_model.dart';
 
 class AnswerTile extends ConsumerStatefulWidget {
   const AnswerTile({
@@ -27,7 +27,6 @@ class AnswerTile extends ConsumerStatefulWidget {
 }
 
 class _AnswerTileState extends ConsumerState<AnswerTile> {
-
   bool _animate = false;
   bool _hasAnimatedWhenCorrect = false;
 
@@ -37,8 +36,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
     Color backgroundColor = Theme.of(context).colorScheme.surface;
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
-    bool isSelected = widget.answer.answerStage ==
-        AnswerStage.selected;
+    bool isSelected = widget.answer.answerStage == AnswerStage.selected;
 
     if (widget.answer.answerStage == AnswerStage.selected) {
       backgroundColor = Colors.indigo;
@@ -72,8 +70,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
           });
         },
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              vertical: size.height * kFormSpacing),
+          padding: EdgeInsets.symmetric(vertical: size.height * kFormSpacing),
           child: Stack(
             children: [
               ClipRRect(
@@ -91,9 +88,15 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                           dense: true,
                           leading: Text(
                             ((widget.answerIndex + 1).toAlphabet()),
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: isSelected ? Theme.of(context).colorScheme.scrim : Theme.of(context).colorScheme.onSurface
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                    color: isSelected
+                                        ? Theme.of(context).colorScheme.scrim
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSurface),
                           ),
                           title: Text(
                             widget.answer.answer,
@@ -102,12 +105,12 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                                 .textTheme
                                 .displaySmall
                                 ?.copyWith(
-                                  color:
-                                      isSelected ?
-                                      Colors.white : Theme.of(context)
-                                .textTheme
-                                .displayMedium!
-                                .color,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : Theme.of(context)
+                                          .textTheme
+                                          .displayMedium!
+                                          .color,
                                 ), // Align the text to the start (left) side
                           ),
                           trailing: PopOutAnimation(

@@ -2,7 +2,7 @@ import 'package:economics_app/app/animation/rotate_around_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-import '../../../app/configs/constants.dart';
+import '../../../../app/configs/constants.dart';
 
 class ExplanationBox extends StatelessWidget {
   const ExplanationBox({

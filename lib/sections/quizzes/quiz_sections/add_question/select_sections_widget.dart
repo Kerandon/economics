@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/custom_widgets/gap.dart';
 import '../../../../app/utils/mixins/unit_mixin.dart';
 import '../../quiz_state/add_question_state.dart';
-import '../methods/create_units_dropdown_menu_items.dart';
+import '../methods/create_sub_units_dropdown.dart';
 
 class SelectSectionsWidget extends ConsumerStatefulWidget {
   const SelectSectionsWidget({super.key});
@@ -46,10 +46,9 @@ class _SelectSectionsWidgetState extends ConsumerState<SelectSectionsWidget> {
             final s = e as UnitMixin;
             addQuestionNotifier.setSection(s);
 
-            List<DropdownMenuItem<dynamic>> units =
-                createUnitsDropdownMenuItems(s);
+            List<DropdownMenuItem<dynamic>> units = createSubUnitsDropdown(s);
             addQuestionNotifier
-              ..setUnits(units)
+              ..setUnits(units.skip(1).toList())
               ..setUnit(e.subUnits.skip(1).first);
           },
         ),

@@ -2,13 +2,14 @@ import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/constants.dart';
 import '../../../app/enums/course.dart';
 import '../../../app/enums/ib_section.dart';
 import '../../../app/enums/ig_units.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_models/answer_model.dart';
 import '../quiz_models/question_model.dart';
+import '../quiz_sections/methods/add_dropdown_menu_item.dart';
+import '../quiz_sections/methods/create_sub_units_dropdown.dart';
 
 class QuizState {
   final Course course;
@@ -101,35 +102,12 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
     for (var s in selectedSection) {
       sections.add(
-        DropdownMenuItem(
-            value: s,
-            child: Row(
-              children: [
-                if (s.id != null) Text(s.id!),
-                const SizedBox(
-                  width: kDropdownMenuItemGap,
-                ),
-                Text(s.unit),
-              ],
-            )),
+        addDropdownMenuItem(s),
       );
     }
 
-    List<DropdownMenuItem> units = [];
-
-    if (selectedSection.first == IBSection.all ||
-        selectedSection.first == IGSection.all) {
-      units = [];
-    } else {
-      for (var u in selectedSection.first.subUnits) {
-        units.add(
-          DropdownMenuItem(
-            value: u,
-            child: Text(u.unit),
-          ),
-        );
-      }
-    }
+    List<DropdownMenuItem> units =
+        createSubUnitsDropdown(selectedSection.first);
 
     state = state.copyWith(
       sections: sections,
@@ -152,20 +130,16 @@ class QuizNotifier extends StateNotifier<QuizState> {
   }
 
   void setAllQuestions(List<QuestionModel> questions) {
-    // Convert the list to a set to remove duplicates
     Set<QuestionModel> uniqueQuestions = questions.toSet();
 
-    // Convert the set back to a list
     List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
 
     state = state.copyWith(allQuestions: uniqueQuestionsList);
   }
 
   void setSelectedQuestions(List<QuestionModel> questions) {
-    // Convert the list to a set to remove duplicates
     Set<QuestionModel> uniqueQuestions = questions.toSet();
 
-    // Convert the set back to a list
     List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
 
     state = state.copyWith(selectedQuestions: uniqueQuestionsList..shuffle());
