@@ -10,7 +10,7 @@ DropdownMenuItem<dynamic> addDropdownMenuItem(UnitMixin s) {
           Text(s.id!),
           const SizedBox(width: 8),
         ],
-        Text(s.unit),
+        Text(s.name),
       ],
     ),
   );

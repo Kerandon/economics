@@ -1,3 +1,4 @@
+import 'package:economics_app/sections/settings/update_course_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/state/app_state.dart';
@@ -31,6 +32,13 @@ class SettingsPage extends ConsumerWidget {
                 onChanged: (on) {
                   appNotifier.setDarkTheme(on);
                 }),
+            ListTile(
+              title: const Text('Create & update courses'),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const UpdateCoursePage()));
+              },
+            )
           ],
         ),
       ),

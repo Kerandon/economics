@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 class CustomChipButton extends StatelessWidget {
   const CustomChipButton({
     required this.text,
-    this.icon,
     required this.onPressed,
-    required this.isSelected,
+    this.textColor,
+    this.icon,
+    this.isSelected = true,
     this.isDisabled = false,
     super.key,
   });
 
   final String text;
-  final IconData? icon;
+  final Icon? icon;
+  final Color? textColor;
   final Function? onPressed;
   final bool isSelected;
   final bool isDisabled;
@@ -43,11 +45,8 @@ class CustomChipButton extends StatelessWidget {
               children: [
                 if (icon != null) ...[
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      icon,
-                      size: 42,
-                    ),
+                    padding: const EdgeInsets.all(6.0),
+                    child: icon,
                   ),
                 ],
                 Padding(
@@ -56,12 +55,13 @@ class CustomChipButton extends StatelessWidget {
                     text,
                     style: TextStyle(
                       fontSize: 16,
-                      color: isSelected
-                          ? Colors.white
-                          : Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(0.50),
+                      color: textColor ??
+                          (isSelected
+                              ? Colors.white
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.50)),
                     ),
                   ),
                 ),

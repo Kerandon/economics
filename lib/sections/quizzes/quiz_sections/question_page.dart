@@ -7,9 +7,9 @@ import 'package:economics_app/sections/quizzes/quiz_sections/multi_choice/questi
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../app/configs/constants.dart';
-import '../../app/custom_widgets/custom_change_button.dart';
-import 'quiz_sections/completion/completion_page.dart';
+import '../../../app/configs/constants.dart';
+import '../../../app/custom_widgets/custom_change_button.dart';
+import 'completion/completion_page.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -130,7 +130,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                           children: <TextSpan>[
                             TextSpan(
                               text:
-                                  ' ${quizState.section.unit}, ${quizState.unit}',
+                                  ' ${quizState.section.name}, ${quizState.unit}',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),

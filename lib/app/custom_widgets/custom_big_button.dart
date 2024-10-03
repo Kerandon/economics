@@ -33,14 +33,14 @@ class CustomBigButton extends StatelessWidget {
         onPressed: onPressed,
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.10,
+            horizontal: size.width * 0.08,
             vertical: size.height * 0.02,
           ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
               text,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: onPressed == null
                         ? Theme.of(context)
                             .colorScheme

@@ -9,7 +9,7 @@ List<DropdownMenuItem<dynamic>> createSubUnitsDropdown(UnitMixin section) {
   if (section == IBSection.all || section == IGSection.all) {
     return [];
   } else {
-    for (var u in section.subUnits) {
+    for (var u in section.subunits) {
       units.add(addDropdownMenuItem(u));
     }
     return units;

@@ -1,18 +1,16 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
-
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/add_question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
-import 'package:economics_app/sections/quizzes/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/quiz_options/quiz_options.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/custom_widgets/gap.dart';
-import '../quiz_enums/answer_stage.dart';
-import '../quiz_models/question_model.dart';
+import '../../app/custom_widgets/gap.dart';
+import 'quiz_enums/answer_stage.dart';
+import 'quiz_models/question_model.dart';
 
 class QuizHomePage extends ConsumerStatefulWidget {
   const QuizHomePage({super.key});
@@ -141,16 +139,21 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                               CustomBigButton(
                                   text: 'Start Quiz',
                                   onPressed: () {
-                                    quizNotifier.setSelectedQuestions(
-                                        quizState.allQuestions.toList());
-
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((t) {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const QuestionPage()));
-                                    });
+                                    List<QuestionModel> questions = [];
+                                    for (var q in quizState.allQuestions) {
+                                      if (q.course == quizState.course) {
+                                        if (q.section?.name == kAllSections) {
+                                          questions.add(q);
+                                        } else {}
+                                      }
+                                    }
+                                    // WidgetsBinding.instance
+                                    //     .addPostFrameCallback((t) {
+                                    //   Navigator.of(context).push(
+                                    //       MaterialPageRoute(
+                                    //           builder: (context) =>
+                                    //               const QuestionPage()));
+                                    // });
                                   }),
                               SizedBox(
                                 height: size.height * 0.20,
@@ -169,12 +172,21 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                       ));
                     }
                     if (snapshot.data == null || snapshot.data!.isEmpty) {
-                      return Center(
-                          child: Text(
-                        'No questions found!\n\nUpload a quiz question to begin! (top-right plus icon)',
-                        style: Theme.of(context).textTheme.displaySmall,
-                        textAlign: TextAlign.center,
-                      ));
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(
+                            Icons.error_outline,
+                            size: 100,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          Text(
+                            'No questions found!\n\nAdd a quiz question to begin (top-right plus icon)',
+                            style: Theme.of(context).textTheme.titleMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      );
                     }
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {

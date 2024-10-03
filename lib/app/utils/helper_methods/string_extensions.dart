@@ -7,12 +7,6 @@ extension CapitalizeFirstLetterExtension on String {
   }
 }
 
-extension ListToMapExtension<T> on List<T> {
-  Map<String, T> toMap() {
-    return {for (var item in this) indexOf(item).toString(): item};
-  }
-}
-
 extension StringToListOfWords on String {
   List<String> toListOfWords() {
     return split(RegExp(r'\s+'));

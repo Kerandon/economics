@@ -39,7 +39,7 @@ class _QuizOptionsDropdownState extends ConsumerState<QuizOptions> {
             ..setUnits(quizState.units.toList())
             ..setUnit(quizState.unit);
         } else {
-          quizNotifier.setCourse(Course.ib);
+          quizNotifier.setCourse(SelectedCourse.ib);
         }
       });
     }
@@ -89,18 +89,18 @@ class _QuizOptionsDropdownState extends ConsumerState<QuizOptions> {
             spacing: size.width * kWrapSpacing,
             children: [
               CustomChipButton(
-                text: Course.ib.toText(),
+                text: SelectedCourse.ib.toText(),
                 onPressed: () {
-                  quizNotifier.setCourse(Course.ib);
+                  quizNotifier.setCourse(SelectedCourse.ib);
                 },
-                isSelected: quizState.course == Course.ib,
+                isSelected: quizState.course == SelectedCourse.ib,
               ),
               CustomChipButton(
-                text: Course.igcse.toText(),
+                text: SelectedCourse.igcse.toText(),
                 onPressed: () {
-                  quizNotifier.setCourse(Course.igcse);
+                  quizNotifier.setCourse(SelectedCourse.igcse);
                 },
-                isSelected: quizState.course == Course.igcse,
+                isSelected: quizState.course == SelectedCourse.igcse,
               ),
             ],
           ),
@@ -116,7 +116,7 @@ class _QuizOptionsDropdownState extends ConsumerState<QuizOptions> {
             List<DropdownMenuItem<dynamic>> units = createSubUnitsDropdown((s));
 
             quizNotifier
-              ..setUnit(e.subUnits.first)
+              ..setUnit(e.subunits.first)
               ..setUnits(units);
           },
         ),

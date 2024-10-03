@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const kAppName = 'Econ Pro';
 const kLevel = 'level';
 
@@ -16,8 +18,11 @@ const kBody = 'body';
 /// Quiz
 const kAnswers = 'answers';
 const kQuiz = 'quiz';
+const kAllSections = 'All sections';
+const kAllUnits = 'All units';
 const kFormSpacing = 0.005;
 const kDropdownMenuItemGap = 10.0;
+const kFormTextLabelPadding = EdgeInsets.only(left: 20, bottom: 8);
 
 /// Layout
 const kRadius = 12.0;

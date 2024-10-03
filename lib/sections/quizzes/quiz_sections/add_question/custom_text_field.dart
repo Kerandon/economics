@@ -8,18 +8,20 @@ import '../../../../app/state/app_state.dart';
 class CustomTextField extends ConsumerStatefulWidget {
   const CustomTextField({
     required this.controller,
-    required this.label,
+    this.label,
     super.key,
     this.requireValidation = false,
     this.id,
+    this.hintText,
     this.padding = kFormSpacing,
   }) : assert(!requireValidation || id != null,
             'ID must not be null if validation is required');
 
   final TextEditingController controller;
-  final String label;
+  final String? label;
   final bool requireValidation;
   final String? id;
+  final String? hintText;
   final double padding;
 
   @override
@@ -41,16 +43,17 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16, bottom: 4),
-            child: Text(
-              widget.label,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: isValidated || !widget.requireValidation
-                      ? Theme.of(context).colorScheme.primary
-                      : Colors.red),
+          if (widget.label != null)
+            Padding(
+              padding: kFormTextLabelPadding,
+              child: Text(
+                widget.label!,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: isValidated || !widget.requireValidation
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.red),
+              ),
             ),
-          ),
           Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -86,8 +89,9 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
                               setState(() {});
                             }
                           : null,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(10, 5, 50, 5),
+                      decoration: InputDecoration(
+                        hintText: widget.hintText,
+                        contentPadding: const EdgeInsets.fromLTRB(10, 5, 50, 5),
                         border: InputBorder.none,
                         counterText: '',
                       ),

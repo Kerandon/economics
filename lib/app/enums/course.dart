@@ -1,26 +1,26 @@
-enum Course {
+enum SelectedCourse {
   ib,
   igcse,
 }
 
-extension CourseExtension on Course {
+extension CourseExtension on SelectedCourse {
   // Convert enum to text
   String toText() {
     switch (this) {
-      case Course.ib:
+      case SelectedCourse.ib:
         return 'IB';
-      case Course.igcse:
+      case SelectedCourse.igcse:
         return 'IGCSE';
     }
   }
 
   // Convert text to enum
-  static Course fromText(String text) {
+  static SelectedCourse fromText(String text) {
     switch (text) {
       case 'ib':
-        return Course.ib;
+        return SelectedCourse.ib;
       case 'igcse':
-        return Course.igcse;
+        return SelectedCourse.igcse;
       default:
         throw Exception('Unknown course: $text');
     }

@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
 
-class CustomPopUp extends StatelessWidget {
-  const CustomPopUp({
+import 'custom_chip_button.dart';
+
+class CustomPopup extends StatelessWidget {
+  const CustomPopup({
     super.key,
+    required this.actionButtons,
     required this.title,
-    this.subtitle,
+    this.content,
   });
 
   final String title;
-  final String? subtitle;
+  final Widget? content;
+  final List<CustomChipButton> actionButtons;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      content: subtitle != null
-          ? const Text(
-              'Multi-choice questions must have between 2 to 4 answers')
-          : null,
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(); // Close this dialog
-          },
-          child: const Text('OK'),
-        ),
-      ],
+      content: content,
+      actions: actionButtons,
     );
   }
 }

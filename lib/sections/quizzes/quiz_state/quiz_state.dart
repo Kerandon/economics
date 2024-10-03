@@ -12,7 +12,7 @@ import '../quiz_sections/methods/add_dropdown_menu_item.dart';
 import '../quiz_sections/methods/create_sub_units_dropdown.dart';
 
 class QuizState {
-  final Course course;
+  final SelectedCourse course;
   final QuestionType questionType;
   final UnitMixin section;
   final List<DropdownMenuItem> sections;
@@ -45,7 +45,7 @@ class QuizState {
   });
 
   QuizState copyWith({
-    Course? course,
+    SelectedCourse? course,
     QuestionType? questionType,
     UnitMixin? section,
     List<DropdownMenuItem>? sections,
@@ -83,10 +83,10 @@ class QuizState {
 class QuizNotifier extends StateNotifier<QuizState> {
   QuizNotifier(super._state);
 
-  void setCourse(Course course) {
-    if (course == Course.ib) {
+  void setCourse(SelectedCourse course) {
+    if (course == SelectedCourse.ib) {
       changeToNewSections(sectionValues: IBSection.values);
-    } else if (course == Course.igcse) {
+    } else if (course == SelectedCourse.igcse) {
       changeToNewSections(sectionValues: IGSection.values);
     }
     state = state.copyWith(course: course);
@@ -113,7 +113,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
       sections: sections,
       section: selectedSection.first,
       units: units.isEmpty ? [] : units, // Handle empty units
-      unit: units.isEmpty ? null : selectedSection.first.subUnits.first,
+      unit: units.isEmpty ? null : selectedSection.first.subunits.first,
     );
   }
 
@@ -300,12 +300,12 @@ class QuizNotifier extends StateNotifier<QuizState> {
 final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
   (ref) => QuizNotifier(
     QuizState(
-      course: Course.ib,
+      course: SelectedCourse.ib,
       questionType: QuestionType.multi,
       sections: [],
       section: IBSection.intro,
       units: [],
-      unit: IBSection.intro.subUnits.first,
+      unit: IBSection.intro.subunits.first,
       allQuestions: [],
       selectedQuestions: [],
       questionsAllSelected: false,

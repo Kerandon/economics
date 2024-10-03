@@ -4,7 +4,7 @@ import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/add_question/select_sections_widget.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/add_question/custom_add_units.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -125,16 +125,15 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                   spacing: 20,
                   children: [
                     CustomChipButton(
-                      text: Course.ib.toText(),
-                      onPressed: () =>
-                          addQuestionNotifier.setCourseChange(Course.ib),
-                      isSelected: addQuestionState.course == Course.ib,
+                      text: SelectedCourse.ib.toText(),
+                      onPressed: () {},
+                      isSelected: addQuestionState.course == SelectedCourse.ib,
                     ),
                     CustomChipButton(
-                      text: Course.igcse.toText(),
-                      onPressed: () =>
-                          addQuestionNotifier.setCourseChange(Course.igcse),
-                      isSelected: addQuestionState.course == Course.igcse,
+                      text: SelectedCourse.igcse.toText(),
+                      onPressed: () {},
+                      isSelected:
+                          addQuestionState.course == SelectedCourse.igcse,
                     ),
                   ],
                 ),
@@ -200,7 +199,8 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                 const Gap(
                   showDivider: true,
                 ),
-                const SelectSectionsWidget(),
+                const CustomAddUnits(),
+                // const SelectSectionsWidget(),
                 SizedBox(
                   height: size.height * 0.10,
                 ),

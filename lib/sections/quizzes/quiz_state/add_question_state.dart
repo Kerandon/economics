@@ -4,15 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/enums/course.dart';
 import '../../../app/enums/ib_section.dart';
-
-import '../../../app/enums/ig_units.dart';
 import '../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_models/answer_model.dart';
-import '../quiz_sections/methods/add_dropdown_menu_item.dart';
-import '../quiz_sections/methods/create_sub_units_dropdown.dart';
 
 class AddQuestionState {
-  final Course course;
+  final SelectedCourse course;
   final QuestionType questionType;
   final String questionText;
   final List<AnswerModel> multiAnswers;
@@ -39,7 +35,7 @@ class AddQuestionState {
   });
 
   AddQuestionState copyWith({
-    Course? course,
+    SelectedCourse? course,
     QuestionType? questionType,
     String? questionText,
     List<AnswerModel>? multiAnswers,
@@ -76,50 +72,37 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
   }
 
   void setCourseOnFirstInit() {
-    changeToNewSections(sectionValues: IBSection.values.toList());
+    state = state.copyWith(course: SelectedCourse.ib);
+    // changeToNewSections(sectionValues: IBSection.values.toList());
   }
 
-  void setCourseChange(Course course) {
-    if (course == Course.ib) {
-      changeToNewSections(sectionValues: IBSection.values.toList());
-    } else if (course == Course.igcse) {
-      changeToNewSections(sectionValues: IGSection.values.toList());
-    }
-
-    state = state.copyWith(course: course);
-  }
-
-  void setSection(UnitMixin section) {
+  void setUnit(UnitMixin section) {
     state = state.copyWith(section: section);
   }
 
-  void setUnits(List<DropdownMenuItem> units) {
-    state = state.copyWith(units: units.toList());
-  }
-
-  void setUnit(UnitMixin unit) {
+  void setSubunit(UnitMixin unit) {
     state = state.copyWith(unit: unit);
   }
 
-  void changeToNewSections({required List<UnitMixin> sectionValues}) {
-    List<UnitMixin> selectedSection = sectionValues.skip(1).toList();
-    List<DropdownMenuItem> sections = [];
-
-    for (var s in selectedSection) {
-      sections.add(addDropdownMenuItem(s));
-    }
-
-    List<DropdownMenuItem> units =
-        createSubUnitsDropdown(selectedSection.first);
-    state = state.copyWith(
-      sections: sections,
-      section: selectedSection.first,
-      units: units.skip(1).toList(),
-      unit: selectedSection.first.subUnits
-          .skip(1)
-          .first, // Skip the first subunit
-    );
-  }
+  // void changeToNewSections({required List<UnitMixin> sectionValues}) {
+  //   List<UnitMixin> selectedSection = sectionValues.skip(1).toList();
+  //   List<DropdownMenuItem> sections = [];
+  //
+  //   for (var s in selectedSection) {
+  //     sections.add(addDropdownMenuItem(s));
+  //   }
+  //
+  //   List<DropdownMenuItem> units =
+  //       createSubUnitsDropdown(selectedSection.first);
+  //   state = state.copyWith(
+  //     sections: sections,
+  //     section: selectedSection.first,
+  //     units: units.skip(1).toList(),
+  //     unit: selectedSection.first.subunits
+  //         .skip(1)
+  //         .first, // Skip the first subunit
+  //   );
+  // }
 
   void addQuestionAndAnswer(MapEntry field) {
     Map<String, bool> fields = state.fieldValidation;
@@ -172,7 +155,7 @@ final addQuestionProvider =
     StateNotifierProvider<AddQuestionNotifier, AddQuestionState>(
   (ref) => AddQuestionNotifier(
     AddQuestionState(
-      course: Course.ib,
+      course: SelectedCourse.ib,
       questionType: QuestionType.multi,
       questionText: "",
       multiAnswers: [],
@@ -180,7 +163,7 @@ final addQuestionProvider =
       sections: [],
       section: IBSection.intro,
       units: [],
-      unit: IBSection.intro.subUnits.elementAt(1),
+      unit: IBSection.intro.subunits.elementAt(1),
       fieldValidation: {},
       allFieldsAreValidated: false,
     ),

@@ -3,7 +3,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../sections/diagrams/sections/all_diagrams_page.dart';
-import '../../sections/quizzes/quiz_sections/quiz_home_page.dart';
+import '../../sections/quizzes/quiz_home_page.dart';
 import '../../sections/settings/settings_page.dart';
 import '../configs/constants.dart';
 import 'custom_navigation_bar.dart';

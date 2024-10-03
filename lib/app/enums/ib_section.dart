@@ -1,8 +1,10 @@
 // Enum for IB Sections
+import 'package:economics_app/app/configs/constants.dart';
+
 import '../utils/mixins/unit_mixin.dart';
 
 enum IBSection with UnitMixin {
-  all('', 'All sections', [
+  all('', kAllSections, [
     ...IntroUnits.values,
     ...MicroUnits.values,
     ...MacroUnits.values,
@@ -16,37 +18,37 @@ enum IBSection with UnitMixin {
   @override
   final String id; // Section number
   @override
-  final String unit;
+  final String name;
   @override
-  final List<UnitMixin> subUnits;
+  final List<UnitMixin> subunits;
   @override
   final int? numberOfQuestions;
 
-  const IBSection(this.id, this.unit, this.subUnits, {this.numberOfQuestions});
+  const IBSection(this.id, this.name, this.subunits, {this.numberOfQuestions});
 }
 
 // Enum for IB Intro section
 enum IntroUnits with UnitMixin {
-  all('All units', ''),
+  all('', kAllUnits),
   whatIsEconomics('1.1', 'What is economics?'),
   howEconomistsApproachTheWorld('1.2', 'How do economists approach the world?');
 
   @override
   final String id;
   @override
-  final String unit;
+  final String name;
   @override
-  final List<UnitMixin> subUnits;
+  final List<UnitMixin> subunits;
   @override
   final int? numberOfQuestions;
 
-  const IntroUnits(this.id, this.unit,
-      {this.subUnits = const [], this.numberOfQuestions});
+  const IntroUnits(this.id, this.name,
+      {this.subunits = const [], this.numberOfQuestions});
 }
 
 // Enum for IB Micro section
 enum MicroUnits with UnitMixin {
-  all('All units', ''),
+  all('', kAllUnits),
   demand('2.1', 'Demand'),
   supply('2.2', 'Supply'),
   competitiveMarketEquilibrium('2.3', 'Competitive market equilibrium'),
@@ -65,19 +67,19 @@ enum MicroUnits with UnitMixin {
   @override
   final String id;
   @override
-  final String unit;
+  final String name;
   @override
-  final List<UnitMixin> subUnits;
+  final List<UnitMixin> subunits;
   @override
   final int? numberOfQuestions;
 
-  const MicroUnits(this.id, this.unit,
-      {this.subUnits = const [], this.numberOfQuestions});
+  const MicroUnits(this.id, this.name,
+      {this.subunits = const [], this.numberOfQuestions});
 }
 
 // Enum for IB Macro section
 enum MacroUnits with UnitMixin {
-  all('All units', ''),
+  all('', kAllUnits),
   measuringEconomicActivity(
       '3.1', 'Measuring economic activity and illustrating its variations'),
   variationsInEconomicActivity('3.2',
@@ -92,19 +94,19 @@ enum MacroUnits with UnitMixin {
   @override
   final String id;
   @override
-  final String unit;
+  final String name;
   @override
-  final List<UnitMixin> subUnits;
+  final List<UnitMixin> subunits;
   @override
   final int? numberOfQuestions;
 
-  const MacroUnits(this.id, this.unit,
-      {this.subUnits = const [], this.numberOfQuestions});
+  const MacroUnits(this.id, this.name,
+      {this.subunits = const [], this.numberOfQuestions});
 }
 
 // Enum for IB Global section
 enum GlobalUnits with UnitMixin {
-  all('All units', ''),
+  all('', kAllUnits),
   benefitsOfInternationalTrade('4.1', 'Benefits of international trade'),
   typesOfTradeProtection('4.2', 'Types of trade protection'),
   argumentsForTradeProtection(
@@ -122,12 +124,12 @@ enum GlobalUnits with UnitMixin {
   @override
   final String id;
   @override
-  final String unit;
+  final String name;
   @override
-  final List<UnitMixin> subUnits;
+  final List<UnitMixin> subunits;
   @override
   final int? numberOfQuestions;
 
-  const GlobalUnits(this.id, this.unit,
-      {this.subUnits = const [], this.numberOfQuestions});
+  const GlobalUnits(this.id, this.name,
+      {this.subunits = const [], this.numberOfQuestions});
 }
