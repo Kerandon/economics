@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomChipButton extends StatelessWidget {
   const CustomChipButton({
-    required this.text,
+    this.text,
     required this.onPressed,
     this.textColor,
     this.icon,
@@ -12,7 +12,7 @@ class CustomChipButton extends StatelessWidget {
     super.key,
   });
 
-  final String text;
+  final String? text;
   final Icon? icon;
   final Color? textColor;
   final Function? onPressed;
@@ -49,22 +49,24 @@ class CustomChipButton extends StatelessWidget {
                     child: icon,
                   ),
                 ],
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    text,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: textColor ??
-                          (isSelected
-                              ? Colors.white
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withOpacity(0.50)),
+                if (text != null) ...[
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      text!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: textColor ??
+                            (isSelected
+                                ? Colors.white
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(0.50)),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ],
             ),
           ),

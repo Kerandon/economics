@@ -1,7 +1,7 @@
-import 'package:economics_app/sections/settings/update_course_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/state/app_state.dart';
+import 'edit_courses/edit_courses_page.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -36,7 +36,7 @@ class SettingsPage extends ConsumerWidget {
               title: const Text('Create & update courses'),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const UpdateCoursePage()));
+                    builder: (context) => const EditCoursesPage()));
               },
             )
           ],
