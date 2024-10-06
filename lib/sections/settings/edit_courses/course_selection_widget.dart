@@ -41,8 +41,8 @@ class CourseSelectionWidget extends ConsumerWidget {
                       (e) => CustomChipButton(
                         text: e.name,
                         onPressed: () async {
-                          onChange.call();
                           courseNotifier.setCourseSelected(e);
+                          onChange.call();
                         },
                         isSelected: courseState.course.name == e.name,
                       ),
@@ -67,6 +67,7 @@ class CourseSelectionWidget extends ConsumerWidget {
                 text: 'Create new course',
                 onPressed: () {
                   courseNotifier.setCourseSelected(Course(name: "", units: []));
+                  onChange.call();
                 },
               ),
             ),

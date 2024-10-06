@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 import '../../../app/utils/models/unit.dart';
 
@@ -12,8 +13,13 @@ Future<void> addCourseToFirebase(
 
   final ref = FirebaseFirestore.instance;
   try {
-    await ref.collection('courses').doc(course).set(unitsMap);
+    await ref.collection('courses').doc(course).set(
+          unitsMap,
+          SetOptions(merge: true),
+        );
   } catch (e) {
+    debugPrint(e.toString());
+
     /// Todo error catching here
   }
 }

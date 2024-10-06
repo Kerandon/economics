@@ -79,7 +79,7 @@ class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
 
             if (!_setUpUnits) {
               _setUpUnits =
-                  setUpCoursesDataOnInit(courseState.course.units.toList());
+                  setUpCoursesDataOnChange(courseState.course.units.toList());
             }
 
             return SingleChildScrollView(
@@ -92,7 +92,6 @@ class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
                   onChange: () {
                     newMap.clear();
                     _setUpUnits = false;
-
                     setState(() {});
                   },
                 ),
@@ -129,6 +128,8 @@ class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
                         });
 
                         return ExpandablePanel(
+                          controller:
+                              newMap.entries.elementAt(index).value['notifier'],
                           collapsed: const SizedBox.shrink(),
                           header: SizedBox(
                             width: size.width,
@@ -209,6 +210,7 @@ class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
                         'subunits': <int, TextEditingController>{
                           0: TextEditingController(text: ''),
                         },
+                        'notifier': ExpandableController(initialExpanded: true),
                       };
                     });
                   },
@@ -233,34 +235,33 @@ class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
                       onPressed: () {
                         List<Unit> units = [];
 
-                        final testUnits = [
-                          Unit(
-                            name: "Car",
-                            id: '1',
-                            subunits: [
-                              Unit(name: 'Ferrari', id: '1.1'),
-                              Unit(name: 'Porsche', id: '1.2'),
-                            ],
-                          ),
-                          Unit(
-                            name: 'Trucks',
-                            id: '2',
-                            subunits: [
-                              Unit(name: 'Monster truck', id: '2.1'),
-                              Unit(name: 'Truck', id: '2.2'),
-                            ],
-                          )
-                        ];
+                        for (var e in newMap.entries) {
+                          var unitName = e.value['controller'].text;
+                          Map<int, dynamic> subunits = e.value['subunits'];
+
+                          List<Unit> subs = [];
+                          for (var s in subunits.entries) {
+                            final c = s.value as TextEditingController;
+                            subs.add(Unit(name: c.text, id: s.key.toString()));
+                          }
+
+                          units.add(Unit(
+                              name: unitName,
+                              id: e.key.toString(),
+                              subunits: subs));
+                        }
 
                         addCourseToFirebase(
                           course: _courseTextController.text,
                           units: units,
                         );
+                        _setUpUnits = false;
+                        setState(() {});
 
                         courseNotifier.setCourseSelected(
                           Course(
                             name: _courseTextController.text,
-                            units: testUnits,
+                            units: units,
                           ),
                         );
                       }),
@@ -271,7 +272,7 @@ class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
     );
   }
 
-  bool setUpCoursesDataOnInit(List<UnitMixin> units) {
+  bool setUpCoursesDataOnChange(List<UnitMixin> units) {
     // if(courseState.course.units.isEmpty){
     // Populate newMap
     int index = 0; // To keep track of the index for the main units
