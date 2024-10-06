@@ -5,20 +5,25 @@ import '../../../app/utils/models/course.dart';
 
 class CoursesState {
   final CourseMixin course;
-  final List<String> courses;
+  final List<CourseMixin> courses;
+  final bool createCourseIsSelected;
 
   CoursesState({
     required this.course,
     required this.courses,
+    required this.createCourseIsSelected,
   });
 
   CoursesState copyWith({
     CourseMixin? course,
-    List<String>? courses,
+    List<CourseMixin>? courses,
+    bool? createCourseIsSelected,
   }) {
     return CoursesState(
       course: course ?? this.course,
       courses: courses ?? this.courses,
+      createCourseIsSelected:
+          createCourseIsSelected ?? this.createCourseIsSelected,
     );
   }
 }
@@ -27,10 +32,11 @@ class CoursesNotifier extends StateNotifier<CoursesState> {
   CoursesNotifier(super._state);
 
   void setCourseSelected(CourseMixin course) {
-    state = state.copyWith(course: course);
+    state = state.copyWith(
+        course: course, createCourseIsSelected: course.name == "");
   }
 
-  void setAllCourses(List<String> courses) {
+  void setAllCourses(List<CourseMixin> courses) {
     state = state.copyWith(courses: courses);
   }
 }
@@ -40,6 +46,7 @@ final coursesProvider = StateNotifierProvider<CoursesNotifier, CoursesState>(
     CoursesState(
       course: Course(name: '', units: []),
       courses: [],
+      createCourseIsSelected: true,
     ),
   ),
 );

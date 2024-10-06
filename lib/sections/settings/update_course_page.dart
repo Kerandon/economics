@@ -4,6 +4,7 @@ import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/custom_text_field.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/custom_widgets/gap.dart';
@@ -22,10 +23,10 @@ class UpdateCoursePage extends ConsumerStatefulWidget {
 }
 
 class _UpdateCoursePageState extends ConsumerState<UpdateCoursePage> {
-  // late final Stream<List<CourseMixin>> _getCoursesStream;
   final TextEditingController _courseTextController = TextEditingController();
-  final List<UnitTextControllerModel> _unitTextControllerModels = [];
-  final List<UnitTextControllerModel> _subunitTextControllerModels = [];
+  final List<TextEditingModel> _unitTextEditingModels = [];
+  final List<TextEditingModel> _subunitTextEditingModels = [];
+  bool _haveSetCourseOnInit = false;
 
   @override
   void initState() {
@@ -38,10 +39,6 @@ class _UpdateCoursePageState extends ConsumerState<UpdateCoursePage> {
 
     final courseState = ref.watch(coursesProvider);
     final courseNotifier = ref.read(coursesProvider.notifier);
-    bool createCourseSelected = false;
-    if (courseState.course.name == "") {
-      createCourseSelected = true;
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -59,300 +56,410 @@ class _UpdateCoursePageState extends ConsumerState<UpdateCoursePage> {
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             List<CourseMixin> courses = [];
-            List<UnitMixin> units = [];
             if (snapshot.data != null) {
               for (var e in snapshot.data!.docs) {
-                // Get the data as Map<String, dynamic> using the data() method
-
-                courses.add(Course.fromMap({e.id: e.data()}));
+                courses.add(
+                  Course.fromMap({
+                    e.id: e.data(),
+                  }),
+                );
               }
-            }
-            for (var c in courses) {
-              if (courseState.course == c) {
-                units.addAll(c.units.toList());
+              WidgetsBinding.instance.addPostFrameCallback((t) {
+                courseNotifier.setAllCourses(courses);
+              });
+
+              if (!_haveSetCourseOnInit) {
+                _haveSetCourseOnInit = true;
+                if (courseState.courses.isNotEmpty) {
+                  WidgetsBinding.instance.addPostFrameCallback((t) {
+                    courseNotifier.setCourseSelected(courses.first);
+                  });
+                }
               }
             }
 
             return SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Gap(),
-                  Stack(
-                    children: [
-                      Center(
-                        child: Wrap(
-                          alignment: WrapAlignment.center,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          spacing: size.width * kWrapSpacing,
-                          children: [
-                            ...courses.map((e) => CustomChipButton(
-                                  text: e.name,
-                                  onPressed: () async {
-                                    _unitTextControllerModels.clear();
-                                    _subunitTextControllerModels.clear();
-                                    courseNotifier.setCourseSelected(e);
-                                  },
-                                  isSelected: courseState.course.name == e.name,
-                                )),
-                            ...[],
-                          ],
-                        ),
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CourseSelectionWidget(
+                  courseTextEditingController: _courseTextController,
+                  onChange: () {
+                    _unitTextEditingModels.clear();
+                    _subunitTextEditingModels.clear();
+                  },
+                ),
+                if (!courseState.createCourseIsSelected) ...[
+                  const Gap(
+                    showDivider: true,
+                  ),
+                ],
+                Column(
+                  children: [
+                    if (!courseState.createCourseIsSelected &&
+                        courseState.course.units.isNotEmpty) ...[
+                      Text(
+                        'Course contents',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: CustomChipButton(
-                          isSelected: createCourseSelected,
-                          icon: Icon(
-                            Icons.add,
-                            color: courseState.course.name == ""
-                                ? Colors.white
-                                : Theme.of(context).colorScheme.primary,
-                          ),
-                          textColor: createCourseSelected
-                              ? Colors.white
-                              : Theme.of(context).colorScheme.onSurface,
-                          text: 'Create new course',
-                          onPressed: () {
-                            courseNotifier
-                                .setCourseSelected(Course(name: "", units: []));
-                          },
-                        ),
+                      ...List.generate(
+                        courseState.course.units.length,
+                        (index) {
+                          final c = courseState.course.units[index];
+
+                          return Column(
+                            children: [
+                              ExpandablePanel(
+                                header: SizedBox(
+                                  child: Container(
+                                    height: size.height * 0.06,
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16),
+                                          child: Text('Unit ${c.id.toString()}',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleLarge
+                                                  ?.copyWith(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary)),
+                                        ),
+                                        Text(
+                                          c.name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                collapsed: const SizedBox.shrink(),
+                                expanded: Container(
+                                  child: Column(
+                                    children: [
+                                      ...List.generate(
+                                        c.subunits.length,
+                                        (index) => Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(38, 6, 6, 6),
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 12),
+                                                child: Icon(
+                                                  Icons
+                                                      .subdirectory_arrow_right_outlined,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 12),
+                                                child: Text(
+                                                  c.subunits[index].id ?? "",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge
+                                                      ?.copyWith(
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .primary),
+                                                ),
+                                              ),
+                                              Text(c.subunits[index].name,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      const Gap(
+                        showDivider: true,
                       ),
                     ],
-                  ),
-                  if (createCourseSelected)
-                    CustomTextField(
-                        controller: _courseTextController,
-                        label: 'Type new course name'),
-                  const Gap(
-                    showDivider: true,
-                  ),
-                  if (courses.isNotEmpty) ...[
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: courseState.course.units.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(kBackgroundOpacity),
-                            borderRadius: BorderRadius.circular(kRadius),
+                  ],
+                ),
+                const Gap(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Add new units',
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
                           ),
-                          child: ListTile(
-                            leading: Text(
-                              courseState.course.units[index].id.toString(),
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            title: Text(
-                              courseState.course.units[index].name,
-                              style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    ...List.generate(
+                      _unitTextEditingModels.length,
+                      (index) {
+                        int newUnitIndex =
+                            courseState.course.units.length + index;
+
+                        return ExpandablePanel(
+                          collapsed: SizedBox.shrink(),
+                          header: Container(
+                            width: size.width,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  child: Text(
+                                    'Unit ${newUnitIndex + 1}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CustomTextField(
+                                      controller: _unitTextEditingModels[index]
+                                          .controller),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ),
+                          expanded: Container(
+                            width: size.width,
+                            height: 30,
+                            color: Colors.red,
+                          ),
+                        );
+                      },
                     ),
                   ],
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: _unitTextControllerModels.length,
-                    itemBuilder: (context, index) => Row(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.15,
-                          child: CustomTextField(
-                            label: 'Add unit section',
-                            controller:
-                                _unitTextControllerModels[index].idController,
-                            hintText: 'Unit id',
-                          ),
+                ),
+                const Gap(),
+                Wrap(
+                  spacing: size.width * kWrapSpacing,
+                  alignment: WrapAlignment.start,
+                  children: [
+                    CustomChipButton(
+                        icon: const Icon(
+                          Icons.add,
+                          color: Colors.white,
                         ),
-                        SizedBox(
-                          width: size.width * 0.01,
-                        ),
-                        Expanded(
-                          flex: 5,
-                          child: CustomTextField(
-                            label: "",
-                            controller:
-                                _unitTextControllerModels[index].nameController,
-                            hintText: 'Unit name',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Gap(),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: _subunitTextControllerModels.length,
-                    itemBuilder: (context, index) => Row(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.05,
-                        ),
-                        Icon(
-                          Icons.subdirectory_arrow_right_outlined,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 35,
-                        ),
-                        SizedBox(
-                          width: size.width * 0.15,
-                          child: CustomTextField(
-                            label: 'Add subunits',
-                            hintText: 'Subunit id',
-                            controller: _subunitTextControllerModels[index]
-                                .idController,
-                          ),
-                        ),
-                        SizedBox(
-                          width: size.width * 0.01,
-                        ),
-                        Expanded(
-                          child: CustomTextField(
-                            label: "",
-                            hintText: 'Subunit name',
-                            controller: _subunitTextControllerModels[index]
-                                .nameController,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Gap(),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Wrap(
-                      spacing: size.width * kWrapSpacing,
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.08,
-                        ),
-                        CustomChipButton(
-                            icon: const Icon(
-                              Icons.add,
-                              color: Colors.white,
+                        text: "Add unit",
+                        onPressed: () {
+                          _unitTextEditingModels.add(
+                            TextEditingModel(
+                              _unitTextEditingModels.length + 1,
+                              TextEditingController(),
                             ),
-                            text: 'Add new subunit',
-                            onPressed: () {
-                              _subunitTextControllerModels.add(
-                                  UnitTextControllerModel(
-                                      TextEditingController(),
-                                      TextEditingController()));
+                          );
+                          setState(() {});
+                        }),
+                    CustomChipButton(
+                      isDisabled: _unitTextEditingModels.isEmpty,
+                      icon: const Icon(
+                        Icons.remove,
+                        color: Colors.white,
+                      ),
+                      text: "Remove last",
+                      onPressed: _unitTextEditingModels.isNotEmpty
+                          ? () {
+                              _unitTextEditingModels.removeLast();
                               setState(() {});
-                            }),
-                        CustomChipButton(
-                            isDisabled: _unitTextControllerModels.isEmpty,
-                            icon: Icon(
-                              Icons.remove,
-                              color: _subunitTextControllerModels.isNotEmpty
-                                  ? Colors.white
-                                  : Theme.of(context).colorScheme.scrim,
-                            ),
-                            isSelected: _unitTextControllerModels.isNotEmpty,
-                            text: 'Remove last',
-                            onPressed: () {
-                              _unitTextControllerModels.removeLast();
-                              setState(() {});
-                            }),
-                      ],
+                            }
+                          : null,
                     ),
-                  ),
-                  const Gap(
-                    showDivider: true,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Wrap(
-                      spacing: size.width * kWrapSpacing,
-                      children: [
-                        CustomChipButton(
-                            icon: const Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                            text: 'Add new unit',
-                            onPressed: () {
-                              _unitTextControllerModels.add(
-                                  UnitTextControllerModel(
-                                      TextEditingController(),
-                                      TextEditingController()));
-                              setState(() {});
-                            }),
-                        CustomChipButton(
-                            isDisabled: _unitTextControllerModels.isEmpty,
-                            icon: Icon(
-                              Icons.remove,
-                              color: _unitTextControllerModels.isNotEmpty
-                                  ? Colors.white
-                                  : Theme.of(context).colorScheme.scrim,
-                            ),
-                            isSelected: _unitTextControllerModels.isNotEmpty,
-                            text: 'Remove last',
-                            onPressed: () {
-                              _unitTextControllerModels.removeLast();
-                              setState(() {});
-                            }),
-                      ],
-                    ),
-                  ),
-                  const Gap(
-                    showDivider: true,
-                  ),
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  CustomBigButton(
-                      text: courseState.course.name == ""
-                          ? 'Confirm new course'
-                          : "Confirm changes",
+                  ],
+                ),
+                const Gap(
+                  showDivider: true,
+                ),
+                SizedBox(
+                  height: size.height * 0.05,
+                ),
+                Center(
+                  child: CustomBigButton(
+                      text: 'Confirm',
                       onPressed: () {
+                        List<Unit> units = [];
+                        for (var u in _unitTextEditingModels) {
+                          units.add(
+                            Unit(
+                              name: u.controller.text,
+                              id: u.index.toString(),
+                            ),
+                          );
+                        }
+                        final testUnits = [
+                          Unit(
+                            name: "Car",
+                            id: '1',
+                            subunits: [
+                              Unit(name: 'Ferrari', id: '1.1'),
+                              Unit(name: 'Porsche', id: '1.2'),
+                            ],
+                          ),
+                          Unit(
+                            name: 'Trucks',
+                            id: '2',
+                            subunits: [
+                              Unit(name: 'Monster truck', id: '2.1'),
+                              Unit(name: 'Truck', id: '2.2'),
+                            ],
+                          )
+                        ];
+
                         addCourseToFirebase(
-                            course: _courseTextController.text,
-                            unitTextModels: _unitTextControllerModels);
+                          course: _courseTextController.text,
+                          units: units,
+                        );
+
+                        courseNotifier.setCourseSelected(
+                          Course(
+                            name: _courseTextController.text,
+                            units: testUnits,
+                          ),
+                        );
                       }),
-                ],
-              ),
-            );
+                ),
+              ],
+            ));
           }),
     );
   }
 }
 
 Future<void> addCourseToFirebase(
-    {required String course,
-    required List<UnitTextControllerModel> unitTextModels}) async {
-  List<UnitMixin> units = [];
-  for (var m in unitTextModels) {
-    units.add(Unit(id: m.idController.text, name: m.nameController.text));
-  }
-
+    {required String course, required List<Unit> units}) async {
   Map<String, dynamic> unitsMap = {};
 
   for (var u in units) {
-    unitsMap.addAll({
-      u.id!: {'name': u.name}
-    });
+    unitsMap.addAll(u.toMap());
   }
 
   final ref = FirebaseFirestore.instance;
   try {
     await ref.collection('courses').doc(course).set(unitsMap);
   } catch (e) {
+    print('ERROR $e');
+
     /// Todo error catching here
   }
 }
 
 class UnitTextControllerModel {
-  final TextEditingController idController;
-  final TextEditingController nameController;
+  final TextEditingModel idController;
+  final TextEditingModel nameController;
 
   UnitTextControllerModel(this.idController, this.nameController);
+}
+
+class TextEditingModel {
+  final int index;
+  final TextEditingController controller;
+
+  TextEditingModel(this.index, this.controller);
+}
+
+class CourseSelectionWidget extends ConsumerWidget {
+  const CourseSelectionWidget({
+    super.key,
+    required this.onChange,
+    required this.courseTextEditingController,
+  });
+
+  final VoidCallback onChange;
+  final TextEditingController courseTextEditingController;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
+    final courseState = ref.watch(coursesProvider);
+    final courseNotifier = ref.read(coursesProvider.notifier);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Gap(),
+        Stack(
+          children: [
+            Center(
+              child: Container(
+                width: size.width * 0.60,
+                color: Colors.red,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: size.width * kWrapSpacing,
+                  children: [
+                    ...courseState.courses.map(
+                      (e) => CustomChipButton(
+                        text: e.name,
+                        onPressed: () async {
+                          onChange.call();
+                          courseNotifier.setCourseSelected(e);
+                        },
+                        isSelected: courseState.course.name == e.name,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: CustomChipButton(
+                isSelected: courseState.createCourseIsSelected,
+                icon: Icon(
+                  Icons.add,
+                  color: courseState.course.name == ""
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.primary,
+                ),
+                textColor: courseState.createCourseIsSelected
+                    ? Colors.white
+                    : Theme.of(context).colorScheme.onSurface,
+                text: 'Create new course',
+                onPressed: () {
+                  courseNotifier.setCourseSelected(Course(name: "", units: []));
+                },
+              ),
+            ),
+          ],
+        ),
+        Gap(),
+        ...[
+          if (courseState.createCourseIsSelected) ...[
+            Text(
+              'Type course name',
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+            CustomTextField(
+              controller: courseTextEditingController,
+            ),
+          ],
+        ],
+      ],
+    );
+  }
 }

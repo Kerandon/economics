@@ -72,7 +72,7 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
                     : Colors.white,
                 borderRadius: BorderRadius.circular(kRadius),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               child: IntrinsicHeight(
                 child: Stack(
                   children: [
@@ -91,7 +91,7 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
                           : null,
                       decoration: InputDecoration(
                         hintText: widget.hintText,
-                        contentPadding: const EdgeInsets.fromLTRB(10, 5, 50, 5),
+                        contentPadding: const EdgeInsets.fromLTRB(10, 3, 50, 3),
                         border: InputBorder.none,
                         counterText: '',
                       ),
