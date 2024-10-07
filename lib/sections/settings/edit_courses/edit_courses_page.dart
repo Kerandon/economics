@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
+import 'package:economics_app/app/custom_widgets/custom_pop_up.dart';
+import 'package:economics_app/app/enums/firebase_status.dart';
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/gap.dart';
+import '../../../app/custom_widgets/mini_building_helper.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/models/course.dart';
 import '../../../app/utils/models/unit.dart';
@@ -23,7 +28,9 @@ class EditCoursesPage extends ConsumerStatefulWidget {
 
 class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
   final TextEditingController _courseTextController = TextEditingController();
-  final Map<int, Map<String, dynamic>> newMap = {};
+  final List<ExpandableController> _expandableControllers = [];
+
+  final Map<int, Map<String, dynamic>> addCourseMap = {};
   bool _haveSetCourseOnInit = false;
   bool _setUpUnits = false;
 
@@ -80,215 +87,335 @@ class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
             if (!_setUpUnits) {
               _setUpUnits =
                   setUpCoursesDataOnChange(courseState.course.units.toList());
+
+              for (int i = 0; i < courseState.course.units.length; i++) {
+                _expandableControllers
+                    .add(ExpandableController(initialExpanded: true));
+              }
             }
 
-            return SingleChildScrollView(
+            List<Unit> units = Unit.fromAddCourseMap(addCourseMap);
+            bool unitsAreValidated = validateAllFields(
+                units: units,
+                createCoursesIsSelected: courseState.createCourseIsSelected);
+
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: size.width * kPageIndentHorizontal),
+              child: SingleChildScrollView(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CourseSelectionWidget(
-                  courseTextEditingController: _courseTextController,
-                  onChange: () {
-                    newMap.clear();
-                    _setUpUnits = false;
-                    setState(() {});
-                  },
-                ),
-                Column(
-                  children: [
-                    if (!courseState.createCourseIsSelected &&
-                        courseState.course.units.isNotEmpty) ...[
-                      Text(
-                        'Course contents',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                      ),
-                    ],
-                  ],
-                ),
-                const Gap(),
-                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ...List.generate(
-                      newMap.length,
-                      (index) {
-                        // Initialize a map to hold the subunits
-                        Map<int, TextEditingController> subs = {};
-
-                        // Populate the subs map from the current unit's subunits
-                        Map<int, TextEditingController> subunits =
-                            newMap.entries.elementAt(index).value['subunits']
-                                as Map<int, TextEditingController>;
-
-                        subunits.forEach((subIndex, controller) {
-                          subs[subIndex] = controller;
-                        });
-
-                        return ExpandablePanel(
-                          controller:
-                              newMap.entries.elementAt(index).value['notifier'],
-                          collapsed: const SizedBox.shrink(),
-                          header: SizedBox(
-                            width: size.width,
-                            child: ContentsRow(
-                              textEditingController: newMap.entries
-                                  .elementAt(index)
-                                  .value['controller'],
-                              unit: 'Unit ${index + 1} ',
-                            ),
-                          ),
-                          expanded: Column(
-                            children: [
-                              ...List.generate(
-                                subunits.length,
-                                (i) => Row(
-                                  children: [
-                                    SizedBox(
-                                      width: size.width * 0.06,
-                                    ),
-                                    Expanded(
-                                      child: ContentsRow(
-                                        isSubunit: true,
-                                        unit:
-                                            '${(index + 1).toString()}.${(i + 1).toString()}',
-                                        textEditingController: subunits[i]
-                                            as TextEditingController,
-                                      ),
-                                    ),
-                                  ],
+                    CourseSelectionWidget(
+                      courseTextEditingController: _courseTextController,
+                      onChange: () {
+                        addCourseMap.clear();
+                        _setUpUnits = false;
+                        onAdd();
+                        setState(() {});
+                      },
+                    ),
+                    const Gap(),
+                    Column(
+                      children: [
+                        if (!courseState.createCourseIsSelected &&
+                            courseState.course.units.isNotEmpty) ...[
+                          Text(
+                            'Course contents',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
-                              ),
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 158, top: 6, bottom: 6),
-                                    child: AddUnitsButtons(
-                                      onAdd: () {
-                                        setState(() {
-                                          // Get the next index for the new subunit
-                                          int subIndex = subunits.length;
+                          ),
+                        ],
+                      ],
+                    ),
+                    const Gap(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ...List.generate(
+                          addCourseMap.length,
+                          (index) {
+                            // Initialize a map to hold the subunits
+                            Map<int, TextEditingController> subs = {};
 
-                                          // Add a new subunit for the current main unit
-                                          subunits[subIndex] =
-                                              TextEditingController();
-                                        });
-                                      },
-                                      onRemove: () {
-                                        setState(() {
-                                          // Remove the last subunit if it exists
-                                          if (subunits.isNotEmpty) {
-                                            subunits
-                                                .remove(subunits.length - 1);
-                                          }
-                                        });
-                                      },
+                            // Populate the subs map from the current unit's subunits
+                            Map<int, TextEditingController> subunits =
+                                addCourseMap.entries
+                                        .elementAt(index)
+                                        .value['subunits']
+                                    as Map<int, TextEditingController>;
+
+                            subunits.forEach((subIndex, controller) {
+                              subs[subIndex] = controller;
+                            });
+
+                            return Column(
+                              children: [
+                                ExpandablePanel(
+                                  theme: const ExpandableThemeData(
+                                    tapBodyToExpand: false,
+                                    tapBodyToCollapse: false,
+                                    tapHeaderToExpand: false,
+                                  ),
+                                  controller: _expandableControllers[index],
+                                  collapsed: const SizedBox.shrink(),
+                                  header: SizedBox(
+                                    width: size.width,
+                                    child: ContentsRow(
+                                      textEditingController: addCourseMap
+                                          .entries
+                                          .elementAt(index)
+                                          .value['controller'],
+                                      unit: 'Unit ${index + 1} ',
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
+                                  expanded: Column(
+                                    children: [
+                                      ...List.generate(
+                                        subunits.length,
+                                        (i) => Row(
+                                          children: [
+                                            SizedBox(
+                                              width: size.width * 0.06,
+                                            ),
+                                            Expanded(
+                                              child: ContentsRow(
+                                                isSubunit: true,
+                                                unit:
+                                                    '${(index + 1).toString()}.${(i + 1).toString()}',
+                                                textEditingController: subunits[
+                                                    i] as TextEditingController,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 158, top: 6, bottom: 6),
+                                            child: AddUnitsButtons(
+                                              disableOnRemove: subunits.isEmpty,
+                                              onAdd: () {
+                                                setState(() {
+                                                  // Get the next index for the new subunit
+                                                  int subIndex =
+                                                      subunits.length;
+
+                                                  // Add a new subunit for the current main unit
+                                                  subunits[subIndex] =
+                                                      TextEditingController();
+                                                });
+                                              },
+                                              onRemove: () {
+                                                setState(() {
+                                                  if (subunits.isNotEmpty) {
+                                                    subunits.remove(
+                                                        subunits.length - 1);
+                                                  }
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Gap(
+                                  showDivider: true,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    const Gap(),
+                    AddUnitsButtons(
+                      disableOnRemove: units.isEmpty,
+                      onAdd: () {
+                        onAdd();
                       },
+                      onRemove: () {
+                        setState(() {
+                          // Remove the last entry if it exists
+                          if (addCourseMap.isNotEmpty) {
+                            addCourseMap.remove(addCourseMap.length - 1);
+                            _expandableControllers.removeLast();
+                          }
+                        });
+                      },
+                    ),
+                    const Gap(
+                      showDivider: true,
+                    ),
+                    SizedBox(
+                      height: size.height * 0.05,
+                    ),
+                    SizedBox(
+                      width: size.width,
+                      child: Wrap(
+                        spacing: size.width * kWrapSpacing,
+                        alignment: WrapAlignment.spaceBetween,
+                        children: [
+                          CustomChipButton(
+                            isDisabled: !unitsAreValidated,
+                            text: 'Save changes',
+                            onPressed: unitsAreValidated
+                                ? () async {
+                                    List<Unit> units =
+                                        Unit.fromAddCourseMap(addCourseMap);
+
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) => MiniBuilderHelper(
+                                        future: addCourseToFirebase(
+                                            course: _courseTextController.text,
+                                            units: units),
+                                        onComplete: (status) {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((t) {
+                                            if (status ==
+                                                FirebaseStatus.success) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content:
+                                                      Text('Changes saved'),
+                                                ),
+                                              );
+                                            }
+                                            if (status ==
+                                                FirebaseStatus.error) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Changes not saved - check your internet connection and try again'),
+                                                ),
+                                              );
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    );
+
+                                    _setUpUnits = false;
+                                    setState(() {});
+
+                                    courseNotifier.setCourseSelected(
+                                      Course(
+                                        name: _courseTextController.text,
+                                        units: units,
+                                      ),
+                                    );
+                                  }
+                                : null,
+                          ),
+                          CustomChipButton(
+                            fillColor: Colors.red,
+                            icon: Icon(
+                              Icons.delete_outlined,
+                              color: Colors.white,
+                            ),
+                            text: 'Delete course',
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => CustomPopup(
+                                    content: Text(
+                                        'WARNING: this action cannot be undone'),
+                                    actionButtons: [
+                                      CustomChipButton(
+                                          fillColor: Colors.red,
+                                          text: 'Confirm',
+                                          onPressed: () {
+                                            Future<void> deleteAllDocuments(
+                                                String collectionPath) async {
+                                              final instance =
+                                                  FirebaseFirestore.instance;
+
+                                              instance
+                                                  .collection('courses')
+                                                  .doc(_courseTextController
+                                                      .text)
+                                                  .delete();
+
+                                              Navigator.of(context).pop();
+                                            }
+                                          }),
+                                      CustomChipButton(
+                                          text: 'Cancel',
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          }),
+                                    ],
+                                    title: 'Delete the course and all units'),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.15,
                     ),
                   ],
                 ),
-                const Gap(),
-                AddUnitsButtons(
-                  onAdd: () {
-                    setState(() {
-                      // Get the next index for the new main entry
-                      int newIndex = newMap.length;
-
-                      // Create a new entry for the main unit
-                      newMap[newIndex] = {
-                        'controller': TextEditingController(),
-                        'subunits': <int, TextEditingController>{
-                          0: TextEditingController(text: ''),
-                        },
-                        'notifier': ExpandableController(initialExpanded: true),
-                      };
-                    });
-                  },
-                  onRemove: () {
-                    setState(() {
-                      // Remove the last entry if it exists
-                      if (newMap.isNotEmpty) {
-                        newMap.remove(newMap.length - 1);
-                      }
-                    });
-                  },
-                ),
-                const Gap(
-                  showDivider: true,
-                ),
-                SizedBox(
-                  height: size.height * 0.05,
-                ),
-                Center(
-                  child: CustomChipButton(
-                      text: 'Save changes',
-                      onPressed: () {
-                        List<Unit> units = [];
-
-                        for (var e in newMap.entries) {
-                          var unitName = e.value['controller'].text;
-                          Map<int, dynamic> subunits = e.value['subunits'];
-
-                          List<Unit> subs = [];
-                          for (var s in subunits.entries) {
-                            final c = s.value as TextEditingController;
-                            subs.add(Unit(name: c.text, id: s.key.toString()));
-                          }
-
-                          units.add(Unit(
-                              name: unitName,
-                              id: e.key.toString(),
-                              subunits: subs));
-                        }
-
-                        addCourseToFirebase(
-                          course: _courseTextController.text,
-                          units: units,
-                        );
-                        _setUpUnits = false;
-                        setState(() {});
-
-                        courseNotifier.setCourseSelected(
-                          Course(
-                            name: _courseTextController.text,
-                            units: units,
-                          ),
-                        );
-                      }),
-                ),
-              ],
-            ));
+              ),
+            );
           }),
     );
   }
 
+  void onAdd() {
+    int newIndex = addCourseMap.length;
+
+    // Create a new entry for the main unit
+    addCourseMap[newIndex] = {
+      'controller': TextEditingController(),
+      'subunits': <int, TextEditingController>{
+        0: TextEditingController(text: ''),
+      },
+    };
+    _expandableControllers.add(ExpandableController(initialExpanded: true));
+  }
+
+  bool validateAllFields(
+      {required List<Unit> units, required bool createCoursesIsSelected}) {
+    bool isCourseValid = true;
+    if (!createCoursesIsSelected) {
+      isCourseValid = _courseTextController.text.trim().isEmpty;
+    }
+    bool unitsAreValidated = isCourseValid &&
+        units.every(
+          (u) =>
+              u.id?.trim().isNotEmpty == true &&
+              u.name.trim().isNotEmpty &&
+              u.subunits.every((e) =>
+                  e.id?.trim().isNotEmpty == true && e.name.trim().isNotEmpty),
+        );
+    return unitsAreValidated;
+  }
+
   bool setUpCoursesDataOnChange(List<UnitMixin> units) {
-    // if(courseState.course.units.isEmpty){
-    // Populate newMap
     int index = 0; // To keep track of the index for the main units
     for (var c in units) {
-      // Create a new entry for each unit
-      newMap[index] = {
+      addCourseMap[index] = {
         'controller': TextEditingController(text: c.name),
-        // Set the unit name
         'subunits': <int, TextEditingController>{},
-        // Initialize subunits map
       };
-
-      // Populate the subunits
       int subIndex = 0; // To keep track of the index for subunits
       for (var d in c.subunits) {
-        newMap[index]!['subunits'][subIndex] =
+        addCourseMap[index]!['subunits'][subIndex] =
             TextEditingController(text: d.name); // Set subunit name
         subIndex++; // Increment subIndex for the next subunit
       }

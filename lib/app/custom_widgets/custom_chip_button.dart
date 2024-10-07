@@ -9,12 +9,14 @@ class CustomChipButton extends StatelessWidget {
     this.icon,
     this.isSelected = true,
     this.isDisabled = false,
+    this.fillColor,
     super.key,
   });
 
   final String? text;
   final Icon? icon;
   final Color? textColor;
+  final Color? fillColor;
   final Function? onPressed;
   final bool isSelected;
   final bool isDisabled;
@@ -24,12 +26,11 @@ class CustomChipButton extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(kRadius),
       child: Material(
-        color: isSelected
-            ? Theme.of(context).colorScheme.primary
+        color: isDisabled ? Theme.of(context)
+            .colorScheme.scrim : isSelected
+            ? fillColor ?? Theme.of(context).colorScheme.primary
             : Theme.of(context)
-                .colorScheme
-                .onSurface
-                .withOpacity(kBackgroundOpacity),
+                .colorScheme.scrim.withOpacity(kNotSelectedOpacity),
         child: InkWell(
           borderRadius: BorderRadius.circular(kRadius),
           onTap: isDisabled

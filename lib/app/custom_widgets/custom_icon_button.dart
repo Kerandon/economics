@@ -15,7 +15,7 @@ class CustomIconButton extends StatelessWidget {
             color: onPressed != null
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.scrim,
-            width: 2),
+            width: 2,),
         shape: BoxShape.circle, // Circular shape
       ),
       child: IconButton(
@@ -25,6 +25,7 @@ class CustomIconButton extends StatelessWidget {
               }
             : null,
         icon: Icon(
+          size: 20,
           icon,
           color: onPressed != null
               ? Theme.of(context).colorScheme.primary

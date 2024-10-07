@@ -84,26 +84,6 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
     state = state.copyWith(unit: unit);
   }
 
-  // void changeToNewSections({required List<UnitMixin> sectionValues}) {
-  //   List<UnitMixin> selectedSection = sectionValues.skip(1).toList();
-  //   List<DropdownMenuItem> sections = [];
-  //
-  //   for (var s in selectedSection) {
-  //     sections.add(addDropdownMenuItem(s));
-  //   }
-  //
-  //   List<DropdownMenuItem> units =
-  //       createSubUnitsDropdown(selectedSection.first);
-  //   state = state.copyWith(
-  //     sections: sections,
-  //     section: selectedSection.first,
-  //     units: units.skip(1).toList(),
-  //     unit: selectedSection.first.subunits
-  //         .skip(1)
-  //         .first, // Skip the first subunit
-  //   );
-  // }
-
   void addQuestionAndAnswer(MapEntry field) {
     Map<String, bool> fields = state.fieldValidation;
     fields.update(

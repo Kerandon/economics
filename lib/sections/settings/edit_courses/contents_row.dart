@@ -1,4 +1,8 @@
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../../app/custom_widgets/gap.dart';
+
 
 class ContentsRow extends StatelessWidget {
   const ContentsRow({
@@ -12,30 +16,51 @@ class ContentsRow extends StatelessWidget {
   final String unit;
   final TextEditingController textEditingController;
 
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            unit,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-          ),
-        ),
-        Expanded(
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText:
-                  isSubunit == true ? 'Enter subunit name' : 'Enter unit name',
+
+    return  Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Text(
+              unit,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             ),
-            controller: textEditingController,
-            //
           ),
-        )
-      ],
+          Expanded(
+            flex: 8,
+            child: TextFormField(
+              decoration: InputDecoration(
+                fillColor: Theme.of(context).colorScheme.onSurface.withOpacity(kBackgroundOpacity),
+                filled: true,
+                isDense: true,
+                hintText: isSubunit == true ? 'Enter subunit name' : 'Enter unit name',
+                hintStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color:
+                Colors.grey,), // Grey hint text
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(kRadius), // Rounded edges
+                  borderSide: BorderSide.none, // No border initially
+                ),
+              ),
+              controller: textEditingController,
+              onChanged: (value) {
+                // Trigger rebuild to update errorText based on input
+                (context as Element).markNeedsBuild();
+              },
+              style: Theme.of(context).textTheme.titleLarge, // Text color
+            ),
+
+
+
+          ),
+          const Expanded(child: SizedBox.shrink()),
+
+        ],
+
     );
   }
 }

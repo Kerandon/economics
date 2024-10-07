@@ -36,6 +36,7 @@ class CourseSelectionWidget extends ConsumerWidget {
                   alignment: WrapAlignment.center,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   spacing: size.width * kWrapSpacing,
+                  runSpacing: size.height * kWrapSpacing,
                   children: [
                     ...courseState.courses.map(
                       (e) => CustomChipButton(
@@ -77,12 +78,18 @@ class CourseSelectionWidget extends ConsumerWidget {
         ...[
           if (courseState.createCourseIsSelected) ...[
             Text(
-              'Type course name',
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              'Create new course',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
             ),
+            Gap(),
             TextFormField(
+              decoration: InputDecoration(
+                hintText: 'Enter course name',
+                hintStyle: Theme.of(context).textTheme.labelLarge?.copyWith(color:
+                Colors.grey,), //
+              ),
               controller: courseTextEditingController,
             )
           ],

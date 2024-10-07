@@ -1,0 +1,4 @@
+enum FirebaseStatus {
+  success,
+  error,
+}
