@@ -5,70 +5,102 @@ class CustomChipButton extends StatelessWidget {
   const CustomChipButton({
     this.text,
     required this.onPressed,
-    this.textColor,
+    this.textAndIconColor,
     this.icon,
     this.isSelected = true,
     this.isDisabled = false,
     this.fillColor,
+    this.outlinedStyle = false,
     super.key,
   });
 
   final String? text;
-  final Icon? icon;
-  final Color? textColor;
+  final IconData? icon;
+  final Color? textAndIconColor;
   final Color? fillColor;
   final Function? onPressed;
   final bool isSelected;
   final bool isDisabled;
+  final bool outlinedStyle;
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(kRadius),
-      child: Material(
-        color: isDisabled ? Theme.of(context)
-            .colorScheme.scrim : isSelected
-            ? fillColor ?? Theme.of(context).colorScheme.primary
-            : Theme.of(context)
-                .colorScheme.scrim.withOpacity(kNotSelectedOpacity),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(kRadius),
-          onTap: isDisabled
-              ? null
-              : () {
-                  onPressed?.call();
-                },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisSize:
-                  MainAxisSize.min, // Shrinks the row to fit its children
-              children: [
-                if (icon != null) ...[
-                  Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: icon,
-                  ),
-                ],
-                if (text != null) ...[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      text!,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: textColor ??
-                            (isSelected
-                                ? Colors.white
-                                : Theme.of(context)
-                                    .colorScheme
-                                    .onSurface
-                                    .withOpacity(0.50)),
+    final borderColor = isDisabled
+        ? Colors.grey
+        : textAndIconColor ?? Theme.of(context).colorScheme.primary;
+    Color iconAndTextColor = Colors.white;
+    if (isDisabled) {
+      iconAndTextColor = Colors.grey;
+    } else {
+      if (outlinedStyle) {
+        iconAndTextColor =
+            textAndIconColor ?? Theme.of(context).colorScheme.primary;
+      } else {
+        if (isSelected) {
+          iconAndTextColor = Colors.white;
+        } else {
+          iconAndTextColor = Theme.of(context).colorScheme.onSurface;
+        }
+      }
+    }
+    return Container(
+      decoration: outlinedStyle
+          ? BoxDecoration(
+              border: Border.all(
+                color: borderColor,
+              ),
+              borderRadius: BorderRadius.circular(kRadius),
+            )
+          : null,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(kRadius),
+        child: Material(
+          color: isDisabled && !outlinedStyle
+              ? Theme.of(context).colorScheme.scrim
+              : isSelected
+                  ? outlinedStyle
+                      ? null
+                      : fillColor ?? Theme.of(context).colorScheme.primary
+                  : Theme.of(context)
+                      .colorScheme
+                      .scrim
+                      .withOpacity(kNotSelectedOpacity),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(kRadius),
+            onTap: isDisabled
+                ? null
+                : () {
+                    onPressed?.call();
+                  },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisSize:
+                    MainAxisSize.min, // Shrinks the row to fit its children
+                children: [
+                  if (icon != null) ...[
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Icon(
+                        icon,
+                        color: iconAndTextColor,
                       ),
                     ),
-                  ),
+                  ],
+                  if (text != null) ...[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        text!,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: iconAndTextColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),

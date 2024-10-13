@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/enums/firebase_status.dart';
 import 'package:flutter/material.dart';
-import '../../../app/utils/models/unit.dart';
+import '../../../../app/utils/models/unit.dart';
 
 Future<FirebaseStatus> addCourseToFirebase({
   required String course,

@@ -1,22 +1,19 @@
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/enums/course.dart';
-import '../../../app/enums/ib_section.dart';
+import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/mixins/unit_mixin.dart';
+import '../../../app/utils/models/course.dart';
+import '../../../app/utils/models/unit.dart';
 import '../quiz_models/answer_model.dart';
 
 class AddQuestionState {
-  final SelectedCourse course;
+  final Course course;
   final QuestionType questionType;
   final String questionText;
   final List<AnswerModel> multiAnswers;
   final String explanation;
-  final List<DropdownMenuItem> sections;
-  final UnitMixin section;
-  final List<DropdownMenuItem> units;
   final UnitMixin unit;
+  final UnitMixin subunit;
   final Map<String, bool> fieldValidation;
   final bool allFieldsAreValidated;
 
@@ -26,24 +23,20 @@ class AddQuestionState {
     required this.questionText,
     required this.multiAnswers,
     required this.explanation,
-    required this.sections,
-    required this.section,
-    required this.units,
     required this.unit,
+    required this.subunit,
     required this.fieldValidation,
     required this.allFieldsAreValidated,
   });
 
   AddQuestionState copyWith({
-    SelectedCourse? course,
+    Course? course,
     QuestionType? questionType,
     String? questionText,
     List<AnswerModel>? multiAnswers,
     String? explanation,
-    List<DropdownMenuItem>? sections,
-    UnitMixin? section,
-    List<DropdownMenuItem>? units,
     UnitMixin? unit,
+    UnitMixin? subunit,
     bool? allFieldsAreValidated,
     Map<String, bool>? fieldValidation,
   }) {
@@ -53,10 +46,8 @@ class AddQuestionState {
       questionText: questionText ?? this.questionText,
       multiAnswers: multiAnswers ?? this.multiAnswers,
       explanation: explanation ?? this.explanation,
-      sections: sections ?? this.sections,
-      section: section ?? this.section,
-      units: units ?? this.units,
       unit: unit ?? this.unit,
+      subunit: subunit ?? this.subunit,
       fieldValidation: fieldValidation ?? this.fieldValidation,
       allFieldsAreValidated:
           allFieldsAreValidated ?? this.allFieldsAreValidated,
@@ -71,17 +62,16 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
     state = state.copyWith(questionType: type);
   }
 
-  void setCourseOnFirstInit() {
-    state = state.copyWith(course: SelectedCourse.ib);
-    // changeToNewSections(sectionValues: IBSection.values.toList());
+  void setCourse(CourseMixin course) {
+    state = state.copyWith(course: course as Course);
   }
 
-  void setUnit(UnitMixin section) {
-    state = state.copyWith(section: section);
+  void setUnit(UnitMixin unit) {
+    state = state.copyWith(unit: unit);
   }
 
   void setSubunit(UnitMixin unit) {
-    state = state.copyWith(unit: unit);
+    state = state.copyWith(subunit: unit);
   }
 
   void addQuestionAndAnswer(MapEntry field) {
@@ -135,15 +125,13 @@ final addQuestionProvider =
     StateNotifierProvider<AddQuestionNotifier, AddQuestionState>(
   (ref) => AddQuestionNotifier(
     AddQuestionState(
-      course: SelectedCourse.ib,
+      course: Course(name: "", units: []),
       questionType: QuestionType.multi,
       questionText: "",
       multiAnswers: [],
       explanation: "",
-      sections: [],
-      section: IBSection.intro,
-      units: [],
-      unit: IBSection.intro.subunits.elementAt(1),
+      unit: Unit(name: ''),
+      subunit: Unit(name: ''),
       fieldValidation: {},
       allFieldsAreValidated: false,
     ),

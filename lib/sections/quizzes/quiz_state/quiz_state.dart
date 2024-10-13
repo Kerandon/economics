@@ -2,9 +2,9 @@ import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/enums/course.dart';
 import '../../../app/enums/ib_section.dart';
-import '../../../app/enums/ig_units.dart';
+import '../../../app/utils/mixins/course_mixin.dart';
+import '../../../app/utils/models/course.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_models/answer_model.dart';
 import '../quiz_models/question_model.dart';
@@ -12,7 +12,7 @@ import '../quiz_sections/methods/add_dropdown_menu_item.dart';
 import '../quiz_sections/methods/create_sub_units_dropdown.dart';
 
 class QuizState {
-  final SelectedCourse course;
+  final CourseMixin course;
   final QuestionType questionType;
   final UnitMixin section;
   final List<DropdownMenuItem> sections;
@@ -45,7 +45,7 @@ class QuizState {
   });
 
   QuizState copyWith({
-    SelectedCourse? course,
+    CourseMixin? course,
     QuestionType? questionType,
     UnitMixin? section,
     List<DropdownMenuItem>? sections,
@@ -83,12 +83,7 @@ class QuizState {
 class QuizNotifier extends StateNotifier<QuizState> {
   QuizNotifier(super._state);
 
-  void setCourse(SelectedCourse course) {
-    if (course == SelectedCourse.ib) {
-      changeToNewSections(sectionValues: IBSection.values);
-    } else if (course == SelectedCourse.igcse) {
-      changeToNewSections(sectionValues: IGSection.values);
-    }
+  void setCourse(CourseMixin course) {
     state = state.copyWith(course: course);
   }
 
@@ -300,7 +295,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
 final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
   (ref) => QuizNotifier(
     QuizState(
-      course: SelectedCourse.ib,
+      course: Course(name: '', units: []),
       questionType: QuestionType.multi,
       sections: [],
       section: IBSection.intro,

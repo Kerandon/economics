@@ -1,14 +1,15 @@
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import '../../../app/enums/course.dart';
+import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/mixins/unit_mixin.dart';
+import '../../../app/utils/models/course.dart';
 import '../quiz_enums/answer_stage.dart';
 import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
   final QuestionType? type;
-  final SelectedCourse? course;
+  final CourseMixin? course;
   final String? question;
   final Widget? item;
   final List<AnswerModel>? answers;
@@ -34,7 +35,7 @@ class QuestionModel extends Equatable {
   // More flexible copyWith
   QuestionModel copyWith({
     QuestionType? type,
-    SelectedCourse? course,
+    Course? course,
     String? question,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
@@ -62,13 +63,9 @@ class QuestionModel extends Equatable {
         .toList()
       ..shuffle();
 
-    final course = CourseExtension.fromText(map['course']);
-
     return QuestionModel(
       type: QuestionTypeExtension.fromText(map['type']),
       question: map['question'],
-      course: course,
-      section: GetUnit.fromText(map['section'], course),
       answers: answers,
       answerStage: AnswerStage.notSelected,
       explanation: map['explanation'],

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../mixins/unit_mixin.dart';
@@ -54,7 +53,6 @@ class Unit with UnitMixin {
           .toList();
     }
 
-
     return Unit(
       id: id,
       name: map['name'] ?? 'Unknown',
@@ -84,5 +82,4 @@ class Unit with UnitMixin {
 
     return units;
   }
-
 }

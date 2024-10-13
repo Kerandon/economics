@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../enums/firebase_status.dart';

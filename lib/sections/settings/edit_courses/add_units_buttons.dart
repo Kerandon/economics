@@ -4,15 +4,18 @@ import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_chip_button.dart';
 
 class AddUnitsButtons extends StatelessWidget {
-  const AddUnitsButtons(
-      {super.key,
-      required this.onAdd,
-      required this.onRemove,
-      this.disableOnRemove = false});
+  const AddUnitsButtons({
+    super.key,
+    required this.onAdd,
+    required this.onRemove,
+    this.disableOnRemove = false,
+    required this.label,
+  });
 
   final VoidCallback onAdd;
   final VoidCallback onRemove;
   final bool disableOnRemove;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +23,19 @@ class AddUnitsButtons extends StatelessWidget {
     return Wrap(
       spacing: size.width * kWrapSpacing,
       alignment: WrapAlignment.start,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
+        Text(label),
         CustomChipButton(
-            icon: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
+            outlinedStyle: true,
+            icon: Icons.add,
             onPressed: () {
               onAdd.call();
             }),
         CustomChipButton(
+            outlinedStyle: true,
             isDisabled: disableOnRemove,
-            icon: const Icon(
-              Icons.remove,
-              color: Colors.white,
-            ),
+            icon: Icons.remove,
             onPressed: () {
               onRemove.call();
             }),

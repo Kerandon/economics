@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/custom_chip_button.dart';
-import '../../../../app/enums/course.dart';
 import '../../../../app/utils/mixins/unit_mixin.dart';
 import '../../quiz_enums/number_of_questions.dart';
 import '../../quiz_enums/question_type.dart';
@@ -31,17 +30,6 @@ class _QuizOptionsDropdownState extends ConsumerState<QuizOptions> {
 
     if (!_setSectionsOnInit) {
       _setSectionsOnInit = true;
-
-      WidgetsBinding.instance.addPostFrameCallback((t) {
-        if (quizState.units.isNotEmpty) {
-          quizNotifier
-            ..setSection(quizState.section)
-            ..setUnits(quizState.units.toList())
-            ..setUnit(quizState.unit);
-        } else {
-          quizNotifier.setCourse(SelectedCourse.ib);
-        }
-      });
     }
 
     return Column(
@@ -87,22 +75,7 @@ class _QuizOptionsDropdownState extends ConsumerState<QuizOptions> {
           ),
           title: Wrap(
             spacing: size.width * kWrapSpacing,
-            children: [
-              CustomChipButton(
-                text: SelectedCourse.ib.toText(),
-                onPressed: () {
-                  quizNotifier.setCourse(SelectedCourse.ib);
-                },
-                isSelected: quizState.course == SelectedCourse.ib,
-              ),
-              CustomChipButton(
-                text: SelectedCourse.igcse.toText(),
-                onPressed: () {
-                  quizNotifier.setCourse(SelectedCourse.igcse);
-                },
-                isSelected: quizState.course == SelectedCourse.igcse,
-              ),
-            ],
+            children: const [],
           ),
         ),
         const Gap(),

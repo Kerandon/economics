@@ -12,10 +12,11 @@ class CustomIconButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-            color: onPressed != null
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.scrim,
-            width: 2,),
+          color: onPressed != null
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.scrim,
+          width: 2,
+        ),
         shape: BoxShape.circle, // Circular shape
       ),
       child: IconButton(
