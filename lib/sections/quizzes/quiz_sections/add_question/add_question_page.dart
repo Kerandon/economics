@@ -4,6 +4,7 @@ import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/add_question/methods/send_question_to_firebase.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +14,8 @@ import '../../../../app/custom_widgets/custom_icon_button.dart';
 import '../../../../app/custom_widgets/gap.dart';
 import '../../../../app/utils/mixins/course_mixin.dart';
 import '../../../../app/utils/models/course.dart';
+import '../../../../app/utils/models/unit.dart';
+import '../../../settings/edit_courses/helper_methods/get_course_data_from_firebase.dart';
 import 'add_question_dropdowns.dart';
 import 'custom_text_field.dart';
 import '../../quiz_enums/question_type.dart';
@@ -48,10 +51,10 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
           id: i == 0 ? 'question' : 'answer${i - 1}',
           controller: c,
           label: i == 0
-              ? 'Type your question'
+              ? 'Type the quiz question'
               : i == 1
-                  ? '*Type the CORRECT answer...'
-                  : '*Type incorrect answer ${i - 1}...',
+                  ? '*Type the CORRECT answer'
+                  : '*Type incorrect answer #${(i - 1)}',
         ),
       );
       _questionAndAnswerControllers.add(c);
@@ -102,7 +105,7 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                 );
               }
 
-              if (addQuestionState.course.name == "" && courses.isNotEmpty) {
+              if (addQuestionState.course.name == "") {
                 WidgetsBinding.instance.addPostFrameCallback((t) {
                   addQuestionNotifier.setCourse(courses.first);
                 });
@@ -147,15 +150,15 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                       ),
                       Wrap(
                         spacing: 20,
-                        children: courses
-                            .map((c) => CustomChipButton(
-                                  isSelected: c == addQuestionState.course,
-                                  onPressed: () {
-                                    addQuestionNotifier.setCourse(c);
-                                  },
-                                  text: c.name,
-                                ))
-                            .toList(),
+                        children: courses.map((c) {
+                          return CustomChipButton(
+                            isSelected: c == addQuestionState.course,
+                            onPressed: () {
+                              addQuestionNotifier.setCourse(c);
+                            },
+                            text: c.name,
+                          );
+                        }).toList(),
                       ),
                       const Gap(),
                       ..._questionAndAnswerRows,
@@ -173,12 +176,13 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                                     maxNumberOfAnswers + 1
                                 ? () {
                                     final c = TextEditingController();
+
                                     _questionAndAnswerRows.add(
                                       CustomTextField(
+                                        label:
+                                            '*Type incorrect answer #${(_questionAndAnswerRows.length) - 1}',
                                         requireValidation: true,
                                         controller: c,
-                                        label:
-                                            '*Type incorrect answer ${_questionAndAnswerRows.length - 1}...',
                                         id: 'answer${_questionAndAnswerRows.length - 1}',
                                       ),
                                     );
@@ -242,20 +246,25 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                                       isCorrect: i == 1));
                                 }
                                 final explanation = _explanationController.text;
-                                final section = addQuestionState.unit;
+                                final unit = addQuestionState.unit;
+                                final subunit = addQuestionState.subunit;
                                 final q = const QuestionModel().copyWith(
-                                    course: course,
-                                    type: type,
-                                    question: question,
-                                    answers: answers,
-                                    explanation: explanation,
-                                    section: section,
-                                    unit: addQuestionState.subunit);
+                                  course: course,
+                                  type: type,
+                                  question: question,
+                                  answers: answers,
+                                  explanation: explanation,
+                                  unit: unit,
+                                  subunit: Unit().copyWith(
+                                      name: subunit.name,
+                                      index: '${unit.index}.${subunit.index}'),
+                                );
 
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => BuilderHelper(
-                                        future: _sendToFirebase(question: q),
+                                        future:
+                                            sendQuestionToFirebase(question: q),
                                         loadingText:
                                             'Adding question...please wait a moment',
                                         onButtonPressed: {
@@ -297,27 +306,5 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
         },
       ),
     );
-  }
-}
-
-Future<void> _sendToFirebase({required QuestionModel question}) async {
-  final instance = FirebaseFirestore.instance;
-
-  try {
-    await instance.collection('quiz').doc().set(question.toMap());
-  } catch (e) {
-    debugPrint('Could not send data to firebase $e');
-
-    ///ToDo add error catching here
-  }
-}
-
-Future<QuerySnapshot<Map<String, dynamic>>?> getCourseData() async {
-  try {
-    final ref = FirebaseFirestore.instance;
-    return await ref.collection(kCourses).get();
-  } catch (e) {
-    debugPrint('Could not get data $e');
-    return null;
   }
 }

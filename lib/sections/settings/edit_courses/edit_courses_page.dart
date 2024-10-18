@@ -304,11 +304,17 @@ class _UpdateCoursePageState extends ConsumerState<EditCoursesPage> {
     }
     bool unitsAreValidated = isCourseValid &&
         units.every(
-          (u) =>
-              u.id?.trim().isNotEmpty == true &&
-              u.name.trim().isNotEmpty &&
-              u.subunits.every((e) =>
-                  e.id?.trim().isNotEmpty == true && e.name.trim().isNotEmpty),
+          (u) {
+            if (u.index != null && u.name != null) {
+              return u.index!.trim().isNotEmpty == true &&
+                  u.name!.trim().isNotEmpty &&
+                  u.subunits.every((e) =>
+                      e.index!.trim().isNotEmpty == true &&
+                      e.name!.trim().isNotEmpty);
+            } else {
+              return true;
+            }
+          },
         );
     return unitsAreValidated;
   }

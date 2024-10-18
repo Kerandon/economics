@@ -3,6 +3,7 @@ import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/add_question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/quiz_options/quiz_options.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';
@@ -113,6 +114,8 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                               ExpandableNotifier(
                                 controller: _expandableController,
                                 child: ExpandablePanel(
+                                  theme: const ExpandableThemeData(
+                                      tapBodyToCollapse: false),
                                   header: ListTile(
                                     title: Row(
                                       children: [
@@ -134,26 +137,36 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                                 ),
                               ),
                               SizedBox(
-                                height: size.height * 0.20,
+                                height: size.height * 0.15,
                               ),
                               CustomBigButton(
                                   text: 'Start Quiz',
                                   onPressed: () {
-                                    List<QuestionModel> questions = [];
+                                    List<QuestionModel> allQuestions = [],
+                                        selectedQuestions = [];
                                     for (var q in quizState.allQuestions) {
-                                      if (q.course == quizState.course) {
-                                        if (q.section?.name == kAllSections) {
-                                          questions.add(q);
-                                        } else {}
+                                      allQuestions.add(q);
+                                    }
+                                    for (var q in allQuestions) {
+                                      if (q.unit == quizState.unit &&
+                                          q.subunit == quizState.subunit) {
+                                        selectedQuestions.add(q);
                                       }
                                     }
-                                    // WidgetsBinding.instance
-                                    //     .addPostFrameCallback((t) {
-                                    //   Navigator.of(context).push(
-                                    //       MaterialPageRoute(
-                                    //           builder: (context) =>
-                                    //               const QuestionPage()));
-                                    // });
+
+                                    quizNotifier
+                                      ..setAllQuestions(allQuestions)
+                                      ..setSelectedQuestions(selectedQuestions);
+
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((t) {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const QuestionPage(),
+                                        ),
+                                      );
+                                    });
                                   }),
                               SizedBox(
                                 height: size.height * 0.20,

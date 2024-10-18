@@ -1,3 +1,4 @@
+import 'package:economics_app/app/utils/models/unit.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import '../quiz_enums/answer_stage.dart';
 import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
+  final String? id;
   final QuestionType? type;
   final CourseMixin? course;
   final String? question;
@@ -15,11 +17,12 @@ class QuestionModel extends Equatable {
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
-  final UnitMixin? section;
   final UnitMixin? unit;
+  final UnitMixin? subunit;
   final bool? hl;
 
   const QuestionModel({
+    this.id,
     this.type,
     this.course,
     this.question,
@@ -27,37 +30,39 @@ class QuestionModel extends Equatable {
     this.item,
     this.answerStage = AnswerStage.notSelected,
     this.explanation,
-    this.section,
     this.unit,
+    this.subunit,
     this.hl,
   });
 
   // More flexible copyWith
   QuestionModel copyWith({
+    String? id,
     QuestionType? type,
     Course? course,
     String? question,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
-    UnitMixin? section,
     UnitMixin? unit,
+    UnitMixin? subunit,
     String? explanation,
     bool? hl,
   }) {
     return QuestionModel(
+      id: id ?? this.id,
       type: type ?? this.type,
       course: course ?? this.course,
       question: question ?? this.question,
       answers: answers ?? this.answers,
       answerStage: answerStage ?? this.answerStage,
       explanation: explanation ?? this.explanation,
-      section: section ?? this.section,
       unit: unit ?? this.unit,
+      subunit: subunit ?? this.subunit,
       hl: hl ?? this.hl,
     );
   }
 
-  factory QuestionModel.fromMap(Map<String, dynamic> map) {
+  factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     List<AnswerModel> answers = (map['answers'] as List)
         .map((e) => AnswerModel.fromMap(e))
         .toList()
@@ -65,6 +70,8 @@ class QuestionModel extends Equatable {
 
     return QuestionModel(
       type: QuestionTypeExtension.fromText(map['type']),
+      unit: Unit.fromFirebase(map),
+      subunit: Unit.fromFirebase(map, subunit: true),
       question: map['question'],
       answers: answers,
       answerStage: AnswerStage.notSelected,
@@ -82,8 +89,8 @@ class QuestionModel extends Equatable {
       'answers': answers?.map((e) => e.toMap()).toList(),
       'answerStage': answerStage.name, // Enum
       'explanation': explanation,
-      'section': section?.name,
-      'unit': unit?.name,
+      'unit': {unit?.index ?? "": unit?.name ?? ""},
+      'subunit': {subunit?.index ?? "": subunit?.name ?? ""},
       'hl': hl,
     };
   }

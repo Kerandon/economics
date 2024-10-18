@@ -8,7 +8,7 @@ Future<List<QuestionModel>> getQuestionsFromFirebase() async {
   try {
     if (collectionSnapshot.docs.isNotEmpty) {
       for (var d in collectionSnapshot.docs) {
-        questions.add(QuestionModel.fromMap(d.data()));
+        questions.add(QuestionModel.fromMap(d.id, d.data()));
       }
     }
   } catch (e) {

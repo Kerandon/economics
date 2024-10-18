@@ -4,39 +4,18 @@ import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dar
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AddQuestionDropdowns extends ConsumerStatefulWidget {
+class AddQuestionDropdowns extends ConsumerWidget {
   const AddQuestionDropdowns({
     super.key,
   });
 
   @override
-  ConsumerState<AddQuestionDropdowns> createState() => _CustomAddUnitsState();
-}
-
-class _CustomAddUnitsState extends ConsumerState<AddQuestionDropdowns> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final maxWidth = size.width - (size.width * (kPageIndentHorizontal * 2));
 
     final addQuestionState = ref.watch(addQuestionProvider);
     final addQuestionNotifier = ref.read(addQuestionProvider.notifier);
-
-    if (addQuestionState.unit.name == "") {
-      if (addQuestionState.course.units.isNotEmpty) {
-        WidgetsBinding.instance.addPostFrameCallback((t) {
-          addQuestionNotifier.setUnit(addQuestionState.course.units.first);
-        });
-      }
-    }
-
-    if (addQuestionState.subunit.name == "") {
-      if (addQuestionState.unit.subunits.isNotEmpty) {
-        WidgetsBinding.instance.addPostFrameCallback((t) {
-          addQuestionNotifier.setSubunit(addQuestionState.unit.subunits.first);
-        });
-      }
-    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -45,39 +24,51 @@ class _CustomAddUnitsState extends ConsumerState<AddQuestionDropdowns> {
         DropdownMenu(
           width: maxWidth,
           initialSelection: addQuestionState.unit,
-          dropdownMenuEntries: addQuestionState.course.units
-              .map(
-                (e) => DropdownMenuEntry(
-                  value: e,
-                  label: e.name,
-                  labelWidget: SizedBox(
-                    width: size.width,
-                    child: Text(e.name),
+          dropdownMenuEntries: addQuestionState.course.units.map(
+            (u) {
+              return DropdownMenuEntry(
+                style: ButtonStyle(
+                  textStyle: WidgetStateProperty.all(
+                      const TextStyle(color: Colors.white, fontSize: 20)),
+                ),
+                value: u,
+                label: '${u.index}  ${u.name}',
+                labelWidget: SizedBox(
+                  width: size.width,
+                  child: Text(
+                    '${u.index}  ${u.name}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface, // Apply onSurface color
+                        ),
                   ),
                 ),
-              )
-              .toList(),
-          onSelected: (u) {
+              );
+            },
+          ).toList(),
+          onSelected: (s) {
             addQuestionNotifier
-              ..setUnit(u!)
-              ..setSubunit(u.subunits.first);
+              ..setUnit(s!)
+              ..setSubunit(s.subunits.first);
           },
         ),
         const Gap(),
         DropdownMenu(
           width: maxWidth,
           initialSelection: addQuestionState.subunit,
-          dropdownMenuEntries: addQuestionState.unit.subunits
-              .map(
-                (e) => DropdownMenuEntry(
-                  value: e,
-                  label: e.name,
-                  labelWidget: Text(e.name),
-                ),
-              )
-              .toList(),
-          onSelected: (u) {
-            addQuestionNotifier.setSubunit(u!);
+          dropdownMenuEntries: addQuestionState.unit.subunits.map(
+            (s) {
+              return DropdownMenuEntry(
+                value: s,
+                label: '${addQuestionState.unit.index}.${s.index}  ${s.name}',
+                labelWidget: Text(
+                    '${addQuestionState.unit.index}.${s.index}  ${s.name}'),
+              );
+            },
+          ).toList(),
+          onSelected: (s) {
+            addQuestionNotifier.setSubunit(s!);
           },
         ),
       ],

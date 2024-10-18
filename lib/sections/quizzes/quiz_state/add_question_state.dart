@@ -63,7 +63,11 @@ class AddQuestionNotifier extends StateNotifier<AddQuestionState> {
   }
 
   void setCourse(CourseMixin course) {
-    state = state.copyWith(course: course as Course);
+    state = state.copyWith(
+      course: course as Course,
+      unit: course.units.first,
+      subunit: course.units.first.subunits.first,
+    );
   }
 
   void setUnit(UnitMixin unit) {

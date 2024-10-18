@@ -1,9 +1,10 @@
 import 'package:economics_app/app/utils/models/unit.dart';
+import 'package:equatable/equatable.dart';
 
 import '../mixins/course_mixin.dart';
 import '../mixins/unit_mixin.dart';
 
-class Course with CourseMixin {
+class Course with CourseMixin, EquatableMixin {
   @override
   final String name;
 
@@ -23,4 +24,7 @@ class Course with CourseMixin {
 
     return Course(name: courseName, units: units);
   }
+
+  @override
+  List<Object?> get props => [name];
 }

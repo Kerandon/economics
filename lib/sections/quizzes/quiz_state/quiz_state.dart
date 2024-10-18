@@ -1,28 +1,22 @@
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/enums/ib_section.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/models/course.dart';
+import '../../../app/utils/models/unit.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_models/answer_model.dart';
 import '../quiz_models/question_model.dart';
-import '../quiz_sections/methods/add_dropdown_menu_item.dart';
-import '../quiz_sections/methods/create_sub_units_dropdown.dart';
 
 class QuizState {
-  final CourseMixin course;
   final QuestionType questionType;
-  final UnitMixin section;
-  final List<DropdownMenuItem> sections;
+  final CourseMixin course;
   final UnitMixin unit;
-  final List<DropdownMenuItem> units;
+  final UnitMixin subunit;
   final List<QuestionModel> allQuestions;
   final List<QuestionModel> selectedQuestions;
   final bool questionsAllSelected;
   final int numberOfQuestionsCorrect;
-  final List<IBSection> selectedSections;
   final int numberOfQuestionsSelected;
   final int currentQuestionIndex;
   final bool showAnswersAsIGo;
@@ -30,32 +24,26 @@ class QuizState {
   QuizState({
     required this.course,
     required this.questionType,
-    required this.section,
-    required this.sections,
     required this.unit,
-    required this.units,
+    required this.subunit,
     required this.allQuestions,
     required this.selectedQuestions,
     required this.questionsAllSelected,
     required this.numberOfQuestionsCorrect,
-    required this.selectedSections,
     required this.numberOfQuestionsSelected,
     required this.currentQuestionIndex,
     required this.showAnswersAsIGo,
   });
 
   QuizState copyWith({
-    CourseMixin? course,
     QuestionType? questionType,
-    UnitMixin? section,
-    List<DropdownMenuItem>? sections,
+    CourseMixin? course,
     UnitMixin? unit,
-    List<DropdownMenuItem>? units,
+    UnitMixin? subunit,
     List<QuestionModel>? allQuestions,
     List<QuestionModel>? selectedQuestions,
     bool? questionsAllSelected,
     int? numberOfQuestionsCorrect,
-    List<IBSection>? selectedSections,
     int? numberOfQuestionsSelected,
     int? currentQuestionIndex,
     bool? showAnswersAsIGo,
@@ -63,16 +51,13 @@ class QuizState {
     return QuizState(
         course: course ?? this.course,
         questionType: questionType ?? this.questionType,
-        section: section ?? this.section,
-        sections: sections ?? this.sections,
         unit: unit ?? this.unit,
-        units: units ?? this.units,
+        subunit: subunit ?? this.subunit,
         allQuestions: allQuestions ?? this.allQuestions,
         selectedQuestions: selectedQuestions ?? this.selectedQuestions,
         questionsAllSelected: questionsAllSelected ?? this.questionsAllSelected,
         numberOfQuestionsCorrect:
             numberOfQuestionsCorrect ?? this.numberOfQuestionsCorrect,
-        selectedSections: selectedSections ?? this.selectedSections,
         numberOfQuestionsSelected:
             numberOfQuestionsSelected ?? this.numberOfQuestionsSelected,
         currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,
@@ -83,45 +68,24 @@ class QuizState {
 class QuizNotifier extends StateNotifier<QuizState> {
   QuizNotifier(super._state);
 
-  void setCourse(CourseMixin course) {
-    state = state.copyWith(course: course);
-  }
-
   void setQuestionType(QuestionType type) {
     state = state.copyWith(questionType: type);
   }
 
-  void changeToNewSections({required List<UnitMixin> sectionValues}) {
-    List<UnitMixin> selectedSection = sectionValues;
-    List<DropdownMenuItem> sections = [];
-
-    for (var s in selectedSection) {
-      sections.add(
-        addDropdownMenuItem(s),
-      );
-    }
-
-    List<DropdownMenuItem> units =
-        createSubUnitsDropdown(selectedSection.first);
-
+  void setCourse(CourseMixin course) {
     state = state.copyWith(
-      sections: sections,
-      section: selectedSection.first,
-      units: units.isEmpty ? [] : units, // Handle empty units
-      unit: units.isEmpty ? null : selectedSection.first.subunits.first,
+      course: course as Course,
+      unit: course.units.first,
+      subunit: course.units.first.subunits.first,
     );
-  }
-
-  void setSection(UnitMixin section) {
-    state = state.copyWith(section: section);
   }
 
   void setUnit(UnitMixin unit) {
     state = state.copyWith(unit: unit);
   }
 
-  void setUnits(List<DropdownMenuItem> units) {
-    state = state.copyWith(units: units);
+  void setSubunit(UnitMixin unit) {
+    state = state.copyWith(subunit: unit);
   }
 
   void setAllQuestions(List<QuestionModel> questions) {
@@ -264,15 +228,15 @@ class QuizNotifier extends StateNotifier<QuizState> {
         numberOfQuestionsCorrect: numberOfCorrect);
   }
 
-  void setSectionAsSelected(IBSection section) {
-    List<IBSection> sections = state.selectedSections;
-    if (sections.contains(section)) {
-      sections.remove(section);
-    } else {
-      sections.add(section);
-    }
-    state = state.copyWith(selectedSections: sections);
-  }
+  // void setSectionAsSelected(IBSection section) {
+  //   List<IBSection> sections = state.selectedSections;
+  //   if (sections.contains(section)) {
+  //     sections.remove(section);
+  //   } else {
+  //     sections.add(section);
+  //   }
+  //   state = state.copyWith(selectedSections: sections);
+  // }
 
   void setNumberOfQuestionsSelected(int number) {
     state = state.copyWith(numberOfQuestionsSelected: number);
@@ -297,15 +261,12 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
     QuizState(
       course: Course(name: '', units: []),
       questionType: QuestionType.multi,
-      sections: [],
-      section: IBSection.intro,
-      units: [],
-      unit: IBSection.intro.subunits.first,
+      unit: Unit(name: "", subunits: []),
+      subunit: Unit(name: ""),
       allQuestions: [],
       selectedQuestions: [],
       questionsAllSelected: false,
       numberOfQuestionsCorrect: 0,
-      selectedSections: [IBSection.intro],
       numberOfQuestionsSelected: 5,
       currentQuestionIndex: 0,
       showAnswersAsIGo: true,

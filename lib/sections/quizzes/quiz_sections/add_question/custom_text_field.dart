@@ -55,67 +55,68 @@ class _CustomTextFieldState extends ConsumerState<CustomTextField> {
               ),
             ),
           Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    // Shadow color with transparency
-                    offset: const Offset(0, 2),
-                    // Offset of the shadow (x, y)
-                    blurRadius: 6,
-                    // How much the shadow should blur
-                    spreadRadius: 1, // Spread radius of the shadow
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  // Shadow color with transparency
+                  offset: const Offset(0, 2),
+                  // Offset of the shadow (x, y)
+                  blurRadius: 6,
+                  // How much the shadow should blur
+                  spreadRadius: 1, // Spread radius of the shadow
+                ),
+              ],
+              color: isDarkTheme
+                  ? Theme.of(context).colorScheme.surfaceDim
+                  : Colors.white,
+              borderRadius: BorderRadius.circular(kRadius),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            child: IntrinsicHeight(
+              child: Stack(
+                children: [
+                  TextFormField(
+                    controller: widget.controller,
+                    maxLines: 8,
+                    minLines: 1,
+                    maxLength: 500,
+                    onChanged: widget.requireValidation
+                        ? (value) {
+                            isValidated = value.trim() != "";
+                            addQuestionNotifier.validateInput(
+                                field: MapEntry(widget.id!, isValidated));
+                            setState(() {});
+                          }
+                        : null,
+                    decoration: InputDecoration(
+                      hintText: widget.hintText,
+                      contentPadding: const EdgeInsets.fromLTRB(10, 3, 50, 3),
+                      border: InputBorder.none,
+                      counterText: '',
+                    ),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                  Align(
+                    alignment: const Alignment(1.0, 0.0),
+                    // Centered vertically
+                    child: IconButton(
+                      onPressed: () {
+                        widget.controller.clear();
+                      },
+                      icon: Icon(
+                        Icons.clear_outlined,
+                        color: Theme.of(context).colorScheme.surfaceDim,
+                      ),
+                    ),
                   ),
                 ],
-                color: isDarkTheme
-                    ? Theme.of(context).colorScheme.surfaceDim
-                    : Colors.white,
-                borderRadius: BorderRadius.circular(kRadius),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              child: IntrinsicHeight(
-                child: Stack(
-                  children: [
-                    TextFormField(
-                      controller: widget.controller,
-                      maxLines: 8,
-                      minLines: 1,
-                      maxLength: 500,
-                      onChanged: widget.requireValidation
-                          ? (value) {
-                              isValidated = value.trim() != "";
-                              addQuestionNotifier.validateInput(
-                                  field: MapEntry(widget.id!, isValidated));
-                              setState(() {});
-                            }
-                          : null,
-                      decoration: InputDecoration(
-                        hintText: widget.hintText,
-                        contentPadding: const EdgeInsets.fromLTRB(10, 3, 50, 3),
-                        border: InputBorder.none,
-                        counterText: '',
-                      ),
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
-                    Align(
-                      alignment: const Alignment(1.0, 0.0),
-                      // Centered vertically
-                      child: IconButton(
-                        onPressed: () {
-                          widget.controller.clear();
-                        },
-                        icon: Icon(
-                          Icons.clear_outlined,
-                          color: Theme.of(context).colorScheme.surfaceDim,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )),
+            ),
+          ),
         ],
       ),
     );

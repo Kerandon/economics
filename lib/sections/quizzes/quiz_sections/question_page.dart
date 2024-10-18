@@ -1,9 +1,11 @@
 import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
+import 'package:economics_app/app/custom_widgets/gap.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/custom_widgets/custom_slider.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/multi_choice/question_tile.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/unit_banner_title.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -114,53 +116,12 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                     child: Column(
                   children: [
-                    Container(
-                      color: Colors.red,
-                      width: size.width,
-                      height: size.height * 0.05,
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Quizzing ',
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 18),
-                          // Default text style
-                          children: <TextSpan>[
-                            TextSpan(
-                              text:
-                                  ' ${quizState.section.name}, ${quizState.unit}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Expanded(child: SizedBox.shrink()),
-                        const Expanded(
-                          flex: 6,
-                          child: ListTile(
-                            title: CustomSlider(),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '${quizState.currentQuestionIndex + 1}/${quizState.selectedSections.length}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(),
-                          ),
-                        )
-                      ],
-                    ),
+                    UnitBannerTitle(),
+                    CustomSlider(),
+                    Gap(),
                   ],
                 ))
               ];

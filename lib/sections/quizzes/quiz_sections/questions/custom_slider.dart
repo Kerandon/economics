@@ -60,19 +60,29 @@ class _CustomSliderState extends ConsumerState<CustomSlider>
     beginValue = endValue;
 
     final size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: 8,
-      width: size.width * 0.70,
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) => ClipRRect(
-          borderRadius: BorderRadius.circular(kRadius),
-          child: LinearProgressIndicator(
-            minHeight: size.height * 0.001,
-            value: animation.value,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SizedBox(
+          height: 8,
+          width: size.width * 0.80,
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) => ClipRRect(
+              borderRadius: BorderRadius.circular(kRadius),
+              child: LinearProgressIndicator(
+                minHeight: size.height * 0.003,
+                value: animation.value,
+              ),
+            ),
           ),
         ),
-      ),
+        Text(
+            '${quizState.currentQuestionIndex} / ${quizState.selectedQuestions.length}',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                )),
+      ],
     );
   }
 }

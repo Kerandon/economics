@@ -71,12 +71,13 @@ class CustomExpandablePanelNew extends StatelessWidget {
                 dropdownMenuEntries: isDisabled || list.isEmpty
                     ? []
                     : // Handle empty list
-                    list.map<DropdownMenuEntry<UnitMixin>>((UnitMixin value) {
+                    list.map<DropdownMenuEntry<UnitMixin>>((UnitMixin unit) {
                         return DropdownMenuEntry<UnitMixin>(
-                          value: value,
-                          label: value.id != null && value.id!.trim().isNotEmpty
-                              ? '${value.id}   ${value.name}'
-                              : value.name,
+                          value: unit,
+                          label: (unit.index != null &&
+                                  unit.index!.trim().isNotEmpty)
+                              ? '${unit.index!}   ${unit.name ?? ''}'
+                              : (unit.name ?? ''),
                         );
                       }).toList(),
               ),
@@ -140,7 +141,7 @@ class CustomExpandablePanelNew extends StatelessWidget {
                       onPressed: () {
                         onAdd?.call(
                           Unit(
-                              id: idTextController.text,
+                              index: idTextController.text,
                               name: nameTextController.text),
                         );
 

@@ -1,9 +1,7 @@
 mixin UnitMixin {
-  String? get id;
+  String? get index;
 
-  String get name;
+  String? get name;
 
   List<UnitMixin> get subunits;
-
-  int? get numberOfQuestions;
 }
