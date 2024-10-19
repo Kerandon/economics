@@ -1,10 +1,9 @@
-import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
+
 import 'package:economics_app/app/custom_widgets/gap.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
-
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/multi_choice/question_tile.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_navigation_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/unit_banner_title.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
@@ -12,8 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/animation/confetti_animation.dart';
 import '../../../../app/configs/constants.dart';
-import '../../../../app/custom_widgets/custom_change_button.dart';
+import '../../../../app/custom_widgets/custom_chip_button.dart';
 import '../completion/completion_page.dart';
+import 'multi_choice/question_tile.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -182,7 +182,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                           question.answerStage !=
                                               AnswerStage.incorrect)
                                         showCheckAnswersButton
-                                            ? CustomBigButton(
+                                            ? CustomChipButton(
                                                 text: checkButtonText,
                                                 onPressed:
                                                     question.answerStage ==
@@ -203,7 +203,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                             : const SizedBox.shrink(),
                                     ],
                                     allQuestionsAnswered
-                                        ? CustomBigButton(
+                                        ? CustomChipButton(
                                             text: 'Quiz results',
                                             onPressed: () {
                                               showDialog(
@@ -228,39 +228,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               ),
             ),
           ),
-          floatingActionButton: SizedBox(
-            width: size.width * 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomPageChangeButton(
-                  onPressed: () {
-                    _pageController.animateToPage(
-                        quizState.currentQuestionIndex - 1,
-                        duration:
-                            const Duration(milliseconds: kPageChangeAnimation),
-                        curve: Curves.easeInOutCirc);
-                  },
-                  iconData: Icons.arrow_back_outlined,
-                  disable: disableButtonLeft,
-                ),
-                SizedBox(
-                  width: size.width * 0.65,
-                ),
-                CustomPageChangeButton(
-                  onPressed: () {
-                    _pageController.animateToPage(
-                      quizState.currentQuestionIndex + 1,
-                      duration:
-                          const Duration(milliseconds: kPageChangeAnimation),
-                      curve: Curves.easeInOutCirc,
-                    );
-                  },
-                  iconData: Icons.arrow_forward_outlined,
-                  disable: disableButtonRight,
-                ),
-              ],
-            ),
+          floatingActionButton: QuestionNavigationButtons(
+            pageController: _pageController,
+            disableButtonLeft: disableButtonLeft,
+            disableButtonRight: disableButtonRight,
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,

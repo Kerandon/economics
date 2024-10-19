@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kAppName = 'Econ Pro';
+const kAppName = 'Quiz Central';
 const kLevel = 'level';
 
 const kImage = 'image';

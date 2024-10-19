@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/methods/send_question_to_firebase.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
@@ -229,7 +228,7 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
                       SizedBox(
                         height: size.height * 0.10,
                       ),
-                      CustomBigButton(
+                      CustomChipButton(
                         text: 'Add Question',
                         onPressed: addQuestionState.allFieldsAreValidated
                             ? () async {

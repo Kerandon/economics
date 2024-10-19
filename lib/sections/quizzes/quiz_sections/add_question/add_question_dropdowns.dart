@@ -1,10 +1,11 @@
-import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/gap.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../app/utils/models/unit.dart';
+import '../custom_widgets/dropdown_content.dart';
 
 class AddQuestionDropdowns extends ConsumerWidget {
   const AddQuestionDropdowns({
@@ -14,42 +15,32 @@ class AddQuestionDropdowns extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final maxWidth = size.width - (size.width * (kPageIndentHorizontal * 2));
+    final maxWidth = size.width * 0.90;
 
     final addQuestionState = ref.watch(addQuestionProvider);
     final addQuestionNotifier = ref.read(addQuestionProvider.notifier);
-
+    final quizState = ref.watch(quizProvider);
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        DropdownMenu(
-          width: maxWidth,
-          initialSelection: addQuestionState.unit,
-          dropdownMenuEntries: addQuestionState.course.units.map(
-            (u) {
-              return DropdownMenuEntry(
-                style: ButtonStyle(
-                  textStyle: WidgetStateProperty.all(
-                      const TextStyle(color: Colors.white, fontSize: 20)),
-                ),
-                value: u,
-                label: '${u.index}  ${u.name}',
-                labelWidget: SizedBox(
-                  width: size.width,
-                  child: Text(
-                    '${u.index}  ${u.name}',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface, // Apply onSurface color
-                        ),
-                  ),
-                ),
+        DropdownButton(
+          value: addQuestionState.unit,
+          menuWidth: maxWidth,
+          items: addQuestionState.course.units.map(
+            (e) {
+              int i = 0;
+              for (var q in quizState.allQuestions) {
+                if (e == q.unit) {
+                  i++;
+                }
+              }
+
+              return DropdownMenuItem(
+                value: e,
+                child: DropdownContent('${e.index}  ${e.name} ($i)'),
               );
             },
           ).toList(),
-          onSelected: (u) {
+          onChanged: (u) {
             if (u != null) {
               addQuestionNotifier
                 ..setUnit(u)
@@ -60,22 +51,28 @@ class AddQuestionDropdowns extends ConsumerWidget {
           },
         ),
         const Gap(),
-        if (addQuestionState.unit.subunits.isNotEmpty) ...[
-          DropdownMenu(
-            width: maxWidth,
-            initialSelection: addQuestionState.subunit,
-            dropdownMenuEntries: addQuestionState.unit.subunits.map(
+        if (addQuestionState.subunit.name != "") ...[
+          DropdownButton(
+            menuWidth: maxWidth,
+            value: addQuestionState.subunit,
+            items: addQuestionState.unit.subunits.map(
               (s) {
-                return DropdownMenuEntry(
+                int i = 0;
+                for (var q in quizState.allQuestions) {
+                  if (s == q.subunit) {
+                    i++;
+                  }
+                }
+
+                return DropdownMenuItem(
                   value: s,
-                  label: '${addQuestionState.unit.index}.${s.index}  ${s.name}',
-                  labelWidget: Text(
-                      '${addQuestionState.unit.index}.${s.index}  ${s.name}'),
+                  child: DropdownContent(
+                      '${addQuestionState.unit.index}.${s.index}  ${s.name} ($i)'),
                 );
               },
             ).toList(),
-            onSelected: (s) {
-              addQuestionNotifier.setSubunit(s!);
+            onChanged: (s) {
+              addQuestionNotifier.setSubunit(s! as Unit);
             },
           ),
         ],

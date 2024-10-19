@@ -4,12 +4,12 @@ import 'package:economics_app/app/animation/shake_animation.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
-
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../app/configs/constants.dart';
-import '../questions/quiz_models/question_model.dart';
+
+import '../../../../../app/configs/constants.dart';
+import '../quiz_models/question_model.dart';
 
 class AnswerTile extends ConsumerStatefulWidget {
   const AnswerTile({
@@ -98,22 +98,17 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                           dense: true,
                           leading: Text(
                             ((widget.answerIndex + 1).toAlphabet()),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(
-                                  color: indexColor,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                      color: indexColor,
+                                    ),
                           ),
                           title: Text(
                             widget.answer.answer,
                             textAlign: TextAlign.start,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall
-                                ?.copyWith(
-                                    color:
-                                        answerTextColor), // Align the text to the start (left) side
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color:
+                                    answerTextColor), // Align the text to the start (left) side
                           ),
                           trailing: PopOutAnimation(
                             duration: 300,

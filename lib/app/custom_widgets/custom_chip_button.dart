@@ -73,14 +73,14 @@ class CustomChipButton extends StatelessWidget {
                     onPressed?.call();
                   },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 6.0),
               child: Row(
                 mainAxisSize:
                     MainAxisSize.min, // Shrinks the row to fit its children
                 children: [
                   if (icon != null) ...[
                     Padding(
-                      padding: const EdgeInsets.all(6.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Icon(
                         icon,
                         color: iconAndTextColor,
@@ -89,13 +89,12 @@ class CustomChipButton extends StatelessWidget {
                   ],
                   if (text != null) ...[
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(6.0),
                       child: Text(
                         text!,
-                        style: TextStyle(
-                          fontSize: 16,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: iconAndTextColor,
-                        ),
+                        )
                       ),
                     ),
                   ],

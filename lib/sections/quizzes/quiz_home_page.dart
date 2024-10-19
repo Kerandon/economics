@@ -1,6 +1,4 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/add_question/add_question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -55,39 +53,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
             floatHeaderSlivers: true,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                CustomPageHeading(
-                  icon: const Icon(
-                    Icons.question_answer_outlined,
-                    color: Colors.white,
-                  ),
-                  title: 'Quiz',
-                  trailing: Padding(
-                    padding: EdgeInsets.all(size.height * 0.005),
-                    child: SizedBox(
-                      height: size.height * 0.06,
-                      width: size.height * 0.06,
-                      child: FittedBox(
-                        fit: BoxFit.contain,
-                        // Ensures the icon scales down to fit inside
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const AddQuestionPage(),
-                              ),
-                            );
-                          },
-                          icon: Icon(Icons.add_outlined,
-                              color: Colors.white,
-                              size:
-                                  size.width * 0.20), // Icon size can be large
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ];
+              return <Widget>[];
             },
             body: FutureBuilder<List<QuestionModel>>(
                 future: _questionFuture,
@@ -118,65 +84,67 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                           padding: EdgeInsets.symmetric(
                             horizontal: size.width * kPageIndentHorizontal,
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Gap(),
-                              ExpandableNotifier(
-                                controller: _expandableController,
-                                child: ExpandablePanel(
-                                  theme: const ExpandableThemeData(
-                                      tapBodyToCollapse: false),
-                                  header: ListTile(
-                                    title: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.settings_outlined,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                        ),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        const Text('Quiz options'),
-                                      ],
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * kPageIndentHorizontal,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ExpandableNotifier(
+                                  controller: _expandableController,
+                                  child: ExpandablePanel(
+                                    theme: const ExpandableThemeData(
+                                        tapBodyToCollapse: false),
+                                    header: ListTile(
+                                      title: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.settings_outlined,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          const Text('Quiz options'),
+                                        ],
+                                      ),
                                     ),
+                                    collapsed: const SizedBox.shrink(),
+                                    expanded: const QuizOptions(),
                                   ),
-                                  collapsed: const SizedBox.shrink(),
-                                  expanded: const QuizOptions(),
                                 ),
-                              ),
-                              SizedBox(
-                                height: size.height * 0.05,
-                              ),
-                              CustomChipButton(
-                                  isDisabled: selectedQuestions.isEmpty,
-                                  text: 'Start Quiz',
-                                  onPressed: () {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((t) {
-                                      quizNotifier.setSelectedQuestions(
-                                          selectedQuestions);
-                                    });
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((t) {
-                                      Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const QuestionPage(),
-                                        ),
-                                      );
-                                    });
-                                  }),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: size.height * 0.10,
-                                    bottom: size.height * 0.20),
-                                child: Image.asset('assets/images/study.jpg'),
-                              ),
-                            ],
+                                const Gap(),
+                                CustomChipButton(
+                                    isDisabled: selectedQuestions.isEmpty,
+                                    text: 'Start Quiz',
+                                    onPressed: () {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((t) {
+                                        quizNotifier.setSelectedQuestions(
+                                            selectedQuestions);
+                                      });
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((t) {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const QuestionPage(),
+                                          ),
+                                        );
+                                      });
+                                    }),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: size.height * 0.05,
+                                      bottom: size.height * 0.10),
+                                  child: Image.asset('assets/images/study.jpg'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
