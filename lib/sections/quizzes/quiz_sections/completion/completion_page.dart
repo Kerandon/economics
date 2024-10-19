@@ -4,7 +4,6 @@ import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../app/animation/confetti_animation.dart';
 import '../../../../app/custom_widgets/gap.dart';
 import '../../quiz_state/quiz_state.dart';
 import 'incorrect_answers_page.dart';
@@ -214,7 +213,6 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
             ],
           ),
         ),
-        if (percentCorrect == 100) ...[const ConfettiAnimation()],
       ],
     );
   }

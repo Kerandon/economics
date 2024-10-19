@@ -64,24 +64,34 @@ class _CustomSliderState extends ConsumerState<CustomSlider>
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         SizedBox(
-          height: 8,
-          width: size.width * 0.80,
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) => ClipRRect(
-              borderRadius: BorderRadius.circular(kRadius),
-              child: LinearProgressIndicator(
-                minHeight: size.height * 0.003,
-                value: animation.value,
+          width: size.width * kPageIndentHorizontal,
+        ),
+        Expanded(
+          flex: 8,
+          child: SizedBox(
+            height: 8,
+            width: size.width * 0.80,
+            child: AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) => ClipRRect(
+                borderRadius: BorderRadius.circular(kRadius),
+                child: LinearProgressIndicator(
+                  minHeight: size.height * 0.003,
+                  value: animation.value,
+                ),
               ),
             ),
           ),
         ),
-        Text(
-            '${quizState.currentQuestionIndex} / ${quizState.selectedQuestions.length}',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                )),
+        Expanded(
+          child: Center(
+            child: Text(
+                '${quizState.currentQuestionIndex} / ${quizState.selectedQuestions.length}',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    )),
+          ),
+        ),
       ],
     );
   }

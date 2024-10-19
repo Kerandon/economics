@@ -3,8 +3,9 @@ import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../quiz_models/question_model.dart';
+
 import '../completion/explanation_box.dart';
+import '../questions/quiz_models/question_model.dart';
 import 'answer_tile.dart';
 
 class QuestionTile extends ConsumerWidget {

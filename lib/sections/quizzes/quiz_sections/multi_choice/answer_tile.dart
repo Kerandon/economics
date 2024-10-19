@@ -3,12 +3,13 @@ import 'package:economics_app/app/animation/rotate_around_animation.dart';
 import 'package:economics_app/app/animation/shake_animation.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
-import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
+
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/configs/constants.dart';
-import '../../quiz_models/answer_model.dart';
+import '../questions/quiz_models/question_model.dart';
 
 class AnswerTile extends ConsumerStatefulWidget {
   const AnswerTile({

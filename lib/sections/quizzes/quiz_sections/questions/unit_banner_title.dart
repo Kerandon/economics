@@ -29,7 +29,6 @@ class UnitBannerTitle extends ConsumerWidget {
                 children: [
                   TextSpan(
                     text: '${quizState.unit.name}, '
-                        ' '
                         '${quizState.subunit.name}',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),

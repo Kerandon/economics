@@ -1,17 +1,17 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/app/custom_widgets/custom_big_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/add_question/add_question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/question_page.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/quiz_options/quiz_options.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../app/custom_widgets/custom_chip_button.dart';
 import '../../app/custom_widgets/gap.dart';
 import 'quiz_enums/answer_stage.dart';
-import 'quiz_models/question_model.dart';
 
 class QuizHomePage extends ConsumerStatefulWidget {
   const QuizHomePage({super.key});
@@ -36,7 +36,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    List<QuestionModel> allQuestions = [];
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
 
@@ -99,6 +99,18 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                         WidgetsBinding.instance.addPostFrameCallback((t) {
                           quizNotifier.setAllQuestions(snapshot.data!.toList());
                         });
+
+                        for (var q in quizState.allQuestions) {
+                          allQuestions.add(q);
+                        }
+                      }
+
+                      List<QuestionModel> selectedQuestions = [];
+                      for (var q in quizState.allQuestions) {
+                        if (q.unit == quizState.unit &&
+                            q.subunit == quizState.subunit) {
+                          selectedQuestions.add(q);
+                        }
                       }
 
                       return SingleChildScrollView(
@@ -137,30 +149,20 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                                 ),
                               ),
                               SizedBox(
-                                height: size.height * 0.15,
+                                height: size.height * 0.05,
                               ),
-                              CustomBigButton(
+                              CustomChipButton(
+                                  isDisabled: selectedQuestions.isEmpty,
                                   text: 'Start Quiz',
                                   onPressed: () {
-                                    List<QuestionModel> allQuestions = [],
-                                        selectedQuestions = [];
-                                    for (var q in quizState.allQuestions) {
-                                      allQuestions.add(q);
-                                    }
-                                    for (var q in allQuestions) {
-                                      if (q.unit == quizState.unit &&
-                                          q.subunit == quizState.subunit) {
-                                        selectedQuestions.add(q);
-                                      }
-                                    }
-
-                                    quizNotifier
-                                      ..setAllQuestions(allQuestions)
-                                      ..setSelectedQuestions(selectedQuestions);
-
                                     WidgetsBinding.instance
                                         .addPostFrameCallback((t) {
-                                      Navigator.of(context).push(
+                                      quizNotifier.setSelectedQuestions(
+                                          selectedQuestions);
+                                    });
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((t) {
+                                      Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               const QuestionPage(),
@@ -168,8 +170,11 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                                       );
                                     });
                                   }),
-                              SizedBox(
-                                height: size.height * 0.20,
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.10,
+                                    bottom: size.height * 0.20),
+                                child: Image.asset('assets/images/study.jpg'),
                               ),
                             ],
                           ),

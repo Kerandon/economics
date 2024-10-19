@@ -4,6 +4,8 @@ import 'package:economics_app/sections/quizzes/quiz_state/add_question_state.dar
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../app/utils/models/unit.dart';
+
 class AddQuestionDropdowns extends ConsumerWidget {
   const AddQuestionDropdowns({
     super.key,
@@ -47,30 +49,36 @@ class AddQuestionDropdowns extends ConsumerWidget {
               );
             },
           ).toList(),
-          onSelected: (s) {
-            addQuestionNotifier
-              ..setUnit(s!)
-              ..setSubunit(s.subunits.first);
+          onSelected: (u) {
+            if (u != null) {
+              addQuestionNotifier
+                ..setUnit(u)
+                ..setSubunit(u.subunits.isNotEmpty
+                    ? u.subunits.first
+                    : Unit(name: "", index: ""));
+            }
           },
         ),
         const Gap(),
-        DropdownMenu(
-          width: maxWidth,
-          initialSelection: addQuestionState.subunit,
-          dropdownMenuEntries: addQuestionState.unit.subunits.map(
-            (s) {
-              return DropdownMenuEntry(
-                value: s,
-                label: '${addQuestionState.unit.index}.${s.index}  ${s.name}',
-                labelWidget: Text(
-                    '${addQuestionState.unit.index}.${s.index}  ${s.name}'),
-              );
+        if (addQuestionState.unit.subunits.isNotEmpty) ...[
+          DropdownMenu(
+            width: maxWidth,
+            initialSelection: addQuestionState.subunit,
+            dropdownMenuEntries: addQuestionState.unit.subunits.map(
+              (s) {
+                return DropdownMenuEntry(
+                  value: s,
+                  label: '${addQuestionState.unit.index}.${s.index}  ${s.name}',
+                  labelWidget: Text(
+                      '${addQuestionState.unit.index}.${s.index}  ${s.name}'),
+                );
+              },
+            ).toList(),
+            onSelected: (s) {
+              addQuestionNotifier.setSubunit(s!);
             },
-          ).toList(),
-          onSelected: (s) {
-            addQuestionNotifier.setSubunit(s!);
-          },
-        ),
+          ),
+        ],
       ],
     );
   }

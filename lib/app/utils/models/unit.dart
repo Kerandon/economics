@@ -19,8 +19,11 @@ class Unit with UnitMixin, EquatableMixin {
     this.subunits = const [],
   });
 
-  Unit copyWith({String? index, String? name}) {
-    return Unit(index: index ?? this.index, name: name ?? this.name);
+  Unit copyWith({String? index, String? name, List<Unit>? subunits}) {
+    return Unit(
+        index: index ?? this.index,
+        name: name ?? this.name,
+        subunits: subunits ?? this.subunits);
   }
 
   Map<String, dynamic> toMap() {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:economics_app/sections/quizzes/quiz_models/question_model.dart';
+
+import '../questions/quiz_models/question_model.dart';
 
 Future<List<QuestionModel>> getQuestionsFromFirebase() async {
   final instance = FirebaseFirestore.instance;

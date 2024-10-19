@@ -5,8 +5,9 @@ import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/models/course.dart';
 import '../../../app/utils/models/unit.dart';
 import '../quiz_enums/answer_stage.dart';
-import '../quiz_models/answer_model.dart';
-import '../quiz_models/question_model.dart';
+
+import '../quiz_sections/questions/quiz_models/answer_model.dart';
+import '../quiz_sections/questions/quiz_models/question_model.dart';
 
 class QuizState {
   final QuestionType questionType;
@@ -73,10 +74,18 @@ class QuizNotifier extends StateNotifier<QuizState> {
   }
 
   void setCourse(CourseMixin course) {
+    UnitMixin? u, s;
+    if (course.units.isNotEmpty) {
+      u = course.units.first;
+    }
+    if (course.units.first.subunits.isNotEmpty) {
+      s = course.units.first.subunits.first;
+    }
+
     state = state.copyWith(
       course: course as Course,
-      unit: course.units.first,
-      subunit: course.units.first.subunits.first,
+      unit: u,
+      subunit: s,
     );
   }
 

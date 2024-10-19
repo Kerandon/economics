@@ -98,7 +98,7 @@ class _QuizOptions extends ConsumerState<QuizOptions> {
                   spacing: 20,
                   children: courses.map((c) {
                     return CustomChipButton(
-                      isSelected: c == quizState.course,
+                      isSelected: c.name == quizState.course.name,
                       onPressed: () {
                         quizNotifier.setCourse(c);
                       },
