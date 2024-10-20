@@ -1,5 +1,1 @@
-enum AudioClip {
-  correct,
-  incorrect,
-  applause,
-}
+enum AudioClip { correct, incorrect, applause, select, start }

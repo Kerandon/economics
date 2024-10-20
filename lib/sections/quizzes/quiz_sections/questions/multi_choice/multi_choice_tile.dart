@@ -1,28 +1,23 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
-
+import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../completion/explanation_box.dart';
-import '../quiz_models/question_model.dart';
 import 'answer_tile.dart';
 
-class QuestionTile extends ConsumerWidget {
-  const QuestionTile({
+class MultiChoiceTile extends ConsumerWidget {
+  const MultiChoiceTile({
     super.key,
-    this.index,
-    required this.question,
   });
-
-  final int? index;
-  final QuestionModel question;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-
-    final answers = question.answers;
+    final quizState = ref.watch(quizProvider);
+    final index = quizState.currentQuestionIndex;
+    final question = quizState.selectedQuestions[index];
+    final answers = question.answers!.toList();
     return IgnorePointer(
       ignoring: question.answerStage == AnswerStage.correct ||
           question.answerStage == AnswerStage.incorrect,
@@ -38,18 +33,6 @@ class QuestionTile extends ConsumerWidget {
                   padding: EdgeInsets.all(size.height * kPageIndentVertical),
                   child: Row(
                     children: [
-                      if (index != null) ...[
-                        SizedBox(
-                          width: size.width * 0.05,
-                          child: Text(
-                            'Q${(index! + 1).toString()}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge
-                                ?.copyWith(color: Colors.grey.shade700),
-                          ),
-                        ),
-                      ],
                       SizedBox(
                         width: size.width * 0.02,
                       ),
@@ -78,7 +61,7 @@ class QuestionTile extends ConsumerWidget {
                 Column(
                   children: [
                     ...[
-                      ...answers!.map(
+                      ...answers.map(
                         (answer) => AnswerTile(
                           answerIndex: answers.indexOf(answer),
                           answer: answer,
