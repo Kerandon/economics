@@ -86,7 +86,7 @@ class _CustomSliderState extends ConsumerState<CustomSlider>
         Expanded(
           child: Center(
             child: Text(
-                '${quizState.currentQuestionIndex} / ${quizState.selectedQuestions.length}',
+                '${quizState.currentQuestionIndex + 1} / ${quizState.selectedQuestions.length}',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     )),

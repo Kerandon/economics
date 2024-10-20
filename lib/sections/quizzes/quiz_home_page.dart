@@ -45,144 +45,135 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
           question.answerStage == AnswerStage.incorrect)) {}
     }
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-      child: Stack(
-        children: [
-          NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[];
-            },
-            body: FutureBuilder<List<QuestionModel>>(
-                future: _questionFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                      if (!_downloadedAllQuestionsOnInit) {
-                        _downloadedAllQuestionsOnInit = true;
-                        WidgetsBinding.instance.addPostFrameCallback((t) {
-                          quizNotifier.setAllQuestions(snapshot.data!.toList());
-                        });
+    return Stack(
+      children: [
+        NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[];
+          },
+          body: FutureBuilder<List<QuestionModel>>(
+              future: _questionFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                    if (!_downloadedAllQuestionsOnInit) {
+                      _downloadedAllQuestionsOnInit = true;
+                      WidgetsBinding.instance.addPostFrameCallback((t) {
+                        quizNotifier.setAllQuestions(snapshot.data!.toList());
+                      });
 
-                        for (var q in quizState.allQuestions) {
-                          allQuestions.add(q);
-                        }
-                      }
-
-                      List<QuestionModel> selectedQuestions = [];
                       for (var q in quizState.allQuestions) {
-                        if (q.unit == quizState.unit &&
-                            q.subunit == quizState.subunit) {
-                          selectedQuestions.add(q);
-                        }
+                        allQuestions.add(q);
                       }
+                    }
 
-                      return SingleChildScrollView(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: size.width * kPageIndentHorizontal,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: size.width * kPageIndentHorizontal,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ExpandableNotifier(
-                                  controller: _expandableController,
-                                  child: ExpandablePanel(
-                                    theme: const ExpandableThemeData(
-                                        tapBodyToCollapse: false),
-                                    header: ListTile(
-                                      title: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.settings_outlined,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                          const SizedBox(
-                                            width: 8,
-                                          ),
-                                          const Text('Quiz options'),
-                                        ],
+                    List<QuestionModel> selectedQuestions = [];
+                    for (var q in quizState.allQuestions) {
+                      if (q.unit == quizState.unit &&
+                          q.subunit == quizState.subunit) {
+                        selectedQuestions.add(q);
+                      }
+                    }
+
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * kPageIndentHorizontal,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ExpandableNotifier(
+                              controller: _expandableController,
+                              child: ExpandablePanel(
+                                theme: const ExpandableThemeData(
+                                    tapBodyToCollapse: false),
+                                header: ListTile(
+                                  title: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.settings_outlined,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
-                                    ),
-                                    collapsed: const SizedBox.shrink(),
-                                    expanded: const QuizOptions(),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      const Text('Quiz options'),
+                                    ],
                                   ),
                                 ),
-                                const Gap(),
-                                CustomChipButton(
-                                    isDisabled: selectedQuestions.isEmpty,
-                                    text: 'Start Quiz',
-                                    onPressed: () {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((t) {
-                                        quizNotifier.setSelectedQuestions(
-                                            selectedQuestions);
-                                      });
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((t) {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const QuestionPage(),
-                                          ),
-                                        );
-                                      });
-                                    }),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: size.height * 0.05,
-                                      bottom: size.height * 0.10),
-                                  child: Image.asset('assets/images/study.jpg'),
-                                ),
-                              ],
+                                collapsed: const SizedBox.shrink(),
+                                expanded: const QuizOptions(),
+                              ),
                             ),
-                          ),
+                            const Gap(),
+                            CustomChipButton(
+                                isDisabled: selectedQuestions.isEmpty,
+                                text: 'Start Quiz',
+                                onPressed: () {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((t) {
+                                    quizNotifier.setSelectedQuestions(
+                                        selectedQuestions);
+                                  });
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((t) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const QuestionPage(),
+                                      ),
+                                    );
+                                  });
+                                }),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: size.height * 0.05,
+                                  bottom: size.height * 0.10),
+                              child: Image.asset('assets/images/study.jpg'),
+                            ),
+                          ],
                         ),
-                      );
-                    }
-                    if (snapshot.hasError) {
-                      return const Center(
-                          child: Text(
-                        'An error occurred. \n\n'
-                        'Please check your internet connection and try again. \n\n',
-                        textAlign: TextAlign.center,
-                      ));
-                    }
-                    if (snapshot.data == null || snapshot.data!.isEmpty) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(
-                            Icons.error_outline,
-                            size: 100,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          Text(
-                            'No questions found!\n\nAdd a quiz question to begin (top-right plus icon)',
-                            style: Theme.of(context).textTheme.titleMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      );
-                    }
+                      ),
+                    );
                   }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                  if (snapshot.hasError) {
+                    return const Center(
+                        child: Text(
+                      'An error occurred. \n\n'
+                      'Please check your internet connection and try again. \n\n',
+                      textAlign: TextAlign.center,
+                    ));
                   }
-                  return const CircularProgressIndicator();
-                }),
-          ),
-        ],
-      ),
+                  if (snapshot.data == null || snapshot.data!.isEmpty) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          size: 100,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        Text(
+                          'No questions found!\n\nAdd a quiz question to begin (top-right plus icon)',
+                          style: Theme.of(context).textTheme.titleMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    );
+                  }
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return const CircularProgressIndicator();
+              }),
+        ),
+      ],
     );
   }
 }

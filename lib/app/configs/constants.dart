@@ -23,6 +23,7 @@ const kAllUnits = 'All units';
 const kCourses = 'courses';
 const kFormSpacing = 0.005;
 const kDropdownMenuItemGap = 10.0;
+const kDropDownWidth = 0.90;
 const kFormTextLabelPadding = EdgeInsets.only(left: 20, bottom: 2);
 
 /// Layout

@@ -111,191 +111,184 @@ class _AddQuestionDialogState extends ConsumerState<AddQuestionPage> {
               }
             }
 
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: size.width * kPageIndentHorizontal),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.width * kPageIndentHorizontal),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: size.height * 0.02,
-                      ),
-                      Wrap(
-                        spacing: 20,
-                        children: [
-                          CustomChipButton(
-                            text: QuestionType.multi.toText(),
-                            onPressed: () => addQuestionNotifier
-                                .setQuestionType(QuestionType.multi),
-                            isSelected: addQuestionState.questionType ==
-                                QuestionType.multi,
-                          ),
-                          CustomChipButton(
-                            text: QuestionType.flip.toText(),
-                            onPressed: () {
-                              addQuestionNotifier
-                                  .setQuestionType(QuestionType.flip);
-                            },
-                            isSelected: addQuestionState.questionType ==
-                                QuestionType.flip,
-                          ),
-                        ],
-                      ),
-                      const Gap(
-                        showDivider: true,
-                      ),
-                      Wrap(
-                        spacing: 20,
-                        children: courses.map((c) {
-                          return CustomChipButton(
-                            isSelected: c == addQuestionState.course,
-                            onPressed: () {
-                              addQuestionNotifier.setCourse(c);
-                            },
-                            text: c.name,
-                          );
-                        }).toList(),
-                      ),
-                      const Gap(),
-                      ..._questionAndAnswerRows,
-                      SizedBox(
-                        height: size.height * 0.01,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: size.width * 0.03,
-                          ),
-                          CustomIconButton(
-                            onPressed: _questionAndAnswerRows.length <
-                                    maxNumberOfAnswers + 1
-                                ? () {
-                                    final c = TextEditingController();
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * kPageIndentHorizontal),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    Wrap(
+                      spacing: 20,
+                      children: [
+                        CustomChipButton(
+                          text: QuestionType.multi.toText(),
+                          onPressed: () => addQuestionNotifier
+                              .setQuestionType(QuestionType.multi),
+                          isSelected: addQuestionState.questionType ==
+                              QuestionType.multi,
+                        ),
+                        CustomChipButton(
+                          text: QuestionType.flip.toText(),
+                          onPressed: () {
+                            addQuestionNotifier
+                                .setQuestionType(QuestionType.flip);
+                          },
+                          isSelected: addQuestionState.questionType ==
+                              QuestionType.flip,
+                        ),
+                      ],
+                    ),
+                    const Gap(
+                      showDivider: true,
+                    ),
+                    Wrap(
+                      spacing: 20,
+                      children: courses.map((c) {
+                        return CustomChipButton(
+                          isSelected: c == addQuestionState.course,
+                          onPressed: () {
+                            addQuestionNotifier.setCourse(c);
+                          },
+                          text: c.name,
+                        );
+                      }).toList(),
+                    ),
+                    const Gap(),
+                    ..._questionAndAnswerRows,
+                    SizedBox(
+                      height: size.height * 0.01,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.03,
+                        ),
+                        CustomIconButton(
+                          onPressed: _questionAndAnswerRows.length <
+                                  maxNumberOfAnswers + 1
+                              ? () {
+                                  final c = TextEditingController();
 
-                                    _questionAndAnswerRows.add(
-                                      CustomTextField(
-                                        label:
-                                            '*Type incorrect answer #${(_questionAndAnswerRows.length) - 1}',
-                                        requireValidation: true,
-                                        controller: c,
-                                        id: 'answer${_questionAndAnswerRows.length - 1}',
-                                      ),
-                                    );
-                                    _questionAndAnswerControllers.add(c);
-                                    addQuestionNotifier.addQuestionAndAnswer(
-                                        MapEntry(
-                                            'answer${_questionAndAnswerRows.length - 2}',
-                                            false));
-                                    setState(() {});
-                                  }
-                                : null,
-                            icon: Icons.add,
-                          ),
-                          SizedBox(
-                            width: size.width * 0.03,
-                          ),
-                          CustomIconButton(
-                            onPressed: _questionAndAnswerRows.length >
-                                    minNumberOfAnswers + 1
-                                ? () {
-                                    _questionAndAnswerRows.removeLast();
-                                    _questionAndAnswerControllers.removeLast();
-                                    addQuestionNotifier.removeLastAnswer();
-                                    setState(() {});
-                                  }
-                                : null,
-                            icon: Icons.remove,
-                          ),
-                        ],
-                      ),
-                      const Gap(
-                        showDivider: true,
-                      ),
-                      CustomTextField(
-                        padding: 0.0,
-                        controller: _explanationController,
-                        label:
-                            'Type an explanation to the answer (optional)...',
-                      ),
-                      const Gap(
-                        showDivider: true,
-                      ),
-                      const AddQuestionDropdowns(),
-                      SizedBox(
-                        height: size.height * 0.10,
-                      ),
-                      CustomChipButton(
-                        text: 'Add Question',
-                        onPressed: addQuestionState.allFieldsAreValidated
-                            ? () async {
-                                final course = addQuestionState.course;
-                                final type = addQuestionState.questionType;
-                                final question =
-                                    _questionAndAnswerControllers[0].text;
-                                List<AnswerModel> answers = [];
-                                for (int i = 1;
-                                    i < _questionAndAnswerControllers.length;
-                                    i++) {
-                                  answers.add(AnswerModel(
-                                      _questionAndAnswerControllers[i].text,
-                                      isCorrect: i == 1));
+                                  _questionAndAnswerRows.add(
+                                    CustomTextField(
+                                      label:
+                                          '*Type incorrect answer #${(_questionAndAnswerRows.length) - 1}',
+                                      requireValidation: true,
+                                      controller: c,
+                                      id: 'answer${_questionAndAnswerRows.length - 1}',
+                                    ),
+                                  );
+                                  _questionAndAnswerControllers.add(c);
+                                  addQuestionNotifier.addQuestionAndAnswer(MapEntry(
+                                      'answer${_questionAndAnswerRows.length - 2}',
+                                      false));
+                                  setState(() {});
                                 }
-                                final explanation = _explanationController.text;
-                                final unit = addQuestionState.unit;
-                                final subunit = addQuestionState.subunit;
-                                final q = const QuestionModel().copyWith(
-                                  course: course,
-                                  type: type,
-                                  question: question,
-                                  answers: answers,
-                                  explanation: explanation,
-                                  unit: unit,
-                                  subunit: Unit().copyWith(
-                                      name: subunit.name,
-                                      index: '${unit.index}.${subunit.index}'),
-                                );
-
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => BuilderHelper(
-                                        future:
-                                            sendQuestionToFirebase(question: q),
-                                        loadingText:
-                                            'Adding question...please wait a moment',
-                                        onButtonPressed: {
-                                          'Add another question': () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const AddQuestionPage(),
-                                              ),
-                                            );
-                                          },
-                                          'Close': () {
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const HomePage(),
-                                              ),
-                                            );
-                                          },
-                                        }),
-                                  ),
-                                );
+                              : null,
+                          icon: Icons.add,
+                        ),
+                        SizedBox(
+                          width: size.width * 0.03,
+                        ),
+                        CustomIconButton(
+                          onPressed: _questionAndAnswerRows.length >
+                                  minNumberOfAnswers + 1
+                              ? () {
+                                  _questionAndAnswerRows.removeLast();
+                                  _questionAndAnswerControllers.removeLast();
+                                  addQuestionNotifier.removeLastAnswer();
+                                  setState(() {});
+                                }
+                              : null,
+                          icon: Icons.remove,
+                        ),
+                      ],
+                    ),
+                    const Gap(
+                      showDivider: true,
+                    ),
+                    CustomTextField(
+                      padding: 0.0,
+                      controller: _explanationController,
+                      label: 'Type an explanation to the answer (optional)...',
+                    ),
+                    const Gap(
+                      showDivider: true,
+                    ),
+                    const AddQuestionDropdowns(),
+                    SizedBox(
+                      height: size.height * 0.10,
+                    ),
+                    CustomChipButton(
+                      text: 'Add Question',
+                      onPressed: addQuestionState.allFieldsAreValidated
+                          ? () async {
+                              final course = addQuestionState.course;
+                              final type = addQuestionState.questionType;
+                              final question =
+                                  _questionAndAnswerControllers[0].text;
+                              List<AnswerModel> answers = [];
+                              for (int i = 1;
+                                  i < _questionAndAnswerControllers.length;
+                                  i++) {
+                                answers.add(AnswerModel(
+                                    _questionAndAnswerControllers[i].text,
+                                    isCorrect: i == 1));
                               }
-                            : null,
-                      ),
-                      const Gap(),
-                      SizedBox(
-                        height: size.height * 0.10,
-                      ),
-                    ],
-                  ),
+                              final explanation = _explanationController.text;
+                              final unit = addQuestionState.unit;
+                              final subunit = addQuestionState.subunit;
+                              final q = const QuestionModel().copyWith(
+                                course: course,
+                                type: type,
+                                question: question,
+                                answers: answers,
+                                explanation: explanation,
+                                unit: unit,
+                                subunit: Unit().copyWith(
+                                    name: subunit.name,
+                                    index: '${unit.index}.${subunit.index}'),
+                              );
+
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => BuilderHelper(
+                                      future:
+                                          sendQuestionToFirebase(question: q),
+                                      loadingText:
+                                          'Adding question...please wait a moment',
+                                      onButtonPressed: {
+                                        'Add another question': () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const AddQuestionPage(),
+                                            ),
+                                          );
+                                        },
+                                        'Close': () {
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomePage(),
+                                            ),
+                                          );
+                                        },
+                                      }),
+                                ),
+                              );
+                            }
+                          : null,
+                    ),
+                    const Gap(),
+                    SizedBox(
+                      height: size.height * 0.10,
+                    ),
+                  ],
                 ),
               ),
             );

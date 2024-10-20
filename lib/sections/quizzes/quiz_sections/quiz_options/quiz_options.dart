@@ -84,7 +84,6 @@ class _QuizOptions extends ConsumerState<QuizOptions> {
                 ],
               ),
             ),
-
             ListTile(
               dense: true,
               leading: Text(
@@ -108,8 +107,7 @@ class _QuizOptions extends ConsumerState<QuizOptions> {
             ),
             const Gap(),
             const QuizOptionsDropdown(),
-            const Gap(
-            ),
+            const Gap(),
             ListTile(
               dense: true,
               leading: Text(

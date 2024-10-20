@@ -4,6 +4,7 @@ import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../app/configs/constants.dart';
 import '../../../../app/utils/models/unit.dart';
 import '../custom_widgets/dropdown_content.dart';
 
@@ -15,7 +16,6 @@ class AddQuestionDropdowns extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final maxWidth = size.width * 0.90;
 
     final addQuestionState = ref.watch(addQuestionProvider);
     final addQuestionNotifier = ref.read(addQuestionProvider.notifier);
@@ -24,7 +24,7 @@ class AddQuestionDropdowns extends ConsumerWidget {
       children: [
         DropdownButton(
           value: addQuestionState.unit,
-          menuWidth: maxWidth,
+          menuWidth: size.width * kDropDownWidth,
           items: addQuestionState.course.units.map(
             (e) {
               int i = 0;
@@ -53,7 +53,7 @@ class AddQuestionDropdowns extends ConsumerWidget {
         const Gap(),
         if (addQuestionState.subunit.name != "") ...[
           DropdownButton(
-            menuWidth: maxWidth,
+            menuWidth: size.width * kDropDownWidth,
             value: addQuestionState.subunit,
             items: addQuestionState.unit.subunits.map(
               (s) {

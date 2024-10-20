@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/configs/constants.dart';
+
 class DropdownContent extends StatelessWidget {
   const DropdownContent(
     this.text, {
@@ -12,7 +14,7 @@ class DropdownContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return SizedBox(
-      width: size.width * 0.80, // Ensure max width is used
+      width: size.width * kDropDownWidth, // Ensure max width is used
       child: Row(
         children: [
           Flexible(
@@ -21,7 +23,11 @@ class DropdownContent extends StatelessWidget {
               '  $text',
               overflow: TextOverflow.ellipsis, // Add ellipsis for overflow
               softWrap: true, // Allow text to wrap
-              maxLines: 2, // Optional: limit the number of lines
+              maxLines: 2,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(), // Optional: limit the number of lines
             ),
           ),
         ],

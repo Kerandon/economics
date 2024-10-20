@@ -86,6 +86,9 @@ class CustomAppTheme {
         headlineMedium: TextStyle(color: displayColor),
         headlineLarge: TextStyle(color: displayColor),
         titleLarge: TextStyle(color: displayColor),
+        bodySmall: TextStyle(color: displayColor),
+        bodyMedium: TextStyle(color: displayColor),
+        bodyLarge: TextStyle(color: displayColor),
       ),
       // IconButton theme
       iconButtonTheme: IconButtonThemeData(
