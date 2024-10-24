@@ -1,8 +1,10 @@
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/custom_widgets/gif_box.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/methods/show_quick_pop_box.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/audio_manager.dart';
-import '../../../app/enums/audio_clip.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/models/course.dart';
 import '../../../app/utils/models/unit.dart';
@@ -164,7 +166,10 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(showAnswersAsIGo: checkAtEnd);
   }
 
-  void checkAnswer(QuestionModel question) {
+  void checkAnswer(
+      {required BuildContext context, required QuestionModel question}) {
+    if (question.answerStage == AnswerStage.selected) {}
+
     List<AnswerModel> answers = question.answers!.toList();
     for (int i = 0; i < answers.length; i++) {
       if (answers[i].answerStage == AnswerStage.selected) {
@@ -196,14 +201,14 @@ class QuizNotifier extends StateNotifier<QuizState> {
       }
     }
 
+    state = state.copyWith(selectedQuestions: questions);
     if (question.answerStage == AnswerStage.correct) {
-      AudioManager.playAudio(AudioClip.correct);
+      showQuickPopup(context, const GifBox(filesUrl: 'assets/gifs/correct/'));
+      AudioManager.playRandomAudio('assets/audio/correct/');
     }
     if (question.answerStage == AnswerStage.incorrect) {
-      AudioManager.playAudio(AudioClip.incorrect);
+      AudioManager.playRandomAudio('assets/audio/incorrect/');
     }
-
-    state = state.copyWith(selectedQuestions: questions);
   }
 
   void checkAllAnswers() {

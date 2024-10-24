@@ -4,15 +4,12 @@ import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_navigation_buttons.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/unit_banner_title.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/animation/confetti_animation.dart';
 import '../../../../app/configs/constants.dart';
-import '../../../../app/custom_widgets/custom_chip_button.dart';
-import '../completion/completion_page.dart';
 import 'flip_card/flip_card_tile.dart';
 import 'multi_choice/multi_choice_tile.dart';
 
@@ -25,8 +22,6 @@ class QuestionPage extends ConsumerStatefulWidget {
 
 class _QuestionPageState extends ConsumerState<QuestionPage> {
   final _pageController = PageController();
-
-  bool _hasShownCompletedDialog = false;
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +107,11 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                     ...[
                                       if (quizState.questionType ==
                                           QuestionType.multi) ...[
-                                        MultiChoiceTile(),
+                                        const MultiChoiceTile(),
                                       ],
                                       if (quizState.questionType ==
                                           QuestionType.flip) ...[
-                                        FlipCardTile(),
+                                        const FlipCardTile(),
                                       ],
                                       SizedBox(
                                         height: customButtonGap,

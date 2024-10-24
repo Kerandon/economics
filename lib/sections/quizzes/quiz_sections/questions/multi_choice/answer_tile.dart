@@ -1,7 +1,6 @@
 import 'package:economics_app/app/animation/pop_out_animation.dart';
 import 'package:economics_app/app/animation/rotate_around_animation.dart';
 import 'package:economics_app/app/animation/shake_animation.dart';
-import 'package:economics_app/app/audio_manager.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
@@ -9,8 +8,8 @@ import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../app/audio_manager.dart';
 import '../../../../../app/configs/constants.dart';
-import '../../../../../app/enums/audio_clip.dart';
 import '../quiz_models/question_model.dart';
 
 class AnswerTile extends ConsumerStatefulWidget {
@@ -133,9 +132,9 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                   child: InkWell(
                       borderRadius: BorderRadius.circular(kRadius),
                       onTap: () {
+                        AudioManager.playAudio('assets/audio/other/select.mp3');
                         quizNotifier.setQuestionAsSelected(
                             widget.question, widget.answer);
-                        AudioManager.playAudio(AudioClip.select);
                         setState(() {
                           _animate = true;
                         });

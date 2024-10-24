@@ -74,7 +74,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                           horizontal: size.width * kPageIndentHorizontal,
                           vertical: size.height * 0.02,
                         ),
-                        child: Column(
+                        child: const Column(
                           children: [
                             MultiChoiceTile(),
                           ],

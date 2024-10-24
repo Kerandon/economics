@@ -98,9 +98,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
               text: centerButtonText,
               onPressed: () {
                 if (questionIndex == quizState.selectedQuestions.length - 1 &&
-                    question.answerStage == AnswerStage.selected) {
-                  print('QUIZ COMPLETED');
-                }
+                    question.answerStage == AnswerStage.selected) {}
                 if (quizIsCompleted) {
                   showDialog(
                       context: context,
@@ -109,7 +107,8 @@ class QuestionNavigationButtons extends ConsumerWidget {
                   if (!quizState.showAnswersAsIGo) {
                     quizNotifier.checkAllAnswers();
                   } else {
-                    quizNotifier.checkAnswer(question);
+                    quizNotifier.checkAnswer(
+                        context: context, question: question);
                   }
                 }
               },

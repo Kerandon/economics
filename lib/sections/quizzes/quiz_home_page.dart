@@ -1,3 +1,4 @@
+import 'package:economics_app/app/audio_manager.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
@@ -7,10 +8,8 @@ import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../app/audio_manager.dart';
 import '../../app/custom_widgets/custom_chip_button.dart';
 import '../../app/custom_widgets/gap.dart';
-import '../../app/enums/audio_clip.dart';
 import 'quiz_enums/answer_stage.dart';
 
 class QuizHomePage extends ConsumerStatefulWidget {
@@ -71,6 +70,7 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                     }
 
                     List<QuestionModel> selectedQuestions = [];
+
                     for (var q in quizState.allQuestions) {
                       if (q.unit == quizState.unit &&
                           q.subunit == quizState.subunit) {
@@ -78,13 +78,6 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                       }
                     }
 
-                    ///todo remove below to test!!!!
-                    if (selectedQuestions.length > 1) {
-                      selectedQuestions = [
-                        selectedQuestions.first,
-                        selectedQuestions[1]
-                      ];
-                    }
                     return SingleChildScrollView(
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -129,6 +122,8 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                                     quizNotifier.setSelectedQuestions(
                                         selectedQuestions);
                                   });
+                                  AudioManager.playAudio(
+                                      'assets/audio/other/start.mp3');
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((t) {
                                     Navigator.of(context).pushReplacement(
@@ -138,7 +133,6 @@ class _ReviewPageState extends ConsumerState<QuizHomePage> {
                                       ),
                                     );
                                   });
-                                  AudioManager.playAudio(AudioClip.start);
                                 }),
                             Padding(
                               padding: EdgeInsets.only(
