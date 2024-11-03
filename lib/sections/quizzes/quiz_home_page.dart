@@ -1,183 +1,115 @@
-import 'package:economics_app/app/audio_manager.dart';
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/methods/get_questions_from_firebase.dart';
+import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
+import 'package:economics_app/sections/quizzes/custom_widgets/check_answers_at_end_button.dart';
+import 'package:economics_app/sections/quizzes/custom_widgets/number_of_questions_buttons.dart';
+import 'package:economics_app/sections/quizzes/methods/get_questions_data.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/quiz_options/quiz_options.dart';
+
+import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
-import 'package:expandable/expandable.dart';
+import 'package:economics_app/sections/settings/settings_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../app/custom_widgets/custom_chip_button.dart';
+
 import '../../app/custom_widgets/gap.dart';
-import 'quiz_enums/answer_stage.dart';
+import 'custom_widgets/course_type_buttons.dart';
+import 'custom_widgets/quiz_type_buttons.dart';
+import 'custom_widgets/unit_dropdown_buttons.dart';
 
 class QuizHomePage extends ConsumerStatefulWidget {
   const QuizHomePage({super.key});
 
   @override
-  ConsumerState<QuizHomePage> createState() => _ReviewPageState();
+  ConsumerState<QuizHomePage> createState() => _QuizHomePageState();
 }
 
-class _ReviewPageState extends ConsumerState<QuizHomePage> {
-  final ExpandableController _expandableController =
-      ExpandableController(initialExpanded: false);
-
-  bool _downloadedAllQuestionsOnInit = false;
-  late final Future<List<QuestionModel>> _questionFuture;
-
-  @override
-  void initState() {
-    _questionFuture = getQuestionsFromFirebase();
-    super.initState();
-  }
+class _QuizHomePageState extends ConsumerState<QuizHomePage> {
+  final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    List<QuestionModel> allQuestions = [];
-    final quizState = ref.watch(quizProvider);
+    final editState = ref.watch(editQuestionProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
+    return FutureBuilder<dynamic>(
+      future: getQuestionsData(),
+      builder: (context, snapshot) {
+        return Scaffold(
+          drawer: const SettingsPage(),
+          appBar: AppBar(
+            iconTheme: const IconThemeData(
+              color: Colors.white,
+            ),
+            title: const Text('Quiz'),
+          ),
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width * kPageIndentHorizontal),
+            child: SingleChildScrollView(
+              child: FormBuilder(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Gap(),
+                    const QuizTypeButtons(),
+                    const Gap(),
+                    const CourseTypeButtons(),
+                    const Gap(),
+                    const UnitDropdownButtons(),
+                    const Gap(),
+                    const NumberOfQuestionsButtons(),
+                    const Gap(),
+                    const CheckAnswersAtEndButton(),
+                    const Gap(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.30,
+                          vertical: size.height * 0.05),
+                      child: CustomChipButton(
+                          text: 'Start Quiz',
+                          onPressed: () {
+                            final state = _formKey.currentState;
+                            state?.saveAndValidate();
+                            List<QuestionModel> selectedQuestions =
+                                editState.allQuestions.toList();
+                            // final questionType = editState.questionType;
+                            // final course = editState.course;
+                            final unit = state?.fields[kUnit]?.initialValue;
+                            final subunit = state?.fields[kSubunit]?.initialValue;
+                            // final numberOfQuestion = editState.numberOfQuestions;
+                            // final checkAtEnd = editState.checkAnswersAtEnd;
 
-    if (quizState.selectedQuestions
-        .every((question) => question.answerStage == AnswerStage.correct)) {
-      if (quizState.selectedQuestions.every((question) =>
-          question.answerStage == AnswerStage.correct ||
-          question.answerStage == AnswerStage.incorrect)) {}
-    }
+                            for (var q in editState.allQuestions) {
+                              if (q.course != editState.course) {
+                                selectedQuestions.remove(q);
+                              }
+                              if (unit != null && q.unit != unit) {
+                                selectedQuestions.remove(q);
+                              }
+                              if (subunit != null && q.subunit != subunit) {
+                                selectedQuestions.remove(q);
+                              }
+                            }
 
-    return Stack(
-      children: [
-        NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[];
-          },
-          body: FutureBuilder<List<QuestionModel>>(
-              future: _questionFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                    if (!_downloadedAllQuestionsOnInit) {
-                      _downloadedAllQuestionsOnInit = true;
-                      WidgetsBinding.instance.addPostFrameCallback((t) {
-                        quizNotifier.setAllQuestions(snapshot.data!.toList());
-                      });
+                            quizNotifier.setSelectedQuestions(selectedQuestions);
 
-                      for (var q in quizState.allQuestions) {
-                        allQuestions.add(q);
-                      }
-                    }
-
-                    List<QuestionModel> selectedQuestions = [];
-
-                    for (var q in quizState.allQuestions) {
-                      if (q.unit == quizState.unit &&
-                          q.subunit == quizState.subunit) {
-                        selectedQuestions.add(q);
-                      }
-                    }
-
-                    return SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: size.width * kPageIndentHorizontal,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ExpandableNotifier(
-                              controller: _expandableController,
-                              child: ExpandablePanel(
-                                theme: const ExpandableThemeData(
-                                    tapBodyToCollapse: false),
-                                header: ListTile(
-                                  title: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.settings_outlined,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                      const SizedBox(
-                                        width: 8,
-                                      ),
-                                      const Text('Quiz options'),
-                                    ],
-                                  ),
-                                ),
-                                collapsed: const SizedBox.shrink(),
-                                expanded: const QuizOptions(),
-                              ),
-                            ),
-                            const Gap(),
-                            CustomChipButton(
-                                isDisabled: selectedQuestions.isEmpty,
-                                text: 'Start Quiz',
-                                onPressed: () {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((t) {
-                                    quizNotifier.setSelectedQuestions(
-                                        selectedQuestions);
-                                  });
-                                  AudioManager.playAudio(
-                                      'assets/audio/other/start.mp3');
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((t) {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const QuestionPage(),
-                                      ),
-                                    );
-                                  });
-                                }),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: size.height * 0.05,
-                                  bottom: size.height * 0.10),
-                              child: Image.asset('assets/images/study.jpg'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-                  if (snapshot.hasError) {
-                    return const Center(
-                        child: Text(
-                      'An error occurred. \n\n'
-                      'Please check your internet connection and try again. \n\n',
-                      textAlign: TextAlign.center,
-                    ));
-                  }
-                  if (snapshot.data == null || snapshot.data!.isEmpty) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(
-                          Icons.error_outline,
-                          size: 100,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        Text(
-                          'No questions found!\n\nAdd a quiz question to begin (top-right plus icon)',
-                          style: Theme.of(context).textTheme.titleMedium,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    );
-                  }
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return const CircularProgressIndicator();
-              }),
-        ),
-      ],
+                            WidgetsBinding.instance.addPostFrameCallback((t) {
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => QuestionPage()));
+                            });
+                          }),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }
     );
   }
 }

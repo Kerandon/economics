@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../sections/diagrams/sections/all_diagrams_page.dart';
 import '../../sections/quizzes/quiz_home_page.dart';
-import '../../sections/quizzes/quiz_sections/add_question/add_question_page.dart';
 import '../../sections/settings/settings_page.dart';
 import '../configs/constants.dart';
 import 'custom_navigation_bar.dart';
@@ -26,21 +25,6 @@ class HomePage extends ConsumerWidget {
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(kAppName),
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AddQuestionPage(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.add_outlined,
-              color: Colors.white,
-            ), // Icon size can be large
-          ),
-        ],
       ),
       body: ExpandableTheme(
         data: ExpandableThemeData(

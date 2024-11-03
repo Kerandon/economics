@@ -74,7 +74,7 @@ class CustomChipButton extends StatelessWidget {
                   },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6.0),
-              child: Row(
+              child: Row(mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize:
                     MainAxisSize.min, // Shrinks the row to fit its children
                 children: [

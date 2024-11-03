@@ -50,6 +50,7 @@ class CustomAppTheme {
             : AppColors.onSurfaceLightTheme,
       ),
       appBarTheme: const AppBarTheme(
+        centerTitle: true,
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
         backgroundColor: AppColors.defaultAppColorDarkest,
       ),
@@ -73,9 +74,9 @@ class CustomAppTheme {
           },
         ),
       ),
-      listTileTheme: const ListTileThemeData(
+      listTileTheme: ListTileThemeData(
         titleTextStyle:
-            TextStyle(color: AppColors.defaultAppColor, fontSize: 12),
+        TextStyle(color: displayColor),
       ),
       // Adding the textTheme for display styles
       textTheme: GoogleFonts.robotoCondensedTextTheme().copyWith(

@@ -1,8 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-
-import '../../../sections/quizzes/quiz_sections/add_question/custom_text_field.dart';
 import '../../utils/mixins/unit_mixin.dart';
 import '../../utils/models/unit.dart';
 import '../custom_chip_button.dart';
@@ -129,13 +127,13 @@ class CustomExpandablePanelNew extends StatelessWidget {
               const Text('Create a new unit'),
               Row(
                 children: [
-                  Expanded(
-                      child: CustomTextField(
-                          controller: idTextController, label: 'Id')),
-                  Expanded(
-                      flex: 5,
-                      child: CustomTextField(
-                          controller: nameTextController, label: 'Name')),
+                  // Expanded(
+                  //     child: CustomTextField(
+                  //         controller: idTextController, label: 'Id')),
+                  // Expanded(
+                  //     flex: 5,
+                  //     child: CustomTextField(
+                  //         controller: nameTextController, label: 'Name')),
                   CustomChipButton(
                       text: 'Confirm new unit',
                       onPressed: () {

@@ -1,3 +1,5 @@
+
+
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +9,13 @@ class BuilderHelper extends StatelessWidget {
     super.key,
     required this.future,
     this.loadingText = 'In progress...',
+    this.onEnd,
     this.onButtonPressed,
   });
 
-  final Future<void> future; // Keep it as Future<void>
+  final Future<void> future;
   final String loadingText;
+  final Function? onEnd;
   final Map<String, VoidCallback>? onButtonPressed;
 
   @override
@@ -28,41 +32,47 @@ class BuilderHelper extends StatelessWidget {
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
               } else {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Question added successfully',
-                      style: Theme.of(context).textTheme.displaySmall,
-                    ),
-                    Icon(
-                      Icons.check_circle_outline,
-                      size: size.height * 0.20,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    ...[
-                      if (onButtonPressed != null)
-                        Wrap(
-                          alignment: WrapAlignment.center,
-                          spacing: size.width * kWrapSpacing,
-                          children: onButtonPressed!.entries
-                              .map(
-                                (e) => CustomChipButton(
-                                  text: e.key,
-                                  onPressed: () {
-                                    e.value.call();
-                                  },
-                                  isSelected: true,
-                                ),
-                              )
-                              .toList(),
-                        ),
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ...[
+                        if(onEnd != null)...[
+                          onEnd!.call()
+                        ],
+                        if (onButtonPressed != null)...[
+                          Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: size.width * kWrapSpacing,
+                            children: onButtonPressed!.entries
+                                .map(
+                                  (e) =>
+                                  CustomChipButton(
+                                    text: e.key,
+                                    onPressed: () {
+                                      e.value.call();
+                                    },
+                                    isSelected: true,
+                                  ),
+                            )
+                                .toList(),
+                          ),
+                          Icon(
+                            Icons.check_circle_outline,
+                            size: size.height * 0.20,
+                            color: Theme
+                                .of(context)
+                                .colorScheme
+                                .primary,
+                          ),
+                        ],
+                      ],
                     ],
-                  ],
-                );
+                  );
+                }
               }
-            }
+
             return const SizedBox.shrink();
           },
         ),

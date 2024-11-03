@@ -25,6 +25,14 @@ class Course with CourseMixin, EquatableMixin {
     return Course(name: courseName, units: units);
   }
 
+  // copyWith method
+  Course copyWith({String? name, List<UnitMixin>? units}) {
+    return Course(
+      name: name ?? this.name,
+      units: units ?? this.units,
+    );
+  }
+
   @override
   List<Object?> get props => [name];
 }

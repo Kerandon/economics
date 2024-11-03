@@ -1,10 +1,10 @@
+import 'package:economics_app/sections/quizzes/quiz_init_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'app/configs/constants.dart';
 import 'app/configs/theme_data.dart';
-import 'app/home/home_page.dart';
 import 'app/state/app_state.dart';
 
 Future<void> main() async {
@@ -40,7 +40,7 @@ class EconApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: kAppName,
       theme: CustomAppTheme(appState, context).appTheme,
-      home: const HomePage(),
+      home: const QuizInitPage(),
     );
   }
 }

@@ -56,7 +56,6 @@ class Unit with UnitMixin, EquatableMixin {
           .map((entry) => Unit.fromMap(entry.key, entry.value))
           .toList();
     }
-
     return Unit(
       index: (int.parse(index) + 1).toString(),
       name: map['name'] ?? 'Unknown',

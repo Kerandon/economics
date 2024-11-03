@@ -1,3 +1,5 @@
+
+import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/state/app_state.dart';
@@ -38,7 +40,17 @@ class SettingsPage extends ConsumerWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const EditCoursesPage()));
               },
-            )
+            ),
+            ListTile(
+              title: const Text('Manage questions'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ManageQuestionsPage(),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

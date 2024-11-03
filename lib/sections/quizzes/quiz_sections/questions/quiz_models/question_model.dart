@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../../../../app/utils/mixins/course_mixin.dart';
 import '../../../../../app/utils/mixins/unit_mixin.dart';
 
-import '../../../../../app/utils/models/course.dart';
 import '../../../quiz_enums/answer_stage.dart';
 import 'answer_model.dart';
 
@@ -40,7 +39,7 @@ class QuestionModel extends Equatable {
   QuestionModel copyWith({
     String? id,
     QuestionType? type,
-    Course? course,
+    CourseMixin? course,
     String? question,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
@@ -66,10 +65,10 @@ class QuestionModel extends Equatable {
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     List<AnswerModel> answers = (map['answers'] as List)
         .map((e) => AnswerModel.fromMap(e))
-        .toList()
-      ..shuffle();
+        .toList();
 
     return QuestionModel(
+      id: id,
       type: QuestionTypeExtension.fromText(map['type']),
       unit: Unit.fromFirebase(map),
       subunit: Unit.fromFirebase(map, subunit: true),

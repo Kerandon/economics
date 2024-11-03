@@ -1,13 +1,14 @@
 import 'package:economics_app/app/utils/mixins/unit_mixin.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/custom_widgets/gif_box.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/methods/show_quick_pop_box.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/audio_manager.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/models/course.dart';
 import '../../../app/utils/models/unit.dart';
+import '../custom_widgets/gif_box.dart';
+import '../methods/show_quick_pop_box.dart';
 import '../quiz_enums/answer_stage.dart';
 
 import '../quiz_sections/questions/quiz_models/answer_model.dart';
@@ -87,7 +88,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
     }
 
     state = state.copyWith(
-      course: course as Course,
+      course: course,
       unit: u,
       subunit: s,
     );

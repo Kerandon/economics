@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../questions/quiz_models/question_model.dart';
+import '../../../../app/configs/constants.dart';
 
-Future<List<QuestionModel>> getQuestionsFromFirebase() async {
+import '../quiz_sections/questions/quiz_models/question_model.dart';
+
+Future<List<QuestionModel>> getQuestionsData() async {
   final instance = FirebaseFirestore.instance;
-  final collectionSnapshot = await instance.collection('quiz').get();
+  final collectionSnapshot = await instance.collection(kQuiz).get();
   List<QuestionModel> questions = [];
   try {
     if (collectionSnapshot.docs.isNotEmpty) {
