@@ -51,8 +51,8 @@ class EditQuestionState {
   }
 }
 
-class AddQuestionNotifier extends StateNotifier<EditQuestionState> {
-  AddQuestionNotifier(super._state);
+class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
+  EditQuestionNotifier(super._state);
 
   void setQuestionType(QuestionType type) {
     state = state.copyWith(questionType: type);
@@ -63,14 +63,11 @@ class AddQuestionNotifier extends StateNotifier<EditQuestionState> {
   }
 
   void setCourse(CourseMixin course) {
-
-    print('course is ${course.name} and units are ${course.units.length} subunits ${course.units.first.subunits.length}');
-
     UnitMixin? u, s;
     if (course.units.isNotEmpty) {
       u = course.units.first;
     }
-    if(course.units.first.subunits.isNotEmpty){
+    if (course.units.first.subunits.isNotEmpty) {
       s = course.units.first.subunits.first;
     }
 
@@ -84,6 +81,7 @@ class AddQuestionNotifier extends StateNotifier<EditQuestionState> {
   void setUnit(UnitMixin unit) {
     state = state.copyWith(unit: unit);
   }
+
   void setSubunit(UnitMixin unit) {
     state = state.copyWith(subunit: unit);
   }
@@ -96,15 +94,14 @@ class AddQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(numberOfQuestions: number);
   }
 
-  void setCheckAnswersAtEnd(bool checkAtEnd){
+  void setCheckAnswersAtEnd(bool checkAtEnd) {
     state = state.copyWith(checkAnswersAtEnd: checkAtEnd);
   }
-
 }
 
 final editQuestionProvider =
-    StateNotifierProvider<AddQuestionNotifier, EditQuestionState>(
-  (ref) => AddQuestionNotifier(
+    StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
+  (ref) => EditQuestionNotifier(
     EditQuestionState(
       questionType: QuestionType.multi,
       courses: [],

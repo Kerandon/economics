@@ -74,7 +74,8 @@ class CustomChipButton extends StatelessWidget {
                   },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize:
                     MainAxisSize.min, // Shrinks the row to fit its children
                 children: [
@@ -89,7 +90,7 @@ class CustomChipButton extends StatelessWidget {
                   ],
                   if (text != null) ...[
                     Padding(
-                      padding: const EdgeInsets.all(6.0),
+                      padding: const EdgeInsets.all(8),
                       child: Text(text!,
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(

@@ -9,7 +9,6 @@ import '../../app/utils/models/course.dart';
 import '../settings/edit_courses/helper_methods/get_course_data_from_firebase.dart';
 import 'methods/get_questions_data.dart';
 
-
 class QuizInitPage extends ConsumerStatefulWidget {
   const QuizInitPage({super.key});
 
@@ -18,7 +17,6 @@ class QuizInitPage extends ConsumerStatefulWidget {
 }
 
 class _QuizInitPageState extends ConsumerState<QuizInitPage> {
-
   final List<Future<dynamic>> _futures = [];
   bool _initHasRun = false;
 
@@ -30,17 +28,15 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
 
   @override
   Widget build(BuildContext context) {
-    final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
     return Scaffold(
       body: FutureBuilder(
           future: Future.wait(_futures),
           builder: (context, snapshot) {
-
-              if (snapshot.hasData) {
-                if(!_initHasRun) {
-                  _initHasRun = true;
+            if (snapshot.hasData) {
+              if (!_initHasRun) {
+                _initHasRun = true;
                 final courseData = snapshot.data?[0];
                 final questionData = snapshot.data?[1];
                 List<CourseMixin> courses = [];
@@ -54,18 +50,19 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                 }
                 questions = questionData.toList();
                 WidgetsBinding.instance.addPostFrameCallback((t) {
-                  if(courses.isNotEmpty) {
+                  if (courses.isNotEmpty) {
                     editNotifier
                       ..setCourses(courses)
                       ..setCourse(courses.first);
                   }
-                  if(questions.isNotEmpty) {
+                  if (questions.isNotEmpty) {
                     editNotifier.setAllQuestions(questions);
                   }
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => const QuizHomePage()));
-
-
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const QuizHomePage(),
+                    ),
+                  );
                 });
               }
             }

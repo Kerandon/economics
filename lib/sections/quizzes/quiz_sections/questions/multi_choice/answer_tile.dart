@@ -35,13 +35,14 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    Color backgroundColor = Theme.of(context).colorScheme.surface;
+    Color backgroundColor =
+        Theme.of(context).colorScheme.onSurface.withOpacity(kBackgroundOpacity);
 
     final quizNotifier = ref.read(quizProvider.notifier);
     IconData? icon;
     bool isSelected = widget.answer.answerStage == AnswerStage.selected;
     Color answerTextColor = Theme.of(context).colorScheme.onSurface;
-    Color indexColor = Theme.of(context).colorScheme.onSecondary;
+    Color indexColor = Theme.of(context).colorScheme.primary;
     if (widget.answer.answerStage == AnswerStage.selected) {
       backgroundColor = Colors.indigo;
     }
@@ -66,7 +67,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
     if (isSelected ||
         widget.answer.answerStage == AnswerStage.correct ||
         widget.answer.answerStage == AnswerStage.incorrect) {
-      indexColor = Colors.white70;
+      indexColor = Colors.transparent;
       answerTextColor = Colors.white;
     }
 
@@ -97,19 +98,30 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                       children: [
                         ListTile(
                           dense: true,
-                          leading: Text(
-                            ((widget.answerIndex + 1).toAlphabet()),
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: indexColor,
-                                    ),
+                          leading: CircleAvatar(
+                            backgroundColor: indexColor,
+                            // Set the background color to orange
+                            radius: 20,
+                            // Adjust the radius as needed
+                            child: Text(
+                              (widget.answerIndex + 1).toAlphabet(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
                           ),
                           title: Text(
                             widget.answer.answer,
                             textAlign: TextAlign.start,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color:
-                                    answerTextColor), // Align the text to the start (left) side
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(
+                                    color:
+                                        answerTextColor), // Align the text to the start (left) side
                           ),
                           trailing: PopOutAnimation(
                             duration: 300,

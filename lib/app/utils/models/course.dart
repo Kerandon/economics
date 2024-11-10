@@ -1,4 +1,5 @@
 import 'package:economics_app/app/utils/models/unit.dart';
+import 'package:economics_app/sections/quizzes/methods/sort_units_by_index.dart';
 import 'package:equatable/equatable.dart';
 
 import '../mixins/course_mixin.dart';
@@ -21,6 +22,9 @@ class Course with CourseMixin, EquatableMixin {
     List<Unit> units = unitMap.entries
         .map((entry) => Unit.fromMap(entry.key, entry.value))
         .toList();
+
+    /// Sort units so ascends by index
+    sortUnitsByIndex(units);
 
     return Course(name: courseName, units: units);
   }

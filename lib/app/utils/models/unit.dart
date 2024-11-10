@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
+import '../../../sections/quizzes/methods/sort_units_by_index.dart';
+import '../../configs/constants.dart';
 import '../mixins/unit_mixin.dart';
 
 class Unit with UnitMixin, EquatableMixin {
@@ -19,26 +21,19 @@ class Unit with UnitMixin, EquatableMixin {
     this.subunits = const [],
   });
 
-  Unit copyWith({String? index, String? name, List<Unit>? subunits}) {
-    return Unit(
-        index: index ?? this.index,
-        name: name ?? this.name,
-        subunits: subunits ?? this.subunits);
-  }
-
   Map<String, dynamic> toMap() {
     Map<String, dynamic> sub = {};
     for (var s in subunits) {
       sub.addAll({
-        s.index.toString(): {'name': s.name}
+        s.index.toString(): {kName: s.name}
       });
     }
 
     final Map<String, dynamic> map = {
       index ?? "No index number found": {
-        'index': index,
-        'name': name,
-        'subunits': sub,
+        kIndex: index,
+        kName: name,
+        kSubunits: sub,
       }
     };
 
@@ -50,12 +45,16 @@ class Unit with UnitMixin, EquatableMixin {
   // Factory constructor to parse subunits from map
   factory Unit.fromMap(String index, Map<String, dynamic> map) {
     List<Unit> subunits = [];
-    if (map.containsKey('subunits')) {
-      Map<String, dynamic> subunitMap = map['subunits'];
+    if (map.containsKey(kSubunits)) {
+      Map<String, dynamic> subunitMap = map[kSubunits];
       subunits = subunitMap.entries
           .map((entry) => Unit.fromMap(entry.key, entry.value))
           .toList();
+
+      /// Sorts subunits by index so it is in ascending order
+      sortUnitsByIndex(subunits);
     }
+
     return Unit(
       index: (int.parse(index) + 1).toString(),
       name: map['name'] ?? 'Unknown',
@@ -64,7 +63,7 @@ class Unit with UnitMixin, EquatableMixin {
   }
 
   factory Unit.fromFirebase(Map<String, dynamic> map, {bool subunit = false}) {
-    final u = map[subunit ? 'subunit' : 'unit'] as Map<String, dynamic>;
+    final u = map[subunit ? kSubunit : 'unit'] as Map<String, dynamic>;
     try {
       final unit =
           Unit(name: u.entries.first.value, index: u.entries.first.key);
@@ -98,6 +97,5 @@ class Unit with UnitMixin, EquatableMixin {
   }
 
   @override
-  // TODO: implement props
   List<Object?> get props => [name];
 }

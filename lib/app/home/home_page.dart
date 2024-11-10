@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../sections/diagrams/sections/all_diagrams_page.dart';
 import '../../sections/quizzes/quiz_home_page.dart';
 import '../../sections/settings/settings_page.dart';
-import '../configs/constants.dart';
 import 'custom_navigation_bar.dart';
 
 class HomePage extends ConsumerWidget {
@@ -21,11 +20,6 @@ class HomePage extends ConsumerWidget {
       page = const AllDiagramsPage();
     }
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(kAppName),
-        centerTitle: true,
-      ),
       body: ExpandableTheme(
         data: ExpandableThemeData(
           animationDuration: const Duration(milliseconds: 300),

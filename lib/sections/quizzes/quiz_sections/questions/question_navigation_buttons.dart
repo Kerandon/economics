@@ -1,6 +1,7 @@
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/completion/completion_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +21,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
+    final editState = ref.watch(editQuestionProvider);
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     final questionIndex = quizState.currentQuestionIndex;
@@ -57,20 +59,20 @@ class QuestionNavigationButtons extends ConsumerWidget {
         quizState.selectedQuestions.length - 1) {
       disableButtonRight = true;
     }
-    if (!quizState.showAnswersAsIGo &&
+    if (editState.checkAnswersAtEnd &&
         question.answerStage == AnswerStage.notSelected) {
       disableButtonRight = true;
     }
 
     /// Check answers one by one
-    if (quizState.showAnswersAsIGo) {
+    if (!editState.checkAnswersAtEnd) {
       if (question.answerStage == AnswerStage.notSelected ||
           question.answerStage == AnswerStage.selected) {
         disableButtonRight = true;
       }
     }
 
-    if (quizState.showAnswersAsIGo) {
+    if (!editState.checkAnswersAtEnd) {
       if (quizIsCompleted) {
         centerButtonText = 'Show results';
       } else {
@@ -104,7 +106,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
                       context: context,
                       builder: (context) => const CompletionPage());
                 } else {
-                  if (!quizState.showAnswersAsIGo) {
+                  if (editState.checkAnswersAtEnd) {
                     quizNotifier.checkAllAnswers();
                   } else {
                     quizNotifier.checkAnswer(

@@ -11,11 +11,10 @@ class CheckAnswersAtEndButton extends ConsumerWidget {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
     return SwitchListTile(
-        title: Text('Check answers at end'),
+        title: const Text('Check answers at end'),
         value: editState.checkAnswersAtEnd,
-        onChanged: (e){
-      editNotifier.setCheckAnswersAtEnd(e);
-
+        onChanged: (e) {
+          editNotifier.setCheckAnswersAtEnd(e);
         });
   }
 }

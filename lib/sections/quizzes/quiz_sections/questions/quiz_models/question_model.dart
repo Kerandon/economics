@@ -1,3 +1,4 @@
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/utils/models/unit.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:equatable/equatable.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../../app/utils/mixins/course_mixin.dart';
 import '../../../../../app/utils/mixins/unit_mixin.dart';
 
+import '../../../../../app/utils/models/course.dart';
 import '../../../quiz_enums/answer_stage.dart';
 import 'answer_model.dart';
 
@@ -63,35 +65,35 @@ class QuestionModel extends Equatable {
   }
 
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
-    List<AnswerModel> answers = (map['answers'] as List)
-        .map((e) => AnswerModel.fromMap(e))
-        .toList();
+    List<AnswerModel> answers =
+        (map[kAnswers] as List).map((e) => AnswerModel.fromMap(e)).toList();
 
     return QuestionModel(
       id: id,
-      type: QuestionTypeExtension.fromText(map['type']),
+      type: QuestionTypeExtension.fromText(map[kType]),
+      course: Course(name: map[kCourse], units: []),
       unit: Unit.fromFirebase(map),
       subunit: Unit.fromFirebase(map, subunit: true),
-      question: map['question'],
+      question: map[kQuestion],
       answers: answers,
       answerStage: AnswerStage.notSelected,
-      explanation: map['explanation'],
-      hl: map['hl'] ?? false,
+      explanation: map[kExplanation],
+      hl: map[kHL] ?? false,
     );
   }
 
   // Converts QuestionModel to a map that can be sent to Firebase
   Map<String, dynamic> toMap() {
     return {
-      'type': type?.name,
-      'course': course?.name,
-      'question': question,
-      'answers': answers?.map((e) => e.toMap()).toList(),
-      'answerStage': answerStage.name, // Enum
-      'explanation': explanation,
-      'unit': {unit?.index ?? "": unit?.name ?? ""},
-      'subunit': {subunit?.index ?? "": subunit?.name ?? ""},
-      'hl': hl,
+      kType: type?.name,
+      kCourse: course?.name,
+      kQuestion: question,
+      kAnswers: answers?.map((e) => e.toMap()).toList(),
+      kAnswerStage: answerStage.name, // Enum
+      kExplanation: explanation,
+      kUnit: {unit?.index ?? "": unit?.name ?? ""},
+      kSubunit: {subunit?.index ?? "": subunit?.name ?? ""},
+      kHL: hl,
     };
   }
 

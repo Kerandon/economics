@@ -21,69 +21,53 @@ class MultiChoiceTile extends ConsumerWidget {
     return IgnorePointer(
       ignoring: question.answerStage == AnswerStage.correct ||
           question.answerStage == AnswerStage.incorrect,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Stack(
-          children: [
-            ListView(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(size.height * kPageIndentVertical),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: size.width * 0.02,
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            if (question.item != null)
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(bottom: size.height * 0.01),
-                                child: question.item!,
-                              ),
-                            Text(
-                              question.question ?? "",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
+      child: Stack(
+        children: [
+          ListView(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.height * kPageIndentHorizontal),
+                child: Column(
                   children: [
-                    ...[
-                      ...answers.map(
-                        (answer) => AnswerTile(
-                          answerIndex: answers.indexOf(answer),
-                          answer: answer,
-                          question: question,
-                        ),
-                      )
-                    ],
-                    if (question.answerStage == AnswerStage.incorrect &&
-                        question.explanation != null &&
-                        question.explanation!.isNotEmpty)
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: size.height * 0.01),
-                        child:
-                            ExplanationBox(explanation: question.explanation!),
-                      )
+                    Padding(
+                      padding: EdgeInsets.all(size.width * 0.01),
+                      child: Text(
+                        question.question ?? "",
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ],
-                )
-              ],
-            ),
-          ],
-        ),
+                ),
+              ),
+              Column(
+                children: [
+                  ...answers.map(
+                    (answer) => AnswerTile(
+                      answerIndex: answers.indexOf(answer),
+                      answer: answer,
+                      question: question,
+                    ),
+                  ),
+                  if (question.answerStage == AnswerStage.incorrect &&
+                      question.explanation != null &&
+                      question.explanation!.isNotEmpty)
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: size.height * 0.01),
+                      child: ExplanationBox(explanation: question.explanation!),
+                    )
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

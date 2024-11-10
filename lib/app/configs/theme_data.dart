@@ -75,8 +75,7 @@ class CustomAppTheme {
         ),
       ),
       listTileTheme: ListTileThemeData(
-        titleTextStyle:
-        TextStyle(color: displayColor),
+        titleTextStyle: TextStyle(color: displayColor),
       ),
       // Adding the textTheme for display styles
       textTheme: GoogleFonts.robotoCondensedTextTheme().copyWith(

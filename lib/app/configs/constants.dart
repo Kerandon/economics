@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kAppName = 'Quiz Central';
+const kAppName = 'Quiz';
 const kLevel = 'level';
 
 const kImage = 'image';
@@ -16,15 +16,24 @@ const kTitle = 'title';
 const kBody = 'body';
 
 /// Quiz
-const kAnswers = 'answers';
-const kQuiz = 'quiz';
-const kAllSections = 'All sections';
-const kAllUnits = 'All units';
+const kIndex = 'index';
+const kName = 'name';
+const kType = 'type';
 const kCourses = 'courses';
+const kCourse = 'course';
+const kSubunit = 'subunit';
+const kSubunits = 'subunits';
+const kQuestion = 'question';
+const kAnswers = 'answers';
+const kAnswer = 'answer';
+const kAnswerStage = 'answer stage';
+const kIsCorrect = 'is correct';
+const kQuiz = 'quiz';
+const kAllSections = 'all sections';
+const kAllUnits = 'all units';
 const kErrorMessage =
     'An error occurred - check your internet connection & try again';
-const kSubunit = 'Subunit';
-const kQuestion = 'Question';
+const kHL = 'hl';
 const kCorrectAnswer = 'Correct answer';
 const kIncorrectAnswer1 = 'Incorrect answer 1';
 const kIncorrectAnswer2 = 'Incorrect answer 2';
@@ -44,7 +53,7 @@ const kPageIndentHorizontal = 0.03;
 const kPageIndentVertical = 0.02;
 const kBorderWidth = 0.0015;
 const kDividerIndent = 0.03;
-const kWrapSpacing = 0.015;
+const kWrapSpacing = 0.003;
 const kBottomIndent = 0.05;
 
 /// Animation

@@ -60,39 +60,41 @@ class _CustomSliderState extends ConsumerState<CustomSlider>
     beginValue = endValue;
 
     final size = MediaQuery.of(context).size;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        SizedBox(
-          width: size.width * kPageIndentHorizontal,
-        ),
-        Expanded(
-          flex: 8,
-          child: SizedBox(
-            height: 8,
-            width: size.width * 0.80,
-            child: AnimatedBuilder(
-              animation: _controller,
-              builder: (context, child) => ClipRRect(
-                borderRadius: BorderRadius.circular(kRadius),
-                child: LinearProgressIndicator(
-                  minHeight: size.height * 0.003,
-                  value: animation.value,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          SizedBox(
+            width: size.width * kPageIndentHorizontal,
+          ),
+          Expanded(
+            flex: 8,
+            child: SizedBox(
+              height: 12,
+              child: AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) => ClipRRect(
+                  borderRadius: BorderRadius.circular(kRadius),
+                  child: LinearProgressIndicator(
+                    minHeight: size.height * 0.003,
+                    value: animation.value,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        Expanded(
-          child: Center(
-            child: Text(
-                '${quizState.currentQuestionIndex + 1} / ${quizState.selectedQuestions.length}',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    )),
+          Expanded(
+            child: Center(
+              child: Text(
+                  '${quizState.currentQuestionIndex + 1} / ${quizState.selectedQuestions.length}',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      )),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

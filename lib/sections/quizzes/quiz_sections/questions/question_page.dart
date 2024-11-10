@@ -1,10 +1,9 @@
-import 'package:economics_app/app/custom_widgets/gap.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_navigation_buttons.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/unit_banner_title.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,7 +25,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    const borderPadding = 0.01;
+    final editState = ref.read(editQuestionProvider);
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     final customButtonGap = size.height * 0.04;
@@ -35,6 +34,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
       children: [
         Scaffold(
           appBar: AppBar(
+            title: Text(
+              '${editState.unit.name} - '
+              '${editState.subunit.name}',
+            ),
             leading: IconButton(
               icon: const Icon(
                 Icons.arrow_back_outlined,
@@ -42,10 +45,13 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               ),
               onPressed: () {
                 quizNotifier.setResetQuestions();
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return const HomePage();
-                }));
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const HomePage();
+                    },
+                  ),
+                );
               },
             ),
           ),
@@ -55,79 +61,59 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 const SliverToBoxAdapter(
-                    child: Column(
-                  children: [
-                    Gap(),
-                    UnitBannerTitle(),
-                    Gap(),
-                    CustomSlider(),
-                    Gap(),
-                  ],
-                ))
+                  child: Column(
+                    children: [
+                      CustomSlider(),
+                    ],
+                  ),
+                )
               ];
             },
             body: Container(
               color: Theme.of(context).colorScheme.surface,
               child: Stack(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: size.width * borderPadding,
-                        right: size.width * borderPadding,
-                        bottom: size.height * borderPadding),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(kBackgroundOpacity),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(kRadiusBig),
-                        ),
-                      ),
-                      child: PageView(
-                        onPageChanged: (index) {
-                          WidgetsBinding.instance.addPostFrameCallback((t) {
-                            setState(() {});
-                            quizNotifier.setCurrentQuestionIndex(index);
-                          });
-                        },
-                        controller: _pageController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: quizState.selectedQuestions.map(
-                          (question) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: size.width * kPageIndentHorizontal,
-                              ),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    ...[
-                                      if (quizState.questionType ==
-                                          QuestionType.multi) ...[
-                                        const MultiChoiceTile(),
-                                      ],
-                                      if (quizState.questionType ==
-                                          QuestionType.flip) ...[
-                                        const FlipCardTile(),
-                                      ],
-                                      SizedBox(
-                                        height: customButtonGap,
-                                      ),
-                                    ],
-                                    SizedBox(
-                                      height: size.height * 0.15,
-                                    ),
+                  PageView(
+                    onPageChanged: (index) {
+                      WidgetsBinding.instance.addPostFrameCallback((t) {
+                        setState(() {});
+                        quizNotifier.setCurrentQuestionIndex(index);
+                      });
+                    },
+                    controller: _pageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: quizState.selectedQuestions.map(
+                      (question) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: size.width * kPageIndentHorizontal,
+                          ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ...[
+                                  if (editState.questionType ==
+                                      QuestionType.multi) ...[
+                                    const MultiChoiceTile(),
                                   ],
+                                  if (editState.questionType ==
+                                      QuestionType.flip) ...[
+                                    const FlipCardTile(),
+                                  ],
+                                  SizedBox(
+                                    height: customButtonGap,
+                                  ),
+                                ],
+                                SizedBox(
+                                  height: size.height * 0.15,
                                 ),
-                              ),
-                            );
-                          },
-                        ).toList(),
-                      ),
-                    ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ).toList(),
                   ),
                 ],
               ),
