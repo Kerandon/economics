@@ -7,9 +7,9 @@ import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_mode
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../../../../../app/audio_manager.dart';
+import '../../../../../app/audio_manager/audio_manager.dart';
 import '../../../../../app/configs/constants.dart';
+import '../../../../../main.dart';
 import '../quiz_models/question_model.dart';
 
 class AnswerTile extends ConsumerStatefulWidget {
@@ -34,44 +34,50 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
 
   @override
   Widget build(BuildContext context) {
+    ///Define variables
     final size = MediaQuery.of(context).size;
-    Color backgroundColor =
-        Theme.of(context).colorScheme.onSurface.withOpacity(kBackgroundOpacity);
-
+    final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final answerStage = widget.answer.answerStage;
+
+    Color backgroundColor =
+        colorScheme.onSurface.withOpacity(kBackgroundOpacity);
+
     IconData? icon;
-    bool isSelected = widget.answer.answerStage == AnswerStage.selected;
-    Color answerTextColor = Theme.of(context).colorScheme.onSurface;
-    Color indexColor = Theme.of(context).colorScheme.primary;
-    if (widget.answer.answerStage == AnswerStage.selected) {
+    bool isSelected = answerStage == AnswerStage.selected;
+    Color answerTextColor = colorScheme.onSurface;
+    Color indexColor = colorScheme.primary;
+    if (answerStage == AnswerStage.selected) {
       backgroundColor = Colors.indigo;
     }
-    if (widget.answer.answerStage == AnswerStage.correct) {
-      backgroundColor = Theme.of(context).colorScheme.primary;
+    if (answerStage == AnswerStage.correct) {
+      backgroundColor = colorScheme.primary;
       icon = Icons.check_circle_outline;
       if (!_hasAnimatedWhenCorrect) {
         _animate = true;
         _hasAnimatedWhenCorrect = true;
       }
     }
-    if (widget.answer.answerStage == AnswerStage.incorrect) {
+    if (answerStage == AnswerStage.incorrect) {
       backgroundColor = Colors.red;
       icon = Icons.clear_outlined;
     }
-    if (widget.answer.isCorrect &&
-        widget.answer.answerStage == AnswerStage.incorrect) {
-      backgroundColor = Theme.of(context).colorScheme.primary;
+    if (widget.answer.isCorrect && answerStage == AnswerStage.incorrect) {
+      backgroundColor = colorScheme.primary;
       icon = Icons.check_circle_outline;
     }
 
     if (isSelected ||
-        widget.answer.answerStage == AnswerStage.correct ||
-        widget.answer.answerStage == AnswerStage.incorrect) {
+        answerStage == AnswerStage.correct ||
+        answerStage == AnswerStage.incorrect) {
       indexColor = Colors.transparent;
       answerTextColor = Colors.white;
     }
 
     return RotateAroundAnimation(
+      disable: quizState.quizIsCompleted,
       beginValue: widget.answerIndex % 2 == 0 ? 0.50 : -0.50,
       duration: 600,
       child: ShakeAnimation(
@@ -100,28 +106,20 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                           dense: true,
                           leading: CircleAvatar(
                             backgroundColor: indexColor,
-                            // Set the background color to orange
                             radius: 20,
-                            // Adjust the radius as needed
                             child: Text(
                               (widget.answerIndex + 1).toAlphabet(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                  ),
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           title: Text(
                             widget.answer.answer,
                             textAlign: TextAlign.start,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall
-                                ?.copyWith(
-                                    color:
-                                        answerTextColor), // Align the text to the start (left) side
+                            style: theme.textTheme.displaySmall?.copyWith(
+                                color:
+                                    answerTextColor), // Align the text to the start (left) side
                           ),
                           trailing: PopOutAnimation(
                             duration: 300,
@@ -142,15 +140,18 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                      borderRadius: BorderRadius.circular(kRadius),
-                      onTap: () {
-                        AudioManager.playAudio('assets/audio/other/select.mp3');
-                        quizNotifier.setQuestionAsSelected(
-                            widget.question, widget.answer);
-                        setState(() {
+                    borderRadius: BorderRadius.circular(kRadius),
+                    onTap: () {
+                      getIt<AudioManager>().playSound('other/select');
+                      quizNotifier.setQuestionAsSelected(
+                          widget.question, widget.answer);
+                      setState(
+                        () {
                           _animate = true;
-                        });
-                      }),
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],

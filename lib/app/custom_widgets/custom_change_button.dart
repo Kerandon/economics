@@ -20,10 +20,12 @@ class CustomPageChangeButton extends StatelessWidget {
           : Theme.of(context).floatingActionButtonTheme.backgroundColor,
       heroTag: null,
       onPressed: disable ? null : onPressed,
-      child: Icon(iconData,
-          color: disable
-              ? Theme.of(context).colorScheme.surfaceDim
-              : Theme.of(context).floatingActionButtonTheme.foregroundColor),
+      child: Icon(
+        iconData,
+        color: disable
+            ? Theme.of(context).colorScheme.surfaceDim
+            : Theme.of(context).floatingActionButtonTheme.foregroundColor,
+      ),
     );
   }
 }

@@ -53,6 +53,7 @@ dependencies:
   just_audio: ^0.9.41
   flutter_form_builder: ^9.5.0
   form_builder_validators: ^11.0.0
+  get_it: ^8.0.2
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +85,7 @@ flutter:
     - assets/audio/incorrect/
     - assets/audio/other/
     - assets/gifs/correct/
+    - assets/audio/soundtracks/
 
      # An image asset can refer to one or more resolution-specific "variants", see
       # https://flutter.dev/assets-and-images/#resolution-aware

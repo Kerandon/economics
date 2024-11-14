@@ -1,10 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/app/custom_widgets/building_helper.dart';
 import 'package:economics_app/app/custom_widgets/custom_back_to_home_button.dart';
-import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
-import 'package:economics_app/app/custom_widgets/custom_pop_up.dart';
-import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/quiz_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/unit_dropdown_buttons.dart';
@@ -12,14 +8,12 @@ import 'package:economics_app/sections/quizzes/quiz_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_form.dart';
-import 'package:economics_app/sections/settings/manage_questions/methods/delete_question_from_firebase.dart';
 import 'package:flutter/material.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../quizzes/methods/get_questions_data.dart';
+import 'manage_questions_tile.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
   const ManageQuestionsPage({super.key});
@@ -95,82 +89,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                           final q = filteredQuestions[index];
                           return Column(
                             children: [
-                              ListTile(
-                                titleAlignment: ListTileTitleAlignment.top,
-                                trailing: ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                      maxWidth: size.width * 0.20),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                          onPressed: () {
-                                            deleteQuestion(context, q);
-                                          },
-                                          icon: const Icon(
-                                              Icons.delete_outlined)),
-                                      IconButton(
-                                          onPressed: () {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    AddQuestionForm(
-                                                  question: q,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          icon:
-                                              const Icon(Icons.edit_outlined)),
-                                    ],
-                                  ),
-                                ),
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      q.question ?? "question blank",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                              fontWeight: FontWeight.bold),
-                                    ),
-                                    ...q.answers!.map(
-                                      (e) {
-                                        return Row(
-                                          children: [
-                                            SizedBox(
-                                              width: size.width * 0.003,
-                                            ),
-                                            Text(
-                                              (q.answers!.indexOf(e) + 1)
-                                                  .toAlphabet(),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: size.width * 0.003,
-                                              ),
-                                              child: Text(
-                                                e.answer,
-                                              ),
-                                            ),
-                                            if (e.isCorrect) ...[
-                                              Icon(
-                                                Icons.check_circle_outline,
-                                                size: 15,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                              ),
-                                            ],
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              ManageQuestionsTile(q: q),
                               const CustomDivider(),
                             ],
                           );
@@ -184,36 +103,5 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
             }),
       ),
     );
-  }
-
-  void deleteQuestion(BuildContext context, QuestionModel q) {
-    showDialog(
-        context: context,
-        builder: (context) => CustomPopup(actionButtons: [
-              CustomChipButton(
-                  text: 'Confirm',
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => BuilderHelper(
-                          future: deleteQuestionFromFirebase(q.id!),
-                          onComplete: () {
-                            WidgetsBinding.instance.addPostFrameCallback((t) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Question deleted')));
-                            });
-                          },
-                        ),
-                      ),
-                    );
-                  }),
-              CustomChipButton(
-                  text: 'Cancel',
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-            ], title: 'Are you sure you want to delete this question?'));
   }
 }

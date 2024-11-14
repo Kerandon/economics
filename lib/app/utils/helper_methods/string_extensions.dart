@@ -23,3 +23,17 @@ extension BracketExtractExtension on String {
     return null; // Return null if no match found
   }
 }
+
+extension StringListExtensions on List<String> {
+  bool hasDuplicates() {
+    final seenStrings = <String>{}; // Set to track unique strings
+
+    for (var str in this) {
+      if (seenStrings.contains(str)) {
+        return true; // Duplicate found
+      }
+      seenStrings.add(str); // Add string to the set if it's unique so far
+    }
+    return false; // No duplicates
+  }
+}

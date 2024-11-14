@@ -73,7 +73,7 @@ class CustomChipButton extends StatelessWidget {
                     onPressed?.call();
                   },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize:
@@ -81,7 +81,7 @@ class CustomChipButton extends StatelessWidget {
                 children: [
                   if (icon != null) ...[
                     Padding(
-                      padding: const EdgeInsets.all(4.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Icon(
                         icon,
                         color: iconAndTextColor,

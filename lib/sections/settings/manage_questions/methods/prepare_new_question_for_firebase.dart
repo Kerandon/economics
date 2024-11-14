@@ -56,12 +56,22 @@ Future<void> prepareNewQuestionForFirebase({
       builder: (context) => BuilderHelper(
         future: sendNewQuestionToFirebase(question: q),
         onComplete: () {
-          WidgetsBinding.instance.addPostFrameCallback((t) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const ManageQuestionsPage()));
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Question added successfully')));
+          // Check if the widget is still mounted before navigating
+          if (context.mounted) {
+            // Wrap the navigation code inside the post-frame callback
+
+            // Ensure we are using a valid context for navigation
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const ManageQuestionsPage(),
+              ),
+            );
+
+            // Show the snack bar
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Question added successfully')),
+            );
+          }
         },
       ),
     ),

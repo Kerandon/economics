@@ -18,12 +18,6 @@ class _UnitDropdownButtonsState extends ConsumerState<UnitDropdownButtons> {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
-    // editState.unit.subunits.sort((a, b) {
-    //    int aIndex = int.tryParse(a.index ?? '0') ?? 0;
-    //    int bIndex = int.tryParse(b.index ?? '0') ?? 0;
-    //    return aIndex.compareTo(bIndex);
-    //  });
-
     return Column(
       children: [
         if (editState.course.units.isNotEmpty) ...[
@@ -32,7 +26,7 @@ class _UnitDropdownButtonsState extends ConsumerState<UnitDropdownButtons> {
             child: DropdownButton<UnitMixin>(
               underline: buildUnderline(context),
               isExpanded: true,
-              menuMaxHeight: 200,
+              menuMaxHeight: size.height * 0.20,
               onChanged: (e) {
                 editNotifier.setUnit(e as UnitMixin);
                 if (e.subunits.isNotEmpty) {
@@ -50,6 +44,7 @@ class _UnitDropdownButtonsState extends ConsumerState<UnitDropdownButtons> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '${e.index}  ${e.name}  ($numberOfUnits)',
+                      style: Theme.of(context).textTheme.bodyMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -82,6 +77,7 @@ class _UnitDropdownButtonsState extends ConsumerState<UnitDropdownButtons> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         '${editState.unit.index}.${e.index}  ${e.name}  ($numberOfSubunits)',
+                        style: Theme.of(context).textTheme.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

@@ -65,9 +65,6 @@ class _CustomSliderState extends ConsumerState<CustomSlider>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(
-            width: size.width * kPageIndentHorizontal,
-          ),
           Expanded(
             flex: 8,
             child: SizedBox(
@@ -84,10 +81,11 @@ class _CustomSliderState extends ConsumerState<CustomSlider>
               ),
             ),
           ),
-          Expanded(
+          Padding(
+            padding: EdgeInsets.only(left: size.width * 0.02),
             child: Center(
               child: Text(
-                  '${quizState.currentQuestionIndex + 1} / ${quizState.selectedQuestions.length}',
+                  '${quizState.currentQuestionIndex + 1}/${quizState.selectedQuestions.length}',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       )),

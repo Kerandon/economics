@@ -2,6 +2,7 @@ import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../quiz_enums/number_of_questions.dart';
 import '../quiz_state/edit_question_state.dart';
 
 class NumberOfQuestionsButtons extends ConsumerWidget {
@@ -14,21 +15,42 @@ class NumberOfQuestionsButtons extends ConsumerWidget {
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final theme = Theme.of(context);
 
+    List<int> numbers = [];
+    final numberOfFilteredQuestions = editState.filteredQuestions.length;
+
+    if (numberOfFilteredQuestions > 0) {
+      if (numberOfFilteredQuestions >= 5) {
+        for (var n in NumberOfQuestions.values) {
+          if (numberOfFilteredQuestions >= n.toInt) {
+            numbers.add(n.toInt);
+          }
+        }
+      }
+      if (NumberOfQuestions.values
+          .every((e) => e.toInt != numberOfFilteredQuestions)) {
+        numbers.add(numberOfFilteredQuestions);
+      }
+      WidgetsBinding.instance.addPostFrameCallback((t) {
+        if (!numbers.contains(editState.numberOfQuestions)) {
+          editNotifier.setNumberOfQuestions(numbers.first);
+        }
+      });
+    }
+
     return ListTile(
       title: const Text('Number of questions'),
       trailing: Wrap(
         alignment: WrapAlignment.center,
         spacing: size.width * kWrapSpacing,
-        children: kNumberOfQuestions.map((e) {
+        children: numbers.map((e) {
           final isSelected = e == editState.numberOfQuestions;
-          String text = e == -1 ? 'All' : e.toString();
           final onSurfaceColor =
               isSelected ? Colors.white : theme.colorScheme.onSurface;
           return ChoiceChip(
             selectedColor: theme.colorScheme.primary,
             checkmarkColor: onSurfaceColor,
             label: Text(
-              text,
+              e.toString(),
               style: theme.textTheme.titleSmall?.copyWith(
                 color: onSurfaceColor,
               ),

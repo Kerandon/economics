@@ -18,6 +18,7 @@ class MultiChoiceTile extends ConsumerWidget {
     final index = quizState.currentQuestionIndex;
     final question = quizState.selectedQuestions[index];
     final answers = question.answers!.toList();
+
     return IgnorePointer(
       ignoring: question.answerStage == AnswerStage.correct ||
           question.answerStage == AnswerStage.incorrect,

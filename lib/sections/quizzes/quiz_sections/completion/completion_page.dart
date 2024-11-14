@@ -1,10 +1,8 @@
-import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../app/custom_widgets/gap.dart';
 import '../../quiz_state/quiz_state.dart';
 import 'incorrect_answers_page.dart';
 
@@ -21,7 +19,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
     final size = MediaQuery.of(context).size;
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
-    const spacing = 0.03;
+    const spacing = 0.01;
     int numberCorrect = 0;
     int totalQuestions = quizState.selectedQuestions.length;
 
@@ -39,9 +37,9 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
     if (percentCorrect < 0.50) {
       emoji = '📈';
     } else if (percentCorrect >= 0.50 && percentCorrect < 0.85) {
-      emoji = '🏆';
-    } else if (percentCorrect >= 0.85 && percentCorrect <= 0.99) {
       emoji = '🚀';
+    } else if (percentCorrect >= 0.85 && percentCorrect <= 0.99) {
+      emoji = '🏆';
     } else if (percentCorrect == 1.00) {
       emoji = '🎯';
     }
@@ -64,9 +62,6 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: size.height * spacing,
-                ),
                 Text(
                   'Results',
                   textAlign: TextAlign.center,
@@ -79,7 +74,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                   child: Text(
                     emoji,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontSize: 60,
+                          fontSize: 100,
                         ),
                   ),
                 ),
@@ -87,128 +82,97 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
             ),
             content: Builder(builder: (context) {
               final size = MediaQuery.of(context).size;
-              return SizedBox(
-                width: size.width * 0.85,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withOpacity(kBackgroundOpacity),
-                          borderRadius: BorderRadius.circular(kRadius),
-                          border: const Border()),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.width * 0.10,
-                            vertical: size.height * 0.03),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(size.height * 0.01),
-                              child: FittedBox(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: size.height * spacing,
-                                    ),
-                                    Text(
-                                      '${(percentCorrect * 100).round()}%',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displayLarge
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                    ),
-                                    SizedBox(
-                                      height: size.height * spacing,
-                                    ),
-                                  ],
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.01,
+                        vertical: size.height * 0.01),
+                    child: Column(
+                      children: [
+                        FittedBox(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: size.height * spacing,
                                 ),
-                              ),
-                            ),
-                            RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                style: Theme.of(context).textTheme.displaySmall,
-                                children: [
-                                  TextSpan(
-                                    text: '$numberCorrect',
-                                    style: TextStyle(
+                                child: Text(
+                                  '${(percentCorrect * 100).round()}%',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
                                         color: Theme.of(context)
                                             .colorScheme
                                             .primary,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const TextSpan(
-                                    text: ' of ',
-                                  ),
-                                  TextSpan(
-                                    text: '$totalQuestions',
-                                    style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const TextSpan(
-                                    text: ' questions were answered correctly',
-                                  ),
-                                ],
+                                      ),
+                                ),
                               ),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.titleLarge,
+                            children: [
+                              TextSpan(
+                                text: '$numberCorrect',
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const TextSpan(
+                                text: ' of ',
+                              ),
+                              TextSpan(
+                                text: '$totalQuestions',
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const TextSpan(
+                                text: ' questions were answered correctly',
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               );
             }),
-            actionsAlignment: MainAxisAlignment.center,
+            actionsAlignment: MainAxisAlignment.spaceEvenly,
             actions: [
-              Column(
-                children: [
-                  const Gap(),
-                  Wrap(
-                    alignment: WrapAlignment.start,
-                    spacing: size.width * kWrapSpacing,
-                    children: [
-                      if (percentCorrect != 1.0) ...[
-                        CustomChipButton(
-                          text: 'Review incorrect answers',
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    const IncorrectAnswersPage()));
-                          },
-                          isSelected: true,
-                        ),
-                      ],
-                      CustomChipButton(
-                        text: 'New quiz',
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(),
-                            ),
-                          );
-                          WidgetsBinding.instance.addPostFrameCallback((t) {
-                            quizNotifier.setResetQuestions();
-                          });
-                        },
-                        isSelected: true,
-                      ),
-                    ],
-                  ),
-                  const Gap(),
-                ],
+              if (percentCorrect != 1.0) ...[
+                CustomChipButton(
+                  text: 'Review incorrect answers',
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const IncorrectAnswersPage()));
+                  },
+                  isSelected: true,
+                ),
+              ],
+              CustomChipButton(
+                text: 'New quiz',
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
+                  );
+                  WidgetsBinding.instance.addPostFrameCallback((t) {
+                    quizNotifier.setResetQuestions();
+                  });
+                },
+                isSelected: true,
               ),
             ],
           ),

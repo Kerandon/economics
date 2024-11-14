@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
@@ -34,9 +35,13 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: Text(
-              '${editState.unit.name} - '
-              '${editState.subunit.name}',
+            title: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: AutoSizeText(
+                '${editState.unit.name} - ${editState.subunit.name}',
+                overflow: TextOverflow.fade,
+                maxLines: 1,
+              ),
             ),
             leading: IconButton(
               icon: const Icon(
@@ -52,43 +57,41 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                     },
                   ),
                 );
+                WidgetsBinding.instance.addPostFrameCallback((t) {});
               },
             ),
           ),
-          body: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                const SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      CustomSlider(),
-                    ],
-                  ),
-                )
-              ];
-            },
-            body: Container(
-              color: Theme.of(context).colorScheme.surface,
-              child: Stack(
-                children: [
-                  PageView(
-                    onPageChanged: (index) {
-                      WidgetsBinding.instance.addPostFrameCallback((t) {
-                        setState(() {});
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * kPageIndentHorizontal,
+            ),
+            child: NestedScrollView(
+              floatHeaderSlivers: true,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  const SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        CustomSlider(),
+                      ],
+                    ),
+                  )
+                ];
+              },
+              body: Container(
+                color: Theme.of(context).colorScheme.surface,
+                child: Stack(
+                  children: [
+                    PageView(
+                      onPageChanged: (index) {
                         quizNotifier.setCurrentQuestionIndex(index);
-                      });
-                    },
-                    controller: _pageController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: quizState.selectedQuestions.map(
-                      (question) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: size.width * kPageIndentHorizontal,
-                          ),
-                          child: SingleChildScrollView(
+                      },
+                      controller: _pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: quizState.selectedQuestions.map(
+                        (question) {
+                          return SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -110,12 +113,12 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                 ),
                               ],
                             ),
-                          ),
-                        );
-                      },
-                    ).toList(),
-                  ),
-                ],
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -128,7 +131,16 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
         if (quizState.selectedQuestions.isNotEmpty &&
             quizState.selectedQuestions[quizState.currentQuestionIndex]
                     .answerStage ==
-                AnswerStage.correct) ...[const ConfettiAnimation()],
+                AnswerStage.correct) ...[
+          const ConfettiAnimation(),
+        ],
+        if (quizState.selectedQuestions.isNotEmpty) ...[
+          ConfettiAnimation(
+            animate: quizState.selectedQuestions[quizState.currentQuestionIndex]
+                    .answerStage ==
+                AnswerStage.correct,
+          ),
+        ],
       ],
     );
   }

@@ -28,7 +28,7 @@ class CustomAppTheme {
 
         /// Use [scrim] and [surfaceDim] for disabled
         scrim: isDark ? Colors.grey.shade900 : Colors.grey.shade400,
-        surfaceDim: isDark ? Colors.grey.shade800 : Colors.grey.shade500,
+        surfaceDim: isDark ? Colors.grey.shade600 : Colors.grey.shade900,
         surface: isDark
             ? AppColors.backgroundDarkTheme
             : AppColors.backgroundLightTheme,
@@ -76,6 +76,8 @@ class CustomAppTheme {
       ),
       listTileTheme: ListTileThemeData(
         titleTextStyle: TextStyle(color: displayColor),
+        subtitleTextStyle: TextStyle(color: displayColor),
+        leadingAndTrailingTextStyle: TextStyle(color: displayColor),
       ),
       // Adding the textTheme for display styles
       textTheme: GoogleFonts.robotoCondensedTextTheme().copyWith(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/audio_manager.dart';
+import '../../../app/audio_manager/audio_manager.dart';
+import '../../../main.dart';
 import '../custom_widgets/gif_box.dart';
 import '../methods/show_quick_pop_box.dart';
 import '../quiz_enums/answer_stage.dart';
@@ -13,6 +14,7 @@ class QuizState {
   final int numberOfQuestionsCorrect;
   final int numberOfQuestionsSelected;
   final int currentQuestionIndex;
+  final bool quizIsCompleted;
 
   QuizState({
     required this.selectedQuestions,
@@ -20,6 +22,7 @@ class QuizState {
     required this.numberOfQuestionsCorrect,
     required this.numberOfQuestionsSelected,
     required this.currentQuestionIndex,
+    required this.quizIsCompleted,
   });
 
   QuizState copyWith({
@@ -28,6 +31,7 @@ class QuizState {
     int? numberOfQuestionsCorrect,
     int? numberOfQuestionsSelected,
     int? currentQuestionIndex,
+    bool? quizIsCompleted,
   }) {
     return QuizState(
       selectedQuestions: selectedQuestions ?? this.selectedQuestions,
@@ -37,6 +41,7 @@ class QuizState {
       numberOfQuestionsSelected:
           numberOfQuestionsSelected ?? this.numberOfQuestionsSelected,
       currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,
+      quizIsCompleted: quizIsCompleted ?? this.quizIsCompleted,
     );
   }
 }
@@ -45,11 +50,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
   QuizNotifier(super._state);
 
   void setSelectedQuestions(List<QuestionModel> questions) {
-    Set<QuestionModel> uniqueQuestions = questions.toSet();
-
-    List<QuestionModel> uniqueQuestionsList = uniqueQuestions.toList();
-
-    state = state.copyWith(selectedQuestions: uniqueQuestionsList..shuffle());
+    state = state.copyWith(selectedQuestions: questions);
   }
 
   void setQuestionAsSelected(QuestionModel question, AnswerModel answer) {
@@ -134,11 +135,11 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
     state = state.copyWith(selectedQuestions: questions);
     if (question.answerStage == AnswerStage.correct) {
-      showQuickPopup(context, const GifBox(filesUrl: 'assets/gifs/correct/'));
-      AudioManager.playRandomAudio('assets/audio/correct/');
+      // showQuickPopup(context, const GifBox(filesUrl: 'assets/gifs/correct/'));
+      getIt<AudioManager>().playSoundRandomly('correct');
     }
     if (question.answerStage == AnswerStage.incorrect) {
-      AudioManager.playRandomAudio('assets/audio/incorrect/');
+      getIt<AudioManager>().playSoundRandomly('incorrect');
     }
   }
 
@@ -191,12 +192,17 @@ class QuizNotifier extends StateNotifier<QuizState> {
     state = state.copyWith(currentQuestionIndex: index);
   }
 
+  void setQuizIsCompleted(bool completed) {
+    state = state.copyWith(quizIsCompleted: completed);
+  }
+
   void setResetQuestions() {
     state = state.copyWith(
       selectedQuestions: [],
       questionsAllSelected: false,
       numberOfQuestionsCorrect: 0,
       currentQuestionIndex: 0,
+      quizIsCompleted: false,
     );
   }
 }
@@ -209,6 +215,7 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       numberOfQuestionsCorrect: 0,
       numberOfQuestionsSelected: 5,
       currentQuestionIndex: 0,
+      quizIsCompleted: false,
     ),
   ),
 );

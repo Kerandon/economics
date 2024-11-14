@@ -40,28 +40,28 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return const Stack(
       children: [
-        Align(
-          alignment: const Alignment(0, -1),
-          child: ConfettiWidget(
-            canvas: MediaQuery.of(context).size,
-            colors: const [
-              Colors.amberAccent,
-              Colors.redAccent,
-              Colors.pinkAccent
-            ],
-            blastDirectionality: BlastDirectionality.explosive,
-            numberOfParticles: 18,
-            maxBlastForce: 60,
-            gravity: 0.60,
-            minimumSize: const Size(20, 50),
-            maximumSize: const Size(50, 80),
-            shouldLoop: false,
-            confettiController: _controller,
-            // createParticlePath: drawStar,
-          ),
-        ),
+        // Align(
+        //   alignment: const Alignment(0, -1),
+        //   child: ConfettiWidget(
+        //     canvas: MediaQuery.of(context).size,
+        //     colors: const [
+        //       Colors.amberAccent,
+        //       Colors.redAccent,
+        //       Colors.pinkAccent
+        //     ],
+        //     blastDirectionality: BlastDirectionality.explosive,
+        //     numberOfParticles: 18,
+        //     maxBlastForce: 60,
+        //     gravity: 0.60,
+        //     minimumSize: const Size(20, 50),
+        //     maximumSize: const Size(50, 80),
+        //     shouldLoop: false,
+        //     confettiController: _controller,
+        //     // createParticlePath: drawStar,
+        //   ),
+        // ),
       ],
     );
   }

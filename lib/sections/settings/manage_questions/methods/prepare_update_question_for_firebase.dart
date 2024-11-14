@@ -66,8 +66,13 @@ void prepareUpdateQuestionForFirebase({
                 updatedFields: updatedFields),
             onComplete: () {
               WidgetsBinding.instance.addPostFrameCallback((t) {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ManageQuestionsPage()));
+                if (context.mounted) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ManageQuestionsPage(),
+                    ),
+                  );
+                }
               });
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('Question updated successfully')));

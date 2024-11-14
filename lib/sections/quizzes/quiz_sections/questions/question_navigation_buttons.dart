@@ -1,11 +1,9 @@
-import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/completion/completion_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/custom_change_button.dart';
 import '../../quiz_enums/answer_stage.dart';
@@ -20,7 +18,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     final editState = ref.watch(editQuestionProvider);
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
@@ -29,22 +27,16 @@ class QuestionNavigationButtons extends ConsumerWidget {
     if (quizState.selectedQuestions.isNotEmpty) {
       question = quizState.selectedQuestions[questionIndex];
     }
-    String centerButtonText = "";
-    bool quizIsCompleted = false, disableCenterButton = false;
-    if (questionIndex == quizState.selectedQuestions.length - 1) {
-      if (question.answerStage == AnswerStage.correct ||
-          question.answerStage == AnswerStage.incorrect) {
-        quizIsCompleted = true;
-      }
-    }
 
-    if (!quizIsCompleted) {
-      if (question.answerStage == AnswerStage.notSelected ||
-          question.answerStage == AnswerStage.correct ||
-          question.answerStage == AnswerStage.incorrect) {
-        disableCenterButton = true;
-      }
-    }
+    bool onLastQuestion =
+        questionIndex == quizState.selectedQuestions.length - 1;
+    bool questionIsAnswered = question.answerStage == AnswerStage.correct ||
+        question.answerStage == AnswerStage.incorrect;
+    bool disableCenterButton = false;
+    bool showCenterButton = false;
+    String centerButtonText = kCheck;
+
+    checkIfQuizIsCompleted(quizState, quizNotifier);
 
     /// Directional buttons
     /// Left button
@@ -55,8 +47,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
 
     /// Right button
     bool disableButtonRight = false;
-    if (quizState.currentQuestionIndex ==
-        quizState.selectedQuestions.length - 1) {
+    if (onLastQuestion) {
       disableButtonRight = true;
     }
     if (editState.checkAnswersAtEnd &&
@@ -64,25 +55,38 @@ class QuestionNavigationButtons extends ConsumerWidget {
       disableButtonRight = true;
     }
 
-    /// Check answers one by one
-    if (!editState.checkAnswersAtEnd) {
+    /// Check answers at the end
+    if (editState.checkAnswersAtEnd) {
+      if (onLastQuestion && question.answerStage != AnswerStage.notSelected ||
+          quizState.quizIsCompleted) {
+        centerButtonText = kResults;
+        showCenterButton = true;
+      }
+    } else {
+      /// Check answers one-by-one
+      showCenterButton = true;
+      if (question.answerStage == AnswerStage.notSelected) {
+        disableCenterButton = true;
+      }
+
       if (question.answerStage == AnswerStage.notSelected ||
           question.answerStage == AnswerStage.selected) {
         disableButtonRight = true;
       }
-    }
 
-    if (!editState.checkAnswersAtEnd) {
-      if (quizIsCompleted) {
-        centerButtonText = 'Show results';
+      if (quizState.quizIsCompleted) {
+        centerButtonText = kResults;
       } else {
-        centerButtonText = 'Check question';
+        if (question.answerStage == AnswerStage.notSelected ||
+            questionIsAnswered) {
+          disableCenterButton = true;
+        }
       }
     }
+
     return SizedBox(
-      width: size.width * 1,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CustomPageChangeButton(
             onPressed: () {
@@ -93,29 +97,44 @@ class QuestionNavigationButtons extends ConsumerWidget {
             iconData: Icons.arrow_back_outlined,
             disable: disableButtonLeft,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.30),
-            child: CustomChipButton(
-              isDisabled: disableCenterButton,
-              text: centerButtonText,
-              onPressed: () {
-                if (questionIndex == quizState.selectedQuestions.length - 1 &&
-                    question.answerStage == AnswerStage.selected) {}
-                if (quizIsCompleted) {
-                  showDialog(
-                      context: context,
-                      builder: (context) => const CompletionPage());
-                } else {
-                  if (editState.checkAnswersAtEnd) {
-                    quizNotifier.checkAllAnswers();
-                  } else {
-                    quizNotifier.checkAnswer(
-                        context: context, question: question);
-                  }
-                }
-              },
+          if (showCenterButton) ...[
+            FloatingActionButton.extended(
+              backgroundColor: disableCenterButton
+                  ? theme.colorScheme.scrim
+                  : theme.floatingActionButtonTheme.backgroundColor,
+              disabledElevation: 0,
+              label: Text(
+                centerButtonText,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: disableCenterButton
+                      ? theme.colorScheme.surfaceDim
+                      : theme.floatingActionButtonTheme.foregroundColor,
+                ),
+              ),
+              onPressed: disableCenterButton
+                  ? null
+                  : () {
+                      if (editState.checkAnswersAtEnd) {
+                        if (onLastQuestion &&
+                            question.answerStage == AnswerStage.selected) {
+                          quizNotifier.checkAllAnswers();
+                          buildShowCompletionDialog(context);
+                        }
+                        if (quizState.quizIsCompleted) {
+                          buildShowCompletionDialog(context);
+                        }
+                      } else {
+                        if (onLastQuestion && questionIsAnswered ||
+                            quizState.quizIsCompleted) {
+                          buildShowCompletionDialog(context);
+                        } else {
+                          quizNotifier.checkAnswer(
+                              context: context, question: question);
+                        }
+                      }
+                    },
             ),
-          ),
+          ],
           CustomPageChangeButton(
             onPressed: () {
               pageController.animateToPage(
@@ -131,18 +150,18 @@ class QuestionNavigationButtons extends ConsumerWidget {
       ),
     );
   }
-}
 
-void _showCompletionBox(
-    {required BuildContext context, required QuizState quizState}) {
-  Future.delayed(const Duration(milliseconds: 800), () {
-    if (context.mounted && ModalRoute.of(context)?.isCurrent != true) {
-      if (quizState.selectedQuestions.isNotEmpty) {
-        WidgetsBinding.instance.addPostFrameCallback((t) async {
-          await showDialog(
-              context: context, builder: (context) => const CompletionPage());
-        });
-      }
-    }
-  });
+  void checkIfQuizIsCompleted(QuizState quizState, QuizNotifier quizNotifier) {
+    WidgetsBinding.instance.addPostFrameCallback((t) {
+      final isCompleted = quizState.selectedQuestions.every((e) =>
+          e.answerStage == AnswerStage.correct ||
+          e.answerStage == AnswerStage.incorrect);
+      quizNotifier.setQuizIsCompleted(isCompleted);
+    });
+  }
+
+  Future<dynamic> buildShowCompletionDialog(BuildContext context) {
+    return showDialog(
+        context: context, builder: (context) => const CompletionPage());
+  }
 }

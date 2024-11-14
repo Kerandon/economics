@@ -14,6 +14,8 @@ class CustomFormBuilderTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+        minLines: 1,
+        maxLines: 5,
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(),
         ]),

@@ -16,6 +16,7 @@ const kTitle = 'title';
 const kBody = 'body';
 
 /// Quiz
+const kNumberOfQuestions = [5, 10, 15, 20, -1];
 const kIndex = 'index';
 const kName = 'name';
 const kType = 'type';
@@ -39,8 +40,9 @@ const kIncorrectAnswer1 = 'Incorrect answer 1';
 const kIncorrectAnswer2 = 'Incorrect answer 2';
 const kIncorrectAnswer3 = 'Incorrect answer 3';
 const kExplanation = 'Answer explanation';
+const kCheck = 'Check';
+const kResults = 'Results';
 
-const kNumberOfQuestions = [5, 10, 15, 20, -1];
 const kFormSpacing = 0.005;
 const kDropdownMenuItemGap = 10.0;
 const kDropDownWidth = 0.90;

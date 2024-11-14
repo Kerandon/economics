@@ -14,6 +14,7 @@ class EditQuestionState {
   final UnitMixin unit;
   final UnitMixin subunit;
   final List<QuestionModel> allQuestions;
+  final List<QuestionModel> filteredQuestions;
   final int numberOfQuestions;
   final bool checkAnswersAtEnd;
 
@@ -24,6 +25,7 @@ class EditQuestionState {
     required this.unit,
     required this.subunit,
     required this.allQuestions,
+    required this.filteredQuestions,
     required this.numberOfQuestions,
     required this.checkAnswersAtEnd,
   });
@@ -35,12 +37,14 @@ class EditQuestionState {
     UnitMixin? unit,
     UnitMixin? subunit,
     List<QuestionModel>? allQuestions,
+    List<QuestionModel>? filteredQuestions,
     int? numberOfQuestions,
     bool? checkAnswersAtEnd,
   }) {
     return EditQuestionState(
       courses: courses ?? this.courses,
       allQuestions: allQuestions ?? this.allQuestions,
+      filteredQuestions: filteredQuestions ?? this.filteredQuestions,
       course: course ?? this.course,
       questionType: questionType ?? this.questionType,
       unit: unit ?? this.unit,
@@ -90,6 +94,10 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(allQuestions: allQuestions);
   }
 
+  void setFilteredQuestions(List<QuestionModel> questions) {
+    state = state.copyWith(filteredQuestions: questions);
+  }
+
   void setNumberOfQuestions(int number) {
     state = state.copyWith(numberOfQuestions: number);
   }
@@ -109,6 +117,7 @@ final editQuestionProvider =
       unit: Unit(name: ''),
       subunit: Unit(name: ''),
       allQuestions: [],
+      filteredQuestions: [],
       numberOfQuestions: kNumberOfQuestions.first,
       checkAnswersAtEnd: false,
     ),
