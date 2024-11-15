@@ -37,6 +37,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
     ///Define variables
     final size = MediaQuery.of(context).size;
     final quizState = ref.watch(quizProvider);
+
     final quizNotifier = ref.read(quizProvider.notifier);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;

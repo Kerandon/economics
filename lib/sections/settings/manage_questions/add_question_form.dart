@@ -35,7 +35,16 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final editState = ref.watch(editQuestionProvider);
+    final courseUnitSubunitStateAllQuestionsState = ref.watch(
+      editQuestionProvider.select(
+        (s) => (
+          s.course,
+          s.unit,
+          s.subunit,
+          s.allQuestions,
+        ),
+      ),
+    );
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
     bool listsAreEqual = false;
@@ -87,7 +96,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                 spacing: 20,
                 children: courses.map((c) {
                   return CustomChipButton(
-                    isSelected: c == editState.course,
+                    isSelected: c == courseUnitSubunitStateAllQuestionsState.$1,
                     onPressed: () {
                       editNotifier.setCourse(c);
                     },
@@ -155,7 +164,8 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                           final fields = _formKey.currentState?.fields;
                           bool questionAlreadyExists = false;
                           if (widget.question == null) {
-                            questionAlreadyExists = editState.allQuestions.any(
+                            questionAlreadyExists =
+                                courseUnitSubunitStateAllQuestionsState.$4.any(
                               (q) => q.question == fields![kQuestion]!.value,
                             );
                           }
@@ -179,15 +189,27 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                           } else {
                             if (widget.question != null) {
                               prepareUpdateQuestionForFirebase(
-                                  context: context,
-                                  originalQuestion: widget.question!,
-                                  formKey: _formKey,
-                                  editState: editState);
+                                context: context,
+                                originalQuestion: widget.question!,
+                                formKey: _formKey,
+                                course:
+                                    courseUnitSubunitStateAllQuestionsState.$1,
+                                unit:
+                                    courseUnitSubunitStateAllQuestionsState.$2,
+                                subunit:
+                                    courseUnitSubunitStateAllQuestionsState.$3,
+                              );
                             } else {
                               prepareNewQuestionForFirebase(
-                                  context: context,
-                                  formKey: _formKey,
-                                  editState: editState);
+                                context: context,
+                                formKey: _formKey,
+                                course:
+                                    courseUnitSubunitStateAllQuestionsState.$1,
+                                unit:
+                                    courseUnitSubunitStateAllQuestionsState.$2,
+                                subunit:
+                                    courseUnitSubunitStateAllQuestionsState.$3,
+                              );
                             }
                           }
 

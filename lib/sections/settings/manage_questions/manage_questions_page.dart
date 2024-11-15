@@ -30,7 +30,10 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final editState = ref.watch(editQuestionProvider);
+    final unitAndSubunitProvider = ref.watch(
+      editQuestionProvider.select((state) => (state.unit, state.subunit)),
+    );
+
     final editNotifier = ref.read(editQuestionProvider.notifier);
     return Scaffold(
       appBar: AppBar(
@@ -39,8 +42,11 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const AddQuestionForm()));
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AddQuestionForm(),
+                ),
+              );
             },
             icon: const Icon(
               Icons.add,
@@ -63,10 +69,10 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
 
                 List<QuestionModel> filteredQuestions = questions.toList();
                 for (var q in questions) {
-                  if (q.unit != editState.unit) {
+                  if (q.unit != unitAndSubunitProvider.$1) {
                     filteredQuestions.remove(q);
                   }
-                  if (q.subunit != editState.subunit) {
+                  if (q.subunit != unitAndSubunitProvider.$2) {
                     filteredQuestions.remove(q);
                   }
                 }

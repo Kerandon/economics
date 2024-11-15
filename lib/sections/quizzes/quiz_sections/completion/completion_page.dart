@@ -17,13 +17,17 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final quizState = ref.watch(quizProvider);
+    final selectedQuestionsState = ref.watch(
+      quizProvider.select(
+        (s) => s.selectedQuestions,
+      ),
+    );
     final quizNotifier = ref.read(quizProvider.notifier);
     const spacing = 0.01;
     int numberCorrect = 0;
-    int totalQuestions = quizState.selectedQuestions.length;
+    int totalQuestions = selectedQuestionsState.length;
 
-    for (var q in quizState.selectedQuestions) {
+    for (var q in selectedQuestionsState) {
       if (q.answerStage == AnswerStage.correct) {
         numberCorrect++;
       }

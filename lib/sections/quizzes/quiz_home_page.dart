@@ -15,7 +15,6 @@ import '../../main.dart';
 import 'custom_widgets/course_type_buttons.dart';
 import 'custom_widgets/quiz_type_buttons.dart';
 import 'custom_widgets/unit_dropdown_buttons.dart';
-import 'methods/filter_selected_questions.dart';
 import 'methods/start_quiz.dart';
 
 class QuizHomePage extends ConsumerStatefulWidget {
@@ -37,13 +36,12 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final editState = ref.watch(editQuestionProvider);
-    final editNotifier = ref.read(editQuestionProvider.notifier);
+    final numberOfQuestionsFilteredQuestionsProvider = ref.watch(
+      editQuestionProvider.select(
+          (state) => (state.numberOfQuestions, state.filteredQuestions)),
+    );
     final quizNotifier = ref.read(quizProvider.notifier);
     final audioState = ref.watch(audioProvider);
-
-    filterSelectedQuestion(
-        editState: editState, editNotifier: editNotifier, formKey: _formKey);
 
     return Scaffold(
       drawer: const SettingsPage(),
@@ -79,7 +77,8 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomChipButton(
-                      isDisabled: editState.filteredQuestions.isEmpty,
+                      isDisabled:
+                          numberOfQuestionsFilteredQuestionsProvider.$2.isEmpty,
                       text: 'Start Quiz',
                       onPressed: () {
                         final audio = getIt<AudioManager>();
@@ -90,7 +89,9 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
 
                         startQuiz(
                           context: context,
-                          editState: editState,
+                          filteredQuestions:
+                              numberOfQuestionsFilteredQuestionsProvider.$2,
+                          limit: numberOfQuestionsFilteredQuestionsProvider.$1,
                           quizNotifier: quizNotifier,
                         );
                       },

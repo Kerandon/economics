@@ -2,10 +2,10 @@ import 'package:economics_app/sections/settings/manage_questions/manage_question
 import 'package:economics_app/sections/settings/manage_questions/methods/update_question_in_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-
+import '../../../../app/utils/mixins/course_mixin.dart';
+import '../../../../app/utils/mixins/unit_mixin.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
-import '../../../quizzes/quiz_state/edit_question_state.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/building_helper.dart';
 
@@ -13,14 +13,14 @@ void prepareUpdateQuestionForFirebase({
   required BuildContext context,
   required QuestionModel originalQuestion,
   required GlobalKey<FormBuilderState> formKey,
-  required EditQuestionState editState,
+  required CourseMixin course,
+  required UnitMixin unit,
+  required UnitMixin subunit,
 }) {
   final fields = formKey.currentState!.fields;
   final updatedFields = <String, dynamic>{};
 
   // Retrieve current values from the form
-  final unit = editState.unit;
-  final subunit = editState.subunit;
   final question = fields[kQuestion]?.value;
   final correctAnswer = fields[kCorrectAnswer]?.value;
   final incorrectAnswer1 = fields[kIncorrectAnswer1]?.value;

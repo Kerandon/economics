@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/audio_manager/audio_manager.dart';
 import '../../../main.dart';
-import '../custom_widgets/gif_box.dart';
-import '../methods/show_quick_pop_box.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_sections/questions/quiz_models/answer_model.dart';
 import '../quiz_sections/questions/quiz_models/question_model.dart';

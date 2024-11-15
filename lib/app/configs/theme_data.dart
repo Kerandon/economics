@@ -1,4 +1,3 @@
-import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -115,14 +114,22 @@ class CustomAppTheme {
               isDark ? Colors.grey.shade900 : Colors.grey.shade300,
           color: AppColors.defaultAppColor),
       dropdownMenuTheme: DropdownMenuThemeData(
-        inputDecorationTheme: InputDecorationTheme(
+        menuStyle: MenuStyle(
+          fixedSize: WidgetStateProperty.all(
+            Size.fromWidth(MediaQuery.of(context).size.width * 0.92),
+          ), // Maximum allowable width
+          visualDensity: VisualDensity.compact, // Compact height for menu items
+        ),
+        textStyle: TextStyle(fontSize: 14, color: displayColor),
+        inputDecorationTheme: const InputDecorationTheme(
           isDense: true,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(kRadius),
-            borderSide: const BorderSide(
-              color: AppColors.defaultAppColor,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: AppColors
+                  .defaultAppColor, // Makes the default border invisible
             ),
           ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10),
         ),
       ),
     );

@@ -19,7 +19,8 @@ class QuestionNavigationButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final editState = ref.watch(editQuestionProvider);
+    final checkAnswersAtEndState =
+        ref.watch(editQuestionProvider.select((s) => (s.checkAnswersAtEnd)));
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     final questionIndex = quizState.currentQuestionIndex;
@@ -50,13 +51,13 @@ class QuestionNavigationButtons extends ConsumerWidget {
     if (onLastQuestion) {
       disableButtonRight = true;
     }
-    if (editState.checkAnswersAtEnd &&
+    if (checkAnswersAtEndState &&
         question.answerStage == AnswerStage.notSelected) {
       disableButtonRight = true;
     }
 
     /// Check answers at the end
-    if (editState.checkAnswersAtEnd) {
+    if (checkAnswersAtEndState) {
       if (onLastQuestion && question.answerStage != AnswerStage.notSelected ||
           quizState.quizIsCompleted) {
         centerButtonText = kResults;
@@ -114,7 +115,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
               onPressed: disableCenterButton
                   ? null
                   : () {
-                      if (editState.checkAnswersAtEnd) {
+                      if (checkAnswersAtEndState) {
                         if (onLastQuestion &&
                             question.answerStage == AnswerStage.selected) {
                           quizNotifier.checkAllAnswers();

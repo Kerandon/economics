@@ -10,7 +10,8 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appState = ref.watch(appProvider);
+    final isDarkThemeState =
+        ref.watch(appProvider.select((s) => s.isDarkTheme));
     final appNotifier = ref.read(appProvider.notifier);
     return Drawer(
       child: Scaffold(
@@ -30,7 +31,7 @@ class SettingsPage extends ConsumerWidget {
           children: [
             SwitchListTile(
                 title: const Text('Dark theme'),
-                value: appState.isDarkTheme,
+                value: isDarkThemeState,
                 onChanged: (on) {
                   appNotifier.setDarkTheme(on);
                 }),

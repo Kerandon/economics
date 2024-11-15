@@ -14,9 +14,9 @@ class MultiChoiceTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final quizState = ref.watch(quizProvider);
-    final index = quizState.currentQuestionIndex;
-    final question = quizState.selectedQuestions[index];
+    final state = ref.watch(quizProvider);
+    final index = state.currentQuestionIndex;
+    final question = state.selectedQuestions[index];
     final answers = question.answers!.toList();
 
     return IgnorePointer(

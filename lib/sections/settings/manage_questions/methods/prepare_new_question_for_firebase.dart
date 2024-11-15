@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/building_helper.dart';
+import '../../../../app/utils/mixins/course_mixin.dart';
+import '../../../../app/utils/mixins/unit_mixin.dart';
 import '../../../quizzes/quiz_enums/question_type.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
-import '../../../quizzes/quiz_state/edit_question_state.dart';
 import '../manage_questions_page.dart';
 
 Future<void> prepareNewQuestionForFirebase({
   required BuildContext context,
   required GlobalKey<FormBuilderState> formKey,
-  required EditQuestionState editState,
+  required CourseMixin course,
+  required UnitMixin unit,
+  required UnitMixin subunit,
 }) async {
   final fields = formKey.currentState!.fields;
-  final u = editState.unit;
-  final s = editState.subunit;
   final question = fields[kQuestion]?.value;
   final correctAnswer = fields[kCorrectAnswer]?.value;
   final incorrectAnswer1 = fields[kIncorrectAnswer1]?.value;
@@ -26,9 +27,9 @@ Future<void> prepareNewQuestionForFirebase({
 
   final q = QuestionModel(
     type: QuestionType.multi,
-    course: editState.course,
-    unit: u,
-    subunit: s,
+    course: course,
+    unit: unit,
+    subunit: subunit,
     question: question,
     answers: [
       AnswerModel(

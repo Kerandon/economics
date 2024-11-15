@@ -46,7 +46,9 @@ class EconApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: kAppName,
       theme: CustomAppTheme(appState, context).appTheme,
-      home: const QuizInitPage(),
+      home: const
+          //DropdownMenuExample(),
+          QuizInitPage(),
     );
   }
 }

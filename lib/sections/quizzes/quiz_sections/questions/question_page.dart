@@ -26,8 +26,15 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final editState = ref.read(editQuestionProvider);
-    final quizState = ref.watch(quizProvider);
+    final unitSubunitQuestionTypeProvider = ref.read(
+      editQuestionProvider.select(
+        (s) => (s.unit, s.subunit, s.questionType),
+      ),
+    );
+    final selectedQuestionsCurrentQuestionIndexState = ref.watch(quizProvider
+        .select((s) => (s.selectedQuestions, s.currentQuestionIndex)));
+    final currentQuestion = selectedQuestionsCurrentQuestionIndexState
+        .$1[selectedQuestionsCurrentQuestionIndexState.$2];
     final quizNotifier = ref.read(quizProvider.notifier);
     final customButtonGap = size.height * 0.04;
 
@@ -38,7 +45,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             title: FittedBox(
               fit: BoxFit.scaleDown,
               child: AutoSizeText(
-                '${editState.unit.name} - ${editState.subunit.name}',
+                '${unitSubunitQuestionTypeProvider.$1.name} - ${unitSubunitQuestionTypeProvider.$2.name}',
                 overflow: TextOverflow.fade,
                 maxLines: 1,
               ),
@@ -89,18 +96,19 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                       },
                       controller: _pageController,
                       physics: const NeverScrollableScrollPhysics(),
-                      children: quizState.selectedQuestions.map(
+                      children:
+                          selectedQuestionsCurrentQuestionIndexState.$1.map(
                         (question) {
                           return SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 ...[
-                                  if (editState.questionType ==
+                                  if (unitSubunitQuestionTypeProvider.$3 ==
                                       QuestionType.multi) ...[
                                     const MultiChoiceTile(),
                                   ],
-                                  if (editState.questionType ==
+                                  if (unitSubunitQuestionTypeProvider.$3 ==
                                       QuestionType.flip) ...[
                                     const FlipCardTile(),
                                   ],
@@ -128,17 +136,13 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
         ),
-        if (quizState.selectedQuestions.isNotEmpty &&
-            quizState.selectedQuestions[quizState.currentQuestionIndex]
-                    .answerStage ==
-                AnswerStage.correct) ...[
+        if (selectedQuestionsCurrentQuestionIndexState.$1.isNotEmpty &&
+            currentQuestion.answerStage == AnswerStage.correct) ...[
           const ConfettiAnimation(),
         ],
-        if (quizState.selectedQuestions.isNotEmpty) ...[
+        if (selectedQuestionsCurrentQuestionIndexState.$1.isNotEmpty) ...[
           ConfettiAnimation(
-            animate: quizState.selectedQuestions[quizState.currentQuestionIndex]
-                    .answerStage ==
-                AnswerStage.correct,
+            animate: currentQuestion.answerStage == AnswerStage.correct,
           ),
         ],
       ],

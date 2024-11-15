@@ -8,7 +8,9 @@ class QuizStats extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizState = ref.watch(quizProvider);
+    final selectedQuestionsNumberOfQuestionsCorrectState = ref.watch(
+        quizProvider
+            .select((s) => (s.selectedQuestions, s.numberOfQuestionsCorrect)));
     final quizNotifier = ref.read(quizProvider.notifier);
     final size = MediaQuery.of(context).size;
     const spacing = 0.02;
@@ -18,8 +20,8 @@ class QuizStats extends ConsumerWidget {
           Padding(
             padding: EdgeInsets.all(size.height * spacing),
             child: Text(
-              (quizState.numberOfQuestionsCorrect /
-                      quizState.selectedQuestions.length)
+              (selectedQuestionsNumberOfQuestionsCorrectState.$2 /
+                      selectedQuestionsNumberOfQuestionsCorrectState.$1.length)
                   .toPercentageString(),
               style: Theme.of(context).textTheme.displayLarge,
             ),
@@ -27,7 +29,7 @@ class QuizStats extends ConsumerWidget {
           Padding(
             padding: EdgeInsets.only(bottom: size.height * spacing),
             child: Text(
-              '${quizState.numberOfQuestionsCorrect} / ${quizState.selectedQuestions.length} answers are correct',
+              '${selectedQuestionsNumberOfQuestionsCorrectState.$2} / ${selectedQuestionsNumberOfQuestionsCorrectState.$1.length} answers are correct',
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
