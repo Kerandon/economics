@@ -1,8 +1,9 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
+import 'package:economics_app/app/enums/firebase_status.dart';
 import 'package:flutter/material.dart';
 
-class BuilderHelper extends StatelessWidget {
+class BuilderHelper extends StatefulWidget {
   const BuilderHelper({
     super.key,
     required this.future,
@@ -13,8 +14,15 @@ class BuilderHelper extends StatelessWidget {
 
   final Future<void> future;
   final String loadingText;
-  final Function? onComplete;
+  final Function(dynamic)? onComplete;
   final Map<String, VoidCallback>? onButtonPressed;
+
+  @override
+  State<BuilderHelper> createState() => _BuilderHelperState();
+}
+
+class _BuilderHelperState extends State<BuilderHelper> {
+  bool _onCompleteHasBeenCalled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +31,22 @@ class BuilderHelper extends StatelessWidget {
       body: SizedBox(
         width: size.width,
         child: FutureBuilder<dynamic>(
-          future: future,
+          future: widget.future,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
+                widget.onComplete?.call(FirebaseStatus.error);
               } else {
-                if (onComplete != null) {
+                if (widget.onComplete != null) {
                   WidgetsBinding.instance.addPostFrameCallback((t) {
-                    Navigator.of(context).pop();
-                    onComplete?.call();
+                    if (!_onCompleteHasBeenCalled) {
+                      _onCompleteHasBeenCalled = true;
+
+                      Navigator.of(context).pop();
+                      widget.onComplete?.call(FirebaseStatus.success);
+                    }
                   });
                 }
                 return Column(
@@ -41,11 +54,11 @@ class BuilderHelper extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ...[
-                      if (onButtonPressed != null) ...[
+                      if (widget.onButtonPressed != null) ...[
                         Wrap(
                           alignment: WrapAlignment.center,
                           spacing: size.width * kWrapSpacing,
-                          children: onButtonPressed!.entries
+                          children: widget.onButtonPressed!.entries
                               .map(
                                 (e) => CustomChipButton(
                                   text: e.key,

@@ -192,6 +192,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
   void setQuizIsCompleted(bool completed) {
     state = state.copyWith(quizIsCompleted: completed);
+
   }
 
   void setResetQuestions() {

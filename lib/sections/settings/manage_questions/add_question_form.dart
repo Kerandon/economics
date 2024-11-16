@@ -35,16 +35,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final courseUnitSubunitStateAllQuestionsState = ref.watch(
-      editQuestionProvider.select(
-        (s) => (
-          s.course,
-          s.unit,
-          s.subunit,
-          s.allQuestions,
-        ),
-      ),
-    );
+    final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
     bool listsAreEqual = false;
@@ -54,7 +45,6 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
       title = 'Edit question';
 
       if (!_setUpForQuestionEdit) {
-        _setUpForQuestionEdit = true;
         final questionModel = widget.question;
 
         final answers = questionModel!.answers;
@@ -77,14 +67,18 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
           fields[kIncorrectAnswer2]!.didChange(incorrectAnswers[1].answer);
           fields[kIncorrectAnswer3]!.didChange(incorrectAnswers[2].answer);
           fields[kExplanation]!.didChange(explanation);
+          final bool validated = _formKey.currentState?.saveAndValidate() ?? false;
         });
       }
     }
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(title),
-          leading: const CustomBackIconButton(ManageQuestionsPage())),
+        title: Text(title),
+        leading: const CustomBackIconButton(
+          ManageQuestionsPage(),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: size.width * kPageIndentHorizontal),
@@ -96,7 +90,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                 spacing: 20,
                 children: courses.map((c) {
                   return CustomChipButton(
-                    isSelected: c == courseUnitSubunitStateAllQuestionsState.$1,
+                    isSelected: c == editState.course,
                     onPressed: () {
                       editNotifier.setCourse(c);
                     },
@@ -108,9 +102,11 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
               FormBuilder(
                 onChanged: () {
                   WidgetsBinding.instance.addPostFrameCallback((t) {
+                    print('on change here');
                     bool validated = _formKey.currentState?.isValid == true;
+                    print('validated is ${validated}');
                     if (widget.question != null) {
-                      final answers = getAnswers(_formKey);
+                      final answers = getAnswersAndExplanation(_formKey);
                       listsAreEqual = checkIfChangesMade(
                           question: widget.question, newAnswers: answers);
                       if (!listsAreEqual && validated) {
@@ -125,22 +121,17 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                   });
                 },
                 key: _formKey,
-                child: Column(
+                child: const Column(
                   children: [
-                    const UnitDropdownButtons(),
-                    const Column(
-                      children: [
-                        CustomFormBuilderTextField(kQuestion),
-                        CustomFormBuilderTextField(kCorrectAnswer),
-                        CustomFormBuilderTextField(kIncorrectAnswer1),
-                        CustomFormBuilderTextField(kIncorrectAnswer2),
-                        CustomFormBuilderTextField(kIncorrectAnswer3),
-                      ],
-                    ),
-                    FormBuilderTextField(
-                      decoration:
-                          const InputDecoration(label: Text(kExplanation)),
-                      name: kExplanation,
+                    UnitDropdownButtons(),
+                    CustomFormBuilderTextField(kQuestion),
+                    CustomFormBuilderTextField(kCorrectAnswer),
+                    CustomFormBuilderTextField(kIncorrectAnswer1),
+                    CustomFormBuilderTextField(kIncorrectAnswer2),
+                    CustomFormBuilderTextField(kIncorrectAnswer3),
+                    CustomFormBuilderTextField(
+                      kExplanation,
+                      validationRequired: false,
                     ),
                   ],
                 ),
@@ -157,15 +148,15 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                     spacing: size.width * kWrapSpacing,
                     children: [
                       CustomChipButton(
-                        isDisabled: disableConfirmButton,
+                        isDisabled: disableConfirmButton || _formKey.currentState?.isValid == false,
                         onPressed: () {
                           final hasDuplicates =
-                              getAnswers(_formKey).hasDuplicates();
+                              getAnswersAndExplanation(_formKey)
+                                  .hasDuplicates();
                           final fields = _formKey.currentState?.fields;
                           bool questionAlreadyExists = false;
                           if (widget.question == null) {
-                            questionAlreadyExists =
-                                courseUnitSubunitStateAllQuestionsState.$4.any(
+                            questionAlreadyExists = editState.allQuestions.any(
                               (q) => q.question == fields![kQuestion]!.value,
                             );
                           }
@@ -192,28 +183,16 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                                 context: context,
                                 originalQuestion: widget.question!,
                                 formKey: _formKey,
-                                course:
-                                    courseUnitSubunitStateAllQuestionsState.$1,
-                                unit:
-                                    courseUnitSubunitStateAllQuestionsState.$2,
-                                subunit:
-                                    courseUnitSubunitStateAllQuestionsState.$3,
+                                editState: editState,
                               );
                             } else {
                               prepareNewQuestionForFirebase(
                                 context: context,
                                 formKey: _formKey,
-                                course:
-                                    courseUnitSubunitStateAllQuestionsState.$1,
-                                unit:
-                                    courseUnitSubunitStateAllQuestionsState.$2,
-                                subunit:
-                                    courseUnitSubunitStateAllQuestionsState.$3,
+                                editState: editState,
                               );
                             }
                           }
-
-                          setState(() {});
                         },
                         text: 'Confirm',
                       ),
@@ -246,7 +225,7 @@ Future updateQuestion() async {
   }
 }
 
-List<String> getAnswers(GlobalKey<FormBuilderState> formKey) {
+List<String> getAnswersAndExplanation(GlobalKey<FormBuilderState> formKey) {
   List<String> answers = [];
   if (formKey.currentState?.fields != null) {
     final fields = formKey.currentState!.fields;
@@ -254,6 +233,7 @@ List<String> getAnswers(GlobalKey<FormBuilderState> formKey) {
     answers.add(fields[kIncorrectAnswer1]!.value);
     answers.add(fields[kIncorrectAnswer2]!.value);
     answers.add(fields[kIncorrectAnswer3]!.value);
+    answers.add(fields[kExplanation]?.value ?? "");
   }
   return answers;
 }
@@ -266,6 +246,7 @@ bool checkIfChangesMade(
     for (var a in question.answers!) {
       originalAnswers.add(a.answer);
     }
+    originalAnswers.add(question.explanation ?? "");
     return const ListEquality().equals(originalAnswers, newAnswers);
   }
   return false;

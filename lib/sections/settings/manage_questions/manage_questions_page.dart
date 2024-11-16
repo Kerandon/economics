@@ -67,7 +67,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                   editNotifier.setAllQuestions(questions);
                 });
 
-                List<QuestionModel> filteredQuestions = questions.toList();
+                List<QuestionModel> filteredQuestions = questions.toList()..sort((a,b)=> a.question!.compareTo(b.question!));
                 for (var q in questions) {
                   if (q.unit != unitAndSubunitProvider.$1) {
                     filteredQuestions.remove(q);
@@ -95,6 +95,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                           final q = filteredQuestions[index];
                           return Column(
                             children: [
+                              SizedBox(height: size.height * 0.01,),
                               ManageQuestionsTile(q: q),
                               const CustomDivider(),
                             ],

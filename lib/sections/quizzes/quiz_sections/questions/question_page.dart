@@ -4,6 +4,7 @@ import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_navigation_buttons.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +34,11 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     );
     final selectedQuestionsCurrentQuestionIndexState = ref.watch(quizProvider
         .select((s) => (s.selectedQuestions, s.currentQuestionIndex)));
-    final currentQuestion = selectedQuestionsCurrentQuestionIndexState
-        .$1[selectedQuestionsCurrentQuestionIndexState.$2];
+    QuestionModel? currentQuestion;
+    if(selectedQuestionsCurrentQuestionIndexState.$1.isNotEmpty) {
+     currentQuestion = selectedQuestionsCurrentQuestionIndexState
+          .$1[selectedQuestionsCurrentQuestionIndexState.$2];
+    }
     final quizNotifier = ref.read(quizProvider.notifier);
     final customButtonGap = size.height * 0.04;
 
@@ -137,12 +141,12 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               FloatingActionButtonLocation.centerFloat,
         ),
         if (selectedQuestionsCurrentQuestionIndexState.$1.isNotEmpty &&
-            currentQuestion.answerStage == AnswerStage.correct) ...[
+            currentQuestion?.answerStage == AnswerStage.correct) ...[
           const ConfettiAnimation(),
         ],
         if (selectedQuestionsCurrentQuestionIndexState.$1.isNotEmpty) ...[
           ConfettiAnimation(
-            animate: currentQuestion.answerStage == AnswerStage.correct,
+            animate: currentQuestion?.answerStage == AnswerStage.correct,
           ),
         ],
       ],

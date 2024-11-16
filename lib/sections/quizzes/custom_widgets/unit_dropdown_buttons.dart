@@ -3,35 +3,23 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_state/edit_question_state.dart';
 
-class UnitDropdownButtons extends ConsumerStatefulWidget {
+class UnitDropdownButtons extends ConsumerWidget {
   const UnitDropdownButtons({super.key});
 
   @override
-  ConsumerState<UnitDropdownButtons> createState() =>
-      _UnitDropdownButtonsState();
-}
-
-class _UnitDropdownButtonsState extends ConsumerState<UnitDropdownButtons> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final courseUnitSubunitAllQuestionsProvider = ref.watch(
-      editQuestionProvider.select((state) => (
-            state.course,
-            state.unit,
-            state.subunit,
-            state.allQuestions,
-          )),
-    );
+    final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
     return Column(
       children: [
-        if (courseUnitSubunitAllQuestionsProvider.$1.units.isNotEmpty) ...[
+        if (editState.course.units.isNotEmpty) ...[
           DropdownMenu<UnitMixin>(
+            key: UniqueKey(),
             width: size.width,
             requestFocusOnTap: false,
-            initialSelection: courseUnitSubunitAllQuestionsProvider.$2,
+            initialSelection: editState.unit,
             onSelected: (e) {
               editNotifier.setUnit(e as UnitMixin);
               if (e.subunits.isNotEmpty) {
@@ -39,8 +27,9 @@ class _UnitDropdownButtonsState extends ConsumerState<UnitDropdownButtons> {
               }
             },
             dropdownMenuEntries:
-                courseUnitSubunitAllQuestionsProvider.$1.units.map((e) {
-              int numberOfUnits = courseUnitSubunitAllQuestionsProvider.$4
+                editState
+                    .course.units.map((e) {
+              int numberOfUnits = editState.allQuestions
                   .where((q) => q.unit == e)
                   .length;
               return DropdownMenuEntry(
@@ -49,20 +38,23 @@ class _UnitDropdownButtonsState extends ConsumerState<UnitDropdownButtons> {
               );
             }).toList(),
           ),
-          if (courseUnitSubunitAllQuestionsProvider.$2.subunits.isNotEmpty) ...[
+          if (editState.unit.subunits.isNotEmpty) ...[
             DropdownMenu<UnitMixin>(
+              key: UniqueKey(),
               width: size.width,
               requestFocusOnTap: false,
               initialSelection:
-                  courseUnitSubunitAllQuestionsProvider.$2.subunits.first,
+                  editState.subunit.name == "" ?
+                  editState.unit.subunits.first :
+                  editState.subunit,
               onSelected: (e) {
                 editNotifier.setSubunit(e!);
               },
               dropdownMenuEntries:
-                  courseUnitSubunitAllQuestionsProvider.$2.subunits.map((e) {
-                courseUnitSubunitAllQuestionsProvider.$2.subunits;
+                  editState.unit.subunits.map((e) {
+                editState.unit.subunits;
                 int numberOfSubunits = 0;
-                for (var q in courseUnitSubunitAllQuestionsProvider.$4) {
+                for (var q in editState.allQuestions) {
                   if (q.subunit == e) {
                     numberOfSubunits++;
                   }
@@ -70,7 +62,7 @@ class _UnitDropdownButtonsState extends ConsumerState<UnitDropdownButtons> {
                 return DropdownMenuEntry(
                   value: e,
                   label:
-                      '${courseUnitSubunitAllQuestionsProvider.$2.index}.${e.index}  ${e.name}  ($numberOfSubunits)',
+                      '${editState.unit.index}.${e.index}  ${e.name}  ($numberOfSubunits)',
                 );
               }).toList(),
             ),

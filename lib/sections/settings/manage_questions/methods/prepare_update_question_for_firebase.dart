@@ -1,25 +1,24 @@
+import 'package:economics_app/app/enums/firebase_status.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/settings/manage_questions/methods/update_question_in_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import '../../../../app/utils/mixins/course_mixin.dart';
-import '../../../../app/utils/mixins/unit_mixin.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/building_helper.dart';
 
-void prepareUpdateQuestionForFirebase({
-  required BuildContext context,
-  required QuestionModel originalQuestion,
-  required GlobalKey<FormBuilderState> formKey,
-  required CourseMixin course,
-  required UnitMixin unit,
-  required UnitMixin subunit,
-}) {
+void prepareUpdateQuestionForFirebase(
+    {required BuildContext context,
+    required QuestionModel originalQuestion,
+    required GlobalKey<FormBuilderState> formKey,
+    required EditQuestionState editState}) {
   final fields = formKey.currentState!.fields;
   final updatedFields = <String, dynamic>{};
 
+  final unit = editState.unit;
+  final subunit = editState.subunit;
   // Retrieve current values from the form
   final question = fields[kQuestion]?.value;
   final correctAnswer = fields[kCorrectAnswer]?.value;
@@ -64,18 +63,28 @@ void prepareUpdateQuestionForFirebase({
             future: updateQuestionInFirebase(
                 originalQuestionId: originalQuestion.id!,
                 updatedFields: updatedFields),
-            onComplete: () {
-              WidgetsBinding.instance.addPostFrameCallback((t) {
-                if (context.mounted) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const ManageQuestionsPage(),
-                    ),
-                  );
-                }
-              });
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Question updated successfully')));
+            onComplete: (value) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (t) {
+                  if (context.mounted) {
+                    String text = 'Question updated successfully';
+
+                    if (value == FirebaseStatus.error) {
+                      text = kErrorMessage;
+                    }
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ManageQuestionsPage(),
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(text),
+                      ),
+                    );
+                  }
+                },
+              );
             },
           ),
         ),

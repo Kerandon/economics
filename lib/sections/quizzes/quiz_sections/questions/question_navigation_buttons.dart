@@ -1,3 +1,4 @@
+import 'package:economics_app/app/audio_manager/audio_manager.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/completion/completion_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -6,9 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/custom_change_button.dart';
+import '../../../../main.dart';
 import '../../quiz_enums/answer_stage.dart';
 
-class QuestionNavigationButtons extends ConsumerWidget {
+class QuestionNavigationButtons extends ConsumerStatefulWidget {
   const QuestionNavigationButtons({
     super.key,
     required this.pageController,
@@ -17,7 +19,15 @@ class QuestionNavigationButtons extends ConsumerWidget {
   final PageController pageController;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<QuestionNavigationButtons> createState() => _QuestionNavigationButtonsState();
+}
+
+class _QuestionNavigationButtonsState extends ConsumerState<QuestionNavigationButtons> {
+
+  bool _completeAudioHasPlayed = false;
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final checkAnswersAtEndState =
         ref.watch(editQuestionProvider.select((s) => (s.checkAnswersAtEnd)));
@@ -85,13 +95,23 @@ class QuestionNavigationButtons extends ConsumerWidget {
       }
     }
 
+    if(!_completeAudioHasPlayed){
+
+      _completeAudioHasPlayed = true;
+      final audioManager = getIt<AudioManager>();
+      if(!audioManager.soundTrackPlayer.playing){
+        audioManager.stopSoundTrack();
+      }
+      audioManager.playSound('other/complete');
+    }
+
     return SizedBox(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           CustomPageChangeButton(
             onPressed: () {
-              pageController.animateToPage(quizState.currentQuestionIndex - 1,
+              widget.pageController.animateToPage(quizState.currentQuestionIndex - 1,
                   duration: const Duration(milliseconds: kPageChangeAnimation),
                   curve: Curves.easeInOutCirc);
             },
@@ -138,7 +158,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
           ],
           CustomPageChangeButton(
             onPressed: () {
-              pageController.animateToPage(
+              widget.pageController.animateToPage(
                 quizState.currentQuestionIndex + 1,
                 duration: const Duration(milliseconds: kPageChangeAnimation),
                 curve: Curves.easeInOutCirc,

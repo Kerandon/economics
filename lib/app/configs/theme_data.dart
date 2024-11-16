@@ -74,9 +74,9 @@ class CustomAppTheme {
         ),
       ),
       listTileTheme: ListTileThemeData(
-        titleTextStyle: TextStyle(color: displayColor),
-        subtitleTextStyle: TextStyle(color: displayColor),
-        leadingAndTrailingTextStyle: TextStyle(color: displayColor),
+        titleTextStyle: Theme.of(context).textTheme.bodyMedium,
+        subtitleTextStyle: Theme.of(context).textTheme.bodyMedium,
+        leadingAndTrailingTextStyle: Theme.of(context).textTheme.bodyMedium,
       ),
       // Adding the textTheme for display styles
       textTheme: GoogleFonts.robotoCondensedTextTheme().copyWith(

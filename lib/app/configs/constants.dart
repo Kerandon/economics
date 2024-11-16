@@ -33,7 +33,7 @@ const kQuiz = 'quiz';
 const kAllSections = 'all sections';
 const kAllUnits = 'all units';
 const kErrorMessage =
-    'An error occurred - check your internet connection & try again';
+    'Something went wrong - check your internet connection & try again';
 const kHL = 'hl';
 const kCorrectAnswer = 'Correct answer';
 const kIncorrectAnswer1 = 'Incorrect answer 1';

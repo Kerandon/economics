@@ -7,18 +7,22 @@ class CustomFormBuilderTextField extends StatelessWidget {
   const CustomFormBuilderTextField(
     this.text, {
     super.key,
+    this.validationRequired = true,
   });
 
   final String text;
+  final bool validationRequired;
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
         minLines: 1,
         maxLines: 5,
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-        ]),
+        validator: validationRequired
+            ? FormBuilderValidators.compose([
+                FormBuilderValidators.required(),
+              ])
+            : null,
         decoration: InputDecoration(
           label: Text(text.capitalizeFirstLetter()),
         ),

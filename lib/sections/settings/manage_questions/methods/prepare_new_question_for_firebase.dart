@@ -1,21 +1,19 @@
+import 'package:economics_app/app/enums/firebase_status.dart';
 import 'package:economics_app/sections/settings/manage_questions/methods/send_new_question_to_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/building_helper.dart';
-import '../../../../app/utils/mixins/course_mixin.dart';
-import '../../../../app/utils/mixins/unit_mixin.dart';
 import '../../../quizzes/quiz_enums/question_type.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import '../../../quizzes/quiz_state/edit_question_state.dart';
 import '../manage_questions_page.dart';
 
 Future<void> prepareNewQuestionForFirebase({
   required BuildContext context,
   required GlobalKey<FormBuilderState> formKey,
-  required CourseMixin course,
-  required UnitMixin unit,
-  required UnitMixin subunit,
+  required EditQuestionState editState,
 }) async {
   final fields = formKey.currentState!.fields;
   final question = fields[kQuestion]?.value;
@@ -24,7 +22,9 @@ Future<void> prepareNewQuestionForFirebase({
   final incorrectAnswer2 = fields[kIncorrectAnswer2]?.value;
   final incorrectAnswer3 = fields[kIncorrectAnswer3]?.value;
   final explanation = fields[kExplanation]?.value;
-
+  final course = editState.course;
+  final unit = editState.unit;
+  final subunit = editState.subunit;
   final q = QuestionModel(
     type: QuestionType.multi,
     course: course,
@@ -52,15 +52,19 @@ Future<void> prepareNewQuestionForFirebase({
     explanation: explanation,
   );
 
+  final future = sendNewQuestionToFirebase(question: q);
   Navigator.of(context).push(
     MaterialPageRoute(
       builder: (context) => BuilderHelper(
-        future: sendNewQuestionToFirebase(question: q),
-        onComplete: () {
+        future: future,
+        onComplete: (value) {
           // Check if the widget is still mounted before navigating
           if (context.mounted) {
             // Wrap the navigation code inside the post-frame callback
-
+            String text = 'Question added successfully';
+            if (value == FirebaseStatus.error) {
+              text = kErrorMessage;
+            }
             // Ensure we are using a valid context for navigation
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
@@ -68,10 +72,10 @@ Future<void> prepareNewQuestionForFirebase({
               ),
             );
 
-            // Show the snack bar
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Question added successfully')),
+              SnackBar(content: Text(text)),
             );
+            // Show the snack bar
           }
         },
       ),

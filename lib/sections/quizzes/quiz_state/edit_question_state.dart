@@ -65,6 +65,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   void setCourses(List<CourseMixin> courses) {
     state = state.copyWith(courses: courses);
+    setFilteredQuestions();
   }
 
   void setCourse(CourseMixin course) {
@@ -97,6 +98,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   void setAllQuestions(List<QuestionModel> allQuestions) {
     state = state.copyWith(allQuestions: allQuestions);
+    setFilteredQuestions();
   }
 
   void setFilteredQuestions() {
@@ -114,7 +116,8 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
       }
     }
 
-    state = state.copyWith(filteredQuestions: filteredQuestions.toList());
+    state = state.copyWith(
+        filteredQuestions: filteredQuestions.toList());
   }
 
   void setNumberOfQuestions(int number) {
