@@ -3,7 +3,7 @@ import 'package:economics_app/app/custom_widgets/custom_back_to_home_button.dart
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/quiz_type_buttons.dart';
-import 'package:economics_app/sections/quizzes/custom_widgets/unit_dropdown_buttons.dart';
+
 import 'package:economics_app/sections/quizzes/quiz_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
+import '../../quizzes/custom_widgets/unit_drop_down.dart';
 import '../../quizzes/methods/get_questions_data.dart';
 import 'manage_questions_tile.dart';
 
@@ -67,7 +68,8 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                   editNotifier.setAllQuestions(questions);
                 });
 
-                List<QuestionModel> filteredQuestions = questions.toList()..sort((a,b)=> a.question!.compareTo(b.question!));
+                List<QuestionModel> filteredQuestions = questions.toList()
+                  ..sort((a, b) => a.question!.compareTo(b.question!));
                 for (var q in questions) {
                   if (q.unit != unitAndSubunitProvider.$1) {
                     filteredQuestions.remove(q);
@@ -85,7 +87,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                       const Gap(),
                       const CourseTypeButtons(),
                       const Gap(),
-                      const UnitDropdownButtons(),
+                      const UnitDropDown(),
                       const Gap(),
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
@@ -95,7 +97,9 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                           final q = filteredQuestions[index];
                           return Column(
                             children: [
-                              SizedBox(height: size.height * 0.01,),
+                              SizedBox(
+                                height: size.height * 0.01,
+                              ),
                               ManageQuestionsTile(q: q),
                               const CustomDivider(),
                             ],

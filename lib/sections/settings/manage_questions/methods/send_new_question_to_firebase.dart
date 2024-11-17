@@ -7,7 +7,6 @@ Future<void> sendNewQuestionToFirebase(
   final instance = FirebaseFirestore.instance;
 
   try {
-
     await instance.collection(kQuiz).doc().set(question.toMap());
   } catch (e) {
     throw Exception('Error $e');

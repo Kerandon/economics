@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../app/custom_widgets/building_helper.dart';
@@ -16,7 +15,7 @@ void deleteQuestion(BuildContext context, QuestionModel q) {
           text: 'Confirm',
           onPressed: () {
             Navigator.of(context).pop();
-            WidgetsBinding.instance.addPostFrameCallback((t){
+            WidgetsBinding.instance.addPostFrameCallback((t) {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => BuilderHelper(
@@ -32,13 +31,11 @@ void deleteQuestion(BuildContext context, QuestionModel q) {
                           content: Text('Question deleted'),
                         ),
                       );
-
                     },
                   ),
                 ),
               );
             });
-
           }),
       CustomChipButton(
         outlinedStyle: true,

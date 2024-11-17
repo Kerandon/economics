@@ -1,5 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
@@ -11,10 +12,11 @@ class EditQuestionState {
   final QuestionType questionType;
   final List<CourseMixin> courses;
   final CourseMixin course;
+  final QuizFilter quizFilter;
+  final List<QuestionModel> filteredQuestions;
   final UnitMixin unit;
   final UnitMixin subunit;
   final List<QuestionModel> allQuestions;
-  final List<QuestionModel> filteredQuestions;
   final int numberOfQuestions;
   final bool checkAnswersAtEnd;
 
@@ -22,6 +24,7 @@ class EditQuestionState {
     required this.questionType,
     required this.courses,
     required this.course,
+    required this.quizFilter,
     required this.unit,
     required this.subunit,
     required this.allQuestions,
@@ -34,16 +37,18 @@ class EditQuestionState {
     QuestionType? questionType,
     List<CourseMixin>? courses,
     CourseMixin? course,
+    QuizFilter? quizFilter,
+    List<QuestionModel>? filteredQuestions,
     UnitMixin? unit,
     UnitMixin? subunit,
     List<QuestionModel>? allQuestions,
-    List<QuestionModel>? filteredQuestions,
     int? numberOfQuestions,
     bool? checkAnswersAtEnd,
   }) {
     return EditQuestionState(
       courses: courses ?? this.courses,
       allQuestions: allQuestions ?? this.allQuestions,
+      quizFilter: quizFilter ?? this.quizFilter,
       filteredQuestions: filteredQuestions ?? this.filteredQuestions,
       course: course ?? this.course,
       questionType: questionType ?? this.questionType,
@@ -101,6 +106,10 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     setFilteredQuestions();
   }
 
+  void setQuizFilter(QuizFilter filter){
+    state = state.copyWith(quizFilter: filter);
+  }
+
   void setFilteredQuestions() {
     List<QuestionModel> filteredQuestions = state.allQuestions.toList();
 
@@ -116,8 +125,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
       }
     }
 
-    state = state.copyWith(
-        filteredQuestions: filteredQuestions.toList());
+    state = state.copyWith(filteredQuestions: filteredQuestions.toList());
   }
 
   void setNumberOfQuestions(int number) {
@@ -134,6 +142,7 @@ final editQuestionProvider =
   (ref) => EditQuestionNotifier(
     EditQuestionState(
       questionType: QuestionType.multi,
+      quizFilter: QuizFilter.all,
       courses: [],
       course: Course(name: "", units: []),
       unit: Unit(name: ''),

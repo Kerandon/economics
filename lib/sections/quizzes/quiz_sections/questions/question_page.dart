@@ -10,7 +10,9 @@ import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/animation/confetti_animation.dart';
+import '../../../../app/audio_manager/audio_manager.dart';
 import '../../../../app/configs/constants.dart';
+import '../../../../main.dart';
 import 'flip_card/flip_card_tile.dart';
 import 'multi_choice/multi_choice_tile.dart';
 
@@ -22,25 +24,44 @@ class QuestionPage extends ConsumerStatefulWidget {
 }
 
 class _QuestionPageState extends ConsumerState<QuestionPage> {
+
+  bool _completeAudioHasPlayed = false;
+
   final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
     final unitSubunitQuestionTypeProvider = ref.read(
       editQuestionProvider.select(
-        (s) => (s.unit, s.subunit, s.questionType),
+            (s) => (s.unit, s.subunit, s.questionType),
       ),
     );
-    final selectedQuestionsCurrentQuestionIndexState = ref.watch(quizProvider
-        .select((s) => (s.selectedQuestions, s.currentQuestionIndex)));
+    final selectedQuestionsCurrentQuestionIndexQuizIsCompletedState = ref.watch(quizProvider
+        .select((s) =>
+    (s.selectedQuestions, s.currentQuestionIndex, s.quizIsCompleted, ),),);
     QuestionModel? currentQuestion;
-    if(selectedQuestionsCurrentQuestionIndexState.$1.isNotEmpty) {
-     currentQuestion = selectedQuestionsCurrentQuestionIndexState
-          .$1[selectedQuestionsCurrentQuestionIndexState.$2];
+    if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$1.isNotEmpty) {
+      currentQuestion = selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
+          .$1[selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$2];
     }
     final quizNotifier = ref.read(quizProvider.notifier);
     final customButtonGap = size.height * 0.04;
+
+    if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$3) {
+      print('QUIZ COMPLETED');
+      if (!_completeAudioHasPlayed) {
+        _completeAudioHasPlayed = true;
+        final audioManager = getIt<AudioManager>();
+        if (audioManager.soundTrackPlayer.playing) {
+          audioManager.stopSoundTrack();
+        }
+        audioManager.playSound('other/complete');
+      }
+    }
+
 
     return Stack(
       children: [
@@ -49,7 +70,8 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             title: FittedBox(
               fit: BoxFit.scaleDown,
               child: AutoSizeText(
-                '${unitSubunitQuestionTypeProvider.$1.name} - ${unitSubunitQuestionTypeProvider.$2.name}',
+                '${unitSubunitQuestionTypeProvider.$1
+                    .name} - ${unitSubunitQuestionTypeProvider.$2.name}',
                 overflow: TextOverflow.fade,
                 maxLines: 1,
               ),
@@ -91,7 +113,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                 ];
               },
               body: Container(
-                color: Theme.of(context).colorScheme.surface,
+                color: Theme
+                    .of(context)
+                    .colorScheme
+                    .surface,
                 child: Stack(
                   children: [
                     PageView(
@@ -101,8 +126,8 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                       controller: _pageController,
                       physics: const NeverScrollableScrollPhysics(),
                       children:
-                          selectedQuestionsCurrentQuestionIndexState.$1.map(
-                        (question) {
+                      selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$1.map(
+                            (question) {
                           return SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -138,13 +163,13 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             pageController: _pageController,
           ),
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
+          FloatingActionButtonLocation.centerFloat,
         ),
-        if (selectedQuestionsCurrentQuestionIndexState.$1.isNotEmpty &&
+        if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$1.isNotEmpty &&
             currentQuestion?.answerStage == AnswerStage.correct) ...[
           const ConfettiAnimation(),
         ],
-        if (selectedQuestionsCurrentQuestionIndexState.$1.isNotEmpty) ...[
+        if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$1.isNotEmpty) ...[
           ConfettiAnimation(
             animate: currentQuestion?.answerStage == AnswerStage.correct,
           ),

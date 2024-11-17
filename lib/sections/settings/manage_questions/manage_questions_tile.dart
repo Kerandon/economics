@@ -56,7 +56,8 @@ class ManageQuestionsTile extends ConsumerWidget {
           ),
         ],
       ),
-      subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,19 +68,23 @@ class ManageQuestionsTile extends ConsumerWidget {
                       ? colorScheme.primary
                       : listTileTheme.titleTextStyle?.color;
                   return Padding(
-                    padding: EdgeInsets.symmetric(vertical: size.height * 0.002),
+                    padding:
+                        EdgeInsets.symmetric(vertical: size.height * 0.002),
                     child: Row(
                       children: [
-                        SizedBox(width: size.width * 0.005,),
+                        SizedBox(
+                          width: size.width * 0.005,
+                        ),
                         Expanded(
                           flex: 1,
                           child: Text(
                             (q.answers!.indexOf(a) + 1).toAlphabet(),
-                            style:
-                                listTileTheme.leadingAndTrailingTextStyle?.copyWith(
+                            style: listTileTheme.leadingAndTrailingTextStyle
+                                ?.copyWith(
                               color: color,
-                              fontWeight:
-                                  a.isCorrect ? FontWeight.bold : FontWeight.normal,
+                              fontWeight: a.isCorrect
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
                             ),
                           ),
                         ),
@@ -93,8 +98,9 @@ class ManageQuestionsTile extends ConsumerWidget {
                               a.answer,
                               style: listTileTheme.subtitleTextStyle?.copyWith(
                                 color: color,
-                                fontWeight:
-                                    a.isCorrect ? FontWeight.bold : FontWeight.normal,
+                                fontWeight: a.isCorrect
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
                               ),
                             ),
                           ),
@@ -111,26 +117,27 @@ class ManageQuestionsTile extends ConsumerWidget {
                   );
                 },
               ),
-
             ],
           ),
-          if(q.explanation != null && q.explanation != "")...[RichText(
-            text: TextSpan(
-              style: Theme.of(context).textTheme.bodyMedium,
-              children: [
-                TextSpan(
-                  text: 'Explanation: ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor, // Use the primary color.// Adjust size as needed.
+          if (q.explanation != null && q.explanation != "") ...[
+            RichText(
+              text: TextSpan(
+                style: Theme.of(context).textTheme.bodyMedium,
+                children: [
+                  TextSpan(
+                    text: 'Explanation: ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context)
+                          .primaryColor, // Use the primary color.// Adjust size as needed.
+                    ),
                   ),
-                ),
-                TextSpan(
-                  text: q.explanation!,
-                ),
-              ],
+                  TextSpan(
+                    text: q.explanation!,
+                  ),
+                ],
+              ),
             ),
-          ),
           ],
         ],
       ),

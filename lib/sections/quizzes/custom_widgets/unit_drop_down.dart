@@ -1,0 +1,100 @@
+import 'package:economics_app/sections/quizzes/custom_widgets/quiz_type_buttons.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../../app/utils/mixins/unit_mixin.dart';
+import '../quiz_state/edit_question_state.dart';
+
+class UnitDropDown extends ConsumerWidget {
+  const UnitDropDown({this.canFilterByAll = false, super.key});
+
+  final bool canFilterByAll;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
+    final editState = ref.watch(editQuestionProvider);
+    final editNotifier = ref.read(editQuestionProvider.notifier);
+
+    bool showUnits = false, showSubunits = false;
+    if (editState.course.units.isNotEmpty) {
+      if (canFilterByAll) {
+        if (editState.quizFilter != QuizFilter.all) {
+          showUnits = true;
+        }else{
+          showUnits = false;
+        }
+      } else {
+        showUnits = true;
+      }
+    }
+    if (editState.unit.subunits.isNotEmpty) {
+      if (canFilterByAll) {
+        if (editState.quizFilter == QuizFilter.subunit) {
+          showSubunits = true;
+        }else{
+          showSubunits = false;
+        }
+      } else {
+        showSubunits = true;
+      }
+    }
+
+    return Column(
+      children: [
+
+        if (showUnits) ...[
+          DropdownMenu<UnitMixin>(
+            key: UniqueKey(),
+            width: size.width,
+            requestFocusOnTap: false,
+            initialSelection: editState.unit,
+            onSelected: (e) {
+              editNotifier.setUnit(e as UnitMixin);
+              if (e.subunits.isNotEmpty) {
+                editNotifier.setSubunit(e.subunits.first);
+              }
+            },
+            dropdownMenuEntries: editState.course.units.map((e) {
+              int numberOfUnits =
+                  editState.allQuestions.where((q) => q.unit == e).length;
+              return DropdownMenuEntry(
+                value: e,
+                label: '${e.index}  ${e.name}  ($numberOfUnits)',
+              );
+            }).toList(),
+          ),
+        ],
+        if (showSubunits) ...[
+          DropdownMenu<UnitMixin>(
+            key: UniqueKey(),
+            width: size.width,
+            requestFocusOnTap: false,
+            initialSelection: editState.subunit.name == ""
+                ? editState.unit.subunits.first
+                : editState.subunit,
+            onSelected: (e) {
+              editNotifier.setSubunit(e!);
+            },
+            dropdownMenuEntries: editState.unit.subunits.map((e) {
+              editState.unit.subunits;
+              int numberOfSubunits = 0;
+              for (var q in editState.allQuestions) {
+                if (q.subunit == e) {
+                  numberOfSubunits++;
+                }
+              }
+              return DropdownMenuEntry(
+                value: e,
+                label:
+                    '${editState.unit.index}.${e.index}  ${e.name}  ($numberOfSubunits)',
+              );
+            }).toList(),
+          ),
+        ],
+      ],
+    );
+  }
+}

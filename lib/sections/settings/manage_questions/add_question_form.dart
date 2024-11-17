@@ -12,7 +12,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/custom_back_to_home_button.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
-import '../../quizzes/custom_widgets/unit_dropdown_buttons.dart';
+import '../../quizzes/custom_widgets/unit_drop_down.dart';
 import 'custom_form_builder_text_field.dart';
 import 'methods/prepare_new_question_for_firebase.dart';
 import 'methods/prepare_update_question_for_firebase.dart';
@@ -29,7 +29,7 @@ class AddQuestionForm extends ConsumerStatefulWidget {
 class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _setUpForQuestionEdit = false;
-  bool disableConfirmButton = true;
+  bool _listsAreEqual = true;
   List<CourseMixin> courses = [];
 
   @override
@@ -38,13 +38,12 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
-    bool listsAreEqual = false;
-
     String title = 'Add question';
     if (widget.question != null) {
       title = 'Edit question';
 
       if (!_setUpForQuestionEdit) {
+        _setUpForQuestionEdit = true;
         final questionModel = widget.question;
 
         final answers = questionModel!.answers;
@@ -67,8 +66,18 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
           fields[kIncorrectAnswer2]!.didChange(incorrectAnswers[1].answer);
           fields[kIncorrectAnswer3]!.didChange(incorrectAnswers[2].answer);
           fields[kExplanation]!.didChange(explanation);
-          final bool validated = _formKey.currentState?.saveAndValidate() ?? false;
         });
+      }
+    }
+
+    bool disableButton = true;
+    if (widget.question != null) {
+      if (_formKey.currentState?.isValid == true && !_listsAreEqual) {
+        disableButton = false;
+      }
+    } else {
+      if (_formKey.currentState?.isValid == true) {
+        disableButton = false;
       }
     }
 
@@ -102,20 +111,10 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
               FormBuilder(
                 onChanged: () {
                   WidgetsBinding.instance.addPostFrameCallback((t) {
-                    print('on change here');
-                    bool validated = _formKey.currentState?.isValid == true;
-                    print('validated is ${validated}');
                     if (widget.question != null) {
                       final answers = getAnswersAndExplanation(_formKey);
-                      listsAreEqual = checkIfChangesMade(
+                      _listsAreEqual = checkIfChangesMade(
                           question: widget.question, newAnswers: answers);
-                      if (!listsAreEqual && validated) {
-                        disableConfirmButton = false;
-                      } else {
-                        disableConfirmButton = true;
-                      }
-                    } else if (validated == true) {
-                      disableConfirmButton = false;
                     }
                     setState(() {});
                   });
@@ -123,7 +122,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                 key: _formKey,
                 child: const Column(
                   children: [
-                    UnitDropdownButtons(),
+                    UnitDropDown(),
                     CustomFormBuilderTextField(kQuestion),
                     CustomFormBuilderTextField(kCorrectAnswer),
                     CustomFormBuilderTextField(kIncorrectAnswer1),
@@ -148,7 +147,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                     spacing: size.width * kWrapSpacing,
                     children: [
                       CustomChipButton(
-                        isDisabled: disableConfirmButton || _formKey.currentState?.isValid == false,
+                        isDisabled: disableButton,
                         onPressed: () {
                           final hasDuplicates =
                               getAnswersAndExplanation(_formKey)

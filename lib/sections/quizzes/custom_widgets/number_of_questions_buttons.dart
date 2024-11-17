@@ -1,4 +1,5 @@
 import 'package:economics_app/app/configs/constants.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,7 +17,20 @@ class NumberOfQuestionsButtons extends ConsumerWidget {
     final theme = Theme.of(context);
 
     List<int> numbers = [];
-    final numberOfFilteredQuestions = editState.filteredQuestions.length;
+    int numberOfFilteredQuestions = 0;
+
+    if(editState.quizFilter == QuizFilter.all){
+
+      for(var q in editState.allQuestions){
+        if(q.course == editState.course){
+          numberOfFilteredQuestions++;
+        }
+      }
+
+
+    }else {
+      numberOfFilteredQuestions = editState.filteredQuestions.length;
+    }
 
     if (numberOfFilteredQuestions > 0) {
       if (numberOfFilteredQuestions >= 5) {

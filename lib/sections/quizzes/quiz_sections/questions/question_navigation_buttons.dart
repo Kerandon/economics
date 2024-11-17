@@ -1,4 +1,3 @@
-import 'package:economics_app/app/audio_manager/audio_manager.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/completion/completion_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/custom_change_button.dart';
-import '../../../../main.dart';
 import '../../quiz_enums/answer_stage.dart';
 
 class QuestionNavigationButtons extends ConsumerStatefulWidget {
@@ -19,11 +17,12 @@ class QuestionNavigationButtons extends ConsumerStatefulWidget {
   final PageController pageController;
 
   @override
-  ConsumerState<QuestionNavigationButtons> createState() => _QuestionNavigationButtonsState();
+  ConsumerState<QuestionNavigationButtons> createState() =>
+      _QuestionNavigationButtonsState();
 }
 
-class _QuestionNavigationButtonsState extends ConsumerState<QuestionNavigationButtons> {
-
+class _QuestionNavigationButtonsState
+    extends ConsumerState<QuestionNavigationButtons> {
   bool _completeAudioHasPlayed = false;
 
   @override
@@ -95,15 +94,7 @@ class _QuestionNavigationButtonsState extends ConsumerState<QuestionNavigationBu
       }
     }
 
-    if(!_completeAudioHasPlayed){
 
-      _completeAudioHasPlayed = true;
-      final audioManager = getIt<AudioManager>();
-      if(!audioManager.soundTrackPlayer.playing){
-        audioManager.stopSoundTrack();
-      }
-      audioManager.playSound('other/complete');
-    }
 
     return SizedBox(
       child: Row(
@@ -111,7 +102,8 @@ class _QuestionNavigationButtonsState extends ConsumerState<QuestionNavigationBu
         children: [
           CustomPageChangeButton(
             onPressed: () {
-              widget.pageController.animateToPage(quizState.currentQuestionIndex - 1,
+              widget.pageController.animateToPage(
+                  quizState.currentQuestionIndex - 1,
                   duration: const Duration(milliseconds: kPageChangeAnimation),
                   curve: Curves.easeInOutCirc);
             },

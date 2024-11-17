@@ -1,8 +1,9 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/state/audio_state.dart';
-import 'package:economics_app/sections/quizzes/custom_widgets/check_answers_at_end_button.dart';
-import 'package:economics_app/sections/quizzes/custom_widgets/number_of_questions_buttons.dart';
+import 'package:economics_app/sections/quizzes/custom_widgets/filter_button.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:economics_app/sections/settings/settings_page.dart';
@@ -10,11 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/audio_manager/audio_manager.dart';
-import '../../app/custom_widgets/gap.dart';
 import '../../main.dart';
-import 'custom_widgets/course_type_buttons.dart';
-import 'custom_widgets/quiz_type_buttons.dart';
-import 'custom_widgets/unit_dropdown_buttons.dart';
 import 'methods/start_quiz.dart';
 
 class QuizHomePage extends ConsumerStatefulWidget {
@@ -36,12 +33,39 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final numberOfQuestionsFilteredQuestionsProvider = ref.watch(
+    final numberOfQuestionsFilteredQuestionsQuizFilterAllQuestionsCourse =
+        ref.watch(
       editQuestionProvider.select(
-          (state) => (state.numberOfQuestions, state.filteredQuestions)),
+        (state) => (
+          state.numberOfQuestions,
+          state.filteredQuestions,
+          state.quizFilter,
+          state.allQuestions,
+          state.course,
+        ),
+      ),
     );
     final quizNotifier = ref.read(quizProvider.notifier);
     final audioState = ref.watch(audioProvider);
+
+    List<QuestionModel> selectedQuestions = [];
+
+    if (numberOfQuestionsFilteredQuestionsQuizFilterAllQuestionsCourse.$3 ==
+        QuizFilter.all) {
+      for (var q
+          in numberOfQuestionsFilteredQuestionsQuizFilterAllQuestionsCourse
+              .$4) {
+        if (q.course ==
+            numberOfQuestionsFilteredQuestionsQuizFilterAllQuestionsCourse.$5) {
+          selectedQuestions.add(q);
+        }
+      }
+    } else {
+      selectedQuestions.addAll(
+        numberOfQuestionsFilteredQuestionsQuizFilterAllQuestionsCourse.$2
+            .toList(),
+      );
+    }
 
     return Scaffold(
       drawer: const SettingsPage(),
@@ -58,18 +82,8 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
           child: FormBuilder(
             key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Gap(),
-                const QuizTypeButtons(),
-                const Gap(),
-                const CourseTypeButtons(),
-                const Gap(),
-                const UnitDropdownButtons(),
-                const Gap(),
-                const NumberOfQuestionsButtons(),
-                const Gap(),
-                const CheckAnswersAtEndButton(),
+                QuizFilterButton(),
                 SizedBox(
                   height: size.height * 0.05,
                 ),
@@ -78,7 +92,7 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
                   children: [
                     CustomChipButton(
                       isDisabled:
-                          numberOfQuestionsFilteredQuestionsProvider.$2.isEmpty,
+                          selectedQuestions.isEmpty,
                       text: 'Start Quiz',
                       onPressed: () {
                         final audio = getIt<AudioManager>();
@@ -89,9 +103,10 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
 
                         startQuiz(
                           context: context,
-                          filteredQuestions:
-                              numberOfQuestionsFilteredQuestionsProvider.$2,
-                          limit: numberOfQuestionsFilteredQuestionsProvider.$1,
+                          filteredQuestions: selectedQuestions,
+                          limit:
+                              numberOfQuestionsFilteredQuestionsQuizFilterAllQuestionsCourse
+                                  .$1,
                           quizNotifier: quizNotifier,
                         );
                       },
