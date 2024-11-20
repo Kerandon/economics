@@ -31,8 +31,14 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final unitAndSubunitProvider = ref.watch(
-      editQuestionProvider.select((state) => (state.unit, state.subunit)),
+    final selectEditState = ref.watch(
+      editQuestionProvider.select(
+        (state) => (
+          state.unit,
+          state.subunit,
+          state.questionType,
+        ),
+      ),
     );
 
     final editNotifier = ref.read(editQuestionProvider.notifier);
@@ -45,7 +51,9 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const AddQuestionForm(),
+                  builder: (context) => AddQuestionForm(
+                    questionType: selectEditState.$3,
+                  ),
                 ),
               );
             },
@@ -71,10 +79,10 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                 List<QuestionModel> filteredQuestions = questions.toList()
                   ..sort((a, b) => a.question!.compareTo(b.question!));
                 for (var q in questions) {
-                  if (q.unit != unitAndSubunitProvider.$1) {
+                  if (q.unit != selectEditState.$1) {
                     filteredQuestions.remove(q);
                   }
-                  if (q.subunit != unitAndSubunitProvider.$2) {
+                  if (q.subunit != selectEditState.$2) {
                     filteredQuestions.remove(q);
                   }
                 }

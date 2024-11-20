@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -18,8 +19,9 @@ import 'methods/prepare_new_question_for_firebase.dart';
 import 'methods/prepare_update_question_for_firebase.dart';
 
 class AddQuestionForm extends ConsumerStatefulWidget {
-  const AddQuestionForm({this.question, super.key});
+  const AddQuestionForm({required this.questionType, this.question, super.key});
 
+  final QuestionType questionType;
   final QuestionModel? question;
 
   @override
@@ -38,9 +40,12 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
-    String title = 'Add question';
+    String title = '';
+
+    title = 'Add ${editState.questionType.toText()} question';
+
     if (widget.question != null) {
-      title = 'Edit question';
+      title = 'Edit ${editState.questionType.toText()} question';
 
       if (!_setUpForQuestionEdit) {
         _setUpForQuestionEdit = true;
@@ -120,18 +125,20 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                   });
                 },
                 key: _formKey,
-                child: const Column(
+                child: Column(
                   children: [
-                    UnitDropDown(),
-                    CustomFormBuilderTextField(kQuestion),
-                    CustomFormBuilderTextField(kCorrectAnswer),
-                    CustomFormBuilderTextField(kIncorrectAnswer1),
-                    CustomFormBuilderTextField(kIncorrectAnswer2),
-                    CustomFormBuilderTextField(kIncorrectAnswer3),
-                    CustomFormBuilderTextField(
-                      kExplanation,
-                      validationRequired: false,
-                    ),
+                    const UnitDropDown(),
+                    const CustomFormBuilderTextField(kQuestion),
+                    const CustomFormBuilderTextField(kCorrectAnswer),
+                    if (editState.questionType == QuestionType.multi) ...[
+                      const CustomFormBuilderTextField(kIncorrectAnswer1),
+                      const CustomFormBuilderTextField(kIncorrectAnswer2),
+                      const CustomFormBuilderTextField(kIncorrectAnswer3),
+                      const CustomFormBuilderTextField(
+                        kExplanation,
+                        validationRequired: false,
+                      ),
+                    ],
                   ],
                 ),
               ),

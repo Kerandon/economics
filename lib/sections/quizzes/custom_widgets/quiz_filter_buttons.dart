@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -22,7 +21,6 @@ class QuizFilterButtons extends ConsumerWidget {
           spacing: size.width * kWrapSpacing,
           children: QuizFilter.values.map((e) {
             String text = e.toText();
-            print('all q ${editState.allQuestions.length}');
 
             if (e == QuizFilter.all) {
               int numberOfQuestionsInCourse = 0;
@@ -36,7 +34,7 @@ class QuizFilterButtons extends ConsumerWidget {
 
             final isSelected = e == editState.quizFilter;
             final onSurfaceColor =
-            isSelected ? Colors.white : theme.colorScheme.onSurface;
+                isSelected ? Colors.white : theme.colorScheme.onSurface;
 
             return ChoiceChip(
               checkmarkColor: onSurfaceColor,

@@ -8,21 +8,15 @@ class QuizFilterButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-final size = MediaQuery.of(context).size;
-
-    return
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CustomChipButton(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CustomChipButton(
           outlinedStyle: true,
-            icon: Icons.filter_alt_outlined,
-            onPressed: (){
-              showModalBottomSheet(
-                  context: context,
-                  builder: (context) => const FilterContents());
-            }),
-      );
-
-
+          icon: Icons.filter_alt_outlined,
+          onPressed: () {
+            showModalBottomSheet(
+                context: context, builder: (context) => const FilterContents());
+          }),
+    );
   }
 }

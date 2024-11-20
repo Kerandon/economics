@@ -23,8 +23,6 @@ class QuestionNavigationButtons extends ConsumerStatefulWidget {
 
 class _QuestionNavigationButtonsState
     extends ConsumerState<QuestionNavigationButtons> {
-  bool _completeAudioHasPlayed = false;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -93,8 +91,6 @@ class _QuestionNavigationButtonsState
         }
       }
     }
-
-
 
     return SizedBox(
       child: Row(

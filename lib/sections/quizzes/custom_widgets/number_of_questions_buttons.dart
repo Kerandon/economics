@@ -19,16 +19,13 @@ class NumberOfQuestionsButtons extends ConsumerWidget {
     List<int> numbers = [];
     int numberOfFilteredQuestions = 0;
 
-    if(editState.quizFilter == QuizFilter.all){
-
-      for(var q in editState.allQuestions){
-        if(q.course == editState.course){
+    if (editState.quizFilter == QuizFilter.all) {
+      for (var q in editState.allQuestions) {
+        if (q.course == editState.course) {
           numberOfFilteredQuestions++;
         }
       }
-
-
-    }else {
+    } else {
       numberOfFilteredQuestions = editState.filteredQuestions.length;
     }
 

@@ -4,11 +4,9 @@ import 'package:economics_app/sections/quizzes/custom_widgets/number_of_question
 import 'package:economics_app/sections/quizzes/custom_widgets/quiz_filter_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/quiz_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/unit_drop_down.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/constants.dart';
-import '../quiz_state/edit_question_state.dart';
 
 class FilterContents extends ConsumerWidget {
   const FilterContents({
@@ -18,9 +16,6 @@ class FilterContents extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final theme = Theme.of(context);
-    final editState = ref.watch(editQuestionProvider);
-    final editNotifier = ref.read(editQuestionProvider.notifier);
     return Padding(
       padding: EdgeInsets.only(
         left: size.width * kPageIndentHorizontal,

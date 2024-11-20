@@ -83,16 +83,32 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
             key: _formKey,
             child: Column(
               children: [
-                QuizFilterButton(),
+                const Row(
+                  children: [
+                    QuizFilterButton(),
+                  ],
+                ),
+                Container(
+                  height: size.height * 0.40, // Set your desired height
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.circular(16.0), // Rounded corners
+                    image: const DecorationImage(
+                      image: AssetImage(
+                          'assets/images/study.jpg'), // Asset image path
+                      fit:
+                          BoxFit.cover, // Adjust the image to fit the container
+                    ),
+                  ),
+                ),
                 SizedBox(
-                  height: size.height * 0.05,
+                  height: size.height * 0.10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomChipButton(
-                      isDisabled:
-                          selectedQuestions.isEmpty,
+                      isDisabled: selectedQuestions.isEmpty,
                       text: 'Start Quiz',
                       onPressed: () {
                         final audio = getIt<AudioManager>();

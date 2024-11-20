@@ -106,7 +106,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     setFilteredQuestions();
   }
 
-  void setQuizFilter(QuizFilter filter){
+  void setQuizFilter(QuizFilter filter) {
     state = state.copyWith(quizFilter: filter);
   }
 

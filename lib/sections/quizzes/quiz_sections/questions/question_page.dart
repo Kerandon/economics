@@ -24,34 +24,38 @@ class QuestionPage extends ConsumerStatefulWidget {
 }
 
 class _QuestionPageState extends ConsumerState<QuestionPage> {
-
   bool _completeAudioHasPlayed = false;
 
   final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     final unitSubunitQuestionTypeProvider = ref.read(
       editQuestionProvider.select(
-            (s) => (s.unit, s.subunit, s.questionType),
+        (s) => (s.unit, s.subunit, s.questionType),
       ),
     );
-    final selectedQuestionsCurrentQuestionIndexQuizIsCompletedState = ref.watch(quizProvider
-        .select((s) =>
-    (s.selectedQuestions, s.currentQuestionIndex, s.quizIsCompleted, ),),);
+    final selectedQuestionsCurrentQuestionIndexQuizIsCompletedState = ref.watch(
+      quizProvider.select(
+        (s) => (
+          s.selectedQuestions,
+          s.currentQuestionIndex,
+          s.quizIsCompleted,
+        ),
+      ),
+    );
     QuestionModel? currentQuestion;
-    if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$1.isNotEmpty) {
-      currentQuestion = selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
-          .$1[selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$2];
+    if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
+        .$1.isNotEmpty) {
+      currentQuestion =
+          selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
+              .$1[selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$2];
     }
     final quizNotifier = ref.read(quizProvider.notifier);
     final customButtonGap = size.height * 0.04;
 
     if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$3) {
-      print('QUIZ COMPLETED');
       if (!_completeAudioHasPlayed) {
         _completeAudioHasPlayed = true;
         final audioManager = getIt<AudioManager>();
@@ -62,7 +66,6 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
       }
     }
 
-
     return Stack(
       children: [
         Scaffold(
@@ -70,8 +73,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             title: FittedBox(
               fit: BoxFit.scaleDown,
               child: AutoSizeText(
-                '${unitSubunitQuestionTypeProvider.$1
-                    .name} - ${unitSubunitQuestionTypeProvider.$2.name}',
+                '${unitSubunitQuestionTypeProvider.$1.name} - ${unitSubunitQuestionTypeProvider.$2.name}',
                 overflow: TextOverflow.fade,
                 maxLines: 1,
               ),
@@ -113,10 +115,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                 ];
               },
               body: Container(
-                color: Theme
-                    .of(context)
-                    .colorScheme
-                    .surface,
+                color: Theme.of(context).colorScheme.surface,
                 child: Stack(
                   children: [
                     PageView(
@@ -126,8 +125,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                       controller: _pageController,
                       physics: const NeverScrollableScrollPhysics(),
                       children:
-                      selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$1.map(
-                            (question) {
+                          selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
+                              .$1
+                              .map(
+                        (question) {
                           return SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -163,13 +164,15 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             pageController: _pageController,
           ),
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerFloat,
         ),
-        if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$1.isNotEmpty &&
+        if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
+                .$1.isNotEmpty &&
             currentQuestion?.answerStage == AnswerStage.correct) ...[
           const ConfettiAnimation(),
         ],
-        if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$1.isNotEmpty) ...[
+        if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
+            .$1.isNotEmpty) ...[
           ConfettiAnimation(
             animate: currentQuestion?.answerStage == AnswerStage.correct,
           ),

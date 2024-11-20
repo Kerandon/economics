@@ -1,5 +1,3 @@
-import 'package:economics_app/sections/quizzes/custom_widgets/quiz_type_buttons.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,7 +21,7 @@ class UnitDropDown extends ConsumerWidget {
       if (canFilterByAll) {
         if (editState.quizFilter != QuizFilter.all) {
           showUnits = true;
-        }else{
+        } else {
           showUnits = false;
         }
       } else {
@@ -34,7 +32,7 @@ class UnitDropDown extends ConsumerWidget {
       if (canFilterByAll) {
         if (editState.quizFilter == QuizFilter.subunit) {
           showSubunits = true;
-        }else{
+        } else {
           showSubunits = false;
         }
       } else {
@@ -44,7 +42,6 @@ class UnitDropDown extends ConsumerWidget {
 
     return Column(
       children: [
-
         if (showUnits) ...[
           DropdownMenu<UnitMixin>(
             key: UniqueKey(),
