@@ -1,8 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_back_to_home_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
-import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
-import 'package:economics_app/sections/quizzes/custom_widgets/quiz_type_buttons.dart';
 
 import 'package:economics_app/sections/quizzes/quiz_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -13,9 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../quizzes/custom_widgets/filter_button.dart';
-import '../../quizzes/custom_widgets/unit_drop_down.dart';
 import '../../quizzes/methods/get_questions_data.dart';
-import '../../quizzes/quiz_enums/quiz_filter.dart';
 import 'manage_questions_tile.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
@@ -31,29 +27,12 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
   List<CourseMixin> courses = [];
   late final _future = getQuestionsData();
   bool _dataIsSet = false;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
+  @override
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
-    final selectEditState = ref.watch(
-      editQuestionProvider.select(
-        (state) => (
-          state.unit,
-          state.subunit,
-          state.questionType,
-          state.quizFilter,
-          //   state.allQuestions,
-          // state.course,
-          // state.filteredQuestions,
-        ),
-      ),
-    );
 
     final editNotifier = ref.read(editQuestionProvider.notifier);
     return Scaffold(
@@ -61,13 +40,15 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
         title: const Text('Manage questions'),
         leading: const CustomBackIconButton(QuizHomePage()),
         actions: [
-          QuizFilterButton(),
+          const QuizFilterButton(
+            showExtraButtons: false,
+          ),
           IconButton(
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => AddQuestionForm(
-                    questionType: selectEditState.$3,
+                    questionType: editState.questionType,
                   ),
                 ),
               );
@@ -88,48 +69,23 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
             if (snapshot.hasData) {
               List<QuestionModel> questions = snapshot.data!.toList();
               WidgetsBinding.instance.addPostFrameCallback((t) {
-                if(!_dataIsSet) {
+                if (!_dataIsSet) {
                   _dataIsSet = true;
                   editNotifier.setAllQuestions(questions);
+                  editNotifier.setFilteredQuestions();
                 }
               });
-
-              List<QuestionModel> filteredQuestions = questions.toList()
-                ..sort((a, b) => a.question!.compareTo(b.question!));
-
-              // if (selectEditState.$3 ==
-              //     QuizFilter.all) {
-              //   for (var q
-              //   in selectEditState
-              //       .$4) {
-              //     if (q.course ==
-              //         selectEditState.$5) {
-              //       selectedQuestions.add(q);
-              //     }
-              //   }
-              // } else {
-              //   selectedQuestions.addAll(
-              //     selectEditState.$2
-              //         .toList(),
-              //   );
-              // }
 
               return SingleChildScrollView(
                 child: Column(
                   children: [
                     const Gap(),
-                    const QuizTypeButtons(),
-                    const Gap(),
-                    const CourseTypeButtons(),
-                    const Gap(),
-                    const UnitDropDown(),
-                    const Gap(),
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: filteredQuestions.length,
+                      itemCount: editState.filteredQuestions.length,
                       itemBuilder: (context, index) {
-                        final q = filteredQuestions[index];
+                        final q = editState.filteredQuestions[index];
                         return Column(
                           children: [
                             SizedBox(

@@ -108,22 +108,32 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   void setQuizFilter(QuizFilter filter) {
     state = state.copyWith(quizFilter: filter);
+    setFilteredQuestions();
   }
 
   void setFilteredQuestions() {
     List<QuestionModel> filteredQuestions = state.allQuestions.toList();
 
     for (var q in state.allQuestions) {
+      if (q.questionType != state.questionType) {
+        filteredQuestions.remove(q);
+      }
+
       if (q.course != state.course) {
         filteredQuestions.remove(q);
       }
-      if (q.unit != state.unit) {
-        filteredQuestions.remove(q);
+      if (state.quizFilter == QuizFilter.unit) {
+        if (q.unit != state.unit) {
+          filteredQuestions.remove(q);
+        }
       }
-      if (q.subunit != state.subunit) {
-        filteredQuestions.remove(q);
+      if (state.quizFilter == QuizFilter.subunit) {
+        if (q.subunit != state.subunit) {
+          filteredQuestions.remove(q);
+        }
       }
     }
+    filteredQuestions.sort((a, b) => a.question!.compareTo(b.question!));
 
     state = state.copyWith(filteredQuestions: filteredQuestions.toList());
   }

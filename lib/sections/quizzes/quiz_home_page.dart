@@ -33,8 +33,7 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final selectEditState =
-        ref.watch(
+    final selectEditState = ref.watch(
       editQuestionProvider.select(
         (state) => (
           state.numberOfQuestions,
@@ -50,20 +49,15 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
 
     List<QuestionModel> selectedQuestions = [];
 
-    if (selectEditState.$3 ==
-        QuizFilter.all) {
-      for (var q
-          in selectEditState
-              .$4) {
-        if (q.course ==
-            selectEditState.$5) {
+    if (selectEditState.$3 == QuizFilter.all) {
+      for (var q in selectEditState.$4) {
+        if (q.course == selectEditState.$5) {
           selectedQuestions.add(q);
         }
       }
     } else {
       selectedQuestions.addAll(
-        selectEditState.$2
-            .toList(),
+        selectEditState.$2.toList(),
       );
     }
 
@@ -74,6 +68,9 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
           color: Colors.white,
         ),
         title: const Text('Quiz'),
+        actions: const [
+          QuizFilterButton(),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -120,9 +117,7 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
                         startQuiz(
                           context: context,
                           filteredQuestions: selectedQuestions,
-                          limit:
-                              selectEditState
-                                  .$1,
+                          limit: selectEditState.$1,
                           quizNotifier: quizNotifier,
                         );
                       },

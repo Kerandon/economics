@@ -10,30 +10,38 @@ import '../../../app/configs/constants.dart';
 
 class FilterContents extends ConsumerWidget {
   const FilterContents({
+    this.showExtraButtons = true,
     super.key,
   });
+
+  final bool showExtraButtons;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: EdgeInsets.only(
-        left: size.width * kPageIndentHorizontal,
-        top: size.height * kPageIndentVertical,
-        right: size.width * kPageIndentHorizontal,
-      ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          QuizTypeButtons(),
-          CourseTypeButtons(),
-          QuizFilterButtons(),
-          UnitDropDown(
-            canFilterByAll: true,
-          ),
-          NumberOfQuestionsButtons(),
-          CheckAnswersAtEndButton(),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: size.width * kPageIndentHorizontal,
+          top: size.height * kPageIndentVertical,
+          right: size.width * kPageIndentHorizontal,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const QuizTypeButtons(),
+            const CourseTypeButtons(),
+            const QuizFilterButtons(),
+            const UnitDropDown(),
+            if (showExtraButtons) ...[
+              const NumberOfQuestionsButtons(),
+              const CheckAnswersAtEndButton(),
+            ],
+            SizedBox(
+              height: size.height * 0.05,
+            ),
+          ],
+        ),
       ),
     );
   }

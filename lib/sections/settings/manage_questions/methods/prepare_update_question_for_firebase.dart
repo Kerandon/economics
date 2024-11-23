@@ -32,10 +32,10 @@ void prepareUpdateQuestionForFirebase(
   }
 
   if (unit != originalQuestion.unit) {
-    updatedFields[kUnit] = {unit.index : unit.name};
+    updatedFields[kUnit] = {unit.index: unit.name};
   }
   if (subunit != originalQuestion.subunit) {
-    updatedFields[kSubunit] = {subunit.index : subunit.name};
+    updatedFields[kSubunit] = {subunit.index: subunit.name};
   }
   if (question != originalQuestion.question) {
     updatedFields[kQuestion] = question;

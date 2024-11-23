@@ -10,9 +10,9 @@ extension Filter on QuizFilter {
       case QuizFilter.all:
         return 'All questions';
       case QuizFilter.unit:
-        return 'Unit only';
+        return 'Unit';
       case QuizFilter.subunit:
-        return 'Unit & subunit';
+        return 'Subunit';
     }
   }
 }

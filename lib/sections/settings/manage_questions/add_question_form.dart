@@ -70,7 +70,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
             final fields = _formKey.currentState!.fields;
             fields[kQuestion]!.didChange(questionModel.question ?? "");
             fields[kCorrectAnswer]!.didChange(correctAnswer?.answer ?? "");
-            if (questionModel.type == QuestionType.multi) {
+            if (questionModel.questionType == QuestionType.multi) {
               fields[kIncorrectAnswer1]!.didChange(incorrectAnswers[0].answer);
               fields[kIncorrectAnswer2]!.didChange(incorrectAnswers[1].answer);
               fields[kIncorrectAnswer3]!.didChange(incorrectAnswers[2].answer);
@@ -81,7 +81,8 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
       }
 
       _courseAndUnitsAreEqual = editState.course == widget.question?.course &&
-          editState.unit == widget.question?.unit && editState.subunit == widget.question?.subunit;
+          editState.unit == widget.question?.unit &&
+          editState.subunit == widget.question?.subunit;
     }
 
     bool disableButton = true;
@@ -132,8 +133,6 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                       _questionsAndAnswersAreEqual =
                           questionsAndAnswersAreEqual(
                               question: widget.question, newAnswers: answers);
-                      print(
-                          'questions and answers are equal $_questionsAndAnswersAreEqual');
                     }
                     setState(() {});
                   });

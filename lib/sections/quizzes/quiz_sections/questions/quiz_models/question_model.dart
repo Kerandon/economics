@@ -12,7 +12,7 @@ import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
   final String? id;
-  final QuestionType? type;
+  final QuestionType? questionType;
   final CourseMixin? course;
   final String? question;
   final Widget? item;
@@ -25,7 +25,7 @@ class QuestionModel extends Equatable {
 
   const QuestionModel({
     this.id,
-    this.type,
+    this.questionType,
     this.course,
     this.question,
     this.answers,
@@ -52,7 +52,7 @@ class QuestionModel extends Equatable {
   }) {
     return QuestionModel(
       id: id ?? this.id,
-      type: type ?? this.type,
+      questionType: type ?? this.questionType,
       course: course ?? this.course,
       question: question ?? this.question,
       answers: answers ?? this.answers,
@@ -70,7 +70,7 @@ class QuestionModel extends Equatable {
 
     return QuestionModel(
       id: id,
-      type: QuestionTypeExtension.fromText(map[kType]),
+      questionType: QuestionTypeExtension.fromText(map[kType]),
       course: Course(name: map[kCourse], units: []),
       unit: Unit.fromFirebase(map),
       subunit: Unit.fromFirebase(map, subunit: true),
@@ -85,7 +85,7 @@ class QuestionModel extends Equatable {
   // Converts QuestionModel to a map that can be sent to Firebase
   Map<String, dynamic> toMap() {
     return {
-      kType: type?.name,
+      kType: questionType?.name,
       kCourse: course?.name,
       kQuestion: question,
       kAnswers: answers?.map((e) => e.toMap()).toList(),

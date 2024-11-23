@@ -6,9 +6,9 @@ import '../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_state/edit_question_state.dart';
 
 class UnitDropDown extends ConsumerWidget {
-  const UnitDropDown({this.canFilterByAll = false, super.key});
+  const UnitDropDown({super.key});
 
-  final bool canFilterByAll;
+  final bool canFilterByAll = true;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,8 +55,9 @@ class UnitDropDown extends ConsumerWidget {
               }
             },
             dropdownMenuEntries: editState.course.units.map((e) {
-              int numberOfUnits =
-                  editState.allQuestions.where((q) => q.type == editState.questionType && q.unit == e).length;
+              int numberOfUnits = editState.allQuestions
+                  .where((q) => q.questionType == editState.questionType && q.unit == e)
+                  .length;
               return DropdownMenuEntry(
                 value: e,
                 label: '${e.index}  ${e.name}  ($numberOfUnits)',
@@ -79,7 +80,7 @@ class UnitDropDown extends ConsumerWidget {
               editState.unit.subunits;
               int numberOfSubunits = 0;
               for (var q in editState.allQuestions) {
-                if (q.type == editState.questionType && q.subunit == e) {
+                if (q.questionType == editState.questionType && q.subunit == e) {
                   numberOfSubunits++;
                 }
               }

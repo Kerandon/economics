@@ -55,8 +55,11 @@ class ManageQuestionsTile extends ConsumerWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HtmlWidget(q.question!, textStyle: listTileTheme.titleTextStyle
-              ?.copyWith(fontWeight: FontWeight.bold),),
+          HtmlWidget(
+            q.question!,
+            textStyle: listTileTheme.titleTextStyle
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
         ],
       ),
       subtitle: Column(
@@ -99,7 +102,8 @@ class ManageQuestionsTile extends ConsumerWidget {
                             ),
                             child: HtmlWidget(
                               a.answer,
-                              textStyle: listTileTheme.subtitleTextStyle?.copyWith(
+                              textStyle:
+                                  listTileTheme.subtitleTextStyle?.copyWith(
                                 color: color,
                                 fontWeight: a.isCorrect
                                     ? FontWeight.bold

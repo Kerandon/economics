@@ -39,7 +39,7 @@ Future<void> prepareNewQuestionForFirebase({
   final unit = editState.unit;
   final subunit = editState.subunit;
   final q = QuestionModel(
-    type: questionType,
+    questionType: questionType,
     course: course,
     unit: unit,
     subunit: subunit,

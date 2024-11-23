@@ -52,10 +52,10 @@ const kFormTextLabelPadding = EdgeInsets.only(left: 20, bottom: 2);
 const kRadius = 12.0;
 const kRadiusBig = 30.0;
 const kPageIndentHorizontal = 0.03;
-const kPageIndentVertical = 0.02;
+const kPageIndentVertical = 0.03;
 const kBorderWidth = 0.0015;
 const kDividerIndent = 0.03;
-const kWrapSpacing = 0.003;
+const kWrapSpacing = 0.01;
 const kBottomIndent = 0.05;
 
 /// Animation
