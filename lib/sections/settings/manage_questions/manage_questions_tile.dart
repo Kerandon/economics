@@ -2,6 +2,7 @@ import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'methods/delete_question.dart';
@@ -18,6 +19,7 @@ class ManageQuestionsTile extends ConsumerWidget {
     final colorScheme = theme.colorScheme;
     final listTileTheme = theme.listTileTheme;
     final editState = ref.watch(editQuestionProvider);
+
     return ListTile(
       visualDensity: VisualDensity.compact,
       minVerticalPadding: 0,
@@ -53,11 +55,8 @@ class ManageQuestionsTile extends ConsumerWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            q.question!,
-            style: listTileTheme.titleTextStyle
-                ?.copyWith(fontWeight: FontWeight.bold),
-          ),
+          HtmlWidget(q.question!, textStyle: listTileTheme.titleTextStyle
+              ?.copyWith(fontWeight: FontWeight.bold),),
         ],
       ),
       subtitle: Column(
@@ -98,9 +97,9 @@ class ManageQuestionsTile extends ConsumerWidget {
                             padding: EdgeInsets.symmetric(
                               horizontal: size.width * 0.02,
                             ),
-                            child: Text(
+                            child: HtmlWidget(
                               a.answer,
-                              style: listTileTheme.subtitleTextStyle?.copyWith(
+                              textStyle: listTileTheme.subtitleTextStyle?.copyWith(
                                 color: color,
                                 fontWeight: a.isCorrect
                                     ? FontWeight.bold

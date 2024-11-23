@@ -17,9 +17,9 @@ void prepareUpdateQuestionForFirebase(
   final fields = formKey.currentState!.fields;
   final updatedFields = <String, dynamic>{};
 
+  final course = editState.course;
   final unit = editState.unit;
   final subunit = editState.subunit;
-  // Retrieve current values from the form
   final question = fields[kQuestion]?.value;
   final correctAnswer = fields[kCorrectAnswer]?.value;
   final incorrectAnswer1 = fields[kIncorrectAnswer1]?.value;
@@ -27,15 +27,20 @@ void prepareUpdateQuestionForFirebase(
   final incorrectAnswer3 = fields[kIncorrectAnswer3]?.value;
   final explanation = fields[kExplanation]?.value;
 
+  if (course != originalQuestion.course) {
+    updatedFields[kCourse] = editState.course.name;
+  }
+
   if (unit != originalQuestion.unit) {
-    updatedFields[kUnit] = unit;
+    updatedFields[kUnit] = {unit.index : unit.name};
   }
   if (subunit != originalQuestion.subunit) {
-    updatedFields[kSubunit] = subunit;
+    updatedFields[kSubunit] = {subunit.index : subunit.name};
   }
   if (question != originalQuestion.question) {
     updatedFields[kQuestion] = question;
   }
+
   final a = originalQuestion.answers!;
   if (correctAnswer != a.elementAt(0).answer ||
       incorrectAnswer1 != a.elementAt(1).answer ||
@@ -46,8 +51,6 @@ void prepareUpdateQuestionForFirebase(
     updatedAnswers.add(AnswerModel(incorrectAnswer1, isCorrect: false));
     updatedAnswers.add(AnswerModel(incorrectAnswer2, isCorrect: false));
     updatedAnswers.add(AnswerModel(incorrectAnswer3, isCorrect: false));
-    updatedFields[kAnswers] = updatedAnswers.map((e) => e.toMap()).toList();
-
     updatedFields[kAnswers] = updatedAnswers.map((e) => e.toMap()).toList();
   }
 

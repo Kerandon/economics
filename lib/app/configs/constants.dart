@@ -39,7 +39,7 @@ const kCorrectAnswer = 'Correct answer';
 const kIncorrectAnswer1 = 'Incorrect answer 1';
 const kIncorrectAnswer2 = 'Incorrect answer 2';
 const kIncorrectAnswer3 = 'Incorrect answer 3';
-const kExplanation = 'Answer explanation';
+const kExplanation = 'answer explanation';
 const kCheck = 'Check';
 const kResults = 'Results';
 

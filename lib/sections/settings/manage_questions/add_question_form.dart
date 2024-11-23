@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
+import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
@@ -31,7 +32,8 @@ class AddQuestionForm extends ConsumerStatefulWidget {
 class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
   final _formKey = GlobalKey<FormBuilderState>();
   bool _setUpForQuestionEdit = false;
-  bool _listsAreEqual = true;
+  bool _courseAndUnitsAreEqual = true;
+  bool _questionsAndAnswersAreEqual = true;
   List<CourseMixin> courses = [];
 
   @override
@@ -63,21 +65,30 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
         }
 
         final explanation = questionModel.explanation ?? "";
-        WidgetsBinding.instance.addPostFrameCallback((t) {
-          final fields = _formKey.currentState!.fields;
-          fields[kQuestion]!.didChange(questionModel.question ?? "");
-          fields[kCorrectAnswer]!.didChange(correctAnswer?.answer ?? "");
-          fields[kIncorrectAnswer1]!.didChange(incorrectAnswers[0].answer);
-          fields[kIncorrectAnswer2]!.didChange(incorrectAnswers[1].answer);
-          fields[kIncorrectAnswer3]!.didChange(incorrectAnswers[2].answer);
-          fields[kExplanation]!.didChange(explanation);
-        });
+        WidgetsBinding.instance.addPostFrameCallback(
+          (t) {
+            final fields = _formKey.currentState!.fields;
+            fields[kQuestion]!.didChange(questionModel.question ?? "");
+            fields[kCorrectAnswer]!.didChange(correctAnswer?.answer ?? "");
+            if (questionModel.type == QuestionType.multi) {
+              fields[kIncorrectAnswer1]!.didChange(incorrectAnswers[0].answer);
+              fields[kIncorrectAnswer2]!.didChange(incorrectAnswers[1].answer);
+              fields[kIncorrectAnswer3]!.didChange(incorrectAnswers[2].answer);
+              fields[kExplanation]!.didChange(explanation);
+            }
+          },
+        );
       }
+
+      _courseAndUnitsAreEqual = editState.course == widget.question?.course &&
+          editState.unit == widget.question?.unit && editState.subunit == widget.question?.subunit;
     }
 
     bool disableButton = true;
     if (widget.question != null) {
-      if (_formKey.currentState?.isValid == true && !_listsAreEqual) {
+      if (_formKey.currentState?.isValid == true &&
+              !_questionsAndAnswersAreEqual ||
+          !_courseAndUnitsAreEqual) {
         disableButton = false;
       }
     } else {
@@ -85,7 +96,6 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
         disableButton = false;
       }
     }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -117,9 +127,13 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                 onChanged: () {
                   WidgetsBinding.instance.addPostFrameCallback((t) {
                     if (widget.question != null) {
-                      final answers = getAnswersAndExplanation(_formKey);
-                      _listsAreEqual = checkIfChangesMade(
-                          question: widget.question, newAnswers: answers);
+                      final answers = getQuestionAndAnswersAndExplanation(
+                          _formKey, editState);
+                      _questionsAndAnswersAreEqual =
+                          questionsAndAnswersAreEqual(
+                              question: widget.question, newAnswers: answers);
+                      print(
+                          'questions and answers are equal $_questionsAndAnswersAreEqual');
                     }
                     setState(() {});
                   });
@@ -127,6 +141,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    const CourseTypeButtons(),
                     const UnitDropDown(),
                     const CustomFormBuilderTextField(kQuestion),
                     const CustomFormBuilderTextField(kCorrectAnswer),
@@ -157,8 +172,10 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                         isDisabled: disableButton,
                         onPressed: () {
                           final hasDuplicates =
-                              getAnswersAndExplanation(_formKey)
+                              getQuestionAndAnswersAndExplanation(
+                                      _formKey, editState)
                                   .hasDuplicates();
+
                           final fields = _formKey.currentState?.fields;
                           bool questionAlreadyExists = false;
                           if (widget.question == null) {
@@ -231,29 +248,38 @@ Future updateQuestion() async {
   }
 }
 
-List<String> getAnswersAndExplanation(GlobalKey<FormBuilderState> formKey) {
-  List<String> answers = [];
+List<String> getQuestionAndAnswersAndExplanation(
+    GlobalKey<FormBuilderState> formKey, EditQuestionState editState) {
+  List<String> questionsAndAnswers = [];
   if (formKey.currentState?.fields != null) {
     final fields = formKey.currentState!.fields;
-    answers.add(fields[kCorrectAnswer]!.value);
-    answers.add(fields[kIncorrectAnswer1]!.value);
-    answers.add(fields[kIncorrectAnswer2]!.value);
-    answers.add(fields[kIncorrectAnswer3]!.value);
-    answers.add(fields[kExplanation]?.value ?? "");
+    questionsAndAnswers.add(fields[kQuestion]!.value);
+    questionsAndAnswers.add(fields[kCorrectAnswer]!.value);
+    if (editState.questionType == QuestionType.multi) {
+      questionsAndAnswers.add(fields[kIncorrectAnswer1]!.value);
+      questionsAndAnswers.add(fields[kIncorrectAnswer2]!.value);
+      questionsAndAnswers.add(fields[kIncorrectAnswer3]!.value);
+      questionsAndAnswers.add(fields[kExplanation]?.value ?? "");
+    }
   }
-  return answers;
+
+  return questionsAndAnswers;
 }
 
-bool checkIfChangesMade(
-    {required QuestionModel? question, required newAnswers}) {
+bool questionsAndAnswersAreEqual({
+  required QuestionModel? question,
+  required List<String> newAnswers,
+}) {
   if (question != null) {
-    List<String> originalAnswers = [];
-
+    List<String> originalQuestionsAndAnswersAndExplanation = [];
+    originalQuestionsAndAnswersAndExplanation.add(question.question!);
     for (var a in question.answers!) {
-      originalAnswers.add(a.answer);
+      originalQuestionsAndAnswersAndExplanation.add(a.answer);
     }
-    originalAnswers.add(question.explanation ?? "");
-    return const ListEquality().equals(originalAnswers, newAnswers);
+    originalQuestionsAndAnswersAndExplanation.add(question.explanation ?? "");
+
+    return const ListEquality()
+        .equals(originalQuestionsAndAnswersAndExplanation, newAnswers);
   }
   return false;
 }

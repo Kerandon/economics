@@ -15,40 +15,36 @@ Future<void> prepareNewQuestionForFirebase({
   required GlobalKey<FormBuilderState> formKey,
   required EditQuestionState editState,
 }) async {
+  final questionType = editState.questionType;
   final fields = formKey.currentState!.fields;
   final question = fields[kQuestion]?.value;
-  final correctAnswer = fields[kCorrectAnswer]?.value;
-  final incorrectAnswer1 = fields[kIncorrectAnswer1]?.value;
-  final incorrectAnswer2 = fields[kIncorrectAnswer2]?.value;
-  final incorrectAnswer3 = fields[kIncorrectAnswer3]?.value;
-  final explanation = fields[kExplanation]?.value;
+  List<AnswerModel> answers = [];
+  String? explanation;
+  answers.add(
+    AnswerModel(fields[kCorrectAnswer]?.value, isCorrect: true),
+  );
+  if (questionType == QuestionType.multi) {
+    answers.add(
+      AnswerModel(fields[kIncorrectAnswer1]?.value),
+    );
+    answers.add(
+      AnswerModel(fields[kIncorrectAnswer2]?.value),
+    );
+    answers.add(
+      AnswerModel(fields[kIncorrectAnswer3]?.value),
+    );
+    explanation = fields[kExplanation]?.value;
+  }
   final course = editState.course;
   final unit = editState.unit;
   final subunit = editState.subunit;
   final q = QuestionModel(
-    type: QuestionType.multi,
+    type: questionType,
     course: course,
     unit: unit,
     subunit: subunit,
     question: question,
-    answers: [
-      AnswerModel(
-        correctAnswer,
-        isCorrect: true,
-      ),
-      AnswerModel(
-        incorrectAnswer1,
-        isCorrect: false,
-      ),
-      AnswerModel(
-        incorrectAnswer2,
-        isCorrect: false,
-      ),
-      AnswerModel(
-        incorrectAnswer3,
-        isCorrect: false,
-      ),
-    ],
+    answers: answers,
     explanation: explanation,
   );
 

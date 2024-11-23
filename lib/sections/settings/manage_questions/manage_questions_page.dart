@@ -12,8 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
+import '../../quizzes/custom_widgets/filter_button.dart';
 import '../../quizzes/custom_widgets/unit_drop_down.dart';
 import '../../quizzes/methods/get_questions_data.dart';
+import '../../quizzes/quiz_enums/quiz_filter.dart';
 import 'manage_questions_tile.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
@@ -27,16 +29,28 @@ class ManageQuestionsPage extends ConsumerStatefulWidget {
 class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
   List<QuestionModel> questions = [];
   List<CourseMixin> courses = [];
+  late final _future = getQuestionsData();
+  bool _dataIsSet = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final editState = ref.watch(editQuestionProvider);
     final selectEditState = ref.watch(
       editQuestionProvider.select(
         (state) => (
           state.unit,
           state.subunit,
           state.questionType,
+          state.quizFilter,
+          //   state.allQuestions,
+          // state.course,
+          // state.filteredQuestions,
         ),
       ),
     );
@@ -47,6 +61,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
         title: const Text('Manage questions'),
         leading: const CustomBackIconButton(QuizHomePage()),
         actions: [
+          QuizFilterButton(),
           IconButton(
             onPressed: () {
               Navigator.of(context).push(
@@ -68,58 +83,73 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
         padding: EdgeInsets.symmetric(
             horizontal: size.width * kPageIndentHorizontal),
         child: FutureBuilder<List<QuestionModel>>(
-            future: getQuestionsData(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<QuestionModel> questions = snapshot.data!.toList();
-                WidgetsBinding.instance.addPostFrameCallback((t) {
+          future: _future,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<QuestionModel> questions = snapshot.data!.toList();
+              WidgetsBinding.instance.addPostFrameCallback((t) {
+                if(!_dataIsSet) {
+                  _dataIsSet = true;
                   editNotifier.setAllQuestions(questions);
-                });
-
-                List<QuestionModel> filteredQuestions = questions.toList()
-                  ..sort((a, b) => a.question!.compareTo(b.question!));
-                for (var q in questions) {
-                  if (q.unit != selectEditState.$1) {
-                    filteredQuestions.remove(q);
-                  }
-                  if (q.subunit != selectEditState.$2) {
-                    filteredQuestions.remove(q);
-                  }
                 }
+              });
 
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const Gap(),
-                      const QuizTypeButtons(),
-                      const Gap(),
-                      const CourseTypeButtons(),
-                      const Gap(),
-                      const UnitDropDown(),
-                      const Gap(),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: filteredQuestions.length,
-                        itemBuilder: (context, index) {
-                          final q = filteredQuestions[index];
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: size.height * 0.01,
-                              ),
-                              ManageQuestionsTile(q: q),
-                              const CustomDivider(),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                );
-              }
-              return const Center(child: CircularProgressIndicator());
-            }),
+              List<QuestionModel> filteredQuestions = questions.toList()
+                ..sort((a, b) => a.question!.compareTo(b.question!));
+
+              // if (selectEditState.$3 ==
+              //     QuizFilter.all) {
+              //   for (var q
+              //   in selectEditState
+              //       .$4) {
+              //     if (q.course ==
+              //         selectEditState.$5) {
+              //       selectedQuestions.add(q);
+              //     }
+              //   }
+              // } else {
+              //   selectedQuestions.addAll(
+              //     selectEditState.$2
+              //         .toList(),
+              //   );
+              // }
+
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Gap(),
+                    const QuizTypeButtons(),
+                    const Gap(),
+                    const CourseTypeButtons(),
+                    const Gap(),
+                    const UnitDropDown(),
+                    const Gap(),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: filteredQuestions.length,
+                      itemBuilder: (context, index) {
+                        final q = filteredQuestions[index];
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: size.height * 0.01,
+                            ),
+                            ManageQuestionsTile(q: q),
+                            const CustomDivider(),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }
