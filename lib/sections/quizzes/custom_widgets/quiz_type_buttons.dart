@@ -18,7 +18,7 @@ class QuizTypeButtons extends ConsumerWidget {
     return Wrap(
       alignment: WrapAlignment.center,
       spacing: size.width * kWrapSpacing,
-      children: QuestionType.values.map((e) {
+      children: QuizType.values.map((e) {
         final isSelected = e == editState.questionType;
         final theme = Theme.of(context);
         final onSurfaceColor =
@@ -27,7 +27,7 @@ class QuizTypeButtons extends ConsumerWidget {
           selectedColor: theme.colorScheme.primary,
           checkmarkColor: onSurfaceColor,
           label: Text(
-            e.name,
+            e.toText(),
             style: theme.textTheme.titleSmall?.copyWith(
               color: isSelected ? Colors.white : theme.colorScheme.onSurface,
             ),

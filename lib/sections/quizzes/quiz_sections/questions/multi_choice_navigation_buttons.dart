@@ -8,8 +8,8 @@ import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/custom_change_button.dart';
 import '../../quiz_enums/answer_stage.dart';
 
-class QuestionNavigationButtons extends ConsumerStatefulWidget {
-  const QuestionNavigationButtons({
+class MultiChoiceNavigationButtons extends ConsumerWidget {
+  const MultiChoiceNavigationButtons({
     super.key,
     required this.pageController,
   });
@@ -17,14 +17,7 @@ class QuestionNavigationButtons extends ConsumerStatefulWidget {
   final PageController pageController;
 
   @override
-  ConsumerState<QuestionNavigationButtons> createState() =>
-      _QuestionNavigationButtonsState();
-}
-
-class _QuestionNavigationButtonsState
-    extends ConsumerState<QuestionNavigationButtons> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final checkAnswersAtEndState =
         ref.watch(editQuestionProvider.select((s) => (s.checkAnswersAtEnd)));
@@ -98,8 +91,7 @@ class _QuestionNavigationButtonsState
         children: [
           CustomPageChangeButton(
             onPressed: () {
-              widget.pageController.animateToPage(
-                  quizState.currentQuestionIndex - 1,
+              pageController.animateToPage(quizState.currentQuestionIndex - 1,
                   duration: const Duration(milliseconds: kPageChangeAnimation),
                   curve: Curves.easeInOutCirc);
             },
@@ -146,7 +138,7 @@ class _QuestionNavigationButtonsState
           ],
           CustomPageChangeButton(
             onPressed: () {
-              widget.pageController.animateToPage(
+              pageController.animateToPage(
                 quizState.currentQuestionIndex + 1,
                 duration: const Duration(milliseconds: kPageChangeAnimation),
                 curve: Curves.easeInOutCirc,

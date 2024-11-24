@@ -6,9 +6,9 @@ import '../../../app/utils/mixins/unit_mixin.dart';
 import '../quiz_state/edit_question_state.dart';
 
 class UnitDropDown extends ConsumerWidget {
-  const UnitDropDown({super.key});
+  const UnitDropDown({required this.alwaysShowAllUnits, super.key});
 
-  final bool canFilterByAll = true;
+  final bool alwaysShowAllUnits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,26 +17,25 @@ class UnitDropDown extends ConsumerWidget {
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
     bool showUnits = false, showSubunits = false;
+
     if (editState.course.units.isNotEmpty) {
-      if (canFilterByAll) {
-        if (editState.quizFilter != QuizFilter.all) {
-          showUnits = true;
-        } else {
-          showUnits = false;
-        }
-      } else {
+      if (alwaysShowAllUnits) {
         showUnits = true;
+      } else if (editState.quizFilter == QuizFilter.unit ||
+          editState.quizFilter == QuizFilter.subunit) {
+        showUnits = true;
+      } else {
+        showUnits = false;
       }
     }
+
     if (editState.unit.subunits.isNotEmpty) {
-      if (canFilterByAll) {
-        if (editState.quizFilter == QuizFilter.subunit) {
-          showSubunits = true;
-        } else {
-          showSubunits = false;
-        }
-      } else {
+      if (alwaysShowAllUnits) {
         showSubunits = true;
+      } else if (editState.quizFilter == QuizFilter.subunit) {
+        showSubunits = true;
+      } else {
+        showSubunits = false;
       }
     }
 
@@ -56,7 +55,8 @@ class UnitDropDown extends ConsumerWidget {
             },
             dropdownMenuEntries: editState.course.units.map((e) {
               int numberOfUnits = editState.allQuestions
-                  .where((q) => q.questionType == editState.questionType && q.unit == e)
+                  .where((q) =>
+                      q.questionType == editState.questionType && q.unit == e)
                   .length;
               return DropdownMenuEntry(
                 value: e,
@@ -80,7 +80,8 @@ class UnitDropDown extends ConsumerWidget {
               editState.unit.subunits;
               int numberOfSubunits = 0;
               for (var q in editState.allQuestions) {
-                if (q.questionType == editState.questionType && q.subunit == e) {
+                if (q.questionType == editState.questionType &&
+                    q.subunit == e) {
                   numberOfSubunits++;
                 }
               }

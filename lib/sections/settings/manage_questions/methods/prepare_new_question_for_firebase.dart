@@ -23,7 +23,7 @@ Future<void> prepareNewQuestionForFirebase({
   answers.add(
     AnswerModel(fields[kCorrectAnswer]?.value, isCorrect: true),
   );
-  if (questionType == QuestionType.multi) {
+  if (questionType == QuizType.multi) {
     answers.add(
       AnswerModel(fields[kIncorrectAnswer1]?.value),
     );

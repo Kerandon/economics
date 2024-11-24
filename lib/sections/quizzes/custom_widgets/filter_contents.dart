@@ -11,10 +11,12 @@ import '../../../app/configs/constants.dart';
 class FilterContents extends ConsumerWidget {
   const FilterContents({
     this.showExtraButtons = true,
+    this.alwaysShowAllUnits = false,
     super.key,
   });
 
   final bool showExtraButtons;
+  final bool alwaysShowAllUnits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +34,9 @@ class FilterContents extends ConsumerWidget {
             const QuizTypeButtons(),
             const CourseTypeButtons(),
             const QuizFilterButtons(),
-            const UnitDropDown(),
+            UnitDropDown(
+              alwaysShowAllUnits: alwaysShowAllUnits,
+            ),
             if (showExtraButtons) ...[
               const NumberOfQuestionsButtons(),
               const CheckAnswersAtEndButton(),

@@ -12,7 +12,7 @@ import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
   final String? id;
-  final QuestionType? questionType;
+  final QuizType? questionType;
   final CourseMixin? course;
   final String? question;
   final Widget? item;
@@ -40,7 +40,7 @@ class QuestionModel extends Equatable {
   // More flexible copyWith
   QuestionModel copyWith({
     String? id,
-    QuestionType? type,
+    QuizType? questionType,
     CourseMixin? course,
     String? question,
     List<AnswerModel>? answers,
@@ -52,7 +52,7 @@ class QuestionModel extends Equatable {
   }) {
     return QuestionModel(
       id: id ?? this.id,
-      questionType: type ?? this.questionType,
+      questionType: questionType ?? this.questionType,
       course: course ?? this.course,
       question: question ?? this.question,
       answers: answers ?? this.answers,

@@ -42,7 +42,7 @@ class NumberOfQuestionsButtons extends ConsumerWidget {
         numbers.add(numberOfFilteredQuestions);
       }
       WidgetsBinding.instance.addPostFrameCallback((t) {
-        if (!numbers.contains(editState.numberOfQuestions)) {
+        if (!numbers.contains(editState.maxNumberOfQuestions)) {
           editNotifier.setNumberOfQuestions(numbers.first);
         }
       });
@@ -54,7 +54,7 @@ class NumberOfQuestionsButtons extends ConsumerWidget {
         alignment: WrapAlignment.center,
         spacing: size.width * kWrapSpacing,
         children: numbers.map((e) {
-          final isSelected = e == editState.numberOfQuestions;
+          final isSelected = e == editState.maxNumberOfQuestions;
           final onSurfaceColor =
               isSelected ? Colors.white : theme.colorScheme.onSurface;
           return ChoiceChip(

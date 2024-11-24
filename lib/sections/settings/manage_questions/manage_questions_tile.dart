@@ -1,5 +1,4 @@
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
-import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -18,7 +17,6 @@ class ManageQuestionsTile extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final listTileTheme = theme.listTileTheme;
-    final editState = ref.watch(editQuestionProvider);
 
     return ListTile(
       visualDensity: VisualDensity.compact,
@@ -35,7 +33,6 @@ class ManageQuestionsTile extends ConsumerWidget {
               MaterialPageRoute(
                 builder: (context) => AddQuestionForm(
                   question: q,
-                  questionType: editState.questionType,
                 ),
               ),
             );

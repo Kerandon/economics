@@ -3,7 +3,6 @@ import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_navigation_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
@@ -15,6 +14,7 @@ import '../../../../app/configs/constants.dart';
 import '../../../../main.dart';
 import 'flip_card/flip_card_tile.dart';
 import 'multi_choice/multi_choice_tile.dart';
+import 'multi_choice_navigation_buttons.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -31,31 +31,20 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final unitSubunitQuestionTypeProvider = ref.read(
-      editQuestionProvider.select(
-        (s) => (s.unit, s.subunit, s.questionType),
-      ),
-    );
-    final selectedQuestionsCurrentQuestionIndexQuizIsCompletedState = ref.watch(
-      quizProvider.select(
-        (s) => (
-          s.selectedQuestions,
-          s.currentQuestionIndex,
-          s.quizIsCompleted,
-        ),
-      ),
-    );
+
+    final quizState = ref.watch(quizProvider);
+
+    final editState = ref.watch(editQuestionProvider);
+
     QuestionModel? currentQuestion;
-    if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
-        .$1.isNotEmpty) {
+    if (quizState.selectedQuestions.isNotEmpty) {
       currentQuestion =
-          selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
-              .$1[selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$2];
+          quizState.selectedQuestions[quizState.currentQuestionIndex];
     }
     final quizNotifier = ref.read(quizProvider.notifier);
     final customButtonGap = size.height * 0.04;
 
-    if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState.$3) {
+    if (quizState.quizIsCompleted) {
       if (!_completeAudioHasPlayed) {
         _completeAudioHasPlayed = true;
         final audioManager = getIt<AudioManager>();
@@ -73,7 +62,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             title: FittedBox(
               fit: BoxFit.scaleDown,
               child: AutoSizeText(
-                '${unitSubunitQuestionTypeProvider.$1.name} - ${unitSubunitQuestionTypeProvider.$2.name}',
+                '${editState.unit.name} - ${editState.subunit.name}',
                 overflow: TextOverflow.fade,
                 maxLines: 1,
               ),
@@ -124,22 +113,19 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                       },
                       controller: _pageController,
                       physics: const NeverScrollableScrollPhysics(),
-                      children:
-                          selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
-                              .$1
-                              .map(
+                      children: quizState.selectedQuestions.map(
                         (question) {
                           return SingleChildScrollView(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 ...[
-                                  if (unitSubunitQuestionTypeProvider.$3 ==
-                                      QuestionType.multi) ...[
+                                  if (editState.questionType ==
+                                      QuizType.multi) ...[
                                     const MultiChoiceTile(),
                                   ],
-                                  if (unitSubunitQuestionTypeProvider.$3 ==
-                                      QuestionType.flip) ...[
+                                  if (editState.questionType ==
+                                      QuizType.flip) ...[
                                     const FlipCardTile(),
                                   ],
                                   SizedBox(
@@ -160,19 +146,17 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               ),
             ),
           ),
-          floatingActionButton: QuestionNavigationButtons(
+          floatingActionButton: MultiChoiceNavigationButtons(
             pageController: _pageController,
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
         ),
-        if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
-                .$1.isNotEmpty &&
+        if (quizState.selectedQuestions.isNotEmpty &&
             currentQuestion?.answerStage == AnswerStage.correct) ...[
           const ConfettiAnimation(),
         ],
-        if (selectedQuestionsCurrentQuestionIndexQuizIsCompletedState
-            .$1.isNotEmpty) ...[
+        if (quizState.selectedQuestions.isNotEmpty) ...[
           ConfettiAnimation(
             animate: currentQuestion?.answerStage == AnswerStage.correct,
           ),

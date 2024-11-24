@@ -28,7 +28,7 @@ class _FlipAnimationState extends State<FlipAnimation>
   @override
   initState() {
     _animationController = AnimationController(
-        duration: const Duration(milliseconds: 300), vsync: this)
+        duration: const Duration(milliseconds: 1200), vsync: this)
       ..addListener(() {
         if (_animationController.isCompleted) {
           widget.animationCompleted.call();
@@ -69,7 +69,7 @@ class _FlipAnimationState extends State<FlipAnimation>
         transform: Matrix4.identity()
           ..setEntry(3, 2, 0.0001)
           ..rotateY((_animationController.value * pi) / 2)
-          ..rotateY(rotationAdjustment),
+          ..rotateY(-rotationAdjustment),
         child: widget.child,
       ),
     );

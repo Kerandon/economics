@@ -14,15 +14,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/custom_back_to_home_button.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
+import '../../quizzes/custom_widgets/quiz_type_buttons.dart';
 import '../../quizzes/custom_widgets/unit_drop_down.dart';
 import 'custom_form_builder_text_field.dart';
 import 'methods/prepare_new_question_for_firebase.dart';
 import 'methods/prepare_update_question_for_firebase.dart';
 
 class AddQuestionForm extends ConsumerStatefulWidget {
-  const AddQuestionForm({required this.questionType, this.question, super.key});
+  const AddQuestionForm({this.question, super.key});
 
-  final QuestionType questionType;
   final QuestionModel? question;
 
   @override
@@ -40,14 +40,13 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
-    final editNotifier = ref.read(editQuestionProvider.notifier);
 
     String title = '';
 
-    title = 'Add ${editState.questionType.toText()} question';
+    title = 'Add ${editState.questionType.toText().toLowerCase()} question';
 
     if (widget.question != null) {
-      title = 'Edit ${editState.questionType.toText()} question';
+      title = 'Edit ${editState.questionType.toText().toLowerCase()} question';
 
       if (!_setUpForQuestionEdit) {
         _setUpForQuestionEdit = true;
@@ -70,7 +69,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
             final fields = _formKey.currentState!.fields;
             fields[kQuestion]!.didChange(questionModel.question ?? "");
             fields[kCorrectAnswer]!.didChange(correctAnswer?.answer ?? "");
-            if (questionModel.questionType == QuestionType.multi) {
+            if (questionModel.questionType == QuizType.multi) {
               fields[kIncorrectAnswer1]!.didChange(incorrectAnswers[0].answer);
               fields[kIncorrectAnswer2]!.didChange(incorrectAnswers[1].answer);
               fields[kIncorrectAnswer3]!.didChange(incorrectAnswers[2].answer);
@@ -111,19 +110,6 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
           child: Column(
             children: [
               const Gap(),
-              Wrap(
-                spacing: 20,
-                children: courses.map((c) {
-                  return CustomChipButton(
-                    isSelected: c == editState.course,
-                    onPressed: () {
-                      editNotifier.setCourse(c);
-                    },
-                    text: c.name,
-                  );
-                }).toList(),
-              ),
-              const Gap(),
               FormBuilder(
                 onChanged: () {
                   WidgetsBinding.instance.addPostFrameCallback((t) {
@@ -140,11 +126,14 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                 key: _formKey,
                 child: Column(
                   children: [
+                    const QuizTypeButtons(),
                     const CourseTypeButtons(),
-                    const UnitDropDown(),
+                    const UnitDropDown(
+                      alwaysShowAllUnits: true,
+                    ),
                     const CustomFormBuilderTextField(kQuestion),
                     const CustomFormBuilderTextField(kCorrectAnswer),
-                    if (editState.questionType == QuestionType.multi) ...[
+                    if (editState.questionType == QuizType.multi) ...[
                       const CustomFormBuilderTextField(kIncorrectAnswer1),
                       const CustomFormBuilderTextField(kIncorrectAnswer2),
                       const CustomFormBuilderTextField(kIncorrectAnswer3),
@@ -254,7 +243,7 @@ List<String> getQuestionAndAnswersAndExplanation(
     final fields = formKey.currentState!.fields;
     questionsAndAnswers.add(fields[kQuestion]!.value);
     questionsAndAnswers.add(fields[kCorrectAnswer]!.value);
-    if (editState.questionType == QuestionType.multi) {
+    if (editState.questionType == QuizType.multi) {
       questionsAndAnswers.add(fields[kIncorrectAnswer1]!.value);
       questionsAndAnswers.add(fields[kIncorrectAnswer2]!.value);
       questionsAndAnswers.add(fields[kIncorrectAnswer3]!.value);

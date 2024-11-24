@@ -19,36 +19,39 @@ class QuizFilterButtons extends ConsumerWidget {
         Wrap(
           alignment: WrapAlignment.center,
           spacing: size.width * kWrapSpacing,
-          children: QuizFilter.values.map((e) {
-            String text = e.toText();
+          children: QuizFilter.values.map(
+            (e) {
+              String text = e.toText();
 
-            if (e == QuizFilter.all) {
-              int numberOfQuestionsInCourse = 0;
-              for (var q in editState.allQuestions) {
-                if (q.course == editState.course) {
-                  numberOfQuestionsInCourse++;
+              if (e == QuizFilter.all) {
+                int numberOfQuestionsInCourse = 0;
+                for (var q in editState.allQuestions) {
+                  if (q.questionType == editState.questionType &&
+                      q.course == editState.course) {
+                    numberOfQuestionsInCourse++;
+                  }
                 }
+                text = '${e.toText()}  ($numberOfQuestionsInCourse)';
               }
-              text = '${e.toText()}  ($numberOfQuestionsInCourse)';
-            }
 
-            final isSelected = e == editState.quizFilter;
-            final onSurfaceColor =
-                isSelected ? Colors.white : theme.colorScheme.onSurface;
+              final isSelected = e == editState.quizFilter;
+              final onSurfaceColor =
+                  isSelected ? Colors.white : theme.colorScheme.onSurface;
 
-            return ChoiceChip(
-              checkmarkColor: onSurfaceColor,
-              selected: isSelected,
-              selectedColor: theme.colorScheme.primary,
-              label: Text(
-                text,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  color: onSurfaceColor,
+              return ChoiceChip(
+                checkmarkColor: onSurfaceColor,
+                selected: isSelected,
+                selectedColor: theme.colorScheme.primary,
+                label: Text(
+                  text,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    color: onSurfaceColor,
+                  ),
                 ),
-              ),
-              onSelected: (_) => editNotifier.setQuizFilter(e),
-            );
-          }).toList(),
+                onSelected: (_) => editNotifier.setQuizFilter(e),
+              );
+            },
+          ).toList(),
         ),
       ],
     );

@@ -2,8 +2,6 @@ import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/state/audio_state.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/filter_button.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:economics_app/sections/settings/settings_page.dart';
@@ -33,33 +31,9 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final selectEditState = ref.watch(
-      editQuestionProvider.select(
-        (state) => (
-          state.numberOfQuestions,
-          state.filteredQuestions,
-          state.quizFilter,
-          state.allQuestions,
-          state.course,
-        ),
-      ),
-    );
+    final editState = ref.watch(editQuestionProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
     final audioState = ref.watch(audioProvider);
-
-    List<QuestionModel> selectedQuestions = [];
-
-    if (selectEditState.$3 == QuizFilter.all) {
-      for (var q in selectEditState.$4) {
-        if (q.course == selectEditState.$5) {
-          selectedQuestions.add(q);
-        }
-      }
-    } else {
-      selectedQuestions.addAll(
-        selectEditState.$2.toList(),
-      );
-    }
 
     return Scaffold(
       drawer: const SettingsPage(),
@@ -68,8 +42,11 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
           color: Colors.white,
         ),
         title: const Text('Quiz'),
-        actions: const [
-          QuizFilterButton(),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: size.width * kPageIndentHorizontal),
+            child: const QuizFilterButton(),
+          ),
         ],
       ),
       body: Padding(
@@ -80,32 +57,33 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
             key: _formKey,
             child: Column(
               children: [
-                const Row(
-                  children: [
-                    QuizFilterButton(),
-                  ],
-                ),
-                Container(
-                  height: size.height * 0.40, // Set your desired height
-                  decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(16.0), // Rounded corners
-                    image: const DecorationImage(
-                      image: AssetImage(
-                          'assets/images/study.jpg'), // Asset image path
-                      fit:
-                          BoxFit.cover, // Adjust the image to fit the container
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: size.width * kPageIndentHorizontal,
+                    vertical: size.height * kPageIndentVertical,
+                  ),
+                  child: Container(
+                    height: size.height * 0.40, // Set your desired height
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(16.0), // Rounded corners
+                      image: const DecorationImage(
+                        image: AssetImage(
+                            'assets/images/study.jpg'), // Asset image path
+                        fit: BoxFit
+                            .cover, // Adjust the image to fit the container
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: size.height * 0.10,
+                  height: size.height * 0.05,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomChipButton(
-                      isDisabled: selectedQuestions.isEmpty,
+                      isDisabled: editState.filteredQuestions.isEmpty,
                       text: 'Start Quiz',
                       onPressed: () {
                         final audio = getIt<AudioManager>();
@@ -116,8 +94,8 @@ class _QuizHomePageState extends ConsumerState<QuizHomePage> {
 
                         startQuiz(
                           context: context,
-                          filteredQuestions: selectedQuestions,
-                          limit: selectEditState.$1,
+                          filteredQuestions: editState.filteredQuestions,
+                          limit: editState.maxNumberOfQuestions,
                           quizNotifier: quizNotifier,
                         );
                       },

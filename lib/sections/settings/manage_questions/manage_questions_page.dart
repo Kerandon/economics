@@ -47,9 +47,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => AddQuestionForm(
-                    questionType: editState.questionType,
-                  ),
+                  builder: (context) => const AddQuestionForm(),
                 ),
               );
             },

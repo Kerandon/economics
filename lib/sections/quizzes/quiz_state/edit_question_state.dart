@@ -9,7 +9,7 @@ import '../../../app/utils/models/course.dart';
 import '../../../app/utils/models/unit.dart';
 
 class EditQuestionState {
-  final QuestionType questionType;
+  final QuizType questionType;
   final List<CourseMixin> courses;
   final CourseMixin course;
   final QuizFilter quizFilter;
@@ -17,7 +17,7 @@ class EditQuestionState {
   final UnitMixin unit;
   final UnitMixin subunit;
   final List<QuestionModel> allQuestions;
-  final int numberOfQuestions;
+  final int maxNumberOfQuestions;
   final bool checkAnswersAtEnd;
 
   EditQuestionState({
@@ -29,12 +29,12 @@ class EditQuestionState {
     required this.subunit,
     required this.allQuestions,
     required this.filteredQuestions,
-    required this.numberOfQuestions,
+    required this.maxNumberOfQuestions,
     required this.checkAnswersAtEnd,
   });
 
   EditQuestionState copyWith({
-    QuestionType? questionType,
+    QuizType? questionType,
     List<CourseMixin>? courses,
     CourseMixin? course,
     QuizFilter? quizFilter,
@@ -42,7 +42,7 @@ class EditQuestionState {
     UnitMixin? unit,
     UnitMixin? subunit,
     List<QuestionModel>? allQuestions,
-    int? numberOfQuestions,
+    int? maxNumberOfQuestions,
     bool? checkAnswersAtEnd,
   }) {
     return EditQuestionState(
@@ -54,7 +54,7 @@ class EditQuestionState {
       questionType: questionType ?? this.questionType,
       unit: unit ?? this.unit,
       subunit: subunit ?? this.subunit,
-      numberOfQuestions: numberOfQuestions ?? this.numberOfQuestions,
+      maxNumberOfQuestions: maxNumberOfQuestions ?? this.maxNumberOfQuestions,
       checkAnswersAtEnd: checkAnswersAtEnd ?? this.checkAnswersAtEnd,
     );
   }
@@ -63,7 +63,7 @@ class EditQuestionState {
 class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   EditQuestionNotifier(super._state);
 
-  void setQuestionType(QuestionType type) {
+  void setQuestionType(QuizType type) {
     state = state.copyWith(questionType: type);
     setFilteredQuestions();
   }
@@ -139,7 +139,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   }
 
   void setNumberOfQuestions(int number) {
-    state = state.copyWith(numberOfQuestions: number);
+    state = state.copyWith(maxNumberOfQuestions: number);
   }
 
   void setCheckAnswersAtEnd(bool checkAtEnd) {
@@ -151,7 +151,7 @@ final editQuestionProvider =
     StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
   (ref) => EditQuestionNotifier(
     EditQuestionState(
-      questionType: QuestionType.multi,
+      questionType: QuizType.multi,
       quizFilter: QuizFilter.all,
       courses: [],
       course: Course(name: "", units: []),
@@ -159,7 +159,7 @@ final editQuestionProvider =
       subunit: Unit(name: ''),
       allQuestions: [],
       filteredQuestions: [],
-      numberOfQuestions: kNumberOfQuestions.first,
+      maxNumberOfQuestions: kNumberOfQuestions.first,
       checkAnswersAtEnd: false,
     ),
   ),

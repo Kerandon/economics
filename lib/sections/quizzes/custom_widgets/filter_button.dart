@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class QuizFilterButton extends ConsumerWidget {
-  const QuizFilterButton({this.showExtraButtons = true, super.key});
+  const QuizFilterButton(
+      {this.showExtraButtons = true,
+      this.alwaysShowAllUnits = false,
+      super.key});
 
   final bool showExtraButtons;
+  final bool alwaysShowAllUnits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,6 +28,7 @@ class QuizFilterButton extends ConsumerWidget {
               context: context,
               builder: (context) => FilterContents(
                 showExtraButtons: showExtraButtons,
+                alwaysShowAllUnits: alwaysShowAllUnits,
               ),
             );
           },
