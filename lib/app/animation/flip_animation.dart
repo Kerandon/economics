@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class FlipAnimation extends StatefulWidget {
@@ -7,14 +6,14 @@ class FlipAnimation extends StatefulWidget {
       {required this.child,
       required this.animate,
       required this.reset,
-      required this.flipFromHalfWay,
+      required this.animationHalfCompleted,
       required this.animationCompleted,
       super.key});
 
   final Widget child;
   final bool animate;
   final bool reset;
-  final bool flipFromHalfWay;
+  final VoidCallback animationHalfCompleted;
   final VoidCallback animationCompleted;
 
   @override
@@ -24,13 +23,14 @@ class FlipAnimation extends StatefulWidget {
 class _FlipAnimationState extends State<FlipAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
+  bool _halfFlipCallSent = false;
 
   @override
   initState() {
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 1200), vsync: this)
       ..addListener(() {
-        if (_animationController.isCompleted) {
+        if (_animationController.value == 1.0) {
           widget.animationCompleted.call();
         }
       });
@@ -57,21 +57,34 @@ class _FlipAnimationState extends State<FlipAnimation>
 
   @override
   Widget build(BuildContext context) {
-    double rotationAdjustment = 0;
-    if (widget.flipFromHalfWay) {
-      rotationAdjustment = pi / 2;
-    }
-
     return AnimatedBuilder(
       animation: _animationController,
-      builder: (context, child) => Transform(
-        alignment: Alignment.center,
-        transform: Matrix4.identity()
-          ..setEntry(3, 2, 0.0001)
-          ..rotateY((_animationController.value * pi) / 2)
-          ..rotateY(-rotationAdjustment),
-        child: widget.child,
-      ),
+      builder: (context, child) {
+        bool mirrorFlip = false;
+
+        if (_animationController.value < 0.50) {
+          _halfFlipCallSent = false;
+        }
+        // print(' ${_animationController.value} call sent $_halfFlipCallSent');
+        if (_animationController.value >= 0.50) {
+          WidgetsBinding.instance.addPostFrameCallback((t) {
+            if (_halfFlipCallSent == false) {
+              widget.animationHalfCompleted.call();
+              _halfFlipCallSent = true;
+            }
+          });
+          mirrorFlip = true;
+        }
+
+        return Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.0001)
+            ..rotateY((_animationController.value * pi) / 1)
+            ..rotateY(mirrorFlip ? pi : 0),
+          child: widget.child,
+        );
+      },
     );
   }
 }

@@ -3,6 +3,11 @@ import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
+
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card/flip_card_tile.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/multi_choice/multi_choice_tile.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_navigation_buttons.dart';
+
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
@@ -10,11 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/animation/confetti_animation.dart';
 import '../../../../app/audio_manager/audio_manager.dart';
-import '../../../../app/configs/constants.dart';
+
 import '../../../../main.dart';
-import 'flip_card/flip_card_tile.dart';
-import 'multi_choice/multi_choice_tile.dart';
-import 'multi_choice_navigation_buttons.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -85,72 +87,65 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               },
             ),
           ),
-          body: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: size.width * kPageIndentHorizontal,
-            ),
-            child: NestedScrollView(
-              floatHeaderSlivers: true,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  const SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        CustomSlider(),
-                      ],
-                    ),
-                  )
-                ];
-              },
-              body: Container(
-                color: Theme.of(context).colorScheme.surface,
-                child: Stack(
-                  children: [
-                    PageView(
-                      onPageChanged: (index) {
-                        quizNotifier.setCurrentQuestionIndex(index);
-                      },
-                      controller: _pageController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: quizState.selectedQuestions.map(
-                        (question) {
-                          return SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ...[
-                                  if (editState.questionType ==
-                                      QuizType.multi) ...[
-                                    const MultiChoiceTile(),
-                                  ],
-                                  if (editState.questionType ==
-                                      QuizType.flip) ...[
-                                    const FlipCardTile(),
-                                  ],
-                                  SizedBox(
-                                    height: customButtonGap,
-                                  ),
+          body: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                const SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      CustomSlider(),
+                    ],
+                  ),
+                )
+              ];
+            },
+            body: Container(
+              color: Theme.of(context).colorScheme.surface,
+              child: Stack(
+                children: [
+                  PageView(
+                    onPageChanged: (index) {
+                      quizNotifier.setCurrentQuestionIndex(index);
+                    },
+                    controller: _pageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: quizState.selectedQuestions.map(
+                      (question) {
+                        return SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ...[
+                                if (editState.questionType ==
+                                    QuestionType.multi) ...[
+                                  MultiChoiceTile(question),
+                                ],
+                                if (editState.questionType ==
+                                    QuestionType.flip) ...[
+                                  FlipCardTile(question),
                                 ],
                                 SizedBox(
-                                  height: size.height * 0.15,
+                                  height: customButtonGap,
                                 ),
                               ],
-                            ),
-                          );
-                        },
-                      ).toList(),
-                    ),
-                  ],
-                ),
+                              SizedBox(
+                                height: size.height * 0.15,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ).toList(),
+                  ),
+                ],
               ),
             ),
           ),
-          floatingActionButton: MultiChoiceNavigationButtons(
+          floatingActionButton: QuestionNavigationButtons(
             pageController: _pageController,
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
         ),
         if (quizState.selectedQuestions.isNotEmpty &&
             currentQuestion?.answerStage == AnswerStage.correct) ...[

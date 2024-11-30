@@ -1,26 +1,26 @@
-enum QuizType {
+enum QuestionType {
   multi,
   flip,
 }
 
-extension QuestionTypeExtension on QuizType {
+extension QuestionTypeExtension on QuestionType {
   // Convert enum to text
   String toText() {
     switch (this) {
-      case QuizType.multi:
+      case QuestionType.multi:
         return 'Multi-choice';
-      case QuizType.flip:
+      case QuestionType.flip:
         return 'Flip-card';
     }
   }
 
   // Convert text to enum
-  static QuizType fromText(String text) {
+  static QuestionType fromText(String text) {
     switch (text) {
       case 'multi':
-        return QuizType.multi;
+        return QuestionType.multi;
       case 'flip':
-        return QuizType.flip;
+        return QuestionType.flip;
       default:
         throw Exception('Unknown question type: $text');
     }

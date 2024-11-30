@@ -79,28 +79,34 @@ class _SlideAnimationState extends State<SlideAnimation>
 
     switch (widget.direction) {
       case SlideDirection.leftAway:
-        tween =
-            Tween<Offset>(begin: const Offset(0, 0), end: const Offset(-1, 0));
+        tween = Tween<Offset>(
+            begin: const Offset(0, 0), end: const Offset(-0.80, 0));
         break;
       case SlideDirection.rightAway:
-        tween =
-            Tween<Offset>(begin: const Offset(0, 0), end: const Offset(1, 0));
+        tween = Tween<Offset>(
+            begin: const Offset(0, 0), end: const Offset(0.80, 0));
         break;
       case SlideDirection.leftIn:
-        tween =
-            Tween<Offset>(begin: const Offset(-1, 0), end: const Offset(0, 0));
+        tween = Tween<Offset>(
+            begin: const Offset(-0.80, 0), end: const Offset(0, 0));
         break;
       case SlideDirection.rightIn:
-        tween =
-            Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0));
+        tween = Tween<Offset>(
+            begin: const Offset(0.80, 0), end: const Offset(0, 0));
         break;
       case SlideDirection.upIn:
-        tween =
-            Tween<Offset>(begin: const Offset(0, 1), end: const Offset(0, 0));
+        tween = Tween<Offset>(
+            begin: const Offset(
+              0,
+              0.80,
+            ),
+            end: const Offset(0, 0));
         break;
       case SlideDirection.none:
-        tween =
-            Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0));
+        tween = Tween<Offset>(
+          begin: const Offset(0, 0),
+          end: const Offset(0, 0),
+        );
         break;
     }
 

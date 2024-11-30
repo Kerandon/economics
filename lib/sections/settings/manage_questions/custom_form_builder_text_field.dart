@@ -27,8 +27,9 @@ class CustomFormBuilderTextField extends ConsumerWidget {
     );
 
     return FormBuilderTextField(
-      minLines: text == kCorrectAnswer && quizType == QuizType.flip ? 10 : 2,
-      maxLines: quizType == QuizType.multi ? 5 : 500,
+      minLines:
+          text == kCorrectAnswer && quizType == QuestionType.flip ? 10 : 2,
+      maxLines: quizType == QuestionType.multi ? 5 : 500,
       validator: validationRequired
           ? FormBuilderValidators.compose([
               FormBuilderValidators.required(),

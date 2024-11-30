@@ -69,7 +69,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
             final fields = _formKey.currentState!.fields;
             fields[kQuestion]!.didChange(questionModel.question ?? "");
             fields[kCorrectAnswer]!.didChange(correctAnswer?.answer ?? "");
-            if (questionModel.questionType == QuizType.multi) {
+            if (questionModel.questionType == QuestionType.multi) {
               fields[kIncorrectAnswer1]!.didChange(incorrectAnswers[0].answer);
               fields[kIncorrectAnswer2]!.didChange(incorrectAnswers[1].answer);
               fields[kIncorrectAnswer3]!.didChange(incorrectAnswers[2].answer);
@@ -133,7 +133,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                     ),
                     const CustomFormBuilderTextField(kQuestion),
                     const CustomFormBuilderTextField(kCorrectAnswer),
-                    if (editState.questionType == QuizType.multi) ...[
+                    if (editState.questionType == QuestionType.multi) ...[
                       const CustomFormBuilderTextField(kIncorrectAnswer1),
                       const CustomFormBuilderTextField(kIncorrectAnswer2),
                       const CustomFormBuilderTextField(kIncorrectAnswer3),
@@ -243,7 +243,7 @@ List<String> getQuestionAndAnswersAndExplanation(
     final fields = formKey.currentState!.fields;
     questionsAndAnswers.add(fields[kQuestion]!.value);
     questionsAndAnswers.add(fields[kCorrectAnswer]!.value);
-    if (editState.questionType == QuizType.multi) {
+    if (editState.questionType == QuestionType.multi) {
       questionsAndAnswers.add(fields[kIncorrectAnswer1]!.value);
       questionsAndAnswers.add(fields[kIncorrectAnswer2]!.value);
       questionsAndAnswers.add(fields[kIncorrectAnswer3]!.value);

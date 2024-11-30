@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'app/audio_manager/audio_manager.dart';
 import 'app/configs/constants.dart';
 import 'app/configs/theme_data.dart';
@@ -46,9 +47,7 @@ class EconApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: kAppName,
       theme: CustomAppTheme(appState, context).appTheme,
-      home: const
-          //DropdownMenuExample(),
-          QuizInitPage(),
+      home: const QuizInitPage(),
     );
   }
 }

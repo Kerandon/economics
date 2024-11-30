@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/custom_page_heading.dart';
-import '../questions/multi_choice/multi_choice_tile.dart';
 import '../questions/quiz_models/question_model.dart';
 
 class IncorrectAnswersPage extends ConsumerStatefulWidget {
@@ -48,7 +47,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
             return <Widget>[
               CustomPageHeading(
                 title:
-                    'Review incorrect answers (${incorrectQuestions.length.toString()})',
+                    'Incorrect answers (${incorrectQuestions.length.toString()})',
               ),
             ];
           },
@@ -76,7 +75,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                         ),
                         child: const Column(
                           children: [
-                            MultiChoiceTile(),
+                            // MultiChoiceTile(quizState),
                           ],
                         ),
                       ),

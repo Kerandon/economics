@@ -13,6 +13,10 @@ class QuizState {
   final int numberOfQuestionsSelected;
   final int currentQuestionIndex;
   final bool quizIsCompleted;
+  final bool flipForward;
+  final bool flipReverse;
+  final bool cardHasHalfFlipped;
+  final bool cardHasFlipped;
 
   QuizState({
     required this.selectedQuestions,
@@ -21,6 +25,10 @@ class QuizState {
     required this.numberOfQuestionsSelected,
     required this.currentQuestionIndex,
     required this.quizIsCompleted,
+    required this.flipForward,
+    required this.flipReverse,
+    required this.cardHasHalfFlipped,
+    required this.cardHasFlipped,
   });
 
   QuizState copyWith({
@@ -30,6 +38,10 @@ class QuizState {
     int? numberOfQuestionsSelected,
     int? currentQuestionIndex,
     bool? quizIsCompleted,
+    bool? flipForward,
+    bool? flipReverse,
+    bool? cardHasHalfFlipped,
+    bool? cardHasFlipped,
   }) {
     return QuizState(
       selectedQuestions: selectedQuestions ?? this.selectedQuestions,
@@ -40,6 +52,10 @@ class QuizState {
           numberOfQuestionsSelected ?? this.numberOfQuestionsSelected,
       currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,
       quizIsCompleted: quizIsCompleted ?? this.quizIsCompleted,
+      flipForward: flipForward ?? this.flipForward,
+      flipReverse: flipReverse ?? this.flipReverse,
+      cardHasHalfFlipped: cardHasHalfFlipped ?? this.cardHasHalfFlipped,
+      cardHasFlipped: cardHasFlipped ?? this.cardHasFlipped,
     );
   }
 }
@@ -182,6 +198,19 @@ class QuizNotifier extends StateNotifier<QuizState> {
         numberOfQuestionsCorrect: numberOfCorrect);
   }
 
+  void updateQuestion(QuestionModel question) {
+    List<QuestionModel> questions = state.selectedQuestions.toList();
+    // Assuming 'questions' is a class-level variable or passed in another way.
+    for (int i = 0; i < questions.length; i++) {
+      if (questions[i].id == question.id) {
+        questions[i] =
+            question; // Replace the existing question with the new one.
+        break; // Exit the loop after replacing to avoid unnecessary iterations.
+      }
+    }
+    state = state.copyWith(selectedQuestions: questions.toList());
+  }
+
   void setNumberOfQuestionsSelected(int number) {
     state = state.copyWith(numberOfQuestionsSelected: number);
   }
@@ -192,6 +221,22 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
   void setQuizIsCompleted(bool completed) {
     state = state.copyWith(quizIsCompleted: completed);
+  }
+
+  void flipCardForward(bool flip) {
+    state = state.copyWith(flipForward: flip);
+  }
+
+  void flipCardReverse(bool flip) {
+    state = state.copyWith(flipReverse: flip);
+  }
+
+  void setCardHasHalfFlipped(bool flipped) {
+    state = state.copyWith(cardHasHalfFlipped: flipped);
+  }
+
+  void setCardHasFlipped(bool flipped) {
+    state = state.copyWith(cardHasFlipped: flipped);
   }
 
   void setResetQuestions() {
@@ -214,6 +259,10 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       numberOfQuestionsSelected: 5,
       currentQuestionIndex: 0,
       quizIsCompleted: false,
+      flipForward: false,
+      flipReverse: false,
+      cardHasHalfFlipped: false,
+      cardHasFlipped: false,
     ),
   ),
 );

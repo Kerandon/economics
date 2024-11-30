@@ -9,7 +9,7 @@ import '../../../app/utils/models/course.dart';
 import '../../../app/utils/models/unit.dart';
 
 class EditQuestionState {
-  final QuizType questionType;
+  final QuestionType questionType;
   final List<CourseMixin> courses;
   final CourseMixin course;
   final QuizFilter quizFilter;
@@ -34,7 +34,7 @@ class EditQuestionState {
   });
 
   EditQuestionState copyWith({
-    QuizType? questionType,
+    QuestionType? questionType,
     List<CourseMixin>? courses,
     CourseMixin? course,
     QuizFilter? quizFilter,
@@ -63,7 +63,7 @@ class EditQuestionState {
 class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   EditQuestionNotifier(super._state);
 
-  void setQuestionType(QuizType type) {
+  void setQuestionType(QuestionType type) {
     state = state.copyWith(questionType: type);
     setFilteredQuestions();
   }
@@ -151,7 +151,7 @@ final editQuestionProvider =
     StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
   (ref) => EditQuestionNotifier(
     EditQuestionState(
-      questionType: QuizType.multi,
+      questionType: QuestionType.flip,
       quizFilter: QuizFilter.all,
       courses: [],
       course: Course(name: "", units: []),
