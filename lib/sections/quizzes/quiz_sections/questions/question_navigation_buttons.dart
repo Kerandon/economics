@@ -5,6 +5,7 @@ import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.da
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../app/animation/flip_animation.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/custom_change_button.dart';
 import '../../quiz_enums/answer_stage.dart';
@@ -90,50 +91,13 @@ class QuestionNavigationButtons extends ConsumerWidget {
 
     /// Flip Card Logic
     if (editState.questionType == QuestionType.flip) {
-      if (question.answerStage == AnswerStage.notSelected) {
-        disableCenterButton = false;
-        centerButtonText = 'Flip';
-      }
+      showCenterButton = false;
     }
 
     return SizedBox(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if (question.answerStage != AnswerStage.notSelected &&
-              quizState.cardHasFlipped) ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                FloatingActionButton.extended(
-                  backgroundColor: question.answerStage == AnswerStage.correct
-                      ? theme.primaryColor
-                      : Colors.grey,
-                  onPressed: () {
-                    quizNotifier.updateQuestion(
-                        question.copyWith(answerStage: AnswerStage.correct));
-                  },
-                  label: const Icon(
-                    Icons.check_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-                FloatingActionButton.extended(
-                  backgroundColor: question.answerStage == AnswerStage.incorrect
-                      ? Colors.red
-                      : Colors.grey,
-                  onPressed: () {
-                    quizNotifier.updateQuestion(
-                        question.copyWith(answerStage: AnswerStage.incorrect));
-                  },
-                  label: const Icon(
-                    Icons.close_outlined,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ],
           SizedBox(
             height: size.height * 0.02,
           ),
@@ -151,21 +115,50 @@ class QuestionNavigationButtons extends ConsumerWidget {
                 iconData: Icons.arrow_back_outlined,
                 disable: disableButtonLeft,
               ),
+              if (editState.questionType == QuestionType.flip) ...[
+                FloatingActionButton.extended(
+                  heroTag: '1',
+                  backgroundColor: question.answerStage == AnswerStage.correct
+                      ? theme.primaryColor
+                      : Colors.grey,
+                  onPressed: () {
+                    quizNotifier.updateQuestion(
+                        question.copyWith(answerStage: AnswerStage.correct));
+                  },
+                  label: const Icon(
+                    Icons.check_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+                FloatingActionButton.extended(
+                  heroTag: '2',
+                  backgroundColor: question.answerStage == AnswerStage.incorrect
+                      ? Colors.red
+                      : Colors.grey,
+                  onPressed: () {
+                    quizNotifier.updateQuestion(
+                        question.copyWith(answerStage: AnswerStage.incorrect));
+                  },
+                  label: const Icon(
+                    Icons.close_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
               if (showCenterButton) ...[
                 FloatingActionButton.extended(
-                  backgroundColor: disableCenterButton
-                      ? theme.colorScheme.scrim
-                      : theme.floatingActionButtonTheme.backgroundColor,
-                  disabledElevation: 0,
-                  label: const Icon(Icons.flip_outlined),
-                  // Text(
-                  //   centerButtonText,
-                  //   style: theme.textTheme.bodyMedium?.copyWith(
-                  //     color: disableCenterButton
-                  //         ? theme.colorScheme.surfaceDim
-                  //         : theme.floatingActionButtonTheme.foregroundColor,
-                  //   ),
-                  // ),
+                  heroTag: '3',
+                  label: editState.questionType == QuestionType.multi
+                      ? Text(
+                          centerButtonText,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: disableCenterButton
+                                ? theme.colorScheme.surfaceDim
+                                : theme
+                                    .floatingActionButtonTheme.foregroundColor,
+                          ),
+                        )
+                      : const Icon(Icons.flip_outlined),
                   onPressed: disableCenterButton
                       ? null
                       : () {
@@ -191,15 +184,12 @@ class QuestionNavigationButtons extends ConsumerWidget {
                             }
                           }
                           if (editState.questionType == QuestionType.flip) {
-                            if (question.answerStage ==
-                                AnswerStage.notSelected) {
-                              quizNotifier
-                                ..updateQuestion(question.copyWith(
-                                    answerStage: AnswerStage.selected))
-                                ..flipCardForward(
-                                    quizState.cardHasFlipped ? false : true);
+                            if (!quizState.cardHasFlipped) {
+                              quizNotifier.flipCardForward(true);
                             }
-                            if (quizState.cardHasFlipped) {}
+                            if (quizState.cardHasFlipped) {
+                              quizNotifier.flipCardForward(false);
+                            }
                           }
                         },
                 ),
@@ -208,10 +198,13 @@ class QuestionNavigationButtons extends ConsumerWidget {
                 onPressed: () {
                   pageController.animateToPage(
                     quizState.currentQuestionIndex + 1,
-                    duration:
-                        const Duration(milliseconds: kPageChangeAnimation),
+                    duration: const Duration(milliseconds: kAnimationDuration
+
+                        ///kPageChangeAnimation
+                        ),
                     curve: Curves.easeInOutCirc,
                   );
+
                 },
                 iconData: Icons.arrow_forward_outlined,
                 disable: disableButtonRight,

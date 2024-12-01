@@ -1,3 +1,4 @@
+import 'package:economics_app/app/animation/flip_animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/audio_manager/audio_manager.dart';
@@ -15,7 +16,7 @@ class QuizState {
   final bool quizIsCompleted;
   final bool flipForward;
   final bool flipReverse;
-  final bool cardHasHalfFlipped;
+  final CardSide currentCardSide;
   final bool cardHasFlipped;
 
   QuizState({
@@ -27,7 +28,7 @@ class QuizState {
     required this.quizIsCompleted,
     required this.flipForward,
     required this.flipReverse,
-    required this.cardHasHalfFlipped,
+    required this.currentCardSide,
     required this.cardHasFlipped,
   });
 
@@ -40,7 +41,7 @@ class QuizState {
     bool? quizIsCompleted,
     bool? flipForward,
     bool? flipReverse,
-    bool? cardHasHalfFlipped,
+    CardSide? currentCardSide,
     bool? cardHasFlipped,
   }) {
     return QuizState(
@@ -54,7 +55,7 @@ class QuizState {
       quizIsCompleted: quizIsCompleted ?? this.quizIsCompleted,
       flipForward: flipForward ?? this.flipForward,
       flipReverse: flipReverse ?? this.flipReverse,
-      cardHasHalfFlipped: cardHasHalfFlipped ?? this.cardHasHalfFlipped,
+      currentCardSide: currentCardSide ?? this.currentCardSide,
       cardHasFlipped: cardHasFlipped ?? this.cardHasFlipped,
     );
   }
@@ -224,15 +225,15 @@ class QuizNotifier extends StateNotifier<QuizState> {
   }
 
   void flipCardForward(bool flip) {
-    state = state.copyWith(flipForward: flip);
+    state = state.copyWith(flipForward: flip, flipReverse: !flip);
   }
 
   void flipCardReverse(bool flip) {
-    state = state.copyWith(flipReverse: flip);
+    state = state.copyWith(flipReverse: flip, flipForward: !flip);
   }
 
-  void setCardHasHalfFlipped(bool flipped) {
-    state = state.copyWith(cardHasHalfFlipped: flipped);
+  void setCardSide(CardSide side) {
+    state = state.copyWith(currentCardSide: side);
   }
 
   void setCardHasFlipped(bool flipped) {
@@ -246,6 +247,7 @@ class QuizNotifier extends StateNotifier<QuizState> {
       numberOfQuestionsCorrect: 0,
       currentQuestionIndex: 0,
       quizIsCompleted: false,
+      currentCardSide: CardSide.front,
     );
   }
 }
@@ -261,7 +263,7 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       quizIsCompleted: false,
       flipForward: false,
       flipReverse: false,
-      cardHasHalfFlipped: false,
+      currentCardSide: CardSide.front,
       cardHasFlipped: false,
     ),
   ),

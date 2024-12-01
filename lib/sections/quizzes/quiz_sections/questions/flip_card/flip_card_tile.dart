@@ -7,57 +7,94 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../../app/configs/constants.dart';
 import '../../../quiz_state/quiz_state.dart';
 
-class FlipCardTile extends ConsumerWidget {
+class FlipCardTile extends ConsumerStatefulWidget {
   const FlipCardTile(this.question, {super.key});
 
   final QuestionModel question;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FlipCardTile> createState() => _FlipCardTileState();
+}
+
+class _FlipCardTileState extends ConsumerState<FlipCardTile> {
+  bool _animateFlip = false;
+  CardSide _cardSide = CardSide.front;
+
+  @override
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
 
-    return SizedBox(
-      width: size.width * 0.90,
-      height: size.height * 0.75,
-      child: Stack(
-        children: [
-          FlipAnimation(
-            animate: quizState.flipForward,
-            reset: false,
-            animationHalfCompleted: () {
-              quizNotifier.setCardHasHalfFlipped(true);
-            },
-            animationCompleted: () {
-              quizNotifier.setCardHasFlipped(true);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(kRadius),
-                border: Border.all(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .onSurface
-                      .withOpacity(kBackgroundOpacity),
-                ),
-                color: Theme.of(context)
-                    .colorScheme
-                    .onSurface
-                    .withOpacity(kBackgroundOpacity),
-              ),
-              child: Center(
-                child: SingleChildScrollView(
-                  child: HtmlWidget(
-                    quizState.cardHasHalfFlipped
-                        ? question.answers!.first.answer
-                        : '${question.question}',
+    final widthPadding = size.width * kPageIndentHorizontal;
+    return Padding(
+      padding: EdgeInsets.only(
+        top: size.height * 0.03,
+        left: widthPadding,
+        right: widthPadding,
+      ),
+      child: FlipAnimation(
+        isAnimating: (animating){
+          if(animating){
+            _animateFlip = false;
+            setState(() {
+
+            });
+          }
+        },
+        reverse: _cardSide == CardSide.back,
+        animate: _animateFlip,
+        animationHalfCompleted: (side) {
+          _cardSide = side;
+          setState(() {});
+        },
+        animationCompleted: (flipDirection) {},
+        child: Container(
+          width: size.width,
+          height: size.height * 0.70,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(kRadius),
+            border: Border.all(
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withOpacity(kBackgroundOpacity),
+            ),
+            color: Theme.of(context)
+                .colorScheme
+                .onSurface
+                .withOpacity(kBackgroundOpacity),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(kRadius),
+                          topRight: Radius.circular(kRadius))),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: HtmlWidget(
+                        _cardSide == CardSide.front
+                            ? widget.question.question!
+                            : widget.question.answers!.first.answer,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              IconButton(
+                  onPressed: () {
+                    _animateFlip = true;
+
+                    setState(() {});
+                  },
+                  icon: Icon(Icons.flip_outlined))
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
