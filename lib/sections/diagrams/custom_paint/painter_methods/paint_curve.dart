@@ -44,11 +44,11 @@ void paintCurve(
 
   if (label1 != null) {
     paintText(size, canvas, label1, Offset(p1.dx, p1.dy),
-        curveAlign: label1Align);
+        curveAlign: label1Align, color: color,);
   }
   if (label2 != null) {
     paintText(size, canvas, label2, Offset(p2.dx, p2.dy),
-        curveAlign: label2Align);
+        curveAlign: label2Align, color: color,);
   }
   double angle = atan2(p2.dy - p1.dy, p2.dx - p1.dx) - (pi / 2);
   if (drawArrowAtStart) {

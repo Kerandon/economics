@@ -1,4 +1,3 @@
-import 'package:economics_app/sections/quizzes/quiz_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/utils/mixins/course_mixin.dart';
 import '../../app/utils/models/course.dart';
 import '../settings/edit_courses/helper_methods/get_course_data_from_firebase.dart';
+import '../tab_main.dart';
 import 'methods/get_questions_data.dart';
 
 class QuizInitPage extends ConsumerStatefulWidget {
@@ -60,7 +60,7 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                   }
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const QuizHomePage(),
+                      builder: (context) => const TabBarMain(),
                     ),
                   );
                 });

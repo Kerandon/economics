@@ -2,8 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/custom_paint_diagrams.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_type.dart';
+import 'package:economics_app/sections/diagrams/sections/all_diagrams_page.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
+import 'package:economics_app/sections/settings/manage_questions/diagram_dropdown.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -14,8 +18,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/custom_back_to_home_button.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
+import '../../diagrams/data/all_diagrams.dart';
+import '../../diagrams/utils/mixins.dart';
 import '../../quizzes/custom_widgets/quiz_type_buttons.dart';
 import '../../quizzes/custom_widgets/unit_drop_down.dart';
+import '../../quizzes/quiz_enums/question_tags.dart';
 import 'custom_form_builder_text_field.dart';
 import 'methods/prepare_new_question_for_firebase.dart';
 import 'methods/prepare_update_question_for_firebase.dart';
@@ -34,12 +41,37 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
   bool _setUpForQuestionEdit = false;
   bool _courseAndUnitsAreEqual = true;
   bool _questionsAndAnswersAreEqual = true;
+
   List<CourseMixin> courses = [];
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
+    final editNotifier = ref.read(editQuestionProvider.notifier);
+    final allDiagrams = AllDiagrams(
+      surfaceColor: Theme.of(context).colorScheme.surface,
+      onSurfaceColor: Theme.of(context).colorScheme.onSurface,
+      primaryColor: Theme.of(context).colorScheme.primary,
+    ).getAllDiagrams();
+
+    List<CustomPainter> selectedPainterDiagrams = [];
+    // for (var d in allDiagrams) {
+    //   final n = d as NameMixin;
+    //   final selected = editState.diagramsSelected.values.firstWhere((e) => e.name == n.name);
+    //
+    //   allDiagramsPainters.add(selected);
+    // }
+    for (var p in allDiagrams) {
+      for (var d in editState.diagramsSelected.entries) {
+        final n = p as NameMixin;
+        if (n.name == d.value.name) {
+          selectedPainterDiagrams.add(p);
+        }
+      }
+    }
+
+    print('selected diagrams ${selectedPainterDiagrams.length}');
 
     String title = '';
 
@@ -141,6 +173,42 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                         kExplanation,
                         validationRequired: false,
                       ),
+                    ],
+                    SizedBox(
+                      // width: size.width * 0.80,
+                      child: GridView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                          itemCount: selectedPainterDiagrams.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2),
+                          itemBuilder: (context, index) => DiagramBox(
+                                customPainter: selectedPainterDiagrams[index],
+                              ),),
+                    ),
+                    DiagramsSelection(),
+                    if (editState.questionType == QuestionType.flip) ...[
+                      DropdownMenu(
+                        initialSelection: editState.flipCardTag,
+                        onSelected: (e) {
+                          editNotifier.setFlipCardTag(e!);
+                        },
+                        width: size.width,
+                        requestFocusOnTap: false,
+                        dropdownMenuEntries: FlipCardTag.values
+                            .map((q) =>
+                                DropdownMenuEntry(value: q, label: q.toText()))
+                            .toList(),
+                      ),
+                      if (editState.course.name == 'IB Economics') ...[
+                        CheckboxListTile(
+                          title: const Text('HL'),
+                          value: editState.isHL,
+                          onChanged: (value) {
+                            editNotifier.setHL(value!);
+                          },
+                        ),
+                      ],
                     ],
                   ],
                 ),

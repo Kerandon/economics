@@ -2,12 +2,12 @@ import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/utils/models/unit.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import '../../../../../app/utils/mixins/course_mixin.dart';
 import '../../../../../app/utils/mixins/unit_mixin.dart';
 
 import '../../../../../app/utils/models/course.dart';
 import '../../../quiz_enums/answer_stage.dart';
+import '../../../quiz_enums/question_tags.dart';
 import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
@@ -15,13 +15,13 @@ class QuestionModel extends Equatable {
   final QuestionType? questionType;
   final CourseMixin? course;
   final String? question;
-  final Widget? item;
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
   final UnitMixin? unit;
   final UnitMixin? subunit;
-  final bool? hl;
+  final FlipCardTag? flipCardTag;
+  final bool? isHL;
 
   const QuestionModel({
     this.id,
@@ -29,12 +29,12 @@ class QuestionModel extends Equatable {
     this.course,
     this.question,
     this.answers,
-    this.item,
     this.answerStage = AnswerStage.notSelected,
     this.explanation,
     this.unit,
     this.subunit,
-    this.hl,
+    this.flipCardTag,
+    this.isHL,
   });
 
   // More flexible copyWith
@@ -48,7 +48,8 @@ class QuestionModel extends Equatable {
     UnitMixin? unit,
     UnitMixin? subunit,
     String? explanation,
-    bool? hl,
+    FlipCardTag? flipCardTag,
+    bool? isHL,
   }) {
     return QuestionModel(
       id: id ?? this.id,
@@ -60,13 +61,25 @@ class QuestionModel extends Equatable {
       explanation: explanation ?? this.explanation,
       unit: unit ?? this.unit,
       subunit: subunit ?? this.subunit,
-      hl: hl ?? this.hl,
+      flipCardTag: flipCardTag ?? this.flipCardTag,
+      isHL: isHL ?? this.isHL,
     );
   }
 
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     List<AnswerModel> answers =
         (map[kAnswers] as List).map((e) => AnswerModel.fromMap(e)).toList();
+
+    FlipCardTag tag = FlipCardTag.general;
+    for (var m in map.entries) {
+      if (m.key == kFlipCardTag) {
+        for (var v in FlipCardTag.values) {
+          if (m.value == v.name) {
+            tag = v;
+          }
+        }
+      }
+    }
 
     return QuestionModel(
       id: id,
@@ -78,7 +91,8 @@ class QuestionModel extends Equatable {
       answers: answers,
       answerStage: AnswerStage.notSelected,
       explanation: map[kExplanation],
-      hl: map[kHL] ?? false,
+      flipCardTag: tag,
+      isHL: map[kIsHL],
     );
   }
 
@@ -93,7 +107,8 @@ class QuestionModel extends Equatable {
       kExplanation: explanation,
       kUnit: {unit?.index ?? "": unit?.name ?? ""},
       kSubunit: {subunit?.index ?? "": subunit?.name ?? ""},
-      kHL: hl,
+      kFlipCardTag: flipCardTag?.name,
+      kIsHL: isHL,
     };
   }
 

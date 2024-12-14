@@ -51,7 +51,7 @@ class CustomAppTheme {
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-        backgroundColor: AppColors.defaultAppColorDarkest,
+        backgroundColor: AppColors.defaultAppColor,
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
@@ -73,6 +73,7 @@ class CustomAppTheme {
           },
         ),
       ),
+      switchTheme: SwitchThemeData(),
       listTileTheme: ListTileThemeData(
         titleTextStyle: Theme.of(context).textTheme.bodyMedium,
         subtitleTextStyle: Theme.of(context).textTheme.bodyMedium,

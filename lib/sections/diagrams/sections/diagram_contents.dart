@@ -33,8 +33,9 @@ class DiagramContents extends ConsumerWidget {
     CustomPainter? selectedDiagramPainter;
 
     AllDiagrams allDiagrams = AllDiagrams(
-      onSurfaceColor: Theme.of(context).colorScheme.onSurface,
-      primaryColor: Theme.of(context).colorScheme.primary,
+      surfaceColor: Colors.black,
+      onSurfaceColor: Colors.orange,
+      primaryColor: Colors.red,
     );
     for (var d in allDiagrams.getAllDiagrams()) {
       if (d.name == diagramState.selectedDiagrams[index].name) {

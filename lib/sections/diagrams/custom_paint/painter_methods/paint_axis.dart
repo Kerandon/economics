@@ -16,7 +16,7 @@ void paintAxis(
   bool addNumericalAxis = false,
   double labelXIndent = kAxisLabelAdjustmentCenter,
   double labelYIndent = kAxisLabelAdjustmentCenter,
-  AxisLabelMargin axisMargin = AxisLabelMargin.middle,
+  AxisLabelMargin axisMargin = AxisLabelMargin.close,
   Indent indent = Indent.end,
 }) {
   paintAxisLines(size, canvas, color: color);

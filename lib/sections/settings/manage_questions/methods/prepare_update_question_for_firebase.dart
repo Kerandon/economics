@@ -1,4 +1,5 @@
 import 'package:economics_app/app/enums/firebase_status.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/settings/manage_questions/methods/update_question_in_firebase.dart';
@@ -26,6 +27,8 @@ void prepareUpdateQuestionForFirebase(
   final incorrectAnswer2 = fields[kIncorrectAnswer2]?.value;
   final incorrectAnswer3 = fields[kIncorrectAnswer3]?.value;
   final explanation = fields[kExplanation]?.value;
+  final flipCardTag = editState.flipCardTag;
+  final isHL = editState.isHL;
 
   if (course != originalQuestion.course) {
     updatedFields[kCourse] = editState.course.name;
@@ -42,20 +45,38 @@ void prepareUpdateQuestionForFirebase(
   }
 
   final a = originalQuestion.answers!;
-  if (correctAnswer != a.elementAt(0).answer ||
-      incorrectAnswer1 != a.elementAt(1).answer ||
-      incorrectAnswer1 != a.elementAt(2).answer ||
-      incorrectAnswer1 != a.elementAt(3).answer) {
-    List<AnswerModel> updatedAnswers = [];
-    updatedAnswers.add(AnswerModel(correctAnswer, isCorrect: true));
-    updatedAnswers.add(AnswerModel(incorrectAnswer1, isCorrect: false));
-    updatedAnswers.add(AnswerModel(incorrectAnswer2, isCorrect: false));
-    updatedAnswers.add(AnswerModel(incorrectAnswer3, isCorrect: false));
-    updatedFields[kAnswers] = updatedAnswers.map((e) => e.toMap()).toList();
+  List<AnswerModel> updatedAnswers = [];
+
+  if (editState.questionType == QuestionType.multi) {
+    if (correctAnswer != a.elementAt(0).answer ||
+        incorrectAnswer1 != a.elementAt(1).answer ||
+        incorrectAnswer1 != a.elementAt(2).answer ||
+        incorrectAnswer1 != a.elementAt(3).answer) {
+      updatedAnswers.add(AnswerModel(correctAnswer, isCorrect: true));
+      updatedAnswers.add(AnswerModel(incorrectAnswer1, isCorrect: false));
+      updatedAnswers.add(AnswerModel(incorrectAnswer2, isCorrect: false));
+      updatedAnswers.add(AnswerModel(incorrectAnswer3, isCorrect: false));
+      updatedFields[kAnswers] = updatedAnswers.map((e) => e.toMap()).toList();
+    }
   }
 
+  if (editState.questionType == QuestionType.flip) {
+    if (correctAnswer != a.elementAt(0).answer) {
+      updatedAnswers.add(AnswerModel(correctAnswer, isCorrect: true));
+    }
+  }
+
+  updatedFields[kAnswers] = updatedAnswers.map((e) => e.toMap()).toList();
   if (explanation != originalQuestion.explanation) {
     updatedFields[kExplanation] = explanation;
+  }
+
+  if (flipCardTag != originalQuestion.flipCardTag) {
+    updatedFields[kFlipCardTag] = flipCardTag.name;
+  }
+
+  if (isHL != originalQuestion.isHL) {
+    updatedFields[kIsHL] = isHL;
   }
 
   if (updatedFields.isNotEmpty) {

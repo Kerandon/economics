@@ -1,6 +1,6 @@
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
-import 'package:economics_app/app/home/home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
+import 'package:economics_app/sections/tab_main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quiz_state/quiz_state.dart';
@@ -169,7 +169,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const TabBarMain(),
                     ),
                   );
                   WidgetsBinding.instance.addPostFrameCallback((t) {

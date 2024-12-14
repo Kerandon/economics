@@ -37,7 +37,9 @@ class _BuilderHelperState extends State<BuilderHelper> {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasError) {
-                widget.onComplete?.call(FirebaseStatus.error);
+                WidgetsBinding.instance.addPostFrameCallback((t) {
+                  widget.onComplete?.call(FirebaseStatus.error);
+                });
               } else {
                 if (widget.onComplete != null) {
                   WidgetsBinding.instance.addPostFrameCallback((t) {

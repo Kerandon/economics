@@ -88,11 +88,11 @@ void paintText(
       /// Add on a margin to the axis
       switch (axisLabelMargin!) {
         case AxisLabelMargin.close:
-          textHeight = textHeight * 1.5;
+          textHeight = textHeight * 2.5;
         case AxisLabelMargin.middle:
           textHeight = textHeight * 2.5;
         case AxisLabelMargin.far:
-          textHeight = textHeight * 3.6;
+          textHeight = textHeight * 2.5;
       }
 
       /// Centers text
@@ -121,11 +121,11 @@ void paintText(
       double horizontalAxis = (height - heightIndent + textHeight / 2);
       switch (axisLabelMargin!) {
         case AxisLabelMargin.close:
-          horizontalAxis = horizontalAxis + textHeight * 0.50;
+          horizontalAxis = horizontalAxis + textHeight * 1.00;
         case AxisLabelMargin.middle:
-          horizontalAxis = horizontalAxis + textHeight * 1.5;
+          horizontalAxis = horizontalAxis + textHeight * 1.00;
         case AxisLabelMargin.far:
-          horizontalAxis = horizontalAxis + textHeight * 2.6;
+          horizontalAxis = horizontalAxis + textHeight * 1.00;
       }
 
       /// Centers text

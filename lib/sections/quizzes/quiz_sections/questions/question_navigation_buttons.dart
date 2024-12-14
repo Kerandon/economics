@@ -5,7 +5,6 @@ import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.da
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../app/animation/flip_animation.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/custom_change_button.dart';
 import '../../quiz_enums/answer_stage.dart';
@@ -204,7 +203,6 @@ class QuestionNavigationButtons extends ConsumerWidget {
                         ),
                     curve: Curves.easeInOutCirc,
                   );
-
                 },
                 iconData: Icons.arrow_forward_outlined,
                 disable: disableButtonRight,

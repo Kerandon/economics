@@ -1,4 +1,3 @@
-import 'package:economics_app/app/custom_widgets/custom_page_heading.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
 import 'package:economics_app/sections/diagrams/utils/extensions.dart';
 import 'package:expandable/expandable.dart';
@@ -52,44 +51,30 @@ class _AllDiagramsPageState extends ConsumerState<AllDiagramsPage>
         subDiagrams[3].add(d);
       }
     }
-    return NestedScrollView(
-      floatHeaderSlivers: true,
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[
-          CustomPageHeading(
-            expandableControllers: _expandableControllers,
-            icon: const Icon(
-              Icons.ssid_chart,
+    return Scaffold(
+      appBar: TabBar(
+        dividerColor: Theme.of(context).colorScheme.scrim,
+        controller: _tabController,
+        tabs: [
+          ...IBSectionOld.values.map(
+            (s) => Tab(
+              text: s.name.capitalizeFirstLetter(),
             ),
-            title: 'Diagrams',
           ),
-        ];
-      },
-      body: Scaffold(
-        appBar: TabBar(
-          dividerColor: Theme.of(context).colorScheme.scrim,
-          controller: _tabController,
-          tabs: [
-            ...IBSectionOld.values.map(
-              (s) => Tab(
-                text: s.name.capitalizeFirstLetter(),
-              ),
+        ],
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          ...List.generate(
+            4,
+            (index) => DiagramContents(
+              subDiagrams: subDiagrams[index],
+              index: index,
+              controller: _expandableControllers[index],
             ),
-          ],
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            ...List.generate(
-              4,
-              (index) => DiagramContents(
-                subDiagrams: subDiagrams[index],
-                index: index,
-                controller: _expandableControllers[index],
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

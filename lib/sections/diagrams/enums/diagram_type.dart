@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 enum DiagramType {
-  micro_PerfectCompetition_LongRun_Default,
+  micro_PerfectCompetition_LongRun_Equilibrium,
   micro_PerfectCompetition_AbnormalProfits,
   micro_PerfectCompetition_EconomicLosses,
   micro_MonopolisticCompetition_LongRun_Default,
@@ -152,7 +152,7 @@ extension DiagramExplainer on DiagramType {
             'Monopolistic competition is not <Strong>allocatively efficient</Strong>. '
             'This is because firms produce at Qm where MR=MC. However, '
             'social surplus would be maximized where P=MC (same as MB=MC).';
-      case DiagramType.micro_PerfectCompetition_LongRun_Default:
+      case DiagramType.micro_PerfectCompetition_LongRun_Equilibrium:
         return 'In the <strong>long-run</strong> firms in '
             'perfect competition only '
             'earn <strong>normal (zero) economic profit</strong>. '
@@ -170,5 +170,23 @@ extension DiagramExplainer on DiagramType {
             'in perfect competition make <strong>economic losses</strong> in the <strong>short-run</strong>. The amount of the losses can be '
             'calculated by working out the size of the shaded rectangle.';
     }
+  }
+}
+
+extension DiagramTypeTextExtension on DiagramType {
+  String toText() {
+    // Convert enum name to string and make it user-friendly
+    return toString()
+        .split('.')
+        .last // Get the part after the enum type name
+        .replaceAllMapped(
+            RegExp(r'([a-z])([A-Z])'),
+            (match) =>
+                '${match.group(1)} ${match.group(2)}') // Insert space between camel case words
+        .replaceAll('_', ' ') // Replace underscores with spaces
+        .split(' ') // Split into words
+        .map((word) =>
+            word[0].toUpperCase() + word.substring(1)) // Capitalize each word
+        .join(' '); // Join back into a single string
   }
 }

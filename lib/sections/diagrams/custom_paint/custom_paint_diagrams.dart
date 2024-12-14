@@ -30,21 +30,11 @@ class DiagramBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: size.width * 0.02, vertical: size.height * 0.01),
-      child: Container(
-        decoration: BoxDecoration(
-            color: Theme.of(context)
-                .colorScheme
-                .onSurface
-                .withOpacity(kBackgroundOpacity),
-            borderRadius: BorderRadius.circular(kRadius)),
-        width: size.width,
-        height: size.width,
-        child: CustomPaint(
-          painter: customPainter,
-        ),
+    return SizedBox(
+      width: size.width * 0.80,
+      height: size.width * 0.80,
+      child: CustomPaint(
+        painter: customPainter,
       ),
     );
   }

@@ -12,19 +12,27 @@ import '../custom_paint/diagrams/macro_circular_flow.dart';
 import '../enums/diagram_type.dart';
 
 class AllDiagrams {
+  final Color surfaceColor;
   final Color onSurfaceColor;
   final Color primaryColor;
 
-  AllDiagrams({required this.onSurfaceColor, required this.primaryColor});
+  AllDiagrams(
+      {required this.surfaceColor,
+      required this.onSurfaceColor,
+      required this.primaryColor});
 
   List<CustomPainter> getAllDiagrams() {
     return [
       MicroPerfectCompetition(
-          type: DiagramType.micro_PerfectCompetition_LongRun_Default),
-      MicroPerfectCompetition(
-          type: DiagramType.micro_PerfectCompetition_AbnormalProfits),
-      MicroPerfectCompetition(
-          type: DiagramType.micro_PerfectCompetition_EconomicLosses),
+        type: DiagramType.micro_PerfectCompetition_LongRun_Equilibrium,
+        surfaceColor: surfaceColor,
+        onSurfaceColor: onSurfaceColor,
+        primaryColor: primaryColor,
+      ),
+      // MicroPerfectCompetition(
+      //     type: DiagramType.micro_PerfectCompetition_AbnormalProfits),
+      // MicroPerfectCompetition(
+      //     type: DiagramType.micro_PerfectCompetition_EconomicLosses),
       MicroMonopolisticCompetition(),
       MicroMonopolisticCompetition(
           type: DiagramType.micro_MonopolisticCompetition_WelfareLoss),

@@ -1,6 +1,5 @@
+import 'package:economics_app/sections/tab_main.dart';
 import 'package:flutter/material.dart';
-
-import '../../home/home_page.dart';
 
 class CustomErrorWidget extends StatelessWidget {
   const CustomErrorWidget({
@@ -28,7 +27,7 @@ class CustomErrorWidget extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                              builder: (context) => const HomePage()),
+                              builder: (context) => const TabBarMain()),
                           (route) => false);
                     },
                     icon: const Icon(

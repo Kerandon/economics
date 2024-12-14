@@ -1,4 +1,5 @@
 import 'package:economics_app/app/enums/firebase_status.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_tags.dart';
 import 'package:economics_app/sections/settings/manage_questions/methods/send_new_question_to_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -20,6 +21,11 @@ Future<void> prepareNewQuestionForFirebase({
   final question = fields[kQuestion]?.value;
   List<AnswerModel> answers = [];
   String? explanation;
+  FlipCardTag? flipCardTag;
+  bool? isHL;
+  final course = editState.course;
+  final unit = editState.unit;
+  final subunit = editState.subunit;
   answers.add(
     AnswerModel(fields[kCorrectAnswer]?.value, isCorrect: true),
   );
@@ -35,9 +41,13 @@ Future<void> prepareNewQuestionForFirebase({
     );
     explanation = fields[kExplanation]?.value;
   }
-  final course = editState.course;
-  final unit = editState.unit;
-  final subunit = editState.subunit;
+  if (editState.questionType == QuestionType.flip) {
+    flipCardTag = editState.flipCardTag;
+    if (course.name == 'IB Economics') {
+      isHL = editState.isHL;
+    }
+  }
+
   final q = QuestionModel(
     questionType: questionType,
     course: course,
@@ -46,6 +56,8 @@ Future<void> prepareNewQuestionForFirebase({
     question: question,
     answers: answers,
     explanation: explanation,
+    flipCardTag: flipCardTag,
+    isHL: isHL,
   );
 
   final future = sendNewQuestionToFirebase(question: q);

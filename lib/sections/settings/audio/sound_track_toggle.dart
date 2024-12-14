@@ -10,7 +10,10 @@ class SoundTrackToggle extends ConsumerWidget {
     final audioState = ref.watch(audioProvider);
     final audioNotifier = ref.read(audioProvider.notifier);
     return SwitchListTile(
-        title: const Text('Soundtrack is on'),
+        title: Text(
+          'Soundtrack is on',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
         value: audioState.soundtrackIsOn,
         onChanged: (on) {
           audioNotifier.setSoundtrackIsOn(on);

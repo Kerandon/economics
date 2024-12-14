@@ -13,13 +13,15 @@ import '../../enums/diagram_type.dart';
 
 class MicroPerfectCompetition extends CustomPainter with NameMixin {
   final DiagramType type;
-  final Color onBackgroundColor;
-  final Color highlightedColor;
+  final Color surfaceColor;
+  final Color onSurfaceColor;
+  final Color primaryColor;
 
   MicroPerfectCompetition({
     required this.type,
-    this.onBackgroundColor = Colors.white,
-    this.highlightedColor = Colors.green,
+    required this.surfaceColor,
+    required this.onSurfaceColor,
+    required this.primaryColor,
   });
 
   @override
@@ -32,23 +34,21 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       canvas,
       yAxisLabel: kPriceCostsRevenue,
       xAxisLabel: kQuantity,
+      color: onSurfaceColor
     );
 
     /// D = MR = P
     paintCurve(
-      size,
-      canvas,
-      const Offset(kAxisIndent, 0.50),
-      const Offset(0.80, 0.50),
-      label2: kDPARMR,
-      label2Align: CurveAlign.centerRight,
-    );
+        size, canvas, const Offset(kAxisIndent, 0.50), const Offset(0.80, 0.50),
+        label2: kDPARMR,
+        label2Align: CurveAlign.centerRight,
+      color: onSurfaceColor,);
 
     /// MC
     paintCustomBezier(
       size,
       canvas,
-      onBackgroundColor,
+      onSurfaceColor,
       startPos: const Offset(0.20, 0.60),
       points: [
         CustomBezier(
@@ -58,12 +58,12 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       label1: kMC,
       label1Align: CurveAlign.centerTop,
     );
-    if (type == DiagramType.micro_PerfectCompetition_LongRun_Default) {
+    if (type == DiagramType.micro_PerfectCompetition_LongRun_Equilibrium) {
       /// AC
       paintCustomBezier(
         size,
         canvas,
-        onBackgroundColor,
+        onSurfaceColor,
         startPos: const Offset(0.18, 0.30),
         points: [
           CustomBezier(
@@ -79,7 +79,7 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       paintCustomBezier(
         size,
         canvas,
-        onBackgroundColor,
+        onSurfaceColor,
         startPos: const Offset(0.18, 0.40),
         points: [
           CustomBezier(
@@ -96,7 +96,7 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
         const Offset(kAxisIndent, 0.59)
       ]);
       paintDot(canvas, size,
-          pos: const Offset(0.50, 0.59), color: highlightedColor);
+          pos: const Offset(0.50, 0.59), color: primaryColor);
     }
 
     if (type == DiagramType.micro_PerfectCompetition_EconomicLosses) {
@@ -104,7 +104,7 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       paintCustomBezier(
         size,
         canvas,
-        onBackgroundColor,
+        onSurfaceColor,
         startPos: const Offset(0.20, 0.20),
         points: [
           CustomBezier(
@@ -121,11 +121,9 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
         const Offset(kAxisIndent, 0.395)
       ]);
       paintDot(canvas, size,
-          pos: const Offset(0.50, 0.395), color: highlightedColor);
+          pos: const Offset(0.50, 0.395), color: primaryColor);
     }
 
-    paintDot(canvas, size,
-        pos: const Offset(0.50, 0.50), color: highlightedColor);
   }
 
   @override

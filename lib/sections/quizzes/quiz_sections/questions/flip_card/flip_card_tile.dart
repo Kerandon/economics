@@ -5,7 +5,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../app/configs/constants.dart';
-import '../../../quiz_state/quiz_state.dart';
 
 class FlipCardTile extends ConsumerStatefulWidget {
   const FlipCardTile(this.question, {super.key});
@@ -23,8 +22,6 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final quizState = ref.watch(quizProvider);
-    final quizNotifier = ref.read(quizProvider.notifier);
 
     final widthPadding = size.width * kPageIndentHorizontal;
     return Padding(
@@ -34,12 +31,10 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
         right: widthPadding,
       ),
       child: FlipAnimation(
-        isAnimating: (animating){
-          if(animating){
+        isAnimating: (animating) {
+          if (animating) {
             _animateFlip = false;
-            setState(() {
-
-            });
+            setState(() {});
           }
         },
         reverse: _cardSide == CardSide.back,
@@ -70,7 +65,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
             children: [
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(kRadius),
                           topRight: Radius.circular(kRadius))),
@@ -91,7 +86,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
 
                     setState(() {});
                   },
-                  icon: Icon(Icons.flip_outlined))
+                  icon: const Icon(Icons.flip_outlined))
             ],
           ),
         ),

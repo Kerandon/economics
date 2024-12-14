@@ -10,7 +10,8 @@ void paintAxisLines(Size size, Canvas canvas,
 
   final axisPaint = Paint()
     ..color = color
-    ..strokeWidth = kAxisWidth;
+    ..strokeWidth = kAxisWidth
+  ..strokeWidth = kCurveWidth;
 
   final startYOffset = Offset(width * kAxisIndent, height * kAxisIndent / 2);
   final endYOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));

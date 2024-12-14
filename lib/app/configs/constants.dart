@@ -6,7 +6,6 @@ const kLevel = 'level';
 const kImage = 'image';
 
 /// Topics
-const kTags = 'tags';
 const kSections = 'sections';
 const kSummary = 'summary';
 const kTerms = 'terms';
@@ -32,9 +31,11 @@ const kIsCorrect = 'is correct';
 const kQuiz = 'quiz';
 const kAllSections = 'all sections';
 const kAllUnits = 'all units';
+const kFlipCardTag = 'flipCardTag';
+const kIsHL = 'isHL';
 const kErrorMessage =
     'Something went wrong - check your internet connection & try again';
-const kHL = 'hl';
+
 const kCorrectAnswer = 'Correct answer';
 const kIncorrectAnswer1 = 'Incorrect answer 1';
 const kIncorrectAnswer2 = 'Incorrect answer 2';
@@ -63,5 +64,5 @@ const kPageChangeAnimation = 400;
 const kAnimationDuration = 500;
 
 /// Colors
-const kBackgroundOpacity = 0.04;
+const kBackgroundOpacity = 0.08;
 const kNotSelectedOpacity = 0.25;

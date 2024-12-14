@@ -1,8 +1,12 @@
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_tags.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../app/custom_widgets/custom_tag.dart';
 import '../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'methods/delete_question.dart';
 
@@ -13,16 +17,13 @@ class ManageQuestionsTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+    final editState = ref.watch(editQuestionProvider);
     final colorScheme = theme.colorScheme;
     final listTileTheme = theme.listTileTheme;
 
     return ListTile(
-      visualDensity: VisualDensity.compact,
-      minVerticalPadding: 0,
       dense: true,
-      titleAlignment: ListTileTitleAlignment.top,
       trailing: PopupMenuButton(
         icon: const Icon(Icons.more_vert),
         onSelected: (value) {
@@ -70,16 +71,12 @@ class ManageQuestionsTile extends ConsumerWidget {
                   final color = a.isCorrect
                       ? colorScheme.primary
                       : listTileTheme.titleTextStyle?.color;
-                  return Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: size.height * 0.002),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.005,
-                        ),
-                        Expanded(
-                          flex: 1,
+                  return Row(
+                    children: [
+                      if (editState.questionType == QuestionType.multi) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 1, bottom: 1, right: 8),
                           child: Text(
                             (q.answers!.indexOf(a) + 1).toAlphabet(),
                             style: listTileTheme.leadingAndTrailingTextStyle
@@ -91,33 +88,20 @@ class ManageQuestionsTile extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 50,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.02,
-                            ),
-                            child: HtmlWidget(
-                              a.answer,
-                              textStyle:
-                                  listTileTheme.subtitleTextStyle?.copyWith(
-                                color: color,
-                                fontWeight: a.isCorrect
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                              ),
-                            ),
+                      ],
+                      Expanded(
+                        flex: 50,
+                        child: HtmlWidget(
+                          a.answer,
+                          textStyle: listTileTheme.subtitleTextStyle?.copyWith(
+                            color: color,
+                            fontWeight: a.isCorrect
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
-                        if (a.isCorrect) ...[
-                          Icon(
-                            Icons.check_circle_outline,
-                            size: 16,
-                            color: colorScheme.primary,
-                          ),
-                        ],
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 },
               ),
@@ -142,6 +126,9 @@ class ManageQuestionsTile extends ConsumerWidget {
                 ],
               ),
             ),
+          ],
+          if (q.flipCardTag != null && q.flipCardTag?.name != "") ...[
+            CustomTag(text: q.flipCardTag?.toText() ?? ""),
           ],
         ],
       ),

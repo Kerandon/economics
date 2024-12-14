@@ -30,20 +30,29 @@ class SettingsPage extends ConsumerWidget {
         body: ListView(
           children: [
             SwitchListTile(
-                title: const Text('Dark theme'),
+                title: Text(
+                  'Dark theme',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 value: isDarkThemeState,
                 onChanged: (on) {
                   appNotifier.setDarkTheme(on);
                 }),
             ListTile(
-              title: const Text('Create & update courses'),
+              title: Text(
+                'Create & update courses',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const EditCoursesPage()));
               },
             ),
             ListTile(
-              title: const Text('Manage questions'),
+              title: Text(
+                'Manage questions',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
