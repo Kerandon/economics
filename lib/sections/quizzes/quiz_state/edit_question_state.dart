@@ -156,7 +156,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
         }
       }
       if (state.questionType == QuestionType.flip) {
-        if (state.selectedFlipCardTags.contains(q.flipCardTag)) {
+        if (!state.selectedFlipCardTags.contains(q.flipCardTag)) {
           filteredQuestions.remove(q);
         }
       }

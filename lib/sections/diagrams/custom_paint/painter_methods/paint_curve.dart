@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
+import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
 import '../painter_constants.dart';
@@ -12,6 +13,7 @@ void paintCurve(
   Canvas canvas,
   Offset p1,
   Offset p2, {
+  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   Color color = Colors.white,
   double strokeWidth = kCurveWidth,
   String? label1,
@@ -24,7 +26,7 @@ void paintCurve(
 }) {
   final width = size.width;
   final height = size.height;
-
+strokeWidth *= sizeAdjustor.width;
   final paint = Paint()
     ..color = color
     ..strokeWidth = strokeWidth
@@ -43,12 +45,18 @@ void paintCurve(
   }
 
   if (label1 != null) {
-    paintText(size, canvas, label1, Offset(p1.dx, p1.dy),
-        curveAlign: label1Align, color: color,);
+    paintText(
+      size,
+      canvas,
+      label1,
+      Offset(p1.dx, p1.dy),
+      curveAlign: label1Align,
+      color: color,
+    );
   }
   if (label2 != null) {
     paintText(size, canvas, label2, Offset(p2.dx, p2.dy),
-        curveAlign: label2Align, color: color,);
+        curveAlign: label2Align, color: color, sizeAdjustor: sizeAdjustor);
   }
   double angle = atan2(p2.dy - p1.dy, p2.dx - p1.dx) - (pi / 2);
   if (drawArrowAtStart) {

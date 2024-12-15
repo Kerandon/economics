@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
 import '../../enums/diagram_type.dart';
 import '../../enums/shade_type.dart';
-import '../../models/models.dart';
+import '../../models/custom_bezier.dart';
 import '../painter_methods/paint_custom_bezier.dart';
 
 class MicroMonopolisticCompetition extends CustomPainter with NameMixin {
@@ -42,7 +42,8 @@ class MicroMonopolisticCompetition extends CustomPainter with NameMixin {
           hideXLine: true);
 
       /// Average Cost
-      paintCustomBezier(size, canvas, onBackgroundColor,
+      paintCustomBezier(size, canvas,
+          onBackgroundColor,
           startPos: const Offset(0.27, 0.22),
           points: [
             CustomBezier(

@@ -1,17 +1,21 @@
 import 'dart:math';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
+import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
 import '../painter_constants.dart';
 
 void paintAxisLines(Size size, Canvas canvas,
-    {Color color = Colors.white, double strokeWidth = kAxisWidth}) {
+    {SizeAdjustor sizeAdjustor = const SizeAdjustor(),
+    Color color = Colors.white,
+    double strokeWidth = kAxisWidth}) {
   final double width = size.width;
   final double height = size.height;
 
+
   final axisPaint = Paint()
     ..color = color
-    ..strokeWidth = kAxisWidth
-  ..strokeWidth = kCurveWidth;
+
+    ..strokeWidth = kCurveWidth * sizeAdjustor.width;
 
   final startYOffset = Offset(width * kAxisIndent, height * kAxisIndent / 2);
   final endYOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
@@ -28,10 +32,10 @@ void paintAxisLines(Size size, Canvas canvas,
   final paint = Paint()..color = Colors.white;
 
   /// Y Axis Arrow
-  paintArrow(canvas, color, positionOfArrow: startYOffset);
+  paintArrow(canvas, color, sizeAdjustor: sizeAdjustor, positionOfArrow: startYOffset);
 
   /// X Axis Arrow
-  paintArrow(canvas, color, positionOfArrow: endXOffset, rotationAngle: pi / 2);
+  paintArrow(canvas, color, sizeAdjustor: sizeAdjustor, positionOfArrow: endXOffset, rotationAngle: pi / 2);
 
   canvas.save();
   canvas.drawPath(path, paint);

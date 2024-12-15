@@ -1,9 +1,10 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/sections/diagrams/models/models.dart';
+import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
+import '../../models/custom_bezier.dart';
 
 void paintCustomBezier(
   Size size,
@@ -11,6 +12,7 @@ void paintCustomBezier(
   Color color, {
   required Offset startPos,
   required List<CustomBezier> points,
+      SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   String? label1,
   String? label2,
   CurveAlign label1Align = CurveAlign.center,
@@ -25,7 +27,7 @@ void paintCustomBezier(
   final paint = Paint()
     ..style = PaintingStyle.stroke
     ..color = color
-    ..strokeWidth = kCurveWidth;
+    ..strokeWidth = kCurveWidth * sizeAdjustor.width;
   final path = Path();
   path.moveTo(startPos.dx * width, startPos.dy * height);
   for (int i = 0; i < points.length; i++) {
@@ -41,6 +43,7 @@ void paintCustomBezier(
   if (label1 != null) {
     paintText(
         size,
+        sizeAdjustor: sizeAdjustor,
         canvas,
         color: color,
         label1,

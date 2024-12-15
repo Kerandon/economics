@@ -33,6 +33,7 @@ class DiagramContents extends ConsumerWidget {
     CustomPainter? selectedDiagramPainter;
 
     AllDiagrams allDiagrams = AllDiagrams(
+      size: size,
       surfaceColor: Colors.black,
       onSurfaceColor: Colors.orange,
       primaryColor: Colors.red,

@@ -5,7 +5,7 @@ import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_type.dart';
 import '../../enums/text_box_shape.dart';
-import '../../models/models.dart';
+import '../../models/custom_bezier.dart';
 import '../painter_methods/paint_custom_bezier.dart';
 import '../painter_methods/paint_text_box.dart';
 import 'dart:math' as math;

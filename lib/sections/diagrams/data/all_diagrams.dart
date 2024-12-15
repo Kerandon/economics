@@ -12,18 +12,21 @@ import '../custom_paint/diagrams/macro_circular_flow.dart';
 import '../enums/diagram_type.dart';
 
 class AllDiagrams {
+  final Size size;
   final Color surfaceColor;
   final Color onSurfaceColor;
   final Color primaryColor;
 
   AllDiagrams(
-      {required this.surfaceColor,
+      {required this.size,
+      required this.surfaceColor,
       required this.onSurfaceColor,
       required this.primaryColor});
 
   List<CustomPainter> getAllDiagrams() {
     return [
       MicroPerfectCompetition(
+        appSize: size,
         type: DiagramType.micro_PerfectCompetition_LongRun_Equilibrium,
         surfaceColor: surfaceColor,
         onSurfaceColor: onSurfaceColor,

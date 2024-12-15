@@ -3,7 +3,6 @@ import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/state/audio_state.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/custom_paint_diagrams.dart';
 import 'package:economics_app/sections/diagrams/data/all_diagrams.dart';
-import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
@@ -37,13 +36,13 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
     final audioState = ref.watch(audioProvider);
 
     final allDiagrams = AllDiagrams(
+      size: size,
       surfaceColor: Theme.of(context).colorScheme.surface,
       onSurfaceColor: Theme.of(context).colorScheme.onSurface,
       primaryColor: Theme.of(context).colorScheme.primary,
     ).getAllDiagrams();
     List<CustomPainter> allDiagramsPainters = [];
     for (var d in allDiagrams) {
-      final n = d as NameMixin;
       allDiagramsPainters.add(d);
     }
 

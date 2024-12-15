@@ -14,9 +14,15 @@ class DiagramDropdown extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
     return DropdownMenu(
+      trailingIcon: Text(
+        (index + 1).toString(),
+        style: Theme.of(context)
+            .textTheme
+            .labelMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.primary),
+      ),
       initialSelection: DiagramType.values.first,
       width: size.width,
       requestFocusOnTap: false,
@@ -37,14 +43,13 @@ class DiagramsSelection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
     return Column(
       children: [
         Row(
           children: [
-            Expanded(
+            const Expanded(
               flex: 2,
               child: ListTile(
                 title: Text('Add diagrams'),

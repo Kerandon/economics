@@ -1,3 +1,4 @@
+import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
 import '../../enums/axis_label_margin.dart';
 import '../../enums/curve_align.dart';
@@ -9,6 +10,7 @@ void paintText(
   Canvas canvas,
   String label,
   Offset position, {
+  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   Color color = Colors.white,
   double fontSize = kFontSize,
   double angle = 0,
@@ -21,6 +23,7 @@ void paintText(
   AxisLabelMargin? axisLabelMargin,
   Indent? axisIndent,
 }) {
+  fontSize = fontSize * sizeAdjustor.width;
   if (axis != null) {
     axisLabelMargin = AxisLabelMargin.far;
     axisIndent = Indent.end;
@@ -118,7 +121,7 @@ void paintText(
           );
       }
     } else if (axis == Axis.horizontal) {
-      double horizontalAxis = (height - heightIndent + textHeight / 2);
+      double horizontalAxis = (height - heightIndent + textHeight);
       switch (axisLabelMargin!) {
         case AxisLabelMargin.close:
           horizontalAxis = horizontalAxis + textHeight * 1.00;

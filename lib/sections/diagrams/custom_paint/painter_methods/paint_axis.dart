@@ -1,4 +1,5 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis_lines.dart';
+import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import '../../enums/axis_label_margin.dart';
@@ -10,6 +11,7 @@ import 'paint_text.dart';
 void paintAxis(
   Size size,
   Canvas canvas, {
+  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   String? yAxisLabel,
   String? xAxisLabel,
   Color color = Colors.white,
@@ -19,11 +21,12 @@ void paintAxis(
   AxisLabelMargin axisMargin = AxisLabelMargin.close,
   Indent indent = Indent.end,
 }) {
-  paintAxisLines(size, canvas, color: color);
+  paintAxisLines(size, canvas, sizeAdjustor: sizeAdjustor, color: color);
 
   if (yAxisLabel != null) {
     paintText(
       size,
+      sizeAdjustor: sizeAdjustor,
       canvas,
       yAxisLabel,
       const Offset(0, 0),
@@ -37,6 +40,7 @@ void paintAxis(
   if (xAxisLabel != null) {
     paintText(
       size,
+      sizeAdjustor: sizeAdjustor,
       canvas,
       xAxisLabel,
       const Offset(0, 0),

@@ -1,14 +1,18 @@
+import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
 
 void paintArrow(
   Canvas canvas,
   Color color, {
   required Offset positionOfArrow,
-  double size = 5,
+      SizeAdjustor sizeAdjustor = const SizeAdjustor(),
+  double size = 10,
   double rotationAngle = 0.0,
 }) {
   final path = Path();
   final paint = Paint()..color = color;
+
+  size *= sizeAdjustor.width;
 
   final arrowWidth = size;
   final arrowHeight = size;

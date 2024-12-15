@@ -35,6 +35,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
     final editState = ref.watch(editQuestionProvider);
 
     final editNotifier = ref.read(editQuestionProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Manage questions'),

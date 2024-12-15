@@ -48,12 +48,14 @@ Future<void> prepareNewQuestionForFirebase({
     }
   }
 
+
   final q = QuestionModel(
     questionType: questionType,
     course: course,
     unit: unit,
     subunit: subunit,
     question: question,
+    diagrams: editState.diagramsSelected,
     answers: answers,
     explanation: explanation,
     flipCardTag: flipCardTag,

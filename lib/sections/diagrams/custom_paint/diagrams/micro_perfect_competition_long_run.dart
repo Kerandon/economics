@@ -6,18 +6,21 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
 import 'package:economics_app/sections/diagrams/enums/curve_align.dart';
 import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
-import 'package:economics_app/sections/diagrams/models/models.dart';
+import 'package:economics_app/sections/diagrams/utils/get_size_adjustor.dart';
 import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_type.dart';
+import '../../models/custom_bezier.dart';
 
 class MicroPerfectCompetition extends CustomPainter with NameMixin {
+  final Size appSize;
   final DiagramType type;
   final Color surfaceColor;
   final Color onSurfaceColor;
   final Color primaryColor;
 
   MicroPerfectCompetition({
+    required this.appSize,
     required this.type,
     required this.surfaceColor,
     required this.onSurfaceColor,
@@ -29,24 +32,30 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
 
   @override
   void paint(Canvas canvas, Size size) {
-    paintAxis(
-      size,
-      canvas,
-      yAxisLabel: kPriceCostsRevenue,
-      xAxisLabel: kQuantity,
-      color: onSurfaceColor
-    );
+   final sizeAdjustor = getSizeAdjustor(size: size, sizeApp: appSize);
+    paintAxis(size,
+        sizeAdjustor: sizeAdjustor,
+        canvas,
+        yAxisLabel: kPriceCostsRevenue,
+        xAxisLabel: kQuantity,
+        color: onSurfaceColor);
 
     /// D = MR = P
     paintCurve(
-        size, canvas, const Offset(kAxisIndent, 0.50), const Offset(0.80, 0.50),
-        label2: kDPARMR,
-        label2Align: CurveAlign.centerRight,
-      color: onSurfaceColor,);
+      size,
+      sizeAdjustor: sizeAdjustor,
+      canvas,
+      const Offset(kAxisIndent, 0.50),
+      const Offset(0.80, 0.50),
+      label2: kDPARMR,
+      label2Align: CurveAlign.centerRight,
+      color: onSurfaceColor,
+    );
 
     /// MC
     paintCustomBezier(
       size,
+      sizeAdjustor: sizeAdjustor,
       canvas,
       onSurfaceColor,
       startPos: const Offset(0.20, 0.60),
@@ -62,6 +71,7 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       /// AC
       paintCustomBezier(
         size,
+        sizeAdjustor: sizeAdjustor,
         canvas,
         onSurfaceColor,
         startPos: const Offset(0.18, 0.30),
@@ -123,7 +133,6 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
       paintDot(canvas, size,
           pos: const Offset(0.50, 0.395), color: primaryColor);
     }
-
   }
 
   @override
@@ -131,3 +140,4 @@ class MicroPerfectCompetition extends CustomPainter with NameMixin {
     return false;
   }
 }
+

@@ -73,7 +73,7 @@ class CustomAppTheme {
           },
         ),
       ),
-      switchTheme: SwitchThemeData(),
+      switchTheme: const SwitchThemeData(),
       listTileTheme: ListTileThemeData(
         titleTextStyle: Theme.of(context).textTheme.bodyMedium,
         subtitleTextStyle: Theme.of(context).textTheme.bodyMedium,

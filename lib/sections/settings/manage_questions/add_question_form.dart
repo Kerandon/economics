@@ -2,9 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/custom_paint_diagrams.dart';
-import 'package:economics_app/sections/diagrams/enums/diagram_type.dart';
-import 'package:economics_app/sections/diagrams/sections/all_diagrams_page.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/diagram_dropdown.dart';
@@ -18,8 +15,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/custom_widgets/custom_back_to_home_button.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
-import '../../diagrams/data/all_diagrams.dart';
-import '../../diagrams/utils/mixins.dart';
+import '../../diagrams/diagram_widgets/diagram_builder.dart';
 import '../../quizzes/custom_widgets/quiz_type_buttons.dart';
 import '../../quizzes/custom_widgets/unit_drop_down.dart';
 import '../../quizzes/quiz_enums/question_tags.dart';
@@ -49,29 +45,6 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    final allDiagrams = AllDiagrams(
-      surfaceColor: Theme.of(context).colorScheme.surface,
-      onSurfaceColor: Theme.of(context).colorScheme.onSurface,
-      primaryColor: Theme.of(context).colorScheme.primary,
-    ).getAllDiagrams();
-
-    List<CustomPainter> selectedPainterDiagrams = [];
-    // for (var d in allDiagrams) {
-    //   final n = d as NameMixin;
-    //   final selected = editState.diagramsSelected.values.firstWhere((e) => e.name == n.name);
-    //
-    //   allDiagramsPainters.add(selected);
-    // }
-    for (var p in allDiagrams) {
-      for (var d in editState.diagramsSelected.entries) {
-        final n = p as NameMixin;
-        if (n.name == d.value.name) {
-          selectedPainterDiagrams.add(p);
-        }
-      }
-    }
-
-    print('selected diagrams ${selectedPainterDiagrams.length}');
 
     String title = '';
 
@@ -174,19 +147,8 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                         validationRequired: false,
                       ),
                     ],
-                    SizedBox(
-                      // width: size.width * 0.80,
-                      child: GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                          itemCount: selectedPainterDiagrams.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2),
-                          itemBuilder: (context, index) => DiagramBox(
-                                customPainter: selectedPainterDiagrams[index],
-                              ),),
-                    ),
-                    DiagramsSelection(),
+                    const DiagramBuilder(),
+                    const DiagramsSelection(),
                     if (editState.questionType == QuestionType.flip) ...[
                       DropdownMenu(
                         initialSelection: editState.flipCardTag,
@@ -292,15 +254,6 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
         ),
       ),
     );
-  }
-}
-
-Future updateQuestion() async {
-  try {
-    final ref = FirebaseFirestore.instance;
-    ref.collection(kQuiz).doc();
-  } catch (e) {
-    throw Exception('Error $e');
   }
 }
 
