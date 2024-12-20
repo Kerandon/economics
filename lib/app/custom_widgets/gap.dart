@@ -19,7 +19,7 @@ class Gap extends StatelessWidget {
               color: Theme.of(context)
                   .colorScheme
                   .onSurface
-                  .withOpacity(kBackgroundOpacity),
+                  .withAlpha(kBackgroundOpacity),
             )
           : null,
     );

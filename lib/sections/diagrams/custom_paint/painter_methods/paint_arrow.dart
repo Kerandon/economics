@@ -5,7 +5,7 @@ void paintArrow(
   Canvas canvas,
   Color color, {
   required Offset positionOfArrow,
-      SizeAdjustor sizeAdjustor = const SizeAdjustor(),
+  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   double size = 10,
   double rotationAngle = 0.0,
 }) {

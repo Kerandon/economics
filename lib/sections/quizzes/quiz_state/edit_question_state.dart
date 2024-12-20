@@ -1,6 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/sections/diagrams/enums/diagram_type.dart';
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
+import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_tags.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
@@ -26,7 +26,7 @@ class EditQuestionState {
   List<FlipCardTag> selectedFlipCardTags;
   final bool isHL;
   final DiagramsNumber diagramsNumber;
-  final Map<int, DiagramType> diagramsSelected;
+  final List<DiagramModel> selectedDiagrams;
 
   EditQuestionState({
     required this.questionType,
@@ -43,7 +43,7 @@ class EditQuestionState {
     required this.selectedFlipCardTags,
     required this.isHL,
     required this.diagramsNumber,
-    required this.diagramsSelected,
+    required this.selectedDiagrams,
   });
 
   EditQuestionState copyWith({
@@ -61,7 +61,7 @@ class EditQuestionState {
     List<FlipCardTag>? selectedFlipCardTags,
     bool? isHL,
     DiagramsNumber? diagramsNumber,
-    Map<int, DiagramType>? diagramsSelected,
+    List<DiagramModel>? selectedDiagrams,
   }) {
     return EditQuestionState(
       courses: courses ?? this.courses,
@@ -78,7 +78,7 @@ class EditQuestionState {
       selectedFlipCardTags: selectedFlipCardTags ?? this.selectedFlipCardTags,
       isHL: isHL ?? this.isHL,
       diagramsNumber: diagramsNumber ?? this.diagramsNumber,
-      diagramsSelected: diagramsSelected ?? this.diagramsSelected,
+      selectedDiagrams: selectedDiagrams ?? this.selectedDiagrams,
     );
   }
 }
@@ -198,29 +198,30 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   void setDiagramsNumber(DiagramsNumber diagramsNumber) {
     state = state.copyWith(diagramsNumber: diagramsNumber);
     final diagramsNum = diagramsNumber.toInt;
-    final mapLength = state.diagramsSelected.length;
+    final currentLengthList = state.selectedDiagrams.length;
 
-    if (diagramsNum > mapLength) {
-      final difference = diagramsNum - mapLength;
+    if (diagramsNum > currentLengthList) {
+      final difference = diagramsNum - currentLengthList;
 
       final newEntries = List.generate(
         difference,
-        (index) => MapEntry(
-          mapLength + index, // Ensure new keys are unique
-          DiagramType.values.first,
-        ),
+        (index) => allDiagrams.first,
       );
-      state.diagramsSelected.addEntries(newEntries);
+      state.selectedDiagrams.addAll(newEntries);
     }
-    if (diagramsNum < mapLength) {
-      state.diagramsSelected.removeWhere((key, value) => key >= diagramsNum);
+    if (diagramsNum < currentLengthList) {
+      state.selectedDiagrams.removeRange(diagramsNum, currentLengthList);
     }
   }
 
-  void setDiagramsSelected(MapEntry<int, DiagramType> diagram) {
-    final updatedMap = Map<int, DiagramType>.from(state.diagramsSelected)
-      ..[diagram.key] = diagram.value;
-    state = state.copyWith(diagramsSelected: updatedMap);
+  void setDiagramsSelected(DiagramModel diagram, int index) {
+    final currentList = state.selectedDiagrams.toList();
+
+    if (index < currentList.length) {
+      currentList[index] = diagram;
+    }
+
+    state = state.copyWith(selectedDiagrams: currentList);
   }
 }
 
@@ -228,21 +229,22 @@ final editQuestionProvider =
     StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
   (ref) => EditQuestionNotifier(
     EditQuestionState(
-        questionType: QuestionType.flip,
-        quizFilter: QuizFilter.all,
-        courses: [],
-        course: Course(name: "", units: []),
-        unit: Unit(name: ''),
-        subunit: Unit(name: ''),
-        allQuestions: [],
-        filteredQuestions: [],
-        maxNumberOfQuestions: kNumberOfQuestions.first,
-        checkAnswersAtEnd: false,
-        flipCardTag: FlipCardTag.general,
-        selectedFlipCardTags: FlipCardTag.values,
-        isHL: false,
-        diagramsNumber: DiagramsNumber.zero,
-        diagramsSelected: {}),
+      questionType: QuestionType.flip,
+      quizFilter: QuizFilter.all,
+      courses: [],
+      course: Course(name: "", units: []),
+      unit: Unit(name: ''),
+      subunit: Unit(name: ''),
+      allQuestions: [],
+      filteredQuestions: [],
+      maxNumberOfQuestions: kNumberOfQuestions.first,
+      checkAnswersAtEnd: false,
+      flipCardTag: FlipCardTag.general,
+      selectedFlipCardTags: FlipCardTag.values,
+      isHL: false,
+      diagramsNumber: DiagramsNumber.zero,
+      selectedDiagrams: [],
+    ),
   ),
 );
 

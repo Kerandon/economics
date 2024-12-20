@@ -11,10 +11,8 @@ void paintAxisLines(Size size, Canvas canvas,
   final double width = size.width;
   final double height = size.height;
 
-
   final axisPaint = Paint()
     ..color = color
-
     ..strokeWidth = kCurveWidth * sizeAdjustor.width;
 
   final startYOffset = Offset(width * kAxisIndent, height * kAxisIndent / 2);
@@ -32,10 +30,14 @@ void paintAxisLines(Size size, Canvas canvas,
   final paint = Paint()..color = Colors.white;
 
   /// Y Axis Arrow
-  paintArrow(canvas, color, sizeAdjustor: sizeAdjustor, positionOfArrow: startYOffset);
+  paintArrow(canvas, color,
+      sizeAdjustor: sizeAdjustor, positionOfArrow: startYOffset);
 
   /// X Axis Arrow
-  paintArrow(canvas, color, sizeAdjustor: sizeAdjustor, positionOfArrow: endXOffset, rotationAngle: pi / 2);
+  paintArrow(canvas, color,
+      sizeAdjustor: sizeAdjustor,
+      positionOfArrow: endXOffset,
+      rotationAngle: pi / 2);
 
   canvas.save();
   canvas.drawPath(path, paint);

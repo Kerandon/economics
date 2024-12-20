@@ -1,25 +1,16 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
-import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
-import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_curve.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_keyensian_curve.dart';
 
-class MacroKeynesianADAS extends CustomPainter with NameMixin {
-  final DiagramType type;
-
-  @override
-  String get name => type.name;
-
+class MacroKeynesianADAS extends CustomPainter {
   final Color axisColor;
   final Color primaryColor;
 
   MacroKeynesianADAS(
-      {required this.type,
-      this.axisColor = Colors.white,
-      this.primaryColor = Colors.green});
+      {this.axisColor = Colors.white, this.primaryColor = Colors.green});
 
   @override
   void paint(Canvas canvas, Size size) {

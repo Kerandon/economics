@@ -6,7 +6,7 @@ import '../../../../../app/utils/mixins/course_mixin.dart';
 import '../../../../../app/utils/mixins/unit_mixin.dart';
 
 import '../../../../../app/utils/models/course.dart';
-import '../../../../diagrams/enums/diagram_type.dart';
+import '../../../../diagrams/models/diagram_model.dart';
 import '../../../quiz_enums/answer_stage.dart';
 import '../../../quiz_enums/question_tags.dart';
 import 'answer_model.dart';
@@ -16,7 +16,7 @@ class QuestionModel extends Equatable {
   final QuestionType? questionType;
   final CourseMixin? course;
   final String? question;
-  final Map<int, DiagramType>? diagrams;
+  final List<DiagramModel>? diagrams;
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
@@ -46,7 +46,7 @@ class QuestionModel extends Equatable {
     QuestionType? questionType,
     CourseMixin? course,
     String? question,
-    Map<int, DiagramType>? diagrams,
+    List<DiagramModel>? diagrams,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
     UnitMixin? unit,
@@ -71,6 +71,23 @@ class QuestionModel extends Equatable {
     );
   }
 
+  // Converts QuestionModel to a map that can be sent to Firebase
+  Map<String, dynamic> toMap() {
+    return {
+      kType: questionType?.name,
+      kCourse: course?.name,
+      kQuestion: question,
+      kAnswers: answers?.map((e) => e.toMap()).toList(),
+      kAnswerStage: answerStage.name, // Enum
+      kExplanation: explanation,
+      kDiagrams: diagrams?.map((e) => e.toMap()).toList(),
+      kUnit: {unit?.index ?? "": unit?.name ?? ""},
+      kSubunit: {subunit?.index ?? "": subunit?.name ?? ""},
+      kFlipCardTag: flipCardTag?.name,
+      kIsHL: isHL,
+    };
+  }
+
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     List<AnswerModel> answers =
         (map[kAnswers] as List).map((e) => AnswerModel.fromMap(e)).toList();
@@ -86,14 +103,6 @@ class QuestionModel extends Equatable {
       }
     }
 
-    // Convert Map<String, String> to Map<int, DiagramType>
-    Map<int, DiagramType>? diagrams = (map[kDiagrams] as Map<String, dynamic>?)?.map(
-          (key, value) => MapEntry(
-        int.parse(key), // Convert the key back to int
-        DiagramType.values.firstWhere((e) => e.name == value), // Convert the value to DiagramType
-      ),
-    );
-
     return QuestionModel(
       id: id,
       questionType: QuestionTypeExtension.fromText(map[kType]),
@@ -101,30 +110,13 @@ class QuestionModel extends Equatable {
       unit: Unit.fromFirebase(map),
       subunit: Unit.fromFirebase(map, subunit: true),
       question: map[kQuestion],
-      diagrams: diagrams,
       answers: answers,
       answerStage: AnswerStage.notSelected,
       explanation: map[kExplanation],
+      diagrams: DiagramModel.fromFirebaseList(map[kDiagrams] as List<dynamic>),
       flipCardTag: tag,
       isHL: map[kIsHL],
     );
-  }
-
-  // Converts QuestionModel to a map that can be sent to Firebase
-  Map<String, dynamic> toMap() {
-    return {
-      kType: questionType?.name,
-      kCourse: course?.name,
-      kQuestion: question,
-      kDiagrams: diagrams?.map((key, value) => MapEntry(key.toString(), value)),
-      kAnswers: answers?.map((e) => e.toMap()).toList(),
-      kAnswerStage: answerStage.name, // Enum
-      kExplanation: explanation,
-      kUnit: {unit?.index ?? "": unit?.name ?? ""},
-      kSubunit: {subunit?.index ?? "": subunit?.name ?? ""},
-      kFlipCardTag: flipCardTag?.name,
-      kIsHL: isHL,
-    };
   }
 
   QuestionModel shuffleAnswers() {

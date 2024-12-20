@@ -53,12 +53,12 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
               color: Theme.of(context)
                   .colorScheme
                   .onSurface
-                  .withOpacity(kBackgroundOpacity),
+                  .withAlpha(kBackgroundOpacity),
             ),
             color: Theme.of(context)
                 .colorScheme
                 .onSurface
-                .withOpacity(kBackgroundOpacity),
+                .withAlpha(kBackgroundOpacity),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

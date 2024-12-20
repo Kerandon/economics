@@ -1,23 +1,16 @@
-import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
-import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_curve.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_text.dart';
 
-class GlobalQuotas extends CustomPainter with NameMixin {
-  @override
-  String get name => type.name;
-
-  final DiagramType type;
+class GlobalQuotas extends CustomPainter {
   final Color color;
   final Color highlightedColor;
 
   GlobalQuotas({
-    this.type = DiagramType.global_Quotas_Standard_Default,
     this.color = Colors.white,
     this.highlightedColor = Colors.green,
   });
@@ -32,15 +25,6 @@ class GlobalQuotas extends CustomPainter with NameMixin {
     String q2 = 'Q2';
     String q3 = 'Q3';
     String q4 = 'Q4';
-
-    if (type == DiagramType.global_Quotas_Calculation) {
-      pWQ = '\$110';
-      pW = '\$60';
-      q1 = '150';
-      q2 = '450';
-      q3 = '750';
-      q4 = '1000';
-    }
 
     paintAxis(size, canvas, yAxisLabel: kYLabelWine, xAxisLabel: kXLabelWine);
     paintCurve(
@@ -121,30 +105,6 @@ class GlobalQuotas extends CustomPainter with NameMixin {
         yAxisStartPos: 0.52, xAxisEndPos: 0.26, hideYLine: true, xLabel: q2);
     paintDiagramDashedLines(size, canvas,
         yAxisStartPos: 0.70, xAxisEndPos: 0.57, hideYLine: true, xLabel: q4);
-
-    /// Label letters
-    if (type == DiagramType.global_Quotas_Labels) {
-      paintText(size, canvas, 'a', const Offset(0.18, 0.60),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'b', const Offset(0.28, 0.58),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'c', const Offset(0.35, 0.65),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'd', const Offset(0.46, 0.58),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'e', const Offset(0.52, 0.65),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'f', const Offset(0.62, 0.65),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'g', const Offset(0.18, 0.78),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'h', const Offset(0.31, 0.78),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'i', const Offset(0.48, 0.78),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'j', const Offset(0.63, 0.78),
-          fontSize: kLabelLetterFontSize);
-    }
   }
 
   @override

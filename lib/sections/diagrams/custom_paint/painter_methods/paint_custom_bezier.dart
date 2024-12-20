@@ -12,7 +12,7 @@ void paintCustomBezier(
   Color color, {
   required Offset startPos,
   required List<CustomBezier> points,
-      SizeAdjustor sizeAdjustor = const SizeAdjustor(),
+  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   String? label1,
   String? label2,
   CurveAlign label1Align = CurveAlign.center,

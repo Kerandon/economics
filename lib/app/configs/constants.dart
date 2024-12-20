@@ -19,6 +19,7 @@ const kNumberOfQuestions = [5, 10, 15, 20, -1];
 const kIndex = 'index';
 const kName = 'name';
 const kType = 'type';
+const kSubtype = 'subtype';
 const kCourses = 'courses';
 const kCourse = 'course';
 const kSubunit = 'subunit';
@@ -65,5 +66,5 @@ const kPageChangeAnimation = 400;
 const kAnimationDuration = 500;
 
 /// Colors
-const kBackgroundOpacity = 0.08;
+const kBackgroundOpacity = 60;
 const kNotSelectedOpacity = 0.25;

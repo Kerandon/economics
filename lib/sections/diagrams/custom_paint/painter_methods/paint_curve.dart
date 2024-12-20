@@ -26,7 +26,7 @@ void paintCurve(
 }) {
   final width = size.width;
   final height = size.height;
-strokeWidth *= sizeAdjustor.width;
+  strokeWidth *= sizeAdjustor.width;
   final paint = Paint()
     ..color = color
     ..strokeWidth = strokeWidth

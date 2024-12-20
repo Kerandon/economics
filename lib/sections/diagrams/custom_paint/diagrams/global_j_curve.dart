@@ -2,22 +2,15 @@ import 'dart:math' as math;
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
-import '../../enums/diagram_type.dart';
 
-class GlobalJCurve extends CustomPainter with NameMixin {
-  @override
-  String get name => type.name;
-
-  final DiagramType type;
+class GlobalJCurve extends CustomPainter {
   final Color onBackgroundColor;
   final Color highlightedColor;
 
   GlobalJCurve(
       {super.repaint,
-      this.type = DiagramType.global_JCurve_CorrectingTradeDeficit_Default,
       this.onBackgroundColor = Colors.white,
       this.highlightedColor = Colors.green});
 
@@ -44,20 +37,6 @@ class GlobalJCurve extends CustomPainter with NameMixin {
       ..strokeWidth = kCurveWidth;
 
     final path = Path()..moveTo(kAxisIndent * width, 0.50 * height);
-
-    if (type == DiagramType.global_JCurve_CorrectingTradeSurplus) {
-      // Inverted curve
-      path
-        ..lineTo(width * 0.20, 0.50 * height)
-        ..quadraticBezierTo(
-            width * 0.40, 0.10 * height, width * 0.70, 0.80 * height);
-    } else {
-      // Default curve
-      path
-        ..lineTo(width * 0.20, 0.50 * height)
-        ..quadraticBezierTo(
-            width * 0.40, 0.90 * height, width * 0.70, 0.20 * height);
-    }
 
     canvas.drawPath(path, paint);
   }

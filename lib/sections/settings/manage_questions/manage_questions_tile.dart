@@ -1,4 +1,5 @@
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
+import 'package:economics_app/sections/diagrams/utils/methods/get_diagrams_to_display.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_tags.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -17,10 +18,16 @@ class ManageQuestionsTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final editState = ref.watch(editQuestionProvider);
     final colorScheme = theme.colorScheme;
     final listTileTheme = theme.listTileTheme;
+
+    List<CustomPainter> diagrams = [];
+    if (q.diagrams?.isNotEmpty ?? false) {
+      diagrams = getDiagramsToDisplay(size, context, q.diagrams!).toList();
+    }
 
     return ListTile(
       dense: true,
@@ -126,6 +133,22 @@ class ManageQuestionsTile extends ConsumerWidget {
                 ],
               ),
             ),
+          ],
+          if (diagrams.isNotEmpty) ...[
+            SizedBox(
+              height: size.height * 0.10,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: diagrams.length,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                      width: size.height * 0.10,
+                      height: size.height * 0.10,
+                      child: CustomPaint(painter: diagrams[index])),
+                ),
+              ),
+            )
           ],
           if (q.flipCardTag != null && q.flipCardTag?.name != "") ...[
             CustomTag(text: q.flipCardTag?.toText() ?? ""),

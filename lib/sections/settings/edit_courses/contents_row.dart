@@ -33,7 +33,7 @@ class ContentsRow extends StatelessWidget {
               fillColor: Theme.of(context)
                   .colorScheme
                   .onSurface
-                  .withOpacity(kBackgroundOpacity),
+                  .withAlpha(kBackgroundOpacity),
               filled: true,
               isDense: true,
               hintText:

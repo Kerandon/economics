@@ -11,7 +11,7 @@ extension GetSection on IBSectionOld {
         return 'Macroeconomics';
       case IBSectionOld.global:
         return 'Global Economics';
-      }
+    }
   }
 
   String getSectionShortName() {
@@ -24,6 +24,6 @@ extension GetSection on IBSectionOld {
         return 'Macro';
       case IBSectionOld.global:
         return 'Global';
-      }
+    }
   }
 }

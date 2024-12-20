@@ -64,7 +64,7 @@ class CustomChipButton extends StatelessWidget {
                   : Theme.of(context)
                       .colorScheme
                       .scrim
-                      .withOpacity(kNotSelectedOpacity),
+                      .withAlpha(kBackgroundOpacity),
           child: InkWell(
             borderRadius: BorderRadius.circular(kRadius),
             onTap: isDisabled

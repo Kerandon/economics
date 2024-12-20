@@ -1,4 +1,3 @@
-import 'package:economics_app/sections/diagrams/sections/all_diagrams_page.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/filter_button.dart';
 import 'package:economics_app/sections/quizzes/question_home_page.dart';
 
@@ -61,9 +60,11 @@ class _TabBarMainState extends State<TabBarMain> with TickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const <Widget>[
-          QuestionHomePage(),
-          AllDiagramsPage(),
+        children: <Widget>[
+          const QuestionHomePage(),
+          Container(
+            color: Colors.red,
+          ),
         ],
       ),
     );

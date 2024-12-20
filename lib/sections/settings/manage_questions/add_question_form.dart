@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
+import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/diagram_dropdown.dart';
@@ -87,6 +88,18 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
       _courseAndUnitsAreEqual = editState.course == widget.question?.course &&
           editState.unit == widget.question?.unit &&
           editState.subunit == widget.question?.subunit;
+
+      if (widget.question!.diagrams != null) {
+        if (widget.question!.diagrams!.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((t) {
+            editNotifier.setDiagramsNumber(DiagramsNumber.four);
+            for (int i = 0; i < widget.question!.diagrams!.length; i++) {
+              editNotifier.setDiagramsSelected(
+                  widget.question!.diagrams![i], i);
+            }
+          });
+        }
+      }
     }
 
     bool disableButton = true;

@@ -1,24 +1,16 @@
-import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
-import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_dashed_line.dart';
 import '../painter_methods/path_label_line.dart';
 
-class MacroBusinessCycle extends CustomPainter with NameMixin {
-  @override
-  String get name => type.name;
-
-  final DiagramType type;
+class MacroBusinessCycle extends CustomPainter {
   final Color axisColor;
   final Color primaryColor;
 
   MacroBusinessCycle(
-      {this.type = DiagramType.macro_BusinessCycle_Default,
-      this.axisColor = Colors.white,
-      this.primaryColor = Colors.green});
+      {this.axisColor = Colors.white, this.primaryColor = Colors.green});
 
   @override
   void paint(Canvas canvas, Size size) {

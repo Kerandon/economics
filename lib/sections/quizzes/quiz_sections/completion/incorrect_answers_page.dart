@@ -62,10 +62,10 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                     ),
                     child: Container(
                       decoration: BoxDecoration(
-                        color:
-                            Theme.of(context).colorScheme.onSurface.withOpacity(
-                                  kBackgroundOpacity,
-                                ),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withAlpha(kBackgroundOpacity),
                         borderRadius: BorderRadius.circular(kRadiusBig),
                       ),
                       child: Padding(

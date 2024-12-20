@@ -1,23 +1,16 @@
-import 'package:economics_app/sections/diagrams/utils/mixins.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
-import '../../enums/diagram_type.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_curve.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_text.dart';
 
-class GlobalProductionSubsidies extends CustomPainter with NameMixin {
-  @override
-  String get name => type.name;
-
-  final DiagramType type;
+class GlobalProductionSubsidies extends CustomPainter {
   final Color color;
   final Color highlightedColor;
 
   GlobalProductionSubsidies({
-    this.type = DiagramType.global_ProductionSubsidies_Standard_Default,
     this.color = Colors.white,
     this.highlightedColor = Colors.green,
   });
@@ -36,14 +29,6 @@ class GlobalProductionSubsidies extends CustomPainter with NameMixin {
     String q1 = 'Q1';
     String q2 = 'Q2';
     String q3 = 'Q3';
-
-    if (type == DiagramType.global_ProductionSubsidies_Calculation) {
-      pWS = '\$12';
-      pW = '\$8';
-      q1 = '500';
-      q2 = '600';
-      q3 = '800';
-    }
 
     paintAxis(
       size,
@@ -128,14 +113,6 @@ class GlobalProductionSubsidies extends CustomPainter with NameMixin {
       hideYLine: true,
       xLabel: q3,
     );
-
-    /// Label letters
-    if (type == DiagramType.global_ProductionSubsidies_Standard_Default) {
-      paintText(size, canvas, 'a', Offset(width * 0.20, height * 0.62),
-          fontSize: kLabelLetterFontSize);
-      paintText(size, canvas, 'b', Offset(width * 0.35, height * 0.65),
-          fontSize: kLabelLetterFontSize);
-    }
   }
 
   @override

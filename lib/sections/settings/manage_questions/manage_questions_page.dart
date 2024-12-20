@@ -29,7 +29,6 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
   bool _dataIsSet = false;
 
   @override
-  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);

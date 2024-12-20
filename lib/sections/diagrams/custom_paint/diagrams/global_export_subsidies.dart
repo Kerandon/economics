@@ -1,24 +1,18 @@
 import 'package:economics_app/sections/diagrams/enums/curve_align.dart';
 import 'package:flutter/material.dart';
-import '../../enums/diagram_type.dart';
-import '../../utils/mixins.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_curve.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 
-class GlobalExportSubsidies extends CustomPainter with NameMixin {
-  @override
-  String get name => type.name;
-
+class GlobalExportSubsidies extends CustomPainter {
   final Color color;
   final Color highlightedColor;
-  final DiagramType type;
 
-  GlobalExportSubsidies(
-      {this.color = Colors.white,
-      this.highlightedColor = Colors.green,
-      this.type = DiagramType.global_ExportSubsidies_Standard_Default});
+  GlobalExportSubsidies({
+    this.color = Colors.white,
+    this.highlightedColor = Colors.green,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {

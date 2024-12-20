@@ -1,15 +1,8 @@
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_export_subsidies.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_forex.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_j_curve.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_production_subsidies.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_quotas.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/global_tariffs.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/macro_business_cycle.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/micro_monopolistic_competition.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/micro_perfect_competition_long_run.dart';
+import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:flutter/material.dart';
-import '../custom_paint/diagrams/macro_circular_flow.dart';
-import '../enums/diagram_type.dart';
+
+import '../custom_paint/diagrams/updated_diagrams/circular_flow_of_income.dart';
+import '../custom_paint/diagrams/updated_diagrams/perfect_competition.dart';
 
 class AllDiagrams {
   final Size size;
@@ -17,66 +10,37 @@ class AllDiagrams {
   final Color onSurfaceColor;
   final Color primaryColor;
 
-  AllDiagrams(
-      {required this.size,
-      required this.surfaceColor,
-      required this.onSurfaceColor,
-      required this.primaryColor});
+  AllDiagrams({
+    required this.size,
+    required this.surfaceColor,
+    required this.onSurfaceColor,
+    required this.primaryColor,
+  });
 
   List<CustomPainter> getAllDiagrams() {
     return [
-      MicroPerfectCompetition(
+      PerfectCompetition(
         appSize: size,
-        type: DiagramType.micro_PerfectCompetition_LongRun_Equilibrium,
         surfaceColor: surfaceColor,
         onSurfaceColor: onSurfaceColor,
         primaryColor: primaryColor,
+        diagramModel: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.perfectCompetition,
+          subtype: DiagramSubtype.longRunEquilibrium,
+        ),
       ),
-      // MicroPerfectCompetition(
-      //     type: DiagramType.micro_PerfectCompetition_AbnormalProfits),
-      // MicroPerfectCompetition(
-      //     type: DiagramType.micro_PerfectCompetition_EconomicLosses),
-      MicroMonopolisticCompetition(),
-      MicroMonopolisticCompetition(
-          type: DiagramType.micro_MonopolisticCompetition_WelfareLoss),
-      MicroMonopolisticCompetition(
-          type: DiagramType.micro_MonopolisticCompetition_AbnormalProfits),
-      MicroMonopolisticCompetition(
-          type: DiagramType.micro_MonopolisticCompetition_EconomicLosses),
-      MicroMonopolisticCompetition(
-          type: DiagramType.micro_MonopolisticCompetition_WelfareAnalysis),
-      MacroBusinessCycle(),
-      MacroCircularFlow(
-          type: DiagramType.macro_CircularFlowOfIncome_Closed_Default,
-          onSurfaceColor: onSurfaceColor,
-          primaryColor: primaryColor),
-      MacroCircularFlow(
-          type: DiagramType.macro_CircularFlowOfIncome_IncomeOutputExpenditure,
-          onSurfaceColor: onSurfaceColor,
-          primaryColor: primaryColor),
-      MacroCircularFlow(
-          type: DiagramType.macro_CircularFlowOfIncome_Open,
-          onSurfaceColor: onSurfaceColor,
-          primaryColor: primaryColor),
-      GlobalTariffs(type: DiagramType.global_Tariffs_Standard_Default),
-      GlobalTariffs(type: DiagramType.global_Tariffs_Calculation),
-      GlobalTariffs(type: DiagramType.global_Tariffs_Labels),
-      GlobalQuotas(),
-      GlobalQuotas(type: DiagramType.global_Quotas_Labels),
-      GlobalQuotas(type: DiagramType.global_Quotas_Calculation),
-      GlobalProductionSubsidies(),
-      GlobalProductionSubsidies(
-          type: DiagramType.global_ProductionSubsidies_Calculation),
-      GlobalExportSubsidies(),
-      GlobalExportSubsidies(
-          type: DiagramType.global_ExportSubsidies_Calculation),
-      GlobalForex(),
-      GlobalForex(type: DiagramType.global_Forex_DemandIncrease),
-      GlobalForex(type: DiagramType.global_Forex_DemandDecrease),
-      GlobalForex(type: DiagramType.global_Forex_SupplyIncrease),
-      GlobalForex(type: DiagramType.global_Forex_SupplyDecrease),
-      GlobalJCurve(),
-      GlobalJCurve(type: DiagramType.global_JCurve_CorrectingTradeSurplus),
+      CircularFlowOfIncome(
+        appSize: size,
+        surfaceColor: surfaceColor,
+        onSurfaceColor: onSurfaceColor,
+        primaryColor: primaryColor,
+        diagramModel: DiagramModel(
+          unit: UnitType.macro,
+          type: DiagramType.circularFlowOfIncome,
+          subtype: DiagramSubtype.closed,
+        ),
+      )
     ];
   }
 }

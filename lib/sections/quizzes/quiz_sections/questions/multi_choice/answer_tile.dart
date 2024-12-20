@@ -43,8 +43,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
     final colorScheme = theme.colorScheme;
     final answerStage = widget.answer.answerStage;
 
-    Color backgroundColor =
-        colorScheme.onSurface.withOpacity(kBackgroundOpacity);
+    Color backgroundColor = colorScheme.onSurface.withAlpha(kBackgroundOpacity);
 
     IconData? icon;
     bool isSelected = answerStage == AnswerStage.selected;

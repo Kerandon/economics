@@ -22,3 +22,22 @@ extension DiagramsNumberExtension on DiagramsNumber {
     }
   }
 }
+
+extension DiagramsToIntExtension on int {
+  DiagramsNumber get toDiagramsNumber {
+    switch (this) {
+      case 0:
+        return DiagramsNumber.zero;
+      case 1:
+        return DiagramsNumber.one;
+      case 2:
+        return DiagramsNumber.two;
+      case 3:
+        return DiagramsNumber.three;
+      case 4:
+        return DiagramsNumber.four;
+      default:
+        throw ArgumentError('Invalid integer for DiagramsNumber');
+    }
+  }
+}

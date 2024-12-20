@@ -1,4 +1,5 @@
 import 'package:economics_app/app/enums/firebase_status.dart';
+import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_tags.dart';
 import 'package:economics_app/sections/settings/manage_questions/methods/send_new_question_to_firebase.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,10 @@ Future<void> prepareNewQuestionForFirebase({
     }
   }
 
+  List<DiagramModel>? diagrams;
+  if (editState.selectedDiagrams.isNotEmpty) {
+    diagrams = editState.selectedDiagrams.toList();
+  }
 
   final q = QuestionModel(
     questionType: questionType,
@@ -55,7 +60,7 @@ Future<void> prepareNewQuestionForFirebase({
     unit: unit,
     subunit: subunit,
     question: question,
-    diagrams: editState.diagramsSelected,
+    diagrams: diagrams,
     answers: answers,
     explanation: explanation,
     flipCardTag: flipCardTag,

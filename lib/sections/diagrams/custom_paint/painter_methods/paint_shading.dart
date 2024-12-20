@@ -9,7 +9,7 @@ void paintShading(
   final height = size.height;
   final paint = Paint()
     ..style = PaintingStyle.fill
-    ..color = shade.setShadeColor().withOpacity(0.60);
+    ..color = shade.setShadeColor().withAlpha(60);
 
   if (pointsAndBeziers.isEmpty) return;
 
