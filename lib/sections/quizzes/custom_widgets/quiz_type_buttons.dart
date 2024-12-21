@@ -28,7 +28,7 @@ class QuizTypeButtons extends ConsumerWidget {
           checkmarkColor: onSurfaceColor,
           label: Text(
             e.toText(),
-            style: theme.textTheme.titleSmall?.copyWith(
+            style: theme.textTheme.bodyMedium?.copyWith(
               color: isSelected ? Colors.white : theme.colorScheme.onSurface,
             ),
           ),

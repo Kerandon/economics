@@ -22,6 +22,12 @@ class AnswerModel extends Equatable {
     );
   }
 
+  static List<AnswerModel> fromMapList(List<dynamic> list) {
+    return list
+        .map((e) => AnswerModel.fromMap(e as Map<String, dynamic>))
+        .toList();
+  }
+
   AnswerModel copyWith({
     String? answer,
     bool? isCorrect,
@@ -34,7 +40,6 @@ class AnswerModel extends Equatable {
     );
   }
 
-  // Add the toMap method to serialize AnswerModel
   Map<String, dynamic> toMap() {
     return {
       kAnswer: answer,

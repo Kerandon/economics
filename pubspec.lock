@@ -345,10 +345,10 @@ packages:
     dependency: "direct main"
     description:
       name: form_builder_validators
-      sha256: "9d63d0df783cb633ce5aeec7c1ab7281563ed35cfa55116ccd9c0eead324eefc"
+      sha256: "517fb884183fff7a0ef3db7d375981011da26ee452f20fb3d2e788ad527ad01d"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "11.1.0"
+    version: "11.1.1"
   fwfh_cached_network_image:
     dependency: transitive
     description:

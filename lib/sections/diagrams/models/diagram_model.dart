@@ -49,15 +49,22 @@ class DiagramModel {
     );
   }
 
-  static List<DiagramModel> fromFirebaseList(List<dynamic>? diagramsList) {
-    if (diagramsList == null) return [];
-    return diagramsList
-        .map(
-          (e) => DiagramModel.fromFirebase(
-            Map<String, dynamic>.from(e),
-          ),
-        )
-        .toList();
+  static List<DiagramModel>? fromFirebaseList(List<dynamic>? data) {
+    if (data != null) {
+      final diagramsList = data;
+      if (diagramsList.isEmpty) {
+        return null;
+      } else {
+        return diagramsList
+            .map(
+              (e) => DiagramModel.fromFirebase(
+                Map<String, dynamic>.from(e),
+              ),
+            )
+            .toList();
+      }
+    }
+    return null;
   }
 }
 

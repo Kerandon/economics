@@ -1,6 +1,7 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_back_to_home_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
+import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -32,7 +33,6 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
-
     final editNotifier = ref.read(editQuestionProvider.notifier);
 
     return Scaffold(
@@ -71,6 +71,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                   _dataIsSet = true;
                   editNotifier.setAllQuestions(questions);
                   editNotifier.setFilteredQuestions();
+                  editNotifier.setDiagramsNumber(DiagramsNumber.zero);
                 }
               });
 

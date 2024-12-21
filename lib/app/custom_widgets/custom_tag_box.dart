@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../configs/constants.dart';
 
-class CustomTag extends StatelessWidget {
-  const CustomTag({
+class CustomTagBox extends StatelessWidget {
+  const CustomTagBox({
     super.key,
     required this.text,
   });

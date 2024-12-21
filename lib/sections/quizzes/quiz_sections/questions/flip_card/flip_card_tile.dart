@@ -5,6 +5,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../app/configs/constants.dart';
+import '../../../../../app/custom_widgets/gap.dart';
 
 class FlipCardTile extends ConsumerStatefulWidget {
   const FlipCardTile(this.question, {super.key});
@@ -26,7 +27,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
     final widthPadding = size.width * kPageIndentHorizontal;
     return Padding(
       padding: EdgeInsets.only(
-        top: size.height * 0.03,
+        top: size.height * 0.02,
         left: widthPadding,
         right: widthPadding,
       ),
@@ -50,44 +51,69 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kRadius),
             border: Border.all(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onSurface
-                  .withAlpha(kBackgroundOpacity),
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(15),
             ),
-            color: Theme.of(context)
-                .colorScheme
-                .onSurface
-                .withAlpha(kBackgroundOpacity),
+            color: Colors.white,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Container(
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(kRadius),
-                          topRight: Radius.circular(kRadius))),
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: HtmlWidget(
-                        _cardSide == CardSide.front
-                            ? widget.question.question!
-                            : widget.question.answers!.first.answer,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.05,
+                        vertical: size.height * 0.02),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(kRadius),
+                              topRight: Radius.circular(kRadius))),
+                      child: Center(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Text(
+                                widget.question.question!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                              if (_cardSide == CardSide.back) ...[
+                                Gap(
+                                  showDivider: true,
+                                ),
+                                HtmlWidget(
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(),
+                                  widget.question.answers!.first.answer,
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              IconButton(
-                  onPressed: () {
-                    _animateFlip = true;
+                IconButton(
+                    onPressed: () {
+                      _animateFlip = true;
 
-                    setState(() {});
-                  },
-                  icon: const Icon(Icons.flip_outlined))
-            ],
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.flip_outlined))
+              ],
+            ),
           ),
         ),
       ),

@@ -27,7 +27,7 @@ class CourseTypeButtons extends ConsumerWidget {
           selectedColor: theme.colorScheme.primary,
           label: Text(
             e.name,
-            style: theme.textTheme.titleSmall?.copyWith(
+            style: theme.textTheme.bodyMedium?.copyWith(
               color: onSurfaceColor,
             ),
           ),

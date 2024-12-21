@@ -1,7 +1,8 @@
 import 'package:economics_app/app/configs/constants.dart';
+
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/question_tags.dart';
+
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -10,6 +11,8 @@ import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/mixins/unit_mixin.dart';
 import '../../../app/utils/models/course.dart';
 import '../../../app/utils/models/unit.dart';
+import '../quiz_enums/custom_tag.dart';
+import '../quiz_enums/flip_card_tag.dart';
 
 class EditQuestionState {
   final QuestionType questionType;
@@ -27,6 +30,7 @@ class EditQuestionState {
   final bool isHL;
   final DiagramsNumber diagramsNumber;
   final List<DiagramModel> selectedDiagrams;
+  final List<CustomTag> customTags;
 
   EditQuestionState({
     required this.questionType,
@@ -44,6 +48,7 @@ class EditQuestionState {
     required this.isHL,
     required this.diagramsNumber,
     required this.selectedDiagrams,
+    required this.customTags,
   });
 
   EditQuestionState copyWith({
@@ -62,6 +67,7 @@ class EditQuestionState {
     bool? isHL,
     DiagramsNumber? diagramsNumber,
     List<DiagramModel>? selectedDiagrams,
+    List<CustomTag>? customTags,
   }) {
     return EditQuestionState(
       courses: courses ?? this.courses,
@@ -79,6 +85,7 @@ class EditQuestionState {
       isHL: isHL ?? this.isHL,
       diagramsNumber: diagramsNumber ?? this.diagramsNumber,
       selectedDiagrams: selectedDiagrams ?? this.selectedDiagrams,
+      customTags: customTags ?? this.customTags,
     );
   }
 }
@@ -223,52 +230,37 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
     state = state.copyWith(selectedDiagrams: currentList);
   }
+
+  void setCustomTags(CustomTag tag) {
+    final currentList = state.customTags.toList();
+    if (currentList.contains(tag)) {
+      currentList.remove(tag);
+    } else {
+      currentList.add(tag);
+    }
+    state = state.copyWith(customTags: currentList);
+  }
 }
 
 final editQuestionProvider =
     StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
   (ref) => EditQuestionNotifier(
     EditQuestionState(
-      questionType: QuestionType.flip,
-      quizFilter: QuizFilter.all,
-      courses: [],
-      course: Course(name: "", units: []),
-      unit: Unit(name: ''),
-      subunit: Unit(name: ''),
-      allQuestions: [],
-      filteredQuestions: [],
-      maxNumberOfQuestions: kNumberOfQuestions.first,
-      checkAnswersAtEnd: false,
-      flipCardTag: FlipCardTag.general,
-      selectedFlipCardTags: FlipCardTag.values,
-      isHL: false,
-      diagramsNumber: DiagramsNumber.zero,
-      selectedDiagrams: [],
-    ),
+        questionType: QuestionType.flip,
+        quizFilter: QuizFilter.all,
+        courses: [],
+        course: Course(name: "", units: []),
+        unit: Unit(name: ''),
+        subunit: Unit(name: ''),
+        allQuestions: [],
+        filteredQuestions: [],
+        maxNumberOfQuestions: kNumberOfQuestions.first,
+        checkAnswersAtEnd: false,
+        flipCardTag: FlipCardTag.general,
+        selectedFlipCardTags: FlipCardTag.values,
+        isHL: false,
+        diagramsNumber: DiagramsNumber.zero,
+        selectedDiagrams: [],
+        customTags: []),
   ),
 );
-
-void syncDiagramsWithSelection(
-    Map<int, DiagramType> diagramsSelected, int numberOfDiagramsSelected) {
-  final currentLength = diagramsSelected.length;
-
-  if (currentLength < numberOfDiagramsSelected) {
-    // Calculate the difference
-    final int difference = numberOfDiagramsSelected - currentLength;
-
-    // Get the default value from the first entry (if available)
-    final DiagramType defaultValue = diagramsSelected.values.first;
-
-    // Create new entries with default values
-    final newEntries = List.generate(
-      difference,
-      (index) => MapEntry(
-        currentLength + index, // Ensure new keys are unique
-        defaultValue,
-      ),
-    );
-
-    // Add the new entries to the map
-    diagramsSelected.addEntries(newEntries);
-  }
-}

@@ -35,6 +35,7 @@ const kAllSections = 'all sections';
 const kAllUnits = 'all units';
 const kFlipCardTag = 'flipCardTag';
 const kIsHL = 'isHL';
+const kCustomTags = 'customTags';
 const kErrorMessage =
     'Something went wrong - check your internet connection & try again';
 

@@ -1,13 +1,15 @@
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
 import 'package:economics_app/sections/diagrams/utils/methods/get_diagrams_to_display.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/question_tags.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/custom_tag.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
+
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/custom_widgets/custom_tag.dart';
+import '../../../app/custom_widgets/custom_tag_box.dart';
 import '../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'methods/delete_question.dart';
 
@@ -151,7 +153,18 @@ class ManageQuestionsTile extends ConsumerWidget {
             )
           ],
           if (q.flipCardTag != null && q.flipCardTag?.name != "") ...[
-            CustomTag(text: q.flipCardTag?.toText() ?? ""),
+            CustomTagBox(text: q.flipCardTag?.toText() ?? ""),
+          ],
+          if (q.customTags != null && q.customTags!.isNotEmpty) ...[
+            Wrap(
+              children: q.customTags!
+                  .map(
+                    (e) => CustomTagBox(
+                      text: e.toText(),
+                    ),
+                  )
+                  .toList(),
+            )
           ],
         ],
       ),

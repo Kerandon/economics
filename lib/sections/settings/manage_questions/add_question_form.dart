@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
+import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/custom_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/diagram_dropdown.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
@@ -19,7 +21,8 @@ import '../../../app/utils/mixins/course_mixin.dart';
 import '../../diagrams/diagram_widgets/diagram_builder.dart';
 import '../../quizzes/custom_widgets/quiz_type_buttons.dart';
 import '../../quizzes/custom_widgets/unit_drop_down.dart';
-import '../../quizzes/quiz_enums/question_tags.dart';
+
+import '../../quizzes/quiz_enums/flip_card_tag.dart';
 import 'custom_form_builder_text_field.dart';
 import 'methods/prepare_new_question_for_firebase.dart';
 import 'methods/prepare_update_question_for_firebase.dart';
@@ -72,6 +75,15 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
         final explanation = questionModel.explanation ?? "";
         WidgetsBinding.instance.addPostFrameCallback(
           (t) {
+            if (questionModel.diagrams != null &&
+                questionModel.diagrams!.isNotEmpty) {
+              editNotifier.setDiagramsNumber(
+                  questionModel.diagrams!.length.toDiagramsNumber);
+              for (int i = 0; i < questionModel.diagrams!.length; i++) {
+                editNotifier.setDiagramsSelected(questionModel.diagrams![i], i);
+              }
+            }
+
             final fields = _formKey.currentState!.fields;
             fields[kQuestion]!.didChange(questionModel.question ?? "");
             fields[kCorrectAnswer]!.didChange(correctAnswer?.answer ?? "");
@@ -83,21 +95,20 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
             }
           },
         );
-      }
 
-      _courseAndUnitsAreEqual = editState.course == widget.question?.course &&
-          editState.unit == widget.question?.unit &&
-          editState.subunit == widget.question?.subunit;
+        _courseAndUnitsAreEqual = editState.course == widget.question?.course &&
+            editState.unit == widget.question?.unit &&
+            editState.subunit == widget.question?.subunit;
 
-      if (widget.question!.diagrams != null) {
-        if (widget.question!.diagrams!.isNotEmpty) {
-          WidgetsBinding.instance.addPostFrameCallback((t) {
-            editNotifier.setDiagramsNumber(DiagramsNumber.four);
-            for (int i = 0; i < widget.question!.diagrams!.length; i++) {
-              editNotifier.setDiagramsSelected(
-                  widget.question!.diagrams![i], i);
-            }
-          });
+        if (widget.question!.diagrams != null) {
+          if (widget.question!.diagrams!.isNotEmpty) {
+            WidgetsBinding.instance.addPostFrameCallback((t) {
+              for (int i = 0; i < widget.question!.diagrams!.length; i++) {
+                editNotifier.setDiagramsSelected(
+                    widget.question!.diagrams![i], i);
+              }
+            });
+          }
         }
       }
     }
@@ -185,6 +196,45 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                         ),
                       ],
                     ],
+                    CustomDivider(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: kWrapSpacing * size.width,
+                      children: CustomTag.values.map(
+                        (e) {
+                          bool isSelected = false;
+                          if (editState.customTags.contains(e)) {
+                            isSelected = true;
+                          }
+                          final onSurfaceColor = isSelected
+                              ? Colors.white
+                              : Theme.of(context).colorScheme.onSurface;
+                          return ChoiceChip(
+                            onSelected: (_) {
+                              editNotifier.setCustomTags(e);
+                            },
+                            checkmarkColor: onSurfaceColor,
+                            selectedColor:
+                                Theme.of(context).colorScheme.primary,
+                            label: Text(
+                              e.toText(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: onSurfaceColor,
+                                  ),
+                            ),
+                            selected: isSelected,
+                          );
+                        },
+                      ).toList(),
+                    ),
+                    CustomDivider(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ],
                 ),
               ),

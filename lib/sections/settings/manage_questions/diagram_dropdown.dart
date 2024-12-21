@@ -3,28 +3,27 @@ import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../diagrams/enums/diagrams_number.dart';
 
 class DiagramDropdown extends ConsumerWidget {
-  const DiagramDropdown(this.index, {this.initialValue, super.key});
+  const DiagramDropdown(this.index, {super.key});
 
   final int index;
-  final DiagramModel? initialValue;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final editState = ref.watch(editQuestionProvider);
+
     final editNotifier = ref.read(editQuestionProvider.notifier);
+
     return DropdownMenu(
+      initialSelection: allDiagrams.first,
       trailingIcon: Text(
         (index + 1).toString(),
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
               color: Theme.of(context).colorScheme.primary,
             ),
       ),
-      initialSelection: initialValue ?? editState.selectedDiagrams.first,
       width: size.width,
       requestFocusOnTap: false,
       onSelected: (e) {
@@ -45,11 +44,12 @@ class DiagramDropdown extends ConsumerWidget {
 
 class DiagramsSelection extends ConsumerWidget {
   const DiagramsSelection({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final editState = ref.watch(editQuestionProvider);
+    final diagramsNumber =
+        ref.watch(editQuestionProvider.select((state) => state.diagramsNumber));
     final editNotifier = ref.read(editQuestionProvider.notifier);
+
     return Column(
       children: [
         Row(
@@ -64,7 +64,7 @@ class DiagramsSelection extends ConsumerWidget {
               onSelected: (e) {
                 editNotifier.setDiagramsNumber(e!);
               },
-              initialSelection: editState.diagramsNumber,
+              initialSelection: diagramsNumber,
               dropdownMenuEntries: DiagramsNumber.values
                   .map(
                     (e) => DropdownMenuEntry(
@@ -77,8 +77,10 @@ class DiagramsSelection extends ConsumerWidget {
           ],
         ),
         ...List.generate(
-          editState.diagramsNumber.toInt,
-          (index) => DiagramDropdown(index),
+          diagramsNumber.toInt,
+          (index) => DiagramDropdown(
+            index,
+          ),
         )
       ],
     );

@@ -1,11 +1,12 @@
 import 'package:economics_app/app/enums/firebase_status.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/question_tags.dart';
+
 import 'package:economics_app/sections/settings/manage_questions/methods/send_new_question_to_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/building_helper.dart';
+import '../../../quizzes/quiz_enums/flip_card_tag.dart';
 import '../../../quizzes/quiz_enums/question_type.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -65,6 +66,7 @@ Future<void> prepareNewQuestionForFirebase({
     explanation: explanation,
     flipCardTag: flipCardTag,
     isHL: isHL,
+    customTags: editState.customTags,
   );
 
   final future = sendNewQuestionToFirebase(question: q);

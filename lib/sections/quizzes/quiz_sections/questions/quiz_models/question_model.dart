@@ -4,11 +4,12 @@ import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:equatable/equatable.dart';
 import '../../../../../app/utils/mixins/course_mixin.dart';
 import '../../../../../app/utils/mixins/unit_mixin.dart';
-
 import '../../../../../app/utils/models/course.dart';
 import '../../../../diagrams/models/diagram_model.dart';
 import '../../../quiz_enums/answer_stage.dart';
-import '../../../quiz_enums/question_tags.dart';
+import '../../../quiz_enums/custom_tag.dart';
+
+import '../../../quiz_enums/flip_card_tag.dart';
 import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
@@ -24,6 +25,7 @@ class QuestionModel extends Equatable {
   final UnitMixin? subunit;
   final FlipCardTag? flipCardTag;
   final bool? isHL;
+  final List<CustomTag>? customTags;
 
   const QuestionModel({
     this.id,
@@ -38,6 +40,7 @@ class QuestionModel extends Equatable {
     this.subunit,
     this.flipCardTag,
     this.isHL,
+    this.customTags,
   });
 
   // More flexible copyWith
@@ -54,6 +57,7 @@ class QuestionModel extends Equatable {
     String? explanation,
     FlipCardTag? flipCardTag,
     bool? isHL,
+    List<CustomTag>? customTags,
   }) {
     return QuestionModel(
       id: id ?? this.id,
@@ -68,6 +72,7 @@ class QuestionModel extends Equatable {
       subunit: subunit ?? this.subunit,
       flipCardTag: flipCardTag ?? this.flipCardTag,
       isHL: isHL ?? this.isHL,
+      customTags: customTags ?? this.customTags,
     );
   }
 
@@ -85,24 +90,11 @@ class QuestionModel extends Equatable {
       kSubunit: {subunit?.index ?? "": subunit?.name ?? ""},
       kFlipCardTag: flipCardTag?.name,
       kIsHL: isHL,
+      kCustomTags: customTags?.toFirebase(),
     };
   }
 
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
-    List<AnswerModel> answers =
-        (map[kAnswers] as List).map((e) => AnswerModel.fromMap(e)).toList();
-
-    FlipCardTag tag = FlipCardTag.general;
-    for (var m in map.entries) {
-      if (m.key == kFlipCardTag) {
-        for (var v in FlipCardTag.values) {
-          if (m.value == v.name) {
-            tag = v;
-          }
-        }
-      }
-    }
-
     return QuestionModel(
       id: id,
       questionType: QuestionTypeExtension.fromText(map[kType]),
@@ -110,12 +102,14 @@ class QuestionModel extends Equatable {
       unit: Unit.fromFirebase(map),
       subunit: Unit.fromFirebase(map, subunit: true),
       question: map[kQuestion],
-      answers: answers,
+      answers: AnswerModel.fromMapList(map[kAnswers] as List<dynamic>),
       answerStage: AnswerStage.notSelected,
       explanation: map[kExplanation],
-      diagrams: DiagramModel.fromFirebaseList(map[kDiagrams] as List<dynamic>),
-      flipCardTag: tag,
+      diagrams: DiagramModel.fromFirebaseList(map[kDiagrams]),
+      flipCardTag:
+          FlipCardTagExtension.fromFirebase(map[kFlipCardTag] as String),
       isHL: map[kIsHL],
+      customTags: CustomTagFirebaseExtension.fromFirebaseList(map[kCustomTags]),
     );
   }
 
