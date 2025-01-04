@@ -2,25 +2,24 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/enums/curve_align.dart';
 import 'package:economics_app/sections/diagrams/enums/text_box_shape.dart';
 import 'package:flutter/material.dart';
+import '../../models/diagram_painter_config.dart';
 import '../custom_rotate.dart';
 import '../painter_constants.dart';
 
 void paintTextBox(
-  Canvas canvas,
-  Size size, {
+  DiagramPainterConfig config,
+  Canvas canvas, {
   required String text,
   required Offset position,
   TextBoxShape shape = TextBoxShape.rectangle,
-  Color color = Colors.white,
-  Color fontColor = Colors.white,
   scale = 0.20,
   double angle = 0,
-  double fontSizeAdjustment = 2.2,
+  double fontSizeAdjustment = 6.0,
   Color? fillColor,
   Color? lineColor,
 }) {
-  final width = size.width;
-  final height = size.height;
+  final width = config.painterSize.width;
+  final height = config.painterSize.height;
   final halfWidth = width * 0.50;
   final verticalAdjustment = halfWidth / 2;
   final fontAdjustment = fontSizeAdjustment;
@@ -30,9 +29,9 @@ void paintTextBox(
     ..color = fillColor ?? Colors.transparent;
 
   final linePaint = Paint()
-    ..strokeWidth = kCurveWidth / scale
+    ..strokeWidth = kCurveWidth * config.averageRatio
     ..style = PaintingStyle.stroke
-    ..color = lineColor ?? color;
+    ..color = config.colorScheme.onSurface;
 
   Path path;
 
@@ -74,8 +73,7 @@ void paintTextBox(
   }
 
   canvas.restore();
-  paintText(size, canvas, text, Offset(position.dx, position.dy),
-      color: color,
-      fontSize: (scale * kDefaultFontSize * 1.5) * fontAdjustment,
+  paintText(config, canvas, text, Offset(position.dx, position.dy),
+      fontSize: (scale * kDefaultFontSize) * fontAdjustment,
       curveAlign: CurveAlign.center);
 }

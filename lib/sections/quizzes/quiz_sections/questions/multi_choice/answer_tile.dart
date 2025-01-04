@@ -109,7 +109,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                             radius: 20,
                             child: Text(
                               (widget.answerIndex + 1).toAlphabet(),
-                              style: theme.textTheme.titleLarge?.copyWith(
+                              style: theme.textTheme.titleSmall?.copyWith(
                                 color: Colors.white,
                               ),
                             ),
@@ -117,7 +117,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                           title: Text(
                             widget.answer.answer,
                             textAlign: TextAlign.start,
-                            style: theme.textTheme.displaySmall?.copyWith(
+                            style: theme.textTheme.titleLarge?.copyWith(
                                 color:
                                     answerTextColor), // Align the text to the start (left) side
                           ),

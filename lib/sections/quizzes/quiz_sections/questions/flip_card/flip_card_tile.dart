@@ -1,16 +1,24 @@
 import 'package:economics_app/app/animation/flip_animation.dart';
+import 'package:economics_app/sections/diagrams/diagram_widgets/diagram_builder.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/custom_tag.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../app/configs/constants.dart';
+import '../../../../../app/custom_widgets/custom_tag_box.dart';
 import '../../../../../app/custom_widgets/gap.dart';
+import '../../../../settings/manage_questions/add_question_form.dart';
+import '../../../../settings/manage_questions/methods/delete_question.dart';
 
 class FlipCardTile extends ConsumerStatefulWidget {
-  const FlipCardTile(this.question, {super.key});
+  const FlipCardTile(this.question, {this.editMode = false, super.key});
 
   final QuestionModel question;
+  final bool editMode;
 
   @override
   ConsumerState<FlipCardTile> createState() => _FlipCardTileState();
@@ -23,11 +31,12 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     final widthPadding = size.width * kPageIndentHorizontal;
+    final quizNotifier = ref.watch(quizProvider.notifier);
     return Padding(
       padding: EdgeInsets.only(
         top: size.height * 0.02,
+        bottom: size.height * 0.02,
         left: widthPadding,
         right: widthPadding,
       ),
@@ -42,6 +51,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
         animate: _animateFlip,
         animationHalfCompleted: (side) {
           _cardSide = side;
+          quizNotifier.setCardSide(side);
           setState(() {});
         },
         animationCompleted: (flipDirection) {},
@@ -51,7 +61,10 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kRadius),
             border: Border.all(
-              color: Theme.of(context).colorScheme.onSurface.withAlpha(15),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withAlpha(kBackgroundOpacity),
             ),
             color: Colors.white,
           ),
@@ -60,6 +73,42 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                if (widget.editMode) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      PopupMenuButton(
+                        icon: const Icon(Icons.more_vert),
+                        onSelected: (value) {
+                          if (value == 'delete') {
+                            deleteQuestion(
+                              context,
+                              widget.question,
+                            );
+                          } else if (value == 'edit') {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => AddQuestionForm(
+                                  question: widget.question,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: 'delete',
+                            child: Text('Delete'),
+                          ),
+                          const PopupMenuItem(
+                            value: 'edit',
+                            child: Text('Edit'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -67,16 +116,18 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
                         vertical: size.height * 0.02),
                     child: Container(
                       decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(kRadius),
-                              topRight: Radius.circular(kRadius))),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(kRadius),
+                          topRight: Radius.circular(kRadius),
+                        ),
+                      ),
                       child: Center(
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              Text(
+                              HtmlWidget(
                                 widget.question.question!,
-                                style: Theme.of(context)
+                                textStyle: Theme.of(context)
                                     .textTheme
                                     .bodyLarge
                                     ?.copyWith(
@@ -84,19 +135,24 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
                                           Theme.of(context).colorScheme.primary,
                                       fontWeight: FontWeight.bold,
                                     ),
-                                textAlign: TextAlign.center,
                               ),
                               if (_cardSide == CardSide.back) ...[
                                 Gap(
                                   showDivider: true,
                                 ),
-                                HtmlWidget(
-                                  textStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(),
-                                  widget.question.answers!.first.answer,
-                                ),
+                                if (widget.question.answers!.isNotEmpty) ...[
+                                  HtmlWidget(
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(),
+                                    widget.question.answers!.first.answer,
+                                  ),
+                                ],
+                                if (widget.question.diagrams != null &&
+                                    widget.question.diagrams!.isNotEmpty) ...[
+                                  DiagramBuilder(),
+                                ],
                               ],
                             ],
                           ),
@@ -106,12 +162,40 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      _animateFlip = true;
+                  onPressed: () {
+                    _animateFlip = true;
 
-                      setState(() {});
-                    },
-                    icon: const Icon(Icons.flip_outlined))
+                    setState(() {});
+                  },
+                  icon: const Icon(Icons.flip_outlined),
+                ),
+                if (widget.question.flipCardTag != null &&
+                    widget.question.flipCardTag?.name != "") ...[
+                  Gap(
+                    showDivider: true,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Row(
+                      children: [
+                        CustomTagBox(
+                            text: widget.question.flipCardTag?.toText() ?? ""),
+                      ],
+                    ),
+                  ),
+                ],
+                if (widget.question.customTags != null &&
+                    widget.question.customTags!.isNotEmpty) ...[
+                  Wrap(
+                    children: widget.question.customTags!
+                        .map(
+                          (e) => CustomTagBox(
+                            text: e.toText(),
+                          ),
+                        )
+                        .toList(),
+                  )
+                ],
               ],
             ),
           ),

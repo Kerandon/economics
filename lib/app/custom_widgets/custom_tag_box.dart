@@ -20,7 +20,7 @@ class CustomTagBox extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
           child: Text(
             text,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(

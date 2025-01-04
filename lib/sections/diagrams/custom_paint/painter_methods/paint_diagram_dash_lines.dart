@@ -2,10 +2,11 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 import '../../enums/curve_align.dart';
+import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
 void paintDiagramDashedLines(
-  Size size,
+  DiagramPainterConfig config,
   Canvas canvas, {
   required double yAxisStartPos,
   required double xAxisEndPos,
@@ -13,21 +14,17 @@ void paintDiagramDashedLines(
   String? xLabel,
   bool hideYLine = false,
   bool hideXLine = false,
-  Color color = Colors.white,
 }) {
   if (!hideYLine) {
     /// Dashed line from Y axis
-    paintDashedLine(
-        color: color,
-        size: size,
-        canvas: canvas,
+    paintDashedLine(config, canvas,
         p1: Offset(kAxisIndent, yAxisStartPos),
         p2: Offset(xAxisEndPos + kAxisIndent, yAxisStartPos));
 
     if (yLabel != null) {
       /// Y axis label
       paintText(
-        size,
+        config,
         canvas,
         yLabel,
         fontSize: kLabelFontSize,
@@ -40,9 +37,8 @@ void paintDiagramDashedLines(
   if (!hideXLine) {
     /// Dashed line to X axis
     paintDashedLine(
-      color: color,
-      size: size,
-      canvas: canvas,
+      config,
+      canvas,
       p1: Offset(kAxisIndent + xAxisEndPos, yAxisStartPos),
       p2: Offset(
         kAxisIndent + xAxisEndPos,
@@ -53,11 +49,14 @@ void paintDiagramDashedLines(
     /// X axis label
     if (xLabel != null) {
       paintText(
-        size,
+        config,
         canvas,
         xLabel,
         fontSize: kLabelFontSize,
-        Offset(kAxisIndent + xAxisEndPos, 1 - kAxisIndent),
+        Offset(
+          kAxisIndent + xAxisEndPos,
+          1 - kAxisIndent + 0.02,
+        ),
         curveAlign: CurveAlign.centerBottom,
       );
     }

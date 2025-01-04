@@ -1,7 +1,7 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_back_to_home_button.dart';
-import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card/flip_card_tile.dart';
 
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -10,10 +10,10 @@ import 'package:economics_app/sections/tab_main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../quizzes/custom_widgets/filter_button.dart';
 import '../../quizzes/methods/get_questions_data.dart';
-import 'manage_questions_tile.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
   const ManageQuestionsPage({super.key});
@@ -71,7 +71,8 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                   _dataIsSet = true;
                   editNotifier.setAllQuestions(questions);
                   editNotifier.setFilteredQuestions();
-                  editNotifier.setDiagramsNumber(DiagramsNumber.zero);
+                  editNotifier.setDiagramsNumber(context, size,
+                      diagramsNumber: DiagramsNumber.zero);
                 }
               });
 
@@ -90,8 +91,14 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
 
                         return Column(
                           children: [
-                            ManageQuestionsTile(q: q),
-                            const CustomDivider(),
+                            FlipCardTile(
+                              q,
+                              editMode: true,
+                            ),
+                            Gap(
+                              showDivider: true,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ],
                         );
                       },

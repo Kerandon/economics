@@ -34,14 +34,14 @@ class MultiChoiceTile extends ConsumerWidget {
                 Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(size.width * 0.01),
+                      padding: EdgeInsets.all(size.width * 0.03),
                       child: Text(
                         question.question ?? "",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall
-                            ?.copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   ],

@@ -1,21 +1,20 @@
-import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
+import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
 
+import '../painter_constants.dart';
+
 void paintArrow(
-  Canvas canvas,
-  Color color, {
+  DiagramPainterConfig config,
+  Canvas canvas, {
   required Offset positionOfArrow,
-  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
-  double size = 10,
+  double size = kArrowSize,
   double rotationAngle = 0.0,
 }) {
   final path = Path();
-  final paint = Paint()..color = color;
+  final paint = Paint()..color = config.colorScheme.onSurface;
 
-  size *= sizeAdjustor.width;
-
-  final arrowWidth = size;
-  final arrowHeight = size;
+  final arrowWidth = size * config.averageRatio;
+  final arrowHeight = size * config.averageRatio;
 
   // Save the canvas state before applying transformations
   canvas.save();

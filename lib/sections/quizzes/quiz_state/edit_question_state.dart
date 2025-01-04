@@ -6,6 +6,7 @@ import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/mixins/unit_mixin.dart';
@@ -202,13 +203,16 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(isHL: hl);
   }
 
-  void setDiagramsNumber(DiagramsNumber diagramsNumber) {
+  void setDiagramsNumber(BuildContext context, Size size,
+      {required DiagramsNumber diagramsNumber}) {
     state = state.copyWith(diagramsNumber: diagramsNumber);
     final diagramsNum = diagramsNumber.toInt;
     final currentLengthList = state.selectedDiagrams.length;
 
     if (diagramsNum > currentLengthList) {
       final difference = diagramsNum - currentLengthList;
+
+      final allDiagrams = DiagramModel.getDiagrams(size, context);
 
       final newEntries = List.generate(
         difference,
@@ -223,7 +227,6 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   void setDiagramsSelected(DiagramModel diagram, int index) {
     final currentList = state.selectedDiagrams.toList();
-
     if (index < currentList.length) {
       currentList[index] = diagram;
     }

@@ -61,7 +61,12 @@ void prepareUpdateQuestionForFirebase(
   }
 
   if (editState.questionType == QuestionType.flip) {
-    if (correctAnswer != a.elementAt(0).answer) {
+    if (a.isNotEmpty) {
+      if (correctAnswer != a.elementAt(0).answer) {
+        updatedAnswers.add(AnswerModel(correctAnswer, isCorrect: true));
+      }
+    }
+    if (a.isEmpty) {
       updatedAnswers.add(AnswerModel(correctAnswer, isCorrect: true));
     }
   }

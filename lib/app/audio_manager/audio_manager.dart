@@ -8,7 +8,7 @@ class AudioManager {
   final soundTrackPlayer = AudioPlayer();
   void playSoundTrack(String audio) {
     if (!soundTrackPlayer.playing) {
-      soundTrackPlayer.loopMode == LoopMode.all;
+      soundTrackPlayer.setLoopMode(LoopMode.all);
       soundTrackPlayer.setAsset('assets/audio/soundtracks/$audio.mp3');
       soundTrackPlayer.play();
     }

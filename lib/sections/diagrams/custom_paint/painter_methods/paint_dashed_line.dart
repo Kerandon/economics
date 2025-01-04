@@ -2,19 +2,22 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
-void paintDashedLine({
-  required Size size,
-  required Canvas canvas,
+void paintDashedLine(
+  DiagramPainterConfig config,
+  Canvas canvas, {
   required Offset p1,
   required Offset p2,
   Iterable<double>? pattern,
-  Color color = Colors.white,
   double strokeWidth = kDashedLineWidth,
 }) {
-  p1 = p1 * size.width;
-  p2 = p2 * size.height;
+  strokeWidth *= config.averageRatio;
+  final width = config.painterSize.width;
+  final height = config.painterSize.height;
+  p1 = Offset(p1.dx * width, p1.dy * height);
+  p2 = Offset(p2.dx * width, p2.dy * height);
   pattern ??= [4, 5]; // Default pattern if not provided
   assert(pattern.length.isEven);
   final distance = (p2 - p1).distance;
@@ -22,7 +25,7 @@ void paintDashedLine({
   final points = <Offset>[];
 
   final paint = Paint()
-    ..color = color
+    ..color = config.colorScheme.onSurface
     ..strokeWidth = strokeWidth;
 
   double t = 0;

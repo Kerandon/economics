@@ -1,8 +1,10 @@
 /// Curves
 const kCurveLeft = 0.80;
-const kCurveWidth = 4.0;
+const kCurveWidth = 2.0;
+const kSkinnyCurveWidth = 0.50;
 const kCurveLabelAdjustment = 12.0;
 const kLabelLineWidth = 0.50;
+const kArrowSize = 5.0;
 
 /// Axis
 const kAxisIndent = 0.14;
@@ -16,8 +18,8 @@ const kAxisArrowHeadWidth = 0.010;
 const kTextBoxLineWidth = 4.0;
 
 /// Text
-const kLabelFontSize = 9.0;
-const kFontSize = 16.0;
+const kLabelFontSize = 12.0;
+const kFontSize = 14.0;
 const kLabelLetterFontSize = 12.0;
 
 /// Dot
@@ -42,6 +44,15 @@ const kP = 'P';
 const kQ = 'Q';
 
 /// Global Labels
+const kMicroLabelDMPBMSB = 'D=MPB=MSB';
+const kMicroLabelSMPC = 'S=MPC';
+const kMicroLabelSMSC = 'MSC';
+const kMicroLabelPOpt = 'Popt';
+const kMicroLabelPm = 'Pm';
+const kMicroLabelQOpt = 'Qopt';
+const kMicroLabelQm = 'Qm';
+const kMicroLabelPriceOfFish = 'Price of Fish (£)';
+const kMicroLabelQuantityOfFish = 'Quantity of Fish (\'000)';
 const kXLabelRice = 'Price of rice (\$)';
 const kYLabelRice = 'Quantity supplied of rice (\'000 kg)';
 const kXLabelWine = 'Price of wine (\$)';

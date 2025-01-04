@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
@@ -92,10 +93,14 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Column(
                     children: [
-                      CustomSlider(),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: size.width * kPageIndentHorizontal),
+                        child: CustomSlider(),
+                      ),
                     ],
                   ),
                 )
@@ -124,7 +129,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                 ],
                                 if (editState.questionType ==
                                     QuestionType.flip) ...[
-                                  FlipCardTile(question),
+                                  FlipCardTile(
+                                    question,
+                                    editMode: false,
+                                  ),
                                 ],
                                 SizedBox(
                                   height: customButtonGap,

@@ -7,11 +7,14 @@ enum FlipCardTag {
 }
 
 extension FlipCardTagExtension on FlipCardTag {
-  static FlipCardTag fromFirebase(String value) {
-    return FlipCardTag.values.firstWhere(
-      (e) => e.name == value,
-      orElse: () => FlipCardTag.general,
-    );
+  static FlipCardTag? fromFirebase(String? value) {
+    if (value != null) {
+      return FlipCardTag.values.firstWhere(
+        (e) => e.name == value,
+        orElse: () => FlipCardTag.general,
+      );
+    }
+    return null;
   }
 
   String toText() {

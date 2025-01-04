@@ -1,35 +1,26 @@
 import 'package:economics_app/app/configs/constants.dart';
 
-enum UnitType {
-  micro,
-  macro,
-  global,
-}
+import 'package:flutter/material.dart';
 
-enum DiagramType {
-  perfectCompetition,
-  circularFlowOfIncome,
-}
-
-enum DiagramSubtype {
-  closed,
-  longRunEquilibrium,
-}
+import '../data/all_diagrams.dart';
+import '../enums/diagram_subtype.dart';
+import '../enums/diagram_type.dart';
+import '../enums/unit_type.dart';
+import '../utils/mixins.dart';
 
 class DiagramModel {
   final UnitType? unit;
   final DiagramType? type;
   final DiagramSubtype? subtype;
+  final CustomPainter? painter;
 
-  DiagramModel({this.unit, this.type, this.subtype});
+  DiagramModel({this.unit, this.type, this.subtype, this.painter});
 
   // Serialization method
   Map<String, dynamic> toMap() {
     return {
-      kUnit: unit
-          ?.name, // Assuming unit has a 'name' field for string representation
-      kType: type
-          ?.name, // Assuming type has a 'name' field for string representation
+      kUnit: unit?.name,
+      kType: type?.name,
       kSubtype: subtype?.name,
     };
   }
@@ -66,17 +57,49 @@ class DiagramModel {
     }
     return null;
   }
-}
 
-List<DiagramModel> allDiagrams = [
-  DiagramModel(
-    unit: UnitType.micro,
-    type: DiagramType.perfectCompetition,
-    subtype: DiagramSubtype.longRunEquilibrium,
-  ),
-  DiagramModel(
-    unit: UnitType.macro,
-    type: DiagramType.circularFlowOfIncome,
-    subtype: DiagramSubtype.closed,
-  ),
-];
+  // CopyWith method
+  DiagramModel copyWith({
+    UnitType? unit,
+    DiagramType? type,
+    DiagramSubtype? subtype,
+    CustomPainter? painter,
+  }) {
+    return DiagramModel(
+      unit: unit ?? this.unit,
+      type: type ?? this.type,
+      subtype: subtype ?? this.subtype,
+      painter: painter ?? this.painter,
+    );
+  }
+
+  /// If [selectDiagrams] is null, all diagrams will be retrieved
+  static List<DiagramModel> getDiagrams(Size size, BuildContext context,
+      {List<DiagramModel>? selectedDiagrams}) {
+    final allDiagrams = AllDiagrams(
+      size: size,
+      colorScheme: Theme.of(context).colorScheme,
+    ).getAllPainterDiagrams();
+
+    List<DiagramModel> all = [];
+    for (var e in allDiagrams) {
+      final i = e as DiagramIdentifierMixin;
+
+      all.add(i.model.copyWith(painter: e));
+    }
+
+    if (selectedDiagrams != null && selectedDiagrams.isNotEmpty) {
+      List<DiagramModel> selected = [];
+      for (var s in selectedDiagrams) {
+        for (var a in all) {
+          if (s.type == a.type && s.subtype == s.subtype) {
+            selected.add(a);
+          }
+        }
+      }
+      return selected.toList();
+    } else {
+      return all.toList();
+    }
+  }
+}

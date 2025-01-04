@@ -5,6 +5,7 @@ import 'package:economics_app/sections/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 
 import '../app/configs/constants.dart';
+import 'diagrams/sections/all_diagrams_page.dart';
 
 class TabBarMain extends StatefulWidget {
   const TabBarMain({super.key});
@@ -62,9 +63,7 @@ class _TabBarMainState extends State<TabBarMain> with TickerProviderStateMixin {
         controller: _tabController,
         children: <Widget>[
           const QuestionHomePage(),
-          Container(
-            color: Colors.red,
-          ),
+          AllDiagramsPage(),
         ],
       ),
     );

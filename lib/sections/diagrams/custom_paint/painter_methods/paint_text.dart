@@ -1,17 +1,15 @@
-import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
 import '../../enums/axis_label_margin.dart';
 import '../../enums/curve_align.dart';
 import '../../enums/indent.dart';
+import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
 void paintText(
-  Size size,
+  DiagramPainterConfig config,
   Canvas canvas,
   String label,
   Offset position, {
-  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
-  Color color = Colors.white,
   double fontSize = kFontSize,
   double angle = 0,
 
@@ -23,17 +21,18 @@ void paintText(
   AxisLabelMargin? axisLabelMargin,
   Indent? axisIndent,
 }) {
-  fontSize = fontSize * sizeAdjustor.width;
+  fontSize *= config.averageRatio;
+
   if (axis != null) {
     axisLabelMargin = AxisLabelMargin.far;
     axisIndent = Indent.end;
   }
 
-  final width = size.width;
-  final height = size.height;
+  final width = config.painterSize.width;
+  final height = config.painterSize.height;
 
   final textStyle = TextStyle(
-    color: color,
+    color: config.colorScheme.onSurface,
     fontSize: fontSize,
   );
   final textSpan = TextSpan(
@@ -47,7 +46,7 @@ void paintText(
 
   textPainter.layout(
     minWidth: 0,
-    maxWidth: size.width,
+    maxWidth: width,
   );
 
   /// Aligns the labels on the end of curves
@@ -76,8 +75,8 @@ void paintText(
       yAlign = textPainter.height - adjustment;
   }
   offset = Offset(
-    (position.dx * size.width) + xAlign,
-    (position.dy * size.height) + yAlign,
+    (position.dx * width) + xAlign,
+    (position.dy * height) + yAlign,
   );
 
   if (axis != null) {

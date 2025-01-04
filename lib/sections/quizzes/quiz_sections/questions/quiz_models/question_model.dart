@@ -107,7 +107,7 @@ class QuestionModel extends Equatable {
       explanation: map[kExplanation],
       diagrams: DiagramModel.fromFirebaseList(map[kDiagrams]),
       flipCardTag:
-          FlipCardTagExtension.fromFirebase(map[kFlipCardTag] as String),
+          FlipCardTagExtension.fromFirebase(map[kFlipCardTag] as String?),
       isHL: map[kIsHL],
       customTags: CustomTagFirebaseExtension.fromFirebaseList(map[kCustomTags]),
     );

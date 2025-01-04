@@ -1,3 +1,4 @@
+import 'package:economics_app/app/animation/flip_animation.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/completion/completion_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -92,11 +93,18 @@ class QuestionNavigationButtons extends ConsumerWidget {
     if (editState.questionType == QuestionType.flip) {
       showCenterButton = false;
     }
-
     return SizedBox(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          if (quizState.quizIsCompleted) ...[
+            FloatingActionButton.extended(
+              onPressed: () {
+                buildShowCompletionDialog(context);
+              },
+              label: Text('Review'),
+            ),
+          ],
           SizedBox(
             height: size.height * 0.02,
           ),
@@ -114,38 +122,50 @@ class QuestionNavigationButtons extends ConsumerWidget {
                 iconData: Icons.arrow_back_outlined,
                 disable: disableButtonLeft,
               ),
-              if (editState.questionType == QuestionType.flip) ...[
+              if (editState.questionType == QuestionType.flip &&
+                  quizState.currentCardSide == CardSide.back) ...[
                 FloatingActionButton.extended(
                   heroTag: '1',
                   backgroundColor: question.answerStage == AnswerStage.correct
                       ? theme.primaryColor
-                      : Colors.grey,
+                      : theme.colorScheme.scrim,
                   onPressed: () {
                     quizNotifier.updateQuestion(
-                        question.copyWith(answerStage: AnswerStage.correct));
+                      question.copyWith(
+                        answerStage: AnswerStage.correct,
+                      ),
+                    );
                   },
-                  label: const Icon(
+                  label: Icon(
                     Icons.check_outlined,
-                    color: Colors.white,
+                    color: question.answerStage == AnswerStage.correct
+                        ? Colors.white
+                        : Colors.black,
                   ),
                 ),
                 FloatingActionButton.extended(
                   heroTag: '2',
                   backgroundColor: question.answerStage == AnswerStage.incorrect
                       ? Colors.red
-                      : Colors.grey,
+                      : theme.colorScheme.scrim,
                   onPressed: () {
                     quizNotifier.updateQuestion(
                         question.copyWith(answerStage: AnswerStage.incorrect));
                   },
-                  label: const Icon(
+                  label: Icon(
                     Icons.close_outlined,
-                    color: Colors.white,
+                    color: question.answerStage == AnswerStage.correct ||
+                            question.answerStage == AnswerStage.incorrect
+                        ? Colors.white
+                        : Colors.black,
                   ),
                 ),
               ],
               if (showCenterButton) ...[
                 FloatingActionButton.extended(
+                  backgroundColor: disableCenterButton
+                      ? theme.colorScheme.scrim
+                      : theme.primaryColor,
                   heroTag: '3',
                   label: editState.questionType == QuestionType.multi
                       ? Text(

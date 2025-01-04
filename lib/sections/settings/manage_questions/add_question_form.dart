@@ -7,11 +7,11 @@ import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/custom_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:economics_app/sections/settings/manage_questions/diagram_dropdown.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,6 +24,7 @@ import '../../quizzes/custom_widgets/unit_drop_down.dart';
 
 import '../../quizzes/quiz_enums/flip_card_tag.dart';
 import 'custom_form_builder_text_field.dart';
+import 'diagram_dropdowns/number_of_diagrams_dropdown.dart';
 import 'methods/prepare_new_question_for_firebase.dart';
 import 'methods/prepare_update_question_for_firebase.dart';
 
@@ -77,8 +78,9 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
           (t) {
             if (questionModel.diagrams != null &&
                 questionModel.diagrams!.isNotEmpty) {
-              editNotifier.setDiagramsNumber(
-                  questionModel.diagrams!.length.toDiagramsNumber);
+              editNotifier.setDiagramsNumber(context, size,
+                  diagramsNumber:
+                      questionModel.diagrams!.length.toDiagramsNumber);
               for (int i = 0; i < questionModel.diagrams!.length; i++) {
                 editNotifier.setDiagramsSelected(questionModel.diagrams![i], i);
               }
@@ -171,8 +173,9 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                         validationRequired: false,
                       ),
                     ],
-                    const DiagramBuilder(),
-                    const DiagramsSelection(),
+                    DiagramBuilder(
+                        selectedDiagrams: editState.selectedDiagrams.toList()),
+                    const NumberOfDiagramsDropdown(),
                     if (editState.questionType == QuestionType.flip) ...[
                       DropdownMenu(
                         initialSelection: editState.flipCardTag,

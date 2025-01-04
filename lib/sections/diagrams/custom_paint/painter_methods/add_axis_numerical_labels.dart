@@ -1,15 +1,16 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
-void addAxisNumericalLabels(Canvas canvas, Size size,
+void addAxisNumericalLabels(DiagramPainterConfig config, Canvas canvas,
     {required Axis axis,
     int initialValue = 0,
     int incrementValue = 1,
     totalIncrements = 10}) {
-  final width = size.width;
-  final height = size.height;
+  final width = config.appSize.width;
+  final height = config.appSize.height;
 
   const labelAdjustment = 18.0;
   double length = 0;
@@ -51,7 +52,7 @@ void addAxisNumericalLabels(Canvas canvas, Size size,
       ..lineTo(xPos + xPosAdjustment / 3, yPos + yPosAdjustment / 3);
 
     paintText(
-      size,
+      config,
       canvas,
       initialValue.toString(),
       Offset(xPos + xPosAdjustment, yPos + yPosAdjustment),
