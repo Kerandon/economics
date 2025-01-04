@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../enums/curve_align.dart';
+
+import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 import 'paint_text.dart';
 
 void paintLabelLine(DiagramPainterConfig config, Canvas canvas, String text,
     Offset p1, Offset p2,
-    {CurveAlign textAlign = CurveAlign.center, bool removeDot = false}) {
+    {LabelAlign textAlign = LabelAlign.center, bool removeDot = false}) {
   final width = config.appSize.width;
   final height = config.appSize.height;
   final paint = Paint()

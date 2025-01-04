@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../enums/axis_label_margin.dart';
-import '../../enums/curve_align.dart';
+
 import '../../enums/indent.dart';
+import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
@@ -14,7 +15,7 @@ void paintText(
   double angle = 0,
 
   // /// To align the label at the end of a curve
-  CurveAlign curveAlign = CurveAlign.center,
+  LabelAlign curveAlign = LabelAlign.center,
 
   /// To label chart axis
   Axis? axis,
@@ -56,21 +57,21 @@ void paintText(
   double yAlign = 0;
   const adjustment = 6.0;
   switch (curveAlign) {
-    case CurveAlign.center:
+    case LabelAlign.center:
       xAlign = -textPainter.width / 2;
       yAlign = -textPainter.height / 2;
       break;
-    case CurveAlign.centerLeft:
+    case LabelAlign.centerLeft:
       xAlign = -textPainter.width - adjustment;
       yAlign = -textPainter.height / 2;
       break;
-    case CurveAlign.centerRight:
+    case LabelAlign.centerRight:
       xAlign = adjustment;
       yAlign = -textPainter.height / 2;
-    case CurveAlign.centerTop:
+    case LabelAlign.centerTop:
       xAlign = -textPainter.width / 2;
       yAlign = -textPainter.height - adjustment;
-    case CurveAlign.centerBottom:
+    case LabelAlign.centerBottom:
       xAlign = -textPainter.width / 2;
       yAlign = textPainter.height - adjustment;
   }

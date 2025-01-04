@@ -2,7 +2,7 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.d
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
-import '../../enums/curve_align.dart';
+import '../../enums/label_align.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_painter_config.dart';
 
@@ -15,8 +15,8 @@ void paintCustomBezier(
   SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   String? label1,
   String? label2,
-  CurveAlign label1Align = CurveAlign.center,
-  CurveAlign label2Align = CurveAlign.center,
+  LabelAlign label1Align = LabelAlign.center,
+  LabelAlign label2Align = LabelAlign.center,
   bool drawArrowOnStart = false,
   bool drawArrowOnEnd = false,
   double arrowOnStartAngle = 0,

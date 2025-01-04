@@ -4,7 +4,7 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
-import '../../enums/curve_align.dart';
+import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
@@ -17,8 +17,8 @@ void paintCurve(
   double strokeWidth = kCurveWidth,
   String? label1,
   String? label2,
-  CurveAlign label1Align = CurveAlign.center,
-  CurveAlign label2Align = CurveAlign.center,
+  LabelAlign label1Align = LabelAlign.center,
+  LabelAlign label2Align = LabelAlign.center,
   bool makeDashed = false,
   bool drawArrowAtStart = false,
   bool drawArrowAtEnd = false,

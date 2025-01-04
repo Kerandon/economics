@@ -1,7 +1,7 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/sections/diagrams/enums/curve_align.dart';
 import 'package:economics_app/sections/diagrams/enums/text_box_shape.dart';
 import 'package:flutter/material.dart';
+import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../custom_rotate.dart';
 import '../painter_constants.dart';
@@ -75,5 +75,5 @@ void paintTextBox(
   canvas.restore();
   paintText(config, canvas, text, Offset(position.dx, position.dy),
       fontSize: (scale * kDefaultFontSize) * fontAdjustment,
-      curveAlign: CurveAlign.center);
+      curveAlign: LabelAlign.center);
 }

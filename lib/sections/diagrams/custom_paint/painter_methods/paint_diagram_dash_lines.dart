@@ -1,7 +1,7 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
-import '../../enums/curve_align.dart';
+import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
@@ -29,7 +29,7 @@ void paintDiagramDashedLines(
         yLabel,
         fontSize: kLabelFontSize,
         Offset(kAxisIndent, yAxisStartPos),
-        curveAlign: CurveAlign.centerLeft,
+        curveAlign: LabelAlign.centerLeft,
       );
     }
   }
@@ -57,7 +57,7 @@ void paintDiagramDashedLines(
           kAxisIndent + xAxisEndPos,
           1 - kAxisIndent + 0.02,
         ),
-        curveAlign: CurveAlign.centerBottom,
+        curveAlign: LabelAlign.centerBottom,
       );
     }
   }

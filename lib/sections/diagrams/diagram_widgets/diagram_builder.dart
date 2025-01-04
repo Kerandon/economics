@@ -6,11 +6,13 @@ class DiagramBuilder extends ConsumerWidget {
   const DiagramBuilder({
     this.selectedDiagrams,
     this.doubleCrossAxis = true,
+    this.canScroll = true,
     super.key,
   });
 
   final List<DiagramModel>? selectedDiagrams;
   final bool doubleCrossAxis;
+  final bool canScroll;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +24,7 @@ class DiagramBuilder extends ConsumerWidget {
         DiagramModel.getDiagrams(size, context).toList();
 
     return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
+      physics: canScroll ? null : const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: diagramsToDisplay.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -33,7 +35,7 @@ class DiagramBuilder extends ConsumerWidget {
             : 1,
       ),
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.all(28.0),
+        padding: const EdgeInsets.all(8.0),
         child: CustomPaint(
           painter: diagramsToDisplay[index].painter,
         ),

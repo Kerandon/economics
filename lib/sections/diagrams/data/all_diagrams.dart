@@ -1,3 +1,4 @@
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/updated_diagrams/perfect_competition.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:flutter/material.dart';
 
@@ -28,9 +29,25 @@ class AllDiagrams {
       NegativeProductionExternalities(
         config: config,
         model: DiagramModel(
-          unit: UnitType.macro,
+          unit: UnitType.micro,
           type: DiagramType.negativeProductionExternalities,
           subtype: DiagramSubtype.commonPoolResources,
+        ),
+      ),
+      PerfectCompetition(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.perfectCompetition,
+          subtype: DiagramSubtype.longRunEquilibrium,
+        ),
+      ),
+      PerfectCompetition(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.perfectCompetition,
+          subtype: DiagramSubtype.longRunEquilibrium,
         ),
       ),
     ];

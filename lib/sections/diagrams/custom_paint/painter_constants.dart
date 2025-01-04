@@ -7,7 +7,7 @@ const kLabelLineWidth = 0.50;
 const kArrowSize = 5.0;
 
 /// Axis
-const kAxisIndent = 0.14;
+const kAxisIndent = 0.15;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisLabelAdjustmentOut = 4;
 const kAxisWidth = 0.30;
@@ -32,7 +32,7 @@ const kDefault = 'Default';
 const kPriceCostsRevenue = 'Price, costs & revenues (\$)';
 const kQuantity = 'Quantity (units)';
 const kDAR = 'D=AR';
-const kDPARMR = 'D=P=AR=MR';
+const kPARMR = 'P=AR=MR';
 const kMR = 'MR';
 const kMC = 'MC';
 const kAC = 'AC';
