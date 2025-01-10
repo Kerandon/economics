@@ -29,9 +29,9 @@ void paintTextBox(
     ..color = fillColor ?? Colors.transparent;
 
   final linePaint = Paint()
-    ..strokeWidth = kCurveWidth * config.averageRatio
+    ..strokeWidth = (kCurveWidth * 4) * config.averageRatio
     ..style = PaintingStyle.stroke
-    ..color = config.colorScheme.onSurface;
+    ..color = lineColor ?? config.colorScheme.onSurface;
 
   Path path;
 

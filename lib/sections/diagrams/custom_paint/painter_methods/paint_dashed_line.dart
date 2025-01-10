@@ -16,8 +16,10 @@ void paintDashedLine(
   strokeWidth *= config.averageRatio;
   final width = config.painterSize.width;
   final height = config.painterSize.height;
-  p1 = Offset(p1.dx * width, p1.dy * height);
-  p2 = Offset(p2.dx * width, p2.dy * height);
+
+  p1 = Offset(p1.dx * width, (p1.dy * height));
+  p2 = Offset(p2.dx * width, (p2.dy * height));
+
   pattern ??= [4, 5]; // Default pattern if not provided
   assert(pattern.length.isEven);
   final distance = (p2 - p1).distance;

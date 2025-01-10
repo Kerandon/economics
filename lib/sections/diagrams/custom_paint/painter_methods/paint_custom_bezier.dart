@@ -1,4 +1,5 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,11 @@ import '../../models/diagram_painter_config.dart';
 
 void paintCustomBezier(
   DiagramPainterConfig config,
-  Canvas canvas,
-  Color color, {
+  Canvas canvas, {
   required Offset startPos,
   required List<CustomBezier> points,
+  Color? mainColor,
+  double strokeWidth = kCurveWidth,
   SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   String? label1,
   String? label2,
@@ -22,12 +24,13 @@ void paintCustomBezier(
   double arrowOnStartAngle = 0,
   double arrowOnEndAngle = 0,
 }) {
-  final width = config.appSize.width;
-  final height = config.appSize.height;
+  final width = config.painterSize.width;
+  final height = config.painterSize.height;
+  final color = mainColor ?? config.colorScheme.primary;
   final paint = Paint()
     ..style = PaintingStyle.stroke
     ..color = color
-    ..strokeWidth = kCurveWidth * sizeAdjustor.width;
+    ..strokeWidth = strokeWidth * config.averageRatio;
   final path = Path();
   path.moveTo(startPos.dx * width, startPos.dy * height);
   for (int i = 0; i < points.length; i++) {
@@ -54,19 +57,22 @@ void paintCustomBezier(
         curveAlign: label2Align);
   }
   if (drawArrowOnStart) {
-    // paintArrow(
-    //   color,
-    //   positionOfArrow: Offset(startPos.dx * width, startPos.dy * height),
-    //   rotationAngle: arrowOnStartAngle,
-    // );
+    paintArrow(
+      config,
+      canvas,
+      color: color,
+      positionOfArrow: Offset(startPos.dx * width, startPos.dy * height),
+      rotationAngle: arrowOnStartAngle,
+    );
   }
   if (drawArrowOnEnd) {
-    // paintArrow(
-    //   canvas,
-    //   color,
-    //   positionOfArrow: Offset(
-    //       points.last.endPoint.dx * width, points.last.endPoint.dy * height),
-    //   rotationAngle: arrowOnEndAngle,
-    // );
+    paintArrow(
+      config,
+      canvas,
+      color: color,
+      positionOfArrow: Offset(
+          points.last.endPoint.dx * width, points.last.endPoint.dy * height),
+      rotationAngle: arrowOnEndAngle,
+    );
   }
 }

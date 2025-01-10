@@ -174,7 +174,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                       ),
                     ],
                     DiagramBuilder(
-                      canScroll: false,
+                        canScroll: false,
                         selectedDiagrams: editState.selectedDiagrams.toList()),
                     const NumberOfDiagramsDropdown(),
                     if (editState.questionType == QuestionType.flip) ...[

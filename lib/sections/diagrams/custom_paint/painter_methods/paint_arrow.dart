@@ -7,11 +7,12 @@ void paintArrow(
   DiagramPainterConfig config,
   Canvas canvas, {
   required Offset positionOfArrow,
+  Color? color,
   double size = kArrowSize,
   double rotationAngle = 0.0,
 }) {
   final path = Path();
-  final paint = Paint()..color = config.colorScheme.onSurface;
+  final paint = Paint()..color = color ?? config.colorScheme.onSurface;
 
   final arrowWidth = size * config.averageRatio;
   final arrowHeight = size * config.averageRatio;

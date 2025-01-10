@@ -8,8 +8,8 @@ import 'paint_text.dart';
 void paintLabelLine(DiagramPainterConfig config, Canvas canvas, String text,
     Offset p1, Offset p2,
     {LabelAlign textAlign = LabelAlign.center, bool removeDot = false}) {
-  final width = config.appSize.width;
-  final height = config.appSize.height;
+  final width = config.painterSize.width;
+  final height = config.painterSize.height;
   final paint = Paint()
     ..strokeCap = StrokeCap.round
     ..strokeWidth = kLabelLineWidth / 2

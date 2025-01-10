@@ -10,8 +10,8 @@ import '../../../models/diagram_model.dart';
 import '../../painter_methods/paint_custom_bezier.dart';
 import '../../painter_methods/paint_diagram_dash_lines.dart';
 
-class PerfectCompetition extends BaseDiagramPainter {
-  PerfectCompetition({
+class Monopoly extends BaseDiagramPainter {
+  Monopoly({
     required DiagramPainterConfig config,
     required DiagramModel model,
   }) : super(config, model);
@@ -24,9 +24,18 @@ class PerfectCompetition extends BaseDiagramPainter {
     paintDiagramDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.50,
-      xAxisEndPos: 0.33,
+      yAxisStartPos: 0.38,
+      xAxisEndPos: 0.27,
       yLabel: kPe,
+      xLabel: kQ,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.49,
+      xAxisEndPos: 0.27,
+      hideXLine: true,
+      yLabel: 'Costs',
       xLabel: kQ,
     );
 
@@ -37,35 +46,41 @@ class PerfectCompetition extends BaseDiagramPainter {
       xAxisLabel: kQuantity,
     );
 
-    paintCurve(
-        c,
-        canvas,
-        color: c.colorScheme.primary,
-        Offset(kAxisIndent, 0.50),
-        Offset(0.80, 0.5),
-        label2: kPARMR,
-        label2Align: LabelAlign.centerRight);
+    /// Demand curve
+    paintCurve(c, canvas, Offset(0.20, 0.20), Offset(0.80, 0.70),
+        label2: kDAR, label2Align: LabelAlign.centerBottom);
+
+    /// MR curve
+    paintCurve(c, canvas, Offset(0.20, 0.25), Offset(0.60, 0.90),
+        label2: kMR, label2Align: LabelAlign.centerBottom);
 
     /// Marginal Cost
-    paintCustomBezier(c, canvas,
-        startPos: const Offset(0.25, 0.60),
-        points: [
-          CustomBezier(
-              control: const Offset(0.35, 0.90),
-              endPoint: const Offset(0.60, 0.20))
-        ],
-        label1: kMC,
-        label1Align: LabelAlign.centerTop);
+    paintCustomBezier(
+      c,
+      canvas,
+      startPos: const Offset(0.25, 0.60),
+      points: [
+        CustomBezier(
+          control: const Offset(0.35, 0.90),
+          endPoint: const Offset(0.60, 0.20),
+        ),
+      ],
+      label1: kMC,
+      label1Align: LabelAlign.centerTop,
+    );
 
     /// Average cost
-    paintCustomBezier(c, canvas,
-        startPos: const Offset(0.25, 0.30),
-        points: [
-          CustomBezier(
-              control: const Offset(0.45, 0.70),
-              endPoint: const Offset(0.75, 0.30))
-        ],
-        label1: kSRAC,
-        label1Align: LabelAlign.centerTop);
+    paintCustomBezier(
+      c,
+      canvas,
+      startPos: const Offset(0.20, 0.30),
+      points: [
+        CustomBezier(
+            control: const Offset(0.45, 0.70),
+            endPoint: const Offset(0.80, 0.30))
+      ],
+      label1: kAC,
+      label1Align: LabelAlign.centerTop,
+    );
   }
 }

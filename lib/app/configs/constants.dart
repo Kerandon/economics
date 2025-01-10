@@ -61,6 +61,7 @@ const kBorderWidth = 0.0015;
 const kDividerIndent = 0.03;
 const kWrapSpacing = 0.01;
 const kBottomIndent = 0.05;
+const kTextBoxScale = 0.20;
 
 /// Animation
 const kPageChangeAnimation = 400;

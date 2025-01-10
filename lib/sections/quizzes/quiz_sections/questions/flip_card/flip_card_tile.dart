@@ -151,7 +151,9 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
                                 ],
                                 if (widget.question.diagrams != null &&
                                     widget.question.diagrams!.isNotEmpty) ...[
-                                  DiagramBuilder(canScroll: false,),
+                                  DiagramBuilder(
+                                    canScroll: false,
+                                  ),
                                 ],
                               ],
                             ],

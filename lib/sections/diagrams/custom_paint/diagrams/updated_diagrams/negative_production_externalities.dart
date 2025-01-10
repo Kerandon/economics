@@ -4,6 +4,7 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_box.dart';
 import 'package:flutter/material.dart';
+import '../../../../../app/configs/constants.dart';
 import '../../../enums/label_align.dart';
 import '../../../models/base_painter_painter.dart';
 import '../../../models/diagram_model.dart';
@@ -25,8 +26,8 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.36,
-      yLabel: kMicroLabelPm,
-      xLabel: kMicroLabelQm,
+      yLabel: kPm,
+      xLabel: kQm,
     );
 
     /// Dashed Lines Optimum
@@ -35,15 +36,15 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.40,
       xAxisEndPos: 0.25,
-      yLabel: kMicroLabelPOpt,
-      xLabel: kMicroLabelQOpt,
+      yLabel: kPOpt,
+      xLabel: kQOpt,
     );
 
     paintAxis(
       c,
       canvas,
-      yAxisLabel: kMicroLabelPriceOfFish,
-      xAxisLabel: kMicroLabelQuantityOfFish,
+      yAxisLabel: kP,
+      xAxisLabel: kQ,
     );
 
     /// Demand
@@ -52,7 +53,7 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       Offset(0.20, 0.20),
       Offset(0.80, 0.80),
-      label2: kMicroLabelDMPBMSB,
+      label2: kDMPBMSB,
       label2Align: LabelAlign.centerRight,
     );
 
@@ -62,7 +63,7 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       Offset(0.20, 0.80),
       Offset(0.80, 0.20),
-      label2: kMicroLabelSMPC,
+      label2: kMPC,
       label2Align: LabelAlign.centerRight,
     );
 
@@ -72,13 +73,14 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       Offset(0.20, 0.60),
       Offset(0.72, 0.10),
-      label2: kMicroLabelSMSC,
+      label2: kMSC,
       label2Align: LabelAlign.centerRight,
     );
 
     /// Externality curve
     paintCurve(
       c,
+      color: c.colorScheme.onSurface,
       canvas,
       (Offset(0.68, 0.28)),
       Offset(0.68, 0.18),
@@ -88,11 +90,12 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
 
     /// Explanation
     paintTextBox(c, canvas,
-        scale: 0.15,
+        scale: kTextBoxScale,
         text: 'External cost caused by\noverfishing',
         position: Offset(0.80, 0.45));
     paintCurve(
       c,
+      color: c.colorScheme.onSurface,
       canvas,
       strokeWidth: kSkinnyCurveWidth,
       Offset(0.75, 0.40),
