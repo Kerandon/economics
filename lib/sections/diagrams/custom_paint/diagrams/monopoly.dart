@@ -3,12 +3,12 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
-import '../../../enums/label_align.dart';
-import '../../../models/base_painter_painter.dart';
-import '../../../models/custom_bezier.dart';
-import '../../../models/diagram_model.dart';
-import '../../painter_methods/paint_custom_bezier.dart';
-import '../../painter_methods/paint_diagram_dash_lines.dart';
+import '../../enums/label_align.dart';
+import '../../models/base_painter_painter.dart';
+import '../../models/custom_bezier.dart';
+import '../../models/diagram_model.dart';
+import '../painter_methods/paint_custom_bezier.dart';
+import '../painter_methods/paint_diagram_dash_lines.dart';
 
 class Monopoly extends BaseDiagramPainter {
   Monopoly({

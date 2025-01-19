@@ -4,11 +4,11 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/enums/label_align.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
-import '../../../models/base_painter_painter.dart';
-import '../../../models/diagram_model.dart';
+import '../../models/base_painter_painter.dart';
+import '../../models/diagram_model.dart';
 
-class ImportQuota extends BaseDiagramPainter {
-  ImportQuota({
+class ProductionSubsidy extends BaseDiagramPainter {
+  ProductionSubsidy({
     required DiagramPainterConfig config,
     required DiagramModel model,
   }) : super(config, model);
@@ -39,22 +39,18 @@ class ImportQuota extends BaseDiagramPainter {
       label2Align: LabelAlign.centerRight,
     );
 
-    /// Supply + quota
+    /// Supply
     paintCurve(
       c,
       canvas,
-      Offset(0.42, 0.65),
-      Offset(0.75, 0.35),
-      label2: kSQuota,
+      Offset(0.30, 0.75),
+      Offset(0.75, 0.34),
+      label2: kDomesticSupplySubsidy,
       label2Align: LabelAlign.centerRight,
     );
 
     /// World Line
     paintCurve(c, canvas, Offset(kAxisIndent, 0.65), Offset(0.75, 0.65),
         label2: kWorldSupply, label2Align: LabelAlign.centerRight);
-
-    /// World Line + quota
-    paintCurve(c, canvas, Offset(kAxisIndent, 0.55), Offset(0.75, 0.55),
-        label2: kWorldSupplyQuota, label2Align: LabelAlign.centerRight);
   }
 }

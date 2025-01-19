@@ -77,6 +77,8 @@ const kSRAS = 'SRAS';
 const kLRAS = 'LRAS';
 const kInflationRate = 'Inflation rate';
 const kUnemploymentRate = 'Unemployment rate';
+const kLRPC = 'LRPC';
+const kSRPC = 'SRPC';
 
 /// Global Labels
 const kPrice = 'Price';
@@ -98,3 +100,25 @@ const kCountryA = 'Country A';
 const kCountryB = 'Country B';
 const kGoodA = 'Good A';
 const kGoodB = 'Good B';
+
+const kEuroPerUS = 'EUR / USD';
+const kQuantityOfUSD = 'Quantity of USD';
+const kDemandForUSD = 'Demand for USD';
+const kSupplyOfUSD = 'Supply of USD';
+const kS1 = 'S1';
+const kD1 = 'D1';
+const kS2 = 'S2';
+const kD2 = 'D2';
+const kIncreasedDemandForUSD = 'Increased demand\nfor USD';
+const kExchangeRateEquilibrium = 'e';
+const kExchangeRateEquilibrium1 = 'e1';
+const kExchangeRateEquilibrium2 = 'e2';
+const kExchangeRate = 'Exchange rate';
+const kQuantityOfDomesticCurrency = 'Qty of domestic currency';
+const kLowIncome = 'Low income';
+const kLowSavings = 'Low savings';
+const kLowProductivity = 'Low productivity';
+const kLowInvestment = 'Low investment';
+const kLowPhysicalCapital = 'Low physical capital';
+const kLowHumanCapital = 'Low human capital';
+const kLowNaturalCapital = 'Low natural capital';

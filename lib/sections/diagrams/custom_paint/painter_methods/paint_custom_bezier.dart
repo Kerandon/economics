@@ -1,5 +1,5 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ void paintCustomBezier(
         curveAlign: label2Align);
   }
   if (drawArrowOnStart) {
-    paintArrow(
+    paintArrowHead(
       config,
       canvas,
       color: color,
@@ -66,7 +66,7 @@ void paintCustomBezier(
     );
   }
   if (drawArrowOnEnd) {
-    paintArrow(
+    paintArrowHead(
       config,
       canvas,
       color: color,

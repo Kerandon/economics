@@ -1,6 +1,5 @@
 import 'dart:math';
-
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
@@ -61,13 +60,15 @@ void paintCurve(
     /// work out the angle of the curve, (assume points upwards, and subtracts
     /// half pi to make a base point of zero)
 
-    paintArrow(config, canvas,
+    paintArrowHead(config, canvas,
         positionOfArrow: Offset(p1.dx * width, p1.dy * height),
-        rotationAngle: angle);
+        rotationAngle: angle,
+        color: color);
   }
   if (drawArrowAtEnd) {
-    paintArrow(config, canvas,
+    paintArrowHead(config, canvas,
         positionOfArrow: Offset(p2.dx * width, p2.dy * height),
-        rotationAngle: angle + pi);
+        rotationAngle: angle + pi,
+        color: paint.color);
   }
 }

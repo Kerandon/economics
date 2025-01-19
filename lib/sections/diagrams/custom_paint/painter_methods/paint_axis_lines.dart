@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:flutter/material.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
@@ -28,10 +28,10 @@ void paintAxisLines(DiagramPainterConfig config, Canvas canvas,
   final paint = Paint()..color = Colors.white;
 
   /// Y Axis Arrow
-  paintArrow(config, canvas, positionOfArrow: startYOffset);
+  paintArrowHead(config, canvas, positionOfArrow: startYOffset);
 
   /// X Axis Arrow
-  paintArrow(config, canvas,
+  paintArrowHead(config, canvas,
       positionOfArrow: endXOffset, rotationAngle: pi / 2);
 
   canvas.save();

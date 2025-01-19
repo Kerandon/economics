@@ -1,15 +1,13 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/path_label_line.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
-
-import '../../../enums/label_align.dart';
-import '../../../models/base_painter_painter.dart';
-import '../../../models/diagram_model.dart';
-import '../../../models/diagram_painter_config.dart';
-import '../../painter_constants.dart';
-import '../../painter_methods/paint_axis.dart';
-import '../../painter_methods/paint_curve.dart';
+import '../../enums/label_align.dart';
+import '../../models/base_painter_painter.dart';
+import '../../models/diagram_model.dart';
+import '../../models/diagram_painter_config.dart';
+import '../painter_constants.dart';
+import '../painter_methods/paint_axis.dart';
+import '../painter_methods/paint_curve.dart';
 
 class BusinessCycle extends BaseDiagramPainter {
   BusinessCycle({
@@ -24,10 +22,14 @@ class BusinessCycle extends BaseDiagramPainter {
     paintAxis(c, canvas, yAxisLabel: kRealGDP, xAxisLabel: kTimeYears);
 
     paintCurve(
-        c, canvas, const Offset(kAxisIndent, 0.62), const Offset(0.80, 0.40),
-        makeDashed: true,
-        label2: kPotentialOutput,
-        label2Align: LabelAlign.centerRight);
+      c,
+      canvas,
+      const Offset(kAxisIndent, 0.62),
+      const Offset(0.80, 0.40),
+      makeDashed: true,
+      label2: kPotentialOutput,
+      label2Align: LabelAlign.centerRight,
+    );
 
     /// Biz cycle curve
     paintCustomBezier(
@@ -57,10 +59,5 @@ class BusinessCycle extends BaseDiagramPainter {
         ),
       ],
     );
-
-    paintLabelLine(c, canvas, kPeak, Offset(0.56, 0.41), Offset(0.56, 0.30),
-        textAlign: LabelAlign.centerTop);
-    paintLabelLine(c, canvas, kTrough, Offset(0.45, 0.565), Offset(0.45, 0.65),
-        textAlign: LabelAlign.centerBottom);
   }
 }

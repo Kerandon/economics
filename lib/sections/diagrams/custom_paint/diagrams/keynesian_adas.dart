@@ -4,10 +4,10 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_keyensian_curve.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
-import '../../../enums/label_align.dart';
-import '../../../models/base_painter_painter.dart';
-import '../../../models/diagram_model.dart';
-import '../../painter_methods/paint_diagram_dash_lines.dart';
+import '../../enums/label_align.dart';
+import '../../models/base_painter_painter.dart';
+import '../../models/diagram_model.dart';
+import '../painter_methods/paint_diagram_dash_lines.dart';
 
 class KeynesianADAS extends BaseDiagramPainter {
   KeynesianADAS({

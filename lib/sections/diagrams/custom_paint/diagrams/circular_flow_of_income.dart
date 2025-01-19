@@ -5,10 +5,10 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_box.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
-import '../../../models/base_painter_painter.dart';
-import '../../../models/diagram_model.dart';
-import '../../../models/diagram_painter_config.dart';
-import '../../painter_constants.dart';
+import '../../models/base_painter_painter.dart';
+import '../../models/diagram_model.dart';
+import '../../models/diagram_painter_config.dart';
+import '../painter_constants.dart';
 
 class CircularFlowOfIncome extends BaseDiagramPainter {
   CircularFlowOfIncome({
@@ -20,20 +20,24 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
+    /// Households
     paintTextBox(
-      c,
-      canvas,
+      canvas: canvas,
+      config: c,
       lineColor: c.colorScheme.primary,
       text: kHouseholds,
       position: Offset(0.15, 0.50),
+      showBoxBorder: true,
     );
 
+    /// Firms
     paintTextBox(
-      c,
-      canvas,
+      canvas: canvas,
+      config: c,
       lineColor: c.colorScheme.primary,
       text: kFirms,
       position: Offset(0.85, 0.50),
+      showBoxBorder: true,
     );
 
     /// Factors of production to firms
@@ -67,7 +71,12 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       drawArrowOnStart: true,
       arrowOnStartAngle: pi * 1.15,
     );
-    paintText(c, canvas, kWagesRentInterestProfit, Offset(0.50, 0.38));
+    paintText(
+      c,
+      canvas,
+      kWagesRentInterestProfit,
+      Offset(0.50, 0.38),
+    );
 
     /// Household expenditure
     paintCustomBezier(
@@ -83,7 +92,12 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       drawArrowOnEnd: true,
       arrowOnEndAngle: pi * 0.15,
     );
-    paintText(c, canvas, kHouseholdExpenditureFirmRevenue, Offset(0.50, 0.60));
+    paintText(
+      c,
+      canvas,
+      kHouseholdExpenditureFirmRevenue,
+      Offset(0.50, 0.60),
+    );
 
     /// Sale of goods & services
     paintCustomBezier(
@@ -100,6 +114,11 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       arrowOnStartAngle: -pi * 0.15,
     );
 
-    paintText(c, canvas, kSaleOfGoodsAndServices, Offset(0.50, 0.80));
+    paintText(
+      c,
+      canvas,
+      kSaleOfGoodsAndServices,
+      Offset(0.50, 0.80),
+    );
   }
 }

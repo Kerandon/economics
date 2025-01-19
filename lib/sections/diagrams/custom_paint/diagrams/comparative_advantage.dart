@@ -4,8 +4,8 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
-import '../../../models/base_painter_painter.dart';
-import '../../../models/diagram_model.dart';
+import '../../models/base_painter_painter.dart';
+import '../../models/diagram_model.dart';
 
 class ComparativeAdvantage extends BaseDiagramPainter {
   ComparativeAdvantage({

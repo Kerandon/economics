@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../painter_constants.dart';
 
-void paintArrow(
+void paintArrowHead(
   DiagramPainterConfig config,
   Canvas canvas, {
   required Offset positionOfArrow,

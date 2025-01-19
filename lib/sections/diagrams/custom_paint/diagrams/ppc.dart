@@ -4,9 +4,9 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
-import '../../../models/base_painter_painter.dart';
-import '../../../models/diagram_model.dart';
-import '../../../models/diagram_painter_config.dart';
+import '../../models/base_painter_painter.dart';
+import '../../models/diagram_model.dart';
+import '../../models/diagram_painter_config.dart';
 
 class PPC extends BaseDiagramPainter {
   PPC({

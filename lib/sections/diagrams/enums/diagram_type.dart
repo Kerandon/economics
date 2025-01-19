@@ -14,6 +14,10 @@ enum DiagramType {
   importQuota,
   productionSubsidy,
   exportSubsidy,
+  floatingExchangeRate,
+  fixedExchangeRate,
+  jCurve,
+  povertyTrap,
 }
 
 extension DiagramTypeExtension on DiagramType {
@@ -49,6 +53,14 @@ extension DiagramTypeExtension on DiagramType {
         return 'Production subsidy';
       case DiagramType.exportSubsidy:
         return 'Export subsidy';
+      case DiagramType.floatingExchangeRate:
+        return 'Floating exchange rate';
+      case DiagramType.fixedExchangeRate:
+        return 'Fixed exchange rate';
+      case DiagramType.jCurve:
+        return 'J-Curve';
+      case DiagramType.povertyTrap:
+        return 'Poverty trap';
     }
   }
 }
