@@ -79,7 +79,7 @@ class QuestionModel extends Equatable {
   // Converts QuestionModel to a map that can be sent to Firebase
   Map<String, dynamic> toMap() {
     return {
-      kType: questionType?.name,
+      kFlipCardTag: flipCardTag?.toFireBase(),
       kCourse: course?.name,
       kQuestion: question,
       kAnswers: answers?.map((e) => e.toMap()).toList(),
@@ -88,7 +88,6 @@ class QuestionModel extends Equatable {
       kDiagrams: diagrams?.map((e) => e.toMap()).toList(),
       kUnit: {unit?.index ?? "": unit?.name ?? ""},
       kSubunit: {subunit?.index ?? "": subunit?.name ?? ""},
-      kFlipCardTag: flipCardTag?.name,
       kIsHL: isHL,
       kCustomTags: customTags?.toFirebase(),
     };
@@ -97,7 +96,7 @@ class QuestionModel extends Equatable {
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     return QuestionModel(
       id: id,
-      questionType: QuestionTypeExtension.fromText(map[kType]),
+      flipCardTag: FlipCardFirebase.fromFirebase(map),
       course: Course(name: map[kCourse], units: []),
       unit: Unit.fromFirebase(map),
       subunit: Unit.fromFirebase(map, subunit: true),
@@ -106,8 +105,6 @@ class QuestionModel extends Equatable {
       answerStage: AnswerStage.notSelected,
       explanation: map[kExplanation],
       diagrams: DiagramModel.fromFirebaseList(map[kDiagrams]),
-      flipCardTag:
-          FlipCardTagExtension.fromFirebase(map[kFlipCardTag] as String?),
       isHL: map[kIsHL],
       customTags: CustomTagFirebaseExtension.fromFirebaseList(map[kCustomTags]),
     );

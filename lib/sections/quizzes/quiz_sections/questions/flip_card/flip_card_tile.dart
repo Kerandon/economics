@@ -177,11 +177,12 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
                     showDivider: true,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(2.0),
+                    padding: EdgeInsets.all(2.0),
                     child: Row(
                       children: [
                         CustomTagBox(
-                            text: widget.question.flipCardTag?.toText() ?? ""),
+                          text: widget.question.flipCardTag?.toText() ?? "",
+                        ),
                       ],
                     ),
                   ),

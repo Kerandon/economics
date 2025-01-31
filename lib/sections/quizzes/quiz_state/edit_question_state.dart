@@ -1,8 +1,5 @@
-import 'package:economics_app/app/configs/constants.dart';
-
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
-
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -24,8 +21,6 @@ class EditQuestionState {
   final UnitMixin unit;
   final UnitMixin subunit;
   final List<QuestionModel> allQuestions;
-  final int maxNumberOfQuestions;
-  final bool checkAnswersAtEnd;
   final FlipCardTag flipCardTag;
   List<FlipCardTag> selectedFlipCardTags;
   final bool isHL;
@@ -42,8 +37,6 @@ class EditQuestionState {
     required this.subunit,
     required this.allQuestions,
     required this.filteredQuestions,
-    required this.maxNumberOfQuestions,
-    required this.checkAnswersAtEnd,
     required this.flipCardTag,
     required this.selectedFlipCardTags,
     required this.isHL,
@@ -61,8 +54,6 @@ class EditQuestionState {
     UnitMixin? unit,
     UnitMixin? subunit,
     List<QuestionModel>? allQuestions,
-    int? maxNumberOfQuestions,
-    bool? checkAnswersAtEnd,
     FlipCardTag? flipCardTag,
     List<FlipCardTag>? selectedFlipCardTags,
     bool? isHL,
@@ -79,8 +70,6 @@ class EditQuestionState {
       questionType: questionType ?? this.questionType,
       unit: unit ?? this.unit,
       subunit: subunit ?? this.subunit,
-      maxNumberOfQuestions: maxNumberOfQuestions ?? this.maxNumberOfQuestions,
-      checkAnswersAtEnd: checkAnswersAtEnd ?? this.checkAnswersAtEnd,
       flipCardTag: flipCardTag ?? this.flipCardTag,
       selectedFlipCardTags: selectedFlipCardTags ?? this.selectedFlipCardTags,
       isHL: isHL ?? this.isHL,
@@ -175,14 +164,6 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(filteredQuestions: filteredQuestions.toList());
   }
 
-  void setNumberOfQuestions(int number) {
-    state = state.copyWith(maxNumberOfQuestions: number);
-  }
-
-  void setCheckAnswersAtEnd(bool checkAtEnd) {
-    state = state.copyWith(checkAnswersAtEnd: checkAtEnd);
-  }
-
   void setFlipCardTag(FlipCardTag tag) {
     state = state.copyWith(flipCardTag: tag);
   }
@@ -257,9 +238,7 @@ final editQuestionProvider =
         subunit: Unit(name: ''),
         allQuestions: [],
         filteredQuestions: [],
-        maxNumberOfQuestions: kNumberOfQuestions.first,
-        checkAnswersAtEnd: false,
-        flipCardTag: FlipCardTag.general,
+        flipCardTag: FlipCardTag.definitions,
         selectedFlipCardTags: FlipCardTag.values,
         isHL: false,
         diagramsNumber: DiagramsNumber.zero,

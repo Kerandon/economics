@@ -4,18 +4,19 @@ const kAppName = 'Quiz';
 const kLevel = 'level';
 
 const kImage = 'image';
+const kIBEconomics = 'IB Economics';
+const kIGCSEEconomics = 'IGCSE Economics';
+const kMultipleChoiceQuestions = 'Multiple Choice Questions';
+const kFlipCardQuestions = 'Flip Card Questions';
 
 /// Topics
 const kSections = 'sections';
-const kSummary = 'summary';
+
 const kTerms = 'terms';
-const kArticles = 'articles';
 const kUnit = 'unit';
-const kTitle = 'title';
-const kBody = 'body';
 
 /// Quiz
-const kNumberOfQuestions = [5, 10, 15, 20, -1];
+const kNumberOfQuestionsKey = 'Number of questions key';
 const kIndex = 'index';
 const kName = 'name';
 const kType = 'type';
@@ -51,6 +52,7 @@ const kFormSpacing = 0.005;
 const kDropdownMenuItemGap = 10.0;
 const kDropDownWidth = 0.90;
 const kFormTextLabelPadding = EdgeInsets.only(left: 20, bottom: 2);
+const kMaxNumberOfQuestions = [5, 10, 15, 20];
 
 /// Layout
 const kRadius = 12.0;

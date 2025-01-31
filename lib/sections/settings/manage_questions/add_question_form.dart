@@ -1,17 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
-import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/app/utils/helper_methods/string_extensions.dart';
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/custom_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,7 +16,8 @@ import '../../../app/custom_widgets/custom_back_to_home_button.dart';
 import '../../../app/custom_widgets/gap.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../diagrams/diagram_widgets/diagram_builder.dart';
-import '../../quizzes/custom_widgets/quiz_type_buttons.dart';
+import '../../quizzes/custom_widgets/custom_tags_buttons.dart';
+import '../../quizzes/custom_widgets/flip_card_tags_buttons.dart';
 import '../../quizzes/custom_widgets/unit_drop_down.dart';
 
 import '../../quizzes/quiz_enums/flip_card_tag.dart';
@@ -157,14 +155,15 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    const QuizTypeButtons(),
                     const CourseTypeButtons(),
+                    const FlipCardTagsButtons(),
                     const UnitDropDown(
                       alwaysShowAllUnits: true,
                     ),
                     const CustomFormBuilderTextField(kQuestion),
                     const CustomFormBuilderTextField(kCorrectAnswer),
-                    if (editState.questionType == QuestionType.multi) ...[
+                    if (editState.flipCardTag.toQuestionType() ==
+                        QuestionType.multi) ...[
                       const CustomFormBuilderTextField(kIncorrectAnswer1),
                       const CustomFormBuilderTextField(kIncorrectAnswer2),
                       const CustomFormBuilderTextField(kIncorrectAnswer3),
@@ -177,68 +176,7 @@ class _EditQuestionsPageState extends ConsumerState<AddQuestionForm> {
                         canScroll: false,
                         selectedDiagrams: editState.selectedDiagrams.toList()),
                     const NumberOfDiagramsDropdown(),
-                    if (editState.questionType == QuestionType.flip) ...[
-                      DropdownMenu(
-                        initialSelection: editState.flipCardTag,
-                        onSelected: (e) {
-                          editNotifier.setFlipCardTag(e!);
-                        },
-                        width: size.width,
-                        requestFocusOnTap: false,
-                        dropdownMenuEntries: FlipCardTag.values
-                            .map((q) =>
-                                DropdownMenuEntry(value: q, label: q.toText()))
-                            .toList(),
-                      ),
-                      if (editState.course.name == 'IB Economics') ...[
-                        CheckboxListTile(
-                          title: const Text('HL'),
-                          value: editState.isHL,
-                          onChanged: (value) {
-                            editNotifier.setHL(value!);
-                          },
-                        ),
-                      ],
-                    ],
-                    CustomDivider(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      spacing: kWrapSpacing * size.width,
-                      children: CustomTag.values.map(
-                        (e) {
-                          bool isSelected = false;
-                          if (editState.customTags.contains(e)) {
-                            isSelected = true;
-                          }
-                          final onSurfaceColor = isSelected
-                              ? Colors.white
-                              : Theme.of(context).colorScheme.onSurface;
-                          return ChoiceChip(
-                            onSelected: (_) {
-                              editNotifier.setCustomTags(e);
-                            },
-                            checkmarkColor: onSurfaceColor,
-                            selectedColor:
-                                Theme.of(context).colorScheme.primary,
-                            label: Text(
-                              e.toText(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: onSurfaceColor,
-                                  ),
-                            ),
-                            selected: isSelected,
-                          );
-                        },
-                      ).toList(),
-                    ),
-                    CustomDivider(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                    CustomTagsButtons(),
                   ],
                 ),
               ),

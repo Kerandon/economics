@@ -1,3 +1,5 @@
+import '../../../app/configs/constants.dart';
+
 enum QuestionType {
   multi,
   flip,
@@ -8,9 +10,9 @@ extension QuestionTypeExtension on QuestionType {
   String toText() {
     switch (this) {
       case QuestionType.multi:
-        return 'Multi-choice';
+        return kMultipleChoiceQuestions;
       case QuestionType.flip:
-        return 'Flip-card';
+        return kFlipCardQuestions;
     }
   }
 

@@ -22,8 +22,8 @@ class QuestionNavigationButtons extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-    final checkAnswersAtEndState =
-        ref.watch(editQuestionProvider.select((s) => (s.checkAnswersAtEnd)));
+    final checkAnswersAtEndState = false;
+    // ref.watch(editQuestionProvider.select((s) => (s.checkAnswersAtEnd)));
     final editState = ref.watch(editQuestionProvider);
     final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);

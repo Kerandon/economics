@@ -1,7 +1,5 @@
 import 'package:economics_app/app/custom_widgets/gap.dart';
-import 'package:economics_app/sections/quizzes/custom_widgets/check_answers_at_end_button.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
-import 'package:economics_app/sections/quizzes/custom_widgets/number_of_questions_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/quiz_filter_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/quiz_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/unit_drop_down.dart';
@@ -14,12 +12,18 @@ import '../quiz_enums/flip_card_tag.dart';
 
 class FilterContents extends ConsumerWidget {
   const FilterContents({
-    this.showExtraButtons = true,
+    this.showQuestionType = true,
     this.alwaysShowAllUnits = false,
+    this.showCourseType = true,
+    this.showNumberOfQuestions = true,
+    this.showCheckAnswersAtEnd = true,
     super.key,
   });
 
-  final bool showExtraButtons;
+  final bool showQuestionType;
+  final bool showCourseType;
+  final bool showNumberOfQuestions;
+  final bool showCheckAnswersAtEnd;
   final bool alwaysShowAllUnits;
 
   @override
@@ -37,14 +41,18 @@ class FilterContents extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const QuizTypeButtons(),
-            const Gap(
-              showDivider: true,
-            ),
-            const CourseTypeButtons(),
-            const Gap(
-              showDivider: true,
-            ),
+            if (showCourseType) ...[
+              const CourseTypeButtons(),
+              const Gap(
+                showDivider: true,
+              ),
+            ],
+            if (showQuestionType) ...[
+              const QuizTypeButtons(),
+              const Gap(
+                showDivider: true,
+              ),
+            ],
             const QuizFilterButtons(),
             const Gap(
               showDivider: true,
@@ -52,10 +60,6 @@ class FilterContents extends ConsumerWidget {
             UnitDropDown(
               alwaysShowAllUnits: alwaysShowAllUnits,
             ),
-            if (showExtraButtons) ...[
-              const NumberOfQuestionsButtons(),
-              const CheckAnswersAtEndButton(),
-            ],
             const Gap(
               showDivider: true,
             ),

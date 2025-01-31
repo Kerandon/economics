@@ -1,10 +1,15 @@
+import 'package:economics_app/app/configs/constants.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../app/utils/mixins/course_mixin.dart';
 import '../../app/utils/models/course.dart';
+import '../../app/utils/models/unit.dart';
 import '../settings/edit_courses/helper_methods/get_course_data_from_firebase.dart';
 import '../tab_main.dart';
 import 'methods/get_questions_data.dart';
@@ -29,7 +34,7 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
   @override
   Widget build(BuildContext context) {
     final editNotifier = ref.read(editQuestionProvider.notifier);
-
+    final startNotifier = ref.watch(startQuizProvider.notifier);
     return Scaffold(
       body: FutureBuilder(
           future: Future.wait(_futures),
@@ -58,6 +63,16 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                   if (questions.isNotEmpty) {
                     editNotifier.setAllQuestions(questions);
                   }
+
+                  List<UserPrefs> prefs = [];
+
+// Usage:
+                  addUserPrefs(prefs, courses, kIBEconomics);
+                  addUserPrefs(prefs, courses, kIGCSEEconomics);
+                  WidgetsBinding.instance.addPostFrameCallback((t) {
+                    startNotifier.setAllUserPrefs(prefs);
+                  });
+
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const TabBarMain(),
@@ -69,5 +84,20 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
             return const Center(child: CircularProgressIndicator());
           }),
     );
+  }
+
+  void addUserPrefs(
+      List<UserPrefs> prefs, List<CourseMixin> courses, String courseName) {
+    final course = courses.firstWhere((c) => c.name == courseName);
+    for (var e in FlipCardTag.values) {
+      prefs.add(
+        UserPrefs(
+          course: course as Course,
+          flipCardTag: e,
+          numberOfQuestions: kMaxNumberOfQuestions[0],
+          selectedUnits: [course.units.first as Unit],
+        ),
+      );
+    }
   }
 }

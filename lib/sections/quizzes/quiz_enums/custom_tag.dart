@@ -9,7 +9,6 @@ extension CustomTagFirebaseExtension on List<CustomTag> {
     return map((tag) => tag.name).toList();
   }
 
-  // Match a string value to the corresponding CustomTag enum
   static CustomTag fromFirebase(String value) {
     return CustomTag.values.firstWhere(
       (tag) => tag.name == value,

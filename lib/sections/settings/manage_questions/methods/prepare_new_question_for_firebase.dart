@@ -18,12 +18,12 @@ Future<void> prepareNewQuestionForFirebase({
   required GlobalKey<FormBuilderState> formKey,
   required EditQuestionState editState,
 }) async {
-  final questionType = editState.questionType;
   final fields = formKey.currentState!.fields;
   final question = fields[kQuestion]?.value;
+  final FlipCardTag flipCardTag = editState.flipCardTag;
   List<AnswerModel> answers = [];
   String? explanation;
-  FlipCardTag? flipCardTag;
+
   bool? isHL;
   final course = editState.course;
   final unit = editState.unit;
@@ -31,7 +31,7 @@ Future<void> prepareNewQuestionForFirebase({
   answers.add(
     AnswerModel(fields[kCorrectAnswer]?.value, isCorrect: true),
   );
-  if (questionType == QuestionType.multi) {
+  if (flipCardTag.toQuestionType() == QuestionType.multi) {
     answers.add(
       AnswerModel(fields[kIncorrectAnswer1]?.value),
     );
@@ -43,8 +43,7 @@ Future<void> prepareNewQuestionForFirebase({
     );
     explanation = fields[kExplanation]?.value;
   }
-  if (editState.questionType == QuestionType.flip) {
-    flipCardTag = editState.flipCardTag;
+  if (flipCardTag.toQuestionType() == QuestionType.flip) {
     if (course.name == 'IB Economics') {
       isHL = editState.isHL;
     }
@@ -56,7 +55,6 @@ Future<void> prepareNewQuestionForFirebase({
   }
 
   final q = QuestionModel(
-    questionType: questionType,
     course: course,
     unit: unit,
     subunit: subunit,

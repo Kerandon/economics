@@ -27,7 +27,7 @@ class QuizFilterButton extends ConsumerWidget {
               isScrollControlled: true,
               context: context,
               builder: (context) => FilterContents(
-                showExtraButtons: showExtraButtons,
+                showQuestionType: showExtraButtons,
                 alwaysShowAllUnits: alwaysShowAllUnits,
               ),
             );
