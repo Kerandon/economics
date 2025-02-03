@@ -34,8 +34,9 @@ class CustomAppTheme {
         surfaceContainerHighest: isDark
             ? AppColors.surfaceVariantDarkTheme
             : AppColors.surfaceVariantLightTheme,
-        surfaceTint:
-            isDark ? AppColors.dialogDarkTheme : AppColors.dialogLightTheme,
+        surfaceTint: isDark
+            ? AppColors.surfaceOffBlackDarkTheme
+            : AppColors.surfaceOffWhiteLightTheme,
         shadow: isDark ? AppColors.shadowDarkTheme : AppColors.shadowLightTheme,
         error: Colors.red,
         onPrimary: isDark ? Colors.black : Colors.white,
@@ -48,10 +49,12 @@ class CustomAppTheme {
             ? AppColors.onSurfaceDarkTheme
             : AppColors.onSurfaceLightTheme,
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: true,
         titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-        backgroundColor: AppColors.defaultAppColor,
+        backgroundColor: isDark
+            ? AppColors.surfaceDarkThemeStronger
+            : AppColors.surfaceLightThemeStronger
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
@@ -87,6 +90,8 @@ class CustomAppTheme {
         headlineSmall: TextStyle(color: displayColor),
         headlineMedium: TextStyle(color: displayColor),
         headlineLarge: TextStyle(color: displayColor),
+        titleSmall: TextStyle(color: displayColor),
+        titleMedium:  TextStyle(color: displayColor),
         titleLarge: TextStyle(color: displayColor),
         bodySmall: TextStyle(color: displayColor),
         bodyMedium: TextStyle(color: displayColor),
@@ -131,6 +136,31 @@ class CustomAppTheme {
             ),
           ),
           contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        ),
+      ),
+      tabBarTheme: TabBarThemeData(
+        dividerColor: isDark
+            ? AppColors.surfaceOffBlackDarkTheme
+            : AppColors.surfaceOffWhiteLightTheme,
+        unselectedLabelColor: isDark
+            ? AppColors.onSurfaceDarkTheme
+            : AppColors.onSurfaceLightTheme,
+        // Active tab style
+        unselectedLabelStyle:
+            TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+        // Inactive tab style
+        indicator: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: AppColors.defaultAppColor,
+              width: 2.0, // Indicator thickness
+            ),
+          ),
+        ),
+        labelStyle: TextStyle(
+          color: AppColors.defaultAppColor,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

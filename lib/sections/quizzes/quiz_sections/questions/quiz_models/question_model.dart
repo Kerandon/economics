@@ -1,6 +1,5 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/utils/models/unit.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:equatable/equatable.dart';
 import '../../../../../app/utils/mixins/course_mixin.dart';
 import '../../../../../app/utils/mixins/unit_mixin.dart';
@@ -14,7 +13,7 @@ import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
   final String? id;
-  final QuestionType? questionType;
+
   final CourseMixin? course;
   final String? question;
   final List<DiagramModel>? diagrams;
@@ -29,7 +28,6 @@ class QuestionModel extends Equatable {
 
   const QuestionModel({
     this.id,
-    this.questionType,
     this.course,
     this.question,
     this.diagrams,
@@ -46,7 +44,6 @@ class QuestionModel extends Equatable {
   // More flexible copyWith
   QuestionModel copyWith({
     String? id,
-    QuestionType? questionType,
     CourseMixin? course,
     String? question,
     List<DiagramModel>? diagrams,
@@ -61,7 +58,6 @@ class QuestionModel extends Equatable {
   }) {
     return QuestionModel(
       id: id ?? this.id,
-      questionType: questionType ?? this.questionType,
       course: course ?? this.course,
       question: question ?? this.question,
       diagrams: diagrams ?? this.diagrams,

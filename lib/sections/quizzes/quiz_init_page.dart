@@ -1,5 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -64,7 +65,7 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                     editNotifier.setAllQuestions(questions);
                   }
 
-                  List<UserPrefs> prefs = [];
+                  List<UserPref> prefs = [];
 
 // Usage:
                   addUserPrefs(prefs, courses, kIBEconomics);
@@ -87,15 +88,17 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
   }
 
   void addUserPrefs(
-      List<UserPrefs> prefs, List<CourseMixin> courses, String courseName) {
+      List<UserPref> prefs, List<CourseMixin> courses, String courseName) {
     final course = courses.firstWhere((c) => c.name == courseName);
     for (var e in FlipCardTag.values) {
       prefs.add(
-        UserPrefs(
+        UserPref(
           course: course as Course,
           flipCardTag: e,
-          numberOfQuestions: kMaxNumberOfQuestions[0],
+          quizFilter: QuizFilter.all,
+          numberOfQuestions: 0,
           selectedUnits: [course.units.first as Unit],
+          showAnswersAtEnd: false,
         ),
       );
     }

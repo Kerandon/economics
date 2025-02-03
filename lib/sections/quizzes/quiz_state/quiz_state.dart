@@ -115,8 +115,6 @@ class QuizNotifier extends StateNotifier<QuizState> {
 
   void checkAnswer(
       {required BuildContext context, required QuestionModel question}) {
-    if (question.answerStage == AnswerStage.selected) {}
-
     List<AnswerModel> answers = question.answers!.toList();
     for (int i = 0; i < answers.length; i++) {
       if (answers[i].answerStage == AnswerStage.selected) {

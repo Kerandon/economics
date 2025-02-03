@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CustomChipButton extends StatelessWidget {
   const CustomChipButton({
     this.text,
+    this.textSize,
     required this.onPressed,
     this.textAndIconColor,
     this.icon,
@@ -15,6 +16,7 @@ class CustomChipButton extends StatelessWidget {
   });
 
   final String? text;
+  final double? textSize;
   final IconData? icon;
   final Color? textAndIconColor;
   final Color? fillColor;
@@ -64,7 +66,7 @@ class CustomChipButton extends StatelessWidget {
                   : Theme.of(context)
                       .colorScheme
                       .scrim
-                      .withAlpha(kBackgroundOpacity),
+                      .withAlpha(kBackgroundAlphaLight),
           child: InkWell(
             borderRadius: BorderRadius.circular(kRadius),
             onTap: isDisabled
@@ -73,7 +75,7 @@ class CustomChipButton extends StatelessWidget {
                     onPressed?.call();
                   },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize:
@@ -81,7 +83,7 @@ class CustomChipButton extends StatelessWidget {
                 children: [
                   if (icon != null) ...[
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Icon(
                         icon,
                         color: iconAndTextColor,
@@ -90,11 +92,11 @@ class CustomChipButton extends StatelessWidget {
                   ],
                   if (text != null) ...[
                     Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(12),
                       child: Text(text!,
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: iconAndTextColor,
+                                    color: iconAndTextColor,fontSize: textSize ?? 16
                                   )),
                     ),
                   ],

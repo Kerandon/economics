@@ -22,7 +22,7 @@ class Gap extends StatelessWidget {
                   Theme.of(context)
                       .colorScheme
                       .onSurface
-                      .withAlpha(kBackgroundOpacity),
+                      .withAlpha(kBackgroundAlphaLight),
             )
           : null,
     );

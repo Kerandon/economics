@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
 
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card/flip_card_tile.dart';
@@ -34,6 +34,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
 
     final quizState = ref.watch(quizProvider);
 
@@ -61,19 +62,12 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     return Stack(
       children: [
         Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: AppBar(
-            title: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: AutoSizeText(
-                '${editState.unit.name} - ${editState.subunit.name}',
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-              ),
-            ),
             leading: IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back_outlined,
-                color: Colors.white,
+                color: theme.colorScheme.onSurface,
               ),
               onPressed: () {
                 quizNotifier.setResetQuestions();
@@ -87,48 +81,61 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                 WidgetsBinding.instance.addPostFrameCallback((t) {});
               },
             ),
+            title: Row(
+              children: [
+                // Align the text to the left
+                Expanded(
+                  flex: 12,
+                  child: AutoSizeText(
+                    '${editState.unit.name} - ${editState.subunit.name}',
+                    overflow: TextOverflow.fade,
+                    maxLines: 1,
+                    style: TextStyle(color: theme.colorScheme.primary),
+                  ),
+                ),
+                // You can add other widgets like CustomSlider if needed, but now the text is left-aligned
+                Expanded(
+                  flex: 6,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    child: CustomSlider(),
+                  ),
+                ),
+              ],
+            ),
           ),
           body: NestedScrollView(
             floatHeaderSlivers: true,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: size.width * kPageIndentHorizontal),
-                        child: CustomSlider(),
-                      ),
-                    ],
-                  ),
-                )
-              ];
+              return <Widget>[];
             },
-            body: Container(
-              color: Theme.of(context).colorScheme.surface,
-              child: Stack(
-                children: [
-                  PageView(
-                    onPageChanged: (index) {
-                      quizNotifier.setCurrentQuestionIndex(index);
-                    },
-                    controller: _pageController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: quizState.selectedQuestions.map(
-                      (question) {
-                        return SingleChildScrollView(
+            body: Stack(
+              children: [
+                PageView(
+                  onPageChanged: (index) {
+                    quizNotifier.setCurrentQuestionIndex(index);
+                  },
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: quizState.selectedQuestions.map(
+                    (question) {
+                      return SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: size.width * kPageIndentHorizontal,
+                            vertical: size.height * kPageIndentVertical,
+                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               ...[
-                                if (editState.questionType ==
-                                    QuestionType.multi) ...[
+                                if (question.flipCardTag ==
+                                    FlipCardTag.multipleChoiceQuestions) ...[
                                   MultiChoiceTile(question),
                                 ],
-                                if (editState.questionType ==
-                                    QuestionType.flip) ...[
+                                if (question.flipCardTag !=
+                                    FlipCardTag.multipleChoiceQuestions) ...[
                                   FlipCardTile(
                                     question,
                                     editMode: false,
@@ -139,16 +146,16 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                                 ),
                               ],
                               SizedBox(
-                                height: size.height * 0.15,
+                                height: size.height * 0.05,
                               ),
                             ],
                           ),
-                        );
-                      },
-                    ).toList(),
-                  ),
-                ],
-              ),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ),
+              ],
             ),
           ),
           floatingActionButton: QuestionNavigationButtons(

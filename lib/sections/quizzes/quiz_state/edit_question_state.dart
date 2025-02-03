@@ -22,7 +22,7 @@ class EditQuestionState {
   final UnitMixin subunit;
   final List<QuestionModel> allQuestions;
   final FlipCardTag flipCardTag;
-  List<FlipCardTag> selectedFlipCardTags;
+  final List<FlipCardTag> selectedFlipCardTags;
   final bool isHL;
   final DiagramsNumber diagramsNumber;
   final List<DiagramModel> selectedDiagrams;
@@ -83,6 +83,11 @@ class EditQuestionState {
 class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   EditQuestionNotifier(super._state);
 
+  void setAllQuestions(List<QuestionModel> allQuestions) {
+    state = state.copyWith(allQuestions: allQuestions);
+    setFilteredQuestions();
+  }
+
   void setQuestionType(QuestionType type) {
     state = state.copyWith(questionType: type);
     setFilteredQuestions();
@@ -121,11 +126,6 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     setFilteredQuestions();
   }
 
-  void setAllQuestions(List<QuestionModel> allQuestions) {
-    state = state.copyWith(allQuestions: allQuestions);
-    setFilteredQuestions();
-  }
-
   void setQuizFilter(QuizFilter filter) {
     state = state.copyWith(quizFilter: filter);
     setFilteredQuestions();
@@ -135,7 +135,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     List<QuestionModel> filteredQuestions = state.allQuestions.toList();
 
     for (var q in state.allQuestions) {
-      if (q.questionType != state.questionType) {
+      if (!state.selectedFlipCardTags.contains(q.flipCardTag)) {
         filteredQuestions.remove(q);
       }
 
@@ -149,11 +149,6 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
       }
       if (state.quizFilter == QuizFilter.subunit) {
         if (q.subunit != state.subunit) {
-          filteredQuestions.remove(q);
-        }
-      }
-      if (state.questionType == QuestionType.flip) {
-        if (!state.selectedFlipCardTags.contains(q.flipCardTag)) {
           filteredQuestions.remove(q);
         }
       }

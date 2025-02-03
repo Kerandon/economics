@@ -64,7 +64,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
               color: Theme.of(context)
                   .colorScheme
                   .onSurface
-                  .withAlpha(kBackgroundOpacity),
+                  .withAlpha(kBackgroundAlphaLight),
             ),
             color: Colors.white,
           ),

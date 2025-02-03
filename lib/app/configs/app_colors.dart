@@ -8,9 +8,6 @@ class AppColors {
   static const backgroundLightTheme = Color(0xfff5f5f5);
   static const backgroundDarkTheme = Color(0xFF121212);
 
-  static const surfaceLightTheme = Color(0xffebebeb);
-  static const surfaceDarkTheme = Color(0xff2a2a2a);
-
   static const surfaceVariantDarkTheme = Color(0xFF808080);
   static const surfaceVariantLightTheme = Color(0xFF808080);
 
@@ -20,12 +17,19 @@ class AppColors {
   static const onSurfaceLightTheme = Color(0xff5c5e60);
   static const onSurfaceDarkTheme = Color(0xFFBDBDBD);
 
-  static const onSurfaceVariantLightTheme = Color(0xFF7e7e7e);
-  static const onSurfaceVariantDarkTheme = Color(0xFF7e7e7e);
+  static const onSurfaceVariantLightTheme = Color(0xFFFAFAFA); // Off-white
+  static const onSurfaceVariantDarkTheme = Color(0xFF121212); // Off-black
+// Light theme colors: Closer to white, softer contrast (unchanged)
+  static const surfaceOffWhiteLightTheme = Color(0xFFF5F5F5); // Very light, almost white
+  static const surfaceLightThemeStronger = Color(0xFFEEEEEE); // Slightly darker for subtle contrast
 
-  static const dialogLightTheme = Color(0xffd2d2d2);
-  static const dialogDarkTheme = Color(0xFF373737);
+// Dark theme colors: More greyish-black for better contrast
+  static const surfaceOffBlackDarkTheme = Color(0xFF181818); // More greyish-black
+  static const surfaceDarkThemeStronger = Color(0xFF242424); // Even more greyish-black for contrast
 
-  static const shadowLightTheme = Color(0xffdde3ec);
-  static const shadowDarkTheme = Color(0xff3c3c3a);
+// Light theme shadow: Soft and subtle (unchanged)
+  static const shadowLightTheme = Color(0x1A000000); // Black with 10% opacity (0x1A)
+
+// Dark theme shadow: Soft and subtle (unchanged)
+  static const shadowDarkTheme = Color(0x1AFFFFFF); // White with 10% opacity (0x1A)
 }

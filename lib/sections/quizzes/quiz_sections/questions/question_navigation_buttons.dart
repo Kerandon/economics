@@ -1,4 +1,5 @@
 import 'package:economics_app/app/animation/flip_animation.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/completion/completion_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -90,7 +91,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
     }
 
     /// Flip Card Logic
-    if (editState.questionType == QuestionType.flip) {
+    if (question.flipCardTag == FlipCardTag.multipleChoiceQuestions) {
       showCenterButton = false;
     }
     return SizedBox(
@@ -122,7 +123,7 @@ class QuestionNavigationButtons extends ConsumerWidget {
                 iconData: Icons.arrow_back_outlined,
                 disable: disableButtonLeft,
               ),
-              if (editState.questionType == QuestionType.flip &&
+              if (question.flipCardTag != FlipCardTag.multipleChoiceQuestions &&
                   quizState.currentCardSide == CardSide.back) ...[
                 FloatingActionButton.extended(
                   heroTag: '1',
