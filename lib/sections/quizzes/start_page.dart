@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
+import 'package:economics_app/sections/quizzes/methods/reset_questions_models.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/topic_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -34,12 +34,11 @@ class _StartPageState extends ConsumerState<StartPage> {
 
     UserPref pref = UserPref(
       course: startState.course as Course,
-      flipCardTag: startState.flipCardTag,
+      topicTag: startState.topicTag,
     );
 
     for (var e in startState.userPrefs) {
-      if (e.course == startState.course &&
-          e.flipCardTag == startState.flipCardTag) {
+      if (e.course == startState.course && e.topicTag == startState.topicTag) {
         pref = e;
       }
     }
@@ -50,7 +49,7 @@ class _StartPageState extends ConsumerState<StartPage> {
         (t) {
           startNotifier.setFilteredQuestions(
             pref,
-            editState.allQuestions.toList(),
+            startState.allTopicQuestions.toList(),
           );
         },
       );
@@ -64,17 +63,15 @@ class _StartPageState extends ConsumerState<StartPage> {
             Expanded(
               flex: 12,
               child: AutoSizeText(
-                '${startState.course.name} - ${startState.flipCardTag.toText()}',
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-                style: TextStyle(color: theme.colorScheme.primary),
+                '${startState.course.name} - ${startState.topicTag.toText()}',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
               ),
             ),
-
-
           ],
-        ),),
-
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -105,7 +102,6 @@ class _StartPageState extends ConsumerState<StartPage> {
                         if (pref.numberOfQuestions == e) {
                           isSelected = true;
                         }
-                        final theme = Theme.of(context);
                         final onSurfaceColor = isSelected
                             ? Colors.white
                             : theme.colorScheme.onSurface;
@@ -115,7 +111,7 @@ class _StartPageState extends ConsumerState<StartPage> {
                           onSelected: (_) {
                             startNotifier.updateUserPrefs(
                               pref.copyWith(numberOfQuestions: e),
-                              editState.allQuestions.toList(),
+                              startState.allTopicQuestions.toList(),
                             );
                           },
                           label: Text(
@@ -141,7 +137,7 @@ class _StartPageState extends ConsumerState<StartPage> {
                     flex: 5,
                     child: SizedBox(
                       child: Text(
-                        'Filter',
+                        'Unit',
                         style: theme.textTheme.bodyMedium,
                       ),
                     ),
@@ -153,248 +149,153 @@ class _StartPageState extends ConsumerState<StartPage> {
                   Expanded(
                     flex: 20,
                     child: Wrap(
-                        alignment: WrapAlignment.start,
-                        runAlignment: WrapAlignment.start,
-                        spacing: size.width * kWrapSpacing,
-                        children: QuizFilter.values.map((e) {
-                          bool isSelected = false;
-                          if (pref.quizFilter == e) {
-                            isSelected = true;
-                          }
-                          if (pref.quizFilter == QuizFilter.subunit &&
-                              e == QuizFilter.unit) {
-                            isSelected = true;
-                          }
+                      alignment: WrapAlignment.start,
+                      runAlignment: WrapAlignment.start,
+                      spacing: size.width * kWrapSpacing,
+                      children: pref.course.units.map((e) {
+                        int number = startState.allTopicQuestions
+                            .where((q) => q.unit == e)
+                            .length;
 
-                          final onSurfaceColor = isSelected
-                              ? Colors.white
-                              : theme.colorScheme.onSurface;
-                          return ChoiceChip(
-                              selectedColor: theme.colorScheme.primary,
-                              checkmarkColor: onSurfaceColor,
-                              onSelected: (_) {
-                                startNotifier.updateUserPrefs(
-                                  pref.copyWith(quizFilter: e),
-                                  editState.allQuestions.toList(),
-                                );
-                              },
-                              label: Text(
-                                e.toText(),
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: isSelected
-                                      ? Colors.white
-                                      : theme.colorScheme.onSurface,
-                                ),
+                        bool isSelected =
+                            pref.selectedUnits?.contains(e) ?? false;
+
+                        final theme = Theme.of(context);
+                        final onSurfaceColor = isSelected
+                            ? Colors.white
+                            : theme.colorScheme.onSurface;
+
+                        return ChoiceChip(
+                          label: Text(
+                            '${e.name!} ($number)',
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: isSelected
+                                  ? Colors.white
+                                  : theme.colorScheme.onSurface,
+                            ),
+                          ),
+                          selectedColor: theme.colorScheme.primary,
+                          checkmarkColor: onSurfaceColor,
+                          onSelected: (_) {
+                            // Create a copy of the current selectedUnits list
+                            List<Unit> updatedSelectedUnits =
+                                List<Unit>.from(pref.selectedUnits ?? []);
+
+                            // Create a copy of the current selectedSubunits list
+                            List<Unit> updatedSelectedSubunits =
+                                List<Unit>.from(pref.selectedSubunits ?? []);
+
+                            // Check if the unit already exists in the list
+                            if (updatedSelectedUnits.contains(e)) {
+                              // If it exists, remove it
+                              updatedSelectedUnits.remove(e);
+
+                              // Also remove all its subunits from the selectedSubunits list
+                              updatedSelectedSubunits.removeWhere(
+                                  (subunit) => e.subunits.contains(subunit));
+                            } else {
+                              // If it doesn't exist, add it
+                              updatedSelectedUnits.add(e as Unit);
+                            }
+
+                            // Update the user preferences with the new selectedUnits and selectedSubunits lists
+                            startNotifier.updateUserPrefs(
+                              pref.copyWith(
+                                selectedUnits: updatedSelectedUnits,
+                                selectedSubunits: updatedSelectedSubunits,
                               ),
-                              selected: isSelected);
-                        }).toList()),
+                              editState.allQuestions.toList(),
+                            );
+                          },
+                          selected: isSelected,
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ],
               ),
             ),
-            if (pref.quizFilter == QuizFilter.unit ||
-                pref.quizFilter == QuizFilter.subunit) ...[
-              ListTile(
-                title: Row(
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: SizedBox(
-                        child: Text(
-                          'Unit',
-                          style: theme.textTheme.bodyMedium,
-                        ),
+            ListTile(
+              title: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: SizedBox(
+                      child: Text(
+                        'Subunit',
+                        style: theme.textTheme.bodyMedium,
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(),
-                    ),
-                    Expanded(
-                      flex: 20,
-                      child: Wrap(
-                        alignment: WrapAlignment.start,
-                        runAlignment: WrapAlignment.start,
-                        spacing: size.width * kWrapSpacing,
-                        children: pref.course.units.map((e) {
-                          // Filter questions for the current unit (e)
-                          final filteredQuestionsForUnit =
-                              editState.allQuestions.where((q) {
-                            // Keep questions that match the course
-                            if (q.course != pref.course) {
-                              return false; // Exclude this question
-                            }
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(),
+                  ),
+                  Expanded(
+                    flex: 20,
+                    child: Wrap(
+                      alignment: WrapAlignment.start,
+                      runAlignment: WrapAlignment.start,
+                      spacing: size.width * kWrapSpacing,
+                      children: pref.selectedUnits?.expand(
+                            (e) {
+                              return e.subunits.map(
+                                (e) {
+                                  int number = startState.allTopicQuestions
+                                      .where((q) => q.subunit == e)
+                                      .length;
 
-                            // Keep questions that match the current unit (e)
-                            if (q.unit != e) {
-                              return false; // Exclude this question
-                            }
+                                  bool isSelected = false;
+                                  if (pref.selectedSubunits?.contains(e) ??
+                                      false) {
+                                    isSelected = true;
+                                  }
 
-                            return true; // Include this question
-                          }).toList();
-
-                          // Check if the current unit (e) is selected
-                          bool isSelected =
-                              pref.selectedUnits?.contains(e) ?? false;
-
-                          final theme = Theme.of(context);
-                          final onSurfaceColor = isSelected
-                              ? Colors.white
-                              : theme.colorScheme.onSurface;
-
-                          return ChoiceChip(
-                            label: Text(
-                              '${e.name!} (${filteredQuestionsForUnit.length})',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: isSelected
-                                    ? Colors.white
-                                    : theme.colorScheme.onSurface,
-                              ),
-                            ),
-                            selectedColor: theme.colorScheme.primary,
-                            checkmarkColor: onSurfaceColor,
-                            onSelected: (_) {
-                              // Create a copy of the current selectedUnits list
-                              List<Unit> updatedSelectedUnits =
-                                  List<Unit>.from(pref.selectedUnits ?? []);
-
-                              // Create a copy of the current selectedSubunits list
-                              List<Unit> updatedSelectedSubunits =
-                                  List<Unit>.from(pref.selectedSubunits ?? []);
-
-                              // Check if the unit already exists in the list
-                              if (updatedSelectedUnits.contains(e)) {
-                                // If it exists, remove it
-                                updatedSelectedUnits.remove(e);
-
-                                // Also remove all its subunits from the selectedSubunits list
-                                updatedSelectedSubunits.removeWhere(
-                                    (subunit) => e.subunits.contains(subunit));
-                              } else {
-                                // If it doesn't exist, add it
-                                updatedSelectedUnits.add(e as Unit);
-                              }
-
-                              // Update the user preferences with the new selectedUnits and selectedSubunits lists
-                              startNotifier.updateUserPrefs(
-                                pref.copyWith(
-                                  selectedUnits: updatedSelectedUnits,
-                                  selectedSubunits: updatedSelectedSubunits,
-                                ),
-                                editState.allQuestions.toList(),
+                                  final onSurfaceColor = isSelected
+                                      ? Colors.white
+                                      : theme.colorScheme.onSurface;
+                                  return ChoiceChip(
+                                    selectedColor: theme.colorScheme.primary,
+                                    checkmarkColor: onSurfaceColor,
+                                    onSelected: (_) {
+                                      List<Unit> updatedSelectedSubunits =
+                                          List<Unit>.from(
+                                              pref.selectedSubunits ?? []);
+                                      if (updatedSelectedSubunits.contains(e)) {
+                                        updatedSelectedSubunits.remove(e);
+                                      } else {
+                                        updatedSelectedSubunits.add(e);
+                                      }
+                                      startNotifier.updateUserPrefs(
+                                        pref.copyWith(
+                                          selectedSubunits:
+                                              updatedSelectedSubunits,
+                                        ),
+                                        startState.allTopicQuestions.toList(),
+                                      );
+                                    },
+                                    label: Text(
+                                      '${e.name!} ($number)',
+                                      style:
+                                          theme.textTheme.bodyMedium?.copyWith(
+                                        color: isSelected
+                                            ? Colors.white
+                                            : theme.colorScheme.onSurface,
+                                      ),
+                                    ),
+                                    selected: isSelected,
+                                  );
+                                },
                               );
                             },
-                            selected: isSelected,
-                          );
-                        }).toList(),
-                      ),
+                          ).toList() ??
+                          [],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-            if (pref.quizFilter == QuizFilter.subunit) ...[
-              ListTile(
-                title: Row(
-                  children: [
-                    Expanded(
-                      flex: 5,
-                      child: SizedBox(
-                        child: Text(
-                          'Subunit',
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: SizedBox(),
-                    ),
-                    Expanded(
-                      flex: 20,
-                      child: Wrap(
-                        alignment: WrapAlignment.start,
-                        runAlignment: WrapAlignment.start,
-                        spacing: size.width * kWrapSpacing,
-                        children: pref.selectedUnits?.expand(
-                              (e) {
-                                return e.subunits.map(
-                                  (e) {
-                                    final filteredQuestionsForUnit =
-                                        editState.allQuestions.where((q) {
-                                      // Keep questions that match the course
-                                      if (q.course != pref.course) {
-                                        return false; // Exclude this question
-                                      }
-
-                                      // Keep questions that match the current unit (e)
-                                      if (q.subunit != e) {
-                                        return false; // Exclude this question
-                                      }
-
-                                      return true; // Include this question
-                                    }).toList();
-
-                                    bool isSelected = false;
-                                    if (pref.selectedSubunits?.contains(e) ??
-                                        false) {
-                                      isSelected = true;
-                                    }
-
-                                    final onSurfaceColor = isSelected
-                                        ? Colors.white
-                                        : theme.colorScheme.onSurface;
-                                    return ChoiceChip(
-                                      selectedColor: theme.colorScheme.primary,
-                                      checkmarkColor: onSurfaceColor,
-                                      onSelected: (_) {
-                                        // Create a copy of the current selectedUnits list
-                                        List<Unit> updatedSelectedSubunits =
-                                            List<Unit>.from(
-                                                pref.selectedSubunits ?? []);
-
-                                        // Check if the unit already exists in the list
-                                        if (updatedSelectedSubunits
-                                            .contains(e)) {
-                                          // If it exists, remove it
-                                          updatedSelectedSubunits.remove(e);
-                                        } else {
-                                          // If it doesn't exist, add it
-                                          updatedSelectedSubunits.add(e);
-                                        }
-
-                                        // Update the user preferences with the new selectedUnits list
-                                        startNotifier.updateUserPrefs(
-                                          pref.copyWith(
-                                            selectedSubunits:
-                                                updatedSelectedSubunits,
-                                          ),
-                                          editState.allQuestions.toList(),
-                                        );
-                                      },
-                                      label: Text(
-                                        '${e.name!} ${filteredQuestionsForUnit.length}',
-                                        style: theme.textTheme.bodyMedium
-                                            ?.copyWith(
-                                          color: isSelected
-                                              ? Colors.white
-                                              : theme.colorScheme.onSurface,
-                                        ),
-                                      ),
-                                      selected: isSelected,
-                                    );
-                                  },
-                                );
-                              },
-                            ).toList() ??
-                            [],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-            if (pref.flipCardTag == FlipCardTag.multipleChoiceQuestions) ...[
+            ),
+            if (pref.topicTag == TopicTag.multipleChoiceQuestions) ...[
               ListTile(
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -419,7 +320,7 @@ class _StartPageState extends ConsumerState<StartPage> {
                           onChanged: (value) {
                             startNotifier.updateUserPrefs(
                               pref.copyWith(showAnswersAtEnd: value),
-                              editState.allQuestions.toList(),
+                              startState.allTopicQuestions.toList(),
                             );
                           },
                         ),
@@ -432,28 +333,25 @@ class _StartPageState extends ConsumerState<StartPage> {
             SizedBox(
               height: size.height * 0.05,
             ),
+            Center(
+              child: CustomChipButton(
+                isDisabled: startState.filteredQuestions.isEmpty,
+                text: 'START',
+                onPressed: () {
+                  quizNotifier.setSelectedQuestions(
+                      resetAnswerStage(startState.filteredQuestions.toList()));
 
-              Center(
-                child: CustomChipButton(
-                  isDisabled: startState.filteredQuestions.length == 0,
-                  text: 'START',
-                  textSize: 22,
-                  onPressed: () {
-                    quizNotifier.setSelectedQuestions(
-                        startState.filteredQuestions.toList());
-
-                    WidgetsBinding.instance.addPostFrameCallback((t) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => QuestionPage(),
-                        ),
-                      );
-                    });
-                  },
-                ),
+                  WidgetsBinding.instance.addPostFrameCallback((t) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => QuestionPage(),
+                      ),
+                    );
+                  });
+                },
               ),
-            ],
-
+            ),
+          ],
         ),
       ),
     );

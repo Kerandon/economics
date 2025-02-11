@@ -1,13 +1,11 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/topic_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../app/utils/mixins/course_mixin.dart';
 import '../../app/utils/models/course.dart';
 import '../../app/utils/models/unit.dart';
@@ -90,12 +88,11 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
   void addUserPrefs(
       List<UserPref> prefs, List<CourseMixin> courses, String courseName) {
     final course = courses.firstWhere((c) => c.name == courseName);
-    for (var e in FlipCardTag.values) {
+    for (var e in TopicTag.values) {
       prefs.add(
         UserPref(
           course: course as Course,
-          flipCardTag: e,
-          quizFilter: QuizFilter.all,
+          topicTag: e,
           numberOfQuestions: 0,
           selectedUnits: [course.units.first as Unit],
           showAnswersAtEnd: false,

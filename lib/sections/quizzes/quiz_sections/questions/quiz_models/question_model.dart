@@ -7,13 +7,13 @@ import '../../../../../app/utils/models/course.dart';
 import '../../../../diagrams/models/diagram_model.dart';
 import '../../../quiz_enums/answer_stage.dart';
 import '../../../quiz_enums/custom_tag.dart';
-
-import '../../../quiz_enums/flip_card_tag.dart';
+import '../../../quiz_enums/question_type.dart';
+import '../../../quiz_enums/topic_tag.dart';
 import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
   final String? id;
-
+  final QuestionType? questionType;
   final CourseMixin? course;
   final String? question;
   final List<DiagramModel>? diagrams;
@@ -22,12 +22,13 @@ class QuestionModel extends Equatable {
   final String? explanation;
   final UnitMixin? unit;
   final UnitMixin? subunit;
-  final FlipCardTag? flipCardTag;
+  final TopicTag? topicTag;
   final bool? isHL;
   final List<CustomTag>? customTags;
 
   const QuestionModel({
     this.id,
+    this.questionType,
     this.course,
     this.question,
     this.diagrams,
@@ -36,7 +37,7 @@ class QuestionModel extends Equatable {
     this.explanation,
     this.unit,
     this.subunit,
-    this.flipCardTag,
+    this.topicTag,
     this.isHL,
     this.customTags,
   });
@@ -44,6 +45,7 @@ class QuestionModel extends Equatable {
   // More flexible copyWith
   QuestionModel copyWith({
     String? id,
+    QuestionType? questionType,
     CourseMixin? course,
     String? question,
     List<DiagramModel>? diagrams,
@@ -52,12 +54,13 @@ class QuestionModel extends Equatable {
     UnitMixin? unit,
     UnitMixin? subunit,
     String? explanation,
-    FlipCardTag? flipCardTag,
+    TopicTag? topicTag,
     bool? isHL,
     List<CustomTag>? customTags,
   }) {
     return QuestionModel(
       id: id ?? this.id,
+      questionType: questionType ?? this.questionType,
       course: course ?? this.course,
       question: question ?? this.question,
       diagrams: diagrams ?? this.diagrams,
@@ -66,7 +69,7 @@ class QuestionModel extends Equatable {
       explanation: explanation ?? this.explanation,
       unit: unit ?? this.unit,
       subunit: subunit ?? this.subunit,
-      flipCardTag: flipCardTag ?? this.flipCardTag,
+      topicTag: topicTag ?? this.topicTag,
       isHL: isHL ?? this.isHL,
       customTags: customTags ?? this.customTags,
     );
@@ -75,7 +78,8 @@ class QuestionModel extends Equatable {
   // Converts QuestionModel to a map that can be sent to Firebase
   Map<String, dynamic> toMap() {
     return {
-      kFlipCardTag: flipCardTag?.toFireBase(),
+      kQuestionType: questionType?.name,
+      kFlipCardTag: topicTag?.toFireBase(),
       kCourse: course?.name,
       kQuestion: question,
       kAnswers: answers?.map((e) => e.toMap()).toList(),
@@ -92,7 +96,8 @@ class QuestionModel extends Equatable {
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     return QuestionModel(
       id: id,
-      flipCardTag: FlipCardFirebase.fromFirebase(map),
+      questionType: map[kQuestionType],
+      topicTag: TopicTagFirebase.fromFirebase(map),
       course: Course(name: map[kCourse], units: []),
       unit: Unit.fromFirebase(map),
       subunit: Unit.fromFirebase(map, subunit: true),

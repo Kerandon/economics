@@ -26,6 +26,7 @@ const kCourse = 'course';
 const kSubunit = 'subunit';
 const kSubunits = 'subunits';
 const kQuestion = 'question';
+const kQuestionType = 'question type';
 const kDiagrams = 'diagrams';
 const kAnswers = 'answers';
 const kAnswer = 'answer';

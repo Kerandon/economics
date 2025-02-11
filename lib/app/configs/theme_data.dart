@@ -26,24 +26,22 @@ class CustomAppTheme {
         tertiary: AppColors.defaultAppColorDarkest,
 
         /// Use [scrim] and [surfaceDim] for disabled
-        scrim: isDark ? Colors.grey.shade900 : Colors.grey.shade400,
+        scrim: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
         surfaceDim: isDark ? Colors.grey.shade600 : Colors.grey.shade900,
-        surface: isDark
-            ? AppColors.backgroundDarkTheme
-            : AppColors.backgroundLightTheme,
-        surfaceContainerHighest: isDark
-            ? AppColors.surfaceVariantDarkTheme
-            : AppColors.surfaceVariantLightTheme,
+        surface:
+            isDark ? AppColors.surfaceDarkTheme : AppColors.surfaceLightTheme,
+        surfaceContainerHighest:
+            isDark ? AppColors.surfaceDarkTheme : AppColors.surfaceLightTheme,
         surfaceTint: isDark
-            ? AppColors.surfaceOffBlackDarkTheme
-            : AppColors.surfaceOffWhiteLightTheme,
+            ? AppColors.surfaceDarkThemeStronger
+            : AppColors.surfaceLightThemeStronger,
         shadow: isDark ? AppColors.shadowDarkTheme : AppColors.shadowLightTheme,
         error: Colors.red,
         onPrimary: isDark ? Colors.black : Colors.white,
         onSurface: isDark ? AppColors.onSurfaceDarkTheme : Colors.black,
         onSurfaceVariant: isDark
-            ? AppColors.onSurfaceVariantDarkTheme
-            : AppColors.onSurfaceVariantLightTheme,
+            ? AppColors.onSurfaceDarkTheme
+            : AppColors.onSurfaceLightTheme,
         onError: isDark ? Colors.black : Colors.white,
         onSecondary: isDark
             ? AppColors.onSurfaceDarkTheme
@@ -51,10 +49,11 @@ class CustomAppTheme {
       ),
       appBarTheme: AppBarTheme(
         centerTitle: true,
-        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        titleTextStyle: TextStyle(
+            color: isDark ? Colors.white : Colors.black, fontSize: 20),
         backgroundColor: isDark
             ? AppColors.surfaceDarkThemeStronger
-            : AppColors.surfaceLightThemeStronger
+            : AppColors.surfaceLightThemeStronger,
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
@@ -91,7 +90,7 @@ class CustomAppTheme {
         headlineMedium: TextStyle(color: displayColor),
         headlineLarge: TextStyle(color: displayColor),
         titleSmall: TextStyle(color: displayColor),
-        titleMedium:  TextStyle(color: displayColor),
+        titleMedium: TextStyle(color: displayColor),
         titleLarge: TextStyle(color: displayColor),
         bodySmall: TextStyle(color: displayColor),
         bodyMedium: TextStyle(color: displayColor),
@@ -139,9 +138,8 @@ class CustomAppTheme {
         ),
       ),
       tabBarTheme: TabBarThemeData(
-        dividerColor: isDark
-            ? AppColors.surfaceOffBlackDarkTheme
-            : AppColors.surfaceOffWhiteLightTheme,
+        dividerColor:
+            isDark ? AppColors.dividerDarkTheme : AppColors.dividerLightTheme,
         unselectedLabelColor: isDark
             ? AppColors.onSurfaceDarkTheme
             : AppColors.onSurfaceLightTheme,

@@ -16,23 +16,14 @@ class DiagramBuilder extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
-
     List<DiagramModel> diagramsToDisplay = [];
-
-    diagramsToDisplay = selectedDiagrams?.toList() ??
-        DiagramModel.getDiagrams(size, context).toList();
 
     return GridView.builder(
       physics: canScroll ? null : const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: diagramsToDisplay.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: doubleCrossAxis
-            ? diagramsToDisplay.length == 1
-                ? 1
-                : 2
-            : 1,
+        crossAxisCount: 2,
       ),
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.all(8.0),

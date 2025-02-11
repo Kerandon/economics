@@ -1,13 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/flip_card_tag.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/custom_slider.dart';
-
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card/flip_card_tile.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/multi_choice/multi_choice_tile.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_navigation_buttons.dart';
-
+import 'package:economics_app/sections/quizzes/custom_widgets/custom_slider.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card_tile.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/multi_choice_tile.dart';
+import 'package:economics_app/sections/quizzes/custom_widgets/question_navigation_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
@@ -18,6 +15,8 @@ import '../../../../app/animation/confetti_animation.dart';
 import '../../../../app/audio_manager/audio_manager.dart';
 
 import '../../../../main.dart';
+import '../../custom_widgets/score_bar.dart';
+import '../../quiz_enums/topic_tag.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -35,7 +34,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-
+    final horizontalPadding = size.width * kPageIndentHorizontal;
     final quizState = ref.watch(quizProvider);
 
     final editState = ref.watch(editQuestionProvider);
@@ -62,12 +61,10 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_outlined,
-                color: theme.colorScheme.onSurface,
               ),
               onPressed: () {
                 quizNotifier.setResetQuestions();
@@ -78,7 +75,6 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                     },
                   ),
                 );
-                WidgetsBinding.instance.addPostFrameCallback((t) {});
               },
             ),
             title: Row(
@@ -88,18 +84,22 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   flex: 12,
                   child: AutoSizeText(
                     '${editState.unit.name} - ${editState.subunit.name}',
-                    overflow: TextOverflow.fade,
-                    maxLines: 1,
-                    style: TextStyle(color: theme.colorScheme.primary),
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      color: theme.colorScheme.primary,
+                    ),
                   ),
                 ),
-                // You can add other widgets like CustomSlider if needed, but now the text is left-aligned
+
                 Expanded(
-                  flex: 6,
+                  flex: 4,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 22),
                     child: CustomSlider(),
                   ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: ScoreBar(),
                 ),
               ],
             ),
@@ -122,24 +122,22 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                     (question) {
                       return SingleChildScrollView(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: size.width * kPageIndentHorizontal,
-                            vertical: size.height * kPageIndentVertical,
+                          padding: EdgeInsets.only(
+                            top: size.height * 0.02,
+                            left: horizontalPadding,
+                            right: horizontalPadding,
                           ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ...[
-                                if (question.flipCardTag ==
-                                    FlipCardTag.multipleChoiceQuestions) ...[
+                                if (question.topicTag ==
+                                    TopicTag.multipleChoiceQuestions) ...[
                                   MultiChoiceTile(question),
                                 ],
-                                if (question.flipCardTag !=
-                                    FlipCardTag.multipleChoiceQuestions) ...[
-                                  FlipCardTile(
-                                    question,
-                                    editMode: false,
-                                  ),
+                                if (question.topicTag !=
+                                    TopicTag.multipleChoiceQuestions) ...[
+                                  FlipCardTile(question),
                                 ],
                                 SizedBox(
                                   height: customButtonGap,
@@ -158,9 +156,6 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               ],
             ),
           ),
-          floatingActionButton: QuestionNavigationButtons(
-            pageController: _pageController,
-          ),
         ),
         if (quizState.selectedQuestions.isNotEmpty &&
             currentQuestion?.answerStage == AnswerStage.correct) ...[
@@ -171,6 +166,12 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             animate: currentQuestion?.answerStage == AnswerStage.correct,
           ),
         ],
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: QuestionNavigationButtons(
+            pageController: _pageController,
+          ),
+        ),
       ],
     );
   }

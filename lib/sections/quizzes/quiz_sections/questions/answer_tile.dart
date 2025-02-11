@@ -1,13 +1,17 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/animation/pop_out_animation.dart';
 import 'package:economics_app/app/animation/shake_animation.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
+import 'package:economics_app/sections/quizzes/methods/get_box_shadow.dart';
+import 'package:economics_app/sections/quizzes/methods/get_current_pref.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../../app/configs/constants.dart';
-import '../quiz_models/question_model.dart';
+import '../../../../app/configs/constants.dart';
+import 'quiz_models/question_model.dart';
 
 class AnswerTile extends ConsumerStatefulWidget {
   const AnswerTile({
@@ -32,15 +36,17 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
   @override
   Widget build(BuildContext context) {
     ///Define variables
-    final size = MediaQuery.of(context).size;
-
 
     final quizNotifier = ref.read(quizProvider.notifier);
     final theme = Theme.of(context);
+    final startState = ref.watch(startQuizProvider);
     final colorScheme = theme.colorScheme;
     final answerStage = widget.answer.answerStage;
 
     Color backgroundColor = colorScheme.surface;
+
+    final showAnswersAtEnd =
+        getCurrentPref(startState).showAnswersAtEnd ?? false;
 
     IconData? icon;
     bool isSelected = answerStage == AnswerStage.selected;
@@ -49,6 +55,7 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
 
     if (answerStage == AnswerStage.selected) {
       backgroundColor = Colors.indigo;
+      indexColor = Colors.white;
     }
     if (answerStage == AnswerStage.correct) {
       backgroundColor = colorScheme.primary;
@@ -87,85 +94,75 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
       child: Container(
         decoration: BoxDecoration(
           boxShadow: [
-            BoxShadow(
-                color: Theme.of(context).colorScheme.shadow,
-                blurRadius: 3,
-                offset: Offset(2, 2)),
+            buildBoxShadow(context),
           ],
           borderRadius: BorderRadius.circular(kRadius),
+          border: Border.all(
+            color: theme.colorScheme.scrim,
+          ),
           color: backgroundColor,
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: size.height * kFormSpacing),
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(kRadius),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: backgroundColor,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(size.height * 0.005),
-                    child: ListTile(
-                      titleAlignment: ListTileTitleAlignment.center,
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
-                      leading: Text(
-                        (widget.answerIndex + 1).toAlphabet(),
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          color: indexColor,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      title: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.answer.answer,
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.displaySmall?.copyWith(
-                              color: answerTextColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      trailing: PopOutAnimation(
-                        duration: 300,
-                        addPop: true,
-                        animate: icon != null,
-                        child: Icon(
-                          icon,
-                          color: Colors.white,
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(kRadius),
+              child: ListTile(
+                titleAlignment: ListTileTitleAlignment.center,
+                contentPadding: EdgeInsets.all(12),
+                leading: Text(
+                  (widget.answerIndex + 1).toAlphabet(),
+                  style: theme.textTheme.titleLarge?.copyWith(
+                      color: indexColor, fontWeight: FontWeight.bold),
+                ),
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: AutoSizeText(
+                        widget.answer.answer,
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.displaySmall?.copyWith(
+                          color: answerTextColor,
                         ),
                       ),
                     ),
+                  ],
+                ),
+                trailing: PopOutAnimation(
+                  duration: 300,
+                  addPop: true,
+                  animate: icon != null,
+                  child: Icon(
+                    icon,
+                    color: Colors.white,
                   ),
                 ),
               ),
-              Positioned.fill(
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(kRadius),
-                    onTap: () {
-                      // getIt<AudioManager>().playSound('other/select');
-                      quizNotifier.setQuestionAsSelected(
-                          widget.question, widget.answer);
-                      setState(
-                        () {
-                          _animate = true;
-                        },
-                      );
+            ),
+            Positioned.fill(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(kRadius),
+                  onTap: () {
+                    // getIt<AudioManager>().playSound('other/select');
+                    quizNotifier.setQuestionAsSelected(
+                        widget.question, widget.answer);
+                    setState(
+                      () {
+                        _animate = true;
+                      },
+                    );
 
+                    if (!showAnswersAtEnd) {
                       quizNotifier.checkAnswer(
                           context: context, question: widget.question);
-                    },
-                  ),
+                    }
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

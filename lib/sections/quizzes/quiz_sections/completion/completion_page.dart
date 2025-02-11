@@ -1,5 +1,11 @@
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
+import 'package:economics_app/app/custom_widgets/custom_divider.dart';
+import 'package:economics_app/sections/quizzes/methods/reset_questions_models.dart';
+import 'package:economics_app/sections/quizzes/methods/shuffle_question_models.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/start_page.dart';
 import 'package:economics_app/sections/tab_main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,37 +23,10 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final selectedQuestionsState = ref.watch(
-      quizProvider.select(
-        (s) => s.selectedQuestions,
-      ),
-    );
+    final theme = Theme.of(context);
+    final quizState = ref.watch(quizProvider);
     final quizNotifier = ref.read(quizProvider.notifier);
-    const spacing = 0.01;
-    int numberCorrect = 0;
-    int totalQuestions = selectedQuestionsState.length;
-
-    for (var q in selectedQuestionsState) {
-      if (q.answerStage == AnswerStage.correct) {
-        numberCorrect++;
-      }
-    }
-    double percentCorrect = 0.0;
-    if (totalQuestions > 1) {
-      percentCorrect = numberCorrect / totalQuestions;
-    }
-
-    String emoji = '';
-    if (percentCorrect < 0.50) {
-      emoji = '📈';
-    } else if (percentCorrect >= 0.50 && percentCorrect < 0.85) {
-      emoji = '🚀';
-    } else if (percentCorrect >= 0.85 && percentCorrect <= 0.99) {
-      emoji = '🏆';
-    } else if (percentCorrect == 1.00) {
-      emoji = '🎯';
-    }
-
+    const spacing = 0.03;
     return Stack(
       children: [
         Center(
@@ -76,7 +55,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                     vertical: size.height * spacing,
                   ),
                   child: Text(
-                    emoji,
+                    quizState.results.resultEmoji,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontSize: 100,
                         ),
@@ -84,99 +63,163 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                 ),
               ],
             ),
-            content: Builder(builder: (context) {
-              final size = MediaQuery.of(context).size;
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.01,
-                        vertical: size.height * 0.01),
-                    child: Column(
-                      children: [
-                        FittedBox(
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: size.height * spacing,
-                                ),
-                                child: Text(
-                                  '${(percentCorrect * 100).round()}%',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                ),
+            content: ConstrainedBox(
+              constraints: BoxConstraints(minWidth: size.width * 0.60),
+              child: Builder(builder: (context) {
+                final size = MediaQuery.of(context).size;
+                return SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      FittedBox(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: size.height * spacing,
                               ),
-                            ],
-                          ),
-                        ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            style: Theme.of(context).textTheme.titleLarge,
-                            children: [
-                              TextSpan(
-                                text: '$numberCorrect',
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const TextSpan(
-                                text: ' of ',
-                              ),
-                              TextSpan(
-                                text: '$totalQuestions',
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
+                              child: Text(
+                                quizState.results.percentCorrect,
+                                style: theme.textTheme.displayLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.primary,
                                 ),
                               ),
-                              const TextSpan(
-                                text: ' questions were answered correctly',
+                            ),
+                          ],
+                        ),
+                      ),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: theme.textTheme.titleLarge,
+                          children: [
+                            TextSpan(
+                              text: quizState.results.totalAnsweredCorrect
+                                  .toString(),
+                              style: TextStyle(
+                                color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32,
                               ),
-                            ],
-                          ),
-                        )
+                            ),
+                            const TextSpan(
+                              text: ' of ',
+                            ),
+                            TextSpan(
+                              text: quizState.results.totalAnswered.toString(),
+                              style: TextStyle(
+                                color: theme.colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32,
+                              ),
+                            ),
+                            const TextSpan(
+                              text: ' answers were correct',
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }),
+            ),
+            actions: [
+              Column(
+                children: [
+                  SizedBox(
+                    height: size.height * 0.03,
+                  ),
+                  if (!quizState.results.allQuestionsAreCorrect) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomChipButton(
+                          text: 'Retest incorrect answers',
+                          onPressed: () {
+                            List<QuestionModel> incorrectQuestions = [];
+                            for (var q in quizState.selectedQuestions) {
+                              if (q.answerStage == AnswerStage.incorrect) {
+                                incorrectQuestions.add(q);
+                              }
+                            }
+
+                            incorrectQuestions =
+                                resetAnswerStage(incorrectQuestions.toList());
+
+                            quizNotifier.setResetQuestions();
+                            incorrectQuestions = shuffleQuestionsAndAnswers(
+                                incorrectQuestions.toList());
+                            quizNotifier.setSelectedQuestions(
+                                incorrectQuestions.toList());
+
+                            WidgetsBinding.instance.addPostFrameCallback((t) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => QuestionPage(),
+                                ),
+                              );
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: size.width * 0.01,
+                        ),
+                        CustomChipButton(
+                          text: 'Review incorrect answers',
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    const IncorrectAnswersPage()));
+                          },
+                          isSelected: true,
+                        ),
                       ],
                     ),
-                  )
-                ],
-              );
-            }),
-            actionsAlignment: MainAxisAlignment.spaceEvenly,
-            actions: [
-              if (percentCorrect != 1.0) ...[
-                CustomChipButton(
-                  text: 'Review incorrect answers',
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const IncorrectAnswersPage()));
-                  },
-                  isSelected: true,
-                ),
-              ],
-              CustomChipButton(
-                text: 'New quiz',
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const TabBarMain(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: size.height * 0.02,
+                      ),
+                      child: CustomDivider(),
                     ),
-                  );
-                  WidgetsBinding.instance.addPostFrameCallback((t) {
-                    quizNotifier.setResetQuestions();
-                  });
-                },
-                isSelected: true,
+                  ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomChipButton(
+                        text: 'New quiz',
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (context) => const StartPage()),
+                          );
+                          WidgetsBinding.instance.addPostFrameCallback((t) {
+                            quizNotifier.setResetQuestions();
+                          });
+                        },
+                        isSelected: true,
+                      ),
+                      SizedBox(
+                        width: size.width * 0.02,
+                      ),
+                      CustomChipButton(
+                        text: 'Home',
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (context) => const TabBarMain()),
+                          );
+                          WidgetsBinding.instance.addPostFrameCallback((t) {
+                            quizNotifier.setResetQuestions();
+                          });
+                        },
+                        isSelected: true,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

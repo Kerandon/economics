@@ -1,44 +1,42 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/utils/mixins/course_mixin.dart';
 import '../../../app/utils/models/course.dart';
-import '../quiz_enums/flip_card_tag.dart';
+
+import '../quiz_enums/topic_tag.dart';
 import '../quiz_sections/questions/quiz_models/user_prefs.dart';
 
 class StartQuizState {
-  final QuestionType questionType;
   final CourseMixin course;
+  final List<QuestionModel> allTopicQuestions;
   final List<QuestionModel> filteredQuestions;
-  final FlipCardTag flipCardTag;
+  final TopicTag topicTag;
   final List<UserPref> userPrefs;
   final List<int> numberOfQuestions;
 
   StartQuizState({
-    required this.questionType,
     required this.course,
+    required this.allTopicQuestions,
     required this.filteredQuestions,
-    required this.flipCardTag,
+    required this.topicTag,
     required this.userPrefs,
     required this.numberOfQuestions,
   });
 
   StartQuizState copyWith({
-    QuestionType? questionType,
     CourseMixin? course,
+    List<QuestionModel>? allTopicQuestions,
     List<QuestionModel>? filteredQuestions,
-    FlipCardTag? flipCardTag,
+    TopicTag? topicTag,
     List<UserPref>? userPrefs,
     List<int>? numberOfQuestions,
   }) {
     return StartQuizState(
-      filteredQuestions: filteredQuestions ?? this.filteredQuestions,
       course: course ?? this.course,
-      questionType: questionType ?? this.questionType,
-      flipCardTag: flipCardTag ?? this.flipCardTag,
+      allTopicQuestions: allTopicQuestions ?? this.allTopicQuestions,
+      filteredQuestions: filteredQuestions ?? this.filteredQuestions,
+      topicTag: topicTag ?? this.topicTag,
       userPrefs: userPrefs ?? this.userPrefs,
       numberOfQuestions: numberOfQuestions ?? this.numberOfQuestions,
     );
@@ -54,56 +52,42 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     );
   }
 
-  void setFilteredQuestions(UserPref pref, List<QuestionModel> allQuestions) {
-    // Step 1: Filter questions by course
-    List<QuestionModel> filteredQuestions = allQuestions
-        .where((q) =>
-            q.course == pref.course) // Keep questions that match the course
-        .toList();
+  void setAllTopicQuestions(List<QuestionModel> allQuestions) {
+    List<QuestionModel> allTopic = allQuestions.toList();
+    allTopic.retainWhere(
+        (e) => e.course == state.course && e.topicTag == state.topicTag);
 
-    // Step 2: Filter questions by selected units (if selectedUnits is not null and not empty)
-    if (pref.quizFilter == QuizFilter.unit && pref.selectedUnits != null) {
-      filteredQuestions = filteredQuestions
-          .where((q) => pref.selectedUnits!
-              .contains(q.unit)) // Keep questions that match selected units
-          .toList();
-    }
-
-    // If no units are selected, include all questions (matching the course) by default
-    if (pref.quizFilter == QuizFilter.subunit && pref.selectedSubunits != null) {
-      filteredQuestions = filteredQuestions
-          .where((q) => pref.selectedSubunits!
-              .contains(q.subunit)) // Keep questions that match selected units
-          .toList();
-    }
-
-    // If no units are selected, include all questions (matching the course) by default
-    // Step 3: Sort the filtered questions
-    filteredQuestions.shuffle();
-    for (var q in filteredQuestions) {
-      q.answers?.shuffle();
-      for (var i = 0; i < q.answers!.length; i++) {
-        // Update the answer directly in the list
-        q.answers![i] =
-            q.answers![i].copyWith(answerStage: AnswerStage.notSelected);
-      }
-    }
-
-    // Step 4: Update the state with the filtered and sorted questions
-
-    state = state.copyWith(filteredQuestions: filteredQuestions);
-    setNumberOfPossibleQuestions(pref, allQuestions.toList());
+    state = state.copyWith(allTopicQuestions: allTopic.toList());
   }
 
-  void setFlipCardTag(FlipCardTag tag) {
-    state = state.copyWith(flipCardTag: tag);
+  void setFilteredQuestions(UserPref pref, List<QuestionModel> allQuestions) {
+    List<QuestionModel> filteredQuestions = allQuestions.toList();
+
+    if (pref.selectedUnits?.isNotEmpty ?? false) {
+      filteredQuestions.retainWhere((e) {
+        return pref.selectedUnits!.contains(e.unit);
+      });
+    }
+    if (pref.selectedSubunits?.isNotEmpty ?? false) {
+      filteredQuestions.retainWhere((e) {
+        return pref.selectedUnits!.contains(e.unit) &&
+            pref.selectedSubunits!.contains(e.subunit);
+      });
+    }
+
+    state = state.copyWith(filteredQuestions: filteredQuestions.toList());
+    setNumberOfPossibleQuestions(pref);
+  }
+
+  void setFlipCardTag(TopicTag tag) {
+    state = state.copyWith(topicTag: tag);
   }
 
   void updateUserPrefs(UserPref pref, List<QuestionModel> allQuestions) {
     List<UserPref> existing = state.userPrefs.toList();
     for (int i = 0; i < existing.length; i++) {
       if (pref.course == existing[i].course &&
-          pref.flipCardTag == existing[i].flipCardTag) {
+          pref.topicTag == existing[i].topicTag) {
         existing.removeAt(i);
         existing.insert(i, pref);
       }
@@ -117,15 +101,17 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     state = state.copyWith(userPrefs: prefs);
   }
 
-  void setNumberOfPossibleQuestions(UserPref pref, List<QuestionModel> allQuestions) {
+  void setNumberOfPossibleQuestions(UserPref pref) {
     final totalQuestions = state.filteredQuestions.length;
     List<int> numberOfPossibleQuestions =
-    kMaxNumberOfQuestions.where((n) => n <= totalQuestions).toList();
+        kMaxNumberOfQuestions.where((n) => n <= totalQuestions).toList();
 
     if (totalQuestions == 0) {
-      numberOfPossibleQuestions = []; // Ensure an empty list when there are zero questions
+      numberOfPossibleQuestions =
+          []; // Ensure an empty list when there are zero questions
     } else {
-      if (numberOfPossibleQuestions.isEmpty || totalQuestions < kMaxNumberOfQuestions.first) {
+      if (numberOfPossibleQuestions.isEmpty ||
+          totalQuestions < kMaxNumberOfQuestions.first) {
         numberOfPossibleQuestions.add(totalQuestions);
       }
       if (totalQuestions > kMaxNumberOfQuestions.last) {
@@ -134,21 +120,23 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     }
 
     state = state.copyWith(numberOfQuestions: numberOfPossibleQuestions);
-    if(numberOfPossibleQuestions.isNotEmpty && !numberOfPossibleQuestions.contains(pref.numberOfQuestions)){
-updateUserPrefs(pref.copyWith(numberOfQuestions: numberOfPossibleQuestions.first), allQuestions.toList());
+    if (numberOfPossibleQuestions.isNotEmpty &&
+        !numberOfPossibleQuestions.contains(pref.numberOfQuestions)) {
+      updateUserPrefs(
+          pref.copyWith(numberOfQuestions: numberOfPossibleQuestions.first),
+          state.allTopicQuestions.toList());
     }
   }
-
 }
 
 final startQuizProvider =
     StateNotifierProvider<StartQuizNotifier, StartQuizState>(
   (ref) => StartQuizNotifier(
     StartQuizState(
-      questionType: QuestionType.flip,
       course: Course(name: kIBEconomics, units: []),
+      allTopicQuestions: [],
       filteredQuestions: [],
-      flipCardTag: FlipCardTag.definitions,
+      topicTag: TopicTag.definitions,
       userPrefs: [],
       numberOfQuestions: [],
     ),

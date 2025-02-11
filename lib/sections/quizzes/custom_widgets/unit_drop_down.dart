@@ -55,8 +55,7 @@ class UnitDropDown extends ConsumerWidget {
             },
             dropdownMenuEntries: editState.course.units.map((e) {
               int numberOfUnits = editState.allQuestions
-                  .where((q) =>
-                      q.flipCardTag == editState.flipCardTag && q.unit == e)
+                  .where((q) => q.topicTag == editState.topicTag && q.unit == e)
                   .length;
               return DropdownMenuEntry(
                 value: e,
@@ -80,7 +79,7 @@ class UnitDropDown extends ConsumerWidget {
               editState.unit.subunits;
               int numberOfSubunits = 0;
               for (var q in editState.allQuestions) {
-                if (q.flipCardTag == editState.flipCardTag && q.subunit == e) {
+                if (q.topicTag == editState.topicTag && q.subunit == e) {
                   numberOfSubunits++;
                 }
               }

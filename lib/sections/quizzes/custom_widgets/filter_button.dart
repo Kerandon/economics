@@ -20,7 +20,6 @@ class QuizFilterButton extends ConsumerWidget {
         IconButton(
           icon: const Icon(
             Icons.filter_alt_outlined,
-            color: Colors.white,
           ),
           onPressed: () {
             showModalBottomSheet(
@@ -33,12 +32,8 @@ class QuizFilterButton extends ConsumerWidget {
             );
           },
         ),
-        Text(
-          editState.filteredQuestions.length.toString(),
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: Colors.white,
-              ),
-        ),
+        Text(editState.filteredQuestions.length.toString(),
+            style: Theme.of(context).textTheme.titleLarge),
       ],
     );
   }

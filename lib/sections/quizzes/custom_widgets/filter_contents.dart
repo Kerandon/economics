@@ -1,14 +1,12 @@
 import 'package:economics_app/app/custom_widgets/gap.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/course_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/quiz_filter_buttons.dart';
-import 'package:economics_app/sections/quizzes/custom_widgets/quiz_type_buttons.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/unit_drop_down.dart';
-
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/configs/constants.dart';
-import '../quiz_enums/flip_card_tag.dart';
+import '../quiz_enums/topic_tag.dart';
 
 class FilterContents extends ConsumerWidget {
   const FilterContents({
@@ -47,12 +45,6 @@ class FilterContents extends ConsumerWidget {
                 showDivider: true,
               ),
             ],
-            if (showQuestionType) ...[
-              const QuizTypeButtons(),
-              const Gap(
-                showDivider: true,
-              ),
-            ],
             const QuizFilterButtons(),
             const Gap(
               showDivider: true,
@@ -66,7 +58,7 @@ class FilterContents extends ConsumerWidget {
             Wrap(
               alignment: WrapAlignment.center,
               spacing: size.width * kWrapSpacing,
-              children: FlipCardTag.values.map(
+              children: TopicTag.values.map(
                 (e) {
                   final isSelected = editState.selectedFlipCardTags.contains(e);
                   final onSurfaceColor = isSelected

@@ -120,7 +120,7 @@ class AllDiagrams {
         model: DiagramModel(
           unit: UnitType.global,
           type: DiagramType.internationalTrade,
-          subtype: DiagramSubtype.importer,
+          subtype: DiagramSubtype.exporter,
         ),
       ),
       InternationalTrade(
@@ -128,7 +128,7 @@ class AllDiagrams {
         model: DiagramModel(
           unit: UnitType.global,
           type: DiagramType.internationalTrade,
-          subtype: DiagramSubtype.exporter,
+          subtype: DiagramSubtype.importer,
         ),
       ),
       ComparativeAdvantage(

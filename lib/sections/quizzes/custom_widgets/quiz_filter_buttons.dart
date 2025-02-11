@@ -26,7 +26,7 @@ class QuizFilterButtons extends ConsumerWidget {
               if (e == QuizFilter.all) {
                 int numberOfQuestionsInCourse = 0;
                 for (var q in editState.allQuestions) {
-                  if (q.flipCardTag == editState.flipCardTag &&
+                  if (q.topicTag == editState.topicTag &&
                       q.course == editState.course) {
                     numberOfQuestionsInCourse++;
                   }

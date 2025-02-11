@@ -112,8 +112,8 @@ class _FlipAnimationState extends State<FlipAnimation>
           alignment: Alignment.center,
           transform: Matrix4.identity()
             ..setEntry(3, 2, 0.0003)
-            ..rotateY(((_curvedAnimation.value * pi) / 1))
-            ..rotateY(mirrorFlip ? pi : 0),
+            ..rotateX(((_curvedAnimation.value * pi) / 1))
+            ..rotateX(mirrorFlip ? pi : 0),
           child: widget.child,
         );
       },

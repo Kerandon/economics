@@ -94,10 +94,12 @@ class CustomChipButton extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(text!,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: iconAndTextColor,fontSize: textSize ?? 16
-                                  )),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  color: iconAndTextColor,
+                                  fontSize: textSize ?? 16)),
                     ),
                   ],
                 ],

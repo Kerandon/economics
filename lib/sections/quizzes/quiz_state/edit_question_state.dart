@@ -10,7 +10,8 @@ import '../../../app/utils/mixins/unit_mixin.dart';
 import '../../../app/utils/models/course.dart';
 import '../../../app/utils/models/unit.dart';
 import '../quiz_enums/custom_tag.dart';
-import '../quiz_enums/flip_card_tag.dart';
+import '../quiz_enums/question_part_enum.dart';
+import '../quiz_enums/topic_tag.dart';
 
 class EditQuestionState {
   final QuestionType questionType;
@@ -21,12 +22,15 @@ class EditQuestionState {
   final UnitMixin unit;
   final UnitMixin subunit;
   final List<QuestionModel> allQuestions;
-  final FlipCardTag flipCardTag;
-  final List<FlipCardTag> selectedFlipCardTags;
+  final TopicTag topicTag;
+  final List<TopicTag> selectedFlipCardTags;
   final bool isHL;
   final DiagramsNumber diagramsNumber;
   final List<DiagramModel> selectedDiagrams;
   final List<CustomTag> customTags;
+  final QuestionModel currentQuestion;
+  final int numberOfAnswers;
+  final QuestionPart questionPart;
 
   EditQuestionState({
     required this.questionType,
@@ -37,12 +41,15 @@ class EditQuestionState {
     required this.subunit,
     required this.allQuestions,
     required this.filteredQuestions,
-    required this.flipCardTag,
+    required this.topicTag,
     required this.selectedFlipCardTags,
     required this.isHL,
     required this.diagramsNumber,
     required this.selectedDiagrams,
     required this.customTags,
+    required this.currentQuestion,
+    required this.numberOfAnswers,
+    required this.questionPart,
   });
 
   EditQuestionState copyWith({
@@ -54,12 +61,15 @@ class EditQuestionState {
     UnitMixin? unit,
     UnitMixin? subunit,
     List<QuestionModel>? allQuestions,
-    FlipCardTag? flipCardTag,
-    List<FlipCardTag>? selectedFlipCardTags,
+    TopicTag? topicTag,
+    List<TopicTag>? selectedFlipCardTags,
     bool? isHL,
     DiagramsNumber? diagramsNumber,
     List<DiagramModel>? selectedDiagrams,
     List<CustomTag>? customTags,
+    QuestionModel? currentQuestion,
+    int? numberOfAnswers,
+    QuestionPart? questionPart,
   }) {
     return EditQuestionState(
       courses: courses ?? this.courses,
@@ -70,12 +80,15 @@ class EditQuestionState {
       questionType: questionType ?? this.questionType,
       unit: unit ?? this.unit,
       subunit: subunit ?? this.subunit,
-      flipCardTag: flipCardTag ?? this.flipCardTag,
+      topicTag: topicTag ?? this.topicTag,
       selectedFlipCardTags: selectedFlipCardTags ?? this.selectedFlipCardTags,
       isHL: isHL ?? this.isHL,
       diagramsNumber: diagramsNumber ?? this.diagramsNumber,
       selectedDiagrams: selectedDiagrams ?? this.selectedDiagrams,
       customTags: customTags ?? this.customTags,
+      currentQuestion: currentQuestion ?? this.currentQuestion,
+      numberOfAnswers: numberOfAnswers ?? this.numberOfAnswers,
+      questionPart: questionPart ?? this.questionPart,
     );
   }
 }
@@ -135,7 +148,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     List<QuestionModel> filteredQuestions = state.allQuestions.toList();
 
     for (var q in state.allQuestions) {
-      if (!state.selectedFlipCardTags.contains(q.flipCardTag)) {
+      if (!state.selectedFlipCardTags.contains(q.topicTag)) {
         filteredQuestions.remove(q);
       }
 
@@ -159,12 +172,12 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(filteredQuestions: filteredQuestions.toList());
   }
 
-  void setFlipCardTag(FlipCardTag tag) {
-    state = state.copyWith(flipCardTag: tag);
+  void setFlipCardTag(TopicTag tag) {
+    state = state.copyWith(topicTag: tag);
   }
 
-  void setSelectedFlipCardTags(FlipCardTag tag) {
-    final updatedTags = List<FlipCardTag>.from(state.selectedFlipCardTags);
+  void setSelectedFlipCardTags(TopicTag tag) {
+    final updatedTags = List<TopicTag>.from(state.selectedFlipCardTags);
 
     if (updatedTags.contains(tag)) {
       updatedTags.remove(tag);
@@ -188,7 +201,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     if (diagramsNum > currentLengthList) {
       final difference = diagramsNum - currentLengthList;
 
-      final allDiagrams = DiagramModel.getDiagrams(size, context);
+      final allDiagrams = DiagramModel.getAllDiagrams(size, context);
 
       final newEntries = List.generate(
         difference,
@@ -219,25 +232,56 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     }
     state = state.copyWith(customTags: currentList);
   }
+
+  void updateCurrentQuestion(QuestionModel question) {
+    state = state.copyWith(currentQuestion: question);
+  }
+
+  void setNumberOfAnswers(int number) {
+    final answers = state.currentQuestion.answers?.toList();
+
+    if (answers!.isNotEmpty) {
+      for (int i = 0; i < answers.length; i++) {
+        if (i >= number) {
+          answers[i] = answers[i].copyWith(answer: "", isCorrect: false);
+        }
+      }
+    }
+
+    state = state.copyWith(
+      numberOfAnswers: number,
+      currentQuestion: state.currentQuestion.copyWith(
+        answers: answers.toList(),
+      ),
+    );
+  }
+
+  void setQuestionPartSelected(QuestionPart part) {
+    state = state.copyWith(questionPart: part);
+  }
 }
 
 final editQuestionProvider =
     StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
   (ref) => EditQuestionNotifier(
     EditQuestionState(
-        questionType: QuestionType.flip,
-        quizFilter: QuizFilter.all,
-        courses: [],
-        course: Course(name: "", units: []),
-        unit: Unit(name: ''),
-        subunit: Unit(name: ''),
-        allQuestions: [],
-        filteredQuestions: [],
-        flipCardTag: FlipCardTag.definitions,
-        selectedFlipCardTags: FlipCardTag.values,
-        isHL: false,
-        diagramsNumber: DiagramsNumber.zero,
-        selectedDiagrams: [],
-        customTags: []),
+      questionType: QuestionType.flip,
+      quizFilter: QuizFilter.all,
+      courses: [],
+      course: Course(name: "", units: []),
+      unit: Unit(name: ''),
+      subunit: Unit(name: ''),
+      allQuestions: [],
+      filteredQuestions: [],
+      topicTag: TopicTag.definitions,
+      selectedFlipCardTags: TopicTag.values,
+      isHL: false,
+      diagramsNumber: DiagramsNumber.zero,
+      selectedDiagrams: [],
+      customTags: [],
+      currentQuestion: QuestionModel(),
+      numberOfAnswers: 4,
+      questionPart: QuestionPart.question,
+    ),
   ),
 );

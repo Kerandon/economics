@@ -73,9 +73,8 @@ class DiagramModel {
     );
   }
 
-  /// If [selectDiagrams] is null, all diagrams will be retrieved
-  static List<DiagramModel> getDiagrams(Size size, BuildContext context,
-      {List<DiagramModel>? selectedDiagrams}) {
+  static List<DiagramModel> getSelectedDiagrams(Size size, BuildContext context,
+      {required List<DiagramModel> selectedDiagrams}) {
     final allDiagrams = AllDiagrams(
       size: size,
       colorScheme: Theme.of(context).colorScheme,
@@ -88,7 +87,7 @@ class DiagramModel {
       all.add(i.model.copyWith(painter: e));
     }
 
-    if (selectedDiagrams != null && selectedDiagrams.isNotEmpty) {
+    if (selectedDiagrams.isNotEmpty) {
       List<DiagramModel> selected = [];
       for (var s in selectedDiagrams) {
         for (var a in all) {
@@ -99,7 +98,22 @@ class DiagramModel {
       }
       return selected.toList();
     } else {
-      return all.toList();
+      return [];
     }
+  }
+
+  static List<DiagramModel> getAllDiagrams(Size size, BuildContext context) {
+    final allDiagrams = AllDiagrams(
+      size: size,
+      colorScheme: Theme.of(context).colorScheme,
+    ).getAllPainterDiagrams();
+
+    List<DiagramModel> all = [];
+    for (var e in allDiagrams) {
+      final i = e as DiagramIdentifierMixin;
+
+      all.add(i.model.copyWith(painter: e));
+    }
+    return all;
   }
 }
