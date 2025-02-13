@@ -1,12 +1,10 @@
-import 'package:economics_app/app/utils/models/course.dart';
+import 'package:economics_app/app/enums/course_enum.dart';
 import 'package:economics_app/sections/quizzes/question_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
-
 import 'package:economics_app/sections/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../app/configs/constants.dart';
+import '../app/utils/models/course_model.dart';
 
 class TabBarMain extends ConsumerStatefulWidget {
   const TabBarMain({super.key});
@@ -47,27 +45,27 @@ class _TabBarMainState extends ConsumerState<TabBarMain>
           onTap: (index) {
             if (index == 0) {
               startQuizNotifier.setCourse(
-                Course(
-                  name: kIBEconomics,
+                CourseModel(
+                  course: CourseEnum.ib,
                   units: [],
                 ),
               );
             } else if (index == 1) {
               startQuizNotifier.setCourse(
-                Course(
-                  name: kIGCSEEconomics,
+                CourseModel(
+                  course: CourseEnum.igcse,
                   units: [],
                 ),
               );
             }
           },
           controller: _tabController,
-          tabs: const <Widget>[
+          tabs: <Widget>[
             Tab(
-              text: kIBEconomics,
+              text: CourseEnum.ib.name,
             ),
             Tab(
-              text: kIGCSEEconomics,
+              text: CourseEnum.igcse.name,
             ),
           ],
         ),

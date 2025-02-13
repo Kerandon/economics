@@ -1,7 +1,5 @@
-import 'package:economics_app/app/configs/constants.dart';
-
 import 'package:flutter/material.dart';
-
+import '../../quizzes/quiz_enums/diagram_enum.dart';
 import '../data/all_diagrams.dart';
 import '../enums/diagram_subtype.dart';
 import '../enums/diagram_type.dart';
@@ -19,23 +17,26 @@ class DiagramModel {
   // Serialization method
   Map<String, dynamic> toMap() {
     return {
-      kUnit: unit?.name,
-      kType: type?.name,
-      kSubtype: subtype?.name,
+      DiagramKey.unit.name: unit?.name,
+      DiagramKey.type.name: type?.name,
+      DiagramKey.subtype.name: subtype?.name,
     };
   }
 
   // Deserialization method from Firebase
   factory DiagramModel.fromFirebase(Map<String, dynamic> map) {
     return DiagramModel(
-      unit: map[kUnit] != null
-          ? UnitType.values.firstWhere((e) => e.name == map[kUnit])
+      unit: map[DiagramKey.unit.name] != null
+          ? UnitType.values
+              .firstWhere((e) => e.name == map[DiagramKey.unit.name])
           : null,
-      type: map[kType] != null
-          ? DiagramType.values.firstWhere((e) => e.name == map[kType])
+      type: map[DiagramKey.type.name] != null
+          ? DiagramType.values
+              .firstWhere((e) => e.name == map[DiagramKey.type.name])
           : null,
-      subtype: map[kSubtype] != null
-          ? DiagramSubtype.values.firstWhere((e) => e.name == map[kSubtype])
+      subtype: map[DiagramKey.subtype.name] != null
+          ? DiagramSubtype.values
+              .firstWhere((e) => e.name == map[DiagramKey.subtype.name])
           : null,
     );
   }

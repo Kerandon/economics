@@ -1,3 +1,4 @@
+import 'package:economics_app/app/enums/course_enum.dart';
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
@@ -5,22 +6,20 @@ import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/utils/mixins/course_mixin.dart';
-import '../../../app/utils/mixins/unit_mixin.dart';
-import '../../../app/utils/models/course.dart';
-import '../../../app/utils/models/unit.dart';
+import '../../../app/utils/models/course_model.dart';
+import '../../../app/utils/models/unit_model.dart';
 import '../quiz_enums/custom_tag.dart';
 import '../quiz_enums/question_part_enum.dart';
 import '../quiz_enums/topic_tag.dart';
 
 class EditQuestionState {
   final QuestionType questionType;
-  final List<CourseMixin> courses;
-  final CourseMixin course;
+  final List<CourseModel> courses;
+  final CourseModel course;
   final QuizFilter quizFilter;
   final List<QuestionModel> filteredQuestions;
-  final UnitMixin unit;
-  final UnitMixin subunit;
+  final UnitModel unit;
+  final UnitModel subunit;
   final List<QuestionModel> allQuestions;
   final TopicTag topicTag;
   final List<TopicTag> selectedFlipCardTags;
@@ -54,12 +53,12 @@ class EditQuestionState {
 
   EditQuestionState copyWith({
     QuestionType? questionType,
-    List<CourseMixin>? courses,
-    CourseMixin? course,
+    List<CourseModel>? courses,
+    CourseModel? course,
     QuizFilter? quizFilter,
     List<QuestionModel>? filteredQuestions,
-    UnitMixin? unit,
-    UnitMixin? subunit,
+    UnitModel? unit,
+    UnitModel? subunit,
     List<QuestionModel>? allQuestions,
     TopicTag? topicTag,
     List<TopicTag>? selectedFlipCardTags,
@@ -106,13 +105,13 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     setFilteredQuestions();
   }
 
-  void setCourses(List<CourseMixin> courses) {
+  void setCourses(List<CourseModel> courses) {
     state = state.copyWith(courses: courses);
     setFilteredQuestions();
   }
 
-  void setCourse(CourseMixin course) {
-    UnitMixin? u, s;
+  void setCourse(CourseModel course) {
+    UnitModel? u, s;
     if (course.units.isNotEmpty) {
       u = course.units.first;
     }
@@ -128,13 +127,13 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     setFilteredQuestions();
   }
 
-  void setUnit(UnitMixin unit) {
+  void setUnit(UnitModel unit) {
     state = state.copyWith(unit: unit);
 
     setFilteredQuestions();
   }
 
-  void setSubunit(UnitMixin unit) {
+  void setSubunit(UnitModel unit) {
     state = state.copyWith(subunit: unit);
     setFilteredQuestions();
   }
@@ -268,9 +267,9 @@ final editQuestionProvider =
       questionType: QuestionType.flip,
       quizFilter: QuizFilter.all,
       courses: [],
-      course: Course(name: "", units: []),
-      unit: Unit(name: ''),
-      subunit: Unit(name: ''),
+      course: CourseModel(course: CourseEnum.ib, units: []),
+      unit: UnitModel(name: ''),
+      subunit: UnitModel(name: ''),
       allQuestions: [],
       filteredQuestions: [],
       topicTag: TopicTag.definitions,

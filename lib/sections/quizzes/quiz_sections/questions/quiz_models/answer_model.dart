@@ -1,8 +1,7 @@
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../../../../app/configs/constants.dart';
 import '../../../../diagrams/models/diagram_model.dart';
+import '../../../quiz_enums/question_key.dart';
 
 class AnswerModel extends Equatable {
   final String answer;
@@ -19,17 +18,33 @@ class AnswerModel extends Equatable {
 
   factory AnswerModel.fromMap(Map<String, dynamic> map) {
     return AnswerModel(
-      map[kAnswer],
-      isCorrect: map[kIsCorrect] ?? true,
+      map[QuestionKey.answer.name] as String? ?? '', // Ensure a non-null string
+      isCorrect: map[QuestionKey.correct.name] as bool? ?? true,
       answerStage: AnswerStage.notSelected,
-      diagrams: DiagramModel.fromFirebaseList(map[kDiagrams]),
+      diagrams: (map[QuestionKey.diagrams.name] != null &&
+              map[QuestionKey.diagrams.name] is List)
+          ? DiagramModel.fromFirebaseList(
+              map[QuestionKey.diagrams.name] as List)
+          : null,
     );
   }
 
-  static List<AnswerModel> fromMapList(List<dynamic> list) {
-    return list
-        .map((e) => AnswerModel.fromMap(e as Map<String, dynamic>))
-        .toList();
+  static List<AnswerModel>? fromMapList(Map<String, dynamic>? map) {
+    if (map == null || !map.containsKey(QuestionKey.answers.name)) {
+      return null;
+    }
+
+    final answersList = map[QuestionKey.answers.name];
+
+    if (answersList is List) {
+      return answersList
+          .whereType<
+              Map<String, dynamic>>() // Ensure only valid maps are processed
+          .map(AnswerModel.fromMap)
+          .toList();
+    }
+
+    return null;
   }
 
   AnswerModel copyWith({
@@ -48,10 +63,11 @@ class AnswerModel extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
-      kAnswer: answer,
-      kIsCorrect: isCorrect,
-      kAnswerStage: answerStage.name,
-      kDiagrams: diagrams?.map((e) => e.toMap()).toList(),
+      QuestionKey.answer.name: answer,
+      QuestionKey.correct.name: isCorrect,
+      QuestionKey.answerStage.name: answerStage.name,
+      if (diagrams != null)
+        QuestionKey.diagrams.name: diagrams!.map((e) => e.toMap()),
     };
   }
 

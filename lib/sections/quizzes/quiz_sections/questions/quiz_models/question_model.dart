@@ -1,12 +1,11 @@
-import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/app/utils/models/unit.dart';
+import 'package:economics_app/app/enums/course_enum.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../../app/utils/mixins/course_mixin.dart';
-import '../../../../../app/utils/mixins/unit_mixin.dart';
-import '../../../../../app/utils/models/course.dart';
+import '../../../../../app/utils/models/course_model.dart';
+import '../../../../../app/utils/models/unit_model.dart';
 import '../../../../diagrams/models/diagram_model.dart';
 import '../../../quiz_enums/answer_stage.dart';
 import '../../../quiz_enums/custom_tag.dart';
+import '../../../quiz_enums/question_key.dart';
 import '../../../quiz_enums/question_type.dart';
 import '../../../quiz_enums/topic_tag.dart';
 import 'answer_model.dart';
@@ -14,16 +13,16 @@ import 'answer_model.dart';
 class QuestionModel extends Equatable {
   final String? id;
   final QuestionType? questionType;
-  final CourseMixin? course;
+  final CourseModel? course;
   final String? question;
   final List<DiagramModel>? diagrams;
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
-  final UnitMixin? unit;
-  final UnitMixin? subunit;
+  final UnitModel? unit;
+  final UnitModel? subunit;
   final TopicTag? topicTag;
-  final bool? isHL;
+  final bool? hl;
   final List<CustomTag>? customTags;
 
   const QuestionModel({
@@ -38,7 +37,7 @@ class QuestionModel extends Equatable {
     this.unit,
     this.subunit,
     this.topicTag,
-    this.isHL,
+    this.hl,
     this.customTags,
   });
 
@@ -46,16 +45,16 @@ class QuestionModel extends Equatable {
   QuestionModel copyWith({
     String? id,
     QuestionType? questionType,
-    CourseMixin? course,
+    CourseModel? course,
     String? question,
     List<DiagramModel>? diagrams,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
-    UnitMixin? unit,
-    UnitMixin? subunit,
+    UnitModel? unit,
+    UnitModel? subunit,
     String? explanation,
     TopicTag? topicTag,
-    bool? isHL,
+    bool? hl,
     List<CustomTag>? customTags,
   }) {
     return QuestionModel(
@@ -70,7 +69,7 @@ class QuestionModel extends Equatable {
       unit: unit ?? this.unit,
       subunit: subunit ?? this.subunit,
       topicTag: topicTag ?? this.topicTag,
-      isHL: isHL ?? this.isHL,
+      hl: hl ?? this.hl,
       customTags: customTags ?? this.customTags,
     );
   }
@@ -78,36 +77,45 @@ class QuestionModel extends Equatable {
   // Converts QuestionModel to a map that can be sent to Firebase
   Map<String, dynamic> toMap() {
     return {
-      kQuestionType: questionType?.name,
-      kFlipCardTag: topicTag?.toFireBase(),
-      kCourse: course?.name,
-      kQuestion: question,
-      kAnswers: answers?.map((e) => e.toMap()).toList(),
-      kAnswerStage: answerStage.name, // Enum
-      kExplanation: explanation,
-      kDiagrams: diagrams?.map((e) => e.toMap()).toList(),
-      kUnit: {unit?.index ?? "": unit?.name ?? ""},
-      kSubunit: {subunit?.index ?? "": subunit?.name ?? ""},
-      kIsHL: isHL,
-      kCustomTags: customTags?.toFirebase(),
+      QuestionKey.type.name: questionType?.name,
+      QuestionKey.topic.name: topicTag?.toFireBase(),
+      QuestionKey.course.name: course?.course?.name,
+      QuestionKey.unit.name: {unit?.index ?? "": unit?.name ?? ""},
+      QuestionKey.subunit.name: {subunit?.index ?? "": subunit?.name ?? ""},
+      QuestionKey.question.name: question,
+      QuestionKey.diagrams.name: diagrams?.map((e) => e.toMap()).toList(),
+      QuestionKey.answers.name: answers?.map((e) => e.toMap()).toList(),
+      QuestionKey.answerStage.name: answerStage.name, // Enum
+      QuestionKey.explanation.name: explanation,
+      QuestionKey.hL.name: hl,
+      QuestionKey.customTags.name: customTags?.toFirebase(),
     };
   }
 
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     return QuestionModel(
       id: id,
-      questionType: map[kQuestionType],
+      question: map[QuestionKey.question.name],
+      questionType: map.containsKey(QuestionKey.type.name)
+          ? QuestionTypeExtension.fromText(map[QuestionKey.type.name])
+          : null,
       topicTag: TopicTagFirebase.fromFirebase(map),
-      course: Course(name: map[kCourse], units: []),
-      unit: Unit.fromFirebase(map),
-      subunit: Unit.fromFirebase(map, subunit: true),
-      question: map[kQuestion],
-      answers: AnswerModel.fromMapList(map[kAnswers] as List<dynamic>),
+      course: CourseModel(
+          course: CourseEnumExtension.fromText(map[QuestionKey.course.name]),
+          units: []),
+      unit: UnitModel.fromFirebase(map),
+      subunit: UnitModel.fromFirebase(map, subunit: true),
+      answers: AnswerModel.fromMapList(map)?.toList(),
       answerStage: AnswerStage.notSelected,
-      explanation: map[kExplanation],
-      diagrams: DiagramModel.fromFirebaseList(map[kDiagrams]),
-      isHL: map[kIsHL],
-      customTags: CustomTagFirebaseExtension.fromFirebaseList(map[kCustomTags]),
+      explanation: map.containsKey(QuestionKey.explanation.name)
+          ? map[QuestionKey.explanation.name]
+          : null,
+      diagrams: DiagramModel.fromFirebaseList(map[QuestionKey.diagrams.name]),
+      hl: map.containsKey(QuestionKey.hL.name)
+          ? map[QuestionKey.hL.name]
+          : null,
+      customTags: CustomTagFirebaseExtension.fromFirebaseList(
+          map[QuestionKey.customTags.name]),
     );
   }
 

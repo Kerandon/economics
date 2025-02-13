@@ -1,14 +1,14 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/utils/mixins/course_mixin.dart';
-import '../../../app/utils/models/course.dart';
+import '../../../app/enums/course_enum.dart';
 
+import '../../../app/utils/models/course_model.dart';
 import '../quiz_enums/topic_tag.dart';
 import '../quiz_sections/questions/quiz_models/user_prefs.dart';
 
 class StartQuizState {
-  final CourseMixin course;
+  final CourseModel course;
   final List<QuestionModel> allTopicQuestions;
   final List<QuestionModel> filteredQuestions;
   final TopicTag topicTag;
@@ -25,7 +25,7 @@ class StartQuizState {
   });
 
   StartQuizState copyWith({
-    CourseMixin? course,
+    CourseModel? course,
     List<QuestionModel>? allTopicQuestions,
     List<QuestionModel>? filteredQuestions,
     TopicTag? topicTag,
@@ -46,7 +46,7 @@ class StartQuizState {
 class StartQuizNotifier extends StateNotifier<StartQuizState> {
   StartQuizNotifier(super._state);
 
-  void setCourse(CourseMixin course) {
+  void setCourse(CourseModel course) {
     state = state.copyWith(
       course: course,
     );
@@ -133,7 +133,7 @@ final startQuizProvider =
     StateNotifierProvider<StartQuizNotifier, StartQuizState>(
   (ref) => StartQuizNotifier(
     StartQuizState(
-      course: Course(name: kIBEconomics, units: []),
+      course: CourseModel(course: CourseEnum.ib, units: []),
       allTopicQuestions: [],
       filteredQuestions: [],
       topicTag: TopicTag.definitions,

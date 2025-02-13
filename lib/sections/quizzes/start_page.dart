@@ -10,8 +10,7 @@ import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart'
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/configs/constants.dart';
-import '../../app/utils/models/course.dart';
-import '../../app/utils/models/unit.dart';
+import '../../app/utils/models/unit_model.dart';
 
 class StartPage extends ConsumerStatefulWidget {
   const StartPage({super.key});
@@ -33,7 +32,7 @@ class _StartPageState extends ConsumerState<StartPage> {
     final quizNotifier = ref.read(quizProvider.notifier);
 
     UserPref pref = UserPref(
-      course: startState.course as Course,
+      course: startState.course,
       topicTag: startState.topicTag,
     );
 
@@ -63,7 +62,7 @@ class _StartPageState extends ConsumerState<StartPage> {
             Expanded(
               flex: 12,
               child: AutoSizeText(
-                '${startState.course.name} - ${startState.topicTag.toText()}',
+                '${startState.course} - ${startState.topicTag.toText()}',
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: theme.colorScheme.primary,
                 ),
@@ -178,12 +177,13 @@ class _StartPageState extends ConsumerState<StartPage> {
                           checkmarkColor: onSurfaceColor,
                           onSelected: (_) {
                             // Create a copy of the current selectedUnits list
-                            List<Unit> updatedSelectedUnits =
-                                List<Unit>.from(pref.selectedUnits ?? []);
+                            List<UnitModel> updatedSelectedUnits =
+                                List<UnitModel>.from(pref.selectedUnits ?? []);
 
                             // Create a copy of the current selectedSubunits list
-                            List<Unit> updatedSelectedSubunits =
-                                List<Unit>.from(pref.selectedSubunits ?? []);
+                            List<UnitModel> updatedSelectedSubunits =
+                                List<UnitModel>.from(
+                                    pref.selectedSubunits ?? []);
 
                             // Check if the unit already exists in the list
                             if (updatedSelectedUnits.contains(e)) {
@@ -195,7 +195,7 @@ class _StartPageState extends ConsumerState<StartPage> {
                                   (subunit) => e.subunits.contains(subunit));
                             } else {
                               // If it doesn't exist, add it
-                              updatedSelectedUnits.add(e as Unit);
+                              updatedSelectedUnits.add(e);
                             }
 
                             // Update the user preferences with the new selectedUnits and selectedSubunits lists
@@ -258,8 +258,8 @@ class _StartPageState extends ConsumerState<StartPage> {
                                     selectedColor: theme.colorScheme.primary,
                                     checkmarkColor: onSurfaceColor,
                                     onSelected: (_) {
-                                      List<Unit> updatedSelectedSubunits =
-                                          List<Unit>.from(
+                                      List<UnitModel> updatedSelectedSubunits =
+                                          List<UnitModel>.from(
                                               pref.selectedSubunits ?? []);
                                       if (updatedSelectedSubunits.contains(e)) {
                                         updatedSelectedSubunits.remove(e);

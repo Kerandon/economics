@@ -1,15 +1,16 @@
 import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 
-import '../../../../../app/utils/models/course.dart';
-import '../../../../../app/utils/models/unit.dart';
+import '../../../../../app/utils/models/course_model.dart';
+
+import '../../../../../app/utils/models/unit_model.dart';
 import '../../../quiz_enums/topic_tag.dart';
 
 class UserPref {
-  final Course course;
+  final CourseModel course;
   final TopicTag? topicTag;
   final int? numberOfQuestions;
-  final List<Unit>? selectedUnits;
-  final List<Unit>? selectedSubunits;
+  final List<UnitModel>? selectedUnits;
+  final List<UnitModel>? selectedSubunits;
   final bool? showAnswersAtEnd;
 
   const UserPref({
@@ -23,12 +24,12 @@ class UserPref {
 
   // copyWith method
   UserPref copyWith({
-    Course? course,
+    CourseModel? course,
     TopicTag? topicTag,
     int? numberOfQuestions,
     QuizFilter? quizFilter,
-    List<Unit>? selectedUnits,
-    List<Unit>? selectedSubunits,
+    List<UnitModel>? selectedUnits,
+    List<UnitModel>? selectedSubunits,
     bool? showAnswersAtEnd,
   }) {
     return UserPref(

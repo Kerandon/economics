@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/animation/pop_out_animation.dart';
 import 'package:economics_app/app/animation/shake_animation.dart';
 import 'package:economics_app/app/utils/helper_methods/number_methods.dart';
+import 'package:economics_app/sections/diagrams/diagram_widgets/custom_diagram_builder.dart';
 import 'package:economics_app/sections/quizzes/methods/get_box_shadow.dart';
 import 'package:economics_app/sections/quizzes/methods/get_current_pref.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
@@ -114,10 +115,10 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                   style: theme.textTheme.titleLarge?.copyWith(
                       color: indexColor, fontWeight: FontWeight.bold),
                 ),
-                title: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Flexible(
+                    Expanded(
                       child: AutoSizeText(
                         widget.answer.answer,
                         textAlign: TextAlign.center,
@@ -126,6 +127,10 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
                         ),
                       ),
                     ),
+                    Expanded(
+                        child: CustomDiagramBuilder(
+                            dimensions: 0.10,
+                            diagrams: widget.answer.diagrams?.toList())),
                   ],
                 ),
                 trailing: PopOutAnimation(

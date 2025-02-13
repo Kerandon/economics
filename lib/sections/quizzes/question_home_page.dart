@@ -1,5 +1,4 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/sections/quizzes/diagram_start_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/topic_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
@@ -61,14 +60,9 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
                   ..setFlipCardTag(tag)
                   ..setAllTopicQuestions(editState.allQuestions.toList());
 
-                Widget page = StartPage();
-                if (tag == TopicTag.diagrams) {
-                  page = DiagramStartPage();
-                }
-
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => page,
+                    builder: (context) => StartPage(),
                   ),
                 );
               },

@@ -1,4 +1,5 @@
 import 'package:economics_app/app/configs/constants.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_key.dart';
 
 enum TopicTag {
   multipleChoiceQuestions,
@@ -13,10 +14,22 @@ extension TopicTagFirebase on TopicTag {
     return name;
   }
 
-  // Convert a Map<String, String> (from Firebase) back to a FlipCardTag
-  static fromFirebase(Map<String, dynamic> map) {
-    final t = map[kFlipCardTag] as String;
-    return TopicTag.values.firstWhere((e) => e.name == t);
+// Convert a Map<String, String> (from Firebase) back to a TopicTag
+  static TopicTag? fromFirebase(Map<String, dynamic>? map) {
+    if (map == null || !map.containsKey(QuestionKey.topic.name)) {
+      return null; // Return null if map is null or key is missing
+    }
+
+    final t = map[QuestionKey.topic.name] as String?; // Safe cast to String?
+    if (t == null) {
+      return null; // Return null if value is null
+    }
+
+    try {
+      return TopicTag.values.firstWhere((e) => e.name == t);
+    } catch (e) {
+      return null; // Return null if no matching enum value is found
+    }
   }
 }
 

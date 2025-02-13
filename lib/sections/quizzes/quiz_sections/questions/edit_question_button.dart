@@ -1,6 +1,8 @@
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:flutter/material.dart';
-import '../../../settings/manage_questions/methods/delete_question.dart';
+
+import '../../../settings/add_question/add_question_page.dart';
+import '../../../settings/methods/delete_question.dart';
 
 class EditQuestionButton extends StatelessWidget {
   const EditQuestionButton({
@@ -21,13 +23,9 @@ class EditQuestionButton extends StatelessWidget {
             question,
           );
         } else if (value == 'edit') {
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => AddQuestionForm(
-          //       question: question,
-          //     ),
-          //   ),
-          // );
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => AddQuestionPage()),
+          );
         }
       },
       itemBuilder: (context) => [

@@ -1,4 +1,3 @@
-import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/topic_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
@@ -6,10 +5,9 @@ import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.da
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../app/utils/mixins/course_mixin.dart';
-import '../../app/utils/models/course.dart';
-import '../../app/utils/models/unit.dart';
-import '../settings/edit_courses/helper_methods/get_course_data_from_firebase.dart';
+import '../../app/enums/course_enum.dart';
+import '../../app/utils/models/course_model.dart';
+import 'methods/get_course_data_from_firebase.dart';
 import '../tab_main.dart';
 import 'methods/get_questions_data.dart';
 
@@ -43,15 +41,26 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                 _initHasRun = true;
                 final courseData = snapshot.data?[0];
                 final questionData = snapshot.data?[1];
-                List<CourseMixin> courses = [];
+                List<CourseModel> courses = [];
                 List<QuestionModel> questions = [];
                 for (var e in courseData!.docs) {
                   courses.add(
-                    Course.fromMap({
+                    CourseModel.fromMap({
                       e.id: e.data(),
                     }),
                   );
                 }
+
+                for (var c in courses) {
+                  print('got courses ${c.course}');
+                  for (var u in c.units) {
+                    print('got units ${u.name}');
+                    for (var s in u.subunits) {
+                      print('got subunits ${s.name}');
+                    }
+                  }
+                }
+
                 questions = questionData.toList();
                 WidgetsBinding.instance.addPostFrameCallback((t) {
                   if (courses.isNotEmpty) {
@@ -66,8 +75,8 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                   List<UserPref> prefs = [];
 
 // Usage:
-                  addUserPrefs(prefs, courses, kIBEconomics);
-                  addUserPrefs(prefs, courses, kIGCSEEconomics);
+                  addUserPrefs(prefs, courses, CourseEnum.ib);
+                  addUserPrefs(prefs, courses, CourseEnum.igcse);
                   WidgetsBinding.instance.addPostFrameCallback((t) {
                     startNotifier.setAllUserPrefs(prefs);
                   });
@@ -85,16 +94,16 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
     );
   }
 
-  void addUserPrefs(
-      List<UserPref> prefs, List<CourseMixin> courses, String courseName) {
-    final course = courses.firstWhere((c) => c.name == courseName);
+  Future<void> addUserPrefs(List<UserPref> prefs, List<CourseModel> courses,
+      CourseEnum courseEnum) async {
+    final c = courses.firstWhere((c) => c.course == courseEnum);
     for (var e in TopicTag.values) {
       prefs.add(
         UserPref(
-          course: course as Course,
+          course: c,
           topicTag: e,
           numberOfQuestions: 0,
-          selectedUnits: [course.units.first as Unit],
+          selectedUnits: [],
           showAnswersAtEnd: false,
         ),
       );
