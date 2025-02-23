@@ -24,7 +24,7 @@ class EditQuestionButton extends StatelessWidget {
           );
         } else if (value == 'edit') {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => AddQuestionPage()),
+            MaterialPageRoute(builder: (context) => AddQuestionPage(editQuestion: true,)),
           );
         }
       },

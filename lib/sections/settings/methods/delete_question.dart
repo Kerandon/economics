@@ -1,10 +1,10 @@
-import 'package:economics_app/sections/quizzes/quiz_init_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/custom_widgets/building_helper.dart';
 import '../../../../app/custom_widgets/custom_chip_button.dart';
 import '../../../../app/custom_widgets/custom_pop_up.dart';
 import '../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import '../add_question/add_question_page.dart';
 import 'delete_question_from_firebase.dart';
 
 void deleteQuestion(BuildContext context, QuestionModel q) {
@@ -12,6 +12,7 @@ void deleteQuestion(BuildContext context, QuestionModel q) {
     context: context,
     builder: (context) => CustomPopup(actionButtons: [
       CustomChipButton(
+        fillColor: Colors.red,
           text: 'Confirm',
           onPressed: () {
             Navigator.of(context).pop();
@@ -23,7 +24,7 @@ void deleteQuestion(BuildContext context, QuestionModel q) {
                     onComplete: (value) {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const QuizInitPage(),
+                          builder: (context) => const AddQuestionPage(),
                         ),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -38,7 +39,7 @@ void deleteQuestion(BuildContext context, QuestionModel q) {
             });
           }),
       CustomChipButton(
-        outlinedStyle: true,
+        //outlinedStyle: true,
         text: 'Cancel',
         onPressed: () {
           Navigator.of(context).pop();

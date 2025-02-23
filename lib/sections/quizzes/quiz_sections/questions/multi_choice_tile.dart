@@ -69,7 +69,7 @@ class MultiChoiceTile extends ConsumerWidget {
                               question: question,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

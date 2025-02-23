@@ -1,9 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../app/configs/constants.dart';
-import '../enums/column_width.dart';
 import '../../quizzes/quiz_enums/custom_tag.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
 
@@ -14,7 +11,7 @@ class CustomTagsButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final size = MediaQuery.of(context).size;
+
     final theme = Theme.of(context);
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
@@ -22,56 +19,69 @@ class CustomTagsButtons extends ConsumerWidget {
     // Initialize the list of custom tags from the current question state
     List<CustomTag> customTags = editState.currentQuestion.customTags ?? [];
 
-    return Row(
-      children: [
-        Expanded(
-          flex: CustomColumnWidth.one.getAddDiagramButtonsWidth(),
-          child: AutoSizeText('Custom Tag'),
-        ),
-        Expanded(
-          flex: CustomColumnWidth.two.getAddDiagramButtonsWidth(),
-          child: Wrap(
-            alignment: WrapAlignment.start,
-            spacing: size.width * kWrapSpacing,
-            children: CustomTag.values.map((e) {
-              // Check if the current tag is selected
-              bool isSelected = customTags.contains(e);
+    return PopupMenuButton<CustomTag>(
+      itemBuilder: (BuildContext context) {
+        return CustomTag.values.map((CustomTag tag) {
+          // Check if the current tag is selected
+          bool isSelected = customTags.contains(tag);
 
-              final onSurfaceColor =
-                  isSelected ? Colors.white : theme.colorScheme.onSurface;
+          return PopupMenuItem<CustomTag>(
+            value: tag,
+            child: Row(
+              children: [
+                // Checkbox to indicate selection
+                Checkbox(
+                  value: isSelected,
+                  onChanged: (_) {
+                    // Update the list of custom tags
+                    List<CustomTag> updatedTags = List.from(customTags);
+                    if (isSelected) {
+                      updatedTags.remove(tag); // Remove the tag if it's already selected
+                    } else {
+                      updatedTags.add(tag); // Add the tag if it's not selected
+                    }
 
-              return ChoiceChip(
-                checkmarkColor: onSurfaceColor,
-                selectedColor: theme.colorScheme.primary,
-                onSelected: (_) {
-                  // Update the list of custom tags
-                  List<CustomTag> updatedTags = List.from(customTags);
-                  if (isSelected) {
-                    updatedTags
-                        .remove(e); // Remove the tag if it's already selected
-                  } else {
-                    updatedTags.add(e); // Add the tag if it's not selected
-                  }
+                    // Update the state with the new list of custom tags
+                    editNotifier.updateCurrentQuestion(
+                      editState.currentQuestion.copyWith(
+                        customTags: updatedTags,
+                      ),
+                    );
 
-                  // Update the state with the new list of custom tags
-                  editNotifier.updateCurrentQuestion(
-                    editState.currentQuestion.copyWith(
-                      customTags: updatedTags,
-                    ),
-                  );
-                },
-                label: Text(
-                  e.toText(),
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: onSurfaceColor,
-                  ),
+                    // Close the popup menu
+                    Navigator.of(context).pop();
+                  },
                 ),
-                selected: isSelected,
-              );
-            }).toList(),
-          ),
-        )
-      ],
+                // Tag label
+                Text(
+                  tag.toText(), // Assuming `toText()` converts CustomTag to a displayable string
+                  style: theme.textTheme.bodyMedium,
+                ),
+              ],
+            ),
+          );
+        }).toList();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        decoration: BoxDecoration(
+          border: Border.all(color: theme.colorScheme.onSurface.withAlpha(55)),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Display selected tags or a placeholder
+            Text(
+              customTags.isNotEmpty
+                  ? customTags.map((tag) => tag.toText()).join(', ')
+                  : 'Select Tags',
+              style: theme.textTheme.bodyMedium,
+            ),
+            const Icon(Icons.arrow_drop_down), // Dropdown icon
+          ],
+        ),
+      ),
     );
   }
 }

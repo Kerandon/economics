@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/configs/constants.dart';
+import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/custom_slider.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card_tile.dart';
@@ -36,8 +37,8 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     final theme = Theme.of(context);
     final horizontalPadding = size.width * kPageIndentHorizontal;
     final quizState = ref.watch(quizProvider);
-
     final editState = ref.watch(editQuestionProvider);
+    final appNotifier = ref.read(appProvider.notifier);
 
     QuestionModel? currentQuestion;
     if (quizState.selectedQuestions.isNotEmpty) {
@@ -89,7 +90,16 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                     ),
                   ),
                 ),
-
+                Expanded(
+                  child: IconButton(
+                    onPressed: () {
+                      appNotifier.setFontSize();
+                    },
+                    icon: Icon(
+                      Icons.format_size_outlined,
+                    ),
+                  ),
+                ),
                 Expanded(
                   flex: 4,
                   child: Padding(

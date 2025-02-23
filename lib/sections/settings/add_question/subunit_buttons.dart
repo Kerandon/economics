@@ -1,8 +1,8 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../app/configs/constants.dart';
-import '../enums/column_width.dart';
+import '../../../app/utils/models/unit_model.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
 
 class SubunitButtons extends ConsumerWidget {
@@ -11,55 +11,113 @@ class SubunitButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final theme = Theme.of(context);
     final editState = ref.watch(editQuestionProvider);
-    final editNotifier = ref.read(editQuestionProvider.notifier);
-    return Row(
-      children: [
-        Expanded(
-          flex: CustomColumnWidth.one.getAddDiagramButtonsWidth(),
-          child: Text(
-            'Subunit',
-          ),
-        ),
-        Expanded(
-          flex: CustomColumnWidth.two.getAddDiagramButtonsWidth(),
-          child: Wrap(
-            alignment: WrapAlignment.start,
-            spacing: size.width * kWrapSpacing,
-            children: [
-              if (editState.currentQuestion.unit?.subunits.isNotEmpty ??
-                  false) ...[
-                ...editState.currentQuestion.unit!.subunits.map(
-                  (e) {
-                    bool isSelected = false;
-                    if (editState.currentQuestion.subunit == e) {
-                      isSelected = true;
-                    }
-                    final onSurfaceColor =
-                        isSelected ? Colors.white : theme.colorScheme.onSurface;
-                    return ChoiceChip(
-                      checkmarkColor: onSurfaceColor,
-                      selectedColor: theme.colorScheme.primary,
-                      onSelected: (_) {
-                        editNotifier.updateCurrentQuestion(
-                            editState.currentQuestion.copyWith(subunit: e));
-                      },
-                      label: Text(
-                        e.name!,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: onSurfaceColor,
+
+    final units =
+        editState.filterModel.units?.expand((e) => e.subunits.toList()) ?? [];
+
+    return SizedBox(
+      width: size.width,
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton2<UnitModel>(
+          selectedItemBuilder: (context) {
+            return units.map(
+                  (item) {
+                    return Container(
+                      alignment: AlignmentDirectional.center,
+                      child: Text(
+                        editState.filterModel.subunits
+                                ?.map((e) => e.name)
+                                .join(', ') ??
+                            '',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          overflow: TextOverflow.ellipsis,
                         ),
+                        maxLines: 1,
                       ),
-                      selected: isSelected,
                     );
                   },
-                ),
-              ],
-            ],
+                ).toList();
+          },
+          hint: Text(
+            'Select subunits',
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme.of(context).hintColor,
+            ),
           ),
+          value: (editState.filterModel.units != null &&
+                      editState.filterModel.units!.isNotEmpty) &&
+                  editState.filterModel.subunits != null &&
+                  editState.filterModel.subunits!.isNotEmpty
+              ? units.last
+              : null,
+          isExpanded: true,
+          onChanged: editState.filterModel.units == null ||
+                  editState.filterModel.units!.isEmpty
+              ? null
+              : (_) {},
+          items: [
+            ...units.map(
+              (e) {
+                return DropdownMenuItem(
+                  enabled: false,
+                  value: e,
+                  child: CustomDropdownContents(e),
+                );
+              },
+            ),
+          ],
         ),
-      ],
+      ),
+    );
+  }
+}
+
+class CustomDropdownContents extends ConsumerWidget {
+  const CustomDropdownContents(
+    this.unit, {
+    super.key,
+  });
+
+  final UnitModel unit;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final editState = ref.watch(editQuestionProvider);
+    final editNotifier = ref.read(editQuestionProvider.notifier);
+    final isSelected = editState.filterModel.subunits?.contains(unit) ?? false;
+    return InkWell(
+      onTap: () {
+        final u = editState.filterModel.subunits?.toList() ?? [];
+        isSelected ? u.remove(unit) : u.add(unit);
+        editNotifier
+            .updateFilter(editState.filterModel.copyWith(subunits: u.toList()));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Text(unit.index.toString()),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                unit.name ?? '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(width: 16),
+            if (isSelected) ...[
+              const Icon(Icons.check_box_outlined)
+            ] else ...[
+              const Icon(Icons.check_box_outline_blank),
+            ]
+          ],
+        ),
+      ),
     );
   }
 }

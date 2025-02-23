@@ -19,8 +19,10 @@ class QuestionsAndAnswers extends ConsumerWidget {
 
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    final isMulti =
+    final multi =
         editState.currentQuestion.topicTag == TopicTag.multipleChoiceQuestions;
+    final terms = editState.currentQuestion.topicTag == TopicTag.terms;
+
     return Row(
       children: [
         Expanded(
@@ -33,7 +35,7 @@ class QuestionsAndAnswers extends ConsumerWidget {
                       Expanded(
                         flex: CustomColumnWidth.one.getQuestionsWidth(),
                         child: CustomTextField(
-                          label: QuestionKey.question.name,
+                          label: terms ? 'Term' : 'Question',
                           name: QuestionKey.question.name,
                           onChanged: (value) {
                             editNotifier
@@ -45,33 +47,35 @@ class QuestionsAndAnswers extends ConsumerWidget {
                           },
                         ),
                       ),
-                      Expanded(
-                        flex: CustomColumnWidth.two.getQuestionsWidth(),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                editNotifier.setQuestionPartSelected(
-                                    QuestionPart.question);
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AddDiagramPage(),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.insert_chart_outlined,
+                      if (!terms) ...[
+                        Expanded(
+                          flex: CustomColumnWidth.two.getQuestionsWidth(),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  editNotifier.setQuestionPartSelected(
+                                      QuestionPart.question);
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AddDiagramPage(),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.insert_chart_outlined,
+                                ),
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.image_outlined,
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.image_outlined,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                   Wrap(
@@ -94,135 +98,151 @@ class QuestionsAndAnswers extends ConsumerWidget {
                   ),
                 ],
               ),
-              ...List.generate(
-                editState.currentQuestion.answers?.length ?? 0,
-                (index) => Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: CustomColumnWidth.one.getQuestionsWidth(),
-                          child: CustomTextField(
-                            minLines: isMulti ? 1 : 5,
-                            label: isMulti
-                                ? '${QuestionKey.answer.name} ${index + 1}'
-                                : QuestionKey.answer.name,
-                            name: '$QuestionKey.answer.name ${index + 1}',
-                            onChanged: (value) {
-                              List<AnswerModel> answers =
-                                  editState.currentQuestion.answers?.toList() ??
-                                      [];
-
-                              if (index >= 0 && index < answers.length) {
-                                answers[index] =
-                                    answers[index].copyWith(answer: value);
-
-                                editNotifier.updateCurrentQuestion(
-                                  editState.currentQuestion.copyWith(
-                                    answers: answers,
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                        if (editState.currentQuestion.topicTag ==
-                            TopicTag.multipleChoiceQuestions) ...[
+              if (terms) ...[
+                CustomTextField(
+                  minLines: 5,
+                  name: 'Definition',
+                  label: 'Definition',
+                  onChanged: (value) {
+                    editNotifier.updateCurrentQuestion(editState.currentQuestion
+                        .copyWith(answers: [
+                      AnswerModel(value ?? "", isCorrect: true)
+                    ]));
+                  },
+                )
+              ],
+              if (!terms) ...[
+                ...List.generate(
+                  editState.currentQuestion.answers?.length ?? 0,
+                  (index) => Column(
+                    children: [
+                      Row(
+                        children: [
                           Expanded(
-                            flex: CustomColumnWidth.two.getQuestionsWidth(),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    editNotifier.setQuestionPartSelected(
-                                      '$QuestionKey.answer.name $index'
-                                          .toQuestionPartEnum(),
-                                    );
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AddDiagramPage(),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.insert_chart_outlined,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                              title: Text('Add image'),
-                                            ));
-                                  },
-                                  icon: Icon(
-                                    Icons.image_outlined,
-                                  ),
-                                ),
-                              ],
+                            flex: CustomColumnWidth.one.getQuestionsWidth(),
+                            child: CustomTextField(
+                              minLines: multi ? 1 : 5,
+                              label: multi
+                                  ? '${QuestionKey.answer.name} ${index + 1}'
+                                  : QuestionKey.answer.name,
+                              name: '$QuestionKey.answer.name ${index + 1}',
+                              onChanged: (value) {
+                                List<AnswerModel> answers = editState
+                                        .currentQuestion.answers
+                                        ?.toList() ??
+                                    [];
+
+                                if (index >= 0 && index < answers.length) {
+                                  answers[index] =
+                                      answers[index].copyWith(answer: value);
+
+                                  editNotifier.updateCurrentQuestion(
+                                    editState.currentQuestion.copyWith(
+                                      answers: answers,
+                                    ),
+                                  );
+                                }
+                              },
                             ),
                           ),
-                          if (!isMulti) ...[
-                            Expanded(child: SizedBox()),
-                          ],
-                          if (isMulti) ...[
+                          if (editState.currentQuestion.topicTag ==
+                              TopicTag.multipleChoiceQuestions) ...[
                             Expanded(
-                              flex: 1,
-                              child: Checkbox(
-                                onChanged: (value) {
-                                  final a = editState.currentQuestion.answers
-                                          ?.toList() ??
-                                      [];
-
-                                  if (index >= 0 && index < a.length) {
-                                    a[index] =
-                                        a[index].copyWith(isCorrect: value);
-
-                                    editNotifier.updateCurrentQuestion(
-                                      editState.currentQuestion.copyWith(
-                                        answers: a,
-                                      ),
-                                    );
-                                  }
-                                },
-                                value:
-                                    editState.currentQuestion.answers != null &&
-                                            index <
-                                                editState.currentQuestion
-                                                    .answers!.length
-                                        ? editState.currentQuestion
-                                            .answers![index].isCorrect
-                                        : false,
+                              flex: CustomColumnWidth.two.getQuestionsWidth(),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      editNotifier.setQuestionPartSelected(
+                                        '$QuestionKey.answer.name $index'
+                                            .toQuestionPartEnum(),
+                                      );
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AddDiagramPage(),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.insert_chart_outlined,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: Text('Add image'),
+                                              ));
+                                    },
+                                    icon: Icon(
+                                      Icons.image_outlined,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            if (!multi) ...[
+                              Expanded(child: SizedBox()),
+                            ],
+                            if (multi) ...[
+                              Expanded(
+                                flex: 1,
+                                child: Checkbox(
+                                  onChanged: (value) {
+                                    final a = editState.currentQuestion.answers
+                                            ?.toList() ??
+                                        [];
+
+                                    if (index >= 0 && index < a.length) {
+                                      a[index] =
+                                          a[index].copyWith(isCorrect: value);
+
+                                      editNotifier.updateCurrentQuestion(
+                                        editState.currentQuestion.copyWith(
+                                          answers: a,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  value: editState.currentQuestion.answers !=
+                                              null &&
+                                          index <
+                                              editState.currentQuestion.answers!
+                                                  .length
+                                      ? editState.currentQuestion
+                                          .answers![index].isCorrect
+                                      : false,
+                                ),
+                              ),
+                            ],
                           ],
                         ],
-                      ],
-                    ),
-                    Wrap(
-                      children: [
-                        ...List.generate(
-                          editState.currentQuestion.answers?[index].diagrams
-                                  ?.length ??
-                              0,
-                          (i) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              width: size.width * 0.20,
-                              height: size.width * 0.20,
-                              child: CustomPaint(
-                                painter: editState.currentQuestion
-                                    .answers?[index].diagrams![i].painter,
+                      ),
+                      Wrap(
+                        children: [
+                          ...List.generate(
+                            editState.currentQuestion.answers?[index].diagrams
+                                    ?.length ??
+                                0,
+                            (i) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: size.width * 0.20,
+                                height: size.width * 0.20,
+                                child: CustomPaint(
+                                  painter: editState.currentQuestion
+                                      .answers?[index].diagrams![i].painter,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ],
           ),
         ),

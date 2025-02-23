@@ -51,16 +51,6 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                   );
                 }
 
-                for (var c in courses) {
-                  print('got courses ${c.course}');
-                  for (var u in c.units) {
-                    print('got units ${u.name}');
-                    for (var s in u.subunits) {
-                      print('got subunits ${s.name}');
-                    }
-                  }
-                }
-
                 questions = questionData.toList();
                 WidgetsBinding.instance.addPostFrameCallback((t) {
                   if (courses.isNotEmpty) {

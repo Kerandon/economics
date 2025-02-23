@@ -1,10 +1,10 @@
+import 'package:economics_app/sections/settings/add_question/add_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/configs/constants.dart';
 import '../../../../app/custom_widgets/building_helper.dart';
 import '../../../../app/custom_widgets/custom_chip_button.dart';
 import '../../../../app/enums/firebase_status.dart';
-import '../../quizzes/quiz_init_page.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
 import '../methods/send_new_question_to_firebase.dart';
 
@@ -24,20 +24,7 @@ class AddQuestionButton extends ConsumerWidget {
           text: 'Add question',
           onPressed: () {
             final q = editState.currentQuestion;
-            // print('question type ${q.questionType}');
-            // print('topic ${q.topicTag?.name}');
-            // print('course ${q.course}');
-            // print('unit is ${q.unit}');
-            // print('subunit is ${q.subunit}');
-            // print('is Hl ${q.hl}');
-            // print('question is ${q.question}');
-            // print('diagram is ${q.diagrams?.length}');
-            // print('number of answers ${q.answers?.length}');
-            // for (var a in q.answers!) {
-            //   print(
-            //       'answer is ${a.answer} and diagrams is ${a.diagrams?.length}');
-            // }
-            // print('custom tags ${q.customTags?.length}');
+
 
             if (q.question == null || q.question == "") {
               print('question is empty');
@@ -63,7 +50,7 @@ class AddQuestionButton extends ConsumerWidget {
                         // Ensure we are using a valid context for navigation
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => const QuizInitPage(),
+                            builder: (context) => const AddQuestionPage(),
                           ),
                         );
 

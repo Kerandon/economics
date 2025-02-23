@@ -1,4 +1,6 @@
 import 'package:economics_app/sections/settings/audio/sound_track_toggle.dart';
+import 'package:economics_app/sections/settings/manage_questions_page.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -47,6 +49,19 @@ class SettingsPage extends ConsumerWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const AddQuestionPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
+                'Manage Questions',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ManageQuestionsPage(),
                   ),
                 );
               },

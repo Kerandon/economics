@@ -37,6 +37,7 @@ class CourseModel with EquatableMixin {
       // Parse the units
       List<UnitModel> units = unitMap.entries.map((entry) {
         try {
+
           return UnitModel.fromMap(entry.key, entry.value);
         } catch (e) {
           throw Exception('Failed to parse unit: ${entry.key}, error: $e');

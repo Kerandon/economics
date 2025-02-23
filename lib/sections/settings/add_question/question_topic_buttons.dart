@@ -1,8 +1,5 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../app/configs/constants.dart';
-import '../enums/column_width.dart';
 import '../../quizzes/quiz_enums/question_type.dart';
 import '../../quizzes/quiz_enums/topic_tag.dart';
 import '../../quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
@@ -17,63 +14,49 @@ class QuestionTopicButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final theme = Theme.of(context);
+
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    return Row(
-      children: [
-        Expanded(
-          flex: CustomColumnWidth.one.getAddDiagramButtonsWidth(),
-          child: AutoSizeText('Question Topic'),
-        ),
-        Expanded(
-          flex: CustomColumnWidth.two.getAddDiagramButtonsWidth(),
-          child: Wrap(
-              alignment: WrapAlignment.start,
-              spacing: size.width * kWrapSpacing,
-              children: TopicTag.values.map(
-                (e) {
-                  final topic = editState.currentQuestion.topicTag ??
-                      TopicTag.values.first;
-                  bool isSelected = false;
-                  if (topic == e) {
-                    isSelected = true;
-                  }
-                  final onSurfaceColor =
-                      isSelected ? Colors.white : theme.colorScheme.onSurface;
-                  return ChoiceChip(
-                    checkmarkColor: onSurfaceColor,
-                    selectedColor: theme.colorScheme.primary,
-                    onSelected: (_) {
-                      List<AnswerModel> answers = [];
-                      if (e == TopicTag.multipleChoiceQuestions) {
-                        answers = adjustAnswersLength(editState, 2);
-                      } else {
-                        answers = [editState.currentQuestion.answers!.first];
-                      }
 
-                      editNotifier.updateCurrentQuestion(
-                        editState.currentQuestion.copyWith(
-                          questionType: e == TopicTag.multipleChoiceQuestions
-                              ? QuestionType.multi
-                              : QuestionType.flip,
-                          topicTag: e,
-                          answers: answers,
-                        ),
-                      );
-                    },
-                    label: Text(
-                      e.toText(),
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: onSurfaceColor,
-                      ),
-                    ),
-                    selected: isSelected,
-                  );
-                },
-              ).toList()),
-        )
-      ],
+    // Get the current topic or default to the first one
+    final currentTopic =
+        editState.currentQuestion.topicTag ?? TopicTag.values.first;
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+      child: DropdownMenu<TopicTag>(
+        width: size.width,
+        initialSelection: currentTopic,
+        onSelected: (TopicTag? newTopic) {
+          if (newTopic != null) {
+            List<AnswerModel> answers = [];
+            if (newTopic == TopicTag.multipleChoiceQuestions) {
+              answers = adjustAnswersLength(editState, 2);
+            } else {
+              answers = [editState.currentQuestion.answers!.first];
+            }
+
+            editNotifier.updateCurrentQuestion(
+              editState.currentQuestion.copyWith(
+                questionType: newTopic == TopicTag.multipleChoiceQuestions
+                    ? QuestionType.multi
+                    : QuestionType.flip,
+                topicTag: newTopic,
+                answers: answers,
+              ),
+            );
+          }
+        },
+        dropdownMenuEntries: TopicTag.values.map<DropdownMenuEntry<TopicTag>>(
+          (TopicTag topic) {
+            return DropdownMenuEntry<TopicTag>(
+              value: topic,
+              label: topic
+                  .toText(), // Assuming `toText()` converts TopicTag to a displayable string
+            );
+          },
+        ).toList(),
+      ),
     );
   }
 }

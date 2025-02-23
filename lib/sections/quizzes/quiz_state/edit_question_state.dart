@@ -30,6 +30,7 @@ class EditQuestionState {
   final QuestionModel currentQuestion;
   final int numberOfAnswers;
   final QuestionPart questionPart;
+  final FilterModel filterModel;
 
   EditQuestionState({
     required this.questionType,
@@ -49,6 +50,7 @@ class EditQuestionState {
     required this.currentQuestion,
     required this.numberOfAnswers,
     required this.questionPart,
+    required this.filterModel,
   });
 
   EditQuestionState copyWith({
@@ -69,6 +71,7 @@ class EditQuestionState {
     QuestionModel? currentQuestion,
     int? numberOfAnswers,
     QuestionPart? questionPart,
+    FilterModel? filterModel,
   }) {
     return EditQuestionState(
       courses: courses ?? this.courses,
@@ -88,6 +91,7 @@ class EditQuestionState {
       currentQuestion: currentQuestion ?? this.currentQuestion,
       numberOfAnswers: numberOfAnswers ?? this.numberOfAnswers,
       questionPart: questionPart ?? this.questionPart,
+      filterModel: filterModel ?? this.filterModel,
     );
   }
 }
@@ -236,6 +240,11 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(currentQuestion: question);
   }
 
+  void updateFilter(FilterModel filter) {
+    state = state.copyWith(filterModel: filter);
+
+  }
+
   void setNumberOfAnswers(int number) {
     final answers = state.currentQuestion.answers?.toList();
 
@@ -264,23 +273,62 @@ final editQuestionProvider =
     StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
   (ref) => EditQuestionNotifier(
     EditQuestionState(
-      questionType: QuestionType.flip,
-      quizFilter: QuizFilter.all,
-      courses: [],
-      course: CourseModel(course: CourseEnum.ib, units: []),
-      unit: UnitModel(name: ''),
-      subunit: UnitModel(name: ''),
-      allQuestions: [],
-      filteredQuestions: [],
-      topicTag: TopicTag.definitions,
-      selectedFlipCardTags: TopicTag.values,
-      isHL: false,
-      diagramsNumber: DiagramsNumber.zero,
-      selectedDiagrams: [],
-      customTags: [],
-      currentQuestion: QuestionModel(),
-      numberOfAnswers: 4,
-      questionPart: QuestionPart.question,
-    ),
+        questionType: QuestionType.flip,
+        quizFilter: QuizFilter.all,
+        courses: [],
+        course: CourseModel(course: CourseEnum.ib, units: []),
+        unit: UnitModel(name: ''),
+        subunit: UnitModel(name: ''),
+        allQuestions: [],
+        filteredQuestions: [],
+        topicTag: TopicTag.terms,
+        selectedFlipCardTags: TopicTag.values,
+        isHL: false,
+        diagramsNumber: DiagramsNumber.zero,
+        selectedDiagrams: [],
+        customTags: [],
+        currentQuestion: QuestionModel(),
+        numberOfAnswers: 4,
+        questionPart: QuestionPart.question,
+        filterModel: FilterModel()),
   ),
 );
+
+class FilterModel {
+  final CourseModel? course;
+
+  final List<UnitModel>? units;
+  final List<UnitModel>? subunits;
+  final List<TopicTag>? topicTags;
+
+  final List<CustomTag>? customTags;
+  final bool? isHL;
+
+  FilterModel({
+    this.course,
+    this.units,
+    this.subunits,
+    this.customTags,
+    this.topicTags,
+    this.isHL,
+  });
+
+  // copyWith method
+  FilterModel copyWith({
+    CourseModel? course,
+    List<UnitModel>? units,
+    List<UnitModel>? subunits,
+    List<TopicTag>? topicTags,
+    List<CustomTag>? customTags,
+    bool? isHL,
+  }) {
+    return FilterModel(
+      course: course ?? this.course,
+      units: units ?? this.units,
+      subunits: subunits ?? this.subunits,
+      topicTags: topicTags ?? this.topicTags,
+      customTags: customTags ?? this.customTags,
+      isHL: isHL ?? this.isHL,
+    );
+  }
+}

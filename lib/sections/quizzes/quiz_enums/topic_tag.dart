@@ -4,7 +4,7 @@ import 'package:economics_app/sections/quizzes/quiz_enums/question_key.dart';
 enum TopicTag {
   multipleChoiceQuestions,
   calculations,
-  definitions,
+  terms,
   longAnswer,
   diagrams,
 }
@@ -41,8 +41,8 @@ extension TopicTagToText on TopicTag {
         return kMultipleChoiceQuestions;
       case TopicTag.calculations:
         return "Calculations";
-      case TopicTag.definitions:
-        return "Definitions";
+      case TopicTag.terms:
+        return "Terms";
       case TopicTag.longAnswer:
         return "Long Answer";
       case TopicTag.diagrams:

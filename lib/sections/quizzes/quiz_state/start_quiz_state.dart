@@ -136,7 +136,7 @@ final startQuizProvider =
       course: CourseModel(course: CourseEnum.ib, units: []),
       allTopicQuestions: [],
       filteredQuestions: [],
-      topicTag: TopicTag.definitions,
+      topicTag: TopicTag.terms,
       userPrefs: [],
       numberOfQuestions: [],
     ),
