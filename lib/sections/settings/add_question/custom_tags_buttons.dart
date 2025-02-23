@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,74 +12,78 @@ class CustomTagsButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final size = MediaQuery.of(context).size;
 
-    final theme = Theme.of(context);
+    List<CustomTag> customTags = CustomTag.values.toList();
+
+    return SizedBox(
+      width: size.width,
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton2<CustomTag>(
+          hint: Text(
+            'Select custom tag',
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme.of(context).hintColor,
+            ),
+          ),
+          isExpanded: true,
+          onChanged: (e) {},
+          items: [
+            ...customTags.map(
+              (e) => DropdownMenuItem(
+                enabled: false,
+                value: e,
+                child: CustomTagsDropdown(e),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomTagsDropdown extends ConsumerWidget {
+  const CustomTagsDropdown(
+    this.tag, {
+    super.key,
+  });
+
+  final CustomTag tag;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-
-    // Initialize the list of custom tags from the current question state
-    List<CustomTag> customTags = editState.currentQuestion.customTags ?? [];
-
-    return PopupMenuButton<CustomTag>(
-      itemBuilder: (BuildContext context) {
-        return CustomTag.values.map((CustomTag tag) {
-          // Check if the current tag is selected
-          bool isSelected = customTags.contains(tag);
-
-          return PopupMenuItem<CustomTag>(
-            value: tag,
-            child: Row(
-              children: [
-                // Checkbox to indicate selection
-                Checkbox(
-                  value: isSelected,
-                  onChanged: (_) {
-                    // Update the list of custom tags
-                    List<CustomTag> updatedTags = List.from(customTags);
-                    if (isSelected) {
-                      updatedTags.remove(tag); // Remove the tag if it's already selected
-                    } else {
-                      updatedTags.add(tag); // Add the tag if it's not selected
-                    }
-
-                    // Update the state with the new list of custom tags
-                    editNotifier.updateCurrentQuestion(
-                      editState.currentQuestion.copyWith(
-                        customTags: updatedTags,
-                      ),
-                    );
-
-                    // Close the popup menu
-                    Navigator.of(context).pop();
-                  },
-                ),
-                // Tag label
-                Text(
-                  tag.toText(), // Assuming `toText()` converts CustomTag to a displayable string
-                  style: theme.textTheme.bodyMedium,
-                ),
-              ],
-            ),
-          );
-        }).toList();
+    final isSelected = editState.filterModel.customTags?.contains(tag) ?? false;
+    return InkWell(
+      onTap: () {
+        List<CustomTag> tags = editState.filterModel.customTags?.toList() ?? [];
+        isSelected ? tags.remove(tag) : tags.add(tag);
+        editNotifier.updateFilter(
+          editState.filterModel.copyWith(
+            customTags: tags.toList(),
+          ),
+        );
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        decoration: BoxDecoration(
-          border: Border.all(color: theme.colorScheme.onSurface.withAlpha(55)),
-          borderRadius: BorderRadius.circular(8),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Display selected tags or a placeholder
-            Text(
-              customTags.isNotEmpty
-                  ? customTags.map((tag) => tag.toText()).join(', ')
-                  : 'Select Tags',
-              style: theme.textTheme.bodyMedium,
+            Expanded(
+              child: Text(
+                tag.name,
+              ),
+
             ),
-            const Icon(Icons.arrow_drop_down), // Dropdown icon
+            const SizedBox(width: 16),
+            if (isSelected) ...[
+              const Icon(Icons.check_box_outlined)
+            ] else ...[
+              const Icon(Icons.check_box_outline_blank),
+            ]
+
           ],
         ),
       ),

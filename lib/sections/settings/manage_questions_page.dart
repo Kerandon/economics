@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../quizzes/methods/get_questions_data.dart';
 import '../quizzes/quiz_state/edit_question_state.dart';
+import 'add_question/custom_tags_buttons.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
   const ManageQuestionsPage({super.key});
@@ -71,7 +72,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                         Expanded(flex: 10, child: UnitButtons()),
                         Expanded(flex: 10, child: SubunitButtons()),
                         // Expanded(flex: 10, child: QuestionTopicButtons()),
-                        // Expanded(flex: 10, child: CustomTagsButtons()),
+                        Expanded(flex: 10, child: CustomTagsButtons()),
                         // Expanded(flex: 5, child: HLButton()),
                       ]),
                 ),
