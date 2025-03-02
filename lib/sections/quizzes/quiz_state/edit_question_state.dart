@@ -1,95 +1,49 @@
-import 'package:economics_app/app/enums/course_enum.dart';
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/utils/models/course_model.dart';
-import '../../../app/utils/models/unit_model.dart';
-import '../quiz_enums/custom_tag.dart';
 import '../quiz_enums/question_part_enum.dart';
-import '../quiz_enums/topic_tag.dart';
+import '../quiz_sections/questions/quiz_models/filter_model.dart';
 
 class EditQuestionState {
-  final QuestionType questionType;
   final List<CourseModel> courses;
-  final CourseModel course;
-  final QuizFilter quizFilter;
-  final List<QuestionModel> filteredQuestions;
-  final UnitModel unit;
-  final UnitModel subunit;
   final List<QuestionModel> allQuestions;
-  final TopicTag topicTag;
-  final List<TopicTag> selectedFlipCardTags;
-  final bool isHL;
   final DiagramsNumber diagramsNumber;
   final List<DiagramModel> selectedDiagrams;
-  final List<CustomTag> customTags;
   final QuestionModel currentQuestion;
-  final int numberOfAnswers;
   final QuestionPart questionPart;
   final FilterModel filterModel;
 
+
   EditQuestionState({
-    required this.questionType,
     required this.courses,
-    required this.course,
-    required this.quizFilter,
-    required this.unit,
-    required this.subunit,
     required this.allQuestions,
-    required this.filteredQuestions,
-    required this.topicTag,
-    required this.selectedFlipCardTags,
-    required this.isHL,
     required this.diagramsNumber,
     required this.selectedDiagrams,
-    required this.customTags,
     required this.currentQuestion,
-    required this.numberOfAnswers,
     required this.questionPart,
     required this.filterModel,
   });
 
   EditQuestionState copyWith({
-    QuestionType? questionType,
     List<CourseModel>? courses,
-    CourseModel? course,
-    QuizFilter? quizFilter,
-    List<QuestionModel>? filteredQuestions,
-    UnitModel? unit,
-    UnitModel? subunit,
     List<QuestionModel>? allQuestions,
-    TopicTag? topicTag,
-    List<TopicTag>? selectedFlipCardTags,
-    bool? isHL,
     DiagramsNumber? diagramsNumber,
     List<DiagramModel>? selectedDiagrams,
-    List<CustomTag>? customTags,
     QuestionModel? currentQuestion,
-    int? numberOfAnswers,
     QuestionPart? questionPart,
     FilterModel? filterModel,
   }) {
     return EditQuestionState(
       courses: courses ?? this.courses,
       allQuestions: allQuestions ?? this.allQuestions,
-      quizFilter: quizFilter ?? this.quizFilter,
-      filteredQuestions: filteredQuestions ?? this.filteredQuestions,
-      course: course ?? this.course,
-      questionType: questionType ?? this.questionType,
-      unit: unit ?? this.unit,
-      subunit: subunit ?? this.subunit,
-      topicTag: topicTag ?? this.topicTag,
-      selectedFlipCardTags: selectedFlipCardTags ?? this.selectedFlipCardTags,
-      isHL: isHL ?? this.isHL,
       diagramsNumber: diagramsNumber ?? this.diagramsNumber,
       selectedDiagrams: selectedDiagrams ?? this.selectedDiagrams,
-      customTags: customTags ?? this.customTags,
       currentQuestion: currentQuestion ?? this.currentQuestion,
-      numberOfAnswers: numberOfAnswers ?? this.numberOfAnswers,
       questionPart: questionPart ?? this.questionPart,
       filterModel: filterModel ?? this.filterModel,
     );
@@ -101,99 +55,12 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   void setAllQuestions(List<QuestionModel> allQuestions) {
     state = state.copyWith(allQuestions: allQuestions);
-    setFilteredQuestions();
-  }
-
-  void setQuestionType(QuestionType type) {
-    state = state.copyWith(questionType: type);
-    setFilteredQuestions();
   }
 
   void setCourses(List<CourseModel> courses) {
     state = state.copyWith(courses: courses);
-    setFilteredQuestions();
   }
 
-  void setCourse(CourseModel course) {
-    UnitModel? u, s;
-    if (course.units.isNotEmpty) {
-      u = course.units.first;
-    }
-    if (course.units.first.subunits.isNotEmpty) {
-      s = course.units.first.subunits.first;
-    }
-
-    state = state.copyWith(
-      course: course,
-      unit: u,
-      subunit: s,
-    );
-    setFilteredQuestions();
-  }
-
-  void setUnit(UnitModel unit) {
-    state = state.copyWith(unit: unit);
-
-    setFilteredQuestions();
-  }
-
-  void setSubunit(UnitModel unit) {
-    state = state.copyWith(subunit: unit);
-    setFilteredQuestions();
-  }
-
-  void setQuizFilter(QuizFilter filter) {
-    state = state.copyWith(quizFilter: filter);
-    setFilteredQuestions();
-  }
-
-  void setFilteredQuestions() {
-    List<QuestionModel> filteredQuestions = state.allQuestions.toList();
-
-    for (var q in state.allQuestions) {
-      if (!state.selectedFlipCardTags.contains(q.topicTag)) {
-        filteredQuestions.remove(q);
-      }
-
-      if (q.course != state.course) {
-        filteredQuestions.remove(q);
-      }
-      if (state.quizFilter == QuizFilter.unit) {
-        if (q.unit != state.unit) {
-          filteredQuestions.remove(q);
-        }
-      }
-      if (state.quizFilter == QuizFilter.subunit) {
-        if (q.subunit != state.subunit) {
-          filteredQuestions.remove(q);
-        }
-      }
-    }
-
-    filteredQuestions.sort((a, b) => a.question!.compareTo(b.question!));
-
-    state = state.copyWith(filteredQuestions: filteredQuestions.toList());
-  }
-
-  void setFlipCardTag(TopicTag tag) {
-    state = state.copyWith(topicTag: tag);
-  }
-
-  void setSelectedFlipCardTags(TopicTag tag) {
-    final updatedTags = List<TopicTag>.from(state.selectedFlipCardTags);
-
-    if (updatedTags.contains(tag)) {
-      updatedTags.remove(tag);
-    } else {
-      updatedTags.add(tag);
-    }
-
-    state = state.copyWith(selectedFlipCardTags: updatedTags);
-  }
-
-  void setHL(bool hl) {
-    state = state.copyWith(isHL: hl);
-  }
 
   void setDiagramsNumber(BuildContext context, Size size,
       {required DiagramsNumber diagramsNumber}) {
@@ -226,42 +93,66 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(selectedDiagrams: currentList);
   }
 
-  void setCustomTags(CustomTag tag) {
-    final currentList = state.customTags.toList();
-    if (currentList.contains(tag)) {
-      currentList.remove(tag);
-    } else {
-      currentList.add(tag);
-    }
-    state = state.copyWith(customTags: currentList);
-  }
-
   void updateCurrentQuestion(QuestionModel question) {
     state = state.copyWith(currentQuestion: question);
+    adjustNumberOfAnswers(question);
   }
 
   void updateFilter(FilterModel filter) {
     state = state.copyWith(filterModel: filter);
-
   }
 
   void setNumberOfAnswers(int number) {
-    final answers = state.currentQuestion.answers?.toList();
+    List<AnswerModel> answers =
+        adjustNumberOfAnswers(state.currentQuestion, number: (number + 2));
 
-    if (answers!.isNotEmpty) {
-      for (int i = 0; i < answers.length; i++) {
-        if (i >= number) {
-          answers[i] = answers[i].copyWith(answer: "", isCorrect: false);
+    state = state.copyWith(
+      currentQuestion: state.currentQuestion.copyWith(
+        answers: answers,
+      ),
+    );
+  }
+
+  List<AnswerModel> adjustNumberOfAnswers(QuestionModel question,
+      {int? number}) {
+    List<AnswerModel> answers = question.answers?.toList() ?? [];
+
+    if (question.questionType == QuestionType.flip) {
+      // Flip question type should always have exactly 1 answer
+      state = state.copyWith(
+        currentQuestion: question.copyWith(
+          answers: [
+            AnswerModel(''),
+          ],
+        ),
+      );
+    } else if (question.questionType == QuestionType.multi) {
+      if (question.answers!.length < 2) {
+        int targetNumber = 0;
+        answers.isEmpty ? targetNumber = 3 : targetNumber = 2;
+        for (int i = 0; i < targetNumber; i++) {
+          answers.add(AnswerModel(''));
+        }
+        answers.insert(
+          0,
+          AnswerModel('', isCorrect: true),
+        );
+        state = state.copyWith(
+            currentQuestion: question.copyWith(answers: answers.toList()));
+      } else {
+        int n = number ?? question.answers?.length ?? 4;
+        while (answers.length > n) {
+          answers.removeLast();
+        }
+        while (answers.length < n) {
+          answers.add(
+            AnswerModel(''),
+          );
         }
       }
     }
 
-    state = state.copyWith(
-      numberOfAnswers: number,
-      currentQuestion: state.currentQuestion.copyWith(
-        answers: answers.toList(),
-      ),
-    );
+    return answers;
   }
 
   void setQuestionPartSelected(QuestionPart part) {
@@ -273,62 +164,13 @@ final editQuestionProvider =
     StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
   (ref) => EditQuestionNotifier(
     EditQuestionState(
-        questionType: QuestionType.flip,
-        quizFilter: QuizFilter.all,
-        courses: [],
-        course: CourseModel(course: CourseEnum.ib, units: []),
-        unit: UnitModel(name: ''),
-        subunit: UnitModel(name: ''),
-        allQuestions: [],
-        filteredQuestions: [],
-        topicTag: TopicTag.terms,
-        selectedFlipCardTags: TopicTag.values,
-        isHL: false,
-        diagramsNumber: DiagramsNumber.zero,
-        selectedDiagrams: [],
-        customTags: [],
-        currentQuestion: QuestionModel(),
-        numberOfAnswers: 4,
-        questionPart: QuestionPart.question,
-        filterModel: FilterModel()),
+      courses: [],
+      allQuestions: [],
+      diagramsNumber: DiagramsNumber.zero,
+      selectedDiagrams: [],
+      currentQuestion: QuestionModel(),
+      questionPart: QuestionPart.question,
+      filterModel: FilterModel(),
+    ),
   ),
 );
-
-class FilterModel {
-  final CourseModel? course;
-
-  final List<UnitModel>? units;
-  final List<UnitModel>? subunits;
-  final List<TopicTag>? topicTags;
-
-  final List<CustomTag>? customTags;
-  final bool? isHL;
-
-  FilterModel({
-    this.course,
-    this.units,
-    this.subunits,
-    this.customTags,
-    this.topicTags,
-    this.isHL,
-  });
-
-  // copyWith method
-  FilterModel copyWith({
-    CourseModel? course,
-    List<UnitModel>? units,
-    List<UnitModel>? subunits,
-    List<TopicTag>? topicTags,
-    List<CustomTag>? customTags,
-    bool? isHL,
-  }) {
-    return FilterModel(
-      course: course ?? this.course,
-      units: units ?? this.units,
-      subunits: subunits ?? this.subunits,
-      topicTags: topicTags ?? this.topicTags,
-      customTags: customTags ?? this.customTags,
-      isHL: isHL ?? this.isHL,
-    );
-  }
-}

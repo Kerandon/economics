@@ -295,7 +295,7 @@ class _StartPageState extends ConsumerState<StartPage> {
                 ],
               ),
             ),
-            if (pref.topicTag == TopicTag.multipleChoiceQuestions) ...[
+            if (pref.topicTag == TopicTag.multipleChoiceQuestion) ...[
               ListTile(
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,

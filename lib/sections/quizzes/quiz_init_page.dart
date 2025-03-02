@@ -55,8 +55,7 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                 WidgetsBinding.instance.addPostFrameCallback((t) {
                   if (courses.isNotEmpty) {
                     editNotifier
-                      ..setCourses(courses)
-                      ..setCourse(courses.first);
+                      .setCourses(courses);
                   }
                   if (questions.isNotEmpty) {
                     editNotifier.setAllQuestions(questions);

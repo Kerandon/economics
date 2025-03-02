@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../quizzes/quiz_state/edit_question_state.dart';
+import '../quizzes/quiz_state/edit_question_state.dart';
 
 class HLButton extends ConsumerWidget {
   const HLButton({super.key});

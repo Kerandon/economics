@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
@@ -7,14 +6,12 @@ import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/multi_choice_tile.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/question_navigation_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:economics_app/sections/tab_main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/animation/confetti_animation.dart';
 import '../../../../app/audio_manager/audio_manager.dart';
-
 import '../../../../main.dart';
 import '../../custom_widgets/score_bar.dart';
 import '../../quiz_enums/topic_tag.dart';
@@ -34,10 +31,8 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final theme = Theme.of(context);
     final horizontalPadding = size.width * kPageIndentHorizontal;
     final quizState = ref.watch(quizProvider);
-    final editState = ref.watch(editQuestionProvider);
     final appNotifier = ref.read(appProvider.notifier);
 
     QuestionModel? currentQuestion;
@@ -81,15 +76,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             title: Row(
               children: [
                 // Align the text to the left
-                Expanded(
-                  flex: 12,
-                  child: AutoSizeText(
-                    '${editState.unit.name} - ${editState.subunit.name}',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      color: theme.colorScheme.primary,
-                    ),
-                  ),
-                ),
+
                 Expanded(
                   child: IconButton(
                     onPressed: () {
@@ -142,11 +129,11 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                             children: [
                               ...[
                                 if (question.topicTag ==
-                                    TopicTag.multipleChoiceQuestions) ...[
+                                    TopicTag.multipleChoiceQuestion) ...[
                                   MultiChoiceTile(question),
                                 ],
                                 if (question.topicTag !=
-                                    TopicTag.multipleChoiceQuestions) ...[
+                                    TopicTag.multipleChoiceQuestion) ...[
                                   FlipCardTile(question),
                                 ],
                                 SizedBox(

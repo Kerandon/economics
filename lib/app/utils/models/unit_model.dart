@@ -45,7 +45,8 @@ class UnitModel with EquatableMixin {
     if (map.containsKey(QuestionKey.subunits.name)) {
       Map<String, dynamic> subunitMap = map[QuestionKey.subunits.name];
       subunits = subunitMap.entries
-          .map((entry) => UnitModel.fromMap('$index.${entry.key.toString()}', entry.value))
+          .map((entry) =>
+              UnitModel.fromMap('$index.${entry.key.toString()}', entry.value))
           .toList();
 
       /// Sorts subunits by index so it is in ascending order

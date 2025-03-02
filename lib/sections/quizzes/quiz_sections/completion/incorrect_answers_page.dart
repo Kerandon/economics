@@ -4,7 +4,6 @@ import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/multi_choice_tile.dart';
-import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,7 +22,6 @@ class IncorrectAnswersPage extends ConsumerStatefulWidget {
 class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
   @override
   Widget build(BuildContext context) {
-    final editState = ref.watch(editQuestionProvider);
     final quizState = ref.watch(quizProvider);
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
@@ -41,15 +39,7 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
           title: Row(
             children: [
               // Align the text to the left
-              Expanded(
-                flex: 12,
-                child: AutoSizeText(
-                  '${editState.unit.name} - ${editState.subunit.name}',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: theme.colorScheme.primary,
-                  ),
-                ),
-              ),
+
               Expanded(
                 flex: 12,
                 child: Row(
@@ -120,11 +110,11 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                             ),
                           ),
                           if (question.value.topicTag ==
-                              TopicTag.multipleChoiceQuestions) ...[
+                              TopicTag.multipleChoiceQuestion) ...[
                             MultiChoiceTile(question.value),
                           ],
                           if (question.value.topicTag !=
-                              TopicTag.multipleChoiceQuestions) ...[
+                              TopicTag.multipleChoiceQuestion) ...[
                             FlipCardTile(question.value),
                           ],
                         ],

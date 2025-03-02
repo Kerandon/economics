@@ -21,50 +21,54 @@ class AddQuestionButton extends ConsumerWidget {
       padding:
           EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical * 2),
       child: CustomChipButton(
-          text: 'Add question',
-          onPressed: () {
-            final q = editState.currentQuestion;
+        text: 'Add question',
+        onPressed: () {
+          final q = editState.currentQuestion;
+          String? errorMsg;
 
+          if (q.question == null || q.question!.trim().isEmpty) {
+            errorMsg = 'Question field is empty';
+          } else if (q.answers?.any((e) => e.answer.trim().isEmpty) ?? false) {
+            errorMsg = 'Answer field(s) are empty';
+          } else if (q.answers?.any((e) => e.isCorrect == true) != true) {
+            errorMsg = 'Require at least one correct answer';
+          }
 
-            if (q.question == null || q.question == "") {
-              print('question is empty');
-            } else if (q.answers?.any((e) => e.answer == "") ?? false) {
-              print('answer is empty');
-            } else if (q.answers?.any((e) => e.isCorrect == true) != true) {
-              print('no correct answer selected');
-            } else {
-              print('ALL OK!');
-              final future = sendNewQuestionToFirebase(question: q);
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => BuilderHelper(
-                    future: future,
-                    onComplete: (value) {
-                      // Check if the widget is still mounted before navigating
-                      if (context.mounted) {
-                        // Wrap the navigation code inside the post-frame callback
-                        String text = 'Question added successfully';
-                        if (value == FirebaseStatus.error) {
-                          text = kErrorMessage;
-                        }
-                        // Ensure we are using a valid context for navigation
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const AddQuestionPage(),
-                          ),
-                        );
+          if (errorMsg != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(errorMsg)),
+            );
+            return;
+          }
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(text)),
-                        );
-                        // Show the snack bar
-                      }
-                    },
-                  ),
-                ),
-              );
-            }
-          }),
+          final future = sendNewQuestionToFirebase(question: q);
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => BuilderHelper(
+                future: future,
+                onComplete: (value) {
+                  if (context.mounted) {
+                    String text = 'Question added successfully';
+                    if (value == FirebaseStatus.error) {
+                      text = kErrorMessage;
+                    }
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const AddQuestionPage(),
+                      ),
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(text)),
+                    );
+                  }
+                },
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

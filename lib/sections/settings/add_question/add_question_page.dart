@@ -1,40 +1,35 @@
-import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/topic_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import 'package:economics_app/sections/settings/add_question/add_explanation_box.dart';
 import 'package:economics_app/sections/settings/add_question/add_question_button.dart';
-import 'package:economics_app/sections/settings/add_question/custom_tags_buttons.dart';
-import 'package:economics_app/sections/settings/add_question/hl_button.dart';
-import 'package:economics_app/sections/settings/add_question/question_topic_buttons.dart';
-import 'package:economics_app/sections/settings/add_question/questions_and_answers.dart';
-import 'package:economics_app/sections/settings/add_question/subunit_buttons.dart';
-import 'package:economics_app/sections/settings/add_question/unit_buttons.dart';
-
+import 'package:economics_app/sections/settings/add_question/answers_button.dart';
+import 'package:economics_app/sections/settings/add_question/number_of_answers_button.dart';
+import 'package:economics_app/sections/settings/add_question/question_button.dart';
+import 'package:economics_app/sections/settings/course_button.dart';
+import 'package:economics_app/sections/settings/hl_button.dart';
+import 'package:economics_app/sections/settings/topic_tag_button.dart';
+import 'package:economics_app/sections/settings/unit_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../app/enums/course_enum.dart';
-
 import '../../quizzes/methods/get_questions_data.dart';
-import '../../quizzes/quiz_sections/questions/edit_question_button.dart';
 import '../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
-import 'course_buttons.dart';
-import 'number_of_answers_buttons.dart';
+
+import '../custom_tags_button.dart';
+import '../subunit_button.dart';
 
 class AddQuestionPage extends ConsumerStatefulWidget {
-  const AddQuestionPage({this.editQuestion
-   = false, super.key});
+  const AddQuestionPage({this.editQuestion = false, super.key});
 
   final bool editQuestion;
 
   @override
-  ConsumerState<AddQuestionPage> createState() => _AddQuestionPage2State();
+  ConsumerState<AddQuestionPage> createState() => AddQuestionPageState();
 }
 
-class _AddQuestionPage2State extends ConsumerState<AddQuestionPage> {
+class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
   late final Future<List<QuestionModel>> _questionsFuture;
 
   bool _initNumberOfAnswers = false;
@@ -48,15 +43,16 @@ class _AddQuestionPage2State extends ConsumerState<AddQuestionPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+
 
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
+    final c = editState.currentQuestion;
 
     if (!_initNumberOfAnswers) {
       _initNumberOfAnswers = true;
       List<AnswerModel> answers = [];
-      for (int i = 0; i < editState.numberOfAnswers; i++) {
+      for (int i = 0; i < 4; i++) {
         answers.add(AnswerModel(
           "",
           isCorrect: i == 0,
@@ -64,33 +60,27 @@ class _AddQuestionPage2State extends ConsumerState<AddQuestionPage> {
       }
       WidgetsBinding.instance.addPostFrameCallback((t) {
         List<AnswerModel> answers = [];
-        if (editState.topicTag == TopicTag.multipleChoiceQuestions) {
-          answers = adjustAnswersLength(editState, 2);
+        if (c.questionType == QuestionType.multi || c.questionType == null) {
         } else {
-          answers = [
-            editState.currentQuestion.answers?.first ?? AnswerModel("")
-          ];
+          answers = [c.answers?.first ?? AnswerModel("")];
         }
 
         editNotifier.updateCurrentQuestion(
-          editState.currentQuestion.copyWith(
-            questionType:
-                editState.currentQuestion.questionType ?? QuestionType.multi,
-            topicTag: editState.currentQuestion.topicTag ??
-                TopicTag.multipleChoiceQuestions,
-            course: editState.currentQuestion.course ?? editState.courses.first,
-            unit: editState.currentQuestion.unit ??
-                editState.courses.first.units.first,
-            subunit: editState.currentQuestion.subunit ??
-                editState.courses.first.units.first.subunits.first,
+          c.copyWith(
+            questionType: c.questionType ?? QuestionType.multi,
+            topicTag: c.topicTag ?? TopicTag.multipleChoiceQuestion,
+            course: c.course ?? editState.courses.first,
+            unit: c.unit ?? editState.courses.first.units.first,
+            subunit:
+                c.subunit ?? editState.courses.first.units.first.subunits.first,
             answers: answers,
           ),
         );
       });
     }
 
-    final isMulti =
-        editState.currentQuestion.questionType == QuestionType.multi;
+    final isMulti = c.questionType == QuestionType.multi;
+
 
     return Scaffold(
       appBar: AppBar(),
@@ -106,102 +96,57 @@ class _AddQuestionPage2State extends ConsumerState<AddQuestionPage> {
                       .setAllQuestions(snapshot.data as List<QuestionModel>);
                 });
               }
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: size.width * kPageIndentHorizontal,
-                    vertical: size.height * kPageIndentVertical,
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    collapsedHeight: kToolbarHeight * 2,
+                    expandedHeight: 0,
+                    flexibleSpace: FlexibleSpaceBar(
+                      title: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(flex: 10, child: CourseButton()),
+                            Expanded(flex: 10, child: UnitButton()),
+                            Expanded(flex: 10, child: SubunitButton()),
+                            Expanded(flex: 10, child: TopicTagButton()),
+                            Expanded(flex: 10, child: CustomTagsButton()),
+                            if (editState.currentQuestion.hl == true) ...[
+                              Expanded(
+                                flex: 5,
+                                child: HLButton(),
+                              ),
+                            ],
+                          ]),
+                    ),
+                    automaticallyImplyLeading: false,
+                    pinned:
+                        true, // Keeps the app bar fixed at the top// Height of the expanded app bar
                   ),
-                  child: Column(
-                    children: [
-                      QuestionTopicButtons(),
-                      CustomDivider(),
-                      CourseButtons(),
-                      CustomDivider(),
-                      UnitButtons(),
-                      CustomDivider(),
-                      SubunitButtons(),
-                      CustomDivider(),
-                      if (editState.currentQuestion.course?.course ==
-                          CourseEnum.ib) ...[
-                        HLButton(),
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+
+                          QuestionButton(),
+                        if (isMulti) ...[
+                          NumberOfAnswersButton(),
+                        ],
+
+                          AnswersButton(),
+                          CustomDivider(),
+                        if (isMulti) ...[
+                          AddExplanationBox(),
+                        ],
+                        AddQuestionButton(),
                         CustomDivider(),
                       ],
-                      if (isMulti) ...[
-                        NumberOfAnswersButtons(),
-                        CustomDivider(),
-                      ],
-                      QuestionsAndAnswers(),
-                      if (isMulti) ...[
-                        AddExplanationBox(),
-                      ],
-                      CustomTagsButtons(),
-                      AddQuestionButton(),
-                      CustomDivider(),
-                      ViewQuestionsList(),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               );
             }
             return Center(child: CircularProgressIndicator());
           }),
-    );
-  }
-}
-
-class ViewQuestionsList extends ConsumerWidget {
-  const ViewQuestionsList({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-
-    final editState = ref.watch(editQuestionProvider);
-    final q = editState.currentQuestion;
-
-    List<QuestionModel> filteredQuestions = editState.allQuestions.toList();
-
-   filteredQuestions.retainWhere((e) =>
-   e.course == q.course
-   );
-
-   filteredQuestions.sort((a,b) => a.question!.compareTo(b.question!));
-
-    return Column(
-   children: [
-     ...List.generate(
-         filteredQuestions.length,
-             (index) => Column(
-           children: [
-             ListTile(
-               title: Row(
-                 children: [
-                   Expanded(
-                     child: HtmlWidget(filteredQuestions[index].question??"")
-                   ),
-                   Expanded(
-                       child: HtmlWidget(filteredQuestions[index].answers?.first.answer ?? "")
-                   ),
-                 ],
-               ),
-               trailing: EditQuestionButton(
-                 question: filteredQuestions[index],
-               ),
-               subtitle: Row(
-                 children: [
-                   Text(filteredQuestions[index].unit?.name??"",
-                   style: Theme.of(context).textTheme.labelSmall,
-                   ),
-                   Text(filteredQuestions[index].subunit?.name??"",
-                     style: Theme.of(context).textTheme.labelSmall,
-                   )
-                 ],
-               ),
-             ),
-             CustomDivider(),
-           ],
-         ))
-   ],
     );
   }
 }

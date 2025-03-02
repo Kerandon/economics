@@ -1,12 +1,13 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:economics_app/sections/settings/custom_dropdown_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../app/utils/models/unit_model.dart';
-import '../../quizzes/quiz_state/edit_question_state.dart';
+import '../../app/utils/models/unit_model.dart';
+import '../quizzes/quiz_state/edit_question_state.dart';
 
-class SubunitButtons extends ConsumerWidget {
-  const SubunitButtons({super.key});
+class SubunitsButton extends ConsumerWidget {
+  const SubunitsButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,38 +16,14 @@ class SubunitButtons extends ConsumerWidget {
 
     final units =
         editState.filterModel.units?.expand((e) => e.subunits.toList()) ?? [];
-
+    final f = editState.filterModel;
+    final subunitsText = f.subunits?.map((e) => e.name).join(', ') ?? '';
+    final selectedSubunits = subunitsText.isEmpty ? 'Select subunits' : subunitsText;
     return SizedBox(
       width: size.width,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<UnitModel>(
-          selectedItemBuilder: (context) {
-            return units.map(
-                  (item) {
-                    return Container(
-                      alignment: AlignmentDirectional.center,
-                      child: Text(
-                        editState.filterModel.subunits
-                                ?.map((e) => e.name)
-                                .join(', ') ??
-                            '',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        maxLines: 1,
-                      ),
-                    );
-                  },
-                ).toList();
-          },
-          hint: Text(
-            'Select subunits',
-            style: TextStyle(
-              fontSize: 14,
-              color: Theme.of(context).hintColor,
-            ),
-          ),
+        customButton: CustomDropdownHeading(selectedSubunits),
           value: (editState.filterModel.units != null &&
                       editState.filterModel.units!.isNotEmpty) &&
                   editState.filterModel.subunits != null &&

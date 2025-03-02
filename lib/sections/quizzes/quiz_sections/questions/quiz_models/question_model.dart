@@ -16,6 +16,7 @@ class QuestionModel extends Equatable {
   final CourseModel? course;
   final String? question;
   final List<DiagramModel>? diagrams;
+  // final int? numberOfAnswers;
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
@@ -31,6 +32,7 @@ class QuestionModel extends Equatable {
     this.course,
     this.question,
     this.diagrams,
+    //this.numberOfAnswers,
     this.answers,
     this.answerStage = AnswerStage.notSelected,
     this.explanation,
@@ -48,6 +50,7 @@ class QuestionModel extends Equatable {
     CourseModel? course,
     String? question,
     List<DiagramModel>? diagrams,
+   // int? numberOfAnswers,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
     UnitModel? unit,
@@ -63,6 +66,7 @@ class QuestionModel extends Equatable {
       course: course ?? this.course,
       question: question ?? this.question,
       diagrams: diagrams ?? this.diagrams,
+     // numberOfAnswers: numberOfAnswers ?? this.numberOfAnswers,
       answers: answers ?? this.answers,
       answerStage: answerStage ?? this.answerStage,
       explanation: explanation ?? this.explanation,

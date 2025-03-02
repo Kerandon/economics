@@ -2,11 +2,12 @@ import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_key.dart';
 
 enum TopicTag {
-  multipleChoiceQuestions,
-  calculations,
-  terms,
+  multipleChoiceQuestion,
+  calculation,
+  term,
+  general,
   longAnswer,
-  diagrams,
+  diagram,
 }
 
 extension TopicTagFirebase on TopicTag {
@@ -37,16 +38,18 @@ extension TopicTagFirebase on TopicTag {
 extension TopicTagToText on TopicTag {
   String toText() {
     switch (this) {
-      case TopicTag.multipleChoiceQuestions:
+      case TopicTag.multipleChoiceQuestion:
         return kMultipleChoiceQuestions;
-      case TopicTag.calculations:
+      case TopicTag.calculation:
         return "Calculations";
-      case TopicTag.terms:
+      case TopicTag.term:
         return "Terms";
       case TopicTag.longAnswer:
-        return "Long Answer";
-      case TopicTag.diagrams:
+        return "Long Answers";
+      case TopicTag.diagram:
         return "Diagrams";
+      case TopicTag.general:
+        return "General";
     }
   }
 }

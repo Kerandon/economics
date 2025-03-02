@@ -1,32 +1,32 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:economics_app/sections/settings/custom_dropdown_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../quizzes/quiz_enums/custom_tag.dart';
-import '../../quizzes/quiz_state/edit_question_state.dart';
+import '../quizzes/quiz_enums/custom_tag.dart';
+import '../quizzes/quiz_state/edit_question_state.dart';
 
-class CustomTagsButtons extends ConsumerWidget {
-  const CustomTagsButtons({
+class CustomTagsButton extends ConsumerWidget {
+  const CustomTagsButton({
     super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-
+    final editState = ref.watch(editQuestionProvider);
+    final c = editState.currentQuestion;
     List<CustomTag> customTags = CustomTag.values.toList();
+    String tags = (c.customTags?.map((e) => e.toText()).join(', ') ?? '').isEmpty
+        ? 'Select custom tags'
+        : c.customTags!.map((e) => e.toText()).join(', ');
+
 
     return SizedBox(
       width: size.width,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<CustomTag>(
-          hint: Text(
-            'Select custom tag',
-            style: TextStyle(
-              fontSize: 14,
-              color: Theme.of(context).hintColor,
-            ),
-          ),
+          customButton: CustomDropdownHeading(tags),
           isExpanded: true,
           onChanged: (e) {},
           items: [
@@ -56,16 +56,17 @@ class CustomTagsDropdown extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    final isSelected = editState.filterModel.customTags?.contains(tag) ?? false;
+    final isSelected = editState.currentQuestion.customTags?.contains(tag) ?? false;
     return InkWell(
       onTap: () {
-        List<CustomTag> tags = editState.filterModel.customTags?.toList() ?? [];
+        List<CustomTag> tags = editState.currentQuestion.customTags?.toList() ?? [];
         isSelected ? tags.remove(tag) : tags.add(tag);
-        editNotifier.updateFilter(
-          editState.filterModel.copyWith(
-            customTags: tags.toList(),
-          ),
-        );
+        editNotifier
+          .updateCurrentQuestion(
+            editState.currentQuestion.copyWith(
+              customTags: tags.toList(),
+            ),
+          );
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -73,9 +74,10 @@ class CustomTagsDropdown extends ConsumerWidget {
           children: [
             Expanded(
               child: Text(
-                tag.name,
+                tag.toText(),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
-
             ),
             const SizedBox(width: 16),
             if (isSelected) ...[
@@ -83,7 +85,6 @@ class CustomTagsDropdown extends ConsumerWidget {
             ] else ...[
               const Icon(Icons.check_box_outline_blank),
             ]
-
           ],
         ),
       ),

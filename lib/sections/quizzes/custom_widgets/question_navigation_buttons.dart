@@ -150,7 +150,7 @@ class _QuestionNavigationButtonsState
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (question.topicTag != TopicTag.multipleChoiceQuestions &&
+                if (question.topicTag != TopicTag.multipleChoiceQuestion &&
                     quizState.currentCardSide == CardSide.back) ...[
                   Row(
                     children: [
