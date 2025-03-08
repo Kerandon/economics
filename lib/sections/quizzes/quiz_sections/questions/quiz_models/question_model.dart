@@ -7,7 +7,6 @@ import '../../../quiz_enums/answer_stage.dart';
 import '../../../quiz_enums/custom_tag.dart';
 import '../../../quiz_enums/question_key.dart';
 import '../../../quiz_enums/question_type.dart';
-import '../../../quiz_enums/topic_tag.dart';
 import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
@@ -16,14 +15,11 @@ class QuestionModel extends Equatable {
   final CourseModel? course;
   final String? question;
   final List<DiagramModel>? diagrams;
-  // final int? numberOfAnswers;
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
   final UnitModel? unit;
   final UnitModel? subunit;
-  final TopicTag? topicTag;
-  final bool? hl;
   final List<CustomTag>? customTags;
 
   const QuestionModel({
@@ -32,32 +28,25 @@ class QuestionModel extends Equatable {
     this.course,
     this.question,
     this.diagrams,
-    //this.numberOfAnswers,
     this.answers,
     this.answerStage = AnswerStage.notSelected,
     this.explanation,
     this.unit,
     this.subunit,
-    this.topicTag,
-    this.hl,
     this.customTags,
   });
 
-  // More flexible copyWith
   QuestionModel copyWith({
     String? id,
     QuestionType? questionType,
     CourseModel? course,
     String? question,
     List<DiagramModel>? diagrams,
-   // int? numberOfAnswers,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
     UnitModel? unit,
     UnitModel? subunit,
     String? explanation,
-    TopicTag? topicTag,
-    bool? hl,
     List<CustomTag>? customTags,
   }) {
     return QuestionModel(
@@ -66,14 +55,11 @@ class QuestionModel extends Equatable {
       course: course ?? this.course,
       question: question ?? this.question,
       diagrams: diagrams ?? this.diagrams,
-     // numberOfAnswers: numberOfAnswers ?? this.numberOfAnswers,
       answers: answers ?? this.answers,
       answerStage: answerStage ?? this.answerStage,
       explanation: explanation ?? this.explanation,
       unit: unit ?? this.unit,
       subunit: subunit ?? this.subunit,
-      topicTag: topicTag ?? this.topicTag,
-      hl: hl ?? this.hl,
       customTags: customTags ?? this.customTags,
     );
   }
@@ -82,7 +68,6 @@ class QuestionModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       QuestionKey.type.name: questionType?.name,
-      QuestionKey.topic.name: topicTag?.toFireBase(),
       QuestionKey.course.name: course?.course?.name,
       QuestionKey.unit.name: {unit?.index ?? "": unit?.name ?? ""},
       QuestionKey.subunit.name: {subunit?.index ?? "": subunit?.name ?? ""},
@@ -91,7 +76,6 @@ class QuestionModel extends Equatable {
       QuestionKey.answers.name: answers?.map((e) => e.toMap()).toList(),
       QuestionKey.answerStage.name: answerStage.name, // Enum
       QuestionKey.explanation.name: explanation,
-      QuestionKey.hL.name: hl,
       QuestionKey.customTags.name: customTags?.toFirebase(),
     };
   }
@@ -99,25 +83,17 @@ class QuestionModel extends Equatable {
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     return QuestionModel(
       id: id,
-      question: map[QuestionKey.question.name],
-      questionType: map.containsKey(QuestionKey.type.name)
-          ? QuestionTypeExtension.fromText(map[QuestionKey.type.name])
-          : null,
-      topicTag: TopicTagFirebase.fromFirebase(map),
+      question: getQuestion(map),
+      questionType: QuestionTypeExtension.getQuestionType(map),
       course: CourseModel(
-          course: CourseEnumExtension.fromText(map[QuestionKey.course.name]),
-          units: []),
+        course: CourseEnumExtension.fromFirebase(map), units: [],
+      ),
       unit: UnitModel.fromFirebase(map),
       subunit: UnitModel.fromFirebase(map, subunit: true),
       answers: AnswerModel.fromMapList(map)?.toList(),
       answerStage: AnswerStage.notSelected,
-      explanation: map.containsKey(QuestionKey.explanation.name)
-          ? map[QuestionKey.explanation.name]
-          : null,
+      explanation: getExplanation(map),
       diagrams: DiagramModel.fromFirebaseList(map[QuestionKey.diagrams.name]),
-      hl: map.containsKey(QuestionKey.hL.name)
-          ? map[QuestionKey.hL.name]
-          : null,
       customTags: CustomTagFirebaseExtension.fromFirebaseList(
           map[QuestionKey.customTags.name]),
     );
@@ -126,6 +102,50 @@ class QuestionModel extends Equatable {
   QuestionModel shuffleAnswers() {
     List<AnswerModel> shuffledAnswers = List.from(answers ?? [])..shuffle();
     return copyWith(answers: shuffledAnswers);
+  }
+
+  // Static method to safely extract the question from a map
+  static String? getQuestionFromMap(Map<String, dynamic>? map) {
+    if (map == null) {
+      return null;
+    }
+
+    final questionValue = map[QuestionKey.question.name];
+    if (questionValue is String) {
+      return questionValue;
+    }
+
+    return null;
+  }
+
+  static String? getQuestion(Map<String, dynamic>? map) {
+    final key = QuestionKey.question.name;
+
+    // Check if the map is null
+    if (map == null) {
+      return null;
+    }
+
+    // Extract the question field
+    final questionValue = map[key];
+
+    // Return the question if it's a valid String, otherwise return null
+    return questionValue is String ? questionValue : null;
+  }
+
+  static String? getExplanation(Map<String, dynamic>? map) {
+    final key = QuestionKey.explanation.name;
+
+    // Check if the map is null
+    if (map == null) {
+      return null;
+    }
+
+    // Extract the explanation field
+    final explanationValue = map[key];
+
+    // Return the explanation if it's a valid String, otherwise return null
+    return explanationValue is String ? explanationValue : null;
   }
 
   @override

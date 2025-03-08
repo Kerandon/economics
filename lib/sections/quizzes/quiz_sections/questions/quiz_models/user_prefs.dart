@@ -3,11 +3,11 @@ import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 import '../../../../../app/utils/models/course_model.dart';
 
 import '../../../../../app/utils/models/unit_model.dart';
-import '../../../quiz_enums/topic_tag.dart';
 
 class UserPref {
   final CourseModel course;
-  final TopicTag? topicTag;
+
+  // final TopicTag? topicTag;
   final int? numberOfQuestions;
   final List<UnitModel>? selectedUnits;
   final List<UnitModel>? selectedSubunits;
@@ -15,7 +15,7 @@ class UserPref {
 
   const UserPref({
     required this.course,
-    this.topicTag,
+    // this.topicTag,
     this.numberOfQuestions,
     this.selectedUnits,
     this.selectedSubunits,
@@ -25,7 +25,7 @@ class UserPref {
   // copyWith method
   UserPref copyWith({
     CourseModel? course,
-    TopicTag? topicTag,
+    // TopicTag? topicTag,
     int? numberOfQuestions,
     QuizFilter? quizFilter,
     List<UnitModel>? selectedUnits,
@@ -34,7 +34,7 @@ class UserPref {
   }) {
     return UserPref(
       course: course ?? this.course,
-      topicTag: topicTag ?? this.topicTag,
+      // topicTag: topicTag ?? this.topicTag,
       numberOfQuestions: numberOfQuestions ?? this.numberOfQuestions,
       selectedUnits: selectedUnits ?? this.selectedUnits,
       selectedSubunits: selectedSubunits ?? this.selectedSubunits,
@@ -44,8 +44,7 @@ class UserPref {
 
   @override
   String toString() {
-    return 'UserPrefs(course: $course, flipCardTag: $topicTag, '
-        'numberOfQuestions: $numberOfQuestions, selected units: $selectedUnits'
+    return 'numberOfQuestions: $numberOfQuestions, selected units: $selectedUnits'
         'selected subunits $selectedSubunits show answers at end $showAnswersAtEnd';
   }
 }

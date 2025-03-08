@@ -1,5 +1,6 @@
 import 'package:economics_app/app/animation/flip_animation.dart';
 import 'package:economics_app/sections/quizzes/methods/get_current_pref.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
@@ -9,7 +10,6 @@ import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_change_button.dart';
 import '../methods/show_completion_box.dart';
 import '../quiz_enums/answer_stage.dart';
-import '../quiz_enums/topic_tag.dart';
 
 class QuestionNavigationButtons extends ConsumerStatefulWidget {
   const QuestionNavigationButtons({
@@ -150,7 +150,7 @@ class _QuestionNavigationButtonsState
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (question.topicTag != TopicTag.multipleChoiceQuestion &&
+                if (question.questionType != QuestionType.flip &&
                     quizState.currentCardSide == CardSide.back) ...[
                   Row(
                     children: [

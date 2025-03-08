@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:economics_app/sections/quizzes/quiz_init_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -29,7 +30,12 @@ Future<void> main() async {
       options: firebaseOptions,
     );
   } else {
+    try {
     await Firebase.initializeApp();
+    } catch (e) {
+      throw Exception('Firestore initialization error: $e');
+    }
+
   }
 
   getIt.registerSingleton<AudioManager>(AudioManager());

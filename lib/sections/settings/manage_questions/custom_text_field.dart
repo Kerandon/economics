@@ -7,16 +7,19 @@ class CustomTextField extends StatelessWidget {
       required this.label,
       required this.onChanged,
       this.minLines = 1,
+      this.initialValue,
       super.key});
 
   final String name;
   final String label;
   final int minLines;
   final Function(String?) onChanged;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      initialValue: initialValue,
       minLines: minLines,
       maxLines: 999999,
       onChanged: (value) {

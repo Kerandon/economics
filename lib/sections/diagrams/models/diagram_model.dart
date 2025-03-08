@@ -25,6 +25,7 @@ class DiagramModel {
 
   // Deserialization method from Firebase
   factory DiagramModel.fromFirebase(Map<String, dynamic> map) {
+
     return DiagramModel(
       unit: map[DiagramKey.unit.name] != null
           ? UnitType.values

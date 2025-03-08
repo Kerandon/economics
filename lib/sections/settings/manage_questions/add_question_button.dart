@@ -1,4 +1,4 @@
-import 'package:economics_app/sections/settings/add_question/add_question_page.dart';
+import 'package:economics_app/sections/settings/manage_questions/add_question_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/configs/constants.dart';
@@ -21,25 +21,30 @@ class AddQuestionButton extends ConsumerWidget {
       padding:
           EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical * 2),
       child: CustomChipButton(
+
         text: 'Add question',
         onPressed: () {
           final q = editState.currentQuestion;
-          String? errorMsg;
+          List<String> errors = [];
 
           if (q.question == null || q.question!.trim().isEmpty) {
-            errorMsg = 'Question field is empty';
-          } else if (q.answers?.any((e) => e.answer.trim().isEmpty) ?? false) {
-            errorMsg = 'Answer field(s) are empty';
-          } else if (q.answers?.any((e) => e.isCorrect == true) != true) {
-            errorMsg = 'Require at least one correct answer';
+            errors.add('Question field is empty');
+          }
+          if (q.answers?.any((e) => e.answer.trim().isEmpty) ?? false) {
+            errors.add('Answer field(s) are empty');
+          }
+          if (q.answers?.any((e) => e.isCorrect == true) != true) {
+            errors.add('Require at least one correct answer');
           }
 
-          if (errorMsg != null) {
+          if (errors.isNotEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(errorMsg)),
+              SnackBar(content: Text(errors.join('\n'))),
             );
             return;
           }
+
+
 
           final future = sendNewQuestionToFirebase(question: q);
           Navigator.of(context).pushReplacement(
@@ -68,6 +73,7 @@ class AddQuestionButton extends ConsumerWidget {
             ),
           );
         },
+
       ),
     );
   }

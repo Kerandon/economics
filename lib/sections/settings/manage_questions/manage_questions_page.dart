@@ -1,21 +1,17 @@
-import 'package:economics_app/app/enums/course_enum.dart';
+import 'package:economics_app/app/utils/models/unit_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
-import 'package:economics_app/sections/settings/add_question/add_question_page.dart';
-import 'package:economics_app/sections/settings/course_button.dart';
-
-import 'package:economics_app/sections/settings/custom_tags_button.dart';
-import 'package:economics_app/sections/settings/subunits_button.dart';
-import 'package:economics_app/sections/settings/topic_tags_button.dart';
-import 'package:economics_app/sections/settings/units_button.dart';
-
+import 'package:economics_app/sections/settings/manage_questions/course_button.dart';
+import 'package:economics_app/sections/settings/manage_questions/add_question_page.dart';
+import 'package:economics_app/sections/settings/manage_questions/custom_tags_button.dart';
+import 'package:economics_app/sections/settings/manage_questions/question_type_button.dart';
+import 'package:economics_app/sections/settings/manage_questions/subunits_button.dart';
+import 'package:economics_app/sections/settings/manage_questions/units_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../quizzes/methods/get_questions_data.dart';
+import '../../quizzes/quiz_state/edit_question_state.dart';
 
-import '../quizzes/methods/get_questions_data.dart';
-import '../quizzes/quiz_state/edit_question_state.dart';
-
-import 'hl_button.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
   const ManageQuestionsPage({super.key});
@@ -67,6 +63,11 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
 
           final c = editState.currentQuestion;
           final f = editState.filterModel;
+          if (c.course != null) {
+            filteredQuestions.retainWhere(
+              (e) => e.course == c.course,
+            );
+          }
 
           if (f.units?.isNotEmpty ?? false) {
             filteredQuestions.retainWhere((e) =>
@@ -83,13 +84,13 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                         false) // Adjust if you're checking for subUnits
                 );
           }
-          if (f.topicTags?.isNotEmpty ?? false) {
-            filteredQuestions.retainWhere((e) =>
-                    e.course == c.course &&
-                    (f.topicTags?.contains(e.topicTag) ??
-                        false) // Adjust if you're checking for subUnits
-                );
-          }
+          // if (f.topicTags?.isNotEmpty ?? false) {
+          //   filteredQuestions.retainWhere((e) =>
+          //           e.course == c.course &&
+          //           (f.topicTags?.contains(e.topicTag) ??
+          //               false) // Adjust if you're checking for subUnits
+          //       );
+          // }
           if (c.customTags?.isNotEmpty ?? false) {
             filteredQuestions.retainWhere(
               (e) =>
@@ -100,13 +101,6 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                       false),
             );
           }
-          filteredQuestions.retainWhere(
-            (e) =>
-                e.course == c.course &&
-                (((c.hl ?? true)
-                    ? e.hl == true
-                    : true)), // If c.hl is true, filter by e.hl, otherwise keep everything
-          );
 
           return CustomScrollView(
             slivers: [
@@ -122,15 +116,10 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                       Expanded(flex: 10, child: CourseButton()),
                       Expanded(flex: 10, child: UnitsButton()),
                       Expanded(flex: 10, child: SubunitsButton()),
-                      Expanded(flex: 10, child: TopicTagsButton()),
+                      Expanded( flex: 10, child: QuestionTypeButton()),
                       Expanded(flex: 10, child: CustomTagsButton()),
-                      if (editState.currentQuestion.course?.course ==
-                          CourseEnum.ib) ...[
-                        Expanded(
-                          flex: 5,
-                          child: HLButton(),
-                        ),
-                      ],
+
+
                     ],
                   ),
                 ),
@@ -144,11 +133,54 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      final q = filteredQuestions[index];
+                      QuestionModel q = filteredQuestions[index];
                       return ExpansionTile(
                         title: Container(
                           color: Theme.of(context).colorScheme.surfaceTint,
                           child: HtmlWidget(q.question ?? ''),
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+
+                            /// Need to repopulate Course with unit and subunits
+                            for (var e in editState.courses) {
+                              if (e.course == q.course?.course) {
+                                List<UnitModel> s = [];
+                                for (var u in e.units) {
+                                  if (u == q.unit) {
+                                    s = u.subunits.toList();
+                                  }
+                                }
+                                q = q.copyWith(
+                                  course: q.course?.copyWith(
+                                    units: e.units,
+                                  ),
+                                  unit: UnitModel(
+                                    name: q.unit?.name,
+                                    subunits: [...s],
+                                  ),
+                                );
+                              }
+                            }
+
+
+                            editNotifier.updateCurrentQuestion(q);
+
+                            WidgetsBinding.instance.addPostFrameCallback(
+                              (t) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => AddQuestionPage(
+                                      editQuestion: true,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          icon: Icon(
+                            Icons.edit_outlined,
+                          ),
                         ),
                         children: [
                           Column(

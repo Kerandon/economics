@@ -17,7 +17,7 @@ class EditQuestionState {
   final QuestionModel currentQuestion;
   final QuestionPart questionPart;
   final FilterModel filterModel;
-
+  final int numberOfMultiAnswers;
 
   EditQuestionState({
     required this.courses,
@@ -27,6 +27,7 @@ class EditQuestionState {
     required this.currentQuestion,
     required this.questionPart,
     required this.filterModel,
+    required this.numberOfMultiAnswers,
   });
 
   EditQuestionState copyWith({
@@ -37,6 +38,7 @@ class EditQuestionState {
     QuestionModel? currentQuestion,
     QuestionPart? questionPart,
     FilterModel? filterModel,
+    int? numberOfMultiAnswers,
   }) {
     return EditQuestionState(
       courses: courses ?? this.courses,
@@ -46,6 +48,7 @@ class EditQuestionState {
       currentQuestion: currentQuestion ?? this.currentQuestion,
       questionPart: questionPart ?? this.questionPart,
       filterModel: filterModel ?? this.filterModel,
+      numberOfMultiAnswers: numberOfMultiAnswers ?? this.numberOfMultiAnswers,
     );
   }
 }
@@ -60,7 +63,6 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   void setCourses(List<CourseModel> courses) {
     state = state.copyWith(courses: courses);
   }
-
 
   void setDiagramsNumber(BuildContext context, Size size,
       {required DiagramsNumber diagramsNumber}) {
@@ -94,64 +96,58 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   }
 
   void updateCurrentQuestion(QuestionModel question) {
-    state = state.copyWith(currentQuestion: question);
-    adjustNumberOfAnswers(question);
+    final answers = adjustNumberOfAnswers(question, state.numberOfMultiAnswers);
+    print('answers ${answers.length}');
+    state =
+        state.copyWith(currentQuestion: question.copyWith(answers: answers.toList()));
   }
 
   void updateFilter(FilterModel filter) {
     state = state.copyWith(filterModel: filter);
   }
 
-  void setNumberOfAnswers(int number) {
-    List<AnswerModel> answers =
-        adjustNumberOfAnswers(state.currentQuestion, number: (number + 2));
+  void setNumberOfMultiAnswers(QuestionModel question, int num) {
 
+    final a = adjustNumberOfAnswers(question, num);
+    print('number of answers is ${a.length}');
     state = state.copyWith(
-      currentQuestion: state.currentQuestion.copyWith(
-        answers: answers,
-      ),
-    );
+        numberOfMultiAnswers: num,
+        currentQuestion: state.currentQuestion.copyWith(answers: a.toList())
+        );
   }
 
-  List<AnswerModel> adjustNumberOfAnswers(QuestionModel question,
-      {int? number}) {
-    List<AnswerModel> answers = question.answers?.toList() ?? [];
+  // void setNumberOfAnswers(int number) {
+  //   List<AnswerModel> answers =
+  //       adjustNumberOfAnswers(state.currentQuestion, number: (number + 2));
+  //
+  //   state = state.copyWith(
+  //     currentQuestion: state.currentQuestion.copyWith(
+  //       answers: answers,
+  //     ),
+  //   );
+  // }
 
-    if (question.questionType == QuestionType.flip) {
-      // Flip question type should always have exactly 1 answer
-      state = state.copyWith(
-        currentQuestion: question.copyWith(
-          answers: [
-            AnswerModel(''),
-          ],
-        ),
-      );
-    } else if (question.questionType == QuestionType.multi) {
-      if (question.answers!.length < 2) {
-        int targetNumber = 0;
-        answers.isEmpty ? targetNumber = 3 : targetNumber = 2;
-        for (int i = 0; i < targetNumber; i++) {
+  List<AnswerModel> adjustNumberOfAnswers(QuestionModel question, int num) {
+    final c = question;
+    List<AnswerModel> answers = c.answers?.toList() ?? [];
+    print('question type is ${c.questionType}');
+    if (c.questionType == QuestionType.flip) {
+
+    answers = [AnswerModel('')];
+    } else if (c.questionType == QuestionType.multi) {
+      print(
+          'is multi ${c.questionType} target is ${num} and current ${c.answers?.length}');
+      if (answers.length > num) {
+        // Trim the list to match the required number
+        answers = answers.sublist(0, num);
+      } else if (answers.length < num) {
+        // Add default answers until the list matches the required number
+        while (answers.length < num) {
           answers.add(AnswerModel(''));
-        }
-        answers.insert(
-          0,
-          AnswerModel('', isCorrect: true),
-        );
-        state = state.copyWith(
-            currentQuestion: question.copyWith(answers: answers.toList()));
-      } else {
-        int n = number ?? question.answers?.length ?? 4;
-        while (answers.length > n) {
-          answers.removeLast();
-        }
-        while (answers.length < n) {
-          answers.add(
-            AnswerModel(''),
-          );
         }
       }
     }
-
+    print('return a ${answers.length}');
     return answers;
   }
 
@@ -171,6 +167,7 @@ final editQuestionProvider =
       currentQuestion: QuestionModel(),
       questionPart: QuestionPart.question,
       filterModel: FilterModel(),
+      numberOfMultiAnswers: 4,
     ),
   ),
 );

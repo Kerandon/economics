@@ -3,5 +3,5 @@ import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart'
 
 UserPref getCurrentPref(StartQuizState startState) {
   return startState.userPrefs.toList().firstWhere((p) =>
-      p.course == startState.course && startState.topicTag == p.topicTag);
+      p.course == startState.course);
 }

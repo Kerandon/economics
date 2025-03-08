@@ -2,6 +2,7 @@ import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/custom_slider.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/multi_choice_tile.dart';
 import 'package:economics_app/sections/quizzes/custom_widgets/question_navigation_buttons.dart';
@@ -14,7 +15,6 @@ import '../../../../app/animation/confetti_animation.dart';
 import '../../../../app/audio_manager/audio_manager.dart';
 import '../../../../main.dart';
 import '../../custom_widgets/score_bar.dart';
-import '../../quiz_enums/topic_tag.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
   const QuestionPage({super.key});
@@ -128,12 +128,12 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ...[
-                                if (question.topicTag ==
-                                    TopicTag.multipleChoiceQuestion) ...[
+                                if (question.questionType ==
+                                    QuestionType.multi) ...[
                                   MultiChoiceTile(question),
                                 ],
-                                if (question.topicTag !=
-                                    TopicTag.multipleChoiceQuestion) ...[
+                                if (question.questionType !=
+                                    QuestionType.multi) ...[
                                   FlipCardTile(question),
                                 ],
                                 SizedBox(

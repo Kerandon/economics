@@ -2,16 +2,14 @@ import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/enums/course_enum.dart';
-
 import '../../../app/utils/models/course_model.dart';
-import '../quiz_enums/topic_tag.dart';
 import '../quiz_sections/questions/quiz_models/user_prefs.dart';
 
 class StartQuizState {
   final CourseModel course;
   final List<QuestionModel> allTopicQuestions;
   final List<QuestionModel> filteredQuestions;
-  final TopicTag topicTag;
+ // final TopicTag topicTag;
   final List<UserPref> userPrefs;
   final List<int> numberOfQuestions;
 
@@ -19,7 +17,7 @@ class StartQuizState {
     required this.course,
     required this.allTopicQuestions,
     required this.filteredQuestions,
-    required this.topicTag,
+    //required this.topicTag,
     required this.userPrefs,
     required this.numberOfQuestions,
   });
@@ -28,7 +26,7 @@ class StartQuizState {
     CourseModel? course,
     List<QuestionModel>? allTopicQuestions,
     List<QuestionModel>? filteredQuestions,
-    TopicTag? topicTag,
+    //TopicTag? topicTag,
     List<UserPref>? userPrefs,
     List<int>? numberOfQuestions,
   }) {
@@ -36,7 +34,7 @@ class StartQuizState {
       course: course ?? this.course,
       allTopicQuestions: allTopicQuestions ?? this.allTopicQuestions,
       filteredQuestions: filteredQuestions ?? this.filteredQuestions,
-      topicTag: topicTag ?? this.topicTag,
+      //topicTag: topicTag ?? this.topicTag,
       userPrefs: userPrefs ?? this.userPrefs,
       numberOfQuestions: numberOfQuestions ?? this.numberOfQuestions,
     );
@@ -55,7 +53,9 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
   void setAllTopicQuestions(List<QuestionModel> allQuestions) {
     List<QuestionModel> allTopic = allQuestions.toList();
     allTopic.retainWhere(
-        (e) => e.course == state.course && e.topicTag == state.topicTag);
+        (e) => e.course == state.course
+            //&& e.topicTag == state.topicTag
+        );
 
     state = state.copyWith(allTopicQuestions: allTopic.toList());
   }
@@ -79,15 +79,14 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     setNumberOfPossibleQuestions(pref);
   }
 
-  void setFlipCardTag(TopicTag tag) {
-    state = state.copyWith(topicTag: tag);
-  }
 
   void updateUserPrefs(UserPref pref, List<QuestionModel> allQuestions) {
     List<UserPref> existing = state.userPrefs.toList();
     for (int i = 0; i < existing.length; i++) {
-      if (pref.course == existing[i].course &&
-          pref.topicTag == existing[i].topicTag) {
+      if (pref.course == existing[i].course
+      //&&
+         // pref.topicTag == existing[i].topicTag
+      ) {
         existing.removeAt(i);
         existing.insert(i, pref);
       }
@@ -136,7 +135,7 @@ final startQuizProvider =
       course: CourseModel(course: CourseEnum.ib, units: []),
       allTopicQuestions: [],
       filteredQuestions: [],
-      topicTag: TopicTag.term,
+      //topicTag: TopicTag.term,
       userPrefs: [],
       numberOfQuestions: [],
     ),

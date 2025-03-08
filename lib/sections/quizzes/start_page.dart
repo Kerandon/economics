@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/sections/quizzes/methods/reset_questions_models.dart';
-import 'package:economics_app/sections/quizzes/quiz_enums/topic_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -33,11 +32,13 @@ class _StartPageState extends ConsumerState<StartPage> {
 
     UserPref pref = UserPref(
       course: startState.course,
-      topicTag: startState.topicTag,
+      // topicTag: startState.topicTag,
     );
 
     for (var e in startState.userPrefs) {
-      if (e.course == startState.course && e.topicTag == startState.topicTag) {
+      if (e.course == startState.course
+          //&& e.topicTag == startState.topicTag
+      ) {
         pref = e;
       }
     }
@@ -62,7 +63,7 @@ class _StartPageState extends ConsumerState<StartPage> {
             Expanded(
               flex: 12,
               child: AutoSizeText(
-                '${startState.course} - ${startState.topicTag.toText()}',
+                '${startState.course}',
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: theme.colorScheme.primary,
                 ),
@@ -295,7 +296,7 @@ class _StartPageState extends ConsumerState<StartPage> {
                 ],
               ),
             ),
-            if (pref.topicTag == TopicTag.multipleChoiceQuestion) ...[
+            // if (pref.g == TopicTag.multipleChoiceQuestion) ...[
               ListTile(
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -329,7 +330,7 @@ class _StartPageState extends ConsumerState<StartPage> {
                   ],
                 ),
               ),
-            ],
+          //  ],
             SizedBox(
               height: size.height * 0.05,
             ),
@@ -352,7 +353,7 @@ class _StartPageState extends ConsumerState<StartPage> {
               ),
             ),
           ],
-        ),
+        )
       ),
     );
   }

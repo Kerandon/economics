@@ -21,7 +21,6 @@ class _NumberOfAnswersButtonsState
     final theme = Theme.of(context);
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    final c = editState.currentQuestion;
 
     return Row(
       children: [
@@ -38,9 +37,9 @@ class _NumberOfAnswersButtonsState
               ...List.generate(
                 3,
                 (index) {
-
+                  final n = editState.numberOfMultiAnswers;
                   bool isSelected = false;
-                  if (c.answers?.length == (index + 2)) {
+                  if (n == (index + 2)) {
                     isSelected = true;
                   }
                   final onSurfaceColor =
@@ -48,7 +47,8 @@ class _NumberOfAnswersButtonsState
 
                   return ChoiceChip(
                     onSelected: (_) {
-                      editNotifier.setNumberOfAnswers(index);
+
+                      editNotifier.setNumberOfMultiAnswers(editState.currentQuestion, index + 2);
                     },
                     checkmarkColor: onSurfaceColor,
                     selectedColor: theme.colorScheme.primary,

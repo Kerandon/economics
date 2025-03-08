@@ -1,11 +1,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:economics_app/app/enums/course_enum.dart';
-import 'package:economics_app/sections/settings/custom_dropdown_heading.dart';
+import 'package:economics_app/sections/settings/manage_questions/custom_dropdown_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../app/utils/models/course_model.dart';
-import '../quizzes/quiz_state/edit_question_state.dart';
+import '../../../app/utils/models/course_model.dart';
+import '../../quizzes/quiz_state/edit_question_state.dart';
 
 class CourseButton extends ConsumerWidget {
   const CourseButton({super.key});
@@ -20,6 +20,9 @@ class CourseButton extends ConsumerWidget {
     CourseModel? currentCourse;
     // Get the current course or default to the first one
     if (editState.currentQuestion.course == null) {
+      if(editState.courses.isEmpty){
+        throw Exception('no courses');
+      }
       CourseModel currentCourse = editState.courses.first;
       WidgetsBinding.instance.addPostFrameCallback((t) {
         editNotifier.updateCurrentQuestion(
@@ -33,7 +36,8 @@ class CourseButton extends ConsumerWidget {
       width: size.width,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2(
-          customButton: CustomDropdownHeading(c.course?.course?.toText() ?? 'Select course'),
+          customButton: CustomDropdownHeading(
+              c.course?.course?.toText() ?? 'Select course'),
           onChanged: (e) {
             editNotifier.updateCurrentQuestion(
               editState.currentQuestion.copyWith(
@@ -45,8 +49,16 @@ class CourseButton extends ConsumerWidget {
           },
           value: currentCourse,
           items: [
-            ...editState.courses.map((e) =>
-                DropdownMenuItem(value: e, child: Text(e.course?.toText() ?? '')))
+            ...editState.courses.map(
+              (e) => DropdownMenuItem(
+                value: e,
+                child: Text(
+                  e.course?.toText() ?? '',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+              ),
+            ),
           ],
         ),
       ),

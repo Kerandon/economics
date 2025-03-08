@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/flip_card_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/multi_choice_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/configs/constants.dart';
-import '../../quiz_enums/topic_tag.dart';
 import '../questions/quiz_models/question_model.dart';
 
 class IncorrectAnswersPage extends ConsumerStatefulWidget {
@@ -109,12 +109,12 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                               ],
                             ),
                           ),
-                          if (question.value.topicTag ==
-                              TopicTag.multipleChoiceQuestion) ...[
+                          if (question.value.questionType ==
+                              QuestionType.multi) ...[
                             MultiChoiceTile(question.value),
                           ],
-                          if (question.value.topicTag !=
-                              TopicTag.multipleChoiceQuestion) ...[
+                          if (question.value.questionType !=
+                             QuestionType.multi) ...[
                             FlipCardTile(question.value),
                           ],
                         ],

@@ -1,4 +1,3 @@
-import 'package:economics_app/sections/quizzes/quiz_enums/topic_tag.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
@@ -33,7 +32,7 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final startNotifier = ref.watch(startQuizProvider.notifier);
     return Scaffold(
-      body: FutureBuilder(
+      body: FutureBuilder<dynamic>(
           future: Future.wait(_futures),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -43,19 +42,19 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                 final questionData = snapshot.data?[1];
                 List<CourseModel> courses = [];
                 List<QuestionModel> questions = [];
-                for (var e in courseData!.docs) {
+                for (var e in courseData?.docs) {
+                  print('GETTING COURSE DATA');
                   courses.add(
                     CourseModel.fromMap({
                       e.id: e.data(),
                     }),
                   );
                 }
-
                 questions = questionData.toList();
                 WidgetsBinding.instance.addPostFrameCallback((t) {
                   if (courses.isNotEmpty) {
-                    editNotifier
-                      .setCourses(courses);
+
+                    editNotifier.setCourses(courses);
                   }
                   if (questions.isNotEmpty) {
                     editNotifier.setAllQuestions(questions);
@@ -63,12 +62,11 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
 
                   List<UserPref> prefs = [];
 
-// Usage:
-                  addUserPrefs(prefs, courses, CourseEnum.ib);
-                  addUserPrefs(prefs, courses, CourseEnum.igcse);
-                  WidgetsBinding.instance.addPostFrameCallback((t) {
-                    startNotifier.setAllUserPrefs(prefs);
-                  });
+                  // addUserPrefs(prefs, courses, CourseEnum.ib);
+                  // addUserPrefs(prefs, courses, CourseEnum.igcse);
+                  // WidgetsBinding.instance.addPostFrameCallback((t) {
+                  //   startNotifier.setAllUserPrefs(prefs);
+                  // });
 
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
@@ -78,7 +76,10 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                 });
               }
             }
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Colors.red,
+            ));
           }),
     );
   }
@@ -86,16 +87,15 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
   Future<void> addUserPrefs(List<UserPref> prefs, List<CourseModel> courses,
       CourseEnum courseEnum) async {
     final c = courses.firstWhere((c) => c.course == courseEnum);
-    for (var e in TopicTag.values) {
-      prefs.add(
-        UserPref(
-          course: c,
-          topicTag: e,
-          numberOfQuestions: 0,
-          selectedUnits: [],
-          showAnswersAtEnd: false,
-        ),
-      );
-    }
+    // for (var e in TopicTag.values) {
+    //   prefs.add(
+    //     UserPref(
+    //       course: c,
+    //       numberOfQuestions: 0,
+    //       selectedUnits: [],
+    //       showAnswersAtEnd: false,
+    //     ),
+    //   );
+    // }
   }
 }

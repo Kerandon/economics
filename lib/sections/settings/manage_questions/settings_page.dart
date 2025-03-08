@@ -1,11 +1,9 @@
 import 'package:economics_app/sections/settings/audio/sound_track_toggle.dart';
-import 'package:economics_app/sections/settings/manage_questions_page.dart';
-
-
+import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../app/state/app_state.dart';
-import 'add_question/add_question_page.dart';
+
+import '../../../app/state/app_state.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -40,19 +38,6 @@ class SettingsPage extends ConsumerWidget {
                 onChanged: (on) {
                   appNotifier.setDarkTheme(on);
                 }),
-            ListTile(
-              title: Text(
-                'Add question',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const AddQuestionPage(),
-                  ),
-                );
-              },
-            ),
             ListTile(
               title: Text(
                 'Manage Questions',

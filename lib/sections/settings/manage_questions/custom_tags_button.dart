@@ -1,10 +1,10 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:economics_app/sections/settings/custom_dropdown_heading.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
+import 'package:economics_app/sections/settings/manage_questions/custom_dropdown_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../quizzes/quiz_enums/custom_tag.dart';
-import '../quizzes/quiz_state/edit_question_state.dart';
+import '../../quizzes/quiz_enums/custom_tag.dart';
 
 class CustomTagsButton extends ConsumerWidget {
   const CustomTagsButton({

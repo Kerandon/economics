@@ -1,7 +1,6 @@
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:flutter/material.dart';
-
-import '../../../settings/add_question/add_question_page.dart';
+import '../../../settings/manage_questions/add_question_page.dart';
 import '../../../settings/methods/delete_question.dart';
 
 class EditQuestionButton extends StatelessWidget {

@@ -1,3 +1,5 @@
+import 'package:economics_app/sections/quizzes/quiz_enums/question_key.dart';
+
 enum QuestionType {
   multi,
   flip,
@@ -8,9 +10,9 @@ extension QuestionTypeExtension on QuestionType {
   String toText() {
     switch (this) {
       case QuestionType.multi:
-        return QuestionType.multi.name;
+        return 'Multiple Choice';
       case QuestionType.flip:
-        return QuestionType.flip.name;
+        return 'Flip Card';
     }
   }
 
@@ -25,5 +27,20 @@ extension QuestionTypeExtension on QuestionType {
       default:
         return null; // Return null for unknown values instead of throwing an exception
     }
+  }
+
+  static QuestionType? getQuestionType(Map<String, dynamic>? map) {
+    final key = QuestionKey.type.name;
+
+    // Check if the map is null
+    if (map == null) {
+      return null;
+    }
+
+    // Extract the type field
+    final typeValue = map[key];
+
+    // Parse the typeValue into a QuestionType using the extension
+    return QuestionTypeExtension.fromText(typeValue);
   }
 }
