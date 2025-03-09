@@ -15,7 +15,9 @@ class UnitsButton extends ConsumerWidget {
     final editState = ref.watch(editQuestionProvider);
     final c = editState.currentQuestion;
 
-    final units = editState.currentQuestion.syllabus?.units.toList();
+
+    final units = c.syllabus?.units.toList();
+
     final selectedUnits = c.units?.isNotEmpty == true
         ? c.units!.map((unit) => unit.name).join(', ')
         : 'Select units';

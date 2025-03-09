@@ -5,6 +5,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quizzes/methods/get_questions_data.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
+import 'filter_buttons.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
   const ManageQuestionsPage({super.key});
@@ -76,9 +77,9 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                 .retainWhere((e) => e.questionType == c.questionType);
           }
 
-          if (c.customTags?.isNotEmpty ?? false) {
+          if (c.tags?.isNotEmpty ?? false) {
             filteredQuestions.retainWhere((e) =>
-                e.customTags?.any((tag) => c.customTags!.contains(tag)) ??
+                e.tags?.any((tag) => c.tags!.contains(tag)) ??
                 false);
           }
           return CustomScrollView(
@@ -107,13 +108,20 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                         ),
                         trailing: IconButton(
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => AddQuestionPage(
-                                  editQuestion: true,
+
+                            editNotifier..updateCurrentQuestion(q)
+                            ..setNumberOfMultiAnswers(q, q.answers?.length ?? 4);
+
+
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => AddQuestionPage(
+                                    editQuestion: true,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+
+
                           },
                           icon: Icon(
                             Icons.edit_outlined,
@@ -141,7 +149,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                                 Text(
                                     'Subunits are ${q.subunits?.map((e) => e.name)}'),
                                 Text(
-                                    'Tags are ${q.customTags?.map((e) => e.name)}')
+                                    'Tags are ${q.tags?.map((e) => e.name)}')
                               ],
                             ),
                           )

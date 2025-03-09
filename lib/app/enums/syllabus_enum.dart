@@ -44,18 +44,5 @@ extension SyllabusEnumExtension on Syllabus {
     }
   }
 
-  static Syllabus fromText(String text){
-    try {
-
-      return Syllabus.values.firstWhere(
-            (e) => e.toText().toLowerCase().split(' ').first == text.toLowerCase().split(' ').first,
-        orElse: () => throw Exception('Unknown syllabus: $text'),
-
-      );
-    } catch (e) {
-      throw Exception('Unknown syllabus: $text');
-    }
-
-  }
 
 }

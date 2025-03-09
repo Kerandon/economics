@@ -147,7 +147,6 @@ final editQuestionProvider =
       selectedDiagrams: [],
       currentQuestion: QuestionModel(),
       questionPart: QuestionPart.question,
-      // filterModel: FilterModel(),
       numberOfMultiAnswers: 4,
     ),
   ),

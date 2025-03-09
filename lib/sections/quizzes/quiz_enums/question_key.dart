@@ -14,6 +14,6 @@ enum QuestionKey {
   correct,
   incorrect,
   explanation,
-  customTags,
+  tags,
   diagrams,
 }

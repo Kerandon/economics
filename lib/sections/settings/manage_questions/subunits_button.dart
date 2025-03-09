@@ -16,11 +16,18 @@ class SubunitsButton extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
     final c = editState.currentQuestion;
-    final units =
-        c.units?.expand((e) => e.subunits.map((e) => e)).toList() ?? [];
+    List<UnitModel> allSubunits = [];
+    if(c.units?.isNotEmpty ?? false) {
+      allSubunits = c.syllabus?.units.where((u) => c.units!.contains(u)).expand((e) => e.subunits).toList() ?? [];
+    }
     final selectedUnits = c.subunits?.isNotEmpty == true
         ? c.subunits!.map((unit) => unit.name).join(', ')
         : 'Select subunits';
+
+
+
+
+
     return SizedBox(
       width: size.width,
       child: DropdownButtonHideUnderline(
@@ -29,7 +36,7 @@ class SubunitsButton extends ConsumerWidget {
           isExpanded: true,
           onChanged: (value) {},
           items: [
-            ...units.map(
+            ...allSubunits.map(
                   (e) {
                 return DropdownMenuItem(
                   enabled: false,

@@ -1,11 +1,9 @@
+import 'package:economics_app/sections/quizzes/quiz_enums/tag.dart';
 import 'package:equatable/equatable.dart';
-
-import '../../../../../app/enums/syllabus_enum.dart';
 import '../../../../../app/utils/models/syllabus_model.dart';
 import '../../../../../app/utils/models/unit_model.dart';
 import '../../../../diagrams/models/diagram_model.dart';
 import '../../../quiz_enums/answer_stage.dart';
-import '../../../quiz_enums/custom_tag.dart';
 import '../../../quiz_enums/question_key.dart';
 import '../../../quiz_enums/question_type.dart';
 import 'answer_model.dart';
@@ -21,7 +19,7 @@ class QuestionModel extends Equatable {
   final String? explanation;
   final List<UnitModel>? units;
   final List<UnitModel>? subunits;
-  final List<CustomTag>? customTags;
+  final List<Tag>? tags;
 
   const QuestionModel({
     this.id,
@@ -34,7 +32,7 @@ class QuestionModel extends Equatable {
     this.explanation,
     this.units,
     this.subunits,
-    this.customTags,
+    this.tags,
   });
 
   QuestionModel copyWith({
@@ -48,7 +46,7 @@ class QuestionModel extends Equatable {
     List<UnitModel>? units,
     List<UnitModel>? subunits,
     String? explanation,
-    List<CustomTag>? customTags,
+    List<Tag>? tags,
   }) {
     return QuestionModel(
       id: id ?? this.id,
@@ -61,7 +59,7 @@ class QuestionModel extends Equatable {
       explanation: explanation ?? this.explanation,
       units: units ?? this.units,
       subunits: subunits ?? this.subunits,
-      customTags: customTags ?? this.customTags,
+      tags: tags ?? this.tags,
     );
   }
 
@@ -76,27 +74,24 @@ class QuestionModel extends Equatable {
       QuestionKey.answers.name: answers?.map((e) => e.toMap()).toList(),
       QuestionKey.explanation.name: explanation,
       QuestionKey.diagrams.name: diagrams?.map((e) => e.toMap()).toList(),
-      QuestionKey.customTags.name: customTags?.toFirebase(),
+      QuestionKey.tags.name: tags?.map((e) => e.name).toList(),
     };
   }
 
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
+    print('map l is ${map.length} ${map.keys} and ${map.values}');
     return QuestionModel(
       id: id,
       question: getQuestion(map),
       questionType: QuestionTypeExtension.getQuestionType(map),
-      syllabus: SyllabusModel(
-        syllabus: SyllabusEnumExtension.fromFirebase(map),
-        units: [],
-      ),
+      syllabus: SyllabusModel.fromFirebase(map),
       units: UnitModelExtension.fromFirebase(map),
       subunits: UnitModelExtension.fromFirebase(map, subunit: true),
-      answers: AnswerModel.fromFirebase(map)?.toList(),
+      answers: AnswerModel.fromFirebase(map),
       answerStage: AnswerStage.notSelected,
       explanation: getExplanation(map),
       diagrams: DiagramModel.fromFirebaseList(map[QuestionKey.diagrams.name]),
-      customTags: CustomTagFirebaseExtension.fromFirebaseList(
-          map[QuestionKey.customTags.name]),
+     tags: TagFirebaseExtension.fromFirebase(map),
     );
   }
 

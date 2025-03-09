@@ -4,18 +4,13 @@ import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_explanation_box.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/answers_button.dart';
-import 'package:economics_app/sections/settings/manage_questions/custom_tags_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/number_of_answers_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/question_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
-import 'package:economics_app/sections/settings/manage_questions/question_type_button.dart';
-import 'package:economics_app/sections/settings/manage_questions/subunits_button.dart';
-
-import 'package:economics_app/sections/settings/manage_questions/units_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
-import 'SyllabusButton.dart';
+import 'filter_buttons.dart';
 
 
 class AddQuestionPage extends ConsumerStatefulWidget {
@@ -37,19 +32,19 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final c = editState.currentQuestion;
 
-    if (!_initNumberOfAnswers && !widget.editQuestion) {
-      _initNumberOfAnswers = true;
-      WidgetsBinding.instance.addPostFrameCallback((t) {
-
-        editNotifier.updateCurrentQuestion(
-          c.copyWith(
-            questionType: c.questionType ?? QuestionType.multi,
-            syllabus: c.syllabus ?? editState.syllabuses.first,
-            //answers: answers,
-          ),
-        );
-      });
-    }
+    // if (!_initNumberOfAnswers && !widget.editQuestion) {
+    //   _initNumberOfAnswers = true;
+    //   WidgetsBinding.instance.addPostFrameCallback((t) {
+    //
+    //     editNotifier.updateCurrentQuestion(
+    //       c.copyWith(
+    //         questionType: c.questionType ?? QuestionType.multi,
+    //         syllabus: c.syllabus ?? editState.syllabuses.first,
+    //         //answers: answers,
+    //       ),
+    //     );
+    //   });
+    // }
 
     final isMulti = c.questionType == QuestionType.multi;
 
@@ -107,40 +102,6 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class FilterButtons extends StatelessWidget {
-  const FilterButtons({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 10,
-          child: SyllabusButton(),
-        ),
-        Expanded(
-          flex: 10,
-          child: UnitsButton(),
-        ),
-        Expanded(
-          flex: 10,
-          child: SubunitsButton(),
-        ),
-        Expanded(
-          flex: 10,
-          child: QuestionTypeButton(),
-        ),
-        Expanded(
-          flex: 10,
-          child: CustomTagsButton(),
-        ),
-      ],
     );
   }
 }

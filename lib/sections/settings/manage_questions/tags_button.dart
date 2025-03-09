@@ -5,10 +5,11 @@ import 'package:economics_app/sections/settings/manage_questions/custom_dropdown
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../quizzes/quiz_enums/custom_tag.dart';
+import '../../quizzes/quiz_enums/tag.dart';
 
-class CustomTagsButton extends ConsumerWidget {
-  const CustomTagsButton({
+
+class TagsButton extends ConsumerWidget {
+  const TagsButton({
     super.key,
   });
 
@@ -17,16 +18,16 @@ class CustomTagsButton extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
     final c = editState.currentQuestion;
-    List<CustomTag> customTags = CustomTag.values.toList();
-    String tags = (c.customTags?.map((e) => e.toText()).join(', ') ?? '').isEmpty
-        ? 'Select custom tags'
-        : c.customTags!.map((e) => e.toText()).join(', ');
+    List<Tag> customTags = Tag.values.toList();
+    String tags = (c.tags?.map((e) => e.toText()).join(', ') ?? '').isEmpty
+        ? 'Select tags'
+        : c.tags!.map((e) => e.toText()).join(', ');
 
 
     return SizedBox(
       width: size.width,
       child: DropdownButtonHideUnderline(
-        child: DropdownButton2<CustomTag>(
+        child: DropdownButton2<Tag>(
           customButton: CustomDropdownHeading(tags),
           isExpanded: true,
           onChanged: (e) {},
@@ -51,21 +52,21 @@ class CustomTagsDropdown extends ConsumerWidget {
     super.key,
   });
 
-  final CustomTag tag;
+  final Tag tag;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    final isSelected = editState.currentQuestion.customTags?.contains(tag) ?? false;
+    final isSelected = editState.currentQuestion.tags?.contains(tag) ?? false;
     return InkWell(
       onTap: () {
-        List<CustomTag> tags = editState.currentQuestion.customTags?.toList() ?? [];
+        List<Tag> tags = editState.currentQuestion.tags?.toList() ?? [];
         isSelected ? tags.remove(tag) : tags.add(tag);
         editNotifier
           .updateCurrentQuestion(
             editState.currentQuestion.copyWith(
-              customTags: tags.toList(),
+              tags: tags.toList(),
             ),
           );
       },

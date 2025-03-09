@@ -24,7 +24,7 @@ class SyllabusButton extends ConsumerWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton2(
           customButton: CustomDropdownHeading(
-              c.syllabus?.syllabus?.toText() ?? 'Select course'),
+              c.syllabus?.syllabus?.toText() ?? 'Select syllabus'),
           onChanged: (e) {
             // ✅ Clone current units and subunits
             List<UnitModel> units = c.units?.toList() ?? [];
