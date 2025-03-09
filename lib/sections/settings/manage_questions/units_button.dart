@@ -3,6 +3,7 @@ import 'package:economics_app/sections/settings/manage_questions/custom_dropdown
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../app/utils/models/unit_model.dart';
+import '../../quizzes/custom_widgets/custom_dropdown_tile.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
 
 class UnitsButton extends ConsumerWidget {
@@ -12,16 +13,17 @@ class UnitsButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
+    final c = editState.currentQuestion;
 
-    final units = editState.currentQuestion.course?.units.toList();
-    final f = editState.filterModel;
-    final unitsText = f.units?.map((e) => e.name).join(', ') ?? '';
-    final selectedUnits = unitsText.isEmpty ? 'Select units' : unitsText;
+    final units = editState.currentQuestion.syllabus?.units.toList();
+    final selectedUnits = c.units?.isNotEmpty == true
+        ? c.units!.map((unit) => unit.name).join(', ')
+        : 'Select units';
     return SizedBox(
       width: size.width,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<UnitModel>(
-      customButton: CustomDropdownHeading(selectedUnits),
+          customButton: CustomDropdownHeading(selectedUnits),
           isExpanded: true,
           onChanged: (_) {},
           items: [
@@ -52,52 +54,36 @@ class CustomDropdownContents extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    final isSelected = editState.filterModel.units?.contains(unit) ?? false;
+    final c = editState.currentQuestion;
+    final isSelected = c.units?.contains(unit) ?? false;
     return InkWell(
-      onTap: () {
-        final u = editState.filterModel.units?.toList() ?? [];
-        final s = editState.filterModel.subunits?.toList() ?? [];
+        onTap: () {
+          List<UnitModel> units = c.units?.toList() ?? [];
+          List<UnitModel> subunits = c.subunits?.toList() ?? [];
 
-// Add or remove the unit based on selection
-        if (isSelected) {
-          u.remove(unit); // Remove the unit if it's deselected
+// Toggle the unit selection
+          if (units.contains(unit)) {
+            units.remove(unit);
 
-          // Remove all subunits that belong to the deselected unit
-          s.removeWhere((subunit) => unit.subunits.contains(subunit) == true);
-        } else {
-          u.add(unit); // Add the unit if it's selected
-        }
+            ///Remove any subunit that belongs to the deselected unit
+            subunits.removeWhere((s) => unit.subunits.contains(s));
+          } else {
+            units.add(unit);
+          }
 
-// Update the filter model
-        editNotifier.updateFilter(
-          editState.filterModel.copyWith(
-            units: u,
-            subunits: s,
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Text(unit.index.toString()),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                unit.name ?? '',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
+          ///Update the question state
+          editNotifier.updateCurrentQuestion(
+            c.copyWith(
+              units: units.toList(),
+              subunits: subunits.toList(),
             ),
-            const SizedBox(width: 16),
-            if (isSelected) ...[
-              const Icon(Icons.check_box_outlined)
-            ] else ...[
-              const Icon(Icons.check_box_outline_blank),
-            ]
-          ],
-        ),
-      ),
-    );
+          );
+
+        },
+        child: CustomDropdownTile(
+          leading: unit.index,
+          text: unit.name ?? '',
+          isSelected: isSelected,
+        ));
   }
 }

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../quiz_enums/question_key.dart';
 
 Future<QuerySnapshot<Map<String, dynamic>>> getCourseData() async {
 

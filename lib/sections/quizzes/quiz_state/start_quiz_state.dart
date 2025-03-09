@@ -1,40 +1,37 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/enums/course_enum.dart';
-import '../../../app/utils/models/course_model.dart';
+
+import '../../../app/enums/syllabus_enum.dart';
+import '../../../app/utils/models/syllabus_model.dart';
 import '../quiz_sections/questions/quiz_models/user_prefs.dart';
 
 class StartQuizState {
-  final CourseModel course;
+  final SyllabusModel syllabus;
   final List<QuestionModel> allTopicQuestions;
   final List<QuestionModel> filteredQuestions;
- // final TopicTag topicTag;
   final List<UserPref> userPrefs;
   final List<int> numberOfQuestions;
 
   StartQuizState({
-    required this.course,
+    required this.syllabus,
     required this.allTopicQuestions,
     required this.filteredQuestions,
-    //required this.topicTag,
     required this.userPrefs,
     required this.numberOfQuestions,
   });
 
   StartQuizState copyWith({
-    CourseModel? course,
+    SyllabusModel? syllabus,
     List<QuestionModel>? allTopicQuestions,
     List<QuestionModel>? filteredQuestions,
-    //TopicTag? topicTag,
     List<UserPref>? userPrefs,
     List<int>? numberOfQuestions,
   }) {
     return StartQuizState(
-      course: course ?? this.course,
+      syllabus: syllabus ?? this.syllabus,
       allTopicQuestions: allTopicQuestions ?? this.allTopicQuestions,
       filteredQuestions: filteredQuestions ?? this.filteredQuestions,
-      //topicTag: topicTag ?? this.topicTag,
       userPrefs: userPrefs ?? this.userPrefs,
       numberOfQuestions: numberOfQuestions ?? this.numberOfQuestions,
     );
@@ -44,17 +41,16 @@ class StartQuizState {
 class StartQuizNotifier extends StateNotifier<StartQuizState> {
   StartQuizNotifier(super._state);
 
-  void setCourse(CourseModel course) {
+  void setCourse(SyllabusModel course) {
     state = state.copyWith(
-      course: course,
+      syllabus: course,
     );
   }
 
   void setAllTopicQuestions(List<QuestionModel> allQuestions) {
     List<QuestionModel> allTopic = allQuestions.toList();
     allTopic.retainWhere(
-        (e) => e.course == state.course
-            //&& e.topicTag == state.topicTag
+        (e) => e.syllabus == state.syllabus
         );
 
     state = state.copyWith(allTopicQuestions: allTopic.toList());
@@ -62,18 +58,6 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
 
   void setFilteredQuestions(UserPref pref, List<QuestionModel> allQuestions) {
     List<QuestionModel> filteredQuestions = allQuestions.toList();
-
-    if (pref.selectedUnits?.isNotEmpty ?? false) {
-      filteredQuestions.retainWhere((e) {
-        return pref.selectedUnits!.contains(e.unit);
-      });
-    }
-    if (pref.selectedSubunits?.isNotEmpty ?? false) {
-      filteredQuestions.retainWhere((e) {
-        return pref.selectedUnits!.contains(e.unit) &&
-            pref.selectedSubunits!.contains(e.subunit);
-      });
-    }
 
     state = state.copyWith(filteredQuestions: filteredQuestions.toList());
     setNumberOfPossibleQuestions(pref);
@@ -132,10 +116,9 @@ final startQuizProvider =
     StateNotifierProvider<StartQuizNotifier, StartQuizState>(
   (ref) => StartQuizNotifier(
     StartQuizState(
-      course: CourseModel(course: CourseEnum.ib, units: []),
+      syllabus: SyllabusModel(syllabus: Syllabus.ib, units: []),
       allTopicQuestions: [],
       filteredQuestions: [],
-      //topicTag: TopicTag.term,
       userPrefs: [],
       numberOfQuestions: [],
     ),

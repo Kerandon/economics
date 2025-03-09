@@ -1,4 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
+import 'package:economics_app/sections/quizzes/methods/get_tile_decoration.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
@@ -42,73 +44,71 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
           childAspectRatio: 1.0, // Ensures tiles are square
         ),
         itemBuilder: (context, index) {
-          return Container(color: Colors.red,);
           // final tag = TopicTag.values[index];
-          // int numberOfQuestions = 0;
-          // for (var q in editState.allQuestions) {
-          //   if (q.course == startState.course && q.topicTag == tag) {
-          //     numberOfQuestions++;
-          //   }
-          // }
+          int numberOfQuestions = 0;
+          for (var q in editState.allQuestions) {
+            if (q.syllabus == startState.syllabus) {
+              numberOfQuestions++;
+            }
+          }
           //
-          // return GridTile(
-          //   child: InkWell(
-          //     onTap: () {
-          //       startNotifier
-          //         ..setFlipCardTag(tag)
-          //         ..setAllTopicQuestions(editState.allQuestions.toList());
-          //
-          //       Navigator.of(context).push(
-          //         MaterialPageRoute(
-          //           builder: (context) => StartPage(),
-          //         ),
-          //       );
-          //     },
-          //     borderRadius: BorderRadius.circular(kRadius),
-          //     // Match the tile's border radius
-          //     child: Ink(
-          //       decoration: getTileDecoration(context),
-          //       child: Padding(
-          //         padding: EdgeInsets.all(16.0),
-          //         // Inner spacing for the text
-          //         child: Column(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: [
-          //             Expanded(
-          //               flex: 12,
-          //               child: Center(
-          //                 child: Text(
-          //                   tag.toText(),
-          //                   style: Theme.of(context)
-          //                       .textTheme
-          //                       .displaySmall
-          //                       ?.copyWith(
-          //                         fontWeight: FontWeight.bold,
-          //                       ),
-          //                   textAlign: TextAlign.center,
-          //                 ),
-          //               ),
-          //             ),
-          //             Divider(
-          //               color: theme.colorScheme.shadow,
-          //             ),
-          //             Expanded(
-          //               flex: 5,
-          //               child: Center(
-          //                 child: Text(
-          //                   '${numberOfQuestions.toString()} questions',
-          //                   style: Theme.of(context).textTheme.titleSmall,
-          //                 ),
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // );
+          return GridTile(
+            child: InkWell(
+              onTap: () {
+                startNotifier
+                    .setAllTopicQuestions(editState.allQuestions.toList());
+
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Container(color: Colors.red,)
+                  ),
+                );
+              },
+              borderRadius: BorderRadius.circular(kRadius),
+              // Match the tile's border radius
+              child: Ink(
+                decoration: getTileDecoration(context),
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  // Inner spacing for the text
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        flex: 12,
+                        child: Center(
+                          child: Text(
+                            QuestionType.values.elementAt(index).name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        color: theme.colorScheme.shadow,
+                      ),
+                      Expanded(
+                        flex: 5,
+                        child: Center(
+                          child: Text(
+                            '${numberOfQuestions.toString()} questions',
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
         },
-        itemCount: 5,
+        itemCount: QuestionType.values.length,
         //TopicTag.values.length, // Number of grid tiles
       ),
     );

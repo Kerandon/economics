@@ -1,4 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:economics_app/sections/quizzes/custom_widgets/custom_dropdown_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/custom_dropdown_heading.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ class QuestionTypeButton extends ConsumerWidget {
     final c = editState.currentQuestion;
     return DropdownButtonHideUnderline(
       child: DropdownButton2(
-        customButton: CustomDropdownHeading(c.questionType?.toText() ?? 'Select question type'),
+        customButton: CustomDropdownHeading(
+            c.questionType?.toText() ?? 'Select question type'),
         onChanged: (value) {
           editNotifier.updateCurrentQuestion(
             c.copyWith(questionType: value),
@@ -26,13 +28,7 @@ class QuestionTypeButton extends ConsumerWidget {
         items: [
           ...QuestionType.values.map(
             (e) => DropdownMenuItem(
-              value: e,
-              child: Text(
-                e.toText(),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
+                value: e, child: CustomDropdownTile(text: e.toText())),
           ),
         ],
       ),

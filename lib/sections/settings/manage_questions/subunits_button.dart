@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../app/utils/models/unit_model.dart';
+import '../../quizzes/custom_widgets/custom_dropdown_tile.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
 import 'custom_dropdown_heading.dart';
-
-
 
 class SubunitsButton extends ConsumerWidget {
   const SubunitsButton({super.key});
@@ -16,31 +15,22 @@ class SubunitsButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
-
+    final c = editState.currentQuestion;
     final units =
-        editState.filterModel.units?.expand((e) => e.subunits.toList()) ?? [];
-    final f = editState.filterModel;
-    final subunitsText = f.subunits?.map((e) => e.name).join(', ') ?? '';
-    final selectedSubunits = subunitsText.isEmpty ? 'Select subunits' : subunitsText;
+        c.units?.expand((e) => e.subunits.map((e) => e)).toList() ?? [];
+    final selectedUnits = c.subunits?.isNotEmpty == true
+        ? c.subunits!.map((unit) => unit.name).join(', ')
+        : 'Select subunits';
     return SizedBox(
       width: size.width,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<UnitModel>(
-        customButton: CustomDropdownHeading(selectedSubunits),
-          value: (editState.filterModel.units != null &&
-                      editState.filterModel.units!.isNotEmpty) &&
-                  editState.filterModel.subunits != null &&
-                  editState.filterModel.subunits!.isNotEmpty
-              ? units.last
-              : null,
+          customButton: CustomDropdownHeading(selectedUnits),
           isExpanded: true,
-          onChanged: editState.filterModel.units == null ||
-                  editState.filterModel.units!.isEmpty
-              ? null
-              : (_) {},
+          onChanged: (value) {},
           items: [
             ...units.map(
-              (e) {
+                  (e) {
                 return DropdownMenuItem(
                   enabled: false,
                   value: e,
@@ -57,47 +47,33 @@ class SubunitsButton extends ConsumerWidget {
 
 class CustomDropdownContents extends ConsumerWidget {
   const CustomDropdownContents(
-    this.unit, {
-    super.key,
-  });
+      this.unit, {
+        super.key,
+      });
 
   final UnitModel unit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    final isSelected = editState.filterModel.subunits?.contains(unit) ?? false;
+    final c = editState.currentQuestion;
+    final isSelected = c.subunits?.contains(unit) ?? false;
     return InkWell(
-      onTap: () {
-        final u = editState.filterModel.subunits?.toList() ?? [];
-        isSelected ? u.remove(unit) : u.add(unit);
-        editNotifier
-            .updateFilter(editState.filterModel.copyWith(subunits: u.toList()));
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Text(unit.index.toString()),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                unit.name ?? '',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+        onTap: () {
+          List<UnitModel> units = c.subunits?.toList() ?? [];
+          units.contains(unit) ? units.remove(unit) : units.add(unit);
+
+          editNotifier.updateCurrentQuestion(
+            c.copyWith(
+              subunits: units.toList(),
             ),
-            const SizedBox(width: 16),
-            if (isSelected) ...[
-              const Icon(Icons.check_box_outlined)
-            ] else ...[
-              const Icon(Icons.check_box_outline_blank),
-            ]
-          ],
-        ),
-      ),
-    );
+          );
+        },
+        child: CustomDropdownTile(
+          leading: unit.index,
+          text: unit.name ?? '',
+          isSelected: isSelected,
+        ));
   }
 }

@@ -29,7 +29,7 @@ class AnswerModel extends Equatable {
     );
   }
 
-  static List<AnswerModel>? fromMapList(Map<String, dynamic>? map) {
+  static List<AnswerModel>? fromFirebase(Map<String, dynamic>? map) {
     if (map == null || !map.containsKey(QuestionKey.answers.name)) {
       return null;
     }

@@ -1,22 +1,22 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:economics_app/sections/settings/manage_questions/course_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_explanation_box.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_button.dart';
-import 'package:economics_app/sections/settings/manage_questions/answers_button.dart'
-    show AnswersButton;
+import 'package:economics_app/sections/settings/manage_questions/answers_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/custom_tags_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/number_of_answers_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/question_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/settings/manage_questions/question_type_button.dart';
-import 'package:economics_app/sections/settings/manage_questions/unit_button.dart';
+import 'package:economics_app/sections/settings/manage_questions/subunits_button.dart';
+
+import 'package:economics_app/sections/settings/manage_questions/units_button.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../quizzes/quiz_sections/questions/quiz_models/answer_model.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
-import 'subunit_button.dart';
+import 'SyllabusButton.dart';
+
 
 class AddQuestionPage extends ConsumerStatefulWidget {
   const AddQuestionPage({this.editQuestion = false, super.key});
@@ -40,27 +40,12 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
     if (!_initNumberOfAnswers && !widget.editQuestion) {
       _initNumberOfAnswers = true;
       WidgetsBinding.instance.addPostFrameCallback((t) {
-        print('number of answers is ${c.answers?.length}');
-        List<AnswerModel> answers = [];
-        if (c.questionType == QuestionType.multi) {
-          int target = c.answers?.length ?? 2;
-          for (int i = 0; i < target; i++) {
-            answers.add(AnswerModel(
-              "",
-              isCorrect: i == 0,
-            ));
-          }
-        }else {
-          answers = [c.answers?.first ?? AnswerModel("")];
-        }
+
         editNotifier.updateCurrentQuestion(
           c.copyWith(
             questionType: c.questionType ?? QuestionType.multi,
-            course: c.course ?? editState.courses.first,
-            unit: c.unit ?? editState.courses.first.units.first,
-            subunit:
-                c.subunit ?? editState.courses.first.units.first.subunits.first,
-            answers: answers,
+            syllabus: c.syllabus ?? editState.syllabuses.first,
+            //answers: answers,
           ),
         );
       });
@@ -90,30 +75,7 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
               collapsedHeight: kToolbarHeight * 1.5,
               expandedHeight: 0,
               flexibleSpace: FlexibleSpaceBar(
-                title: Row(
-                  children: [
-                    Expanded(
-                      flex: 10,
-                      child: CourseButton(),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: UnitButton(),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: SubunitButton(),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: QuestionTypeButton(),
-                    ),
-                    Expanded(
-                      flex: 10,
-                      child: CustomTagsButton(),
-                    ),
-                  ],
-                ),
+                title: FilterButtons(),
               ),
               automaticallyImplyLeading: false,
               pinned:
@@ -145,6 +107,40 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class FilterButtons extends StatelessWidget {
+  const FilterButtons({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 10,
+          child: SyllabusButton(),
+        ),
+        Expanded(
+          flex: 10,
+          child: UnitsButton(),
+        ),
+        Expanded(
+          flex: 10,
+          child: SubunitsButton(),
+        ),
+        Expanded(
+          flex: 10,
+          child: QuestionTypeButton(),
+        ),
+        Expanded(
+          flex: 10,
+          child: CustomTagsButton(),
+        ),
+      ],
     );
   }
 }

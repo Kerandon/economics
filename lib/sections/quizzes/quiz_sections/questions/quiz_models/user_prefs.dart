@@ -1,11 +1,11 @@
 import 'package:economics_app/sections/quizzes/quiz_enums/quiz_filter.dart';
 
-import '../../../../../app/utils/models/course_model.dart';
 
+import '../../../../../app/utils/models/syllabus_model.dart';
 import '../../../../../app/utils/models/unit_model.dart';
 
 class UserPref {
-  final CourseModel course;
+  final SyllabusModel course;
 
   // final TopicTag? topicTag;
   final int? numberOfQuestions;
@@ -24,7 +24,7 @@ class UserPref {
 
   // copyWith method
   UserPref copyWith({
-    CourseModel? course,
+    SyllabusModel? course,
     // TopicTag? topicTag,
     int? numberOfQuestions,
     QuizFilter? quizFilter,

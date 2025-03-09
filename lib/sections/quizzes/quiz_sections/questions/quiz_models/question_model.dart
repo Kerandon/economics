@@ -1,6 +1,7 @@
-import 'package:economics_app/app/enums/course_enum.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../../app/utils/models/course_model.dart';
+
+import '../../../../../app/enums/syllabus_enum.dart';
+import '../../../../../app/utils/models/syllabus_model.dart';
 import '../../../../../app/utils/models/unit_model.dart';
 import '../../../../diagrams/models/diagram_model.dart';
 import '../../../quiz_enums/answer_stage.dart';
@@ -12,54 +13,54 @@ import 'answer_model.dart';
 class QuestionModel extends Equatable {
   final String? id;
   final QuestionType? questionType;
-  final CourseModel? course;
+  final SyllabusModel? syllabus;
   final String? question;
   final List<DiagramModel>? diagrams;
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
-  final UnitModel? unit;
-  final UnitModel? subunit;
+  final List<UnitModel>? units;
+  final List<UnitModel>? subunits;
   final List<CustomTag>? customTags;
 
   const QuestionModel({
     this.id,
     this.questionType,
-    this.course,
+    this.syllabus,
     this.question,
     this.diagrams,
     this.answers,
     this.answerStage = AnswerStage.notSelected,
     this.explanation,
-    this.unit,
-    this.subunit,
+    this.units,
+    this.subunits,
     this.customTags,
   });
 
   QuestionModel copyWith({
     String? id,
     QuestionType? questionType,
-    CourseModel? course,
+    SyllabusModel? syllabus,
     String? question,
     List<DiagramModel>? diagrams,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
-    UnitModel? unit,
-    UnitModel? subunit,
+    List<UnitModel>? units,
+    List<UnitModel>? subunits,
     String? explanation,
     List<CustomTag>? customTags,
   }) {
     return QuestionModel(
       id: id ?? this.id,
       questionType: questionType ?? this.questionType,
-      course: course ?? this.course,
+      syllabus: syllabus ?? this.syllabus,
       question: question ?? this.question,
       diagrams: diagrams ?? this.diagrams,
       answers: answers ?? this.answers,
       answerStage: answerStage ?? this.answerStage,
       explanation: explanation ?? this.explanation,
-      unit: unit ?? this.unit,
-      subunit: subunit ?? this.subunit,
+      units: units ?? this.units,
+      subunits: subunits ?? this.subunits,
       customTags: customTags ?? this.customTags,
     );
   }
@@ -68,14 +69,13 @@ class QuestionModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       QuestionKey.type.name: questionType?.name,
-      QuestionKey.course.name: course?.course?.name,
-      QuestionKey.unit.name: {unit?.index ?? "": unit?.name ?? ""},
-      QuestionKey.subunit.name: {subunit?.index ?? "": subunit?.name ?? ""},
       QuestionKey.question.name: question,
-      QuestionKey.diagrams.name: diagrams?.map((e) => e.toMap()).toList(),
+      QuestionKey.syllabus.name: syllabus?.syllabus?.name,
+      QuestionKey.units.name: units?.map((e) => {e.index : e.name}).toList(),
+      QuestionKey.subunits.name: subunits?.map((e) => {e.index : e.name}).toList(),
       QuestionKey.answers.name: answers?.map((e) => e.toMap()).toList(),
-      QuestionKey.answerStage.name: answerStage.name, // Enum
       QuestionKey.explanation.name: explanation,
+      QuestionKey.diagrams.name: diagrams?.map((e) => e.toMap()).toList(),
       QuestionKey.customTags.name: customTags?.toFirebase(),
     };
   }
@@ -85,12 +85,13 @@ class QuestionModel extends Equatable {
       id: id,
       question: getQuestion(map),
       questionType: QuestionTypeExtension.getQuestionType(map),
-      course: CourseModel(
-        course: CourseEnumExtension.fromFirebase(map), units: [],
+      syllabus: SyllabusModel(
+        syllabus: SyllabusEnumExtension.fromFirebase(map),
+        units: [],
       ),
-      unit: UnitModel.fromFirebase(map),
-      subunit: UnitModel.fromFirebase(map, subunit: true),
-      answers: AnswerModel.fromMapList(map)?.toList(),
+      units: UnitModelExtension.fromFirebase(map),
+      subunits: UnitModelExtension.fromFirebase(map, subunit: true),
+      answers: AnswerModel.fromFirebase(map)?.toList(),
       answerStage: AnswerStage.notSelected,
       explanation: getExplanation(map),
       diagrams: DiagramModel.fromFirebaseList(map[QuestionKey.diagrams.name]),

@@ -1,3 +1,4 @@
+import 'package:economics_app/app/syllabus_data/courses_data.dart';
 import 'package:economics_app/sections/diagrams/enums/diagrams_number.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
@@ -5,49 +6,48 @@ import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_mode
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/utils/models/course_model.dart';
+import '../../../app/utils/models/syllabus_model.dart';
 import '../quiz_enums/question_part_enum.dart';
-import '../quiz_sections/questions/quiz_models/filter_model.dart';
 
 class EditQuestionState {
-  final List<CourseModel> courses;
+  final List<SyllabusModel> syllabuses;
   final List<QuestionModel> allQuestions;
   final DiagramsNumber diagramsNumber;
   final List<DiagramModel> selectedDiagrams;
   final QuestionModel currentQuestion;
   final QuestionPart questionPart;
-  final FilterModel filterModel;
+  // final FilterModel filterModel;
   final int numberOfMultiAnswers;
 
   EditQuestionState({
-    required this.courses,
+    required this.syllabuses,
     required this.allQuestions,
     required this.diagramsNumber,
     required this.selectedDiagrams,
     required this.currentQuestion,
     required this.questionPart,
-    required this.filterModel,
+    // required this.filterModel,
     required this.numberOfMultiAnswers,
   });
 
   EditQuestionState copyWith({
-    List<CourseModel>? courses,
+    List<SyllabusModel>? syllabuses,
     List<QuestionModel>? allQuestions,
     DiagramsNumber? diagramsNumber,
     List<DiagramModel>? selectedDiagrams,
     QuestionModel? currentQuestion,
     QuestionPart? questionPart,
-    FilterModel? filterModel,
+    // FilterModel? filterModel,
     int? numberOfMultiAnswers,
   }) {
     return EditQuestionState(
-      courses: courses ?? this.courses,
+      syllabuses: syllabuses ?? this.syllabuses,
       allQuestions: allQuestions ?? this.allQuestions,
       diagramsNumber: diagramsNumber ?? this.diagramsNumber,
       selectedDiagrams: selectedDiagrams ?? this.selectedDiagrams,
       currentQuestion: currentQuestion ?? this.currentQuestion,
       questionPart: questionPart ?? this.questionPart,
-      filterModel: filterModel ?? this.filterModel,
+      // filterModel: filterModel ?? this.filterModel,
       numberOfMultiAnswers: numberOfMultiAnswers ?? this.numberOfMultiAnswers,
     );
   }
@@ -57,11 +57,8 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   EditQuestionNotifier(super._state);
 
   void setAllQuestions(List<QuestionModel> allQuestions) {
-    state = state.copyWith(allQuestions: allQuestions);
-  }
+    state = state.copyWith(allQuestions: allQuestions.toList());
 
-  void setCourses(List<CourseModel> courses) {
-    state = state.copyWith(courses: courses);
   }
 
   void setDiagramsNumber(BuildContext context, Size size,
@@ -97,46 +94,31 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   void updateCurrentQuestion(QuestionModel question) {
     final answers = adjustNumberOfAnswers(question, state.numberOfMultiAnswers);
-    print('answers ${answers.length}');
     state =
         state.copyWith(currentQuestion: question.copyWith(answers: answers.toList()));
   }
 
-  void updateFilter(FilterModel filter) {
-    state = state.copyWith(filterModel: filter);
-  }
+  // void updateFilter(FilterModel filter) {
+  //   state = state.copyWith(filterModel: filter);
+  // }
 
   void setNumberOfMultiAnswers(QuestionModel question, int num) {
 
     final a = adjustNumberOfAnswers(question, num);
-    print('number of answers is ${a.length}');
+
     state = state.copyWith(
         numberOfMultiAnswers: num,
         currentQuestion: state.currentQuestion.copyWith(answers: a.toList())
         );
   }
 
-  // void setNumberOfAnswers(int number) {
-  //   List<AnswerModel> answers =
-  //       adjustNumberOfAnswers(state.currentQuestion, number: (number + 2));
-  //
-  //   state = state.copyWith(
-  //     currentQuestion: state.currentQuestion.copyWith(
-  //       answers: answers,
-  //     ),
-  //   );
-  // }
-
   List<AnswerModel> adjustNumberOfAnswers(QuestionModel question, int num) {
     final c = question;
     List<AnswerModel> answers = c.answers?.toList() ?? [];
-    print('question type is ${c.questionType}');
     if (c.questionType == QuestionType.flip) {
 
     answers = [AnswerModel('')];
     } else if (c.questionType == QuestionType.multi) {
-      print(
-          'is multi ${c.questionType} target is ${num} and current ${c.answers?.length}');
       if (answers.length > num) {
         // Trim the list to match the required number
         answers = answers.sublist(0, num);
@@ -147,7 +129,6 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
         }
       }
     }
-    print('return a ${answers.length}');
     return answers;
   }
 
@@ -160,13 +141,13 @@ final editQuestionProvider =
     StateNotifierProvider<EditQuestionNotifier, EditQuestionState>(
   (ref) => EditQuestionNotifier(
     EditQuestionState(
-      courses: [],
+      syllabuses: allSyllabuses.toList(),
       allQuestions: [],
       diagramsNumber: DiagramsNumber.zero,
       selectedDiagrams: [],
       currentQuestion: QuestionModel(),
       questionPart: QuestionPart.question,
-      filterModel: FilterModel(),
+      // filterModel: FilterModel(),
       numberOfMultiAnswers: 4,
     ),
   ),

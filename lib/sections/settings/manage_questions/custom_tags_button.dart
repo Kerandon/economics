@@ -1,4 +1,5 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:economics_app/sections/quizzes/custom_widgets/custom_dropdown_tile.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/custom_dropdown_heading.dart';
 import 'package:flutter/material.dart';
@@ -68,26 +69,7 @@ class CustomTagsDropdown extends ConsumerWidget {
             ),
           );
       },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                tag.toText(),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
-            const SizedBox(width: 16),
-            if (isSelected) ...[
-              const Icon(Icons.check_box_outlined)
-            ] else ...[
-              const Icon(Icons.check_box_outline_blank),
-            ]
-          ],
-        ),
-      ),
+      child: CustomDropdownTile(text: tag.toText(), isSelected: isSelected,)
     );
   }
 }

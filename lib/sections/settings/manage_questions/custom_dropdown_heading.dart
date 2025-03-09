@@ -14,7 +14,6 @@ class CustomDropdownHeading extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 18, horizontal: 18),
       decoration: BoxDecoration(
-        //border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

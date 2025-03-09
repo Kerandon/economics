@@ -1,3 +1,4 @@
+import 'package:economics_app/app/utils/helper_methods/string_methods.dart';
 import 'package:economics_app/sections/settings/enums/column_width.dart';
 
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class AddExplanationBox extends ConsumerWidget {
         Expanded(
           flex: CustomColumnWidth.two.getAddDiagramButtonsWidth(),
           child: CustomTextField(
-            label: QuestionKey.explanation.name,
+            label: QuestionKey.explanation.name.capitalizeFirst(),
             name: QuestionKey.explanation.name,
             onChanged: (value) {
               editNotifier.updateCurrentQuestion(
