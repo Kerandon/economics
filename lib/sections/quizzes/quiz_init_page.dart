@@ -1,11 +1,8 @@
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
-import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-
 import '../../app/enums/syllabus_enum.dart';
 import '../../app/utils/models/syllabus_model.dart';
 import '../tab_main.dart';
@@ -31,7 +28,7 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
   @override
   Widget build(BuildContext context) {
     final editNotifier = ref.read(editQuestionProvider.notifier);
-    final startNotifier = ref.watch(startQuizProvider.notifier);
+
     return Scaffold(
       body: FutureBuilder<dynamic>(
           future: _questionFuture,

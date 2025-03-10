@@ -79,7 +79,7 @@ class QuestionModel extends Equatable {
   }
 
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
-    print('map l is ${map.length} ${map.keys} and ${map.values}');
+
     return QuestionModel(
       id: id,
       question: getQuestion(map),

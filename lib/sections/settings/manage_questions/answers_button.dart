@@ -50,6 +50,10 @@ class AnswersButton extends ConsumerWidget {
                               answers[index].copyWith(answer: value);
                         }
 
+                        if(c.questionType == QuestionType.flip){
+                          answers = [answers.first.copyWith(isCorrect: true)];
+                        }
+
                         editNotifier.updateCurrentQuestion(
                           c.copyWith(
                             answers: answers,

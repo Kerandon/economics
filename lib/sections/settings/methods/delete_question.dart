@@ -1,9 +1,9 @@
-import 'package:economics_app/sections/settings/manage_questions/add_question_page.dart';
 import 'package:flutter/material.dart';
 import '../../../../app/custom_widgets/building_helper.dart';
 import '../../../../app/custom_widgets/custom_chip_button.dart';
 import '../../../../app/custom_widgets/custom_pop_up.dart';
 import '../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import '../manage_questions/manage_questions_page.dart';
 import 'delete_question_from_firebase.dart';
 
 void deleteQuestion(BuildContext context, QuestionModel q) {
@@ -23,7 +23,7 @@ void deleteQuestion(BuildContext context, QuestionModel q) {
                     onComplete: (value) {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const AddQuestionPage(),
+                          builder: (context) => const ManageQuestionsPage(),
                         ),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(

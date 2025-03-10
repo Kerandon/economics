@@ -1,7 +1,7 @@
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_page.dart';
+import 'package:economics_app/sections/settings/manage_questions/question_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quizzes/methods/get_questions_data.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
@@ -78,10 +78,10 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
           }
 
           if (c.tags?.isNotEmpty ?? false) {
-            filteredQuestions.retainWhere((e) =>
-                e.tags?.any((tag) => c.tags!.contains(tag)) ??
-                false);
+            filteredQuestions.retainWhere(
+                (e) => e.tags?.any((tag) => c.tags!.contains(tag)) ?? false);
           }
+
           return CustomScrollView(
             slivers: [
               // Fixed top container
@@ -100,61 +100,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       QuestionModel q = filteredQuestions[index];
-                      return ExpansionTile(
-                        expandedAlignment: Alignment.centerLeft,
-                        title: Container(
-                          color: Theme.of(context).colorScheme.surfaceTint,
-                          child: HtmlWidget(q.question ?? ''),
-                        ),
-                        trailing: IconButton(
-                          onPressed: () {
-
-                            editNotifier..updateCurrentQuestion(q)
-                            ..setNumberOfMultiAnswers(q, q.answers?.length ?? 4);
-
-
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => AddQuestionPage(
-                                    editQuestion: true,
-                                  ),
-                                ),
-                              );
-
-
-                          },
-                          icon: Icon(
-                            Icons.edit_outlined,
-                          ),
-                        ),
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 18.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ...q.answers?.map((a) => Row(
-                                          children: [
-                                            HtmlWidget(a.answer),
-                                            Text(
-                                                '    Correct: ${a.isCorrect.toString()}'),
-                                          ],
-                                        )) ??
-                                    [],
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                    'Units are ${q.units?.map((e) => e.name)}'),
-                                Text(
-                                    'Subunits are ${q.subunits?.map((e) => e.name)}'),
-                                Text(
-                                    'Tags are ${q.tags?.map((e) => e.name)}')
-                              ],
-                            ),
-                          )
-                        ],
-                      );
+                      return QuestionTile(q: q);
                     },
                     childCount: filteredQuestions.length,
                   ),
@@ -166,6 +112,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
+            editNotifier.setEditExistingQuestion(false);
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => AddQuestionPage(),

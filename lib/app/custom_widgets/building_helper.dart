@@ -45,8 +45,6 @@ class _BuilderHelperState extends State<BuilderHelper> {
                   WidgetsBinding.instance.addPostFrameCallback((t) {
                     if (!_onCompleteHasBeenCalled) {
                       _onCompleteHasBeenCalled = true;
-
-                      Navigator.of(context).pop();
                       widget.onComplete?.call(FirebaseStatus.success);
                     }
                   });

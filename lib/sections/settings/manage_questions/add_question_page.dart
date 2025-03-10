@@ -14,9 +14,8 @@ import 'filter_buttons.dart';
 
 
 class AddQuestionPage extends ConsumerStatefulWidget {
-  const AddQuestionPage({this.editQuestion = false, super.key});
+  const AddQuestionPage({ super.key});
 
-  final bool editQuestion;
 
   @override
   ConsumerState<AddQuestionPage> createState() => AddQuestionPageState();
@@ -32,21 +31,21 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final c = editState.currentQuestion;
 
-    // if (!_initNumberOfAnswers && !widget.editQuestion) {
-    //   _initNumberOfAnswers = true;
-    //   WidgetsBinding.instance.addPostFrameCallback((t) {
-    //
-    //     editNotifier.updateCurrentQuestion(
-    //       c.copyWith(
-    //         questionType: c.questionType ?? QuestionType.multi,
-    //         syllabus: c.syllabus ?? editState.syllabuses.first,
-    //         //answers: answers,
-    //       ),
-    //     );
-    //   });
-    // }
+    if (!_initNumberOfAnswers && !editState.editExistingQuestion) {
+      _initNumberOfAnswers = true;
+      WidgetsBinding.instance.addPostFrameCallback((t) {
+
+        editNotifier.updateCurrentQuestion(
+          c.copyWith(
+            questionType: c.questionType ?? QuestionType.multi,
+            syllabus: c.syllabus ?? editState.syllabuses.first,
+          ),
+        );
+      });
+    }
 
     final isMulti = c.questionType == QuestionType.multi;
+
 
     return Scaffold(
       appBar: AppBar(
@@ -80,14 +79,14 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
               delegate: SliverChildListDelegate(
                 [
                   QuestionButton(
-                    initialValue: widget.editQuestion ? c.question : null,
+                    initialValue: editState.editExistingQuestion ? c.question : null,
                   ),
                   if (isMulti) ...[
                     NumberOfAnswersButton(),
                   ],
                   AnswersButton(
                       initialAnswers:
-                          widget.editQuestion ? c.answers?.toList() : null),
+                      editState.editExistingQuestion ? c.answers?.toList() : null),
                   CustomDivider(),
                   if (isMulti) ...[
                     AddExplanationBox(),

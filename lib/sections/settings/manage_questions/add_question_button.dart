@@ -1,12 +1,13 @@
-import 'package:economics_app/sections/settings/manage_questions/add_question_page.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/configs/constants.dart';
-import '../../../../app/custom_widgets/building_helper.dart';
 import '../../../../app/custom_widgets/custom_chip_button.dart';
-import '../../../../app/enums/firebase_status.dart';
+import '../../../app/custom_widgets/building_helper.dart';
+import '../../../app/enums/firebase_status.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
 import '../methods/send_new_question_to_firebase.dart';
+import 'add_question_page.dart';
 
 class AddQuestionButton extends ConsumerWidget {
   const AddQuestionButton({super.key});
@@ -21,8 +22,8 @@ class AddQuestionButton extends ConsumerWidget {
       padding:
           EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical * 2),
       child: CustomChipButton(
-
-        text: 'Add question',
+        text:
+            editState.editExistingQuestion ? 'Update question' : 'Add question',
         onPressed: () {
           final q = editState.currentQuestion;
           List<String> errors = [];
@@ -30,11 +31,23 @@ class AddQuestionButton extends ConsumerWidget {
           if (q.question == null || q.question!.trim().isEmpty) {
             errors.add('Question field is empty');
           }
-          if (q.answers?.any((e) => e.answer.trim().isEmpty) ?? false) {
-            errors.add('Answer field(s) are empty');
+          if (!editState.editExistingQuestion &&
+              editState.allQuestions.any((e) => e.question == q.question)) {
+            errors.add('Question already exists');
           }
-          if (q.answers?.any((e) => e.isCorrect == true) != true) {
-            errors.add('Require at least one correct answer');
+          if (q.questionType == QuestionType.multi) {
+            if (q.answers?.any((e) => e.answer.trim().isEmpty) ?? false) {
+              errors.add('Answer field(s) are empty');
+            }
+            // Check for duplicate answers
+            var answerTexts =
+                q.answers?.map((a) => a.answer.trim()).toList() ?? [];
+            if (answerTexts.toSet().length != answerTexts.length) {
+              errors.add('Duplicate answers are not allowed');
+            }
+            if (q.answers?.any((e) => e.isCorrect == true) != true) {
+              errors.add('Require at least one correct answer');
+            }
           }
 
           if (errors.isNotEmpty) {
@@ -45,8 +58,7 @@ class AddQuestionButton extends ConsumerWidget {
           }
 
 
-
-          final future = sendNewQuestionToFirebase(question: q);
+          final future = sendNewQuestionToFirebase(question: q, existing:  editState.editExistingQuestion);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => BuilderHelper(
@@ -73,7 +85,6 @@ class AddQuestionButton extends ConsumerWidget {
             ),
           );
         },
-
       ),
     );
   }

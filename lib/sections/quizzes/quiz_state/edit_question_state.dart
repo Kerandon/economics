@@ -16,8 +16,8 @@ class EditQuestionState {
   final List<DiagramModel> selectedDiagrams;
   final QuestionModel currentQuestion;
   final QuestionPart questionPart;
-  // final FilterModel filterModel;
   final int numberOfMultiAnswers;
+  final bool editExistingQuestion;
 
   EditQuestionState({
     required this.syllabuses,
@@ -26,8 +26,8 @@ class EditQuestionState {
     required this.selectedDiagrams,
     required this.currentQuestion,
     required this.questionPart,
-    // required this.filterModel,
     required this.numberOfMultiAnswers,
+    required this.editExistingQuestion,
   });
 
   EditQuestionState copyWith({
@@ -37,8 +37,8 @@ class EditQuestionState {
     List<DiagramModel>? selectedDiagrams,
     QuestionModel? currentQuestion,
     QuestionPart? questionPart,
-    // FilterModel? filterModel,
     int? numberOfMultiAnswers,
+    bool? editExistingQuestion,
   }) {
     return EditQuestionState(
       syllabuses: syllabuses ?? this.syllabuses,
@@ -47,8 +47,8 @@ class EditQuestionState {
       selectedDiagrams: selectedDiagrams ?? this.selectedDiagrams,
       currentQuestion: currentQuestion ?? this.currentQuestion,
       questionPart: questionPart ?? this.questionPart,
-      // filterModel: filterModel ?? this.filterModel,
       numberOfMultiAnswers: numberOfMultiAnswers ?? this.numberOfMultiAnswers,
+      editExistingQuestion: editExistingQuestion ?? this.editExistingQuestion,
     );
   }
 }
@@ -58,7 +58,6 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   void setAllQuestions(List<QuestionModel> allQuestions) {
     state = state.copyWith(allQuestions: allQuestions.toList());
-
   }
 
   void setDiagramsNumber(BuildContext context, Size size,
@@ -94,30 +93,30 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   void updateCurrentQuestion(QuestionModel question) {
     final answers = adjustNumberOfAnswers(question, state.numberOfMultiAnswers);
-    state =
-        state.copyWith(currentQuestion: question.copyWith(answers: answers.toList()));
+    state = state.copyWith(
+      currentQuestion: question.copyWith(
+        answers: answers.toList(),
+      ),
+    );
   }
 
-  // void updateFilter(FilterModel filter) {
-  //   state = state.copyWith(filterModel: filter);
-  // }
-
   void setNumberOfMultiAnswers(QuestionModel question, int num) {
-
     final a = adjustNumberOfAnswers(question, num);
 
     state = state.copyWith(
         numberOfMultiAnswers: num,
-        currentQuestion: state.currentQuestion.copyWith(answers: a.toList())
-        );
+        currentQuestion: state.currentQuestion.copyWith(answers: a.toList()));
   }
 
   List<AnswerModel> adjustNumberOfAnswers(QuestionModel question, int num) {
     final c = question;
     List<AnswerModel> answers = c.answers?.toList() ?? [];
     if (c.questionType == QuestionType.flip) {
-
-    answers = [AnswerModel('')];
+      answers = [
+        if (c.answers?.isNotEmpty ?? false) ...[
+          c.answers!.first.copyWith(isCorrect: true)
+        ]
+      ];
     } else if (c.questionType == QuestionType.multi) {
       if (answers.length > num) {
         // Trim the list to match the required number
@@ -135,6 +134,10 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   void setQuestionPartSelected(QuestionPart part) {
     state = state.copyWith(questionPart: part);
   }
+
+  void setEditExistingQuestion(bool edit) {
+    state = state.copyWith(editExistingQuestion: edit);
+  }
 }
 
 final editQuestionProvider =
@@ -148,6 +151,7 @@ final editQuestionProvider =
       currentQuestion: QuestionModel(),
       questionPart: QuestionPart.question,
       numberOfMultiAnswers: 4,
+      editExistingQuestion: false,
     ),
   ),
 );
