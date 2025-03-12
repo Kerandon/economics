@@ -1,4 +1,5 @@
 import 'package:economics_app/app/animation/flip_animation.dart';
+import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/diagrams/diagram_widgets/diagram_builder.dart';
 import 'package:economics_app/sections/quizzes/methods/get_tile_decoration.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../app/configs/constants.dart';
-import '../../../../app/custom_widgets/gap.dart';
 import 'edit_question_button.dart';
 
 class FlipCardTile extends ConsumerStatefulWidget {
@@ -87,9 +87,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
                                   ),
                             ),
                             if (_cardSide == CardSide.back) ...[
-                              Gap(
-                                showDivider: true,
-                              ),
+                              CustomDivider(),
                               if (widget.question.answers!.isNotEmpty) ...[
                                 HtmlWidget(
                                   textStyle: Theme.of(context)

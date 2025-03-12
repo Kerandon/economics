@@ -33,7 +33,7 @@ class TagsButton extends ConsumerWidget {
           onChanged: (e) {},
           items: [
             ...customTags.map(
-              (e) => DropdownMenuItem(
+                  (e) => DropdownMenuItem(
                 enabled: false,
                 value: e,
                 child: CustomTagsDropdown(e),
@@ -48,9 +48,9 @@ class TagsButton extends ConsumerWidget {
 
 class CustomTagsDropdown extends ConsumerWidget {
   const CustomTagsDropdown(
-    this.tag, {
-    super.key,
-  });
+      this.tag, {
+        super.key,
+      });
 
   final Tag tag;
 
@@ -60,17 +60,17 @@ class CustomTagsDropdown extends ConsumerWidget {
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final isSelected = editState.currentQuestion.tags?.contains(tag) ?? false;
     return InkWell(
-      onTap: () {
-        List<Tag> tags = editState.currentQuestion.tags?.toList() ?? [];
-        isSelected ? tags.remove(tag) : tags.add(tag);
-        editNotifier
-          .updateCurrentQuestion(
+        onTap: () {
+          List<Tag> tags = editState.currentQuestion.tags?.toList() ?? [];
+          isSelected ? tags.remove(tag) : tags.add(tag);
+          editNotifier
+              .updateCurrentQuestion(
             editState.currentQuestion.copyWith(
               tags: tags.toList(),
             ),
           );
-      },
-      child: CustomDropdownTile(text: tag.toText(), isSelected: isSelected,)
+        },
+        child: CustomDropdownTile(text: tag.toText(), isSelected: isSelected,)
     );
   }
 }

@@ -6,7 +6,6 @@ enum Syllabus {
 }
 
 extension SyllabusEnumExtension on Syllabus {
-
   String toText() {
     switch (this) {
       case Syllabus.ib:
@@ -20,29 +19,27 @@ extension SyllabusEnumExtension on Syllabus {
     final key = QuestionKey.syllabus.name;
     if (map == null) {
       throw Exception('map null');
-      return null;
     }
     if (!map.containsKey(key)) {
       throw Exception('no syllabus key');
-      return null;
     }
 
     final value = map[key];
 
     if (value is! String) {
-      throw Exception('Invalid syllabus type: Expected a string but got ${value.runtimeType}');
+      throw Exception(
+          'Invalid syllabus type: Expected a string but got ${value.runtimeType}');
     }
 
     try {
       return Syllabus.values.firstWhere(
-            (e) => e.toText().toLowerCase().split(' ').first == map[key].toLowerCase().split(' ').first,
+        (e) =>
+            e.toText().toLowerCase().split(' ').first ==
+            map[key].toLowerCase().split(' ').first,
         orElse: () => throw Exception('Unknown syllabus: ${map[key]}'),
-
       );
     } catch (e) {
       throw Exception('Unknown syllabus: $value');
     }
   }
-
-
 }

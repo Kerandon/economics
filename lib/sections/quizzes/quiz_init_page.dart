@@ -1,10 +1,12 @@
+import 'package:economics_app/app/syllabus_data/courses_data.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/user_prefs.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
+import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/enums/syllabus_enum.dart';
-import '../../app/utils/models/syllabus_model.dart';
 import '../tab_main.dart';
 import 'methods/get_questions_data.dart';
 
@@ -28,6 +30,7 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
   @override
   Widget build(BuildContext context) {
     final editNotifier = ref.read(editQuestionProvider.notifier);
+    final startNotifier = ref.read(startQuizProvider.notifier);
 
     return Scaffold(
       body: FutureBuilder<dynamic>(
@@ -45,13 +48,36 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                     editNotifier.setAllQuestions(questions);
                   }
 
-                  List<UserPref> prefs = [];
+                  List<UserPref> prefs = [
+                    UserPref(
+                      question: QuestionModel(
+                        syllabus: allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.ib),
+                        questionType: QuestionType.multi,
+                      ),
+                    ),
+                    UserPref(
+                      question: QuestionModel(
+                        syllabus: allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.ib),
+                        questionType: QuestionType.flip,
+                      ),
+                    ),
+                    UserPref(
+                      question: QuestionModel(
+                        syllabus: allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.igcse),
+                        questionType: QuestionType.multi,
+                      ),
+                    ),
+                    UserPref(
+                      question: QuestionModel(
+                        syllabus: allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.igcse),
+                        questionType: QuestionType.flip,
+                      ),
+                    ),
+                  ];
 
-                  // addUserPrefs(prefs, courses, CourseEnum.ib);
-                  // addUserPrefs(prefs, courses, CourseEnum.igcse);
-                  // WidgetsBinding.instance.addPostFrameCallback((t) {
-                  //   startNotifier.setAllUserPrefs(prefs);
-                  // });
+                  WidgetsBinding.instance.addPostFrameCallback((t) {
+                    startNotifier.setAllUserPrefs(prefs);
+                  });
 
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
@@ -67,20 +93,5 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
             ));
           }),
     );
-  }
-
-  Future<void> addUserPrefs(List<UserPref> prefs, List<SyllabusModel> syllabuses,
-      Syllabus courseEnum) async {
-   // final c = syllabuses.firstWhere((c) => c.syllabus == courseEnum);
-    // for (var e in TopicTag.values) {
-    //   prefs.add(
-    //     UserPref(
-    //       course: c,
-    //       numberOfQuestions: 0,
-    //       selectedUnits: [],
-    //       showAnswersAtEnd: false,
-    //     ),
-    //   );
-    // }
   }
 }

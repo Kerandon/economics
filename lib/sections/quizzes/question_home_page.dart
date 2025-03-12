@@ -1,6 +1,7 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/sections/quizzes/methods/get_tile_decoration.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz/start_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
@@ -55,13 +56,11 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
           return GridTile(
             child: InkWell(
               onTap: () {
-                startNotifier
-                    .setAllTopicQuestions(editState.allQuestions.toList());
+                startNotifier..setAllTopicQuestions(editState.allQuestions.toList())
+                ..setQuestionType(QuestionType.values[index]);
 
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Container(color: Colors.red,)
-                  ),
+                  MaterialPageRoute(builder: (context) => StartPage(),),
                 );
               },
               borderRadius: BorderRadius.circular(kRadius),

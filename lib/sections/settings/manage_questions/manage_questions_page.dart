@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quizzes/methods/get_questions_data.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
+import '../../tab_main.dart';
 import 'filter_buttons.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
@@ -32,6 +33,16 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_outlined),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => TabBarMain(),
+              ),
+            );
+          },
+        ),
         title: const Text('Manage Questions'),
       ),
       body: FutureBuilder<List<QuestionModel>>(

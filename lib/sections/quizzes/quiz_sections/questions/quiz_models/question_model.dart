@@ -20,6 +20,9 @@ class QuestionModel extends Equatable {
   final List<UnitModel>? units;
   final List<UnitModel>? subunits;
   final List<Tag>? tags;
+  final List<QuestionModel>? filteredQuestions;
+  final int? numberOfQuestions;
+  final bool? showAnswersAtEnd;
 
   const QuestionModel({
     this.id,
@@ -33,6 +36,9 @@ class QuestionModel extends Equatable {
     this.units,
     this.subunits,
     this.tags,
+    this.filteredQuestions,
+    this.numberOfQuestions,
+    this.showAnswersAtEnd,
   });
 
   QuestionModel copyWith({
@@ -47,6 +53,9 @@ class QuestionModel extends Equatable {
     List<UnitModel>? subunits,
     String? explanation,
     List<Tag>? tags,
+    List<QuestionModel>? filteredQuestions,
+    int? numberOfQuestions,
+    bool? showAnswersAtEnd,
   }) {
     return QuestionModel(
       id: id ?? this.id,
@@ -60,6 +69,9 @@ class QuestionModel extends Equatable {
       units: units ?? this.units,
       subunits: subunits ?? this.subunits,
       tags: tags ?? this.tags,
+      filteredQuestions: filteredQuestions ?? this.filteredQuestions,
+      numberOfQuestions: numberOfQuestions ?? this.numberOfQuestions,
+      showAnswersAtEnd: showAnswersAtEnd ?? this.showAnswersAtEnd,
     );
   }
 
@@ -69,8 +81,9 @@ class QuestionModel extends Equatable {
       QuestionKey.type.name: questionType?.name,
       QuestionKey.question.name: question,
       QuestionKey.syllabus.name: syllabus?.syllabus?.name,
-      QuestionKey.units.name: units?.map((e) => {e.index : e.name}).toList(),
-      QuestionKey.subunits.name: subunits?.map((e) => {e.index : e.name}).toList(),
+      QuestionKey.units.name: units?.map((e) => {e.index: e.name}).toList(),
+      QuestionKey.subunits.name:
+          subunits?.map((e) => {e.index: e.name}).toList(),
       QuestionKey.answers.name: answers?.map((e) => e.toMap()).toList(),
       QuestionKey.explanation.name: explanation,
       QuestionKey.diagrams.name: diagrams?.map((e) => e.toMap()).toList(),
@@ -79,7 +92,6 @@ class QuestionModel extends Equatable {
   }
 
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
-
     return QuestionModel(
       id: id,
       question: getQuestion(map),
@@ -91,7 +103,7 @@ class QuestionModel extends Equatable {
       answerStage: AnswerStage.notSelected,
       explanation: getExplanation(map),
       diagrams: DiagramModel.fromFirebaseList(map[QuestionKey.diagrams.name]),
-     tags: TagFirebaseExtension.fromFirebase(map),
+      tags: TagFirebaseExtension.fromFirebase(map),
     );
   }
 

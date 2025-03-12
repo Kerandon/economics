@@ -6,9 +6,9 @@ enum Tag {
   calculation,
   shortAnswer,
   longAnswer,
-  iGWorkbookQuestion,
-  iGCoursebookQuestion,
-  iGPastPaperQuestion,
+  workbook,
+  coursebook,
+  pastPaper,
   hl
 }
 
@@ -39,12 +39,11 @@ extension TagFirebaseExtension on Tag {
   /// Converts a String back to a Tag enum
   static Tag fromFirebaseValue(String value) {
     return Tag.values.firstWhere(
-          (tag) => tag.name == value,
+      (tag) => tag.name == value,
       orElse: () => throw ArgumentError('Invalid value for Tag: $value'),
     );
   }
 }
-
 
 extension CustomTagExtension on Tag {
   /// Converts a CustomTag to a user-friendly text representation.
@@ -60,12 +59,12 @@ extension CustomTagExtension on Tag {
         return "Short Answer";
       case Tag.longAnswer:
         return "Long Answer";
-      case Tag.iGWorkbookQuestion:
-        return "IG Workbook Question";
-      case Tag.iGCoursebookQuestion:
-        return "IG Coursebook Question";
-      case Tag.iGPastPaperQuestion:
-        return "IG Past Paper Question";
+      case Tag.workbook:
+        return "Workbook";
+      case Tag.coursebook:
+        return "Coursebook";
+      case Tag.pastPaper:
+        return "Past paper";
       case Tag.hl:
         return "HL";
     }

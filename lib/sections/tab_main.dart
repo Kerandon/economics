@@ -47,14 +47,14 @@ class _TabBarMainState extends ConsumerState<TabBarMain>
         bottom: TabBar(
           onTap: (index) {
             if (index == 0) {
-              startQuizNotifier.setCourse(
+              startQuizNotifier.setSyllabus(
                 SyllabusModel(
                  syllabus: Syllabus.ib,
                   units: [],
                 ),
               );
             } else if (index == 1) {
-              startQuizNotifier.setCourse(
+              startQuizNotifier.setSyllabus(
                 SyllabusModel(
                   units: [], syllabus: Syllabus.igcse,
                 ),

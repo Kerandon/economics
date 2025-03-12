@@ -1,4 +1,5 @@
 import 'package:economics_app/app/configs/constants.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,21 +9,22 @@ import '../quiz_sections/questions/quiz_models/user_prefs.dart';
 
 class StartQuizState {
   final SyllabusModel syllabus;
+  final QuestionType questionType;
   final List<QuestionModel> allTopicQuestions;
   final List<QuestionModel> filteredQuestions;
   final List<UserPref> userPrefs;
-  final List<int> numberOfQuestions;
 
   StartQuizState({
     required this.syllabus,
+    required this.questionType,
     required this.allTopicQuestions,
     required this.filteredQuestions,
     required this.userPrefs,
-    required this.numberOfQuestions,
   });
 
   StartQuizState copyWith({
     SyllabusModel? syllabus,
+    QuestionType? questionType,
     List<QuestionModel>? allTopicQuestions,
     List<QuestionModel>? filteredQuestions,
     List<UserPref>? userPrefs,
@@ -30,10 +32,10 @@ class StartQuizState {
   }) {
     return StartQuizState(
       syllabus: syllabus ?? this.syllabus,
+      questionType: questionType ?? this.questionType,
       allTopicQuestions: allTopicQuestions ?? this.allTopicQuestions,
       filteredQuestions: filteredQuestions ?? this.filteredQuestions,
       userPrefs: userPrefs ?? this.userPrefs,
-      numberOfQuestions: numberOfQuestions ?? this.numberOfQuestions,
     );
   }
 }
@@ -41,17 +43,21 @@ class StartQuizState {
 class StartQuizNotifier extends StateNotifier<StartQuizState> {
   StartQuizNotifier(super._state);
 
-  void setCourse(SyllabusModel course) {
+  void setSyllabus(SyllabusModel syllabus) {
     state = state.copyWith(
-      syllabus: course,
+      syllabus: syllabus,
+    );
+  }
+
+  void setQuestionType(QuestionType type) {
+    state = state.copyWith(
+      questionType: type,
     );
   }
 
   void setAllTopicQuestions(List<QuestionModel> allQuestions) {
     List<QuestionModel> allTopic = allQuestions.toList();
-    allTopic.retainWhere(
-        (e) => e.syllabus == state.syllabus
-        );
+    allTopic.retainWhere((e) => e.syllabus == state.syllabus);
 
     state = state.copyWith(allTopicQuestions: allTopic.toList());
   }
@@ -63,21 +69,17 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     setNumberOfPossibleQuestions(pref);
   }
 
-
-  void updateUserPrefs(UserPref pref, List<QuestionModel> allQuestions) {
+  void updateUserPrefs(UserPref pref) {
     List<UserPref> existing = state.userPrefs.toList();
     for (int i = 0; i < existing.length; i++) {
-      if (pref.course == existing[i].course
-      //&&
-         // pref.topicTag == existing[i].topicTag
-      ) {
+      if (pref.question?.syllabus == existing[i].question?.syllabus &&
+          pref.question?.questionType == existing[i].question?.questionType) {
         existing.removeAt(i);
         existing.insert(i, pref);
       }
     }
 
     state = state.copyWith(userPrefs: existing);
-    setFilteredQuestions(pref, allQuestions);
   }
 
   void setAllUserPrefs(List<UserPref> prefs) {
@@ -106,8 +108,8 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     if (numberOfPossibleQuestions.isNotEmpty &&
         !numberOfPossibleQuestions.contains(pref.numberOfQuestions)) {
       updateUserPrefs(
-          pref.copyWith(numberOfQuestions: numberOfPossibleQuestions.first),
-          state.allTopicQuestions.toList());
+        pref.copyWith(numberOfQuestions: numberOfPossibleQuestions.first),
+      );
     }
   }
 }
@@ -120,7 +122,7 @@ final startQuizProvider =
       allTopicQuestions: [],
       filteredQuestions: [],
       userPrefs: [],
-      numberOfQuestions: [],
+      questionType: QuestionType.multi,
     ),
   ),
 );
