@@ -66,7 +66,7 @@ class CustomTagsDropdown extends ConsumerWidget {
         onTap: () {
           List<Tag> tags = c?.tags?.toList() ?? [];
           isSelected ? tags.remove(tag) : tags.add(tag);
-          startNotifier.updateUserPrefs(
+          startNotifier.updateUserPref(
             p.copyWith(
               question: c?.copyWith(
                 tags: tags.toList(),

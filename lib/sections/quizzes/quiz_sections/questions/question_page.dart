@@ -64,13 +64,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
               ),
               onPressed: () {
                 quizNotifier.setResetQuestions();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const TabBarMain();
-                    },
-                  ),
-                );
+                Navigator.of(context).pop();
               },
             ),
             title: Row(

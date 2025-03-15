@@ -47,12 +47,12 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
         itemBuilder: (context, index) {
           // final tag = TopicTag.values[index];
           int numberOfQuestions = 0;
+
           for (var q in editState.allQuestions) {
-            if (q.syllabus == startState.syllabus) {
+            if (q.syllabus == startState.syllabus && q.questionType == QuestionType.values[index]) {
               numberOfQuestions++;
             }
           }
-          //
           return GridTile(
             child: InkWell(
               onTap: () {

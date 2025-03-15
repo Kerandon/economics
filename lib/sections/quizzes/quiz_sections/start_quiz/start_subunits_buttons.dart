@@ -81,7 +81,7 @@ class CustomDropdownContents extends ConsumerWidget {
 
         ///Update the question state
 
-        startNotifier.updateUserPrefs(
+        startNotifier.updateUserPref(
           p.copyWith(
             question: c!.copyWith(
               subunits: subunits.toList(),

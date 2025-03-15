@@ -1,4 +1,6 @@
 
+
+import 'package:economics_app/app/syllabus_data/courses_data.dart';
 import 'package:economics_app/sections/quizzes/question_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:economics_app/sections/settings/manage_questions/settings_page.dart';
@@ -6,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app/enums/syllabus_enum.dart';
-import '../app/utils/models/syllabus_model.dart';
 
 class TabBarMain extends ConsumerStatefulWidget {
   const TabBarMain({super.key});
@@ -18,11 +19,12 @@ class TabBarMain extends ConsumerStatefulWidget {
 class _TabBarMainState extends ConsumerState<TabBarMain>
     with TickerProviderStateMixin {
   late final TabController _tabController;
+  bool _initHasRun = false;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: allSyllabuses.length, vsync: this);
   }
 
   @override
@@ -34,7 +36,12 @@ class _TabBarMainState extends ConsumerState<TabBarMain>
   @override
   Widget build(BuildContext context) {
 
+    final startQuizState = ref.watch(startQuizProvider);
     final startQuizNotifier = ref.read(startQuizProvider.notifier);
+    if(!_initHasRun) {
+      _initHasRun = true;
+      _tabController.index = allSyllabuses.indexOf(startQuizState.syllabus);
+    }
     return Scaffold(
       drawer: const SettingsPage(),
       appBar: AppBar(
@@ -48,16 +55,11 @@ class _TabBarMainState extends ConsumerState<TabBarMain>
           onTap: (index) {
             if (index == 0) {
               startQuizNotifier.setSyllabus(
-                SyllabusModel(
-                 syllabus: Syllabus.ib,
-                  units: [],
-                ),
+              allSyllabuses[index]
               );
             } else if (index == 1) {
               startQuizNotifier.setSyllabus(
-                SyllabusModel(
-                  units: [], syllabus: Syllabus.igcse,
-                ),
+                  allSyllabuses[index]
               );
             }
           },

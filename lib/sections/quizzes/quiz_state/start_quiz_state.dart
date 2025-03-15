@@ -1,8 +1,7 @@
-import 'package:economics_app/app/configs/constants.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../../../app/enums/syllabus_enum.dart';
 import '../../../app/utils/models/syllabus_model.dart';
 import '../quiz_sections/questions/quiz_models/user_prefs.dart';
@@ -62,55 +61,59 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     state = state.copyWith(allTopicQuestions: allTopic.toList());
   }
 
-  void setFilteredQuestions(UserPref pref, List<QuestionModel> allQuestions) {
-    List<QuestionModel> filteredQuestions = allQuestions.toList();
-
-    state = state.copyWith(filteredQuestions: filteredQuestions.toList());
-    setNumberOfPossibleQuestions(pref);
-  }
-
-  void updateUserPrefs(UserPref pref) {
+  void updateUserPref(UserPref pref) {
+    List<QuestionModel> filteredQuestions = _getFilteredQuestions(pref);
     List<UserPref> existing = state.userPrefs.toList();
     for (int i = 0; i < existing.length; i++) {
       if (pref.question?.syllabus == existing[i].question?.syllabus &&
           pref.question?.questionType == existing[i].question?.questionType) {
         existing.removeAt(i);
-        existing.insert(i, pref);
+        existing.insert(
+          i,
+          pref.copyWith(
+            question: pref.question
+                ?.copyWith(filteredQuestions: filteredQuestions.toList()),
+          ),
+        );
       }
     }
+    state = state.copyWith(userPrefs: existing.toList());
+  }
 
-    state = state.copyWith(userPrefs: existing);
+  List<QuestionModel> _getFilteredQuestions(UserPref pref) {
+    List<QuestionModel> filteredQuestions = state.allTopicQuestions.toList();
+
+    final c = pref.question;
+    if (c?.syllabus != null) {
+      filteredQuestions.retainWhere(
+        (e) => e.syllabus == c?.syllabus,
+      );
+    }
+
+    if (c?.units?.isNotEmpty ?? false) {
+      filteredQuestions.retainWhere(
+          (e) => e.units?.any((unit) => c!.units!.contains(unit)) ?? false);
+    }
+
+    if (c?.subunits?.isNotEmpty ?? false) {
+      filteredQuestions.retainWhere((e) =>
+          e.subunits?.any((unit) => c!.subunits!.contains(unit)) ?? false);
+    }
+
+    if (c?.questionType != null) {
+      filteredQuestions.retainWhere((e) => e.questionType == c!.questionType);
+    }
+
+    if (c?.tags?.isNotEmpty ?? false) {
+      filteredQuestions.retainWhere(
+          (e) => e.tags?.any((tag) => c!.tags!.contains(tag)) ?? false);
+    }
+
+    return filteredQuestions;
   }
 
   void setAllUserPrefs(List<UserPref> prefs) {
     state = state.copyWith(userPrefs: prefs);
-  }
-
-  void setNumberOfPossibleQuestions(UserPref pref) {
-    final totalQuestions = state.filteredQuestions.length;
-    List<int> numberOfPossibleQuestions =
-        kMaxNumberOfQuestions.where((n) => n <= totalQuestions).toList();
-
-    if (totalQuestions == 0) {
-      numberOfPossibleQuestions =
-          []; // Ensure an empty list when there are zero questions
-    } else {
-      if (numberOfPossibleQuestions.isEmpty ||
-          totalQuestions < kMaxNumberOfQuestions.first) {
-        numberOfPossibleQuestions.add(totalQuestions);
-      }
-      if (totalQuestions > kMaxNumberOfQuestions.last) {
-        numberOfPossibleQuestions.add(totalQuestions);
-      }
-    }
-
-    state = state.copyWith(numberOfQuestions: numberOfPossibleQuestions);
-    if (numberOfPossibleQuestions.isNotEmpty &&
-        !numberOfPossibleQuestions.contains(pref.numberOfQuestions)) {
-      updateUserPrefs(
-        pref.copyWith(numberOfQuestions: numberOfPossibleQuestions.first),
-      );
-    }
   }
 }
 
