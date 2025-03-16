@@ -2,6 +2,7 @@ import 'package:economics_app/app/animation/flip_animation.dart';
 import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/diagrams/diagram_widgets/diagram_builder.dart';
 import 'package:economics_app/sections/quizzes/methods/get_tile_decoration.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
 
     final quizNotifier = ref.watch(quizProvider.notifier);
     return FlipAnimation(
@@ -44,7 +46,12 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
         quizNotifier.setCardSide(side);
         setState(() {});
       },
-      animationCompleted: (flipDirection) {},
+      animationCompleted: (flipDirection) {
+        if (widget.question.answerStage != AnswerStage.incorrect) {
+          quizNotifier.updateQuestion(
+              widget.question.copyWith(answerStage: AnswerStage.correct));
+        }
+      },
       child: Container(
         width: size.width,
         height: size.height * 0.75,
@@ -76,23 +83,34 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
                         child: Column(
                           children: [
                             HtmlWidget(
+                              customStylesBuilder: (element) {
+                                return {'text-align': 'center'};
+                              },
                               widget.question.question!,
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              textStyle: _cardSide == CardSide.back
+                                  ? theme.textTheme.titleLarge?.copyWith(
+                                      color: theme.colorScheme.primary,
+                                    )
+                                  : theme.textTheme.displaySmall?.copyWith(
+                                      color: theme.colorScheme.primary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                             ),
                             if (_cardSide == CardSide.back) ...[
-                              CustomDivider(),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.01,
+                                    bottom: size.height * 0.05),
+                                child: CustomDivider(),
+                              ),
                               if (widget.question.answers!.isNotEmpty) ...[
                                 HtmlWidget(
+                                  customStylesBuilder: (element) {
+                                    return {'text-align': 'center'};
+                                  },
                                   textStyle: Theme.of(context)
                                       .textTheme
-                                      .bodyLarge
+                                      .displaySmall
                                       ?.copyWith(),
                                   widget.question.answers!.first.answer,
                                 ),

@@ -8,7 +8,6 @@ import 'package:economics_app/sections/quizzes/quiz_sections/questions/multi_cho
 import 'package:economics_app/sections/quizzes/custom_widgets/question_navigation_buttons.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
-import 'package:economics_app/sections/tab_main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/animation/confetti_animation.dart';
@@ -82,7 +81,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   ),
                 ),
                 Expanded(
-                  flex: 4,
+                  flex: 8,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 22),
                     child: CustomSlider(),
@@ -90,8 +89,18 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                 ),
                 Expanded(
                   flex: 4,
-                  child: ScoreBar(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                     if(currentQuestion?.questionType == QuestionType.multi)...[ScoreBar()],
+                      if(currentQuestion?.questionType == QuestionType.flip)...[
+                        Text('Flagged questions ${quizState.selectedQuestions.where((q) => q.answerStage == AnswerStage.incorrect).length}')
+
+                      ],
+                    ],
+                  ),
                 ),
+                SizedBox(width: size.width * kPageIndentHorizontal,),
               ],
             ),
           ),

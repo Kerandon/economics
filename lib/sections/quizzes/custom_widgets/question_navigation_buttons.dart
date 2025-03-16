@@ -46,15 +46,21 @@ class _QuestionNavigationButtonsState
       });
     }
 
-    QuestionModel question = const QuestionModel();
+    QuestionModel c = const QuestionModel();
     if (quizState.selectedQuestions.isNotEmpty) {
-      question = quizState.selectedQuestions[questionIndex];
+      c = quizState.selectedQuestions[questionIndex];
     }
+    final multi = c.questionType == QuestionType.multi;
+    final flip = c.questionType == QuestionType.flip;
 
     bool onLastQuestion =
         questionIndex == quizState.selectedQuestions.length - 1;
-    bool showCheckAllQuestionsButton = quizState.selectedQuestions.every(
-        (e) => showAnswersAtEnd && e.answerStage == AnswerStage.selected);
+    bool showCheckAllQuestionsButton = false;
+
+    if(multi && c.showAnswersAtEnd == true && quizState.selectedQuestions.every(
+        (e) => showAnswersAtEnd && e.answerStage == AnswerStage.selected)){
+      showCheckAllQuestionsButton = false;
+    }
 
     /// Directional buttons
     /// Left button
@@ -68,9 +74,11 @@ class _QuestionNavigationButtonsState
     if (onLastQuestion) {
       disableButtonRight = true;
     }
-    if (question.answerStage == AnswerStage.notSelected) {
+    if (c.answerStage == AnswerStage.notSelected) {
       disableButtonRight = true;
     }
+
+    print('answer stage ${c.answerStage}');
 
     return Container(
       width: size.width,
@@ -150,26 +158,26 @@ class _QuestionNavigationButtonsState
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (question.questionType != QuestionType.flip &&
+                if (c.questionType != QuestionType.flip &&
                     quizState.currentCardSide == CardSide.back) ...[
                   Row(
                     children: [
                       FloatingActionButton.extended(
                         heroTag: '1',
                         backgroundColor:
-                            question.answerStage == AnswerStage.correct
+                            c.answerStage == AnswerStage.correct
                                 ? theme.primaryColor
                                 : theme.colorScheme.scrim,
                         onPressed: () {
                           quizNotifier.updateQuestion(
-                            question.copyWith(
+                            c.copyWith(
                               answerStage: AnswerStage.correct,
                             ),
                           );
                         },
                         label: Icon(
                           Icons.check_outlined,
-                          color: question.answerStage == AnswerStage.correct
+                          color: c.answerStage == AnswerStage.correct
                               ? Colors.white
                               : Colors.black,
                         ),
@@ -178,17 +186,17 @@ class _QuestionNavigationButtonsState
                       FloatingActionButton.extended(
                         heroTag: '2',
                         backgroundColor:
-                            question.answerStage == AnswerStage.incorrect
+                            c.answerStage == AnswerStage.incorrect
                                 ? Colors.red
                                 : theme.colorScheme.scrim,
                         onPressed: () {
-                          quizNotifier.updateQuestion(question.copyWith(
+                          quizNotifier.updateQuestion(c.copyWith(
                               answerStage: AnswerStage.incorrect));
                         },
                         label: Icon(
                           Icons.close_outlined,
-                          color: question.answerStage == AnswerStage.correct ||
-                                  question.answerStage == AnswerStage.incorrect
+                          color: c.answerStage == AnswerStage.correct ||
+                                  c.answerStage == AnswerStage.incorrect
                               ? Colors.white
                               : Colors.black,
                         ),
@@ -196,6 +204,21 @@ class _QuestionNavigationButtonsState
                     ],
                   ),
                 ],
+                FloatingActionButton.extended(
+                  heroTag: '3',
+                  backgroundColor: c.answerStage == AnswerStage.incorrect ?
+                  Colors.red :
+                  theme.colorScheme.surface,
+                  onPressed: c.answerStage == AnswerStage.notSelected? null : () {
+                    if(c.answerStage == AnswerStage.incorrect){
+                      quizNotifier.updateQuestion(c.copyWith(answerStage: AnswerStage.correct));
+                    }else {
+                      quizNotifier.updateQuestion(
+                          c.copyWith(answerStage: AnswerStage.incorrect));
+                    }
+                  },
+                  label: Icon(Icons.flag_outlined, color: theme.colorScheme.onSurface ,)
+                ),
               ],
             )),
           ],

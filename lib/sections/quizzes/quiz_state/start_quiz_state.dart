@@ -1,4 +1,3 @@
-import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,6 +11,7 @@ class StartQuizState {
   final List<QuestionModel> allTopicQuestions;
   final List<QuestionModel> filteredQuestions;
   final List<UserPref> userPrefs;
+
 
   StartQuizState({
     required this.syllabus,
@@ -27,7 +27,6 @@ class StartQuizState {
     List<QuestionModel>? allTopicQuestions,
     List<QuestionModel>? filteredQuestions,
     List<UserPref>? userPrefs,
-    List<int>? numberOfQuestions,
   }) {
     return StartQuizState(
       syllabus: syllabus ?? this.syllabus,

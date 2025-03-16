@@ -95,7 +95,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
 
           return CustomScrollView(
             slivers: [
-              // Fixed top container
+
               SliverAppBar(
                 collapsedHeight: kToolbarHeight * 2,
                 expandedHeight: 0,
@@ -104,7 +104,12 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                 pinned:
                     true, // Keeps the app bar fixed at the top// Height of the expanded app bar
               ),
-
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('${filteredQuestions.length} questions', style: Theme.of(context).textTheme.titleMedium,),
+                ),
+              ),
               // Scrollable list of questions
               if (filteredQuestions.isNotEmpty) ...[
                 SliverList(

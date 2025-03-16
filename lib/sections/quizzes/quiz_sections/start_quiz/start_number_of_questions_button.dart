@@ -27,7 +27,7 @@ class StartNumberOfQuestionsButton extends ConsumerWidget {
       current.sort();
     }
 
-// Determine heading text
+
     String heading = current.isEmpty
         ? 'No questions available'
         : c?.numberOfQuestions.toString() ?? '';
@@ -35,7 +35,7 @@ class StartNumberOfQuestionsButton extends ConsumerWidget {
     if (current.length == 1 && current.first == 0) {
       current.clear();
     }
-    print('current $current');
+
 
 // Handle preference updates
     if (current.isNotEmpty) {

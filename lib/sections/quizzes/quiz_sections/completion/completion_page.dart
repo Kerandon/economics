@@ -5,6 +5,7 @@ import 'package:economics_app/sections/quizzes/methods/shuffle_question_models.d
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz/start_page.dart';
 import 'package:economics_app/sections/tab_main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -192,7 +193,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                                builder: (context) => Container(color: Colors.red,),),
+                                builder: (context) => StartPage()),
                           );
                           WidgetsBinding.instance.addPostFrameCallback((t) {
                             quizNotifier.setResetQuestions();
