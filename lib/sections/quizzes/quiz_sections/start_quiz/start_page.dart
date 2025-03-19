@@ -12,6 +12,8 @@ import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../app/audio_manager/audio_manager.dart';
+import '../../../../main.dart';
 import '../../../tab_main.dart';
 import '../../quiz_enums/answer_stage.dart';
 import '../questions/quiz_models/answer_model.dart';
@@ -55,7 +57,26 @@ class _StartPageState extends ConsumerState<StartPage> {
             Icons.arrow_back_outlined,
           ),
         ),
-        title: Text('Quiz settings'),
+        title: SizedBox(
+          height: size.height * 0.06,
+          child: Row(
+            children: [
+              Image.asset(fit: BoxFit.contain, 'assets/images/vsp_logo.jpg'),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                child:
+                    Image.asset(fit: BoxFit.contain, 'assets/images/iob.jpeg'),
+              ),
+              Text(
+                'VSP High School Pudong IBDP Economics App',
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: CustomScrollView(
         slivers: [
@@ -96,55 +117,79 @@ class _StartPageState extends ConsumerState<StartPage> {
           ),
           SliverToBoxAdapter(
             child: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/globe.jpg'))),
               width: size.width,
               height: size.height * 0.80,
-              color: Theme.of(context).colorScheme.surface,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Selected ${pref.question?.numberOfQuestions.toString()} of ${pref.question?.filteredQuestions?.toList().length} total questions', style: Theme.of(context).textTheme.titleLarge,),
-                  CustomChipButton(
-                    onPressed: () {
-                      List<QuestionModel> f =
-                          pref.question!.filteredQuestions?.toList() ?? [];
-                      List<QuestionModel> updatedQuestions = f
-                          .map((e) => e.copyWith(
-                                answers: e.answers
-                                    ?.map((a) => a.copyWith(
-                                        answerStage: AnswerStage.notSelected))
-                                    .toList(),
-                                answerStage: AnswerStage
-                                    .notSelected, // If needed at the question level
-                              ))
-                          .toList();
-                      updatedQuestions = updatedQuestions.map((question) {
-                        List<AnswerModel> shuffledAnswers = [
-                          ...?question.answers
-                        ]..shuffle(); // Create a new shuffled list
-                        return question.copyWith(
-                            answers:
-                                shuffledAnswers); // Return a new instance of question
-                      }).toList();
+              child: Padding(
+                padding: const EdgeInsets.all(88.0),
+                child: Row(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Selected ${pref.question?.numberOfQuestions.toString()} of ${pref.question?.filteredQuestions?.toList().length} total questions',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        CustomChipButton(
+                          onPressed: () {
+                            List<QuestionModel> f =
+                                pref.question!.filteredQuestions?.toList() ??
+                                    [];
+                            List<QuestionModel> updatedQuestions = f
+                                .map((e) => e.copyWith(
+                                      answers: e.answers
+                                          ?.map((a) => a.copyWith(
+                                              answerStage:
+                                                  AnswerStage.notSelected))
+                                          .toList(),
+                                      answerStage: AnswerStage
+                                          .notSelected, // If needed at the question level
+                                    ))
+                                .toList();
+                            updatedQuestions = updatedQuestions.map((question) {
+                              List<AnswerModel> shuffledAnswers = [
+                                ...?question.answers
+                              ]..shuffle(); // Create a new shuffled list
+                              return question.copyWith(
+                                  answers:
+                                      shuffledAnswers); // Return a new instance of question
+                            }).toList();
 
-                      updatedQuestions
-                          .shuffle(); // Shuffle the questions AFTER updating answers
+                            updatedQuestions
+                                .shuffle(); // Shuffle the questions AFTER updating answers
 
-                      quizNotifier
-                        ..setResetQuestions()
-                        ..setSelectedQuestions(updatedQuestions.toList() ?? []);
+                            updatedQuestions = updatedQuestions
+                                .getRange(
+                                    0, pref.question?.numberOfQuestions ?? 0)
+                                .toList();
+                            getIt<AudioManager>().playSoundTrack(
+                                'soundtrack_1'); // Retrieve instance
+                            quizNotifier
+                              ..setResetQuestions()
+                              ..setSelectedQuestions(updatedQuestions.toList());
 
-                      WidgetsBinding.instance.addPostFrameCallback((t) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => QuestionPage(),
-                          ),
-                        );
-                      });
-                    },
-                    text: 'Start',
-                  ),
-                ],
+                            WidgetsBinding.instance.addPostFrameCallback((t) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => QuestionPage(),
+                                ),
+                              );
+                            });
+                          },
+                          text: 'Start',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           )

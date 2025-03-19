@@ -49,7 +49,7 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
         if (audioManager.soundTrackPlayer.playing) {
           audioManager.stopSoundTrack();
         }
-        audioManager.playSound('other/complete');
+        audioManager.playSound('correct/correct_2');
       }
     }
 
@@ -69,7 +69,26 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             title: Row(
               children: [
                 // Align the text to the left
-
+                SizedBox(
+                  height: size.height * 0.06,
+                  child: Row(
+                    children: [
+                      Image.asset(fit: BoxFit.contain, 'assets/images/vsp_logo.jpg'),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                        child:
+                        Image.asset(fit: BoxFit.contain, 'assets/images/iob.jpeg'),
+                      ),
+                      Text(
+                        'VSP High School Pudong IBDP Economics App',
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Expanded(
                   child: IconButton(
                     onPressed: () {

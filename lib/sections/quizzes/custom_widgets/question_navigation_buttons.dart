@@ -6,8 +6,10 @@ import 'package:economics_app/sections/quizzes/quiz_state/quiz_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../app/audio_manager/audio_manager.dart';
 import '../../../app/configs/constants.dart';
 import '../../../app/custom_widgets/custom_change_button.dart';
+import '../../../main.dart';
 import '../methods/show_completion_box.dart';
 import '../quiz_enums/answer_stage.dart';
 
@@ -108,6 +110,7 @@ class _QuestionNavigationButtonsState
                   SizedBox(width: buttonsWidthGap),
                   CustomPageChangeButton(
                     onPressed: () {
+                   getIt<AudioManager>().playSound('correct/correct_3'); // Retrieve instance
                       widget.pageController.animateToPage(
                         quizState.currentQuestionIndex + 1,
                         duration:
