@@ -58,6 +58,9 @@ dependencies:
   image_picker: ^1.1.2
   dropdown_button2: ^2.3.9
   flutter_lints: ^5.0.0
+  excel: ^4.0.6
+  path_provider: ^2.1.5
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:

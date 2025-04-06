@@ -1,4 +1,7 @@
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/building_helper.dart';
+import 'package:economics_app/sections/diagrams/diagram_widgets/custom_diagram_builder.dart';
+import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:economics_app/sections/settings/methods/delete_question_from_firebase.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +39,7 @@ class QuestionTile extends ConsumerWidget {
                   onTap: () {
                     editNotifier
                       ..updateCurrentQuestion(q)
-                      ..setNumberOfMultiAnswers(q, q.answers?.length ?? 4)
+                      //.setNumberOfMultiAnswers(q, q.answers?.length ?? 4)
                       ..setEditExistingQuestion(true);
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -72,20 +75,36 @@ class QuestionTile extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ...q.answers?.map((a) => Row(
-                        children: [
-                          HtmlWidget(a.answer),
-                          Text('    Correct: ${a.isCorrect.toString()}'),
-                        ],
-                      )) ??
+              ...q.answers?.map(
+                    (a) => Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(child: HtmlWidget(a.answer)),
+                            if (q.questionType == QuestionType.multi) ...[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * kPageIndentHorizontal,
+                                ),
+                                child: Text(
+                                  a.isCorrect == true ? 'Correct' : 'Incorrect',
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                        CustomDiagramBuilder(diagrams: a.diagrams?.toList()),
+                      ],
+                    ),
+                  ) ??
                   [],
               SizedBox(
                 height: 8,
               ),
-              Text('Question id ${q.id}'),
-              Text('Units are ${q.units?.map((e) => e.name)}'),
-              Text('Subunits are ${q.subunits?.map((e) => e.name)}'),
-              Text('Tags are ${q.tags?.map((e) => e.name)}')
+              Text('${q.id}'),
+              Text(
+                  '${q.units?.map((e) => e.name).join(", ") ?? ""}, ${q.subunits?.map((e) => e.name).join(", ") ?? ""}'),
+              Text(q.tags?.map((e) => e.name).join(", ") ?? ""),
             ],
           ),
         )

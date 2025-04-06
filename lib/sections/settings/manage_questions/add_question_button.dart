@@ -36,10 +36,6 @@ class AddQuestionButton extends ConsumerWidget {
             errors.add('Question already exists');
           }
           if (q.questionType == QuestionType.multi) {
-            if (q.answers?.any((e) => e.answer.trim().isEmpty) ?? false) {
-              errors.add('Answer field(s) are empty');
-            }
-            // Check for duplicate answers
             var answerTexts =
                 q.answers?.map((a) => a.answer.trim()).toList() ?? [];
             if (answerTexts.toSet().length != answerTexts.length) {
@@ -57,8 +53,8 @@ class AddQuestionButton extends ConsumerWidget {
             return;
           }
 
-
-          final future = sendNewQuestionToFirebase(question: q, existing:  editState.editExistingQuestion);
+          final future = sendNewQuestionToFirebase(
+              question: q, existing: editState.editExistingQuestion);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => BuilderHelper(

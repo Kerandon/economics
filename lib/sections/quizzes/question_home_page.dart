@@ -28,7 +28,7 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final startNotifier = ref.read(startQuizProvider.notifier);
-    final startState = ref.watch(startQuizProvider);
+
     final editState = ref.watch(editQuestionProvider);
 
     return Padding(
@@ -45,14 +45,7 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
           childAspectRatio: 1.0, // Ensures tiles are square
         ),
         itemBuilder: (context, index) {
-          // final tag = TopicTag.values[index];
-          int numberOfQuestions = 0;
 
-          for (var q in editState.allQuestions) {
-            if (q.syllabus == startState.syllabus && q.questionType == QuestionType.values[index]) {
-              numberOfQuestions++;
-            }
-          }
           return GridTile(
             child: InkWell(
               onTap: () {
@@ -90,15 +83,6 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
                       ),
                       Divider(
                         color: theme.colorScheme.shadow,
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: Center(
-                          child: Text(
-                            '${numberOfQuestions.toString()} questions',
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                        ),
                       ),
                     ],
                   ),

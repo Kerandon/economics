@@ -8,9 +8,6 @@ BoxDecoration getTileDecoration(BuildContext context,
   final theme = Theme.of(context);
 
   return BoxDecoration(
-    image: DecorationImage(
-      fit: BoxFit.cover,
-      image: AssetImage(   'assets/images/boat_2.png'),),
     color:
         surfaceTint ? theme.colorScheme.surfaceTint : theme.colorScheme.surface,
     borderRadius: BorderRadius.circular(kRadius),

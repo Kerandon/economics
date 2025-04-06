@@ -106,18 +106,15 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                     child: CustomSlider(),
                   ),
                 ),
-                Expanded(
-                  flex: 4,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                     if(currentQuestion?.questionType == QuestionType.multi)...[ScoreBar()],
-                      if(currentQuestion?.questionType == QuestionType.flip)...[
-                        Text('Flagged questions ${quizState.selectedQuestions.where((q) => q.answerStage == AnswerStage.incorrect).length}')
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                   if(currentQuestion?.questionType == QuestionType.multi)...[ScoreBar()],
+                    if(currentQuestion?.questionType == QuestionType.flip)...[
+                      Text('Flagged questions ${quizState.selectedQuestions.where((q) => q.answerStage == AnswerStage.incorrect).length}')
 
-                      ],
                     ],
-                  ),
+                  ],
                 ),
                 SizedBox(width: size.width * kPageIndentHorizontal,),
               ],

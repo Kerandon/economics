@@ -1,4 +1,0 @@
-enum Axis {
-  horizontal,
-  vertical,
-}

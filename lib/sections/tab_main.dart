@@ -3,7 +3,7 @@
 import 'package:economics_app/app/syllabus_data/courses_data.dart';
 import 'package:economics_app/sections/quizzes/question_home_page.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
-import 'package:economics_app/sections/settings/manage_questions/settings_page.dart';
+import 'package:economics_app/sections/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

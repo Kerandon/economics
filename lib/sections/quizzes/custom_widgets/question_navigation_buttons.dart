@@ -53,7 +53,6 @@ class _QuestionNavigationButtonsState
       c = quizState.selectedQuestions[questionIndex];
     }
     final multi = c.questionType == QuestionType.multi;
-    final flip = c.questionType == QuestionType.flip;
 
     bool onLastQuestion =
         questionIndex == quizState.selectedQuestions.length - 1;
@@ -80,7 +79,7 @@ class _QuestionNavigationButtonsState
       disableButtonRight = true;
     }
 
-    print('answer stage ${c.answerStage}');
+
 
     return Container(
       width: size.width,

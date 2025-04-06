@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import '../../quizzes/quiz_enums/diagram_enum.dart';
 import '../data/all_diagrams.dart';
@@ -6,13 +7,13 @@ import '../enums/diagram_type.dart';
 import '../enums/unit_type.dart';
 import '../utils/mixins.dart';
 
-class DiagramModel {
+class DiagramModel extends Equatable {
   final UnitType? unit;
   final DiagramType? type;
   final DiagramSubtype? subtype;
   final CustomPainter? painter;
 
-  DiagramModel({this.unit, this.type, this.subtype, this.painter});
+  const DiagramModel({this.unit, this.type, this.subtype, this.painter});
 
   // Serialization method
   Map<String, dynamic> toMap() {
@@ -118,4 +119,7 @@ class DiagramModel {
     }
     return all;
   }
+
+  @override
+  List<Object?> get props => [type, subtype];
 }

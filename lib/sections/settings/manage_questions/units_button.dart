@@ -15,7 +15,6 @@ class UnitsButton extends ConsumerWidget {
     final editState = ref.watch(editQuestionProvider);
     final c = editState.currentQuestion;
 
-
     final units = c.syllabus?.units.toList();
 
     final selectedUnits = c.units?.isNotEmpty == true
@@ -59,33 +58,33 @@ class CustomDropdownContents extends ConsumerWidget {
     final c = editState.currentQuestion;
     final isSelected = c.units?.contains(unit) ?? false;
     return InkWell(
-        onTap: () {
-          List<UnitModel> units = c.units?.toList() ?? [];
-          List<UnitModel> subunits = c.subunits?.toList() ?? [];
+      onTap: () {
+        List<UnitModel> units = c.units?.toList() ?? [];
+        List<UnitModel> subunits = c.subunits?.toList() ?? [];
 
 // Toggle the unit selection
-          if (units.contains(unit)) {
-            units.remove(unit);
+        if (units.contains(unit)) {
+          units.remove(unit);
 
-            ///Remove any subunit that belongs to the deselected unit
-            subunits.removeWhere((s) => unit.subunits.contains(s));
-          } else {
-            units.add(unit);
-          }
+          ///Remove any subunit that belongs to the deselected unit
+          subunits.removeWhere((s) => unit.subunits.contains(s));
+        } else {
+          units.add(unit);
+        }
 
-          ///Update the question state
-          editNotifier.updateCurrentQuestion(
-            c.copyWith(
-              units: units.toList(),
-              subunits: subunits.toList(),
-            ),
-          );
-
-        },
-        child: CustomDropdownTile(
-          leading: unit.index,
-          text: unit.name ?? '',
-          isSelected: isSelected,
-        ));
+        ///Update the question state
+        editNotifier.updateCurrentQuestion(
+          c.copyWith(
+            units: units.toList(),
+            subunits: subunits.toList(),
+          ),
+        );
+      },
+      child: CustomDropdownTile(
+        leading: unit.index,
+        text: unit.name ?? '',
+        isSelected: isSelected,
+      ),
+    );
   }
 }

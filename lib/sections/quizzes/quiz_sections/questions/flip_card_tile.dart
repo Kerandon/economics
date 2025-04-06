@@ -1,7 +1,6 @@
 import 'package:economics_app/app/animation/flip_animation.dart';
 import 'package:economics_app/app/audio_manager/audio_manager.dart';
-import 'package:economics_app/app/custom_widgets/custom_divider.dart';
-import 'package:economics_app/sections/diagrams/diagram_widgets/diagram_builder.dart';
+import 'package:economics_app/sections/diagrams/diagram_widgets/custom_diagram_builder.dart';
 import 'package:economics_app/sections/quizzes/methods/get_tile_decoration.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
@@ -12,7 +11,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../app/configs/constants.dart';
 import '../../../../main.dart';
-import 'edit_question_button.dart';
 
 class FlipCardTile extends ConsumerStatefulWidget {
   const FlipCardTile(this.question, {this.editMode = false, super.key});
@@ -34,6 +32,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
     final theme = Theme.of(context);
 
     final quizNotifier = ref.watch(quizProvider.notifier);
+    final a = widget.question.answers!.first;
     return FlipAnimation(
       isAnimating: (animating) {
         if (animating) {
@@ -57,7 +56,7 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
       child: Stack(
         children: [
           Container(
-            width: size.width * 0.70,
+            width: size.width * 0.90,
             height: size.height * 0.75,
             decoration: getTileDecoration(context),
             child: Padding(
@@ -65,11 +64,6 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (widget.editMode) ...[
-                    EditQuestionButton(
-                      question: widget.question,
-                    ),
-                  ],
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -85,47 +79,47 @@ class _FlipCardTileState extends ConsumerState<FlipCardTile> {
                         child: Center(
                           child: SingleChildScrollView(
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                HtmlWidget(
-                                  customStylesBuilder: (element) {
-                                    return {'text-align': 'center'};
-                                  },
-                                  widget.question.question!,
-                                  textStyle: _cardSide == CardSide.back
-                                      ? theme.textTheme.displaySmall?.copyWith(
-                                          color: Colors.white,
-                                        )
-                                      : theme.textTheme.displaySmall?.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                ),
-                                if (_cardSide == CardSide.back) ...[
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: size.height * 0.01,
-                                        bottom: size.height * 0.05),
-                                    child: CustomDivider(),
+                                Container(
+                                  color: Colors.redAccent,
+                                  child: HtmlWidget(
+                                    customStylesBuilder: (element) {
+                                      return {'text-align': 'center'};
+                                    },
+                                    widget.question.question!,
+                                    textStyle: _cardSide == CardSide.back
+                                        ? theme.textTheme.titleLarge?.copyWith(
+                                          )
+                                        : theme.textTheme.titleLarge?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                   ),
-                                  if (widget.question.answers!.isNotEmpty) ...[
-                                    HtmlWidget(
-                                      customStylesBuilder: (element) {
-                                        return {'text-align': 'center'};
-                                      },
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .displaySmall
-                                          ?.copyWith(),
-                                      widget.question.answers!.first.answer,
-                                    ),
+                                ),
+                                Row(children: [
+                                  if (_cardSide == CardSide.back) ...[
+                                    if (widget.question.answers!.isNotEmpty) ...[
+                                      Expanded(
+                                        child: HtmlWidget(
+                                          customStylesBuilder: (element) {
+                                            return {'text-align': 'center'};
+                                          },
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge
+                                              ?.copyWith(),
+                                          a.answer,
+                                        ),
+                                      ),
+                                    ],
+                                    if (a.diagrams != null &&
+                                        a.diagrams!.isNotEmpty) ...[
+                                      CustomDiagramBuilder(diagrams: a.diagrams?.toList())
+                                    ],
                                   ],
-                                  if (widget.question.diagrams != null &&
-                                      widget.question.diagrams!.isNotEmpty) ...[
-                                    DiagramBuilder(
-                                      canScroll: false,
-                                    ),
-                                  ],
-                                ],
+
+                                ],)
+
                               ],
                             ),
                           ),

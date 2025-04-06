@@ -38,7 +38,7 @@ const kMaxNumberOfQuestions = [
 ];
 
 /// Layout
-const kRadius = 12.0;
+const kRadius = 6.0;
 const kRadiusBig = 30.0;
 const kPageIndentHorizontal = 0.03;
 const kPageIndentVertical = 0.03;

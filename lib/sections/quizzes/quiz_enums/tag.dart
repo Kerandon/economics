@@ -9,6 +9,7 @@ enum Tag {
   workbook,
   coursebook,
   pastPaper,
+  diagram,
   hl
 }
 
@@ -67,6 +68,8 @@ extension CustomTagExtension on Tag {
         return "Past paper";
       case Tag.hl:
         return "HL";
+      case Tag.diagram:
+        return 'diagram';
     }
   }
 }

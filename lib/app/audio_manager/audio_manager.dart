@@ -9,6 +9,7 @@ class AudioManager {
   void playSoundTrack(String audio) {
     if (!soundTrackPlayer.playing) {
       soundTrackPlayer.setLoopMode(LoopMode.all);
+      soundTrackPlayer.setVolume(0.30);
       soundTrackPlayer.setAsset('assets/audio/soundtracks/$audio.mp3');
       soundTrackPlayer.play();
     }

@@ -22,7 +22,7 @@ class CustomDiagramBuilder extends StatelessWidget {
       children: [
         ...diagramsToShow.map(
           (e) => Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(42.0),
             child: SizedBox(
               width: size.width * dimensions,
               height: size.width * dimensions,

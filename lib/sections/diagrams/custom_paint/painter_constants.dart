@@ -1,32 +1,21 @@
 /// Curves
-const kCurveLeft = 0.80;
-const kCurveWidth = 3.0;
-const kSkinnyCurveWidth = 0.50;
-const kCurveLabelAdjustment = 12.0;
-const kLabelLineWidth = 0.50;
-const kArrowSize = 8.0;
+const kCurveWidth = 12.0;
+const kArrowSize = 18.0;
 
 /// Axis
 const kAxisIndent = 0.15;
 const kAxisLabelAdjustmentCenter = 2.5;
-const kAxisLabelAdjustmentOut = 4;
 const kAxisWidth = 0.30;
-const kDashedLineWidth = 0.50;
-const kAxisArrowHeadWidth = 0.010;
+const kDashedLineWidth = 6.0;
 
-/// Text-box
-const kTextBoxLineWidth = 4.0;
 
 /// Text
-const kLabelFontSize = 12.0;
-const kFontSize = 14.0;
-const kLabelLetterFontSize = 12.0;
+const kLabelFontSize = 28.0;
+const kFontSize = 36.0;
 
 /// Dot
-const kDotRadius = 4.0;
+const kDotRadius = 36.0;
 
-/// Diagrams
-const kDefault = 'Default';
 
 /// Micro labels
 const kP = 'P';

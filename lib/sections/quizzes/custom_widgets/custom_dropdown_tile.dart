@@ -16,34 +16,38 @@ class CustomDropdownTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          if (leading != null) ...[
+    return Container(
+      height: 100,
+      color: isSelected == true ? Theme.of(context).colorScheme.surfaceTint : Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            if (leading != null) ...[
+              Expanded(
+                flex: 1,
+                child: Text(
+                  leading!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
             Expanded(
-              flex: 1,
+              flex:5,
               child: Text(
-                leading!,
+                text,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-          ],
-          Expanded(
-            flex:5,
-            child: Text(
-              text,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-         if(isSelected != null)...[ if (isSelected!) ...[
-            const Icon(Icons.check_box_outlined)
-          ] else ...[
-            const Icon(Icons.check_box_outline_blank),
-          ]
-        ],],
+           if(isSelected != null)...[ if (isSelected!) ...[
+              const Icon(Icons.check_box_outlined)
+            ] else ...[
+              const Icon(Icons.check_box_outline_blank),
+            ]
+          ],],
+        ),
       ),
     );
   }
