@@ -48,11 +48,15 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
+              editNotifier.updateCurrentQuestion(c.copyWith(diagrams: []));
               Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => ManageQuestionsPage(),
+                PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => ManageQuestionsPage(),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
                 ),
               );
+
             },
             icon: Icon(
               Icons.arrow_back_outlined,

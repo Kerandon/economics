@@ -9,8 +9,8 @@ import '../../../quizzes/custom_widgets/custom_dropdown_tile.dart';
 import '../../../quizzes/quiz_state/edit_question_state.dart';
 import '../custom_dropdown_heading.dart';
 
-class AddDiagramToQuestionDialog extends ConsumerWidget {
-  const AddDiagramToQuestionDialog({super.key});
+class AddDiagramsToQuestionDialog extends ConsumerWidget {
+  const AddDiagramsToQuestionDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

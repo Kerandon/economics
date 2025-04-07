@@ -26,7 +26,12 @@ class QuestionTile extends ConsumerWidget {
     final editNotifier = ref.read(editQuestionProvider.notifier);
     return ExpansionTile(
       expandedAlignment: Alignment.centerLeft,
-      title: HtmlWidget(q.question ?? ''),
+      title: Column(
+        children: [
+          HtmlWidget(q.question ?? ''),
+          CustomDiagramBuilder(diagrams: q.diagrams?.toList())
+        ],
+      ),
       trailing: SizedBox(
         width: size.width * 0.10,
         child: Row(

@@ -18,7 +18,7 @@ class CustomDropdownTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
-      color: isSelected == true ? Theme.of(context).colorScheme.surfaceTint : Colors.transparent,
+      color: isSelected == true ? Theme.of(context).colorScheme.primary.withAlpha(155) : Colors.transparent,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

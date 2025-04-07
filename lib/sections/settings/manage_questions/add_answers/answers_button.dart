@@ -101,7 +101,10 @@ class AnswersButton extends ConsumerWidget {
                 ],
               ),
               CustomDiagramBuilder(
-                  diagrams: initialAnswers?[index].diagrams?.toList())
+                  diagrams:
+                  c.answers?[index].diagrams?.toList()
+                 // initialAnswers?[index].diagrams?.toList()
+              )
             ],
           ),
         ),

@@ -59,7 +59,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(
       currentQuestion: question.copyWith(
         answers: answers.toList(),
-          ),
+      ),
     );
   }
 

@@ -95,7 +95,6 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
 
           return CustomScrollView(
             slivers: [
-
               SliverAppBar(
                 collapsedHeight: kToolbarHeight * 2,
                 expandedHeight: 0,
@@ -107,7 +106,10 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${filteredQuestions.length} questions', style: Theme.of(context).textTheme.titleMedium,),
+                  child: Text(
+                    '${filteredQuestions.length} questions',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
               ),
               // Scrollable list of questions
@@ -129,9 +131,9 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             editNotifier.setEditExistingQuestion(false);
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AddQuestionPage(),
+            Navigator.of(context).pushReplacement(
+              PageRouteBuilder(
+                pageBuilder: (_, __, ___) => AddQuestionPage(),
               ),
             );
           },

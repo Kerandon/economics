@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../quizzes/quiz_enums/question_key.dart';
 import '../../../quizzes/quiz_state/edit_question_state.dart';
-import 'add_diagram_to_question_dialog.dart';
+import 'add_diagrams_to_question_dialog.dart';
+import 'add_images_to_question_dialog.dart';
 
 class QuestionButton extends ConsumerWidget {
   const QuestionButton({
@@ -44,7 +45,7 @@ class QuestionButton extends ConsumerWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => AddDiagramToQuestionDialog(),
+                      builder: (context) => AddDiagramsToQuestionDialog(),
                     );
                   },
                   icon: Icon(
@@ -55,9 +56,7 @@ class QuestionButton extends ConsumerWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('Add image'),
-                      ),
+                      builder: (context) => AddImagesToQuestionDialog()
                     );
                   },
                   icon: Icon(
@@ -75,3 +74,4 @@ class QuestionButton extends ConsumerWidget {
     );
   }
 }
+
