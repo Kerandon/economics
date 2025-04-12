@@ -1,12 +1,12 @@
 /// Curves
-const kCurveWidth = 12.0;
-const kArrowSize = 18.0;
+const kCurveWidth = 8.0;
+const kArrowSize = 12.0;
 
 /// Axis
 const kAxisIndent = 0.15;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;
-const kDashedLineWidth = 6.0;
+const kDashedLineWidth = 4.0;
 
 
 /// Text
@@ -20,7 +20,7 @@ const kDotRadius = 36.0;
 /// Micro labels
 const kP = 'P';
 const kQ = 'Q';
-const kDMPBMSB = 'D=MPB=MSB';
+const kDMPBMSB = 'D = MPB = MSB';
 const kMPC = 'S=MPC';
 const kMSC = 'MSC';
 const kPOpt = 'Popt';
@@ -29,13 +29,13 @@ const kQOpt = 'Qopt';
 const kQm = 'Qm';
 const kPriceCostsRevenue = 'Price, costs & revenues (\$)';
 const kQuantity = 'Quantity (units)';
-const kDAR = 'D=AR';
-const kPARMR = 'P=AR=MR';
+const kDAR = 'D = AR';
+const kPARMR = 'P = AR = MR';
 const kMR = 'MR';
 const kMC = 'MC';
 const kAC = 'AC';
 const kSRAC = 'SRAC';
-const kMCMR = 'MC=MR';
+const kMCMR = 'MC = MR';
 
 /// Macro-labels
 const kHouseholds = 'Households';
@@ -111,3 +111,67 @@ const kLowInvestment = 'Low investment';
 const kLowPhysicalCapital = 'Low physical capital';
 const kLowHumanCapital = 'Low human capital';
 const kLowNaturalCapital = 'Low natural capital';
+
+enum MicroLabel {
+  p,
+  q,
+  dEqualsMPBMSB,
+  mpc,
+  msc,
+  pOpt,
+  pm,
+  qOpt,
+  qm,
+  priceCostsRevenue,
+  quantity,
+  dEqualsAR,
+  pEqualsARMR,
+  mr,
+  mc,
+  ac,
+  srac,
+  mcEqualsMR,
+}
+
+extension MicroLabelExtension on MicroLabel {
+  String get label {
+    switch (this) {
+      case MicroLabel.p:
+        return 'P';
+      case MicroLabel.q:
+        return 'Q';
+      case MicroLabel.dEqualsMPBMSB:
+        return 'D = MPB = MSB';
+      case MicroLabel.mpc:
+        return 'S = MPC';
+      case MicroLabel.msc:
+        return 'MSC';
+      case MicroLabel.pOpt:
+        return 'Popt';
+      case MicroLabel.pm:
+        return 'Pm';
+      case MicroLabel.qOpt:
+        return 'Qopt';
+      case MicroLabel.qm:
+        return 'Qm';
+      case MicroLabel.priceCostsRevenue:
+        return 'Price, costs & revenues (\$)';
+      case MicroLabel.quantity:
+        return 'Quantity (units)';
+      case MicroLabel.dEqualsAR:
+        return 'D = AR';
+      case MicroLabel.pEqualsARMR:
+        return 'P = AR = MR';
+      case MicroLabel.mr:
+        return 'MR';
+      case MicroLabel.mc:
+        return 'MC';
+      case MicroLabel.ac:
+        return 'AC';
+      case MicroLabel.srac:
+        return 'SRAC';
+      case MicroLabel.mcEqualsMR:
+        return 'MC = MR';
+    }
+  }
+}

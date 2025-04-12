@@ -27,7 +27,7 @@ void paintDashedLine(
   final points = <Offset>[];
 
   final paint = Paint()
-    ..color = config.colorScheme.onSurface
+    ..color = config.colorScheme.onSurface.withAlpha(120)
     ..strokeWidth = strokeWidth;
 
   double t = 0;

@@ -131,6 +131,7 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             editNotifier.setEditExistingQuestion(false);
+            editNotifier.updateCurrentQuestion(editState.currentQuestion);
             Navigator.of(context).pushReplacement(
               PageRouteBuilder(
                 pageBuilder: (_, __, ___) => AddQuestionPage(),

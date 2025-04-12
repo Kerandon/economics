@@ -1,21 +1,26 @@
+import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/diagram_painter_config.dart';
+import '../../utils/helper_methods/get_scale_ratio.dart';
 
 paintTextBox({
   required Canvas canvas,
   required DiagramPainterConfig config,
   required String text,
   required Offset position,
-  double fontSize = 11,
+  double fontSize = 32,
   Offset? linePoint,
   bool addLineDot = false,
   Color? lineColor,
-  bool showBoxBorder = true,
+  bool showBoxBorder = false,
   Color? boxFillColor,
   Color? boxStrokeColor,
 }) {
-  final sizeAdjustment = config.painterSize.width / config.appSize.width;
+  final sizeAdjustment = config.averageRatio;
+
+
+
 
   final adjustedPos = Offset(position.dx * config.painterSize.width,
       position.dy * config.painterSize.height);
@@ -24,7 +29,8 @@ paintTextBox({
     final lineEndX = config.painterSize.width * linePoint.dx;
     final lineEndY = config.painterSize.height * linePoint.dy;
     final linePaint = Paint()
-      ..color = lineColor ?? config.colorScheme.onSurface;
+      ..color = lineColor ?? config.colorScheme.onSurface
+    ..strokeWidth = kCurveWidth / 5;
     canvas.drawLine(
       adjustedPos,
       Offset(lineEndX, lineEndY),
@@ -52,8 +58,8 @@ paintTextBox({
     ..addRect(
       Rect.fromCenter(
         center: adjustedPos,
-        width: textSize.width + (20 * sizeAdjustment),
-        height: textSize.height + (20 * sizeAdjustment),
+        width: textSize.width + (3 * sizeAdjustment),
+        height: textSize.height + (3 * sizeAdjustment),
       ),
     );
   canvas.drawPath(

@@ -2,6 +2,10 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.d
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_box.dart';
+import 'package:economics_app/sections/diagrams/enums/axis_label_margin.dart';
+import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/label_align.dart';
@@ -24,9 +28,9 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       c,
       canvas,
       yAxisStartPos: 0.50,
-      xAxisEndPos: 0.36,
-      yLabel: kPm,
-      xLabel: kQm,
+      xAxisEndPos: 0.35,
+      yLabel: MicroLabel.pm.label,
+      xLabel: MicroLabel.qm.label,
     );
 
     /// Dashed Lines Optimum
@@ -35,15 +39,27 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.40,
       xAxisEndPos: 0.25,
-      yLabel: kPOpt,
-      xLabel: kQOpt,
+      yLabel: MicroLabel.pOpt.label,
+      xLabel: MicroLabel.qOpt.label,
+    );
+
+    paintShading(
+      canvas,
+      size,
+      ShadeType.welfareLoss,
+      [
+        Offset(0.50, 0.50),
+        Offset(0.40, 0.40),
+        Offset(0.50, 0.31),
+      ],
     );
 
     paintAxis(
       c,
       canvas,
-      yAxisLabel: kP,
-      xAxisLabel: kQ,
+      yAxisLabel: MicroLabel.p.label,
+      xAxisLabel: MicroLabel.q.label,
+      axisLabelMargin: AxisLabelMargin.close,
     );
 
     /// Demand
@@ -52,7 +68,7 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       Offset(0.20, 0.20),
       Offset(0.80, 0.80),
-      label2: kDMPBMSB,
+      label2: MicroLabel.dEqualsMPBMSB.label,
       label2Align: LabelAlign.centerRight,
     );
 
@@ -62,7 +78,7 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       Offset(0.20, 0.80),
       Offset(0.80, 0.20),
-      label2: kMPC,
+      label2: MicroLabel.mpc.label,
       label2Align: LabelAlign.centerRight,
     );
 
@@ -72,7 +88,7 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       canvas,
       Offset(0.20, 0.60),
       Offset(0.72, 0.10),
-      label2: kMSC,
+      label2: MicroLabel.msc.label,
       label2Align: LabelAlign.centerRight,
     );
 
@@ -87,6 +103,21 @@ class NegativeProductionExternalities extends BaseDiagramPainter {
       drawArrowAtStart: true,
     );
 
-    /// Explanation
+    paintTextBox(
+      canvas: canvas,
+      config: c,
+      text: 'Welfare loss',
+      position: Offset(0.40, 0.25),
+      linePoint: Offset(0.45, 0.40),
+      addLineDot: true,
+    );
+    paintTextBox(
+      canvas: canvas,
+      config: c,
+      text: 'External cost',
+      position: Offset(0.80, 0.35),
+      linePoint: Offset(0.70, 0.25),
+      addLineDot: true,
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:economics_app/sections/quizzes/quiz_enums/tag.dart';
 import 'package:equatable/equatable.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../../app/utils/models/syllabus_model.dart';
 import '../../../../../app/utils/models/unit_model.dart';
 import '../../../../diagrams/models/diagram_model.dart';
@@ -14,6 +15,7 @@ class QuestionModel extends Equatable {
   final SyllabusModel? syllabus;
   final String? question;
   final List<DiagramModel>? diagrams;
+  final List<XFile?>? images;
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
@@ -30,6 +32,7 @@ class QuestionModel extends Equatable {
     this.syllabus,
     this.question,
     this.diagrams,
+    this.images,
     this.answers,
     this.answerStage = AnswerStage.notSelected,
     this.explanation,
@@ -47,6 +50,7 @@ class QuestionModel extends Equatable {
     SyllabusModel? syllabus,
     String? question,
     List<DiagramModel>? diagrams,
+    List<XFile?>? images,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
     List<UnitModel>? units,
@@ -63,6 +67,7 @@ class QuestionModel extends Equatable {
       syllabus: syllabus ?? this.syllabus,
       question: question ?? this.question,
       diagrams: diagrams ?? this.diagrams,
+      images: images ?? this.images,
       answers: answers ?? this.answers,
       answerStage: answerStage ?? this.answerStage,
       explanation: explanation ?? this.explanation,

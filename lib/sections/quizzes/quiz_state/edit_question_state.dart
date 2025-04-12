@@ -69,6 +69,9 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
       answers = [
         if (question.answers?.isNotEmpty ?? false) ...[
           question.answers!.first.copyWith(isCorrect: true)
+        ],
+        if(question.answers?.isEmpty == true)...[
+          AnswerModel('',isCorrect: true)
         ]
       ];
     } else if (question.questionType == QuestionType.multi) {

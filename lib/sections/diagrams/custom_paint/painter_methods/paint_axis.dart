@@ -12,14 +12,17 @@ void paintAxis(
   DiagramPainterConfig config,
   Canvas canvas, {
   String? yAxisLabel,
+      bool yLabelIsHorizontal = true,
   String? xAxisLabel,
   bool addNumericalAxis = false,
   double labelXIndent = kAxisLabelAdjustmentCenter,
   double labelYIndent = kAxisLabelAdjustmentCenter,
-  AxisLabelMargin axisMargin = AxisLabelMargin.close,
+  AxisLabelMargin axisLabelMargin = AxisLabelMargin.middle,
   Indent indent = Indent.end,
 }) {
   paintAxisLines(config, canvas);
+
+  print('y axis ${axisLabelMargin}');
 
   if (yAxisLabel != null) {
     paintText(
@@ -27,9 +30,9 @@ void paintAxis(
       canvas,
       yAxisLabel,
       const Offset(0, 0),
-      angle: math.pi / -2,
+      angle: yLabelIsHorizontal ? 0 : math.pi * 1.5,
       axis: Axis.vertical,
-      axisLabelMargin: axisMargin,
+      axisLabelMargin: axisLabelMargin,
       axisIndent: indent,
     );
   }
@@ -40,7 +43,7 @@ void paintAxis(
       xAxisLabel,
       const Offset(0, 0),
       axis: Axis.horizontal,
-      axisLabelMargin: axisMargin,
+      axisLabelMargin: axisLabelMargin,
       axisIndent: indent,
     );
   }
@@ -49,4 +52,5 @@ void paintAxis(
         axis: Axis.horizontal, incrementValue: 50, totalIncrements: 5);
     addAxisNumericalLabels(config, canvas, axis: Axis.vertical);
   }
+  paintText(config, canvas, '0', Offset(kAxisIndent - 0.03,(1-kAxisIndent) + 0.03));
 }

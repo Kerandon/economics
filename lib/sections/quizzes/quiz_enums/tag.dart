@@ -69,7 +69,7 @@ extension CustomTagExtension on Tag {
       case Tag.hl:
         return "HL";
       case Tag.diagram:
-        return 'diagram';
+        return 'Diagram';
     }
   }
 }

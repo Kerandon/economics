@@ -25,7 +25,7 @@ void paintText(
   fontSize *= config.averageRatio;
 
   if (axis != null) {
-    axisLabelMargin = AxisLabelMargin.far;
+    axisLabelMargin = axisLabelMargin;
     axisIndent = Indent.end;
   }
 
@@ -55,7 +55,7 @@ void paintText(
 
   double xAlign = 0;
   double yAlign = 0;
-  const adjustment = 6.0;
+  const adjustment = 16.0;
   switch (curveAlign) {
     case LabelAlign.center:
       xAlign = -textPainter.width / 2;
@@ -91,11 +91,11 @@ void paintText(
       /// Add on a margin to the axis
       switch (axisLabelMargin!) {
         case AxisLabelMargin.close:
-          textHeight = textHeight * 2.5;
+          textHeight = textHeight * 1.5;
         case AxisLabelMargin.middle:
           textHeight = textHeight * 2.5;
         case AxisLabelMargin.far:
-          textHeight = textHeight * 2.5;
+          textHeight = textHeight * 3.5;
       }
 
       /// Centers text
@@ -124,11 +124,11 @@ void paintText(
       double horizontalAxis = (height - heightIndent + textHeight);
       switch (axisLabelMargin!) {
         case AxisLabelMargin.close:
-          horizontalAxis = horizontalAxis + textHeight * 1.00;
+          horizontalAxis = horizontalAxis + textHeight * 0;
         case AxisLabelMargin.middle:
           horizontalAxis = horizontalAxis + textHeight * 1.00;
         case AxisLabelMargin.far:
-          horizontalAxis = horizontalAxis + textHeight * 1.00;
+          horizontalAxis = horizontalAxis + textHeight * 2.00;
       }
 
       /// Centers text
