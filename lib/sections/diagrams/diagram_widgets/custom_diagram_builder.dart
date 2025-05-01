@@ -23,12 +23,20 @@ class CustomDiagramBuilder extends StatelessWidget {
         ...diagramsToShow.map(
           (e) => Padding(
             padding: const EdgeInsets.all(42.0),
-            child: SizedBox(
-              width: size.width * dimensions,
-              height: size.width * dimensions,
-              child: CustomPaint(
-                painter: e.painter,
-              ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: size.width * dimensions,
+                  height: size.width * dimensions,
+                  child: CustomPaint(
+                    painter: e.painter,
+                  ),
+                ),
+                Expanded(child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(e.description ?? ""),
+                ),),
+              ],
             ),
           ),
         ),

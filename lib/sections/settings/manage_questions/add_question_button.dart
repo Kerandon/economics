@@ -32,7 +32,8 @@ class AddQuestionButton extends ConsumerWidget {
             errors.add('Question field is empty');
           }
           if (!editState.editExistingQuestion &&
-              editState.allQuestions.any((e) => e.question == q.question)) {
+              editState.allQuestions.any((e) =>
+                  e.question == q.question && e.syllabus == q.syllabus)) {
             errors.add('Question already exists');
           }
           if (q.questionType == QuestionType.multi) {
@@ -48,7 +49,11 @@ class AddQuestionButton extends ConsumerWidget {
 
           if (errors.isNotEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(errors.join('\n'))),
+              SnackBar(
+                content: Text(
+                  errors.join('\n'),
+                ),
+              ),
             );
             return;
           }

@@ -6,14 +6,20 @@ import '../enums/diagram_subtype.dart';
 import '../enums/diagram_type.dart';
 import '../enums/unit_type.dart';
 import '../utils/mixins.dart';
-
 class DiagramModel extends Equatable {
   final UnitType? unit;
   final DiagramType? type;
   final DiagramSubtype? subtype;
   final CustomPainter? painter;
+  final String? description; // <-- New nullable field
 
-  const DiagramModel({this.unit, this.type, this.subtype, this.painter});
+  const DiagramModel({
+    this.unit,
+    this.type,
+    this.subtype,
+    this.painter,
+    this.description,
+  });
 
   // Serialization method
   Map<String, dynamic> toMap() {
@@ -21,25 +27,26 @@ class DiagramModel extends Equatable {
       DiagramKey.unit.name: unit?.name,
       DiagramKey.type.name: type?.name,
       DiagramKey.subtype.name: subtype?.name,
+      'description': description, // <-- Include it here
     };
   }
 
   // Deserialization method from Firebase
   factory DiagramModel.fromFirebase(Map<String, dynamic> map) {
-
     return DiagramModel(
       unit: map[DiagramKey.unit.name] != null
           ? UnitType.values
-              .firstWhere((e) => e.name == map[DiagramKey.unit.name])
+          .firstWhere((e) => e.name == map[DiagramKey.unit.name])
           : null,
       type: map[DiagramKey.type.name] != null
           ? DiagramType.values
-              .firstWhere((e) => e.name == map[DiagramKey.type.name])
+          .firstWhere((e) => e.name == map[DiagramKey.type.name])
           : null,
       subtype: map[DiagramKey.subtype.name] != null
           ? DiagramSubtype.values
-              .firstWhere((e) => e.name == map[DiagramKey.subtype.name])
+          .firstWhere((e) => e.name == map[DiagramKey.subtype.name])
           : null,
+      description: map['description'], // <-- Deserialize it
     );
   }
 
@@ -52,9 +59,9 @@ class DiagramModel extends Equatable {
         return diagramsList
             .map(
               (e) => DiagramModel.fromFirebase(
-                Map<String, dynamic>.from(e),
-              ),
-            )
+            Map<String, dynamic>.from(e),
+          ),
+        )
             .toList();
       }
     }
@@ -67,12 +74,14 @@ class DiagramModel extends Equatable {
     DiagramType? type,
     DiagramSubtype? subtype,
     CustomPainter? painter,
+    String? description, // <-- Add to copyWith
   }) {
     return DiagramModel(
       unit: unit ?? this.unit,
       type: type ?? this.type,
       subtype: subtype ?? this.subtype,
       painter: painter ?? this.painter,
+      description: description ?? this.description,
     );
   }
 
@@ -119,7 +128,24 @@ class DiagramModel extends Equatable {
     }
     return all;
   }
+  static List<DiagramModel> getUniqueByUnitAndType(Size size, BuildContext context) {
+    final List<DiagramModel> allDiagrams = getAllDiagrams(size, context);
+
+    final Set<String> seenKeys = {};
+    final List<DiagramModel> uniqueDiagrams = [];
+
+    for (final diagram in allDiagrams) {
+      final key = '${diagram.unit}_${diagram.type}';
+      if (seenKeys.add(key)) {
+        uniqueDiagrams.add(diagram);
+      }
+    }
+
+    return uniqueDiagrams;
+  }
+
+
 
   @override
-  List<Object?> get props => [type, subtype];
+  List<Object?> get props => [type, subtype, description]; // <-- Add here
 }

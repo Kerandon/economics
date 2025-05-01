@@ -15,50 +15,99 @@ void paintDiagramDashedLines(
   bool hideYLine = false,
   bool hideXLine = false,
 }) {
+  final normalize = 1 - kAxisIndent * 1.5;
+  final yPos = yAxisStartPos * normalize + (kAxisIndent / 2);
+  final xEndPosNormalized = (kAxisIndent * 1.25 + xAxisEndPos) * normalize;
+  final xLabelY = 1 - kAxisIndent * normalize;
+
   if (!hideYLine) {
-    /// Dashed line from Y axis
-    paintDashedLine(config, canvas,
-        p1: Offset(kAxisIndent, yAxisStartPos),
-        p2: Offset(xAxisEndPos + kAxisIndent, yAxisStartPos));
+    paintDashedLine(
+      config,
+      canvas,
+      p1: Offset(kAxisIndent, yPos),
+      p2: Offset(xEndPosNormalized, yPos),
+    );
 
     if (yLabel != null) {
-      /// Y axis label
-      paintText(
+      paintTextForDashedLines(
         config,
         canvas,
         yLabel,
-        fontSize: kLabelFontSize,
-        Offset(kAxisIndent, yAxisStartPos),
-        curveAlign: LabelAlign.centerLeft,
+        Offset(0, yPos),
+        CustomAxis.y,
       );
     }
   }
 
   if (!hideXLine) {
-    /// Dashed line to X axis
     paintDashedLine(
       config,
       canvas,
-      p1: Offset(kAxisIndent + xAxisEndPos, yAxisStartPos),
-      p2: Offset(
-        kAxisIndent + xAxisEndPos,
-        1 - (1 * kAxisIndent),
-      ),
+      p1: Offset(xEndPosNormalized, yPos),
+      p2: Offset(xEndPosNormalized, 1 - kAxisIndent),
     );
 
-    /// X axis label
     if (xLabel != null) {
-      paintText(
+      paintTextForDashedLines(
         config,
         canvas,
         xLabel,
-        fontSize: kLabelFontSize,
-        Offset(
-          kAxisIndent + xAxisEndPos,
-          1 - kAxisIndent + 0.02,
-        ),
-        curveAlign: LabelAlign.centerBottom,
+        Offset(xEndPosNormalized, xLabelY),
+        CustomAxis.x,
       );
     }
   }
+}
+
+void paintTextForDashedLines(
+  DiagramPainterConfig config,
+  Canvas canvas,
+  String label,
+  Offset position,
+  CustomAxis axis, {
+  double fontSize = kFontSize,
+}) {
+  fontSize *= config.averageRatio;
+
+  final width = config.painterSize.width;
+  final height = config.painterSize.height;
+
+  final textPainter = TextPainter(
+    text: TextSpan(
+      text: label,
+      style: TextStyle(
+        color: config.colorScheme.onSurface,
+        fontSize: fontSize,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout(minWidth: 0, maxWidth: width);
+
+  Offset offset;
+  switch (axis) {
+    case CustomAxis.x:
+      offset = Offset(
+        position.dx * width - textPainter.width / 2,
+        position.dy * height - textPainter.height + (height * 0.030),
+      );
+      break;
+    case CustomAxis.y:
+      offset = Offset(
+        position.dx -
+            textPainter.width +
+            (kAxisIndent * width) -
+            (width * 0.015),
+        position.dy * height - textPainter.height / 2,
+      );
+      break;
+  }
+
+  canvas.save();
+  textPainter.paint(canvas, offset);
+  canvas.restore();
+}
+
+enum CustomAxis {
+  x,
+  y,
 }

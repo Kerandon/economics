@@ -7,38 +7,39 @@ import '../../enums/label_align.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_painter_config.dart';
 
-void paintCustomBezier(
-  DiagramPainterConfig config,
-  Canvas canvas, {
-  required Offset startPos,
-  required List<CustomBezier> points,
-  Color? mainColor,
-  double strokeWidth = kCurveWidth,
-  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
-  String? label1,
-  String? label2,
-  LabelAlign label1Align = LabelAlign.center,
-  LabelAlign label2Align = LabelAlign.center,
-  bool drawArrowOnStart = false,
-  bool drawArrowOnEnd = false,
-  double arrowOnStartAngle = 0,
-  double arrowOnEndAngle = 0,
-}) {
+void paintCustomBezierNormalized(
+    DiagramPainterConfig config,
+    Canvas canvas, {
+      required Offset startPos,
+      required List<CustomBezier> points,
+      Color? mainColor,
+      double strokeWidth = kCurveWidth,
+      SizeAdjustor sizeAdjustor = const SizeAdjustor(),
+      String? label1,
+      String? label2,
+      LabelAlign label1Align = LabelAlign.center,
+      LabelAlign label2Align = LabelAlign.center,
+      bool drawArrowOnStart = false,
+      bool drawArrowOnEnd = false,
+      double arrowOnStartAngle = 0,
+      double arrowOnEndAngle = 0,
+    }) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
   final color = mainColor ?? config.colorScheme.primary;
+  final normalize = 1 - (kAxisIndent * 1.5);
   final paint = Paint()
     ..style = PaintingStyle.stroke
     ..color = color
     ..strokeWidth = strokeWidth * config.averageRatio;
   final path = Path();
-  path.moveTo(startPos.dx * width, startPos.dy * height);
+  path.moveTo(startPos.dx * width * normalize + (kAxisIndent * width), startPos.dy * height * normalize + (kAxisIndent * (height / 2)));
   for (int i = 0; i < points.length; i++) {
     path.quadraticBezierTo(
-      points[i].control.dx * width,
-      points[i].control.dy * height,
-      points[i].endPoint.dx * width,
-      points[i].endPoint.dy * height,
+      points[i].control.dx * width * normalize + (kAxisIndent * width),
+      points[i].control.dy * height * normalize + (kAxisIndent * (height / 2)),
+      points[i].endPoint.dx * width * normalize + (kAxisIndent * width),
+      points[i].endPoint.dy * height * normalize + (kAxisIndent * (height / 2)),
     );
   }
 

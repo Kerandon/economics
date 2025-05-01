@@ -8,14 +8,12 @@ const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 4.0;
 
-
 /// Text
 const kLabelFontSize = 28.0;
 const kFontSize = 36.0;
 
 /// Dot
-const kDotRadius = 36.0;
-
+const kDotRadius = 16.0;
 
 /// Micro labels
 const kP = 'P';
@@ -113,8 +111,14 @@ const kLowHumanCapital = 'Low human capital';
 const kLowNaturalCapital = 'Low natural capital';
 
 enum MicroLabel {
+  tablets,
+  smartPhones,
+  chairs,
+  tables,
   p,
   q,
+  pe,
+  qe,
   dEqualsMPBMSB,
   mpc,
   msc,
@@ -140,6 +144,10 @@ extension MicroLabelExtension on MicroLabel {
         return 'P';
       case MicroLabel.q:
         return 'Q';
+      case MicroLabel.pe:
+        return 'Pe';
+      case MicroLabel.qe:
+        return 'Qe';
       case MicroLabel.dEqualsMPBMSB:
         return 'D = MPB = MSB';
       case MicroLabel.mpc:
@@ -172,6 +180,39 @@ extension MicroLabelExtension on MicroLabel {
         return 'SRAC';
       case MicroLabel.mcEqualsMR:
         return 'MC = MR';
+      case MicroLabel.tablets:
+        return 'tablets';
+      case MicroLabel.smartPhones:
+        return 'smart phones';
+      case MicroLabel.chairs:
+        return 'chairs';
+      case MicroLabel.tables:
+        return 'tables';
+    }
+  }
+}
+
+enum MacroLabel {
+  v,
+  w,
+  x,
+  y,
+  z,
+}
+
+extension MacroLabelExtension on MacroLabel {
+  String get label {
+    switch (this) {
+      case MacroLabel.v:
+        return 'V';
+      case MacroLabel.w:
+        return 'W';
+      case MacroLabel.x:
+        return 'X';
+      case MacroLabel.y:
+        return 'Y';
+      case MacroLabel.z:
+        return 'Z';
     }
   }
 }

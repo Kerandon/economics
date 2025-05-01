@@ -1,8 +1,10 @@
 enum DiagramType {
+  ppcMicro,
+  supplyDemand,
   negativeProductionExternalities,
   perfectCompetition,
   monopoly,
-  ppc,
+  ppcMacro,
   circularFlowOfIncome,
   businessCycle,
   keynesianADAS,
@@ -23,6 +25,10 @@ enum DiagramType {
 extension DiagramTypeExtension on DiagramType {
   String toText() {
     switch (this) {
+      case DiagramType.ppcMacro:
+        return 'PPC Macro';
+      case DiagramType.supplyDemand:
+        return 'Supply & Demand';
       case DiagramType.negativeProductionExternalities:
         return 'Negative production externalities';
       case DiagramType.perfectCompetition:
@@ -33,7 +39,7 @@ extension DiagramTypeExtension on DiagramType {
         return 'Circular flow of income model';
       case DiagramType.businessCycle:
         return 'Business cycle';
-      case DiagramType.ppc:
+      case DiagramType.ppcMicro:
         return 'Production possibilities curve';
       case DiagramType.keynesianADAS:
         return 'Keynesian AD-AS';
@@ -61,6 +67,7 @@ extension DiagramTypeExtension on DiagramType {
         return 'J-Curve';
       case DiagramType.povertyTrap:
         return 'Poverty trap';
+
     }
   }
 }

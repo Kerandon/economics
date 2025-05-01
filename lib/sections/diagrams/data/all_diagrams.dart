@@ -8,12 +8,12 @@ import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopoly.d
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/perfect_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/phillips_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/poverty_trap.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/ppc.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/ppc_micro.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/production_subsidy.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/supply_demand.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/tariff.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:flutter/material.dart';
-
 import '../custom_paint/diagrams/business_cycle.dart';
 import '../custom_paint/diagrams/comparative_advantage.dart';
 import '../custom_paint/diagrams/export_subsidy.dart';
@@ -43,6 +43,68 @@ class AllDiagrams {
       colorScheme: colorScheme,
     );
     return [
+      PPCMicro(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.ppcMicro,
+          subtype: DiagramSubtype.opportunityCost,
+          description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+        ),
+      ),
+      PPCMicro(
+        config: config,
+        model: DiagramModel(
+            unit: UnitType.micro,
+            type: DiagramType.ppcMicro,
+            subtype: DiagramSubtype.increasingOpportunityCost,
+            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+        ),
+      ),
+      PPCMicro(
+        config: config,
+        model: DiagramModel(
+            unit: UnitType.micro,
+            type: DiagramType.ppcMicro,
+            subtype: DiagramSubtype.constantOpportunityCost,
+            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+        ),
+      ),
+      PPCMicro(
+        config: config,
+        model: DiagramModel(
+            unit: UnitType.micro,
+            type: DiagramType.ppcMicro,
+            subtype: DiagramSubtype.outputPoints,
+            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+        ),
+      ),
+      PPCMicro(
+        config: config,
+        model: DiagramModel(
+            unit: UnitType.micro,
+            type: DiagramType.ppcMicro,
+            subtype: DiagramSubtype.increaseInPotentialOutput,
+            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+        ),
+      ),
+      PPCMicro(
+        config: config,
+        model: DiagramModel(
+            unit: UnitType.micro,
+            type: DiagramType.ppcMicro,
+            subtype: DiagramSubtype.decreaseInPotentialOutput,
+            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+        ),
+      ),
+      SupplyDemand(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.supplyDemand,
+          subtype: DiagramSubtype.equilibrium,
+        ),
+      ),
       NegativeProductionExternalities(
         config: config,
         model: DiagramModel(
@@ -83,13 +145,14 @@ class AllDiagrams {
           subtype: DiagramSubtype.standard,
         ),
       ),
-      PPC(
+      PPCMicro(
         config: config,
         model: DiagramModel(
-          unit: UnitType.macro,
-          type: DiagramType.ppc,
-          subtype: DiagramSubtype.macro,
-        ),
+            unit: UnitType.macro,
+            type: DiagramType.ppcMacro,
+            subtype: DiagramSubtype.macro,
+            description:
+                'If a country decides to allocate more of its scare resources towards the production of consumer goods. This would result in a movement from X to Y on the PPC.'),
       ),
       KeynesianADAS(
         config: config,

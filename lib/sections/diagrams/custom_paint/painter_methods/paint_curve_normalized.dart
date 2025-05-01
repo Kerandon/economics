@@ -7,7 +7,7 @@ import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
-void paintCurve(
+void paintCurveNormalized(
   DiagramPainterConfig config,
   Canvas canvas,
   Offset p1,
@@ -24,22 +24,31 @@ void paintCurve(
 }) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
-
+  final normalize = 1 - (kAxisIndent * 1.5);
   final paint = Paint()
     ..color = color ?? config.colorScheme.primary
     ..strokeWidth = strokeWidth * config.averageRatio
     ..strokeCap = StrokeCap.round;
 
+  final p1Norm = Offset(
+    p1.dx * normalize + (kAxisIndent),
+    p1.dy * normalize + (kAxisIndent / 2),
+  );
+  final p2Norm = Offset(
+    p2.dx * normalize + (kAxisIndent),
+    p2.dy * normalize + (kAxisIndent / 2),
+  );
+
   if (makeDashed) {
     paintDashedLine(
       config,
       canvas,
-      p1: Offset(p1.dx, p1.dy),
-      p2: Offset(p2.dx, p2.dy),
+      p1: Offset(p1Norm.dx, p1Norm.dy),
+      p2: Offset(p2Norm.dx, p2Norm.dy),
     );
   } else {
-    canvas.drawLine(Offset(p1.dx * width, p1.dy * height),
-        Offset(p2.dx * width, p2.dy * height), paint);
+    canvas.drawLine(Offset(p1Norm.dx * width, p1Norm.dy * height),
+        Offset(p2Norm.dx * width, p2Norm.dy * height), paint);
   }
 
   if (label1 != null) {
@@ -47,27 +56,27 @@ void paintCurve(
       config,
       canvas,
       label1,
-      Offset(p1.dx, p1.dy),
+      Offset(p1Norm.dx, p1Norm.dy),
       labelAlign: label1Align,
     );
   }
   if (label2 != null) {
-    paintText(config, canvas, label2, Offset(p2.dx, p2.dy),
+    paintText(config, canvas, label2, Offset(p2Norm.dx, p2Norm.dy),
         labelAlign: label2Align);
   }
-  double angle = atan2(p2.dy - p1.dy, p2.dx - p1.dx) - (pi / 2);
+  double angle = atan2(p2Norm.dy - p1Norm.dy, p2Norm.dx - p1Norm.dx) - (pi / 2);
   if (drawArrowAtStart) {
     /// work out the angle of the curve, (assume points upwards, and subtracts
     /// half pi to make a base point of zero)
 
     paintArrowHead(config, canvas,
-        positionOfArrow: Offset(p1.dx * width, p1.dy * height),
+        positionOfArrow: Offset(p1Norm.dx * width, p1Norm.dy * height),
         rotationAngle: angle,
         color: color);
   }
   if (drawArrowAtEnd) {
     paintArrowHead(config, canvas,
-        positionOfArrow: Offset(p2.dx * width, p2.dy * height),
+        positionOfArrow: Offset(p2Norm.dx * width, p2Norm.dy * height),
         rotationAngle: angle + pi,
         color: paint.color);
   }

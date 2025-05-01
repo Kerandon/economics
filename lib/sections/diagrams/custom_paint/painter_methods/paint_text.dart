@@ -15,7 +15,7 @@ void paintText(
   double angle = 0,
 
   // /// To align the label at the end of a curve
-  LabelAlign curveAlign = LabelAlign.center,
+  LabelAlign labelAlign = LabelAlign.center,
 
   /// To label chart axis
   Axis? axis,
@@ -55,8 +55,8 @@ void paintText(
 
   double xAlign = 0;
   double yAlign = 0;
-  const adjustment = 16.0;
-  switch (curveAlign) {
+  const adjustment = 8.0;
+  switch (labelAlign) {
     case LabelAlign.center:
       xAlign = -textPainter.width / 2;
       yAlign = -textPainter.height / 2;

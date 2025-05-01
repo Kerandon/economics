@@ -1,8 +1,7 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:flutter/material.dart';
-
 import '../../models/diagram_painter_config.dart';
-import '../../utils/helper_methods/get_scale_ratio.dart';
+
 
 paintTextBox({
   required Canvas canvas,

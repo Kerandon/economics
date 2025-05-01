@@ -1,5 +1,7 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/sections/diagrams/diagram_widgets/custom_diagram_builder.dart';
+import 'package:economics_app/app/custom_widgets/custom_chip_button.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_type.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/methods/get_tile_decoration.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
@@ -7,6 +9,7 @@ import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz/start_pa
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/audio_manager/audio_manager.dart';
 import '../../main.dart';
@@ -150,7 +153,9 @@ class _AllDiagramsPageState extends State<AllDiagramsPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    List<DiagramModel> allDiagrams = DiagramModel.getAllDiagrams(size, context);
+    List<DiagramModel> allDiagrams = DiagramModel.getUniqueByUnitAndType(size, context);
+
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('All Diagrams'),
@@ -163,9 +168,9 @@ class _AllDiagramsPageState extends State<AllDiagramsPage> {
                 return ExpansionTile(
                   expandedAlignment: Alignment.centerLeft,
                   title: Text(
-                      '${allDiagrams[index].type?.name ?? ''} - ${allDiagrams[index].subtype?.name}'),
+                      '${allDiagrams[index].type?.toText() ?? ''} - ${allDiagrams[index].subtype?.toText()}'),
                   children: [
-                    CustomDiagramBuilder(diagrams: [allDiagrams[index]],dimensions: 0.40,)
+CustomDiagramBuilderWithSubtype(diagrams: [allDiagrams[index]])
                   ],
                 );
               },
@@ -174,6 +179,150 @@ class _AllDiagramsPageState extends State<AllDiagramsPage> {
           ),
         ],
       ),
+    );
+  }
+}
+class CustomDiagramBuilderWithSubtype extends StatefulWidget {
+  const CustomDiagramBuilderWithSubtype({
+    super.key,
+    required this.diagrams,
+    this.dimensions = 0.20,
+  });
+
+  final List<DiagramModel>? diagrams;
+  final double dimensions;
+
+  @override
+  State<CustomDiagramBuilderWithSubtype> createState() =>
+      _CustomDiagramBuilderWithSubtypeState();
+}
+
+class _CustomDiagramBuilderWithSubtypeState
+    extends State<CustomDiagramBuilderWithSubtype> {
+  final Map<String, DiagramSubtype?> _selectedSubtypes = {};
+
+  void _showFullScreenDiagram(DiagramModel diagram) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => Scaffold(
+          appBar: AppBar(
+            title: Text(
+              [
+                diagram.type?.toText(),
+                diagram.subtype?.name,
+              ].whereType<String>().join(' - '),
+            ),
+          ),
+          body: Center(
+            child: InteractiveViewer(
+              panEnabled: true,
+              minScale: 0.5,
+              maxScale: 4.0,
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: CustomPaint(
+                  size: Size.infinite,
+                  painter: diagram.painter,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    final diagramsToShow = DiagramModel.getSelectedDiagrams(
+      size,
+      context,
+      selectedDiagrams: widget.diagrams ?? [],
+    );
+
+    final Map<String, List<DiagramModel>> grouped = {};
+    for (var diagram in diagramsToShow) {
+      final key = '${diagram.unit}_${diagram.type}';
+      grouped.putIfAbsent(key, () => []).add(diagram);
+    }
+
+    return Wrap(
+      children: grouped.entries.map((entry) {
+        final key = entry.key;
+        final diagrams = entry.value;
+        final subtypes = diagrams
+            .where((d) => d.unit == diagrams.first.unit && d.type == diagrams.first.type)
+            .map((d) => d.subtype)
+            .whereType<DiagramSubtype>()
+            .toSet()
+            .toList();
+
+        final selectedSubtype = _selectedSubtypes[key] ?? subtypes.first;
+
+        final currentDiagram = diagrams.firstWhere(
+              (d) => d.subtype == selectedSubtype,
+          orElse: () => diagrams.first,
+        );
+
+        return Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Diagram display with fade animation and fullscreen tap
+              Row(
+                children: [
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 400),
+                    transitionBuilder: (child, animation) =>
+                        FadeTransition(opacity: animation, child: child),
+                    child: GestureDetector(
+                      key: ValueKey(currentDiagram.subtype),
+                      onTap: () => _showFullScreenDiagram(currentDiagram),
+                      child: SizedBox(
+                        width: size.width * widget.dimensions,
+                        height: size.width * widget.dimensions,
+                        child: CustomPaint(painter: currentDiagram.painter),
+                      ),
+                    ),
+                  ),
+                  // Magnifying glass icon for enlargement
+                  IconButton(
+                    icon: Icon(Icons.search, size: 30),
+                    onPressed: () => _showFullScreenDiagram(currentDiagram),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: HtmlWidget(currentDiagram.description ?? ""),
+                    ),
+                  ),
+                ],
+              ),
+              // Subtype chips
+              if (subtypes.length > 1)
+                Wrap(
+                  spacing: 8,
+                  children: subtypes.map((subtype) {
+                    final isSelected = subtype == selectedSubtype;
+                    return CustomChipButton(
+                      isSelected: isSelected,
+                      text: subtype.toText(),
+                      onPressed: () {
+                        setState(() {
+                          _selectedSubtypes[key] = subtype;
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }

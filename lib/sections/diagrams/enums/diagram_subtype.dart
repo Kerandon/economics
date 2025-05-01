@@ -1,4 +1,11 @@
 enum DiagramSubtype {
+  outputPoints,
+  opportunityCost,
+  increasingOpportunityCost,
+  constantOpportunityCost,
+  increaseInPotentialOutput,
+  decreaseInPotentialOutput,
+  equilibrium,
   commonPoolResources,
   longRunEquilibrium,
   abnormalProfit,
@@ -15,6 +22,21 @@ enum DiagramSubtype {
 extension DiagramSubtypeExtension on DiagramSubtype {
   String toText() {
     switch (this) {
+      case DiagramSubtype.outputPoints:
+        return 'Output points';
+      case DiagramSubtype.opportunityCost:
+        return 'Opportunity cost';
+      case DiagramSubtype.increasingOpportunityCost:
+        return 'Increasing opportunity cost';
+      case DiagramSubtype.constantOpportunityCost:
+        return 'Constant opportunity cost';
+
+      case DiagramSubtype.increaseInPotentialOutput:
+        return 'Increase in potential output';
+      case DiagramSubtype.decreaseInPotentialOutput:
+        return 'Decrease in potential output';
+      case DiagramSubtype.equilibrium:
+        return 'Equilibrium';
       case DiagramSubtype.commonPoolResources:
         return 'Common Pool Resources';
       case DiagramSubtype.abnormalProfit:
@@ -27,6 +49,7 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Open-model';
       case DiagramSubtype.macro:
         return 'Macro';
+
       case DiagramSubtype.fullEmployment:
         return 'Full employment';
       case DiagramSubtype.shortRun:

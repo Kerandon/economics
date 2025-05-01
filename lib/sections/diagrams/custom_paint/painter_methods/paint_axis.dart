@@ -22,8 +22,6 @@ void paintAxis(
 }) {
   paintAxisLines(config, canvas);
 
-  print('y axis ${axisLabelMargin}');
-
   if (yAxisLabel != null) {
     paintText(
       config,
