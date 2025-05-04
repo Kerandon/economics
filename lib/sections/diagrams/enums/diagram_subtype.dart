@@ -5,7 +5,18 @@ enum DiagramSubtype {
   constantOpportunityCost,
   increaseInPotentialOutput,
   decreaseInPotentialOutput,
+  growth,
   equilibrium,
+  increaseInDemand,
+  decreaseInDemand,
+  increaseInSupply,
+  decreaseInSupply,
+  shortage,
+  surplus,
+  negativeProduction,
+  negativeConsumption,
+  positiveProduction,
+  positiveConsumption,
   commonPoolResources,
   longRunEquilibrium,
   abnormalProfit,
@@ -30,13 +41,26 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Increasing opportunity cost';
       case DiagramSubtype.constantOpportunityCost:
         return 'Constant opportunity cost';
-
       case DiagramSubtype.increaseInPotentialOutput:
         return 'Increase in potential output';
       case DiagramSubtype.decreaseInPotentialOutput:
         return 'Decrease in potential output';
+      case DiagramSubtype.growth:
+        return 'Actual vs. potential growth';
       case DiagramSubtype.equilibrium:
         return 'Equilibrium';
+      case DiagramSubtype.increaseInDemand:
+        return 'Increase in demand';
+      case DiagramSubtype.decreaseInDemand:
+        return 'Decrease in demand';
+      case DiagramSubtype.increaseInSupply:
+        return 'Increase in supply';
+      case DiagramSubtype.decreaseInSupply:
+        return 'Decrease in supply';
+      case DiagramSubtype.shortage:
+        return 'Shortage';
+      case DiagramSubtype.surplus:
+        return 'Surplus';
       case DiagramSubtype.commonPoolResources:
         return 'Common Pool Resources';
       case DiagramSubtype.abnormalProfit:
@@ -49,7 +73,6 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Open-model';
       case DiagramSubtype.macro:
         return 'Macro';
-
       case DiagramSubtype.fullEmployment:
         return 'Full employment';
       case DiagramSubtype.shortRun:
@@ -60,6 +83,16 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Exporter';
       case DiagramSubtype.importer:
         return 'Importer';
+
+
+      case DiagramSubtype.negativeProduction:
+        return 'Negative production externality';
+      case DiagramSubtype.negativeConsumption:
+        return 'Negative consumption externality';
+      case DiagramSubtype.positiveProduction:
+        return 'Positive production externality';
+      case DiagramSubtype.positiveConsumption:
+        return 'Positive consumption externality';
     }
   }
 }

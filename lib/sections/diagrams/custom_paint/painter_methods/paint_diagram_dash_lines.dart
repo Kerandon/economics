@@ -1,7 +1,5 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
-import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
@@ -88,7 +86,7 @@ void paintTextForDashedLines(
     case CustomAxis.x:
       offset = Offset(
         position.dx * width - textPainter.width / 2,
-        position.dy * height - textPainter.height + (height * 0.030),
+        position.dy * height - (textPainter.height / 2),
       );
       break;
     case CustomAxis.y:

@@ -1,7 +1,7 @@
 enum DiagramType {
   ppcMicro,
   supplyDemand,
-  negativeProductionExternalities,
+  externalities,
   perfectCompetition,
   monopoly,
   ppcMacro,
@@ -29,8 +29,8 @@ extension DiagramTypeExtension on DiagramType {
         return 'PPC Macro';
       case DiagramType.supplyDemand:
         return 'Supply & Demand';
-      case DiagramType.negativeProductionExternalities:
-        return 'Negative production externalities';
+      case DiagramType.externalities:
+        return 'Externalities';
       case DiagramType.perfectCompetition:
         return 'Perfect competition';
       case DiagramType.monopoly:

@@ -55,7 +55,7 @@ void paintText(
 
   double xAlign = 0;
   double yAlign = 0;
-  const adjustment = 8.0;
+  final adjustment = textPainter.height / 2;
   switch (labelAlign) {
     case LabelAlign.center:
       xAlign = -textPainter.width / 2;

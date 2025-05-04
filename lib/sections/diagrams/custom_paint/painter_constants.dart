@@ -1,5 +1,6 @@
 /// Curves
 const kCurveWidth = 8.0;
+const kCurveWidthSlim = 4.0;
 const kArrowSize = 12.0;
 
 /// Axis
@@ -10,7 +11,7 @@ const kDashedLineWidth = 4.0;
 
 /// Text
 const kLabelFontSize = 28.0;
-const kFontSize = 36.0;
+const kFontSize = 26.0;
 
 /// Dot
 const kDotRadius = 16.0;
@@ -115,13 +116,32 @@ enum MicroLabel {
   smartPhones,
   chairs,
   tables,
+  s,
+  d,
+  s1,
+  d1,
+  s2,
+  d2,
   p,
+  p1,
+  p2,
   q,
+  q1,
+  q2,
   pe,
   qe,
+  qS,
+  qD,
+  pM,
+  shortage,
+  surplus,
+  dEqualsMPB,
   dEqualsMPBMSB,
+  sEqualsMPC,
+  sEqualsMPCMSC,
   mpc,
   msc,
+  msb,
   pOpt,
   pm,
   qOpt,
@@ -148,16 +168,52 @@ extension MicroLabelExtension on MicroLabel {
         return 'Pe';
       case MicroLabel.qe:
         return 'Qe';
+      case MicroLabel.d:
+        return 'D';
+      case MicroLabel.d1:
+        return 'D₁';
+      case MicroLabel.s:
+        return 'S';
+      case MicroLabel.s1:
+        return 'S₁';
+      case MicroLabel.p1:
+        return 'P₁';
+      case MicroLabel.p2:
+        return 'P₂';
+      case MicroLabel.q1:
+        return 'Q₁';
+      case MicroLabel.q2:
+        return 'Q₂';
+
+      case MicroLabel.s2:
+        return 'S2';
+      case MicroLabel.d2:
+        return 'D2';
+
       case MicroLabel.dEqualsMPBMSB:
-        return 'D = MPB = MSB';
+        return 'D=MPB=MSB';
       case MicroLabel.mpc:
-        return 'S = MPC';
+        return 'S=MPC';
+      case MicroLabel.qS:
+        return 'Qs';
+      case MicroLabel.qD:
+        return 'Qd';
+      case MicroLabel.pM:
+        return 'Pᴹ';
+
+      case MicroLabel.shortage:
+        return 'shortage';
+      case MicroLabel.surplus:
+        return 'surplus';
       case MicroLabel.msc:
         return 'MSC';
       case MicroLabel.pOpt:
         return 'Popt';
       case MicroLabel.pm:
         return 'Pm';
+
+      case MicroLabel.dEqualsMPB:
+    return 'D=MPB';
       case MicroLabel.qOpt:
         return 'Qopt';
       case MicroLabel.qm:
@@ -167,13 +223,15 @@ extension MicroLabelExtension on MicroLabel {
       case MicroLabel.quantity:
         return 'Quantity (units)';
       case MicroLabel.dEqualsAR:
-        return 'D = AR';
+        return 'D=AR';
       case MicroLabel.pEqualsARMR:
-        return 'P = AR = MR';
+        return 'P=AR=MR';
       case MicroLabel.mr:
         return 'MR';
       case MicroLabel.mc:
         return 'MC';
+      case MicroLabel.msb:
+        return 'MSB';
       case MicroLabel.ac:
         return 'AC';
       case MicroLabel.srac:
@@ -188,6 +246,13 @@ extension MicroLabelExtension on MicroLabel {
         return 'chairs';
       case MicroLabel.tables:
         return 'tables';
+
+      case MicroLabel.sEqualsMPC:
+        return 'S = MPC';
+
+      case MicroLabel.sEqualsMPCMSC:
+        return 'S = MPC = MSC';
+
     }
   }
 }

@@ -168,7 +168,7 @@ class _AllDiagramsPageState extends State<AllDiagramsPage> {
                 return ExpansionTile(
                   expandedAlignment: Alignment.centerLeft,
                   title: Text(
-                      '${allDiagrams[index].type?.toText() ?? ''} - ${allDiagrams[index].subtype?.toText()}'),
+                      allDiagrams[index].type?.toText() ?? ''),
                   children: [
 CustomDiagramBuilderWithSubtype(diagrams: [allDiagrams[index]])
                   ],
@@ -186,7 +186,7 @@ class CustomDiagramBuilderWithSubtype extends StatefulWidget {
   const CustomDiagramBuilderWithSubtype({
     super.key,
     required this.diagrams,
-    this.dimensions = 0.20,
+    this.dimensions = 0.45,
   });
 
   final List<DiagramModel>? diagrams;
@@ -210,7 +210,7 @@ class _CustomDiagramBuilderWithSubtypeState
             title: Text(
               [
                 diagram.type?.toText(),
-                diagram.subtype?.name,
+                diagram.subtype?.toText(),
               ].whereType<String>().join(' - '),
             ),
           ),
@@ -219,15 +219,19 @@ class _CustomDiagramBuilderWithSubtypeState
               panEnabled: true,
               minScale: 0.5,
               maxScale: 4.0,
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: CustomPaint(
-                  size: Size.infinite,
-                  painter: diagram.painter,
+              child: AspectRatio(
+                aspectRatio: 1, // Ensures width and height are equal
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: CustomPaint(
+                    painter: diagram.painter,
+                    size: Size.infinite, // Painter will be given square space
+                  ),
                 ),
               ),
             ),
-          ),
+          )
+
         ),
       ),
     );

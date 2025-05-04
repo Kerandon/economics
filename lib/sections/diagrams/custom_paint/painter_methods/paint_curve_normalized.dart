@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 import '../../enums/label_align.dart';
@@ -19,8 +20,11 @@ void paintCurveNormalized(
   LabelAlign label1Align = LabelAlign.center,
   LabelAlign label2Align = LabelAlign.center,
   bool makeDashed = false,
-  bool drawArrowAtStart = false,
-  bool drawArrowAtEnd = false,
+  bool arrowAtStart = false,
+  bool arrowAtEnd = false,
+      bool circleAtEnd = false,
+      bool circleAtStart = false,
+      double circleRadius = 10,
 }) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
@@ -65,19 +69,38 @@ void paintCurveNormalized(
         labelAlign: label2Align);
   }
   double angle = atan2(p2Norm.dy - p1Norm.dy, p2Norm.dx - p1Norm.dx) - (pi / 2);
-  if (drawArrowAtStart) {
+  if (arrowAtStart) {
     /// work out the angle of the curve, (assume points upwards, and subtracts
     /// half pi to make a base point of zero)
 
     paintArrowHead(config, canvas,
         positionOfArrow: Offset(p1Norm.dx * width, p1Norm.dy * height),
         rotationAngle: angle,
-        color: color);
+        color: paint.color);
   }
-  if (drawArrowAtEnd) {
+  if (arrowAtEnd) {
+
+    final paint = Paint()
+      ..color = color!
+      ..style = PaintingStyle.fill;
+
     paintArrowHead(config, canvas,
         positionOfArrow: Offset(p2Norm.dx * width, p2Norm.dy * height),
         rotationAngle: angle + pi,
         color: paint.color);
+  }
+  final r = circleRadius * config.averageRatio;
+  if(circleAtStart){
+    canvas.drawCircle(
+        Offset(p1Norm.dx * width, p1Norm.dy * height),
+        r,
+        paint);
+  }if(circleAtEnd){
+    canvas.drawCircle(
+        Offset(
+          p2Norm.dx * width, p2Norm.dy * height,
+        ),
+        r,
+        paint);
   }
 }

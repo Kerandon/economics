@@ -19,8 +19,8 @@ void paintCurve(
   LabelAlign label1Align = LabelAlign.center,
   LabelAlign label2Align = LabelAlign.center,
   bool makeDashed = false,
-  bool drawArrowAtStart = false,
-  bool drawArrowAtEnd = false,
+  bool arrowAtStart = false,
+  bool arrowAtEnd = false,
 }) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
@@ -56,7 +56,7 @@ void paintCurve(
         labelAlign: label2Align);
   }
   double angle = atan2(p2.dy - p1.dy, p2.dx - p1.dx) - (pi / 2);
-  if (drawArrowAtStart) {
+  if (arrowAtStart) {
     /// work out the angle of the curve, (assume points upwards, and subtracts
     /// half pi to make a base point of zero)
 
@@ -65,7 +65,7 @@ void paintCurve(
         rotationAngle: angle,
         color: color);
   }
-  if (drawArrowAtEnd) {
+  if (arrowAtEnd) {
     paintArrowHead(config, canvas,
         positionOfArrow: Offset(p2.dx * width, p2.dy * height),
         rotationAngle: angle + pi,

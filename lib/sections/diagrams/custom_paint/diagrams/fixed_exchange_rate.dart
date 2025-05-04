@@ -81,10 +81,10 @@ class FixedExchangeRate extends BaseDiagramPainter {
     );
 
     paintCurve(c, canvas, Offset(0.63, 0.35), Offset(0.72, 0.35),
-        drawArrowAtEnd: true, color: c.colorScheme.onSurface);
+        arrowAtEnd: true, color: c.colorScheme.onSurface);
 
     paintCurve(c, canvas, Offset(0.61, 0.65), Offset(0.70, 0.65),
-        drawArrowAtEnd: true, color: c.colorScheme.onSurface);
+        arrowAtEnd: true, color: c.colorScheme.onSurface);
 
     paintTextBox(
       canvas: canvas,

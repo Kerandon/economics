@@ -10,16 +10,16 @@ import 'package:economics_app/sections/diagrams/custom_paint/diagrams/phillips_c
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/poverty_trap.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/ppc_micro.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/production_subsidy.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/diagrams/supply_demand.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/tariff.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:flutter/material.dart';
 import '../custom_paint/diagrams/business_cycle.dart';
 import '../custom_paint/diagrams/comparative_advantage.dart';
 import '../custom_paint/diagrams/export_subsidy.dart';
+import '../custom_paint/diagrams/externalities.dart';
 import '../custom_paint/diagrams/fixed_exchange_rate.dart';
 import '../custom_paint/diagrams/import_quota.dart';
-import '../custom_paint/diagrams/negative_production_externalities.dart';
+import '../custom_paint/diagrams/supply_and_demand.dart';
 import '../enums/diagram_subtype.dart';
 import '../enums/diagram_type.dart';
 import '../enums/unit_type.dart';
@@ -49,7 +49,7 @@ class AllDiagrams {
           unit: UnitType.micro,
           type: DiagramType.ppcMicro,
           subtype: DiagramSubtype.opportunityCost,
-          description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+          description: 'A movement from X to Y on the PPC shows 50 tablets must be given up to gain 30 smart phones. Therefore one smartphone has an opportunity cost of 1.67 tablets (50/30)'
         ),
       ),
       PPCMicro(
@@ -58,7 +58,7 @@ class AllDiagrams {
             unit: UnitType.micro,
             type: DiagramType.ppcMicro,
             subtype: DiagramSubtype.increasingOpportunityCost,
-            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+            description: 'As production shifts from point X to point Y, the economy gains 30 smartphones but sacrifices 50 tablets. However, moving further from point Y to point Z, another 50 tablets must be given up for a gain of only 10 smartphones. This illustrates that as more smartphones are produced, increasingly more tablets must be given up for each additional unit.'
         ),
       ),
       PPCMicro(
@@ -67,7 +67,7 @@ class AllDiagrams {
             unit: UnitType.micro,
             type: DiagramType.ppcMicro,
             subtype: DiagramSubtype.constantOpportunityCost,
-            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+            description: 'A linear PPC shows constant opportunity costs. A movement from X to Y will gain 30 smartphones at a cost of 50 tablets. A movement from Y to Z will also result in a gain of 30 smartphones at a cost of 50 smartphones. The opportunity cost of 3/5 of a smartphone for every new tablet is constant along the PPC.'
         ),
       ),
       PPCMicro(
@@ -76,7 +76,7 @@ class AllDiagrams {
             unit: UnitType.micro,
             type: DiagramType.ppcMicro,
             subtype: DiagramSubtype.outputPoints,
-            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+            description: 'Output at point Y shows unemployment or inefficient use of resources. Point X, Y & Z all represent full employment of resources with maximum efficiency. Point W represents unattainable output given the economy\'s current resources.'
         ),
       ),
       PPCMicro(
@@ -85,7 +85,7 @@ class AllDiagrams {
             unit: UnitType.micro,
             type: DiagramType.ppcMicro,
             subtype: DiagramSubtype.increaseInPotentialOutput,
-            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+            description: 'An increase in the PPC reflects an increase in potential output (production possibilities) of an economy. This is caused by an increase in the quantity and quality of resources in an economy, such as improved education or advancements in technology.'
         ),
       ),
       PPCMicro(
@@ -94,23 +94,117 @@ class AllDiagrams {
             unit: UnitType.micro,
             type: DiagramType.ppcMicro,
             subtype: DiagramSubtype.decreaseInPotentialOutput,
-            description: 'A movement from point X to point Y on the PPC results in a gain of 30 smartphones at an opportunity cost of 35 tablets.'
+            description: 'A decrease in the PPC reflects a decrease in potential output. This is usually a more rare occurrence, but could be caused by a falling population or the result of a significant natural disaster.'
         ),
       ),
-      SupplyDemand(
+      PPCMicro(
+        config: config,
+        model: DiagramModel(
+            unit: UnitType.micro,
+            type: DiagramType.ppcMicro,
+            subtype: DiagramSubtype.growth,
+            description: 'A movement from W to X represents actual growth (short-term growth) caused by 1. increased employment of resources, or 2. increased efficiency in the use of resources. Point Y to Z is an outward shift of the PPC curve and represents an increase in potential (long-term) output.'
+        ),
+      ),
+      SupplyAndDemand(
         config: config,
         model: DiagramModel(
           unit: UnitType.micro,
           type: DiagramType.supplyDemand,
           subtype: DiagramSubtype.equilibrium,
+          description: 'The market is in equilibrium when the quantity demanded is equal to the quantity supplied at the market price.'
         ),
       ),
-      NegativeProductionExternalities(
+      SupplyAndDemand(
         config: config,
         model: DiagramModel(
           unit: UnitType.micro,
-          type: DiagramType.negativeProductionExternalities,
-          subtype: DiagramSubtype.commonPoolResources,
+          type: DiagramType.supplyDemand,
+          subtype: DiagramSubtype.increaseInDemand,
+          description: "An increase in demand shifts the demand curve to the right, resulting in a higher market price and increased quantity supplied as the market adjusts to the new equilibrium."
+
+        ),
+      ),
+      SupplyAndDemand(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.supplyDemand,
+          subtype: DiagramSubtype.decreaseInDemand,
+          description: "A decrease in demand shifts the demand curve to the left, causing the market price to fall and the quantity supplied to decrease as the market adjusts to the new equilibrium."
+        ),
+      ),
+      SupplyAndDemand(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.supplyDemand,
+          subtype: DiagramSubtype.increaseInSupply,
+          description: "An increase in supply shifts the supply curve to the right, leading to a lower market price and increased quantity demanded as the market reaches the new equilibrium."
+
+        ),
+      ),
+      SupplyAndDemand(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.supplyDemand,
+          subtype: DiagramSubtype.decreaseInSupply,
+          description: "A decrease in supply shifts the supply curve to the left, causing the market price to rise and the quantity demanded to decrease as the market adjusts to the new equilibrium."
+
+        ),
+      ),
+      SupplyAndDemand(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.supplyDemand,
+          subtype: DiagramSubtype.shortage,
+          description: "A shortage occurs when the quantity demanded exceeds the quantity supplied at a given price, causing upward pressure on prices as the market moves towards equilibrium."
+
+
+        ),
+      ),
+      SupplyAndDemand(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.supplyDemand,
+          subtype: DiagramSubtype.surplus,
+          description: "A surplus occurs when the quantity supplied exceeds the quantity demanded at a given price, leading to downward pressure on prices as the market adjusts to reach equilibrium."
+
+        ),
+      ),
+      Externalities(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.externalities,
+          subtype: DiagramSubtype.negativeProduction,
+        ),
+      ),
+      Externalities(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.externalities,
+          subtype: DiagramSubtype.negativeConsumption,
+        ),
+      ),
+      Externalities(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.externalities,
+          subtype: DiagramSubtype.positiveProduction,
+        ),
+      ),
+      Externalities(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.externalities,
+          subtype: DiagramSubtype.positiveConsumption,
         ),
       ),
       PerfectCompetition(

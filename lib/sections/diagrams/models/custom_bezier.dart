@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
 class CustomBezier {
   final Offset control;
   final Offset endPoint;
 
-  CustomBezier({required this.control, required this.endPoint});
+  CustomBezier({
+    Offset? control,
+    required this.endPoint,
+  }) : control = control ?? endPoint;
 }
