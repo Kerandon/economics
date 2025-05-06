@@ -17,10 +17,16 @@ class AnswerModel extends Equatable {
   });
 
   factory AnswerModel.fromMap(Map<String, dynamic> map) {
+
     return AnswerModel(
       map[QuestionKey.answer.name] as String? ?? '', // Ensure a non-null string
       isCorrect: map[QuestionKey.correct.name] as bool? ?? true,
       answerStage: AnswerStage.notSelected,
+
+      // diagrams: (map[QuestionKey.diagrams.name] != null &&
+      //         map[QuestionKey.diagrams.name] is List)
+      //     ? []
+      //     : null,
       diagrams: (map[QuestionKey.diagrams.name] != null &&
               map[QuestionKey.diagrams.name] is List)
           ? DiagramModel.fromFirebaseList(
@@ -57,7 +63,7 @@ class AnswerModel extends Equatable {
       answer ?? this.answer,
       isCorrect: isCorrect ?? this.isCorrect,
       answerStage: answerStage ?? this.answerStage,
-      diagrams: diagrams ?? this.diagrams,
+     diagrams: diagrams ?? this.diagrams,
     );
   }
 

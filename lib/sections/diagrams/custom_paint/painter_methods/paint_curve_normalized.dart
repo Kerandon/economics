@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 import '../../enums/label_align.dart';

@@ -186,7 +186,7 @@ class CustomDiagramBuilderWithSubtype extends StatefulWidget {
   const CustomDiagramBuilderWithSubtype({
     super.key,
     required this.diagrams,
-    this.dimensions = 0.45,
+    this.dimensions = 0.40,
   });
 
   final List<DiagramModel>? diagrams;
@@ -210,7 +210,7 @@ class _CustomDiagramBuilderWithSubtypeState
             title: Text(
               [
                 diagram.type?.toText(),
-                diagram.subtype?.toText(),
+                diagram.subtype?.description(),
               ].whereType<String>().join(' - '),
             ),
           ),
@@ -301,7 +301,7 @@ class _CustomDiagramBuilderWithSubtypeState
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: HtmlWidget(currentDiagram.description ?? ""),
+                      child: HtmlWidget(currentDiagram.subtype?.description() ?? ""),
                     ),
                   ),
                 ],

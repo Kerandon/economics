@@ -212,7 +212,25 @@ class AllDiagrams {
         model: DiagramModel(
           unit: UnitType.micro,
           type: DiagramType.perfectCompetition,
-          subtype: DiagramSubtype.longRunEquilibrium,
+          subtype: DiagramSubtype.perfectCompetitionNormalProfit,
+          description: "The firm always produces at the profit maximizing quantity where MC=MR. In the long run, this is also where: AR=AC (normal profit), P=MC (allocatively efficient), and MC=AC (productively efficient)."
+        ),
+      ),
+      PerfectCompetition(
+        config: config,
+        model: DiagramModel(
+            unit: UnitType.micro,
+            type: DiagramType.perfectCompetition,
+            subtype: DiagramSubtype.perfectCompetitionAbnormalProfit,
+            description: "(AR > AC) X Q -> Abnormal profit is only possible in the short-run. Due to no barriers of entry, more firms will enter the market, increasing the supply of firms, pushing down the market price until all abnormal profits are eliminated"
+        ),
+      ),
+      PerfectCompetition(
+        config: config,
+        model: DiagramModel(
+            unit: UnitType.micro,
+            type: DiagramType.perfectCompetition,
+            subtype: DiagramSubtype.perfectCompetitionLoss,
         ),
       ),
       Monopoly(
@@ -220,7 +238,23 @@ class AllDiagrams {
         model: DiagramModel(
           unit: UnitType.micro,
           type: DiagramType.monopoly,
-          subtype: DiagramSubtype.abnormalProfit,
+          subtype: DiagramSubtype.monopolyAbnormalProfit,
+        ),
+      ),
+      Monopoly(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.monopoly,
+          subtype: DiagramSubtype.monopolyNormalProfit,
+        ),
+      ),
+      Monopoly(
+        config: config,
+        model: DiagramModel(
+          unit: UnitType.micro,
+          type: DiagramType.monopoly,
+          subtype: DiagramSubtype.monopolyLoss,
         ),
       ),
       CircularFlowOfIncome(
@@ -363,3 +397,10 @@ class AllDiagrams {
     ];
   }
 }
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 /// Curves
-const kCurveWidth = 8.0;
-const kCurveWidthSlim = 4.0;
-const kArrowSize = 12.0;
+const kCurveWidth = 5.0;
+const kCurveWidthSlim = 3.0;
+const kArrowSize = 8.0;
 
 /// Axis
 const kAxisIndent = 0.15;
@@ -14,7 +14,7 @@ const kLabelFontSize = 28.0;
 const kFontSize = 26.0;
 
 /// Dot
-const kDotRadius = 16.0;
+const kDotRadius = 12.0;
 
 /// Micro labels
 const kP = 'P';
@@ -149,7 +149,7 @@ enum MicroLabel {
   priceCostsRevenue,
   quantity,
   dEqualsAR,
-  pEqualsARMR,
+  pEqualsDARMR,
   mr,
   mc,
   ac,
@@ -224,8 +224,8 @@ extension MicroLabelExtension on MicroLabel {
         return 'Quantity (units)';
       case MicroLabel.dEqualsAR:
         return 'D=AR';
-      case MicroLabel.pEqualsARMR:
-        return 'P=AR=MR';
+      case MicroLabel.pEqualsDARMR:
+        return 'P=D=AR=MR';
       case MicroLabel.mr:
         return 'MR';
       case MicroLabel.mc:
@@ -237,7 +237,7 @@ extension MicroLabelExtension on MicroLabel {
       case MicroLabel.srac:
         return 'SRAC';
       case MicroLabel.mcEqualsMR:
-        return 'MC = MR';
+        return 'MC=MR';
       case MicroLabel.tablets:
         return 'tablets';
       case MicroLabel.smartPhones:
@@ -248,10 +248,10 @@ extension MicroLabelExtension on MicroLabel {
         return 'tables';
 
       case MicroLabel.sEqualsMPC:
-        return 'S = MPC';
+        return 'S=MPC';
 
       case MicroLabel.sEqualsMPCMSC:
-        return 'S = MPC = MSC';
+        return 'S=MPC=MSC';
 
     }
   }

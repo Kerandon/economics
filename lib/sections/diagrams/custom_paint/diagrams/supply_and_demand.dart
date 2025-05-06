@@ -13,7 +13,6 @@ import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
-import '../painter_methods/paint_custom_bezier.dart';
 import '../painter_methods/paint_text.dart';
 
 class SupplyAndDemand extends BaseDiagramPainter {
@@ -143,8 +142,6 @@ class SupplyAndDemand extends BaseDiagramPainter {
         label2Align: LabelAlign.centerRight,
       );
 
-      // paintCurveNormalized(c, canvas, Offset(0.30, 0.10), Offset(0.90, 0.70),
-      //     label2: MicroLabel.d1.label, label2Align: LabelAlign.centerRight);
       paintDiagramDashedLines(
         c,
         canvas,

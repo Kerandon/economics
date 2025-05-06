@@ -1,10 +1,10 @@
 import 'dart:math';
-
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
+import 'package:path_drawing/path_drawing.dart';
 import '../../enums/label_align.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_painter_config.dart';
@@ -28,6 +28,7 @@ void paintCustomBezierNormalized(
       bool circleAtEnd = false,
       bool circleAtStart = false,
       double circleRadius = 10,
+      bool dashed = false,
     }) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
@@ -58,7 +59,15 @@ void paintCustomBezierNormalized(
     path.quadraticBezierTo(controlX, controlY, eX, eY);
   }
 
-  canvas.drawPath(path, paint);
+  if (dashed) {    final dashedPath = dashPath(
+      path,
+      dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]),
+
+    );
+    canvas.drawPath(dashedPath, paint);
+  } else {
+    canvas.drawPath(path, paint);
+  }
 
   // Labels
   if (label1 != null) {

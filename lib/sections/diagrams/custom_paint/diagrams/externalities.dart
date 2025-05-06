@@ -39,9 +39,9 @@ class Externalities extends BaseDiagramPainter {
         size,
         ShadeType.welfareLoss,
         [
-          Offset(0.54, 0.47),
-          Offset(0.46, 0.38),
-          Offset(0.54, 0.30),
+          Offset(0.50, 0.50),
+          Offset(0.40, 0.40),
+          Offset(0.50, 0.30),
         ],
       );
 
@@ -74,9 +74,9 @@ class Externalities extends BaseDiagramPainter {
         size,
         ShadeType.welfareLoss,
         [
-          Offset(0.54, 0.62),
-          Offset(0.46, 0.54),
-          Offset(0.54, 0.46),
+          Offset(0.50, 0.50),
+          Offset(0.40, 0.60),
+          Offset(0.50, 0.70),
         ],
       );
       paintCustomBezierNormalized(
@@ -109,9 +109,9 @@ class Externalities extends BaseDiagramPainter {
         size,
         ShadeType.welfareLoss,
         [
-          Offset(0.54, 0.62),
-          Offset(0.62, 0.54),
-          Offset(0.54, 0.46),
+          Offset(0.50, 0.50),
+          Offset(0.60, 0.60),
+          Offset(0.50, 0.70),
         ],
       );
 
@@ -145,9 +145,9 @@ class Externalities extends BaseDiagramPainter {
         size,
         ShadeType.welfareLoss,
         [
-          Offset(0.53, 0.47),
-          Offset(0.62, 0.385),
-          Offset(0.53, 0.30),
+          Offset(0.50, 0.30),
+          Offset(0.60, 0.40),
+          Offset(0.50, 0.50),
         ],
       );
 
