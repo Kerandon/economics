@@ -207,7 +207,9 @@ class KeyEntry {
   Color get color => customColor ?? shadeType!.setShadeColor();
 
   String get label {
-    if (_label != null) return _label!;
+    if (_label != null) {
+      return _label;
+    }
     if (shadeType != null) return shadeType!.defaultLabel;
     throw ArgumentError('Label must be provided if no shadeType is set.');
   }
@@ -222,7 +224,6 @@ String createColorKey(List<KeyEntry> entries) {
         color.green.toRadixString(16).padLeft(2, '0') +
         color.blue.toRadixString(16).padLeft(2, '0') +
         color.alpha.toRadixString(16).padLeft(2, '0');
-
     buffer.writeln('''
       <tr>
         <td style="width:12px;height:12px;background-color:#$hexColor;"></td>
@@ -230,7 +231,16 @@ String createColorKey(List<KeyEntry> entries) {
       </tr>
     ''');
   }
-
   buffer.writeln('</table>');
   return buffer.toString();
+}extension ColorUtils on Color {
+
+  int toInt() {
+    final alpha = (a * 255).toInt();
+    final red = (r * 255).toInt();
+    final green = (g * 255).toInt();
+    final blue = (b * 255).toInt();
+    // Combine the components into a single int using bit shifting
+    return (alpha << 24) | (red << 16) | (green << 8) | blue;
+  }
 }

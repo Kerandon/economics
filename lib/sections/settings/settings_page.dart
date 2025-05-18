@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/settings/audio/sound_track_toggle.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
+import 'package:excel/excel.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/state/app_state.dart';
@@ -59,10 +63,52 @@ class SettingsPage extends ConsumerWidget {
                 exportToExcel(editState.allQuestions.toList());
               },
             ),
+            ListTile(
+              title: Text('Upload Excel'),
+              onTap: () {
+           showDialog(context: context, builder: (context) => ExcelDataManager());
+              },
+            ),
             const SoundTrackToggle(),
           ],
         ),
       ),
     );
   }
+}
+
+class ExcelDataManager extends StatelessWidget {
+  const ExcelDataManager({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Excel data manager'),
+      content: Column(
+        children: [
+          OutlinedButton(onPressed: ()async{
+
+
+          }, child: Text('Select Excel')),
+
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+void pickExcelFile() async {
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['xlsx', 'xls'],
+  );
+
+  if (result != null && result.files.single.path != null) {
+    print('success');
+  }
+  return null;
 }

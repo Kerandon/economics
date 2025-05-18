@@ -1,4 +1,3 @@
-import 'package:economics_app/sections/quizzes/quiz_enums/question_key.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import '../../quizzes/quiz_enums/diagram_enum.dart';
@@ -36,9 +35,7 @@ class DiagramModel extends Equatable {
   // Deserialization method from Firebase
   factory DiagramModel.fromFirebase(Map<String, dynamic> map) {
 
-    print(map[DiagramKey.unit.name]);
-    print(map[DiagramKey.type.name]);
-    print(map[DiagramKey.subtype.name]);
+
     return DiagramModel(
       unit: map[DiagramKey.unit.name] != null
           ? UnitType.values
