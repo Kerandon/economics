@@ -109,8 +109,8 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                   if(currentQuestion?.questionType == QuestionType.multi)...[ScoreBar()],
-                    if(currentQuestion?.questionType == QuestionType.flip)...[
+                   if(currentQuestion?.questionTypes == QuestionType.multi)...[ScoreBar()],
+                    if(currentQuestion?.questionTypes == QuestionType.flip)...[
                       Text('Flagged questions ${quizState.selectedQuestions.where((q) => q.answerStage == AnswerStage.incorrect).length}')
 
                     ],
@@ -147,11 +147,11 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ...[
-                                if (question.questionType ==
+                                if (question.questionTypes ==
                                     QuestionType.multi) ...[
                                   MultiChoiceTile(question),
                                 ],
-                                if (question.questionType !=
+                                if (question.questionTypes !=
                                     QuestionType.multi) ...[
                                   FlipCardTile(question),
                                 ],

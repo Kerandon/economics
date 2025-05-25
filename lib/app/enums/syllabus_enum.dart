@@ -9,9 +9,19 @@ extension SyllabusEnumExtension on Syllabus {
   String toText() {
     switch (this) {
       case Syllabus.ib:
-        return 'IB Economics';
+        return 'IB';
       case Syllabus.igcse:
         return 'IGCSE';
+    }
+  }
+  static Syllabus? fromText(String? text) {
+    switch (text?.trim().toUpperCase()) {
+      case 'IB' || 'IBDP':
+        return Syllabus.ib;
+      case 'IG' || 'IGCSE':
+        return Syllabus.igcse;
+      default:
+        return null; // or throw an error if preferred
     }
   }
 

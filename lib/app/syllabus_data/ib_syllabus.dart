@@ -3,7 +3,7 @@ import '../enums/syllabus_enum.dart';
 import '../utils/models/syllabus_model.dart';
 import '../utils/models/unit_model.dart';
 
-final ibSyllabus = SyllabusModel(syllabus: Syllabus.ib, units: [
+final ib = SyllabusModel(syllabus: Syllabus.ib, units: [
   UnitModel(index: '1', name: 'Introduction to Economics', subunits: [
     UnitModel(index: '1.1', name: 'What is Economics?'),
     UnitModel(index: '1.2', name: 'How do Economists Approach the World?'),

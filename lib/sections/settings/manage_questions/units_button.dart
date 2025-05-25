@@ -15,7 +15,11 @@ class UnitsButton extends ConsumerWidget {
     final editState = ref.watch(editQuestionProvider);
     final c = editState.currentQuestion;
 
-    final units = c.syllabus?.units.toList();
+    final List<UnitModel> units = c.syllabuses
+        ?.expand((s) => s.units)
+        .toList()
+        .cast<UnitModel>() ?? [];
+
 
     final selectedUnits = c.units?.isNotEmpty == true
         ? c.units!.map((unit) => unit.name).join(', ')
@@ -28,7 +32,7 @@ class UnitsButton extends ConsumerWidget {
           isExpanded: true,
           onChanged: (_) {},
           items: [
-            if (units != null && units.isNotEmpty)
+            if (units.isNotEmpty)
               ...units.map(
                 (e) => DropdownMenuItem(
                   enabled: false,

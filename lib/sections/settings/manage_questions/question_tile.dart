@@ -1,5 +1,6 @@
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/custom_widgets/building_helper.dart';
+import 'package:economics_app/app/enums/syllabus_enum.dart';
 import 'package:economics_app/sections/diagrams/diagram_widgets/custom_diagram_builder.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
@@ -86,7 +87,7 @@ class QuestionTile extends ConsumerWidget {
                         Row(
                           children: [
                             Expanded(child: HtmlWidget(a.answer)),
-                            if (q.questionType == QuestionType.multi) ...[
+                            if (q.questionTypes == QuestionType.multi) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: size.width * kPageIndentHorizontal,
@@ -106,10 +107,11 @@ class QuestionTile extends ConsumerWidget {
               SizedBox(
                 height: 8,
               ),
-              Text('${q.id}'),
+              Text('ID: ${q.id}'),
+              Text('SYLLABUS: ${q.syllabuses?[0].syllabus?.toText()}'),
               Text(
-                  '${q.units?.map((e) => e.name).join(", ") ?? ""}, ${q.subunits?.map((e) => e.name).join(", ") ?? ""}'),
-              Text(q.tags?.map((e) => e.name).join(", ") ?? ""),
+                  'UNIT: ${q.units?.map((e) => e.name).join(", ") ?? ""}, ${q.subunits?.map((e) => e.name).join(", ") ?? ""}'),
+              Text('TAGS ${q.tags?.map((e) => e.name).join(", ") ?? ""}'),
             ],
           ),
         )

@@ -21,7 +21,7 @@ class AnswersButton extends ConsumerWidget {
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final c = editState.currentQuestion;
     final isMulti =
-        editState.currentQuestion.questionType == QuestionType.multi;
+        editState.currentQuestion.questionTypes == QuestionType.multi;
 
     return Column(
       children: [
@@ -48,7 +48,7 @@ class AnswersButton extends ConsumerWidget {
                               answers[index].copyWith(answer: value);
                         }
 
-                        if (c.questionType == QuestionType.flip) {
+                        if (c.questionTypes == QuestionType.flip) {
                           answers = [answers.first.copyWith(isCorrect: true)];
                         }
 

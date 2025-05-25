@@ -67,9 +67,9 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
           List<QuestionModel> filteredQuestions = snapshot.data?.toList() ?? [];
 
           final c = editState.currentQuestion;
-          if (c.syllabus != null) {
+          if (c.syllabuses != null) {
             filteredQuestions.retainWhere(
-              (e) => e.syllabus == c.syllabus,
+              (e) => e.syllabuses == c.syllabuses,
             );
           }
 
@@ -83,9 +83,9 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                 e.subunits?.any((unit) => c.subunits!.contains(unit)) ?? false);
           }
 
-          if (c.questionType != null) {
+          if (c.questionTypes != null) {
             filteredQuestions
-                .retainWhere((e) => e.questionType == c.questionType);
+                .retainWhere((e) => e.questionTypes == c.questionTypes);
           }
 
           if (c.tags?.isNotEmpty ?? false) {

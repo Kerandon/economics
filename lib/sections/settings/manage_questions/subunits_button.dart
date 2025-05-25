@@ -18,21 +18,19 @@ class SubunitsButton extends ConsumerWidget {
     final c = editState.currentQuestion;
     List<UnitModel> allSubunits = [];
     if(c.units?.isNotEmpty ?? false) {
-      allSubunits = c.syllabus?.units.where((u) => c.units!.contains(u)).expand((e) => e.subunits).toList() ?? [];
+      allSubunits = c.units?.expand((s) => s.subunits).toList().cast<UnitModel>() ?? [];
     }
-    final selectedUnits = c.subunits?.isNotEmpty == true
-        ? c.subunits!.map((unit) => unit.name).join(', ')
+
+
+    final selectedSubunits = c.subunits?.isNotEmpty == true
+        ? c.subunits!.map((subunit) => subunit.name).join(', ')
         : 'Select subunits';
-
-
-
-
 
     return SizedBox(
       width: size.width,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<UnitModel>(
-          customButton: CustomDropdownHeading(selectedUnits),
+          customButton: CustomDropdownHeading(selectedSubunits),
           isExpanded: true,
           onChanged: (value) {},
           items: [

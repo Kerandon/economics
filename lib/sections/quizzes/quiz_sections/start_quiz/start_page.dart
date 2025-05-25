@@ -102,7 +102,7 @@ class _StartPageState extends ConsumerState<StartPage> {
                     flex: 10,
                     child: StartNumberOfQuestionsButton(),
                   ),
-                  if (pref.question?.questionType == QuestionType.multi) ...[
+                  if (pref.question?.questionTypes == QuestionType.multi) ...[
                     Expanded(
                       flex: 10,
                       child: AnswersAtEndButton(),

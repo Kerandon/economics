@@ -45,7 +45,6 @@ extension TagFirebaseExtension on Tag {
     );
   }
 }
-
 extension CustomTagExtension on Tag {
   /// Converts a CustomTag to a user-friendly text representation.
   String toText() {
@@ -69,7 +68,38 @@ extension CustomTagExtension on Tag {
       case Tag.hl:
         return "HL";
       case Tag.diagram:
-        return 'Diagram';
+        return "Diagram";
     }
   }
+
+  /// Converts a user-friendly text (nullable) to a CustomTag.
+  static Tag? fromText(String? text) {
+    if (text == null || text.trim().isEmpty) return null;
+
+    switch (text.trim().toUpperCase()) {
+      case "TERM":
+        return Tag.term;
+      case "GENERAL":
+        return Tag.general;
+      case "CALCULATION":
+        return Tag.calculation;
+      case "SHORT ANSWER":
+        return Tag.shortAnswer;
+      case "LONG ANSWER":
+        return Tag.longAnswer;
+      case "WORKBOOK":
+        return Tag.workbook;
+      case "COURSEBOOK":
+        return Tag.coursebook;
+      case "PAST PAPER":
+        return Tag.pastPaper;
+      case "HL":
+        return Tag.hl;
+      case "DIAGRAM":
+        return Tag.diagram;
+      default:
+        return null;
+    }
+  }
+
 }

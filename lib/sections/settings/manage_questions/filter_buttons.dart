@@ -1,8 +1,8 @@
 
-import 'package:economics_app/sections/settings/manage_questions/question_type_button.dart';
+import 'package:economics_app/sections/settings/manage_questions/question_type_buttons.dart';
 import 'package:economics_app/sections/settings/manage_questions/subunits_button.dart';
 import 'package:economics_app/sections/settings/manage_questions/syllabus_buttons.dart';
-import 'package:economics_app/sections/settings/manage_questions/tags_button.dart';
+import 'package:economics_app/sections/settings/manage_questions/tags_buttons.dart';
 import 'package:economics_app/sections/settings/manage_questions/units_button.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class FilterButtons extends StatelessWidget {
       children: [
         Expanded(
           flex: 10,
-          child: SyllabusButton(),
+          child: SyllabusesButtons(),
         ),
         Expanded(
           flex: 10,
@@ -30,11 +30,11 @@ class FilterButtons extends StatelessWidget {
         ),
         Expanded(
           flex: 10,
-          child: QuestionTypeButton(),
+          child: QuestionTypeButtons(),
         ),
         Expanded(
           flex: 10,
-          child: TagsButton(),
+          child: TagsButtons(),
         ),
       ],
     );

@@ -109,11 +109,11 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                               ],
                             ),
                           ),
-                          if (question.value.questionType ==
+                          if (question.value.questionTypes ==
                               QuestionType.multi) ...[
                             MultiChoiceTile(question.value),
                           ],
-                          if (question.value.questionType !=
+                          if (question.value.questionTypes !=
                              QuestionType.multi) ...[
                             FlipCardTile(question.value),
                           ],

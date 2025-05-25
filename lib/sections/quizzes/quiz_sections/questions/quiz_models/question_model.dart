@@ -11,8 +11,8 @@ import 'answer_model.dart';
 
 class QuestionModel extends Equatable {
   final String? id;
-  final QuestionType? questionType;
-  final SyllabusModel? syllabus;
+  final List<QuestionType>? questionTypes;
+  final List<SyllabusModel>? syllabuses;
   final String? question;
   final List<DiagramModel>? diagrams;
   final List<XFile?>? images;
@@ -28,8 +28,8 @@ class QuestionModel extends Equatable {
 
   const QuestionModel({
     this.id,
-    this.questionType,
-    this.syllabus,
+    this.questionTypes,
+    this.syllabuses,
     this.question,
     this.diagrams,
     this.images,
@@ -46,8 +46,8 @@ class QuestionModel extends Equatable {
 
   QuestionModel copyWith({
     String? id,
-    QuestionType? questionType,
-    SyllabusModel? syllabus,
+    List<QuestionType>? questionTypes,
+    List<SyllabusModel>? syllabuses,
     String? question,
     List<DiagramModel>? diagrams,
     List<XFile?>? images,
@@ -63,8 +63,8 @@ class QuestionModel extends Equatable {
   }) {
     return QuestionModel(
       id: id ?? this.id,
-      questionType: questionType ?? this.questionType,
-      syllabus: syllabus ?? this.syllabus,
+      questionTypes: questionTypes ?? this.questionTypes,
+      syllabuses: syllabuses ?? this.syllabuses,
       question: question ?? this.question,
       diagrams: diagrams ?? this.diagrams,
       images: images ?? this.images,
@@ -83,12 +83,11 @@ class QuestionModel extends Equatable {
   // Converts QuestionModel to a map that can be sent to Firebase
   Map<String, dynamic> toMap() {
     return {
-      QuestionKey.type.name: questionType?.name,
+      QuestionKey.type.name: questionTypes?[0].name,
       QuestionKey.question.name: question,
-      QuestionKey.syllabus.name: syllabus?.syllabus?.name,
-      QuestionKey.units.name: units?.map((e) => {e.index: e.name}).toList(),
-      QuestionKey.subunits.name:
-          subunits?.map((e) => {e.index: e.name}).toList(),
+      QuestionKey.syllabus.name: syllabuses?.map((e) => e.syllabus).toList(),
+      QuestionKey.units.name: units?.map((e) => {e.index ?? 0: e.name}).toList(),
+      QuestionKey.subunits.name: subunits?.map((e) => {e.index ?? 0: e.name}).toList(),
       QuestionKey.answers.name: answers?.map((e) => e.toMap()).toList(),
       QuestionKey.explanation.name: explanation,
       QuestionKey.diagrams.name: diagrams?.map((e) => e.toMap()).toList(),
@@ -100,8 +99,8 @@ class QuestionModel extends Equatable {
     return QuestionModel(
       id: id,
       question: getQuestion(map),
-      questionType: QuestionTypeExtension.getQuestionType(map),
-      syllabus: SyllabusModel.fromFirebase(map),
+      questionTypes: [QuestionTypeExtension.getQuestionType(map) ?? QuestionType.multi],
+      syllabuses: SyllabusModel.fromFirebase(map),
       units: UnitModelExtension.fromFirebase(map),
       subunits: UnitModelExtension.fromFirebase(map, subunit: true),
       answers: AnswerModel.fromFirebase(map),

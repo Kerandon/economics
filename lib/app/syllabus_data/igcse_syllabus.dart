@@ -3,7 +3,7 @@ import '../enums/syllabus_enum.dart';
 import '../utils/models/syllabus_model.dart';
 import '../utils/models/unit_model.dart';
 
-final igcseSyllabus = SyllabusModel(syllabus: Syllabus.igcse, units: [
+final igcse = SyllabusModel(syllabus: Syllabus.igcse, units: [
   UnitModel(index: '1', name: 'The Basic Economic Problem', subunits: [
     UnitModel(index: '1.1', name: 'The Nature of the Economic Problem'),
     UnitModel(index: '1.2', name: 'The Factors of Production'),

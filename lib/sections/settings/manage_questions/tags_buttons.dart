@@ -8,8 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quizzes/quiz_enums/tag.dart';
 
 
-class TagsButton extends ConsumerWidget {
-  const TagsButton({
+class TagsButtons extends ConsumerWidget {
+  const TagsButtons({
     super.key,
   });
 

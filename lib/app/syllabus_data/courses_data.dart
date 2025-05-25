@@ -6,5 +6,5 @@ import '../utils/models/syllabus_model.dart';
 import 'ib_syllabus.dart';
 
 final List<SyllabusModel> allSyllabuses = [
-ibSyllabus, igcseSyllabus
+ib, igcse
 ];

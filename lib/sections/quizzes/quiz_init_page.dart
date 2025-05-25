@@ -51,26 +51,26 @@ class _QuizInitPageState extends ConsumerState<QuizInitPage> {
                   List<UserPref> prefs = [
                     UserPref(
                       question: QuestionModel(
-                        syllabus: allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.ib),
-                        questionType: QuestionType.multi,
+                        syllabuses: [allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.ib)],
+                        questionTypes: [QuestionType.multi],
                       ),
                     ),
                     UserPref(
                       question: QuestionModel(
-                        syllabus: allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.ib),
-                        questionType: QuestionType.flip,
+                        syllabuses: [allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.ib)],
+                        questionTypes: [QuestionType.flip],
                       ),
                     ),
                     UserPref(
                       question: QuestionModel(
-                        syllabus: allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.igcse),
-                        questionType: QuestionType.multi,
+                        syllabuses: [allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.igcse)],
+                        questionTypes: [QuestionType.multi],
                       ),
                     ),
                     UserPref(
                       question: QuestionModel(
-                        syllabus: allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.igcse),
-                        questionType: QuestionType.flip,
+                        syllabuses: [allSyllabuses.firstWhere((e) => e.syllabus == Syllabus.igcse)],
+                        questionTypes: [QuestionType.flip],
                       ),
                     ),
                   ];

@@ -3,112 +3,97 @@ import 'package:excel/excel.dart';
 
 import '../../../sections/quizzes/quiz_enums/question_key.dart';
 import '../../../sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
-
 void exportToExcel(List<QuestionModel> allQuestions) {
   final excel = Excel.createExcel();
-  Sheet sheet = excel['quiz_data'];
+  excel.rename('Sheet1', 'quiz_data');
+  final Sheet sheet = excel['quiz_data'];
 
-  // Define headers including the new properties, with Question ID as the first column
+  // Define headers explicitly
   List<String> headers = [
     QuestionKey.id.name,
-    // Moved ID to the first column
     QuestionKey.type.name,
-    // Moved Question Type to the second column
     QuestionKey.question.name,
     QuestionKey.answer1.name,
-    QuestionKey.correct.name,
+    QuestionKey.correct1.name,
     QuestionKey.answer2.name,
-    QuestionKey.correct.name,
+    QuestionKey.correct2.name,
     QuestionKey.answer3.name,
-    QuestionKey.correct.name,
+    QuestionKey.correct3.name,
     QuestionKey.answer4.name,
-    QuestionKey.correct.name,
+    QuestionKey.correct4.name,
     QuestionKey.explanation.name,
     QuestionKey.syllabus.name,
+    QuestionKey.unit1Index.name,
     QuestionKey.unit1.name,
-    QuestionKey.unit2.name,
+    QuestionKey.subunit1Index.name,
     QuestionKey.subunit1.name,
-    QuestionKey.subunit2.name,
     QuestionKey.tag1.name,
     QuestionKey.tag2.name,
     QuestionKey.tag3.name,
     QuestionKey.tag4.name,
-    QuestionKey.diagram1.name,
-    QuestionKey.diagram2.name,
-    QuestionKey.diagram3.name,
-    QuestionKey.diagram4.name,
-    // Added columns for diagrams
+    // Add more headers here if needed
   ];
 
+  // Write headers
   for (int col = 0; col < headers.length; col++) {
-    sheet
-        .cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 0))
+    sheet.cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: 0))
         .value = TextCellValue(headers[col]);
   }
 
-  // Populate data
-  for (int i = 0; i < allQuestions.length; i++) {
-    final q = allQuestions[i];
+  // Write question data
+  for (int row = 0; row < allQuestions.length; row++) {
+    final q = allQuestions[row];
 
-    // Ensure exactly 4 answers and their correctness
-    List<String> answers = List.filled(4, '');
-    List<String> correctness =
-    List.filled(4, 'FALSE'); // Create a list for correctness
-    for (int j = 0; j < (q.answers?.length ?? 0).clamp(0, 4); j++) {
-      answers[j] = q.answers![j].answer;
-      correctness[j] = q.answers![j].isCorrect
-          ? 'TRUE'
-          : 'FALSE'; // Assign correct status as string
+    final answers = List.filled(4, '');
+    final correctness = List.filled(4, 'FALSE');
+    for (int i = 0; i < (q.answers?.length ?? 0).clamp(0, 4); i++) {
+      answers[i] = q.answers![i].answer;
+      correctness[i] = q.answers![i].isCorrect ? 'TRUE' : 'FALSE';
     }
 
-    // Ensure exactly 2 units
-    List<String> units = List.filled(2, 'null');
-    for (int j = 0; j < (q.units?.length ?? 0).clamp(0, 2); j++) {
-      units[j] = q.units![j].name ?? 'null';
+    final unitName = q.units?.isNotEmpty == true ? q.units!.first.name ?? 'null' : 'null';
+    final unitIndex = q.units?.isNotEmpty == true ? (q.units!.first.index ?? 0).toString() : '0';
+
+    final subunitName = q.subunits?.isNotEmpty == true ? q.subunits!.first.name ?? 'null' : 'null';
+    final subunitIndex = q.subunits?.isNotEmpty == true ? (q.subunits!.first.index ?? 0).toString() : '0';
+
+    final tags = List.filled(4, 'null');
+    for (int i = 0; i < (q.tags?.length ?? 0).clamp(0, 4); i++) {
+      tags[i] = q.tags![i].name;
     }
 
-    // Ensure exactly 2 subunits
-    List<String> subunits = List.filled(2, 'null');
-    for (int j = 0; j < (q.subunits?.length ?? 0).clamp(0, 2); j++) {
-      subunits[j] = q.subunits![j].name ?? 'null';
-    }
+    final Map<String, String?> valueMap = {
+      QuestionKey.id.name: q.id ?? '',
+      QuestionKey.type.name: q.questionTypes?[0].name ?? '',
+      QuestionKey.question.name: q.question,
+      QuestionKey.answer1.name: answers[0],
+      QuestionKey.correct1.name: correctness[0],
+      QuestionKey.answer2.name: answers[1],
+      QuestionKey.correct2.name: correctness[1],
+      QuestionKey.answer3.name: answers[2],
+      QuestionKey.correct3.name: correctness[2],
+      QuestionKey.answer4.name: answers[3],
+      QuestionKey.correct4.name: correctness[3],
+      QuestionKey.explanation.name: q.explanation,
+      QuestionKey.syllabus.name: q.syllabuses?[0].syllabus?.name,
+      QuestionKey.unit1Index.name: unitIndex,
+      QuestionKey.unit1.name: unitName,
+      QuestionKey.subunit1Index.name: subunitIndex,
+      QuestionKey.subunit1.name: subunitName,
+      QuestionKey.tag1.name: tags[0],
+      QuestionKey.tag2.name: tags[1],
+      QuestionKey.tag3.name: tags[2],
+      QuestionKey.tag4.name: tags[3],
+    };
 
-    // Ensure exactly 4 tags
-    List<String> tags = List.filled(4, 'null');
-    for (int j = 0; j < (q.tags?.length ?? 0).clamp(0, 4); j++) {
-      tags[j] = q.tags![j].name;
-    }
-
-    // Ensure exactly 4 diagrams
-    List<String> diagrams = List.filled(4, 'null');
-    for (int j = 0; j < (q.diagrams?.length ?? 0).clamp(0, 4); j++) {
-      diagrams[j] = q.diagrams![j].type?.name ?? 'null';
-    }
-
-    // Prepare row data, with question ID as the first column
-    List<String?> rowValues = [
-      q.id ?? '', // Question ID first
-      q.questionType?.name ?? '', // Question Type second
-      q.question,
-      answers[0], correctness[0], // Answer 1 and its correctness
-      answers[1], correctness[1], // Answer 2 and its correctness
-      answers[2], correctness[2], // Answer 3 and its correctness
-      answers[3], correctness[3], // Answer 4 and its correctness
-      q.explanation,
-      q.syllabus?.syllabus?.name ?? '',
-      ...units, // Correctly filling the unit columns
-      ...subunits, // Correctly filling the subunit columns
-      ...tags, // Tags (up to 4 tags)
-      ...diagrams, // Diagrams (up to 4 diagrams)
-    ];
-
-    // Populate row in Excel sheet
-    for (int col = 0; col < rowValues.length; col++) {
-      sheet
-          .cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: i + 1))
-          .value = TextCellValue(rowValues[col] ?? '');
+    // Fill the row based on headers
+    for (int col = 0; col < headers.length; col++) {
+      final key = headers[col];
+      sheet.cell(CellIndex.indexByColumnRow(columnIndex: col, rowIndex: row + 1))
+          .value = TextCellValue(valueMap[key] ?? '');
     }
   }
 
   excel.save(fileName: 'economics_app_data.xlsx');
 }
+

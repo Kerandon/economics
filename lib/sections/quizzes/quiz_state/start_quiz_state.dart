@@ -55,7 +55,7 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
 
   void setAllTopicQuestions(List<QuestionModel> allQuestions) {
     List<QuestionModel> allTopic = allQuestions.toList();
-    allTopic.retainWhere((e) => e.syllabus == state.syllabus);
+    allTopic.retainWhere((e) => e.syllabuses?[0] == state.syllabus);
 
     state = state.copyWith(allTopicQuestions: allTopic.toList());
   }
@@ -64,8 +64,8 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     List<QuestionModel> filteredQuestions = _getFilteredQuestions(pref);
     List<UserPref> existing = state.userPrefs.toList();
     for (int i = 0; i < existing.length; i++) {
-      if (pref.question?.syllabus == existing[i].question?.syllabus &&
-          pref.question?.questionType == existing[i].question?.questionType) {
+      if (pref.question?.syllabuses?[0] == existing[i].question?.syllabuses?[0] &&
+          pref.question?.questionTypes == existing[i].question?.questionTypes) {
         existing.removeAt(i);
         existing.insert(
           i,
@@ -83,9 +83,9 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     List<QuestionModel> filteredQuestions = state.allTopicQuestions.toList();
 
     final c = pref.question;
-    if (c?.syllabus != null) {
+    if (c?.syllabuses != null) {
       filteredQuestions.retainWhere(
-        (e) => e.syllabus == c?.syllabus,
+        (e) => e.syllabuses == c?.syllabuses,
       );
     }
 
@@ -99,8 +99,8 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
           e.subunits?.any((unit) => c!.subunits!.contains(unit)) ?? false);
     }
 
-    if (c?.questionType != null) {
-      filteredQuestions.retainWhere((e) => e.questionType == c!.questionType);
+    if (c?.questionTypes != null) {
+      filteredQuestions.retainWhere((e) => e.questionTypes == c!.questionTypes);
     }
 
     if (c?.tags?.isNotEmpty ?? false) {

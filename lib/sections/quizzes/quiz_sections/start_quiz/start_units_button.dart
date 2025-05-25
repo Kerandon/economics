@@ -16,7 +16,7 @@ class StartUnitsButton extends ConsumerWidget {
     final startState = ref.watch(startQuizProvider);
     final pref = getPref(startState);
 
-    final units = pref.question?.syllabus?.units ?? [];
+    final units = pref.question?.syllabuses?[0].units ?? [];
 
     final selectedUnits = pref.question?.units?.isNotEmpty == true
         ? pref.question?.units?.map((unit) => unit.name).join(', ')

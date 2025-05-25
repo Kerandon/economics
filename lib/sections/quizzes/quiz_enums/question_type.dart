@@ -19,7 +19,7 @@ extension QuestionTypeExtension on QuestionType {
   static QuestionType? fromText(String? text) {
     if (text == null) return null; // Handle null input
 
-    switch (text) {
+    switch (text.toLowerCase()) {
       case 'multi':
         return QuestionType.multi;
       case 'flip':

@@ -33,10 +33,10 @@ class AddQuestionButton extends ConsumerWidget {
           }
           if (!editState.editExistingQuestion &&
               editState.allQuestions.any((e) =>
-                  e.question == q.question && e.syllabus == q.syllabus)) {
+                  e.question == q.question && e.syllabuses == q.syllabuses)) {
             errors.add('Question already exists');
           }
-          if (q.questionType == QuestionType.multi) {
+          if (q.questionTypes == QuestionType.multi) {
             var answerTexts =
                 q.answers?.map((a) => a.answer.trim()).toList() ?? [];
             if (answerTexts.toSet().length != answerTexts.length) {

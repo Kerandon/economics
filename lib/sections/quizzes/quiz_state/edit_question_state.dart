@@ -65,7 +65,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   List<AnswerModel> setAnswers(QuestionModel question) {
     List<AnswerModel> answers = question.answers?.toList() ?? [];
-    if (question.questionType == QuestionType.flip) {
+    if (question.questionTypes == QuestionType.flip) {
       answers = [
         if (question.answers?.isNotEmpty ?? false) ...[
           question.answers!.first.copyWith(isCorrect: true)
@@ -74,7 +74,7 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
           AnswerModel('',isCorrect: true)
         ]
       ];
-    } else if (question.questionType == QuestionType.multi) {
+    } else if (question.questionTypes == QuestionType.multi) {
       if (answers.length < 4) {
         // Add default answers until the list matches the required number
         while (answers.length < 4) {

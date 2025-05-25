@@ -19,7 +19,7 @@ class StartSubunitsButton extends ConsumerWidget {
 
     List<UnitModel> allSubunits = [];
     if (c?.units?.isNotEmpty ?? false) {
-      allSubunits = c?.syllabus?.units
+      allSubunits = c?.syllabuses?[0].units
               .where((u) => c.units!.contains(u))
               .expand((e) => e.subunits.toList())
               .toList() ??

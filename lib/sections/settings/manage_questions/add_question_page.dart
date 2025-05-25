@@ -34,15 +34,15 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
         (t) {
           editNotifier.updateCurrentQuestion(
             c.copyWith(
-              questionType: c.questionType ?? QuestionType.multi,
-              syllabus: c.syllabus ?? editState.syllabuses.first,
+              questionTypes: [c.questionTypes?[0] ?? QuestionType.multi],
+              syllabuses: [c.syllabuses?[0] ?? editState.syllabuses.first],
             ),
           );
         },
       );
     }
 
-    final isMulti = c.questionType == QuestionType.multi;
+    final isMulti = c.questionTypes == QuestionType.multi;
 
     return Scaffold(
       appBar: AppBar(
