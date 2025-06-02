@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 
 
 class FilterButtons extends StatelessWidget {
-  const FilterButtons({
+  const FilterButtons({this.oneChoiceOnlyMode = false,
     super.key,
   });
+
+ final bool oneChoiceOnlyMode;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class FilterButtons extends StatelessWidget {
       children: [
         Expanded(
           flex: 10,
-          child: SyllabusesButtons(),
+          child: SyllabusesButtons(oneChoiceOnly: oneChoiceOnlyMode,),
         ),
         Expanded(
           flex: 10,
@@ -30,7 +32,7 @@ class FilterButtons extends StatelessWidget {
         ),
         Expanded(
           flex: 10,
-          child: QuestionTypeButtons(),
+          child: QuestionTypeButtons(oneChoiceOnly: oneChoiceOnlyMode,),
         ),
         Expanded(
           flex: 10,

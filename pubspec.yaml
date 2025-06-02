@@ -63,6 +63,8 @@ dependencies:
   path: ^1.9.1
   path_drawing: ^1.0.1
   file_picker: ^10.1.7
+  firebase_storage: ^12.4.6
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -94,6 +96,7 @@ flutter:
     - assets/audio/incorrect/
     - assets/audio/other/
     - assets/gifs/correct/
+    - assets/gifs/incorrect/
     - assets/audio/soundtracks/
 
      # An image asset can refer to one or more resolution-specific "variants", see

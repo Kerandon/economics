@@ -4,7 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'app/audio_manager/audio_manager.dart';
 import 'app/configs/constants.dart';
@@ -15,6 +18,9 @@ GetIt getIt = GetIt.instance;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  final dir = await getApplicationDocumentsDirectory();
+
 
   const firebaseOptions = FirebaseOptions(
       apiKey: "AIzaSyAZrccyrnsXRA_D3tAU7pHdaZLkhANvDu8",

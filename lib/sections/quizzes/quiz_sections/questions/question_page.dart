@@ -1,3 +1,4 @@
+
 import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/app/state/app_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
@@ -13,6 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/animation/confetti_animation.dart';
 import '../../../../app/audio_manager/audio_manager.dart';
 import '../../../../main.dart';
+import '../../custom_widgets/gif_popup.dart';
 import '../../custom_widgets/score_bar.dart';
 
 class QuestionPage extends ConsumerStatefulWidget {
@@ -32,14 +34,12 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
     final size = MediaQuery.of(context).size;
     final horizontalPadding = size.width * kPageIndentHorizontal;
     final quizState = ref.watch(quizProvider);
-    final appNotifier = ref.read(appProvider.notifier);
-
-    QuestionModel? currentQuestion;
-    if (quizState.selectedQuestions.isNotEmpty) {
-      currentQuestion =
-          quizState.selectedQuestions[quizState.currentQuestionIndex];
-    }
     final quizNotifier = ref.read(quizProvider.notifier);
+    final appNotifier = ref.read(appProvider.notifier);
+    QuestionModel? c;
+    if (quizState.selectedQuestions.isNotEmpty) {
+      c = quizState.selectedQuestions[quizState.currentQuestionIndex];
+    }
     final customButtonGap = size.height * 0.04;
 
     if (quizState.quizIsCompleted) {
@@ -73,18 +73,12 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                   height: size.height * 0.06,
                   child: Row(
                     children: [
-                      Image.asset(fit: BoxFit.contain, 'assets/images/vsp_logo.jpg'),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                        child:
-                        Image.asset(fit: BoxFit.contain, 'assets/images/iob.jpeg'),
-                      ),
                       Text(
-                        'VSP High School Pudong IBDP Economics App',
+                        'Economics App',
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ],
                   ),
@@ -109,14 +103,18 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                   if(currentQuestion?.questionTypes == QuestionType.multi)...[ScoreBar()],
-                    if(currentQuestion?.questionTypes == QuestionType.flip)...[
-                      Text('Flagged questions ${quizState.selectedQuestions.where((q) => q.answerStage == AnswerStage.incorrect).length}')
-
+                    if (c?.questionTypes?[0] == QuestionType.multi) ...[
+                      ScoreBar()
+                    ],
+                    if (c?.questionTypes?[0] == QuestionType.flip) ...[
+                      Text(
+                          'Flagged questions ${quizState.selectedQuestions.where((q) => q.answerStage == AnswerStage.incorrect).length}')
                     ],
                   ],
                 ),
-                SizedBox(width: size.width * kPageIndentHorizontal,),
+                SizedBox(
+                  width: size.width * kPageIndentHorizontal,
+                ),
               ],
             ),
           ),
@@ -147,11 +145,11 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ...[
-                                if (question.questionTypes ==
+                                if (question.questionTypes?[0] ==
                                     QuestionType.multi) ...[
                                   MultiChoiceTile(question),
                                 ],
-                                if (question.questionTypes !=
+                                if (question.questionTypes?[0] !=
                                     QuestionType.multi) ...[
                                   FlipCardTile(question),
                                 ],
@@ -173,22 +171,20 @@ class _QuestionPageState extends ConsumerState<QuestionPage> {
             ),
           ),
         ),
-        if (quizState.selectedQuestions.isNotEmpty &&
-            currentQuestion?.answerStage == AnswerStage.correct) ...[
-          const ConfettiAnimation(),
-        ],
-        if (quizState.selectedQuestions.isNotEmpty) ...[
-          ConfettiAnimation(
-            animate: currentQuestion?.answerStage == AnswerStage.correct,
-          ),
-        ],
+
+        GifPopup(),
         Align(
           alignment: Alignment.bottomCenter,
           child: QuestionNavigationButtons(
             pageController: _pageController,
           ),
         ),
+        if (c?.answerStage == AnswerStage.correct) ...[
+          const ConfettiAnimation(),
+        ],
       ],
     );
   }
 }
+
+

@@ -12,7 +12,6 @@ class SyllabusModel with EquatableMixin {
 
   // copyWith method
   SyllabusModel copyWith({Syllabus? syllabus, List<UnitModel>? units}) {
-
     return SyllabusModel(
       syllabus: syllabus ?? this.syllabus,
       units: units ?? this.units,
@@ -20,24 +19,18 @@ class SyllabusModel with EquatableMixin {
   }
 
   static List<SyllabusModel>? fromFirebase(Map<String, dynamic>? map) {
-     if (map == null) {
-       return null;}
-     final key = QuestionKey.syllabus.name;
-     if (!map.containsKey(key)) {
-       return null;}else{
-    final data = map[key];
-if(data == null){
-  return null;
-}
-
-
-     }
-     return null;
-
-
-
+    if (map == null) {
+      return null;
+    }
+    final key = QuestionKey.syllabus.name;
+    if (!map.containsKey(key)) {
+      return null;
+    } else {
+      final data = map[key];
+      final s = SyllabusEnumExtension.fromText(data);
+      return [if (s != null) SyllabusModel(syllabus: s, units: [])];
+    }
   }
-
 
   @override
   List<Object?> get props => [syllabus];

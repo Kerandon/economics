@@ -12,7 +12,7 @@ void paintCurveNormalized(
   Canvas canvas,
   Offset p1,
   Offset p2, {
-  Color? color,
+  Color? color = Colors.white,
   double strokeWidth = kCurveWidth,
   String? label1,
   String? label2,
@@ -80,7 +80,7 @@ void paintCurveNormalized(
   if (arrowAtEnd) {
 
     final paint = Paint()
-      ..color = color!
+      ..color = color ?? Colors.white
       ..style = PaintingStyle.fill;
 
     paintArrowHead(config, canvas,

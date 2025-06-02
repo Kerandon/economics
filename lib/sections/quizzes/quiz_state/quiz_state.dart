@@ -6,6 +6,7 @@ import '../../../app/audio_manager/audio_manager.dart';
 import '../../../main.dart';
 import '../quiz_enums/answer_stage.dart';
 import '../quiz_sections/questions/quiz_models/answer_model.dart';
+import '../quiz_sections/questions/quiz_models/gif_collection.dart';
 import '../quiz_sections/questions/quiz_models/question_model.dart';
 
 class QuizState {
@@ -19,6 +20,7 @@ class QuizState {
   final CardSide currentCardSide;
   final bool cardHasFlipped;
   final ResultsModel results;
+  final GifCollection gifs; // ✅ updated here
 
   QuizState({
     required this.selectedQuestions,
@@ -31,6 +33,7 @@ class QuizState {
     required this.currentCardSide,
     required this.cardHasFlipped,
     required this.results,
+    required this.gifs,
   });
 
   QuizState copyWith({
@@ -44,6 +47,7 @@ class QuizState {
     CardSide? currentCardSide,
     bool? cardHasFlipped,
     ResultsModel? results,
+    GifCollection? gifs// ✅ updated here
   }) {
     return QuizState(
       selectedQuestions: selectedQuestions ?? this.selectedQuestions,
@@ -57,6 +61,7 @@ class QuizState {
       currentCardSide: currentCardSide ?? this.currentCardSide,
       cardHasFlipped: cardHasFlipped ?? this.cardHasFlipped,
       results: results ?? this.results,
+      gifs: gifs ?? this.gifs, // ✅ updated here
     );
   }
 }
@@ -256,6 +261,11 @@ class QuizNotifier extends StateNotifier<QuizState> {
       results: ResultsModel.fromQuestions([]),
     );
   }
+
+  void setGifsCollection(GifCollection gifs){
+    state = state.copyWith(gifs: gifs);
+  }
+
 }
 
 final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
@@ -271,6 +281,10 @@ final quizProvider = StateNotifierProvider<QuizNotifier, QuizState>(
       currentCardSide: CardSide.front,
       cardHasFlipped: false,
       results: ResultsModel.fromQuestions([]),
+      gifs: GifCollection(
+      ),
     ),
   ),
 );
+
+

@@ -62,6 +62,7 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
 
   void updateUserPref(UserPref pref) {
     List<QuestionModel> filteredQuestions = _getFilteredQuestions(pref);
+
     List<UserPref> existing = state.userPrefs.toList();
     for (int i = 0; i < existing.length; i++) {
       if (pref.question?.syllabuses?[0] == existing[i].question?.syllabuses?[0] &&
@@ -83,24 +84,30 @@ class StartQuizNotifier extends StateNotifier<StartQuizState> {
     List<QuestionModel> filteredQuestions = state.allTopicQuestions.toList();
 
     final c = pref.question;
-    if (c?.syllabuses != null) {
-      filteredQuestions.retainWhere(
-        (e) => e.syllabuses == c?.syllabuses,
-      );
+    if (c?.syllabuses?.isNotEmpty ?? false) {
+      filteredQuestions.retainWhere((e) => e.syllabuses?.first == c?.syllabuses?.first);
     }
 
     if (c?.units?.isNotEmpty ?? false) {
       filteredQuestions.retainWhere(
           (e) => e.units?.any((unit) => c!.units!.contains(unit)) ?? false);
     }
-
+    //
     if (c?.subunits?.isNotEmpty ?? false) {
       filteredQuestions.retainWhere((e) =>
           e.subunits?.any((unit) => c!.subunits!.contains(unit)) ?? false);
     }
 
-    if (c?.questionTypes != null) {
-      filteredQuestions.retainWhere((e) => e.questionTypes == c!.questionTypes);
+
+
+
+    if (c?.questionTypes?.isNotEmpty ?? false) {
+
+      filteredQuestions.retainWhere((e) {
+
+
+        return e.questionTypes?.first == c!.questionTypes?.first;
+      });
     }
 
     if (c?.tags?.isNotEmpty ?? false) {

@@ -34,6 +34,7 @@ enum QuestionKey {
   tag4,
   numberOfDiagrams,
   diagrams,
+  images,
   diagram1,
   diagram2,
   diagram3,

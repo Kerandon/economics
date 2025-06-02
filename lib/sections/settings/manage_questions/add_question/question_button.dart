@@ -49,7 +49,7 @@ class QuestionButton extends ConsumerWidget {
                     );
                   },
                   icon: Icon(
-                    Icons.insert_chart_outlined,
+                    Icons.show_chart_outlined,
                   ),
                 ),
                 IconButton(
@@ -67,8 +67,12 @@ class QuestionButton extends ConsumerWidget {
             ),
           ],
         ),
+QuestionImageBuilder(c.xFileImages?.toList() ?? []),
+
+
         CustomDiagramBuilder(
           diagrams: c.diagrams?.toList(),
+          dimensions: 0.10,
         ),
       ],
     );

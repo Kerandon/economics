@@ -28,6 +28,8 @@ class QuestionTile extends ConsumerWidget {
     return ExpansionTile(
       expandedAlignment: Alignment.centerLeft,
       title: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HtmlWidget(q.question ?? ''),
           CustomDiagramBuilder(diagrams: q.diagrams?.toList())
@@ -87,7 +89,7 @@ class QuestionTile extends ConsumerWidget {
                         Row(
                           children: [
                             Expanded(child: HtmlWidget(a.answer)),
-                            if (q.questionTypes == QuestionType.multi) ...[
+                            if (q.questionTypes?[0] == QuestionType.multi) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: size.width * kPageIndentHorizontal,

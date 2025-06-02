@@ -1,115 +1,107 @@
-import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../../../diagrams/diagram_widgets/custom_diagram_builder.dart';
 import '../../methods/get_tile_decoration.dart';
+import '../../quiz_enums/answer_stage.dart';
 import 'answer_tile.dart';
-import 'edit_question_button.dart';
 
 class MultiChoiceTile extends ConsumerWidget {
   const MultiChoiceTile(
-    this.question, {
-    this.editMode = false,
-    super.key,
-  });
+      this.question, {
+        super.key,
+      });
 
   final QuestionModel question;
-  final bool editMode;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final tileSpacing = size.width * 0.01;
+
     return IgnorePointer(
       ignoring: question.answerStage == AnswerStage.correct ||
           question.answerStage == AnswerStage.incorrect,
       child: Container(
         decoration: getTileDecoration(context),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: tileSpacing,
-            vertical: tileSpacing,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: tileSpacing),
-                child: Container(
-                  decoration: getTileDecoration(context),
-                  child: Padding(
-                    padding: EdgeInsets.all(tileSpacing),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                question.question ?? "",
-                                textAlign: TextAlign.center,
-                                style: theme.textTheme.displaySmall?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              CustomDiagramBuilder(
-                                  diagrams: question.diagrams?.toList()),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: EditQuestionButton(
-                              question: question,
-                            ),
-                          ),
-                        ),
-                      ],
+        padding: EdgeInsets.all(tileSpacing),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Question header with centered title
+            Padding(
+              padding: EdgeInsets.only(bottom: tileSpacing),
+              child: Container(
+                decoration: getTileDecoration(context),
+                padding: EdgeInsets.symmetric(
+                    horizontal: tileSpacing, vertical: tileSpacing / 2),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // Centered question text
+                    Text(
+                      question.question ?? "",
+                      style: theme.textTheme.headlineLarge?.copyWith(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: tileSpacing,
-                ),
-                child: (question.answers?.isNotEmpty ?? false)
-                    ? GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: question.answers?.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: tileSpacing,
-                          crossAxisSpacing: tileSpacing,
-                          mainAxisExtent: (size.height * 0.28),
+
+                    // Diagram aligned to the left
+                    if (question.diagrams != null && question.diagrams!.isNotEmpty)
+                      Positioned(
+                        left: 0,
+                        child: CustomDiagramBuilder(
+                          diagrams: question.diagrams!.toList(),
                         ),
-                        itemBuilder: (context, index) {
-                          final a = question.answers![index];
-                          return GridTile(
-                            child: AnswerTile(
-                              answer: a.copyWith(
-                                  answerStage: editMode
-                                      ? a.isCorrect
-                                          ? AnswerStage.correct
-                                          : null
-                                      : null),
-                              question: question,
-                              answerIndex: index,
-                            ),
-                          );
-                        },
-                      )
-                    : Container(color: Colors.red, width: 50, height: 50),
+                      ),
+
+
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+
+            // Answers grid
+            if (question.answers?.isNotEmpty ?? false)
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: question.answers!.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: tileSpacing,
+                  crossAxisSpacing: tileSpacing,
+                  mainAxisExtent: size.height * 0.25,
+                ),
+                itemBuilder: (context, index) {
+                  final a = question.answers![index];
+
+
+                  return GridTile(
+                    child: AnswerTile(
+                      answer: a,
+                      question: question,
+                      answerIndex: index,
+                    ),
+                  );
+                },
+              )
+            else
+              Center(
+                child: Container(
+                  color: Colors.red,
+                  width: 50,
+                  height: 50,
+                  child: const Icon(Icons.error, color: Colors.white),
+                ),
+              ),
+          ],
         ),
       ),
     );

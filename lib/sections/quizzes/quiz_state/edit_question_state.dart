@@ -9,6 +9,7 @@ import '../../../app/utils/models/syllabus_model.dart';
 class EditQuestionState {
   final List<SyllabusModel> syllabuses;
   final List<QuestionModel> allQuestions;
+  final List<QuestionModel> temporaryQuestions;
   final List<DiagramModel> selectedDiagrams;
   final QuestionModel currentQuestion;
   final bool editExistingQuestion;
@@ -16,6 +17,7 @@ class EditQuestionState {
   EditQuestionState({
     required this.syllabuses,
     required this.allQuestions,
+    required this.temporaryQuestions,
     required this.selectedDiagrams,
     required this.currentQuestion,
     required this.editExistingQuestion,
@@ -24,6 +26,7 @@ class EditQuestionState {
   EditQuestionState copyWith({
     List<SyllabusModel>? syllabuses,
     List<QuestionModel>? allQuestions,
+    List<QuestionModel>? temporaryQuestions,
     List<DiagramModel>? selectedDiagrams,
     QuestionModel? currentQuestion,
     bool? editExistingQuestion,
@@ -31,6 +34,7 @@ class EditQuestionState {
     return EditQuestionState(
       syllabuses: syllabuses ?? this.syllabuses,
       allQuestions: allQuestions ?? this.allQuestions,
+      temporaryQuestions: temporaryQuestions ?? this.temporaryQuestions,
       selectedDiagrams: selectedDiagrams ?? this.selectedDiagrams,
       currentQuestion: currentQuestion ?? this.currentQuestion,
       editExistingQuestion: editExistingQuestion ?? this.editExistingQuestion,
@@ -45,6 +49,10 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
     state = state.copyWith(allQuestions: allQuestions.toList());
   }
 
+  void setTemporaryQuestions(List<QuestionModel> questions) {
+    state = state.copyWith(temporaryQuestions: questions.toList());
+  }
+
   void setDiagramsSelected(DiagramModel diagram, int index) {
     final currentList = state.selectedDiagrams.toList();
     if (index < currentList.length) {
@@ -55,6 +63,9 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
   }
 
   void updateCurrentQuestion(QuestionModel question) {
+
+
+
     final answers = setAnswers(question);
     state = state.copyWith(
       currentQuestion: question.copyWith(
@@ -65,20 +76,22 @@ class EditQuestionNotifier extends StateNotifier<EditQuestionState> {
 
   List<AnswerModel> setAnswers(QuestionModel question) {
     List<AnswerModel> answers = question.answers?.toList() ?? [];
-    if (question.questionTypes == QuestionType.flip) {
-      answers = [
-        if (question.answers?.isNotEmpty ?? false) ...[
-          question.answers!.first.copyWith(isCorrect: true)
-        ],
-        if(question.answers?.isEmpty == true)...[
-          AnswerModel('',isCorrect: true)
-        ]
-      ];
-    } else if (question.questionTypes == QuestionType.multi) {
-      if (answers.length < 4) {
-        // Add default answers until the list matches the required number
-        while (answers.length < 4) {
-          answers.add(AnswerModel(''));
+    if(question.questionTypes?.isNotEmpty == true) {
+      if (question.questionTypes?[0] == QuestionType.flip) {
+        answers = [
+          if (question.answers?.isNotEmpty ?? false) ...[
+            question.answers!.first.copyWith(isCorrect: true)
+          ],
+          if(question.answers?.isEmpty == true)...[
+            AnswerModel('', isCorrect: true)
+          ]
+        ];
+      } else if (question.questionTypes?[0] == QuestionType.multi) {
+        if (answers.length < 4) {
+          // Add default answers until the list matches the required number
+          while (answers.length < 4) {
+            answers.add(AnswerModel(''));
+          }
         }
       }
     }
@@ -96,6 +109,7 @@ final editQuestionProvider =
     EditQuestionState(
       syllabuses: allSyllabuses.toList(),
       allQuestions: [],
+      temporaryQuestions: [],
       selectedDiagrams: [],
       currentQuestion: QuestionModel(),
       editExistingQuestion: false,

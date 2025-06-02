@@ -36,8 +36,6 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
 
   @override
   Widget build(BuildContext context) {
-    ///Define variables
-
     final quizNotifier = ref.read(quizProvider.notifier);
     final theme = Theme.of(context);
     final startState = ref.watch(startQuizProvider);
@@ -108,56 +106,63 @@ class _AnswerTileState extends ConsumerState<AnswerTile> {
             ClipRRect(
               borderRadius: BorderRadius.circular(kRadius),
               child: ListTile(
-                titleAlignment: ListTileTitleAlignment.center,
-                contentPadding: EdgeInsets.all(12),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 leading: Text(
                   (widget.answerIndex + 1).toAlphabet(),
                   style: theme.textTheme.titleLarge?.copyWith(
-                      color: indexColor, fontWeight: FontWeight.bold),
-                ),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: AutoSizeText(
-                        widget.answer.answer,
-                        textAlign: TextAlign.center,
-                        style: theme.textTheme.displaySmall?.copyWith(
-                          color: answerTextColor,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                        child: CustomDiagramBuilder(
-                            dimensions: 0.10,
-                            diagrams: widget.answer.diagrams?.toList())),
-                  ],
-                ),
-                trailing: PopOutAnimation(
-                  duration: 300,
-                  addPop: true,
-                  animate: icon != null,
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
+                    color: indexColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
+                title: Center(
+                  child: AutoSizeText(
+                    widget.answer.answer,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.headlineLarge?.copyWith(
+                      color: answerTextColor,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.answer.diagrams != null && widget.answer.diagrams!.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: CustomDiagramBuilder(
+                          dimensions: 0.10,
+                          diagrams: widget.answer.diagrams!.toList(),
+                        ),
+                      ),
+                    if (icon != null)
+                      PopOutAnimation(
+                        duration: 300,
+                        addPop: true,
+                        animate: true,
+                        child: Icon(
+                          icon,
+                          color: Colors.white,
+                        ),
+                      ),
+                  ],
+                ),
               ),
+
             ),
+
             Positioned.fill(
               child: Material(
                 color: Colors.transparent,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(kRadius),
                   onTap: () {
-                    // getIt<AudioManager>().playSound('other/select');
                     quizNotifier.setQuestionAsSelected(
                         widget.question, widget.answer);
-                    setState(
-                      () {
-                        _animate = true;
-                      },
-                    );
+                    setState(() {
+                      _animate = true;
+                    });
 
                     if (!showAnswersAtEnd) {
                       quizNotifier.checkAnswer(

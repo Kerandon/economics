@@ -1,6 +1,7 @@
-
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:economics_app/app/utils/helper_methods/string_methods.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,25 +19,33 @@ class AddDiagramsToAnswerDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
+
     final allDiagrams = DiagramModel.getAllDiagrams(size, context);
+
+    final editState = ref.watch(editQuestionProvider);
+    final diagramHeading = editState.currentQuestion.answers?[answerIndex].diagrams
+        ?.map((e) => '${e.type?.toText()} - ${e.subtype?.toText()}').join(', ');
+
+
 
     return AlertDialog(
       content: SizedBox(
         width: size.width * 0.60,
         child: DropdownButtonHideUnderline(
-
           child: DropdownButton2<DiagramModel>(
-
-            customButton: CustomDropdownHeading('Select diagrams'),
+            customButton: CustomDropdownHeading(diagramHeading ?? 'Select diagrams', maxLines: 99,),
             isExpanded: true,
             onChanged: (value) {},
             items: [
               ...allDiagrams.map(
-                    (e) {
+                (e) {
                   return DropdownMenuItem(
                     enabled: false,
                     value: e,
-                    child: CustomDropdownContents(index: answerIndex, diagram: e,),
+                    child: CustomDropdownContents(
+                      index: answerIndex,
+                      diagram: e,
+                    ),
                   );
                 },
               ),
@@ -45,23 +54,25 @@ class AddDiagramsToAnswerDialog extends ConsumerWidget {
         ),
       ),
       actions: [
-        OutlinedButton(onPressed: (){
-          Navigator.maybePop(context);
-        }, child: Text('Close'))
+        OutlinedButton(
+            onPressed: () {
+              Navigator.maybePop(context);
+            },
+            child: Text('Close'))
       ],
     );
   }
 }
 
 class CustomDropdownContents extends ConsumerWidget {
-  const CustomDropdownContents(
-      {required this.index, required this.diagram,
-        super.key,
-      });
+  const CustomDropdownContents({
+    required this.index,
+    required this.diagram,
+    super.key,
+  });
 
   final int index;
   final DiagramModel diagram;
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -93,7 +104,7 @@ class CustomDropdownContents extends ConsumerWidget {
       child: CustomDropdownTile(
         leading: (diagram.unit!.name.capitalizeFirst()).toString(),
         text:
-        '${diagram.type!.name.capitalizeFirst()} - ${diagram.subtype!.name.capitalizeFirst()}',
+            '${diagram.type!.name.capitalizeFirst()} - ${diagram.subtype!.name.capitalizeFirst()}',
         isSelected: isSelected,
       ),
     );

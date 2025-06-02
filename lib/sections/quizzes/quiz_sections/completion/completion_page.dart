@@ -3,13 +3,16 @@ import 'package:economics_app/app/custom_widgets/custom_divider.dart';
 import 'package:economics_app/sections/quizzes/methods/reset_questions_models.dart';
 import 'package:economics_app/sections/quizzes/methods/shuffle_question_models.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/questions/question_page.dart';
+
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz/start_page.dart';
+
 import 'package:economics_app/sections/tab_main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quiz_state/quiz_state.dart';
+import '../questions/question_page.dart';
+
+import '../start_quiz/start_quiz_page.dart';
 import 'incorrect_answers_page.dart';
 
 class CompletionPage extends ConsumerStatefulWidget {
@@ -193,7 +196,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                                builder: (context) => StartPage()),
+                                builder: (context) => StartQuizPage()),
                           );
                           WidgetsBinding.instance.addPostFrameCallback((t) {
                             quizNotifier.setResetQuestions();

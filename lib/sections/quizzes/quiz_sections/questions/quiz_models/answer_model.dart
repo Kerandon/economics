@@ -23,10 +23,6 @@ class AnswerModel extends Equatable {
       isCorrect: map[QuestionKey.correct.name] as bool? ?? true,
       answerStage: AnswerStage.notSelected,
 
-      // diagrams: (map[QuestionKey.diagrams.name] != null &&
-      //         map[QuestionKey.diagrams.name] is List)
-      //     ? []
-      //     : null,
       diagrams: (map[QuestionKey.diagrams.name] != null &&
               map[QuestionKey.diagrams.name] is List)
           ? DiagramModel.fromFirebaseList(

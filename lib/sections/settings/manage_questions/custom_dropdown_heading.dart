@@ -1,13 +1,14 @@
-
 import 'package:flutter/material.dart';
 
 class CustomDropdownHeading extends StatelessWidget {
   const CustomDropdownHeading(
-      this.text, {
-        super.key,
-      });
+    this.text, {
+    this.maxLines = 1,
+    super.key,
+  });
 
   final String text;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class CustomDropdownHeading extends StatelessWidget {
             child: Text(
               text,
               overflow: TextOverflow.ellipsis,
-              maxLines: 1,
+              maxLines: maxLines,
               textAlign: TextAlign.left,
             ),
           ),

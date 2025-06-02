@@ -52,7 +52,7 @@ class _QuestionNavigationButtonsState
     if (quizState.selectedQuestions.isNotEmpty) {
       c = quizState.selectedQuestions[questionIndex];
     }
-    final multi = c.questionTypes == QuestionType.multi;
+    final multi = c.questionTypes?[0] == QuestionType.multi;
 
     bool onLastQuestion =
         questionIndex == quizState.selectedQuestions.length - 1;
@@ -160,7 +160,7 @@ class _QuestionNavigationButtonsState
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (c.questionTypes != QuestionType.flip &&
+                if (c.questionTypes?[0] != QuestionType.flip &&
                     quizState.currentCardSide == CardSide.back) ...[
                   Row(
                     children: [

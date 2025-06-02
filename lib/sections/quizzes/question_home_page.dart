@@ -5,7 +5,8 @@ import 'package:economics_app/sections/diagrams/enums/diagram_type.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:economics_app/sections/quizzes/methods/get_tile_decoration.dart';
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
-import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz/start_page.dart';
+import 'package:economics_app/sections/quizzes/quiz_sections/start_quiz/start_quiz_page.dart';
+
 import 'package:economics_app/sections/quizzes/quiz_state/edit_question_state.dart';
 import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class _QuestionHomePageState extends ConsumerState<QuestionHomePage> {
 
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => StartPage(),
+                      builder: (context) => StartQuizPage(),
                     ),
                   );
                 });

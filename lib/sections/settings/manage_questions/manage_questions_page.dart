@@ -1,8 +1,11 @@
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_page.dart';
+import 'package:economics_app/sections/settings/manage_questions/excel_manager/excel_download_manager.dart';
 import 'package:economics_app/sections/settings/manage_questions/question_tile.dart';
+import 'package:economics_app/sections/settings/methods/filter_questions.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../app/utils/helper_methods/export_to_excel.dart';
 import '../../quizzes/methods/get_questions_data.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
 import '../../tab_main.dart';
@@ -19,6 +22,7 @@ class ManageQuestionsPage extends ConsumerStatefulWidget {
 class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
   late final Future<List<QuestionModel>> _questionsFuture;
   bool _questionsHaveBeenSet = false;
+  List<QuestionModel> filteredQuestions = [];
 
   @override
   void initState() {
@@ -44,6 +48,32 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
           },
         ),
         title: const Text('Manage Questions'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              exportToExcel(
+                filteredQuestions.toList(),
+              );
+            },
+            icon: Icon(
+              Icons.file_download,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ExcelUploadManager(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.upload_file,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+        ],
       ),
       body: FutureBuilder<List<QuestionModel>>(
         future: _questionsFuture,
@@ -64,34 +94,13 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
 
-          List<QuestionModel> filteredQuestions = snapshot.data?.toList() ?? [];
+          filteredQuestions = snapshot.data?.toList() ?? [];
+
 
           final c = editState.currentQuestion;
-          if (c.syllabuses != null) {
-            filteredQuestions.retainWhere(
-              (e) => e.syllabuses == c.syllabuses,
-            );
-          }
-
-          if (c.units?.isNotEmpty ?? false) {
-            filteredQuestions.retainWhere((e) =>
-                e.units?.any((unit) => c.units!.contains(unit)) ?? false);
-          }
-
-          if (c.subunits?.isNotEmpty ?? false) {
-            filteredQuestions.retainWhere((e) =>
-                e.subunits?.any((unit) => c.subunits!.contains(unit)) ?? false);
-          }
-
-          if (c.questionTypes != null) {
-            filteredQuestions
-                .retainWhere((e) => e.questionTypes == c.questionTypes);
-          }
-
-          if (c.tags?.isNotEmpty ?? false) {
-            filteredQuestions.retainWhere(
-                (e) => e.tags?.any((tag) => c.tags!.contains(tag)) ?? false);
-          }
+          filteredQuestions =
+              filterQuestions(questions: filteredQuestions.toList(), filter: c)
+                  .toList();
 
           return CustomScrollView(
             slivers: [

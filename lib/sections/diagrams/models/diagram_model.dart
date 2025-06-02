@@ -91,23 +91,27 @@ class DiagramModel extends Equatable {
 
   static List<DiagramModel> getSelectedDiagrams(Size size, BuildContext context,
       {required List<DiagramModel> selectedDiagrams}) {
+
+    /// get all diagrams which are [BaseDiagramPainter]
     final allDiagrams = AllDiagrams(
       size: size,
       colorScheme: Theme.of(context).colorScheme,
     ).getAllPainterDiagrams();
 
     List<DiagramModel> all = [];
+
     for (var e in allDiagrams) {
       final i = e as DiagramIdentifierMixin;
 
       all.add(i.model.copyWith(painter: e));
     }
 
+
     if (selectedDiagrams.isNotEmpty) {
       List<DiagramModel> selected = [];
       for (var s in selectedDiagrams) {
         for (var a in all) {
-          if (s.type == a.type && s.subtype == s.subtype) {
+          if (s.type == a.type && s.subtype == a.subtype) {
             selected.add(a);
           }
         }

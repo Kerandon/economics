@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:economics_app/sections/quizzes/quiz_enums/tag.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../../app/utils/models/syllabus_model.dart';
 import '../../../../../app/utils/models/unit_model.dart';
@@ -15,7 +18,8 @@ class QuestionModel extends Equatable {
   final List<SyllabusModel>? syllabuses;
   final String? question;
   final List<DiagramModel>? diagrams;
-  final List<XFile?>? images;
+  final List<String>? images;
+  final List<XFile?>? xFileImages;
   final List<AnswerModel>? answers;
   final AnswerStage answerStage;
   final String? explanation;
@@ -33,6 +37,7 @@ class QuestionModel extends Equatable {
     this.question,
     this.diagrams,
     this.images,
+    this.xFileImages,
     this.answers,
     this.answerStage = AnswerStage.notSelected,
     this.explanation,
@@ -50,7 +55,8 @@ class QuestionModel extends Equatable {
     List<SyllabusModel>? syllabuses,
     String? question,
     List<DiagramModel>? diagrams,
-    List<XFile?>? images,
+    List<String>? images,
+    List<XFile?>? xFileImages,
     List<AnswerModel>? answers,
     AnswerStage? answerStage,
     List<UnitModel>? units,
@@ -85,9 +91,11 @@ class QuestionModel extends Equatable {
     return {
       QuestionKey.type.name: questionTypes?[0].name,
       QuestionKey.question.name: question,
-      QuestionKey.syllabus.name: syllabuses?.map((e) => e.syllabus).toList(),
-      QuestionKey.units.name: units?.map((e) => {e.index ?? 0: e.name}).toList(),
-      QuestionKey.subunits.name: subunits?.map((e) => {e.index ?? 0: e.name}).toList(),
+      QuestionKey.syllabus.name: syllabuses?[0].syllabus?.name,
+      QuestionKey.units.name:
+          units?.map((e) => {e.index ?? 0: e.name}).toList(),
+      QuestionKey.subunits.name:
+          subunits?.map((e) => {e.index ?? 0: e.name}).toList(),
       QuestionKey.answers.name: answers?.map((e) => e.toMap()).toList(),
       QuestionKey.explanation.name: explanation,
       QuestionKey.diagrams.name: diagrams?.map((e) => e.toMap()).toList(),
@@ -99,7 +107,9 @@ class QuestionModel extends Equatable {
     return QuestionModel(
       id: id,
       question: getQuestion(map),
-      questionTypes: [QuestionTypeExtension.getQuestionType(map) ?? QuestionType.multi],
+      questionTypes: [
+        QuestionTypeExtension.getQuestionType(map) ?? QuestionType.multi
+      ],
       syllabuses: SyllabusModel.fromFirebase(map),
       units: UnitModelExtension.fromFirebase(map),
       subunits: UnitModelExtension.fromFirebase(map, subunit: true),
@@ -162,4 +172,13 @@ class QuestionModel extends Equatable {
 
   @override
   List<Object?> get props => [question];
+}
+
+void sendXFileToFirebaseStorage(XFile? xFile) {
+  if (xFile != null) {
+    final storageRef = FirebaseStorage.instance.ref();
+    final fileRef =
+        storageRef.child('uploads/${xFile.name}'); // optional: add folder path
+    final uploadTask = fileRef.putFile(File(xFile.path));
+  }
 }

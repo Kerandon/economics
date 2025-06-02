@@ -20,8 +20,8 @@ class AnswersButton extends ConsumerWidget {
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final c = editState.currentQuestion;
-    final isMulti =
-        editState.currentQuestion.questionTypes == QuestionType.multi;
+    final isMulti = (editState.currentQuestion.questionTypes?.isNotEmpty == true) &&
+        (editState.currentQuestion.questionTypes?[0] == QuestionType.multi);
 
     return Column(
       children: [
@@ -48,7 +48,7 @@ class AnswersButton extends ConsumerWidget {
                               answers[index].copyWith(answer: value);
                         }
 
-                        if (c.questionTypes == QuestionType.flip) {
+                        if (c.questionTypes?[0] == QuestionType.flip) {
                           answers = [answers.first.copyWith(isCorrect: true)];
                         }
 
@@ -73,7 +73,7 @@ class AnswersButton extends ConsumerWidget {
                           );
                         },
                         icon: Icon(
-                          Icons.insert_chart_outlined,
+                          Icons.show_chart_outlined,
                         ),
                       ),
                       IconButton(

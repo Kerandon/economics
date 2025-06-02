@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,7 +19,7 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
   @override
   void initState() {
     _controller =
-        ConfettiController(duration: const Duration(milliseconds: 200));
+        ConfettiController(duration: const Duration(milliseconds: 300));
     if (widget.animate == null) {
       _controller.play();
     }
@@ -40,52 +42,53 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
+    final size = MediaQuery.of(context).size;
+    return  Stack(
       children: [
-        // Align(
-        //   alignment: const Alignment(0, -1),
-        //   child: ConfettiWidget(
-        //     canvas: MediaQuery.of(context).size,
-        //     colors: const [
-        //       Colors.amberAccent,
-        //       Colors.redAccent,
-        //       Colors.pinkAccent
-        //     ],
-        //     blastDirectionality: BlastDirectionality.explosive,
-        //     numberOfParticles: 18,
-        //     maxBlastForce: 60,
-        //     gravity: 0.60,
-        //     minimumSize: const Size(20, 50),
-        //     maximumSize: const Size(50, 80),
-        //     shouldLoop: false,
-        //     confettiController: _controller,
-        //     // createParticlePath: drawStar,
-        //   ),
-        // ),
+        Align(
+          alignment: Alignment(0, -0.50),
+          child: ConfettiWidget(
+            canvas: size,
+            colors: const [
+              Colors.amberAccent,
+              Colors.redAccent,
+              Colors.pinkAccent
+            ],
+            blastDirectionality: BlastDirectionality.explosive,
+            numberOfParticles: 10,
+            maxBlastForce: 100,
+            gravity: 0.60,
+            minimumSize: const Size(15, 20),
+            maximumSize: const Size(20, 25),
+            shouldLoop: false,
+            confettiController: _controller,
+            createParticlePath: (s) => drawStar(s),
+          ),
+        ),
       ],
     );
   }
 }
-//
-// Path drawStar(Size size) {
-//   double degToRad(double deg) => deg * (pi / 180.0);
-//
-//   const numberOfPoints = 5;
-//   final halfWidth = size.width / 2;
-//   final externalRadius = halfWidth;
-//   final internalRadius = halfWidth / 2.5;
-//   final degreesPerStep = degToRad(360 / numberOfPoints);
-//   final halfDegreesPerStep = degreesPerStep / 2;
-//   final path = Path();
-//   final fullAngle = degToRad(360);
-//   path.moveTo(size.width, halfWidth);
-//
-//   for (double step = 0; step < fullAngle; step += degreesPerStep) {
-//     path.lineTo(halfWidth + externalRadius * cos(step),
-//         halfWidth + externalRadius * sin(step));
-//     path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
-//         halfWidth + internalRadius * sin(step + halfDegreesPerStep));
-//   }
-//   path.close();
-//   return path;
-// }
+
+Path drawStar(Size size) {
+  double degToRad(double deg) => deg * (pi / 180.0);
+
+  const numberOfPoints = 5;
+  final halfWidth = size.width / 2;
+  final externalRadius = halfWidth;
+  final internalRadius = halfWidth / 2.5;
+  final degreesPerStep = degToRad(360 / numberOfPoints);
+  final halfDegreesPerStep = degreesPerStep / 2;
+  final path = Path();
+  final fullAngle = degToRad(360);
+  path.moveTo(size.width, halfWidth);
+
+  for (double step = 0; step < fullAngle; step += degreesPerStep) {
+    path.lineTo(halfWidth + externalRadius * cos(step),
+        halfWidth + externalRadius * sin(step));
+    path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+        halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+  }
+  path.close();
+  return path;
+}

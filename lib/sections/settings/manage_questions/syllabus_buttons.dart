@@ -11,52 +11,67 @@ import '../../quizzes/quiz_state/edit_question_state.dart';
 import 'custom_dropdown_heading.dart';
 
 class SyllabusesButtons extends ConsumerWidget {
-  const SyllabusesButtons({super.key});
+  final bool oneChoiceOnly;
+
+  const SyllabusesButtons({super.key, this.oneChoiceOnly = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final editState = ref.watch(editQuestionProvider);
-    final editNotifier = ref.read(editQuestionProvider.notifier);
     final c = editState.currentQuestion;
+    final editNotifier = ref.read(editQuestionProvider.notifier);
+
+
+
+
+    if (oneChoiceOnly) {
+
+      final currentList = c.syllabuses ?? [];
+
+      if (currentList.isEmpty) {
+        final defaultType = Syllabus.values.first;
+
+            Future.microtask(() {
+          editNotifier.updateCurrentQuestion(
+            c.copyWith(
+              syllabuses: [
+                SyllabusModel(syllabus: defaultType, units: []),
+              ],
+              units: [],
+              subunits: [],
+            ),
+          );
+        });
+      } else if (currentList.length > 1) {
+        final first = currentList.first;
+        Future.microtask(() {
+          editNotifier.updateCurrentQuestion(
+            c.copyWith(
+              syllabuses: [first],
+              units: [],
+              subunits: [],
+            ),
+          );
+        });
+      }
+    }
+
+   final selectedText = c.syllabuses?.isNotEmpty == true
+        ? c.syllabuses!.map((e) => e.syllabus?.toText() ?? 'Unknown').join(', ')
+        : 'Select syllabus';
 
     return SizedBox(
       width: size.width,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<SyllabusModel>(
-          customButton: CustomDropdownHeading(c.syllabuses?.isNotEmpty == true
-              ? c.syllabuses!
-                  .map((e) => e.syllabus?.toText() ?? 'Unknown')
-                  .join(', ')
-              : 'Select syllabus'),
-          onChanged: (e) {
-            List<UnitModel> units = c.units?.toList() ?? [];
-            List<UnitModel> subunits = c.subunits?.toList() ?? [];
-
-            // ✅ Get the new course's available units, defaulting to an empty list if null
-            final newCourseUnits = e?.units ?? [];
-
-            // ✅ Remove any units that do not belong to the new course
-            units.removeWhere((u) => !newCourseUnits.contains(u));
-
-            // ✅ Remove any subunits that belong to removed units
-            subunits.removeWhere(
-                (s) => !units.expand((u) => u.subunits).contains(s));
-
-            // ✅ Update the question state
-            editNotifier.updateCurrentQuestion(
-              c.copyWith(
-                syllabuses: e != null ? [e] : [],
-                units: units,
-                subunits: subunits,
-              ),
-            );
-          },
+          customButton: CustomDropdownHeading(selectedText),
+          onChanged: (_) {},
           items: [
             ...allSyllabuses.map(
               (e) => DropdownMenuItem(
                 value: e,
-                child: CustomDropdownContents(e),
+                child: CustomDropdownContents(e, oneChoiceOnly: oneChoiceOnly),
               ),
             ),
           ],
@@ -67,9 +82,11 @@ class SyllabusesButtons extends ConsumerWidget {
 }
 
 class CustomDropdownContents extends ConsumerWidget {
-  const CustomDropdownContents(this.syllabus, {super.key});
-
   final SyllabusModel syllabus;
+  final bool oneChoiceOnly;
+
+  const CustomDropdownContents(this.syllabus,
+      {super.key, this.oneChoiceOnly = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,36 +94,37 @@ class CustomDropdownContents extends ConsumerWidget {
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final c = editState.currentQuestion;
     final isSelected = c.syllabuses?.contains(syllabus) ?? false;
+
     return InkWell(
       onTap: () {
-        List<SyllabusModel> syllabuses = c.syllabuses?.toList() ?? [];
+        List<SyllabusModel> syllabuses;
 
-// Toggle the unit selection
-        if (syllabuses.contains(syllabus)) {
-          syllabuses.remove(syllabus);
+        if (oneChoiceOnly) {
+          // Always replace with the single selected syllabus
+          syllabuses = [syllabus];
+          Navigator.maybePop(context);
         } else {
-          syllabuses.add(syllabus);
+          syllabuses = c.syllabuses?.toList() ?? [];
+          if (isSelected) {
+            syllabuses.remove(syllabus);
+          } else {
+            syllabuses.add(syllabus);
+          }
         }
+
         List<UnitModel> units = c.units?.toList() ?? [];
         List<UnitModel> subunits = c.subunits?.toList() ?? [];
 
-        final List<UnitModel> newCourseUnits = syllabuses
-            .expand((e) => e.units)
-            .toList();
-
-        // ✅ Remove any units that do not belong to the new course
+        final newCourseUnits = syllabuses.expand((e) => e.units).toList();
         units.removeWhere((u) => !newCourseUnits.contains(u));
-
-        // ✅ Remove any subunits that belong to removed units
         subunits
             .removeWhere((s) => !units.expand((u) => u.subunits).contains(s));
 
-        ///Update the question state
         editNotifier.updateCurrentQuestion(
           c.copyWith(
-            syllabuses: syllabuses.toList(),
-            units: units.toList(),
-            subunits: subunits.toList(),
+            syllabuses: syllabuses,
+            units: units,
+            subunits: subunits,
           ),
         );
       },

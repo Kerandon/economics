@@ -34,15 +34,29 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
         (t) {
           editNotifier.updateCurrentQuestion(
             c.copyWith(
-              questionTypes: [c.questionTypes?[0] ?? QuestionType.multi],
-              syllabuses: [c.syllabuses?[0] ?? editState.syllabuses.first],
+              questionTypes: [
+                (c.questionTypes != null && c.questionTypes!.isNotEmpty)
+                    ? c.questionTypes!.first
+                    : QuestionType.multi
+              ],
+              syllabuses: [
+                (c.syllabuses != null && c.syllabuses!.isNotEmpty)
+                    ? c.syllabuses!.first
+                    : (editState.syllabuses.isNotEmpty
+                    ? editState.syllabuses.first
+                    : throw Exception('No syllabus available'))
+              ],
             ),
           );
+
         },
       );
     }
 
-    final isMulti = c.questionTypes == QuestionType.multi;
+    bool isMulti = false;
+    if(c.questionTypes?.isNotEmpty == true) {
+      isMulti = c.questionTypes?[0] == QuestionType.multi;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -72,7 +86,7 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
               collapsedHeight: kToolbarHeight * 1.5,
               expandedHeight: 0,
               flexibleSpace: FlexibleSpaceBar(
-                title: FilterButtons(),
+                title: FilterButtons(oneChoiceOnlyMode: true,),
               ),
               automaticallyImplyLeading: false,
               pinned:
@@ -85,9 +99,6 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
                     initialValue:
                         editState.editExistingQuestion ? c.question : null,
                   ),
-                  if (isMulti) ...[
-                    //NumberOfAnswersButton(),
-                  ],
                   AnswersButton(
                       initialAnswers: editState.editExistingQuestion
                           ? c.answers?.toList()

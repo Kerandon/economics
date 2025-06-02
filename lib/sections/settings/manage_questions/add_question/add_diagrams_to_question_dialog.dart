@@ -1,6 +1,8 @@
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:economics_app/app/utils/helper_methods/string_methods.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -89,7 +91,7 @@ class CustomDropdownContents extends ConsumerWidget {
       child: CustomDropdownTile(
         leading: (diagram.unit!.name.capitalizeFirst()).toString(),
         text:
-        '${diagram.type!.name.capitalizeFirst()} - ${diagram.subtype!.name.capitalizeFirst()}',
+        '${diagram.type!.toText()} - ${diagram.subtype!.toText()}',
         isSelected: isSelected,
       ),
     );
