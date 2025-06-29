@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../app/audio_manager/audio_manager.dart';
 import '../../../../main.dart';
-import '../../../tab_main.dart';
+import '../../../home_page/tab_main.dart';
 import '../../quiz_enums/answer_stage.dart';
 import '../questions/question_page.dart';
 import '../questions/quiz_models/answer_model.dart';
@@ -130,7 +130,7 @@ class _StartPageState extends ConsumerState<StartQuizPage> {
                               .titleLarge
                         ),
                         CustomChipButton(
-                          onPressed: () {
+                          onTap: () {
                             List<QuestionModel> f =
                                 pref.question!.filteredQuestions?.toList() ??
                                     [];
@@ -175,7 +175,7 @@ class _StartPageState extends ConsumerState<StartQuizPage> {
                               );
                             });
                           },
-                          text: 'Start',
+                          label: 'Start',
                         ),
                       ],
                     ),

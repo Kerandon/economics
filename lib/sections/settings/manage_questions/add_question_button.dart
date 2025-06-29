@@ -1,6 +1,7 @@
 
 import 'package:economics_app/sections/quizzes/quiz_enums/question_type.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
+import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,7 +14,9 @@ import '../methods/send_new_question_to_firebase.dart';
 import 'add_question_page.dart';
 
 class AddQuestionButton extends ConsumerWidget {
-  const AddQuestionButton({super.key});
+  const AddQuestionButton({required this.pageOnBackButton, super.key});
+
+  final Widget pageOnBackButton;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,9 +28,9 @@ class AddQuestionButton extends ConsumerWidget {
       padding:
           EdgeInsets.symmetric(vertical: size.height * kPageIndentVertical * 2),
       child: CustomChipButton(
-        text:
+        label:
             editState.editExistingQuestion ? 'Update question' : 'Add question',
-        onPressed: () {
+        onTap: () {
           final q = editState.currentQuestion;
           List<String> errors = [];
 
@@ -70,7 +73,7 @@ class AddQuestionButton extends ConsumerWidget {
 
 
 
-          final imagesFuture = uploadXFileImages(q);
+
           final questionFuture = sendNewQuestionToFirebase(
               question: q, existing: editState.editExistingQuestion);
           Navigator.of(context).pushReplacement(
@@ -86,7 +89,7 @@ class AddQuestionButton extends ConsumerWidget {
 
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => const AddQuestionPage(),
+                        builder: (context) => AddQuestionPage(pageOnBackButton: ManageQuestionsPage(),),
                       ),
                     );
 
@@ -112,7 +115,7 @@ Future<List<String>> uploadXFileImages(QuestionModel q) async {
       final storageRef = FirebaseStorage.instance.ref();
       final fileRef = storageRef.child(xFile!.name);
       final bytes = await xFile.readAsBytes(); // Use this instead of File(xFile.path)
-      final uploadTask = await fileRef.putData(bytes); // Upload from memory
+      await fileRef.putData(bytes); // Upload from memory
 
       final url = await fileRef.getDownloadURL();
       downloadUrls.add(url);

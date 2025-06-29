@@ -12,8 +12,8 @@ void deleteQuestion(BuildContext context, QuestionModel q) {
     builder: (context) => CustomPopup(actionButtons: [
       CustomChipButton(
         fillColor: Colors.red,
-          text: 'Confirm',
-          onPressed: () {
+          label: 'Confirm',
+          onTap: () {
             Navigator.of(context).pop();
             WidgetsBinding.instance.addPostFrameCallback((t) {
               Navigator.of(context).push(
@@ -39,8 +39,8 @@ void deleteQuestion(BuildContext context, QuestionModel q) {
           }),
       CustomChipButton(
         //outlinedStyle: true,
-        text: 'Cancel',
-        onPressed: () {
+        label: 'Cancel',
+        onTap: () {
           Navigator.of(context).pop();
         },
       ),

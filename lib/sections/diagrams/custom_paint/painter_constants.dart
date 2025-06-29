@@ -1,17 +1,17 @@
 /// Curves
 const kCurveWidth = 5.0;
 const kCurveWidthSlim = 3.0;
-const kArrowSize = 8.0;
+const kArrowSize = 16.0;
 
 /// Axis
-const kAxisIndent = 0.15;
+const kAxisIndent = 0.20;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 4.0;
 
 /// Text
 const kLabelFontSize = 28.0;
-const kFontSize = 26.0;
+const kFontSize = 32.0;
 
 /// Dot
 const kDotRadius = 12.0;
@@ -27,14 +27,13 @@ const kPm = 'Pm';
 const kQOpt = 'Qopt';
 const kQm = 'Qm';
 const kPriceCostsRevenue = 'Price, costs & revenues (\$)';
-const kQuantity = 'Quantity (units)';
+
 const kDAR = 'D = AR';
-const kPARMR = 'P = AR = MR';
+
 const kMR = 'MR';
 const kMC = 'MC';
 const kAC = 'AC';
-const kSRAC = 'SRAC';
-const kMCMR = 'MC = MR';
+
 
 /// Macro-labels
 const kHouseholds = 'Households';
@@ -117,7 +116,11 @@ enum MicroLabel {
   chairs,
   tables,
   s,
+  sm,
+  sm1,
   d,
+  dm,
+  dm1,
   s1,
   d1,
   s2,
@@ -144,15 +147,18 @@ enum MicroLabel {
   msb,
   pOpt,
   pm,
+  pm1,
   qOpt,
   qm,
   priceCostsRevenue,
-  quantity,
+  industryQuantity,
+  quantityFirm,
   dEqualsAR,
   pEqualsDARMR,
+  p1EqualsD1AR1MR1,
   mr,
   mc,
-  ac,
+  atc,
   srac,
   mcEqualsMR,
 }
@@ -220,20 +226,20 @@ extension MicroLabelExtension on MicroLabel {
         return 'Qm';
       case MicroLabel.priceCostsRevenue:
         return 'Price, costs & revenues (\$)';
-      case MicroLabel.quantity:
-        return 'Quantity (units)';
+      case MicroLabel.quantityFirm:
+        return 'Quantity - Firm';
       case MicroLabel.dEqualsAR:
         return 'D=AR';
       case MicroLabel.pEqualsDARMR:
-        return 'P=D=AR=MR';
+        return 'D=AR=MR';
       case MicroLabel.mr:
         return 'MR';
       case MicroLabel.mc:
         return 'MC';
       case MicroLabel.msb:
         return 'MSB';
-      case MicroLabel.ac:
-        return 'AC';
+      case MicroLabel.atc:
+        return 'ATC';
       case MicroLabel.srac:
         return 'SRAC';
       case MicroLabel.mcEqualsMR:
@@ -253,6 +259,20 @@ extension MicroLabelExtension on MicroLabel {
       case MicroLabel.sEqualsMPCMSC:
         return 'S=MPC=MSC';
 
+      case MicroLabel.sm:
+        return 'Sm';
+      case MicroLabel.dm:
+        return 'Dm';
+      case MicroLabel.industryQuantity:
+        return 'Quantity - Industry';
+      case MicroLabel.pm1:
+        return 'Pm₁';
+      case MicroLabel.dm1:
+        return 'Dm₁';
+      case MicroLabel.p1EqualsD1AR1MR1:
+        return 'D₁=AR₁=MR₁';
+      case MicroLabel.sm1:
+        return 'Sm₁';
     }
   }
 }

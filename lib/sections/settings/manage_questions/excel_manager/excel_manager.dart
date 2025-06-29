@@ -1,8 +1,12 @@
+import 'package:economics_app/app/custom_widgets/building_helper.dart';
 import 'package:economics_app/sections/settings/manage_questions/filter_buttons.dart';
+import 'package:economics_app/sections/settings/manage_questions/manage_questions_page.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../app/enums/firebase_status.dart';
+import '../../../../app/utils/helper_methods/export_to_excel.dart';
 import '../../../quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import '../../../quizzes/quiz_state/edit_question_state.dart';
 import '../../methods/download_excel_data.dart';
@@ -11,14 +15,14 @@ import '../../methods/pick_excel_file.dart';
 import '../../methods/send_new_question_to_firebase.dart';
 import '../question_tile.dart';
 
-class ExcelUploadManager extends ConsumerStatefulWidget {
-  const ExcelUploadManager({super.key});
+class ExcelManager extends ConsumerStatefulWidget {
+  const ExcelManager({super.key});
 
   @override
-  ConsumerState<ExcelUploadManager> createState() => _ExcelUploadManagerState();
+  ConsumerState<ExcelManager> createState() => _ExcelUploadManagerState();
 }
 
-class _ExcelUploadManagerState extends ConsumerState<ExcelUploadManager> {
+class _ExcelUploadManagerState extends ConsumerState<ExcelManager> {
   FilePickerResult? file;
   List<QuestionModel> filteredQuestions = [];
 
@@ -34,7 +38,32 @@ class _ExcelUploadManagerState extends ConsumerState<ExcelUploadManager> {
             .toList();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Excel Data Manager')),
+      appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => ManageQuestionsPage(),
+                ),
+              );
+            },
+            icon: Icon(Icons.arrow_back_outlined),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                exportToExcel(
+                  filteredQuestions.toList(),
+                );
+              },
+              icon: Icon(
+                Icons.file_download,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+
+          ],
+          title: Text('Excel Manager'),),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -95,17 +124,31 @@ class _ExcelUploadManagerState extends ConsumerState<ExcelUploadManager> {
                       'Add ${filteredQuestions.length} questions to Firebase'),
                   onPressed: filteredQuestions.isNotEmpty
                       ? () {
-
-
-
-
-
-                          sendNewQuestionsBatchToFirebase(
-                              filteredQuestions.toList());
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => BuilderHelper(
+                                        future: sendNewQuestionsBatchToFirebase(
+                                            filteredQuestions.toList()),
+                                        onComplete: (status) {
+                                          String msg =
+                                              'Questions successfully added to firebase';
+                                          if (status ==
+                                              FirebaseStatus.error) {
+                                            msg =
+                                                'Error - questions not added to firebase';
+                                          }
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                                  SnackBar(content: Text(msg)));
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ExcelManager(),
+                                            ),
+                                          );
+                                        },
+                                      )));
                         }
-
-
-
                       : null,
                   style: FilledButton.styleFrom(
                     padding:
@@ -121,7 +164,10 @@ class _ExcelUploadManagerState extends ConsumerState<ExcelUploadManager> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  return QuestionTile(q: filteredQuestions[index]);
+                  return QuestionTile(
+                    q: filteredQuestions[index],
+                    pageOnPopupButtonExit: ExcelManager(),
+                  );
                 },
                 childCount: filteredQuestions.length,
               ),

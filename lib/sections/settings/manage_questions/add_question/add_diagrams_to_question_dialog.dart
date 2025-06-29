@@ -19,7 +19,9 @@ class AddDiagramsToQuestionDialog extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
 
 
-    final allDiagrams = DiagramModel.getAllDiagrams(size, context);
+    final allDiagrams = [];
+
+   // DiagramModel.getAllDiagrams(size, context);
 
     return AlertDialog(
       content: SizedBox(

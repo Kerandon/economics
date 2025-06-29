@@ -5,7 +5,6 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve_normalized.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier_normalized.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/sections/diagrams/enums/axis_label_margin.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_text.dart';
+import '../painter_methods/paint_title.dart';
 
 class SupplyAndDemand extends BaseDiagramPainter {
   SupplyAndDemand({
@@ -24,14 +24,6 @@ class SupplyAndDemand extends BaseDiagramPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
-
-    paintAxis(
-      c,
-      canvas,
-      yAxisLabel: MicroLabel.p.label,
-      xAxisLabel: MicroLabel.q.label,
-      axisLabelMargin: AxisLabelMargin.close,
-    );
 
     // Original equilibrium dashed lines
     if (model.subtype == DiagramSubtype.equilibrium ||
@@ -46,11 +38,11 @@ class SupplyAndDemand extends BaseDiagramPainter {
         xLabel: MicroLabel.qe.label,
       );
 
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.85, 0.85),
           ),
@@ -58,11 +50,11 @@ class SupplyAndDemand extends BaseDiagramPainter {
         label2: MicroLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.85, 0.15),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.15, 0.85),
           ),
@@ -80,11 +72,11 @@ class SupplyAndDemand extends BaseDiagramPainter {
     if (isDemandShift || isSupplyShift) {
       // Base curves
 
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.85, 0.85),
           ),
@@ -92,11 +84,11 @@ class SupplyAndDemand extends BaseDiagramPainter {
         label2: MicroLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.85, 0.15),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.15, 0.85),
           ),
@@ -129,11 +121,11 @@ class SupplyAndDemand extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.increaseInDemand) {
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.30, 0.10),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.90, 0.70),
           ),
@@ -193,31 +185,31 @@ class SupplyAndDemand extends BaseDiagramPainter {
         yAxisStartPos: 0.70,
         xLabel: MicroLabel.qS.label,
       );
-      paintCustomBezierNormalized(
-          color: c.colorScheme.onSurface,
-          strokeWidth: kCurveWidthSlim,
-          c,
-          canvas,
-          startPos: Offset(0.30, 1.10),
-          points: [
-            CustomBezier(endPoint: Offset(0.30, 1.14)),
-            CustomBezier(endPoint: Offset(0.70, 1.14)),
-            CustomBezier(endPoint: Offset(0.70, 1.10)),
-          ],
-          arrowOnEnd: true,
-          arrowOnStart: true,
-          arrowOnStartAngle: pi / 0.50,
-          arrowOnEndAngle: pi / 0.50, );
+      paintCustomDiagramLines(
+        color: c.colorScheme.onSurface,
+        strokeWidth: kCurveWidthSlim,
+        c,
+        canvas,
+        startPos: Offset(0.30, 1.10),
+        bezierPoints: [
+          CustomBezier(endPoint: Offset(0.30, 1.14)),
+          CustomBezier(endPoint: Offset(0.70, 1.14)),
+          CustomBezier(endPoint: Offset(0.70, 1.10)),
+        ],
+        arrowOnEnd: true,
+        arrowOnStart: true,
+        arrowOnStartAngle: pi / 0.50,
+        arrowOnEndAngle: pi / 0.50,
+      );
       paintText(c, canvas, MicroLabel.shortage.label, Offset(0.53, 0.98));
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         circleAtStart: true,
         circleAtEnd: true,
         color: Colors.red,
         c,
         canvas,
-
         startPos: Offset(0.30, 0.70),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.70, 0.70),
           ),
@@ -241,13 +233,13 @@ class SupplyAndDemand extends BaseDiagramPainter {
         yAxisStartPos: 0.30,
         xLabel: MicroLabel.qS.label,
       );
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
           strokeWidth: kCurveWidthSlim,
           color: c.colorScheme.onSurface,
           c,
           canvas,
           startPos: Offset(0.30, 0.25),
-          points: [
+          bezierPoints: [
             CustomBezier(endPoint: Offset(0.30, 0.20)),
             CustomBezier(endPoint: Offset(0.70, 0.20)),
             CustomBezier(endPoint: Offset(0.70, 0.25)),
@@ -257,19 +249,161 @@ class SupplyAndDemand extends BaseDiagramPainter {
           arrowOnStartAngle: pi,
           arrowOnEndAngle: pi);
       paintText(c, canvas, 'surplus', Offset(0.53, 0.20));
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         circleAtStart: true,
         circleAtEnd: true,
         color: Colors.red,
         c,
         canvas,
         startPos: Offset(0.30, 0.30),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.70, 0.30),
           ),
         ],
       );
+    }
+
+    /// Perfect competition market supply and demand
+    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit ||
+        model.subtype == DiagramSubtype.perfectCompetitionAbnormalProfit ||
+        model.subtype == DiagramSubtype.perfectCompetitionLoss) {
+      paintTitle(c, canvas, 'Industry');
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        xAxisEndPos: 1.15,
+        yAxisStartPos: 0.50,
+        yLabel: kPm,
+        hideXLine: true,
+        xLabel: MicroLabel.q2.label,
+      );
+      paintAxis(
+        c,
+        canvas,
+        yAxisLabel: MicroLabel.priceCostsRevenue.label,
+        yLabelIsHorizontal: false,
+        xAxisLabel: MicroLabel.industryQuantity.label,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.85, 0.15),
+        bezierPoints: [
+          CustomBezier(
+            endPoint: Offset(0.15, 0.85),
+          ),
+        ],
+        label1: MicroLabel.sm.label,
+        label1Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.15, 0.15),
+        bezierPoints: [
+          CustomBezier(
+            endPoint: Offset(0.85, 0.85),
+          ),
+        ],
+        label2: MicroLabel.dm.label,
+        label2Align: LabelAlign.centerRight,
+      );
+    }
+    if (model.subtype == DiagramSubtype.perfectCompetitionAbnormalProfit) {
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        xAxisEndPos: 1.15,
+        yAxisStartPos: 0.40,
+        yLabel: MicroLabel.pm1.label,
+        hideXLine: true,
+        xLabel: MicroLabel.q2.label,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.90, 0.30),
+        bezierPoints: [
+          CustomBezier(
+            endPoint: Offset(0.30, 0.90),
+          ),
+        ],
+        label1: MicroLabel.sm1.label,
+        label1Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(
+          0.25,
+          0.05,
+        ),
+        bezierPoints: [
+          CustomBezier(
+            endPoint: Offset(0.85, 0.65),
+          ),
+        ],
+        label2: MicroLabel.dm1.label,
+        label2Align: LabelAlign.centerRight,
+      );
+
+      /// Arrows
+
+      paintText(c, canvas, '2', Offset(0.46, 0.59));
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(
+          0.33,
+          0.70,
+        ),
+        bezierPoints: [
+          CustomBezier(
+            endPoint: Offset(0.43, 0.70),
+          ),
+        ],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi / 2,
+        color: c.colorScheme.onSurface,
+      );
+      paintText(c, canvas, '1', Offset(0.72, 0.55));
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(
+          0.68,
+          0.65,
+        ),
+        bezierPoints: [
+          CustomBezier(
+            endPoint: Offset(0.78, 0.65),
+          ),
+        ],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi / 2,
+        color: c.colorScheme.onSurface,
+      );
+    }
+    if (model.subtype == DiagramSubtype.perfectCompetitionLoss){
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        xAxisEndPos: 1.15,
+        yAxisStartPos: 0.60,
+        yLabel: MicroLabel.pm1.label,
+        hideXLine: true,
+        xLabel: MicroLabel.q2.label,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.15, 0.35),
+        straightEndPos: Offset(0.70,0.90),
+        label2: MicroLabel.dm1.label,
+        label2Align: LabelAlign.centerRight,
+      );
+
     }
   }
 }

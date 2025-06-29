@@ -28,9 +28,11 @@ class TagsButtons extends ConsumerWidget {
       width: size.width,
       child: DropdownButtonHideUnderline(
         child: DropdownButton2<Tag>(
+          dropdownStyleData: DropdownStyleData(),
           customButton: CustomDropdownHeading(tags),
           isExpanded: true,
           onChanged: (e) {},
+
           items: [
             ...customTags.map(
                   (e) => DropdownMenuItem(

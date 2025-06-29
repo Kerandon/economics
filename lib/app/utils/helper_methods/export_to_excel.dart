@@ -51,6 +51,9 @@ void exportToExcel(List<QuestionModel> allQuestions) {
       correctness[i] = q.answers![i].isCorrect ? 'TRUE' : 'FALSE';
     }
 
+    final syllabusName = (q.syllabuses?.isNotEmpty ?? false)
+        ? q.syllabuses![0].syllabus?.name
+        : 'null';
     final unitName = q.units?.isNotEmpty == true ? q.units!.first.name ?? 'null' : 'null';
     final unitIndex = q.units?.isNotEmpty == true ? (q.units!.first.index ?? 0).toString() : '0';
 
@@ -75,7 +78,7 @@ void exportToExcel(List<QuestionModel> allQuestions) {
       QuestionKey.answer4.name: answers[3],
       QuestionKey.correct4.name: correctness[3],
       QuestionKey.explanation.name: q.explanation,
-      QuestionKey.syllabus.name: q.syllabuses?[0].syllabus?.name,
+      QuestionKey.syllabus.name: syllabusName,
       QuestionKey.unit1Index.name: unitIndex,
       QuestionKey.unit1.name: unitName,
       QuestionKey.subunit1Index.name: subunitIndex,

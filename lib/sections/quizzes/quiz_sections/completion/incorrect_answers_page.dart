@@ -128,11 +128,11 @@ class _IncorrectAnswersPageState extends ConsumerState<IncorrectAnswersPage> {
                   vertical: size.height * kBottomIndent,
                 ),
                 child: CustomChipButton(
-                    text: 'Close',
-                    onPressed: () {
+                    label: 'Close',
+                    onTap: () {
                       Navigator.of(context).pop();
                     },
-                    isSelected: true),
+                    selected: true),
               ),
             ],
           ),

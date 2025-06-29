@@ -20,7 +20,6 @@ class _AddImagesToQuestionDialogState
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final theme = Theme.of(context);
     final editState = ref.watch(editQuestionProvider);
     final editNotifier = ref.read(editQuestionProvider.notifier);
     final c = editState.currentQuestion;

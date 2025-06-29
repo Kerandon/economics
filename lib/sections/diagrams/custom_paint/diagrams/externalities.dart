@@ -54,11 +54,11 @@ class Externalities extends BaseDiagramPainter {
         yLabel: MicroLabel.pOpt.label,
         xLabel: MicroLabel.qOpt.label,
       );
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.70, 0.10),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.10, 0.70),
           ),
@@ -79,11 +79,11 @@ class Externalities extends BaseDiagramPainter {
           Offset(0.50, 0.70),
         ],
       );
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.70, 0.90),
           ),
@@ -125,11 +125,11 @@ class Externalities extends BaseDiagramPainter {
         xLabel: MicroLabel.qOpt.label,
       );
 
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.90, 0.30),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.30, 0.90),
           ),
@@ -160,11 +160,11 @@ class Externalities extends BaseDiagramPainter {
         yLabel: MicroLabel.pOpt.label,
         xLabel: MicroLabel.qOpt.label,
       );
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.25, 0.05),
-        points: [
+        bezierPoints: [
           CustomBezier(
             endPoint: Offset(0.90, 0.70),
           ),
@@ -193,11 +193,11 @@ class Externalities extends BaseDiagramPainter {
     );
 
 
-    paintCustomBezierNormalized(
+    paintCustomDiagramLines(
       c,
       canvas,
       startPos: Offset(0.15, 0.15),
-      points: [
+      bezierPoints: [
         CustomBezier(
           endPoint: Offset(0.85, 0.85),
         ),
@@ -205,11 +205,11 @@ class Externalities extends BaseDiagramPainter {
       label2: demandLabel,
       label2Align: LabelAlign.centerRight,
     );
-    paintCustomBezierNormalized(
+    paintCustomDiagramLines(
       c,
       canvas,
       startPos: Offset(0.85, 0.15),
-      points: [
+      bezierPoints: [
         CustomBezier(
           endPoint: Offset(0.15, 0.85),
         ),

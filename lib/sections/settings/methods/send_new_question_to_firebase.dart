@@ -36,10 +36,10 @@ Future<void> sendNewQuestionsBatchToFirebase(List<QuestionModel> questions) asyn
 
       DocumentReference docRef;
       if (querySnapshot.docs.isNotEmpty) {
-        // Overwrite existing doc
+
         docRef = querySnapshot.docs.first.reference;
       } else {
-        // Create new doc with auto-generated ID
+
         docRef = instance.collection(QuestionKey.quiz.name).doc();
       }
 

@@ -10,7 +10,9 @@ enum Tag {
   coursebook,
   pastPaper,
   diagram,
-  hl
+  hl,
+  p1OctoberNovember2023_0455_11,
+  p1OctoberNovember2023_0455_13,
 }
 
 extension TagFirebaseExtension on Tag {
@@ -64,11 +66,15 @@ extension CustomTagExtension on Tag {
       case Tag.coursebook:
         return "Coursebook";
       case Tag.pastPaper:
-        return "Past paper";
+        return "Past Paper";
       case Tag.hl:
         return "HL";
       case Tag.diagram:
         return "Diagram";
+      case Tag.p1OctoberNovember2023_0455_11:
+       return "p1OctoberNovember2023_0455_11";
+      case Tag.p1OctoberNovember2023_0455_13:
+        return "p1OctoberNovember2023_0455_13";
     }
   }
 
@@ -97,6 +103,10 @@ extension CustomTagExtension on Tag {
         return Tag.hl;
       case "DIAGRAM":
         return Tag.diagram;
+      case "p1OctoberNovember2023_0455_11":
+        return Tag.p1OctoberNovember2023_0455_11;
+      case "p1OctoberNovember2023_0455_13":
+        return Tag.p1OctoberNovember2023_0455_13;
       default:
         return null;
     }

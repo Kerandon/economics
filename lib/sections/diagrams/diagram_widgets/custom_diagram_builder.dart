@@ -14,11 +14,13 @@ class CustomDiagramBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final dim = size.width * dimensions;
-    final diagramsToShow = DiagramModel.getSelectedDiagrams(
-      size,
-      context,
-      selectedDiagrams: diagrams?.toList() ?? [],
-    ).toList();
+    final diagramsToShow = [];
+
+    // DiagramModel.getSelectedDiagrams(
+    //   size,
+    //   context,
+    //   selectedDiagrams: diagrams?.toList() ?? [],
+    // ).toList();
 
     return Wrap(
       children: [

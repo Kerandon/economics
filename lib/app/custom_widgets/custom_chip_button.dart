@@ -3,25 +3,25 @@ import 'package:flutter/material.dart';
 
 class CustomChipButton extends StatelessWidget {
   const CustomChipButton({
-    this.text,
+    this.label,
     this.textSize,
-    required this.onPressed,
+    required this.onTap,
     this.textAndIconColor,
     this.icon,
-    this.isSelected = true,
+    this.selected = true,
     this.isDisabled = false,
     this.fillColor,
     this.outlinedStyle = false,
     super.key,
   });
 
-  final String? text;
+  final String? label;
   final double? textSize;
   final IconData? icon;
   final Color? textAndIconColor;
   final Color? fillColor;
-  final Function? onPressed;
-  final bool isSelected;
+  final Function? onTap;
+  final bool selected;
   final bool isDisabled;
   final bool outlinedStyle;
 
@@ -38,7 +38,7 @@ class CustomChipButton extends StatelessWidget {
         iconAndTextColor =
             textAndIconColor ?? Theme.of(context).colorScheme.primary;
       } else {
-        if (isSelected) {
+        if (selected) {
           iconAndTextColor = Colors.white;
         } else {
           iconAndTextColor = Theme.of(context).colorScheme.onSurface;
@@ -59,7 +59,7 @@ class CustomChipButton extends StatelessWidget {
         child: Material(
           color: isDisabled && !outlinedStyle
               ? Theme.of(context).colorScheme.scrim
-              : isSelected
+              : selected
                   ? outlinedStyle
                       ? null
                       : fillColor ?? Theme.of(context).colorScheme.primary
@@ -72,7 +72,7 @@ class CustomChipButton extends StatelessWidget {
             onTap: isDisabled
                 ? null
                 : () {
-                    onPressed?.call();
+                    onTap?.call();
                   },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -90,10 +90,10 @@ class CustomChipButton extends StatelessWidget {
                       ),
                     ),
                   ],
-                  if (text != null) ...[
+                  if (label != null) ...[
                     Padding(
                       padding: const EdgeInsets.all(12),
-                      child: Text(text!,
+                      child: Text(label!,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium

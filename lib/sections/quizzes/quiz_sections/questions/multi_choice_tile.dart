@@ -1,5 +1,6 @@
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../diagrams/diagram_widgets/custom_diagram_builder.dart';
@@ -9,16 +10,16 @@ import 'answer_tile.dart';
 
 class MultiChoiceTile extends ConsumerWidget {
   const MultiChoiceTile(
-      this.question, {
-        super.key,
-      });
+    this.question, {
+    super.key,
+  });
 
   final QuestionModel question;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final theme = Theme.of(context);
+
     final tileSpacing = size.width * 0.01;
 
     return IgnorePointer(
@@ -30,7 +31,6 @@ class MultiChoiceTile extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Question header with centered title
             Padding(
               padding: EdgeInsets.only(bottom: tileSpacing),
               child: Container(
@@ -41,27 +41,19 @@ class MultiChoiceTile extends ConsumerWidget {
                   alignment: Alignment.center,
                   children: [
                     // Centered question text
-                    Text(
+                    HtmlWidget(
                       question.question ?? "",
-                      style: theme.textTheme.headlineLarge?.copyWith(
-                        color: theme.colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
+                      textStyle: Theme.of(context).textTheme.headlineLarge,
                     ),
-
                     // Diagram aligned to the left
-                    if (question.diagrams != null && question.diagrams!.isNotEmpty)
+                    if (question.diagrams != null &&
+                        question.diagrams!.isNotEmpty)
                       Positioned(
                         left: 0,
                         child: CustomDiagramBuilder(
                           diagrams: question.diagrams!.toList(),
                         ),
                       ),
-
-
                   ],
                 ),
               ),
@@ -81,7 +73,6 @@ class MultiChoiceTile extends ConsumerWidget {
                 ),
                 itemBuilder: (context, index) {
                   final a = question.answers![index];
-
 
                   return GridTile(
                     child: AnswerTile(

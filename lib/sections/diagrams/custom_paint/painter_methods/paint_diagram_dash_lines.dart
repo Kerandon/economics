@@ -13,11 +13,11 @@ void paintDiagramDashedLines(
   bool hideYLine = false,
   bool hideXLine = false,
 }) {
-  final normalize = 1 - kAxisIndent * 1.5;
+  final normalize = 1 - kAxisIndent * 1.50;
   final yPos = yAxisStartPos * normalize + (kAxisIndent / 2);
-  final xEndPosNormalized = (kAxisIndent * 1.25 + xAxisEndPos) * normalize;
+  final xEndPosNormalized = (kAxisIndent * 1.50 + xAxisEndPos) * normalize;
   final xLabelY = 1 - kAxisIndent * normalize;
-
+  // final normalize = 1 - (kAxisIndent * 1.5);
   if (!hideYLine) {
     paintDashedLine(
       config,

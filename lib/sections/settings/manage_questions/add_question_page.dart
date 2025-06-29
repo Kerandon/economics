@@ -12,7 +12,9 @@ import '../../quizzes/quiz_state/edit_question_state.dart';
 import 'filter_buttons.dart';
 
 class AddQuestionPage extends ConsumerStatefulWidget {
-  const AddQuestionPage({super.key});
+  const AddQuestionPage({super.key, required this.pageOnBackButton});
+
+  final Widget pageOnBackButton;
 
   @override
   ConsumerState<AddQuestionPage> createState() => AddQuestionPageState();
@@ -35,12 +37,12 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
           editNotifier.updateCurrentQuestion(
             c.copyWith(
               questionTypes: [
-                (c.questionTypes != null && c.questionTypes!.isNotEmpty)
+                (c.questionTypes?.isNotEmpty ?? false)
                     ? c.questionTypes!.first
                     : QuestionType.multi
               ],
               syllabuses: [
-                (c.syllabuses != null && c.syllabuses!.isNotEmpty)
+                (c.syllabuses?.isNotEmpty ?? false)
                     ? c.syllabuses!.first
                     : (editState.syllabuses.isNotEmpty
                     ? editState.syllabuses.first
@@ -65,7 +67,7 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
               editNotifier.updateCurrentQuestion(c.copyWith(diagrams: []));
               Navigator.of(context).pushReplacement(
                 PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => ManageQuestionsPage(),
+                  pageBuilder: (_, __, ___) => widget.pageOnBackButton,
                   transitionDuration: Duration.zero,
                   reverseTransitionDuration: Duration.zero,
                 ),
@@ -74,7 +76,7 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
             },
             icon: Icon(
               Icons.arrow_back_outlined,
-            )),
+            ),),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -109,7 +111,7 @@ class AddQuestionPageState extends ConsumerState<AddQuestionPage> {
                   ],
                   Padding(
                     padding: const EdgeInsets.all(18.0),
-                    child: AddQuestionButton(),
+                    child: AddQuestionButton(pageOnBackButton: ManageQuestionsPage(),),
                   ),
                 ],
               ),

@@ -1,14 +1,18 @@
+import 'package:economics_app/app/custom_widgets/building_helper.dart';
+import 'package:economics_app/app/enums/firebase_status.dart';
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 import 'package:economics_app/sections/settings/manage_questions/add_question_page.dart';
-import 'package:economics_app/sections/settings/manage_questions/excel_manager/excel_download_manager.dart';
+
 import 'package:economics_app/sections/settings/manage_questions/question_tile.dart';
+import 'package:economics_app/sections/settings/methods/delete_quiz_collection.dart';
 import 'package:economics_app/sections/settings/methods/filter_questions.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/utils/helper_methods/export_to_excel.dart';
 import '../../quizzes/methods/get_questions_data.dart';
 import '../../quizzes/quiz_state/edit_question_state.dart';
-import '../../tab_main.dart';
+import '../../home_page/tab_main.dart';
+import 'excel_manager/excel_manager.dart';
 import 'filter_buttons.dart';
 
 class ManageQuestionsPage extends ConsumerStatefulWidget {
@@ -49,30 +53,69 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
         ),
         title: const Text('Manage Questions'),
         actions: [
-          IconButton(
-            onPressed: () {
-              exportToExcel(
-                filteredQuestions.toList(),
-              );
-            },
-            icon: Icon(
-              Icons.file_download,
-              color: Theme.of(context).colorScheme.onSurface,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => ExcelManager(),
+                  ),
+                );
+              },
+              icon: Icon(
+                FontAwesomeIcons.solidFileExcel,
+                color: Colors.green,
+              ),
             ),
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ExcelUploadManager(),
-                ),
-              );
-            },
-            icon: Icon(
-              Icons.upload_file,
-              color: Theme.of(context).colorScheme.onSurface,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Delete Quiz Collection?'),
+                    content: const Text('Are you sure you want to delete the entire quiz collection? This cannot be undone.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(), // Cancel
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog first
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => BuilderHelper(
+                                future: deleteQuizCollection(context),
+                                onComplete: (status) {
+                                  String msg = 'Quiz collection successfully deleted';
+                                  if (status == FirebaseStatus.error) {
+                                    msg = 'Quiz collection not deleted';
+                                  }
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(msg)),
+                                  );
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(builder: (context) => ManageQuestionsPage()),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text('Confirm', style: TextStyle(color: Colors.red)),
+                      ),
+                    ],
+                  ),
+                );
+              },
+
+              icon: const Icon(Icons.delete_forever, color: Colors.red),
             ),
-          ),
+          )
         ],
       ),
       body: FutureBuilder<List<QuestionModel>>(
@@ -95,7 +138,6 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
           }
 
           filteredQuestions = snapshot.data?.toList() ?? [];
-
 
           final c = editState.currentQuestion;
           filteredQuestions =
@@ -127,7 +169,10 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       QuestionModel q = filteredQuestions[index];
-                      return QuestionTile(q: q);
+                      return QuestionTile(
+                        q: q,
+                        pageOnPopupButtonExit: ManageQuestionsPage(),
+                      );
                     },
                     childCount: filteredQuestions.length,
                   ),
@@ -143,7 +188,9 @@ class _ManageQuestionsPageState extends ConsumerState<ManageQuestionsPage> {
             editNotifier.updateCurrentQuestion(editState.currentQuestion);
             Navigator.of(context).pushReplacement(
               PageRouteBuilder(
-                pageBuilder: (_, __, ___) => AddQuestionPage(),
+                pageBuilder: (_, __, ___) => AddQuestionPage(
+                  pageOnBackButton: ManageQuestionsPage(),
+                ),
               ),
             );
           },

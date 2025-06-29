@@ -43,7 +43,7 @@ class Monopoly extends BaseDiagramPainter {
       c,
       canvas,
       yAxisLabel: kPriceCostsRevenue,
-      xAxisLabel: kQuantity,
+      xAxisLabel: MicroLabel.quantityFirm.label,
     );
 
     /// Demand curve

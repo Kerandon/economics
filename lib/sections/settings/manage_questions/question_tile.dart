@@ -15,11 +15,13 @@ import 'add_question_page.dart';
 
 class QuestionTile extends ConsumerWidget {
   const QuestionTile({
+    required this.pageOnPopupButtonExit,
     super.key,
     required this.q,
   });
 
   final QuestionModel q;
+  final Widget pageOnPopupButtonExit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -45,14 +47,25 @@ class QuestionTile extends ConsumerWidget {
                 PopupMenuItem(
                   child: Text('Edit'),
                   onTap: () {
-                    editNotifier
-                      ..updateCurrentQuestion(q)
-                      //.setNumberOfMultiAnswers(q, q.answers?.length ?? 4)
-                      ..setEditExistingQuestion(true);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => AddQuestionPage(),
-                      ),
+                    Future.delayed(
+                      Duration.zero,
+                      () {
+                        editNotifier
+                          ..updateCurrentQuestion(q)
+                          ..setEditExistingQuestion(true);
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (t) {
+                            Navigator.maybePop(context);
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => AddQuestionPage(
+                                  pageOnBackButton: pageOnPopupButtonExit,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     );
                   },
                 ),
@@ -92,7 +105,8 @@ class QuestionTile extends ConsumerWidget {
                             if (q.questionTypes?[0] == QuestionType.multi) ...[
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * kPageIndentHorizontal,
+                                  horizontal:
+                                      size.width * kPageIndentHorizontal,
                                 ),
                                 child: Text(
                                   a.isCorrect == true ? 'Correct' : 'Incorrect',
@@ -110,7 +124,9 @@ class QuestionTile extends ConsumerWidget {
                 height: 8,
               ),
               Text('ID: ${q.id}'),
-              Text('SYLLABUS: ${q.syllabuses?[0].syllabus?.toText()}'),
+              if (q.syllabuses?.isNotEmpty ?? false) ...[
+                Text('SYLLABUS: ${q.syllabuses?[0].syllabus?.toText()}'),
+              ],
               Text(
                   'UNIT: ${q.units?.map((e) => e.name).join(", ") ?? ""}, ${q.subunits?.map((e) => e.name).join(", ") ?? ""}'),
               Text('TAGS ${q.tags?.map((e) => e.name).join(", ") ?? ""}'),

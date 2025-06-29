@@ -38,8 +38,16 @@ extension Shade on ShadeType {
     }
   }
 
-  String toHexColorString() {
+  String toHexColorString({bool withAlpha = false}) {
     final color = setShadeColor();
-    return '#${color.value.toRadixString(16).padLeft(8, '0').substring(2)}';
+    final red = (color.r * 255).toInt().toRadixString(16).padLeft(2, '0');
+    final green = (color.g * 255).toInt().toRadixString(16).padLeft(2, '0');
+    final blue = (color.b * 255).toInt().toRadixString(16).padLeft(2, '0');
+    final alpha = (color.a * 255).toInt().toRadixString(16).padLeft(2, '0');
+
+    return withAlpha
+        ? '#$alpha$red$green$blue'.toUpperCase()
+        : '#$red$green$blue'.toUpperCase();
   }
+
 }

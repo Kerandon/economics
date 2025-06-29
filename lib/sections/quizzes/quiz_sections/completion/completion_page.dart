@@ -6,7 +6,7 @@ import 'package:economics_app/sections/quizzes/quiz_enums/answer_stage.dart';
 
 import 'package:economics_app/sections/quizzes/quiz_sections/questions/quiz_models/question_model.dart';
 
-import 'package:economics_app/sections/tab_main.dart';
+import 'package:economics_app/sections/home_page/tab_main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../quiz_state/quiz_state.dart';
@@ -140,8 +140,8 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomChipButton(
-                          text: 'Retest incorrect answers',
-                          onPressed: () {
+                          label: 'Retest incorrect answers',
+                          onTap: () {
                             List<QuestionModel> incorrectQuestions = [];
                             for (var q in quizState.selectedQuestions) {
                               if (q.answerStage == AnswerStage.incorrect) {
@@ -171,13 +171,13 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                           width: size.width * 0.01,
                         ),
                         CustomChipButton(
-                          text: 'Review incorrect answers',
-                          onPressed: () {
+                          label: 'Review incorrect answers',
+                          onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
                                     const IncorrectAnswersPage()));
                           },
-                          isSelected: true,
+                          selected: true,
                         ),
                       ],
                     ),
@@ -192,8 +192,8 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomChipButton(
-                        text: 'New quiz',
-                        onPressed: () {
+                        label: 'New quiz',
+                        onTap: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                                 builder: (context) => StartQuizPage()),
@@ -202,14 +202,14 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                             quizNotifier.setResetQuestions();
                           });
                         },
-                        isSelected: true,
+                        selected: true,
                       ),
                       SizedBox(
                         width: size.width * 0.02,
                       ),
                       CustomChipButton(
-                        text: 'Home',
-                        onPressed: () {
+                        label: 'Home',
+                        onTap: () {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                                 builder: (context) => const TabBarMain()),
@@ -218,7 +218,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                             quizNotifier.setResetQuestions();
                           });
                         },
-                        isSelected: true,
+                        selected: true,
                       ),
                     ],
                   ),

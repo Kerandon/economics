@@ -65,9 +65,9 @@ class _BuilderHelperState extends State<BuilderHelper> {
                         spacing: size.width * kWrapSpacing,
                         children: widget.onButtonPressed!.entries
                             .map((e) => CustomChipButton(
-                          text: e.key,
-                          onPressed: e.value,
-                          isSelected: true,
+                          label: e.key,
+                          onTap: e.value,
+                          selected: true,
                         ))
                             .toList(),
                       ),

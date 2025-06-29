@@ -9,9 +9,11 @@ class EditQuestionButton extends ConsumerWidget {
   const EditQuestionButton({
     super.key,
     required this.question,
+    required this.pageOnBackButton,
   });
 
   final QuestionModel question;
+  final Widget pageOnBackButton;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,7 +30,7 @@ class EditQuestionButton extends ConsumerWidget {
           editNotifier.setEditExistingQuestion(true);
           WidgetsBinding.instance.addPostFrameCallback((t){
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => AddQuestionPage()),
+              MaterialPageRoute(builder: (context) => AddQuestionPage(pageOnBackButton: pageOnBackButton,)),
             );
           });
 

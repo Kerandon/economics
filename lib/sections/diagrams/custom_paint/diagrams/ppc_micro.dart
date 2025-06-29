@@ -35,11 +35,11 @@ class PPCMicro extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.opportunityCost ||
         model.subtype == DiagramSubtype.increasingOpportunityCost ||
         model.subtype == DiagramSubtype.outputPoints) {
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.20),
-        points: [
+        bezierPoints: [
           CustomBezier(
             control: Offset(0.70, 0.35),
             endPoint: Offset(
@@ -168,11 +168,11 @@ class PPCMicro extends BaseDiagramPainter {
         model.subtype == DiagramSubtype.growth) {
       final increase =
           model.subtype == DiagramSubtype.increaseInPotentialOutput;
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.10),
-        points: [
+        bezierPoints: [
           CustomBezier(
             control: Offset(0.85, 0.25),
             endPoint: Offset(
@@ -182,11 +182,11 @@ class PPCMicro extends BaseDiagramPainter {
           ),
         ],
       );
-      paintCustomBezierNormalized(
+      paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.30),
-        points: [
+        bezierPoints: [
           CustomBezier(
             control: Offset(0.60, 0.45),
             endPoint: Offset(

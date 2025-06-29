@@ -9,9 +9,9 @@ import 'package:economics_app/sections/quizzes/quiz_state/start_quiz_state.dart'
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../app/enums/syllabus_enum.dart';
-import '../tab_main.dart';
-import 'methods/get_gifs.dart';
-import 'methods/get_questions_data.dart';
+import 'tab_main.dart';
+import '../quizzes/methods/get_gifs.dart';
+import '../quizzes/methods/get_questions_data.dart';
 
 class QuizInitPage extends ConsumerStatefulWidget {
   const QuizInitPage({super.key});

@@ -1,11 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import '../../quizzes/quiz_enums/diagram_enum.dart';
-import '../data/all_diagrams.dart';
 import '../enums/diagram_subtype.dart';
 import '../enums/diagram_type.dart';
 import '../enums/unit_type.dart';
-import '../utils/mixins.dart';
 
 class DiagramModel extends Equatable {
   final UnitType? unit;
@@ -34,20 +32,18 @@ class DiagramModel extends Equatable {
 
   // Deserialization method from Firebase
   factory DiagramModel.fromFirebase(Map<String, dynamic> map) {
-
-
     return DiagramModel(
       unit: map[DiagramKey.unit.name] != null
           ? UnitType.values
-          .firstWhere((e) => e.name == map[DiagramKey.unit.name])
+              .firstWhere((e) => e.name == map[DiagramKey.unit.name])
           : null,
       type: map[DiagramKey.type.name] != null
           ? DiagramType.values
-          .firstWhere((e) => e.name == map[DiagramKey.type.name])
+              .firstWhere((e) => e.name == map[DiagramKey.type.name])
           : null,
       subtype: map[DiagramKey.subtype.name] != null
           ? DiagramSubtype.values
-          .firstWhere((e) => e.name == map[DiagramKey.subtype.name])
+              .firstWhere((e) => e.name == map[DiagramKey.subtype.name])
           : null,
       description: map['description'], // <-- Deserialize it
     );
@@ -59,13 +55,12 @@ class DiagramModel extends Equatable {
       if (diagramsList.isEmpty) {
         return null;
       } else {
-
         return diagramsList
             .map(
               (e) => DiagramModel.fromFirebase(
-            Map<String, dynamic>.from(e),
-          ),
-        )
+                Map<String, dynamic>.from(e),
+              ),
+            )
             .toList();
       }
     }
@@ -77,6 +72,8 @@ class DiagramModel extends Equatable {
     UnitType? unit,
     DiagramType? type,
     DiagramSubtype? subtype,
+    DiagramType? type2,
+    DiagramSubtype? subtype2,
     CustomPainter? painter,
     String? description, // <-- Add to copyWith
   }) {
@@ -88,71 +85,6 @@ class DiagramModel extends Equatable {
       description: description ?? this.description,
     );
   }
-
-  static List<DiagramModel> getSelectedDiagrams(Size size, BuildContext context,
-      {required List<DiagramModel> selectedDiagrams}) {
-
-    /// get all diagrams which are [BaseDiagramPainter]
-    final allDiagrams = AllDiagrams(
-      size: size,
-      colorScheme: Theme.of(context).colorScheme,
-    ).getAllPainterDiagrams();
-
-    List<DiagramModel> all = [];
-
-    for (var e in allDiagrams) {
-      final i = e as DiagramIdentifierMixin;
-
-      all.add(i.model.copyWith(painter: e));
-    }
-
-
-    if (selectedDiagrams.isNotEmpty) {
-      List<DiagramModel> selected = [];
-      for (var s in selectedDiagrams) {
-        for (var a in all) {
-          if (s.type == a.type && s.subtype == a.subtype) {
-            selected.add(a);
-          }
-        }
-      }
-      return selected.toList();
-    } else {
-      return [];
-    }
-  }
-
-  static List<DiagramModel> getAllDiagrams(Size size, BuildContext context) {
-    final allDiagrams = AllDiagrams(
-      size: size,
-      colorScheme: Theme.of(context).colorScheme,
-    ).getAllPainterDiagrams();
-
-    List<DiagramModel> all = [];
-    for (var e in allDiagrams) {
-      final i = e as DiagramIdentifierMixin;
-
-      all.add(i.model.copyWith(painter: e));
-    }
-    return all;
-  }
-  static List<DiagramModel> getUniqueByUnitAndType(Size size, BuildContext context) {
-    final List<DiagramModel> allDiagrams = getAllDiagrams(size, context);
-
-    final Set<String> seenKeys = {};
-    final List<DiagramModel> uniqueDiagrams = [];
-
-    for (final diagram in allDiagrams) {
-      final key = '${diagram.unit}_${diagram.type}';
-      if (seenKeys.add(key)) {
-        uniqueDiagrams.add(diagram);
-      }
-    }
-
-    return uniqueDiagrams;
-  }
-
-
 
   @override
   List<Object?> get props => [type, subtype, description]; // <-- Add here

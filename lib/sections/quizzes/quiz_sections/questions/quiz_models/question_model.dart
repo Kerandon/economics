@@ -86,22 +86,40 @@ class QuestionModel extends Equatable {
     );
   }
 
-  // Converts QuestionModel to a map that can be sent to Firebase
   Map<String, dynamic> toMap() {
+    String safeIndex(dynamic index) {
+      if (index == null) return '0';
+      final s = index.toString().trim();
+      return s.isEmpty ? '0' : s;
+    }
+
     return {
-      QuestionKey.type.name: questionTypes?[0].name,
+      QuestionKey.type.name: questionTypes?.isNotEmpty == true
+          ? questionTypes![0].name
+          : null,
       QuestionKey.question.name: question,
-      QuestionKey.syllabus.name: syllabuses?[0].syllabus?.name,
-      QuestionKey.units.name:
-          units?.map((e) => {e.index ?? 0: e.name}).toList(),
-      QuestionKey.subunits.name:
-          subunits?.map((e) => {e.index ?? 0: e.name}).toList(),
-      QuestionKey.answers.name: answers?.map((e) => e.toMap()).toList(),
-      QuestionKey.explanation.name: explanation,
-      QuestionKey.diagrams.name: diagrams?.map((e) => e.toMap()).toList(),
-      QuestionKey.tags.name: tags?.map((e) => e.name).toList(),
+      QuestionKey.syllabus.name: syllabuses?.isNotEmpty == true
+          ? syllabuses![0].syllabus?.name
+          : null,
+      if (units?.isNotEmpty == true)
+        QuestionKey.units.name: {
+          for (var e in units!) safeIndex(e.index): e.name
+        },
+      if (subunits?.isNotEmpty == true)
+        QuestionKey.subunits.name: {
+          for (var e in subunits!) safeIndex(e.index): e.name
+        },
+      if (answers?.isNotEmpty == true)
+        QuestionKey.answers.name: answers!.map((e) => e.toMap()).toList(),
+      if (explanation?.isNotEmpty == true)
+        QuestionKey.explanation.name: explanation,
+      if (diagrams?.isNotEmpty == true)
+        QuestionKey.diagrams.name: diagrams!.map((e) => e.toMap()).toList(),
+      if (tags?.isNotEmpty == true)
+        QuestionKey.tags.name: tags!.map((e) => e.name).toList(),
     };
   }
+
 
   factory QuestionModel.fromMap(String id, Map<String, dynamic> map) {
     return QuestionModel(
@@ -179,6 +197,6 @@ void sendXFileToFirebaseStorage(XFile? xFile) {
     final storageRef = FirebaseStorage.instance.ref();
     final fileRef =
         storageRef.child('uploads/${xFile.name}'); // optional: add folder path
-    final uploadTask = fileRef.putFile(File(xFile.path));
+        fileRef.putFile(File(xFile.path));
   }
 }

@@ -171,6 +171,7 @@ class _QuestionNavigationButtonsState
                                 ? theme.primaryColor
                                 : theme.colorScheme.scrim,
                         onPressed: () {
+                          getIt<AudioManager>().playSoundRandomly('correct/');
                           quizNotifier.updateQuestion(
                             c.copyWith(
                               answerStage: AnswerStage.correct,

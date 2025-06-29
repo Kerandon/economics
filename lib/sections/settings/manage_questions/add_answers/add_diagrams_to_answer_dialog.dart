@@ -20,7 +20,7 @@ class AddDiagramsToAnswerDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
 
-    final allDiagrams = DiagramModel.getAllDiagrams(size, context);
+    final allDiagrams = [];
 
     final editState = ref.watch(editQuestionProvider);
     final diagramHeading = editState.currentQuestion.answers?[answerIndex].diagrams
