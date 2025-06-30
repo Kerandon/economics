@@ -13,11 +13,12 @@ void paintDiagramDashedLines(
   bool hideYLine = false,
   bool hideXLine = false,
 }) {
-  final normalize = 1 - kAxisIndent * 1.50;
+
+  final normalize = 1 - (kAxisIndent * 1.50);
   final yPos = yAxisStartPos * normalize + (kAxisIndent / 2);
-  final xEndPosNormalized = (kAxisIndent * 1.50 + xAxisEndPos) * normalize;
+  final xEndPosNormalized = xAxisEndPos * (1- (kAxisIndent * 1.5)) + kAxisIndent;
+      //xAxisEndPos - (kAxisIndent / 2);
   final xLabelY = 1 - kAxisIndent * normalize;
-  // final normalize = 1 - (kAxisIndent * 1.5);
   if (!hideYLine) {
     paintDashedLine(
       config,
@@ -70,6 +71,7 @@ void paintTextForDashedLines(
   final width = config.painterSize.width;
   final height = config.painterSize.height;
 
+
   final textPainter = TextPainter(
     text: TextSpan(
       text: label,
@@ -81,12 +83,15 @@ void paintTextForDashedLines(
     textDirection: TextDirection.ltr,
   )..layout(minWidth: 0, maxWidth: width);
 
+
+
   Offset offset;
   switch (axis) {
     case CustomAxis.x:
       offset = Offset(
         position.dx * width - textPainter.width / 2,
-        position.dy * height - (textPainter.height / 2),
+        height - (kAxisIndent * height) + (textPainter.height / 4),
+        //position.dy * height - kAxisIndent / 2 + (textPainter.height / 2),
       );
       break;
     case CustomAxis.y:

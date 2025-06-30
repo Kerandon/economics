@@ -12,7 +12,7 @@ void paintAxis(
   DiagramPainterConfig config,
   Canvas canvas, {
   String? yAxisLabel,
-      bool yLabelIsHorizontal = true,
+  bool yLabelIsHorizontal = true,
   String? xAxisLabel,
   bool addNumericalAxis = false,
   double labelXIndent = kAxisLabelAdjustmentCenter,
@@ -50,5 +50,6 @@ void paintAxis(
         axis: Axis.horizontal, incrementValue: 50, totalIncrements: 5);
     addAxisNumericalLabels(config, canvas, axis: Axis.vertical);
   }
-  paintText(config, canvas, '0', Offset(kAxisIndent - 0.03,(1-kAxisIndent) + 0.03));
+  paintText(config, canvas, '0',
+      Offset(kAxisIndent - 0.03, (1 - kAxisIndent) + 0.03));
 }

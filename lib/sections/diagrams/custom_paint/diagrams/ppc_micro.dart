@@ -1,6 +1,5 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier_normalized.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
@@ -11,6 +10,7 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_curve_normalized.dart';
+import '../painter_methods/paint_diagram_custom_lines.dart';
 
 class PPCMicro extends BaseDiagramPainter {
   PPCMicro({

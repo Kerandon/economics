@@ -49,7 +49,7 @@ class AllDiagrams {
         type: DiagramType.perfectCompetition,
         label: 'Perfect Competition - Long-run Equilibrium',
         description:
-            'Long-run equilibrium the firm earns normal profit AR=ATC. The firm is allocatively efficient P=MC and Productively efficient MC=AC',
+            kPerfectCompetitionLongRunEquilibrium,
         basePainterDiagrams: [
           SupplyAndDemand(
             config: config,
@@ -73,7 +73,7 @@ class AllDiagrams {
         unit: UnitType.micro,
         type: DiagramType.perfectCompetition,
         label: 'Perfect Competition - Abnormal Profits',
-        description: perfectCompetitionAbnormalProfitProcessDescription,
+        description: kPerfectCompetitionAbnormalProfitProcessDescription,
         basePainterDiagrams: [
           SupplyAndDemand(
             config: config,
@@ -97,7 +97,7 @@ class AllDiagrams {
         unit: UnitType.micro,
         type: DiagramType.perfectCompetition,
         label: 'Perfect Competition - Economic Losses',
-        description: '',
+        description: kPerfectCompetitionLossesDescription,
         basePainterDiagrams: [
           SupplyAndDemand(
             config: config,

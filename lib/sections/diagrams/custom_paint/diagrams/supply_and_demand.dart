@@ -1,9 +1,7 @@
 import 'dart:math';
-
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve_normalized.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier_normalized.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
@@ -12,6 +10,7 @@ import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
+import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_text.dart';
 import '../painter_methods/paint_title.dart';
 
@@ -145,8 +144,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.increaseInSupply) {
-      paintCurveNormalized(c, canvas, Offset(0.30, 0.90), Offset(0.90, 0.30),
-          label2: MicroLabel.s1.label, label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(c, canvas,
+          startPos: Offset(0.30, 0.90), straightEndPos: Offset(0.90, 0.30));
       paintDiagramDashedLines(
         c,
         canvas,
@@ -268,16 +267,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit ||
         model.subtype == DiagramSubtype.perfectCompetitionAbnormalProfit ||
         model.subtype == DiagramSubtype.perfectCompetitionLoss) {
-      paintTitle(c, canvas, 'Industry');
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        xAxisEndPos: 1.15,
-        yAxisStartPos: 0.50,
-        yLabel: kPm,
-        hideXLine: true,
-        xLabel: MicroLabel.q2.label,
-      );
+      paintTitle(c, canvas, 'Industry / Market');
       paintAxis(
         c,
         canvas,
@@ -285,28 +275,33 @@ class SupplyAndDemand extends BaseDiagramPainter {
         yLabelIsHorizontal: false,
         xAxisLabel: MicroLabel.industryQuantity.label,
       );
+
+    }
+    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit) {
+
+      paintDiagramDashedLines(c, canvas,
+          yLabel: MicroLabel.pm.label,
+          hideXLine: true,
+          yAxisStartPos: 0.50,
+          xAxisEndPos: 1.1);
+
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(0.85, 0.15),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.15, 0.85),
-          ),
-        ],
-        label1: MicroLabel.sm.label,
-        label1Align: LabelAlign.centerRight,
+        startPos: Offset(
+          0.15,
+          0.15,
+        ),
+        straightEndPos: Offset(0.85, 0.85),
+        label2: MicroLabel.d.label,
+        label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(0.15, 0.15),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.85, 0.85),
-          ),
-        ],
-        label2: MicroLabel.dm.label,
+        startPos: Offset(0.15, 0.85),
+        straightEndPos: Offset(0.85, 0.15),
+        label2: MicroLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
     }
@@ -316,94 +311,123 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 1.15,
         yAxisStartPos: 0.40,
-        yLabel: MicroLabel.pm1.label,
+        yLabel: MicroLabel.pm.label,
         hideXLine: true,
-        xLabel: MicroLabel.q2.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramDashedLines(
         c,
         canvas,
-        startPos: Offset(0.90, 0.30),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.30, 0.90),
-          ),
-        ],
-        label1: MicroLabel.sm1.label,
-        label1Align: LabelAlign.centerRight,
+        xAxisEndPos: 1.15,
+        yAxisStartPos: 0.50,
+        yLabel: MicroLabel.pe.label,
+        hideXLine: true,
       );
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(
-          0.25,
-          0.05,
+          0.15,
+          0.15,
         ),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.85, 0.65),
-          ),
-        ],
-        label2: MicroLabel.dm1.label,
+        straightEndPos: Offset(0.85, 0.85),
+        label2: MicroLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
-
-      /// Arrows
-
-      paintText(c, canvas, '2', Offset(0.46, 0.59));
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.33,
-          0.70,
-        ),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.43, 0.70),
-          ),
-        ],
-        arrowOnEnd: true,
-        arrowOnEndAngle: pi / 2,
-        color: c.colorScheme.onSurface,
+        startPos: Offset(0.10, 0.70),
+        straightEndPos: Offset(0.70, 0.10),
+        label2: MicroLabel.s.label,
+        label2Align: LabelAlign.centerRight,
       );
-      paintText(c, canvas, '1', Offset(0.72, 0.55));
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.68,
-          0.65,
-        ),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.78, 0.65),
-          ),
-        ],
-        arrowOnEnd: true,
+        startPos: Offset(0.15, 0.85),
+        straightEndPos: Offset(0.85, 0.15),
+        label2: MicroLabel.s1.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.60, 0.25),
+        straightEndPos: Offset(0.68, 0.25),
+arrowOnEnd: true,
         arrowOnEndAngle: pi / 2,
-        color: c.colorScheme.onSurface,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.80, 0.41),
+        straightEndPos: Offset(0.80, 0.47),
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi,
       );
     }
-    if (model.subtype == DiagramSubtype.perfectCompetitionLoss){
+    if (model.subtype == DiagramSubtype.perfectCompetitionLoss) {
       paintDiagramDashedLines(
         c,
         canvas,
         xAxisEndPos: 1.15,
         yAxisStartPos: 0.60,
-        yLabel: MicroLabel.pm1.label,
+        yLabel: MicroLabel.pm.label,
         hideXLine: true,
-        xLabel: MicroLabel.q2.label,
+      );
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        xAxisEndPos: 1.15,
+        yAxisStartPos: 0.50,
+        yLabel: MicroLabel.pe.label,
+        hideXLine: true,
       );
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(0.15, 0.35),
-        straightEndPos: Offset(0.70,0.90),
-        label2: MicroLabel.dm1.label,
+        startPos: Offset(
+          0.15,
+          0.15,
+        ),
+        straightEndPos: Offset(0.85, 0.85),
+        label2: MicroLabel.d.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.35, 0.85),
+        straightEndPos: Offset(0.90, 0.30),
+        label2: MicroLabel.s.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.15, 0.85),
+        straightEndPos: Offset(0.85, 0.15),
+        label2: MicroLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
 
+      //Arrow across
+
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.72, 0.35),
+        straightEndPos: Offset(0.80, 0.35),
+        arrowOnStart: true,
+        arrowOnStartAngle: pi / -2,
+      );
+
+      /// Arrow up
+      paintCustomDiagramLines(c, canvas, startPos: Offset(0.80,0.53),
+        straightEndPos: Offset(0.80,0.59),
+        arrowOnStart: true,
+        arrowOnStartAngle: 0,
+      );
     }
   }
 }

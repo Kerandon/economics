@@ -1,24 +1,19 @@
+final kPerfectCompetitionLongRunEquilibrium = '''
+The industry supply and demand determine the price for each firm.
+In the long-run equilibrium, firms earn only normal profit, where AR = ATC.
+Firms are allocatively efficient (P = MC) and productively efficient (MC = ATC).
+''';
 
-final perfectCompetitionLongRunDescription =
-    '<p>In the long run, firms in perfect competition produce where'
-    '<strong>AR (or P) = AC</strong>, meaning zero economic profit.'
-    'This is also the point of <strong>allocative efficiency</strong> where '
-    '<strong>P = MC</strong>, and <strong>productive efficiency</strong> where <strong>MC = AC</strong>.</p>';
+final kPerfectCompetitionAbnormalProfitProcessDescription = '''
+In the short run, firms may earn abnormal (supernormal) profit.
+Firms produce where MR = MC, and here AR > ATC, resulting in abnormal profit.
+In the long run, new firms enter the industry, increasing market supply.
+This causes the market price to fall until firms earn normal profit, where AR = ATC.
+''';
 
-final perfectCompetitionAbnormalProfitProcessDescription =
-'''
-          <p>
-  1. Increase market demand causes a higher market price.
-  In the short run, firms can earn abnormal (supernormal) profits, represented by the
-  <span style="display: inline-block; background-color: #007BFF; color: white; padding: 4px 8px; border-radius: 4px;">
-    striped box
-  </span>. 2. However, due to no barriers of entry, other firms will enter the industry attracted by abnormal profits, increasing market supply.
-</p>
-
-          ''';
-
-final perfectCompetitionAbnormalProfitDescription =
-    '<p>In the long run, firms in perfect competition produce where'
-    '<strong>AR (or P) = AC</strong>, meaning zero economic profit.'
-    'This is also the point of <strong>allocative efficiency</strong> where '
-    '<strong>P = MC</strong>, and <strong>productive efficiency</strong> where <strong>MC = AC</strong>.</p>';
+final kPerfectCompetitionLossesDescription = '''
+In the short run, firms may incur losses.
+Firms produce where MR = MC, but here ATC > AR, resulting in losses.
+In the long run, some firms exit the industry, reducing market supply.
+This causes the market price to rise until firms earn normal profit, where AR = ATC.
+''';

@@ -12,7 +12,8 @@ import '../../models/base_painter_painter.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
-import '../painter_methods/paint_custom_bezier_normalized.dart';
+
+import '../painter_methods/paint_diagram_custom_lines.dart';
 
 class Externalities extends BaseDiagramPainter {
   Externalities({

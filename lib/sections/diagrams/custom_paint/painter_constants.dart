@@ -1,10 +1,10 @@
 /// Curves
 const kCurveWidth = 5.0;
 const kCurveWidthSlim = 3.0;
-const kArrowSize = 16.0;
+const kArrowSize = 12.0;
 
 /// Axis
-const kAxisIndent = 0.20;
+const kAxisIndent = 0.22;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 4.0;
@@ -33,7 +33,6 @@ const kDAR = 'D = AR';
 const kMR = 'MR';
 const kMC = 'MC';
 const kAC = 'AC';
-
 
 /// Macro-labels
 const kHouseholds = 'Households';
@@ -117,10 +116,14 @@ enum MicroLabel {
   tables,
   s,
   sm,
+  sme,
   sm1,
+  sm2,
   d,
   dm,
+  dme,
   dm1,
+  dm2,
   s1,
   d1,
   s2,
@@ -132,6 +135,7 @@ enum MicroLabel {
   q1,
   q2,
   pe,
+  pme,
   qe,
   qS,
   qD,
@@ -148,14 +152,14 @@ enum MicroLabel {
   pOpt,
   pm,
   pm1,
+  pm2,
   qOpt,
   qm,
   priceCostsRevenue,
   industryQuantity,
   quantityFirm,
-  dEqualsAR,
-  pEqualsDARMR,
-  p1EqualsD1AR1MR1,
+  dEqualsARMR,
+  d1EqualsAR1MR1,
   mr,
   mc,
   atc,
@@ -219,7 +223,7 @@ extension MicroLabelExtension on MicroLabel {
         return 'Pm';
 
       case MicroLabel.dEqualsMPB:
-    return 'D=MPB';
+        return 'D=MPB';
       case MicroLabel.qOpt:
         return 'Qopt';
       case MicroLabel.qm:
@@ -228,9 +232,9 @@ extension MicroLabelExtension on MicroLabel {
         return 'Price, costs & revenues (\$)';
       case MicroLabel.quantityFirm:
         return 'Quantity - Firm';
-      case MicroLabel.dEqualsAR:
-        return 'D=AR';
-      case MicroLabel.pEqualsDARMR:
+      case MicroLabel.d1EqualsAR1MR1:
+        return 'D₁=AR₁=MR₁';
+      case MicroLabel.dEqualsARMR:
         return 'D=AR=MR';
       case MicroLabel.mr:
         return 'MR';
@@ -269,10 +273,22 @@ extension MicroLabelExtension on MicroLabel {
         return 'Pm₁';
       case MicroLabel.dm1:
         return 'Dm₁';
-      case MicroLabel.p1EqualsD1AR1MR1:
-        return 'D₁=AR₁=MR₁';
+
       case MicroLabel.sm1:
         return 'Sm₁';
+      case MicroLabel.sm2:
+        return 'Sm₂';
+      case MicroLabel.dm2:
+        return 'Dm₂';
+      case MicroLabel.pm2:
+        return 'Pm₂';
+      case MicroLabel.sme:
+        return 'Dmₑ';
+      case MicroLabel.dme:
+        return 'Smₑ';
+
+      case MicroLabel.pme:
+        return 'Pmₑ';
     }
   }
 }
