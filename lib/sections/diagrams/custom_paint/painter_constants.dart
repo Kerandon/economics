@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// Curves
 const kCurveWidth = 5.0;
 const kCurveWidthSlim = 3.0;
@@ -11,7 +13,9 @@ const kDashedLineWidth = 4.0;
 
 /// Text
 const kLabelFontSize = 28.0;
-const kFontSize = 32.0;
+const kFontSize = 26.0;
+const kLabelTextStyle =
+    TextStyle(fontStyle: FontStyle.italic, fontSize: kFontSize * 0.90);
 
 /// Dot
 const kDotRadius = 12.0;
@@ -110,6 +114,11 @@ const kLowHumanCapital = 'Low human capital';
 const kLowNaturalCapital = 'Low natural capital';
 
 enum MicroLabel {
+  consumerSurplus,
+  producerSurplus,
+  abnormalProfit,
+  welfareLoss,
+  loss,
   tablets,
   smartPhones,
   chairs,
@@ -157,13 +166,16 @@ enum MicroLabel {
   qm,
   priceCostsRevenue,
   industryQuantity,
+  quantity,
   quantityFirm,
   dEqualsARMR,
+  dEqualsAR,
   d1EqualsAR1MR1,
   mr,
   mc,
   atc,
   srac,
+  lrac,
   mcEqualsMR,
 }
 
@@ -289,6 +301,22 @@ extension MicroLabelExtension on MicroLabel {
 
       case MicroLabel.pme:
         return 'Pmₑ';
+      case MicroLabel.consumerSurplus:
+        return 'Consumer surplus';
+      case MicroLabel.producerSurplus:
+        return 'Producer surplus';
+      case MicroLabel.abnormalProfit:
+        return 'Abnormal profit';
+      case MicroLabel.loss:
+        return 'Loss';
+      case MicroLabel.dEqualsAR:
+        return 'D=AR';
+      case MicroLabel.quantity:
+        return 'Quantity';
+      case MicroLabel.lrac:
+      return 'LRAC';
+      case MicroLabel.welfareLoss:
+        return 'Welfare Loss';
     }
   }
 }

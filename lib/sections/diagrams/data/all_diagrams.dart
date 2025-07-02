@@ -1,3 +1,4 @@
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopoly.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/perfect_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/ppc_micro.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
@@ -47,9 +48,8 @@ class AllDiagrams {
       DiagramBundle(
         unit: UnitType.micro,
         type: DiagramType.perfectCompetition,
-        label: 'Perfect Competition - Long-run Equilibrium',
-        description:
-            kPerfectCompetitionLongRunEquilibrium,
+        label: 'Long-Run Equilibrium',
+        description: kPerfectCompetitionLongRunEquilibrium,
         basePainterDiagrams: [
           SupplyAndDemand(
             config: config,
@@ -72,7 +72,7 @@ class AllDiagrams {
       DiagramBundle(
         unit: UnitType.micro,
         type: DiagramType.perfectCompetition,
-        label: 'Perfect Competition - Abnormal Profits',
+        label: 'Abnormal Profits',
         description: kPerfectCompetitionAbnormalProfitProcessDescription,
         basePainterDiagrams: [
           SupplyAndDemand(
@@ -96,7 +96,7 @@ class AllDiagrams {
       DiagramBundle(
         unit: UnitType.micro,
         type: DiagramType.perfectCompetition,
-        label: 'Perfect Competition - Economic Losses',
+        label: 'Losses',
         description: kPerfectCompetitionLossesDescription,
         basePainterDiagrams: [
           SupplyAndDemand(
@@ -113,6 +113,86 @@ class AllDiagrams {
               unit: UnitType.micro,
               type: DiagramType.perfectCompetition,
               subtype: DiagramSubtype.perfectCompetitionLoss,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.perfectCompetition,
+        label: 'Social Welfare',
+        description: kPerfectCompetitionSocialWelfareDescription,
+        basePainterDiagrams: [
+          SupplyAndDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.supplyDemand,
+              subtype: DiagramSubtype.perfectCompetitionSocialWelfare,
+            ),
+          ),
+          PerfectCompetition(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.perfectCompetition,
+              subtype: DiagramSubtype.perfectCompetitionSocialWelfare,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+
+        basePainterDiagrams: [
+          Monopoly(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.monopoly,
+              subtype: DiagramSubtype.monopolyAbnormalProfit,
+              description: kMonopolyAbnormalProfits,
+
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+
+        basePainterDiagrams: [
+          Monopoly(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.monopoly,
+              subtype: DiagramSubtype.monopolyLoss,
+              description: 'A monopoly can be loss-making',
+
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+
+        basePainterDiagrams: [
+          Monopoly(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.monopoly,
+              subtype: DiagramSubtype.monopolyNatural,
+              description: kMonopolyNaturalDescription,
+
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+
+        basePainterDiagrams: [
+          Monopoly(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.monopoly,
+              subtype: DiagramSubtype.monopolySocialWelfare,
+              description: kMonopolyWelfareLossDescription,
+
             ),
           ),
         ],
@@ -147,6 +227,7 @@ class AllDiagrams {
             diagram.model.subtype == diagram.model.subtype);
       }).toList();
     }
+    print('bundles ${allBundles.length}');
     return allBundles.toList();
   }
 }

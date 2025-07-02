@@ -56,8 +56,8 @@ void paintShading(
 
     final stripePaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1
-      ..color = shade.setShadeColor().withAlpha(55);
+      ..strokeWidth = 3
+      ..color = shade.setShadeColor().withAlpha(105);
 
     // Draw diagonal lines as stripes
     for (double y = -size.height; y < size.height * 2; y += stripeSpacing) {

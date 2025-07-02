@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_normalized_within_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
@@ -26,7 +26,8 @@ class PerfectCompetition extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit) {
+    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit ||
+        model.subtype == DiagramSubtype.perfectCompetitionSocialWelfare) {
       /// Dashed Lines
       paintDiagramDashedLines(
         c,
@@ -82,17 +83,9 @@ class PerfectCompetition extends BaseDiagramPainter {
         hideXLine: true,
         yLabel: MicroLabel.pe.label,
       );
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        label2: MicroLabel.d1EqualsAR1MR1.label,
-        label2Align: LabelAlign.centerRight,
-        startPos: Offset(1, 0.50),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(1, 0.50),
-          ),
-        ],
+
+      paintTextNormalizedWithinAxis(c, canvas, MicroLabel.d1EqualsAR1MR1.label, Offset(1.0,0.50),
+      align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
         c,
@@ -117,6 +110,13 @@ class PerfectCompetition extends BaseDiagramPainter {
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
       );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.abnormalProfit.label,
+        Offset(0.25, 0.85),
+        pointerLine: Offset(0.25,0.45),
+      );
     }
     if (model.subtype == DiagramSubtype.perfectCompetitionLoss) {
       paintShading(canvas, size, ShadeType.loss, striped: true, [
@@ -128,7 +128,6 @@ class PerfectCompetition extends BaseDiagramPainter {
 
       /// Dashed Lines
 
-
       paintDiagramDashedLines(c, canvas,
           yAxisStartPos: 0.5,
           xAxisEndPos: 0.45,
@@ -139,29 +138,39 @@ class PerfectCompetition extends BaseDiagramPainter {
           xAxisEndPos: 0.51,
           xLabel: '  ${MicroLabel.qe.label}',
           hideYLine: true);
-      paintDiagramDashedLines(c, canvas,
-          yAxisStartPos: 0.6,
-          xAxisEndPos: 0.90,
-          hideXLine: true,
-          yLabel: MicroLabel.p.label,
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.5,
+        xAxisEndPos: 0.90,
+        hideXLine: true,
+        yLabel: MicroLabel.p.label,
       );
       paintCustomDiagramLines(
         c,
         canvas,
-        label1: MicroLabel.pe.label,
+        label1: MicroLabel.p.label,
         label1Align: LabelAlign.centerLeft,
         label2: MicroLabel.d1EqualsAR1MR1.label,
         label2Align: LabelAlign.centerRight,
-        startPos: Offset(0, 0.50),
-        straightEndPos: Offset(0.90, 0.50),
+        startPos: Offset(0, 0.60),
+        straightEndPos: Offset(0.90, 0.60),
       );
-      paintCustomDiagramLines(c, canvas, startPos: Offset(0.80,0.53),
-        straightEndPos: Offset(0.80,0.59),
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.80, 0.53),
+        straightEndPos: Offset(0.80, 0.59),
         arrowOnStart: true,
         arrowOnStartAngle: 0,
       );
-
-
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.loss.label,
+        Offset(0.20, 0.90),
+        pointerLine: Offset(0.20,0.55),
+      );
     }
     paintAxis(
       c,
@@ -176,10 +185,10 @@ class PerfectCompetition extends BaseDiagramPainter {
       canvas,
       label2: MicroLabel.mc.label,
       label2Align: LabelAlign.centerTop,
-      startPos: Offset(0.15, 0.60),
+      startPos: Offset(0.15, 0.65),
       bezierPoints: [
         CustomBezier(
-          control: Offset(0.35, 1.10),
+          control: Offset(0.40, 1.0),
           endPoint: Offset(0.64, 0.10),
         ),
       ],

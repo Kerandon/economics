@@ -1,14 +1,18 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_custom_lines.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
 import '../../enums/label_align.dart';
+import '../../enums/shade_type.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
-import '../painter_methods/paint_custom_bezier.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_shading.dart';
+import '../painter_methods/paint_text_normalized_within_axis.dart';
+import '../painter_methods/paint_title.dart';
 
 class Monopoly extends BaseDiagramPainter {
   Monopoly({
@@ -20,67 +24,216 @@ class Monopoly extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    /// Dashed Lines
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.38,
-      xAxisEndPos: 0.27,
-      yLabel: kPe,
-      xLabel: kQ,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.49,
-      xAxisEndPos: 0.27,
-      hideXLine: true,
-      yLabel: 'Costs',
-      xLabel: kQ,
-    );
-
     paintAxis(
       c,
       canvas,
       yAxisLabel: kPriceCostsRevenue,
-      xAxisLabel: MicroLabel.quantityFirm.label,
+      yLabelIsHorizontal: false,
+      xAxisLabel: MicroLabel.quantity.label,
     );
 
-    /// Demand curve
-    paintCurve(c, canvas, Offset(0.20, 0.20), Offset(0.80, 0.70),
-        label2: kDAR, label2Align: LabelAlign.centerBottom);
+    if (model.subtype == DiagramSubtype.monopolyAbnormalProfit ||
+        model.subtype == DiagramSubtype.monopolyLoss ||
+        model.subtype == DiagramSubtype.monopolySocialWelfare) {
+      paintCustomDiagramLines(c, canvas,
+          startPos: Offset(0.10, 0.20),
+          straightEndPos: Offset(0.85, 0.85),
+          label2: MicroLabel.dEqualsAR.label,
+          label2Align: LabelAlign.centerRight);
 
-    /// MR curve
-    paintCurve(c, canvas, Offset(0.20, 0.25), Offset(0.60, 0.90),
-        label2: kMR, label2Align: LabelAlign.centerBottom);
+      paintCustomDiagramLines(c, canvas,
+          startPos: Offset(0.05, 0.25),
+          straightEndPos: Offset(0.55, 1.05),
+          label2: MicroLabel.mr.label,
+          label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        label2: MicroLabel.mc.label,
+        label2Align: LabelAlign.centerTop,
+        startPos: Offset(0.10, 0.85),
+        bezierPoints: [
+          CustomBezier(
+            control: Offset(0.30, 1.0),
+            endPoint: Offset(0.54, 0.30),
+          ),
+        ],
+      );
+    }
+    if (model.subtype == DiagramSubtype.monopolyAbnormalProfit ||
+        model.subtype == DiagramSubtype.monopolySocialWelfare) {
+      if (model.subtype == DiagramSubtype.monopolyAbnormalProfit) {
+        paintTitle(c, canvas, 'Monopoly - Abnormal Profits');
+        paintShading(canvas, size, ShadeType.abnormalProfits, striped: true, [
+          Offset(0, 0.42),
+          Offset(0.35, 0.42),
+          Offset(0.35, 0.57),
+          Offset(0, 0.57),
+        ]);
+        paintTextNormalizedWithinAxis(
+          c,
+          canvas,
+          MicroLabel.abnormalProfit.label,
+          Offset(0.25, 0.05),
+          pointerLine: Offset(0.25, 0.45),
+        );
+      }
 
-    /// Marginal Cost
-    paintCustomBezier(
-      c,
-      canvas,
-      startPos: const Offset(0.25, 0.60),
-      points: [
-        CustomBezier(
-          control: const Offset(0.35, 0.90),
-          endPoint: const Offset(0.60, 0.20),
-        ),
-      ],
-      label1: kMC,
-      label1Align: LabelAlign.centerTop,
-    );
+      /// Dashed Lines
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.42,
+        xAxisEndPos: 0.355,
+        yLabel: MicroLabel.p.label,
+        xLabel: MicroLabel.q.label,
+      );
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.57,
+        xAxisEndPos: 0.355,
+        hideXLine: true,
+        yLabel: MicroLabel.atc.label,
+      );
 
-    /// Average cost
-    paintCustomBezier(
-      c,
-      canvas,
-      startPos: const Offset(0.20, 0.30),
-      points: [
-        CustomBezier(
-            control: const Offset(0.45, 0.70),
-            endPoint: const Offset(0.80, 0.30))
-      ],
-      label1: kAC,
-      label1Align: LabelAlign.centerTop,
-    );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        label2: MicroLabel.atc.label,
+        label2Align: LabelAlign.centerTop,
+        startPos: Offset(0.05, 0.30),
+        bezierPoints: [
+          CustomBezier(
+            control: Offset(0.40, 0.85),
+            endPoint: Offset(0.85, 0.30),
+          ),
+        ],
+      );
+    }
+
+    if (model.subtype == DiagramSubtype.monopolyLoss) {
+      paintTitle(c, canvas, 'Monopoly - Losses');
+
+      /// Dashed Lines
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.41,
+        xAxisEndPos: 0.355,
+        hideXLine: true,
+        yLabel: MicroLabel.p.label,
+      );
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.32,
+        xAxisEndPos: 0.36,
+        yLabel: MicroLabel.atc.label,
+        xLabel: MicroLabel.q.label,
+      );
+
+      paintShading(
+        canvas,
+        size,
+        ShadeType.loss,
+        striped: true,
+        [
+          Offset(0, 0.32),
+          Offset(0.36, 0.32),
+          Offset(0.36, 0.41),
+          Offset(0, 0.41),
+        ],
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        label2: MicroLabel.atc.label,
+        label2Align: LabelAlign.centerTop,
+        startPos: Offset(0.10, 0.10),
+        bezierPoints: [
+          CustomBezier(
+            control: Offset(0.50, 0.60),
+            endPoint: Offset(0.90, 0.10),
+          ),
+        ],
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.loss.label,
+        Offset(0.20, 0.05),
+        pointerLine: Offset(0.20, 0.36),
+      );
+    }
+
+    if (model.subtype == DiagramSubtype.monopolyNatural) {
+      paintTitle(c, canvas, 'Natural Monopoly');
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.05, 0.35),
+        bezierPoints: [
+          CustomBezier(
+            control: Offset(0.50, 0.80),
+            endPoint: Offset(0.90, 0.70),
+          ),
+        ],
+        label2: MicroLabel.lrac.label,
+        label2Align: LabelAlign.centerRight,
+      );
+
+      paintCustomDiagramLines(c, canvas,
+          startPos: Offset(0.20, 0.20),
+          straightEndPos: Offset(0.70, 0.90),
+          label2: MicroLabel.dEqualsAR.label,
+          label2Align: LabelAlign.centerRight);
+    }
+    if (model.subtype == DiagramSubtype.monopolySocialWelfare) {
+      paintTitle(c, canvas, 'Monopoly - Social Welfare');
+      paintShading(canvas, size, ShadeType.consumerSurplus, striped: true, [
+        Offset(0, 0.12),
+        Offset(0.36, 0.42),
+        Offset(0, 0.42),
+      ]);
+      paintShading(canvas, size, ShadeType.producerSurplus, striped: true, [
+        Offset(0, 0.42),
+        Offset(0.36, 0.42),
+        Offset(0.36, 0.72),
+        CustomBezier(control: Offset(0.20, 1.0), endPoint: Offset(0, 0.78)),
+      ]);
+      paintShading(
+        canvas,
+        size,
+        ShadeType.welfareLoss,
+        striped: true,
+        [
+          Offset(0.36, 0.42),
+          Offset(0.46, 0.50),
+          Offset(0.36, 0.72),
+        ],
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.consumerSurplus.label,
+        Offset(0.25, 0.05),
+        pointerLine: Offset(0.20, 0.36),
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.producerSurplus.label,
+        Offset(0.10, 0.95),
+        pointerLine: Offset(0.20, 0.70),
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.welfareLoss.label,
+        Offset(0.45, 0.15),
+        pointerLine: Offset(0.40, 0.50),
+      );
+    }
   }
 }

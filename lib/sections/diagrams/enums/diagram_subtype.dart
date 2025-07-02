@@ -26,9 +26,12 @@ enum DiagramSubtype {
   perfectCompetitionNormalProfit,
   perfectCompetitionAbnormalProfit,
   perfectCompetitionLoss,
+  perfectCompetitionSocialWelfare,
   monopolyAbnormalProfit,
   monopolyNormalProfit,
   monopolyLoss,
+  monopolyNatural,
+  monopolySocialWelfare,
   socialWelfare,
   closed,
   open,
@@ -115,6 +118,12 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Increase in market supply';
       case DiagramSubtype.longRunEquilibrium:
         return 'Long-run equilibrium';
+      case DiagramSubtype.perfectCompetitionSocialWelfare:
+        return 'Social Welfare';
+      case DiagramSubtype.monopolyNatural:
+        return 'Natural Monopoly';
+      case DiagramSubtype.monopolySocialWelfare:
+        return 'Social Welfare';
     }
   }
 }

@@ -3,7 +3,10 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.d
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve_normalized.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_normalized_within_axis.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
+import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
 import '../../enums/label_align.dart';
@@ -266,7 +269,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
     /// Perfect competition market supply and demand
     if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit ||
         model.subtype == DiagramSubtype.perfectCompetitionAbnormalProfit ||
-        model.subtype == DiagramSubtype.perfectCompetitionLoss) {
+        model.subtype == DiagramSubtype.perfectCompetitionLoss ||
+        model.subtype == DiagramSubtype.perfectCompetitionSocialWelfare) {
       paintTitle(c, canvas, 'Industry / Market');
       paintAxis(
         c,
@@ -275,10 +279,10 @@ class SupplyAndDemand extends BaseDiagramPainter {
         yLabelIsHorizontal: false,
         xAxisLabel: MicroLabel.industryQuantity.label,
       );
-
     }
-    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit) {
-
+    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit
+    || model.subtype == DiagramSubtype.perfectCompetitionSocialWelfare
+    ) {
       paintDiagramDashedLines(c, canvas,
           yLabel: MicroLabel.pm.label,
           hideXLine: true,
@@ -354,7 +358,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         startPos: Offset(0.60, 0.25),
         straightEndPos: Offset(0.68, 0.25),
-arrowOnEnd: true,
+        arrowOnEnd: true,
         arrowOnEndAngle: pi / 2,
       );
       paintCustomDiagramLines(
@@ -423,10 +427,35 @@ arrowOnEnd: true,
       );
 
       /// Arrow up
-      paintCustomDiagramLines(c, canvas, startPos: Offset(0.80,0.53),
-        straightEndPos: Offset(0.80,0.59),
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.80, 0.53),
+        straightEndPos: Offset(0.80, 0.59),
         arrowOnStart: true,
         arrowOnStartAngle: 0,
+      );
+    }
+    if (model.subtype == DiagramSubtype.perfectCompetitionSocialWelfare) {
+      paintShading(canvas, size, ShadeType.consumerSurplus, striped: true, [
+        Offset(0, 0.50),
+        Offset(0.50, 0.50),
+        Offset(0, 0),
+      ]);
+      paintShading(canvas, size, ShadeType.producerSurplus, striped: true, [
+        Offset(0, 0.50),
+        Offset(0.50, 0.5),
+        Offset(0, 1),
+      ]);
+
+
+
+      paintTextNormalizedWithinAxis(
+          c, canvas, MicroLabel.consumerSurplus.label, Offset(0.5,0.10),
+      pointerLine: Offset(0.15,0.30), style: kLabelTextStyle,
+      );
+      paintTextNormalizedWithinAxis(c, canvas, MicroLabel.producerSurplus.label, Offset(0.5,0.90),
+          pointerLine: Offset(0.15,0.60),style: kLabelTextStyle,
       );
     }
   }

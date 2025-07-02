@@ -72,12 +72,12 @@ class _AllDiagramsPageState extends State<AllDiagramsPage> {
                         ],
                       );
                     }),
-                    if (selectedBundle.description != null)
+                    if (selectedBundle.description != null || selectedBundle.diagramModels.first.description != null)
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: size.width * 0.8),
-                          child: HtmlWidget(selectedBundle.description!),
+                          child: HtmlWidget(selectedBundle.description ?? selectedBundle.diagramModels.first.description ?? ''),
                         ),
                       ),
                   ],

@@ -3,7 +3,6 @@ import '../enums/diagram_type.dart';
 import '../enums/unit_type.dart';
 import 'base_painter_painter.dart';
 import 'diagram_model.dart';
-
 class DiagramBundle {
   final List<BaseDiagramPainter> basePainterDiagrams;
   final List<DiagramModel> diagramModels;
@@ -15,13 +14,14 @@ class DiagramBundle {
   DiagramBundle({
     List<BaseDiagramPainter>? basePainterDiagrams,
     List<DiagramModel>? diagramModels,
-    this.unit,
-    this.type,
+    UnitType? unit,
+    DiagramType? type,
     this.label,
     this.description,
-  })
-      : basePainterDiagrams = basePainterDiagrams ?? [],
-        diagramModels = diagramModels ?? [];
+  })  : basePainterDiagrams = basePainterDiagrams ?? [],
+        diagramModels = diagramModels ?? [],
+        unit = unit ?? (diagramModels != null && diagramModels.isNotEmpty ? diagramModels.first.unit : null),
+        type = type ?? (diagramModels != null && diagramModels.isNotEmpty ? diagramModels.first.type : null);
 
   DiagramBundle copyWith({
     List<BaseDiagramPainter>? basePainterDiagrams,
