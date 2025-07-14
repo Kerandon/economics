@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve_normalized.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_normalized_within_axis.dart';
@@ -26,6 +25,13 @@ class SupplyAndDemand extends BaseDiagramPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
+
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: MicroLabel.p.label,
+      xAxisLabel: MicroLabel.q.label,
+    );
 
     // Original equilibrium dashed lines
     if (model.subtype == DiagramSubtype.equilibrium ||
@@ -110,8 +116,15 @@ class SupplyAndDemand extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.decreaseInDemand) {
-      paintCurveNormalized(c, canvas, Offset(0.10, 0.30), Offset(0.70, 0.90),
-          label2: MicroLabel.d1.label, label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.30),
+        straightEndPos: Offset(0.70, 0.90),
+        label2: MicroLabel.d2.label,
+        label2Align: LabelAlign.centerRight,
+      );
+
       paintDiagramDashedLines(
         c,
         canvas,
@@ -119,6 +132,15 @@ class SupplyAndDemand extends BaseDiagramPainter {
         xAxisEndPos: 0.40,
         yLabel: MicroLabel.p2.label,
         xLabel: MicroLabel.q2.label,
+      );
+
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.68, 0.80),
+        straightEndPos: Offset(0.76, 0.80),
+        arrowOnStart: true,
+        arrowOnStartAngle: pi * -0.50
       );
     }
 
@@ -144,6 +166,14 @@ class SupplyAndDemand extends BaseDiagramPainter {
         yLabel: MicroLabel.p2.label,
         xLabel: MicroLabel.q2.label,
       );
+      paintCustomDiagramLines(
+          c,
+          canvas,
+          startPos: Offset(0.70, 0.65),
+          straightEndPos: Offset(0.79, 0.65),
+          arrowOnEnd: true,
+          arrowOnEndAngle: pi * 0.50,
+      );
     }
 
     if (model.subtype == DiagramSubtype.increaseInSupply) {
@@ -157,11 +187,23 @@ class SupplyAndDemand extends BaseDiagramPainter {
         yLabel: MicroLabel.p2.label,
         xLabel: MicroLabel.q2.label,
       );
+      paintCustomDiagramLines(
+          c,
+          canvas,
+          startPos: Offset(0.65, 0.40),
+          straightEndPos: Offset(0.73, 0.40),
+          arrowOnEnd: true,
+          arrowOnEndAngle: pi * 0.50
+      );
     }
 
     if (model.subtype == DiagramSubtype.decreaseInSupply) {
-      paintCurveNormalized(c, canvas, Offset(0.05, 0.75), Offset(0.70, 0.10),
-          label2: MicroLabel.s1.label, label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(c, canvas,
+          startPos: Offset(0.05, 0.75),
+          straightEndPos: Offset(0.70, 0.10),
+          label2: MicroLabel.s2.label,
+          label2Align: LabelAlign.centerRight);
+
       paintDiagramDashedLines(
         c,
         canvas,
@@ -169,6 +211,14 @@ class SupplyAndDemand extends BaseDiagramPainter {
         xAxisEndPos: 0.40,
         yLabel: MicroLabel.p2.label,
         xLabel: MicroLabel.q2.label,
+      );
+      paintCustomDiagramLines(
+          c,
+          canvas,
+          startPos: Offset(0.57, 0.30),
+          straightEndPos: Offset(0.65, 0.30),
+          arrowOnStart: true,
+          arrowOnStartAngle: pi * 1.50
       );
     }
     if (model.subtype == DiagramSubtype.shortage) {
@@ -267,10 +317,10 @@ class SupplyAndDemand extends BaseDiagramPainter {
     }
 
     /// Perfect competition market supply and demand
-    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit ||
-        model.subtype == DiagramSubtype.perfectCompetitionAbnormalProfit ||
-        model.subtype == DiagramSubtype.perfectCompetitionLoss ||
-        model.subtype == DiagramSubtype.perfectCompetitionSocialWelfare) {
+    if (model.subtype == DiagramSubtype.longRunEquilibrium ||
+        model.subtype == DiagramSubtype.abnormalProfit ||
+        model.subtype == DiagramSubtype.loss ||
+        model.subtype == DiagramSubtype.socialWelfare) {
       paintTitle(c, canvas, 'Industry / Market');
       paintAxis(
         c,
@@ -280,9 +330,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         xAxisLabel: MicroLabel.industryQuantity.label,
       );
     }
-    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit
-    || model.subtype == DiagramSubtype.perfectCompetitionSocialWelfare
-    ) {
+    if (model.subtype == DiagramSubtype.longRunEquilibrium ||
+        model.subtype == DiagramSubtype.socialWelfare) {
       paintDiagramDashedLines(c, canvas,
           yLabel: MicroLabel.pm.label,
           hideXLine: true,
@@ -309,7 +358,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         label2Align: LabelAlign.centerRight,
       );
     }
-    if (model.subtype == DiagramSubtype.perfectCompetitionAbnormalProfit) {
+    if (model.subtype == DiagramSubtype.abnormalProfit) {
       paintDiagramDashedLines(
         c,
         canvas,
@@ -370,7 +419,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         arrowOnEndAngle: pi,
       );
     }
-    if (model.subtype == DiagramSubtype.perfectCompetitionLoss) {
+    if (model.subtype == DiagramSubtype.loss) {
       paintDiagramDashedLines(
         c,
         canvas,
@@ -436,7 +485,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         arrowOnStartAngle: 0,
       );
     }
-    if (model.subtype == DiagramSubtype.perfectCompetitionSocialWelfare) {
+    if (model.subtype == DiagramSubtype.socialWelfare) {
       paintShading(canvas, size, ShadeType.consumerSurplus, striped: true, [
         Offset(0, 0.50),
         Offset(0.50, 0.50),
@@ -448,14 +497,21 @@ class SupplyAndDemand extends BaseDiagramPainter {
         Offset(0, 1),
       ]);
 
-
-
       paintTextNormalizedWithinAxis(
-          c, canvas, MicroLabel.consumerSurplus.label, Offset(0.5,0.10),
-      pointerLine: Offset(0.15,0.30), style: kLabelTextStyle,
+        c,
+        canvas,
+        MicroLabel.consumerSurplus.label,
+        Offset(0.5, 0.10),
+        pointerLine: Offset(0.15, 0.30),
+        style: kLabelTextStyle,
       );
-      paintTextNormalizedWithinAxis(c, canvas, MicroLabel.producerSurplus.label, Offset(0.5,0.90),
-          pointerLine: Offset(0.15,0.60),style: kLabelTextStyle,
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.producerSurplus.label,
+        Offset(0.5, 0.90),
+        pointerLine: Offset(0.15, 0.60),
+        style: kLabelTextStyle,
       );
     }
   }

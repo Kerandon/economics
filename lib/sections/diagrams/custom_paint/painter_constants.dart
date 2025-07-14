@@ -124,6 +124,7 @@ enum MicroLabel {
   chairs,
   tables,
   s,
+  sTax,
   sm,
   sme,
   sm1,
@@ -143,6 +144,7 @@ enum MicroLabel {
   q,
   q1,
   q2,
+  qpi,
   pe,
   pme,
   qe,
@@ -155,6 +157,7 @@ enum MicroLabel {
   dEqualsMPBMSB,
   sEqualsMPC,
   sEqualsMPCMSC,
+  externality,
   mpc,
   msc,
   msb,
@@ -317,6 +320,12 @@ extension MicroLabelExtension on MicroLabel {
       return 'LRAC';
       case MicroLabel.welfareLoss:
         return 'Welfare Loss';
+      case MicroLabel.externality:
+        return 'Externality';
+      case MicroLabel.qpi:
+        return 'Qπ';
+      case MicroLabel.sTax:
+        return 'S+Tax';
     }
   }
 }

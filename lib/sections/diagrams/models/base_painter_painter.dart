@@ -11,7 +11,10 @@ abstract class BaseDiagramPainter extends CustomPainter
   final DiagramModel model;
 
   BaseDiagramPainter(this.config, this.model);
-
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant BaseDiagramPainter oldDelegate) {
+    // Return true if something has changed that should repaint
+    return true;
+  }
+
 }

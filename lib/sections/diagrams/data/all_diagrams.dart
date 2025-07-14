@@ -1,8 +1,13 @@
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/externalities.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopolistic_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopoly.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/perfect_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/ppc_micro.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/taxes_and_subsidies.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:flutter/material.dart';
+import '../custom_paint/diagrams/oligopoly.dart';
+import '../custom_paint/diagrams/price_controls.dart';
 import '../custom_paint/diagrams/supply_and_demand.dart';
 import '../enums/diagram_subtype.dart';
 import '../enums/diagram_type.dart';
@@ -32,6 +37,7 @@ class AllDiagrams {
 
     // Create bundles
     final List<DiagramBundle> allBundles = [
+      /// PPC
       DiagramBundle(
         unit: UnitType.micro,
         type: DiagramType.ppcMicro,
@@ -45,6 +51,269 @@ class AllDiagrams {
           ),
         ],
       ),
+      /// Supply and Demand
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.supplyDemand,
+        basePainterDiagrams: [
+          SupplyAndDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.supplyDemand,
+              subtype: DiagramSubtype.equilibrium,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.supplyDemand,
+        basePainterDiagrams: [
+          SupplyAndDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.supplyDemand,
+              subtype: DiagramSubtype.increaseInDemand,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.supplyDemand,
+        basePainterDiagrams: [
+          SupplyAndDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.supplyDemand,
+              subtype: DiagramSubtype.decreaseInDemand,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.supplyDemand,
+        basePainterDiagrams: [
+          SupplyAndDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.supplyDemand,
+              subtype: DiagramSubtype.increaseInSupply,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.supplyDemand,
+        basePainterDiagrams: [
+          SupplyAndDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.supplyDemand,
+              subtype: DiagramSubtype.decreaseInSupply,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.supplyDemand,
+        basePainterDiagrams: [
+          SupplyAndDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.supplyDemand,
+              subtype: DiagramSubtype.shortage,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.supplyDemand,
+        basePainterDiagrams: [
+          SupplyAndDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.supplyDemand,
+              subtype: DiagramSubtype.surplus,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+/// Taxes and Subsidies
+      DiagramBundle(
+        basePainterDiagrams: [
+          TaxesAndSubsidies(
+            config,
+            DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.taxesAndSubsidies,
+              subtype: DiagramSubtype.perUnitSalesTax,
+              description: kFixedPerUnitSalesTax,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          TaxesAndSubsidies(
+            config,
+            DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.taxesAndSubsidies,
+              subtype: DiagramSubtype.adValoremSalesTax,
+              description: kAdValoremSalesTaxDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          TaxesAndSubsidies(
+            config,
+            DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.taxesAndSubsidies,
+              subtype: DiagramSubtype.salesTaxSocialWelfare,
+              description: kSalesTaxSocialWelfareDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          TaxesAndSubsidies(
+            config,
+            DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.taxesAndSubsidies,
+              subtype: DiagramSubtype.subsidy,
+              description: kSubsidyDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          TaxesAndSubsidies(
+            config,
+            DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.taxesAndSubsidies,
+              subtype: DiagramSubtype.subsidySocialWelfare,
+              description: kSubsidySocialWelfareDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          PriceControls(
+            config,
+            DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.priceControls,
+              subtype: DiagramSubtype.priceFloorNationalMinimumWage,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+
+
+      DiagramBundle(
+        basePainterDiagrams: [
+          PriceControls(
+            config,
+            DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.priceControls,
+              subtype: DiagramSubtype.priceFloorAgriculturalPurchases,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          PriceControls(
+            config,
+            DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.priceControls,
+              subtype: DiagramSubtype.priceCeiling,
+              description: '',
+            ),
+          ),
+        ],
+      ),
+      /// Externalities
+      DiagramBundle(
+        basePainterDiagrams: [
+          Externalities(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.externalities,
+              subtype: DiagramSubtype.negativeProduction,
+              description: kNegativeProductionExternalityDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          Externalities(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.externalities,
+              subtype: DiagramSubtype.negativeConsumption,
+              description: kNegativeConsumptionExternalityDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          Externalities(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.externalities,
+              subtype: DiagramSubtype.positiveProduction,
+              description: kPositiveProductionExternalityDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          Externalities(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.externalities,
+              subtype: DiagramSubtype.positiveConsumption,
+              description: kPositiveConsumptionExternalityDescription,
+            ),
+          ),
+        ],
+      ),
+      /// Market Power
       DiagramBundle(
         unit: UnitType.micro,
         type: DiagramType.perfectCompetition,
@@ -56,7 +325,7 @@ class AllDiagrams {
             model: DiagramModel(
               unit: UnitType.micro,
               type: DiagramType.supplyDemand,
-              subtype: DiagramSubtype.perfectCompetitionNormalProfit,
+              subtype: DiagramSubtype.longRunEquilibrium,
             ),
           ),
           PerfectCompetition(
@@ -64,7 +333,7 @@ class AllDiagrams {
             model: DiagramModel(
               unit: UnitType.micro,
               type: DiagramType.perfectCompetition,
-              subtype: DiagramSubtype.perfectCompetitionNormalProfit,
+              subtype: DiagramSubtype.longRunEquilibrium,
             ),
           ),
         ],
@@ -80,7 +349,7 @@ class AllDiagrams {
             model: DiagramModel(
               unit: UnitType.micro,
               type: DiagramType.supplyDemand,
-              subtype: DiagramSubtype.perfectCompetitionAbnormalProfit,
+              subtype: DiagramSubtype.abnormalProfit,
             ),
           ),
           PerfectCompetition(
@@ -88,7 +357,7 @@ class AllDiagrams {
             model: DiagramModel(
               unit: UnitType.micro,
               type: DiagramType.perfectCompetition,
-              subtype: DiagramSubtype.perfectCompetitionAbnormalProfit,
+              subtype: DiagramSubtype.abnormalProfit,
             ),
           ),
         ],
@@ -104,7 +373,7 @@ class AllDiagrams {
             model: DiagramModel(
               unit: UnitType.micro,
               type: DiagramType.supplyDemand,
-              subtype: DiagramSubtype.perfectCompetitionLoss,
+              subtype: DiagramSubtype.loss,
             ),
           ),
           PerfectCompetition(
@@ -112,7 +381,7 @@ class AllDiagrams {
             model: DiagramModel(
               unit: UnitType.micro,
               type: DiagramType.perfectCompetition,
-              subtype: DiagramSubtype.perfectCompetitionLoss,
+              subtype: DiagramSubtype.loss,
             ),
           ),
         ],
@@ -128,7 +397,7 @@ class AllDiagrams {
             model: DiagramModel(
               unit: UnitType.micro,
               type: DiagramType.supplyDemand,
-              subtype: DiagramSubtype.perfectCompetitionSocialWelfare,
+              subtype: DiagramSubtype.socialWelfare,
             ),
           ),
           PerfectCompetition(
@@ -136,63 +405,116 @@ class AllDiagrams {
             model: DiagramModel(
               unit: UnitType.micro,
               type: DiagramType.perfectCompetition,
-              subtype: DiagramSubtype.perfectCompetitionSocialWelfare,
+              subtype: DiagramSubtype.socialWelfare,
             ),
           ),
         ],
       ),
       DiagramBundle(
-
         basePainterDiagrams: [
           Monopoly(
             config: config,
             model: DiagramModel(
               type: DiagramType.monopoly,
-              subtype: DiagramSubtype.monopolyAbnormalProfit,
-              description: kMonopolyAbnormalProfits,
-
+              subtype: DiagramSubtype.abnormalProfit,
+              description: kMonopolyAbnormalProfitsDescription,
             ),
           ),
         ],
       ),
       DiagramBundle(
-
         basePainterDiagrams: [
           Monopoly(
             config: config,
             model: DiagramModel(
               type: DiagramType.monopoly,
-              subtype: DiagramSubtype.monopolyLoss,
+              subtype: DiagramSubtype.loss,
               description: 'A monopoly can be loss-making',
-
             ),
           ),
         ],
       ),
       DiagramBundle(
-
         basePainterDiagrams: [
           Monopoly(
             config: config,
             model: DiagramModel(
               type: DiagramType.monopoly,
-              subtype: DiagramSubtype.monopolyNatural,
+              subtype: DiagramSubtype.naturalMonopoly,
               description: kMonopolyNaturalDescription,
-
             ),
           ),
         ],
       ),
       DiagramBundle(
-
         basePainterDiagrams: [
           Monopoly(
             config: config,
             model: DiagramModel(
               type: DiagramType.monopoly,
-              subtype: DiagramSubtype.monopolySocialWelfare,
+              subtype: DiagramSubtype.socialWelfare,
               description: kMonopolyWelfareLossDescription,
-
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          MonopolisticCompetition(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.monopolisticCompetition,
+              subtype: DiagramSubtype.longRunEquilibrium,
+              description:
+                  kMonopolisticCompetitionLongRunEquilibriumDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          MonopolisticCompetition(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.monopolisticCompetition,
+              subtype: DiagramSubtype.socialWelfare,
+              description: kMonopolisticCompetitionWelfareDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          MonopolisticCompetition(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.monopolisticCompetition,
+              subtype: DiagramSubtype.abnormalProfit,
+              description: kMonopolisticCompetitionAbnormalProfitDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          MonopolisticCompetition(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.monopolisticCompetition,
+              subtype: DiagramSubtype.loss,
+              description: kMonopolisticCompetitionLossDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          Oligopoly(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.oligopoly,
+              subtype: DiagramSubtype.abnormalProfit,
+              description: kOligopolyCartelDescription,
             ),
           ),
         ],
@@ -227,7 +549,6 @@ class AllDiagrams {
             diagram.model.subtype == diagram.model.subtype);
       }).toList();
     }
-    print('bundles ${allBundles.length}');
     return allBundles.toList();
   }
 }

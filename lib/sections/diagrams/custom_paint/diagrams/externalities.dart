@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
@@ -14,6 +16,7 @@ import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 
 import '../painter_methods/paint_diagram_custom_lines.dart';
+import '../painter_methods/paint_text_normalized_within_axis.dart';
 
 class Externalities extends BaseDiagramPainter {
   Externalities({
@@ -40,9 +43,9 @@ class Externalities extends BaseDiagramPainter {
         size,
         ShadeType.welfareLoss,
         [
-          Offset(0.50, 0.50),
+          Offset(0.51, 0.50),
           Offset(0.40, 0.40),
-          Offset(0.50, 0.30),
+          Offset(0.51, 0.30),
         ],
       );
 
@@ -67,6 +70,29 @@ class Externalities extends BaseDiagramPainter {
         label1: MicroLabel.msc.label,
         label1Align: LabelAlign.centerRight,
       );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.65, 0.20),
+    straightEndPos: Offset(0.65, 0.30),
+        arrowOnStart: true,
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi,
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.externality.label,
+        Offset(0.90, 0.30),
+        pointerLine: Offset(0.65,0.25),
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.welfareLoss.label,
+        Offset(0.46, 0.10),
+        pointerLine: Offset(0.46,0.38),
+      );
     }
     if (negCon) {
       demandLabel = MicroLabel.dEqualsMPB.label;
@@ -75,20 +101,16 @@ class Externalities extends BaseDiagramPainter {
         size,
         ShadeType.welfareLoss,
         [
-          Offset(0.50, 0.50),
+          Offset(0.51, 0.50),
           Offset(0.40, 0.60),
-          Offset(0.50, 0.70),
+          Offset(0.51, 0.70),
         ],
       );
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.70, 0.90),
-          ),
-        ],
+       straightEndPos: Offset(0.70, 0.90),
         label2: MicroLabel.msb.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -101,6 +123,29 @@ class Externalities extends BaseDiagramPainter {
         xAxisEndPos: 0.41,
         yLabel: MicroLabel.pOpt.label,
         xLabel: MicroLabel.qOpt.label,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.65, 0.70),
+        straightEndPos: Offset(0.65, 0.80),
+        arrowOnStart: true,
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi,
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.externality.label,
+        Offset(0.90, 0.65),
+        pointerLine: Offset(0.65,0.75),
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.welfareLoss.label,
+        Offset(0.46, 0.20),
+        pointerLine: Offset(0.46,0.58),
       );
     }
     if (posProd) {
@@ -138,6 +183,29 @@ class Externalities extends BaseDiagramPainter {
         label1: MicroLabel.msc.label,
         label1Align: LabelAlign.centerRight,
       );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.75, 0.30),
+        straightEndPos: Offset(0.75, 0.40),
+        arrowOnStart: true,
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi,
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.externality.label,
+        Offset(0.90, 0.50),
+        pointerLine: Offset(0.75,0.35),
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.welfareLoss.label,
+        Offset(0.54, 0.20),
+        pointerLine: Offset(0.54,0.58),
+      );
     }
     if (posCon) {
       demandLabel = MicroLabel.dEqualsMPB.label;
@@ -172,6 +240,30 @@ class Externalities extends BaseDiagramPainter {
         ],
         label2: MicroLabel.msb.label,
         label2Align: LabelAlign.centerRight,
+      );
+
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.welfareLoss.label,
+        Offset(0.54, 0.10),
+        pointerLine: Offset(0.54,0.38),
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.35, 0.20),
+        straightEndPos: Offset(0.35, 0.30),
+        arrowOnStart: true,
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi,
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        MicroLabel.externality.label,
+        Offset(0.15, 0.30),
+        pointerLine: Offset(0.35,0.25),
       );
     }
 

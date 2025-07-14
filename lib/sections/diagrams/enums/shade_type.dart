@@ -4,7 +4,7 @@ enum ShadeType {
   consumerSurplus,
   producerSurplus,
   welfareLoss,
-  abnormalProfits,
+  abnormalProfit,
   loss
 }
 extension Shade on ShadeType {
@@ -16,7 +16,7 @@ extension Shade on ShadeType {
         return Colors.blue;
       case ShadeType.welfareLoss:
         return Colors.orange;
-      case ShadeType.abnormalProfits:
+      case ShadeType.abnormalProfit:
         return Colors.lightBlue;
       case ShadeType.loss:
         return Colors.red;
@@ -31,7 +31,7 @@ extension Shade on ShadeType {
         return 'Producer Surplus';
       case ShadeType.welfareLoss:
         return 'Welfare Loss';
-      case ShadeType.abnormalProfits:
+      case ShadeType.abnormalProfit:
         return 'Abnormal Profits';
       case ShadeType.loss:
         return 'Loss';

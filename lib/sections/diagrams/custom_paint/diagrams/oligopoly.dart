@@ -14,8 +14,8 @@ import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 import '../painter_methods/paint_title.dart';
 
-class Monopoly extends BaseDiagramPainter {
-  Monopoly({
+class Oligopoly extends BaseDiagramPainter {
+  Oligopoly({
     required DiagramPainterConfig config,
     required DiagramModel model,
   }) : super(config, model);
@@ -29,12 +29,9 @@ class Monopoly extends BaseDiagramPainter {
       canvas,
       yAxisLabel: kPriceCostsRevenue,
       yLabelIsHorizontal: false,
-      xAxisLabel: MicroLabel.quantity.label,
+      xAxisLabel: MicroLabel.q.label,
     );
 
-    if (model.subtype == DiagramSubtype.abnormalProfit ||
-        model.subtype == DiagramSubtype.loss ||
-        model.subtype == DiagramSubtype.socialWelfare) {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.20),
           straightEndPos: Offset(0.85, 0.85),
@@ -59,11 +56,10 @@ class Monopoly extends BaseDiagramPainter {
           ),
         ],
       );
-    }
-    if (model.subtype == DiagramSubtype.abnormalProfit ||
-        model.subtype == DiagramSubtype.socialWelfare) {
-      if (model.subtype == DiagramSubtype.abnormalProfit) {
-        paintTitle(c, canvas, 'Monopoly - Abnormal Profits');
+
+
+
+        paintTitle(c, canvas, 'Oligopoly - Cartel');
         paintShading(canvas, size, ShadeType.abnormalProfit, striped: true, [
           Offset(0, 0.42),
           Offset(0.35, 0.42),
@@ -77,7 +73,7 @@ class Monopoly extends BaseDiagramPainter {
           Offset(0.25, 0.05),
           pointerLine: Offset(0.25, 0.45),
         );
-      }
+
 
       /// Dashed Lines
       paintDiagramDashedLines(
@@ -86,7 +82,7 @@ class Monopoly extends BaseDiagramPainter {
         yAxisStartPos: 0.42,
         xAxisEndPos: 0.355,
         yLabel: MicroLabel.p.label,
-        xLabel: MicroLabel.q.label,
+        xLabel: MicroLabel.qpi.label,
       );
       paintDiagramDashedLines(
         c,
@@ -110,85 +106,8 @@ class Monopoly extends BaseDiagramPainter {
           ),
         ],
       );
-    }
 
-    if (model.subtype == DiagramSubtype.loss) {
-      paintTitle(c, canvas, 'Monopoly - Losses');
 
-      /// Dashed Lines
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.41,
-        xAxisEndPos: 0.355,
-        hideXLine: true,
-        yLabel: MicroLabel.p.label,
-      );
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.32,
-        xAxisEndPos: 0.36,
-        yLabel: MicroLabel.atc.label,
-        xLabel: MicroLabel.q.label,
-      );
-
-      paintShading(
-        canvas,
-        size,
-        ShadeType.loss,
-        striped: true,
-        [
-          Offset(0, 0.32),
-          Offset(0.36, 0.32),
-          Offset(0.36, 0.41),
-          Offset(0, 0.41),
-        ],
-      );
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        label2: MicroLabel.atc.label,
-        label2Align: LabelAlign.centerTop,
-        startPos: Offset(0.10, 0.10),
-        bezierPoints: [
-          CustomBezier(
-            control: Offset(0.50, 0.60),
-            endPoint: Offset(0.90, 0.10),
-          ),
-        ],
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        MicroLabel.loss.label,
-        Offset(0.20, 0.05),
-        pointerLine: Offset(0.20, 0.36),
-      );
-    }
-
-    if (model.subtype == DiagramSubtype.naturalMonopoly) {
-      paintTitle(c, canvas, 'Natural Monopoly');
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.05, 0.35),
-        bezierPoints: [
-          CustomBezier(
-            control: Offset(0.50, 0.80),
-            endPoint: Offset(0.90, 0.70),
-          ),
-        ],
-        label2: MicroLabel.lrac.label,
-        label2Align: LabelAlign.centerRight,
-      );
-
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.20, 0.20),
-          straightEndPos: Offset(0.70, 0.90),
-          label2: MicroLabel.dEqualsAR.label,
-          label2Align: LabelAlign.centerRight);
-    }
     if (model.subtype == DiagramSubtype.socialWelfare) {
       paintTitle(c, canvas, 'Monopoly - Social Welfare');
       paintShading(canvas, size, ShadeType.consumerSurplus, striped: true, [

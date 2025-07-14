@@ -26,8 +26,8 @@ class PerfectCompetition extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    if (model.subtype == DiagramSubtype.perfectCompetitionNormalProfit ||
-        model.subtype == DiagramSubtype.perfectCompetitionSocialWelfare) {
+    if (model.subtype == DiagramSubtype.longRunEquilibrium ||
+        model.subtype == DiagramSubtype.socialWelfare) {
       /// Dashed Lines
       paintDiagramDashedLines(
         c,
@@ -50,8 +50,8 @@ class PerfectCompetition extends BaseDiagramPainter {
         ],
       );
     }
-    if (model.subtype == DiagramSubtype.perfectCompetitionAbnormalProfit) {
-      paintShading(canvas, size, ShadeType.abnormalProfits, striped: true, [
+    if (model.subtype == DiagramSubtype.abnormalProfit) {
+      paintShading(canvas, size, ShadeType.abnormalProfit, striped: true, [
         Offset(0, 0.40),
         Offset(0.54, 0.40),
         Offset(0.54, 0.50),
@@ -118,7 +118,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         pointerLine: Offset(0.25,0.45),
       );
     }
-    if (model.subtype == DiagramSubtype.perfectCompetitionLoss) {
+    if (model.subtype == DiagramSubtype.loss) {
       paintShading(canvas, size, ShadeType.loss, striped: true, [
         Offset(0, 0.50),
         Offset(0.45, 0.50),

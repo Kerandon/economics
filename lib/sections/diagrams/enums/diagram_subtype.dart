@@ -14,25 +14,26 @@ enum DiagramSubtype {
   increaseInDemand,
   decreaseInDemand,
   increaseInSupply,
-  increaseInSupplyPerfectCompetition,
   decreaseInSupply,
   shortage,
   surplus,
+  perUnitSalesTax,
+  adValoremSalesTax,
+  salesTaxSocialWelfare,
+  subsidy,
+  subsidySocialWelfare,
+  priceFloorNationalMinimumWage,
+  priceFloorAgriculturalPurchases,
+  priceCeiling,
   negativeProduction,
   negativeConsumption,
   positiveProduction,
   positiveConsumption,
   commonPoolResources,
-  perfectCompetitionNormalProfit,
-  perfectCompetitionAbnormalProfit,
-  perfectCompetitionLoss,
-  perfectCompetitionSocialWelfare,
-  monopolyAbnormalProfit,
-  monopolyNormalProfit,
-  monopolyLoss,
-  monopolyNatural,
-  monopolySocialWelfare,
+  abnormalProfit,
+  loss,
   socialWelfare,
+  naturalMonopoly,
   closed,
   open,
   macro,
@@ -76,10 +77,6 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Surplus';
       case DiagramSubtype.commonPoolResources:
         return 'Common Pool Resources';
-      case DiagramSubtype.perfectCompetitionAbnormalProfit:
-        return 'Abnormal Profit';
-      case DiagramSubtype.perfectCompetitionNormalProfit:
-        return 'Long-Run Equilibrium';
       case DiagramSubtype.closed:
         return 'Closed-model';
       case DiagramSubtype.open:
@@ -92,10 +89,12 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Short-run';
       case DiagramSubtype.standard:
         return 'Standard';
-      case DiagramSubtype.exporter:
-        return 'Exporter';
-      case DiagramSubtype.importer:
-        return 'Importer';
+      case DiagramSubtype.priceFloorNationalMinimumWage:
+        return 'Price Floor - National Minimum Wage';
+      case DiagramSubtype.priceFloorAgriculturalPurchases:
+        return 'Price Floor - Agricultural Purchases';
+      case DiagramSubtype.priceCeiling:
+        return 'Price Ceiling';
       case DiagramSubtype.negativeProduction:
         return 'Negative production externality';
       case DiagramSubtype.negativeConsumption:
@@ -106,24 +105,29 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Positive consumption externality';
       case DiagramSubtype.socialWelfare:
         return 'Social welfare';
-      case DiagramSubtype.perfectCompetitionLoss:
-        return 'Loss';
-      case DiagramSubtype.monopolyAbnormalProfit:
-        return 'Abnormal profit';
-      case DiagramSubtype.monopolyNormalProfit:
-        return 'Normal profit';
-      case DiagramSubtype.monopolyLoss:
-        return 'Loss';
-      case DiagramSubtype.increaseInSupplyPerfectCompetition:
-        return 'Increase in market supply';
       case DiagramSubtype.longRunEquilibrium:
         return 'Long-run equilibrium';
-      case DiagramSubtype.perfectCompetitionSocialWelfare:
-        return 'Social Welfare';
-      case DiagramSubtype.monopolyNatural:
+      case DiagramSubtype.abnormalProfit:
+        return 'Abnormal Profit';
+      case DiagramSubtype.loss:
+        return 'Loss';
+      case DiagramSubtype.naturalMonopoly:
         return 'Natural Monopoly';
-      case DiagramSubtype.monopolySocialWelfare:
-        return 'Social Welfare';
+
+      case DiagramSubtype.exporter:
+        return 'Exporter';
+      case DiagramSubtype.importer:
+        return 'Importer';
+      case DiagramSubtype.perUnitSalesTax:
+        return 'Sales Tax (Fixed Per Unit)';
+      case DiagramSubtype.subsidy:
+        return 'Subsidy';
+      case DiagramSubtype.adValoremSalesTax:
+        return 'Sales Tax (Ad Valorem)';
+      case DiagramSubtype.salesTaxSocialWelfare:
+     return 'Sales Tax Social Welfare';
+      case DiagramSubtype.subsidySocialWelfare:
+        return 'Subsidy Social Welfare';
     }
   }
 }
