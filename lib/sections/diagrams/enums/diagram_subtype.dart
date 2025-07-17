@@ -40,6 +40,8 @@ enum DiagramSubtype {
   fullEmployment,
   shortRun,
   standard,
+  worldPrice,
+  domesticMarket,
   exporter,
   importer,
 }
@@ -125,9 +127,13 @@ extension DiagramSubtypeExtension on DiagramSubtype {
       case DiagramSubtype.adValoremSalesTax:
         return 'Sales Tax (Ad Valorem)';
       case DiagramSubtype.salesTaxSocialWelfare:
-     return 'Sales Tax - Social Welfare';
+        return 'Sales Tax - Social Welfare';
       case DiagramSubtype.subsidySocialWelfare:
         return 'Subsidy - Social Welfare';
+      case DiagramSubtype.worldPrice:
+        return 'World Price';
+      case DiagramSubtype.domesticMarket:
+        return 'Domestic Market';
     }
   }
 }

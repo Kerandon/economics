@@ -7,6 +7,7 @@ import 'package:economics_app/sections/diagrams/models/diagram_painter_config.da
 import 'package:flutter/material.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
+import '../painter_methods/paint_diagram_custom_lines.dart';
 
 class InternationalTrade extends BaseDiagramPainter {
   InternationalTrade({
@@ -20,35 +21,30 @@ class InternationalTrade extends BaseDiagramPainter {
 
     paintAxis(c, canvas, yAxisLabel: kPrice, xAxisLabel: kQ);
 
-    /// Demand
-    paintCurve(
-      c,
-      canvas,
-      Offset(0.20, 0.25),
-      Offset(0.75, 0.75),
-      label2: kDd,
-      label2Align: LabelAlign.centerRight,
-    );
-
-    /// Supply
-    paintCurve(
-      c,
-      canvas,
-      Offset(0.20, 0.75),
-      Offset(0.75, 0.25),
-      label2: kSd,
-      label2Align: LabelAlign.centerRight,
-    );
+    if(model.subtype == DiagramSubtype.worldPrice){
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.10),
+        straightEndPos: Offset(0.90, 0.90),
+        label2: DiagramLabel.dD.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.90),
+        straightEndPos: Offset(0.90, 0.10),
+        label2: DiagramLabel.sD.label,
+        label2Align: LabelAlign.centerRight,
+      );
+    }
 
     if (model.subtype == DiagramSubtype.importer) {
-      /// World Line
-      paintCurve(c, canvas, Offset(kAxisIndent, 0.65), Offset(0.75, 0.65),
-          label2: kWorldSupply, label2Align: LabelAlign.centerRight);
+
     }
     if (model.subtype == DiagramSubtype.exporter) {
-      /// World Line
-      paintCurve(c, canvas, Offset(kAxisIndent, 0.40), Offset(0.75, 0.40),
-          label2: kWorldSupply, label2Align: LabelAlign.centerRight);
+
     }
   }
 }

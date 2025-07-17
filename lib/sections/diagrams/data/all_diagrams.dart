@@ -526,6 +526,8 @@ class AllDiagrams {
       ),
       /// World Trade
       DiagramBundle(
+      label: 'International Trade - Exporter',
+        description: kInternationalTradeExporterDescription,
         basePainterDiagrams: [
           InternationalTrade(
               config:
@@ -533,7 +535,7 @@ class AllDiagrams {
               model: DiagramModel(
                 unit: UnitType.global,
                 type: DiagramType.internationalTrade,
-                subtype: DiagramSubtype.standard,
+                subtype: DiagramSubtype.worldPrice,
                 description: kInternationalTradeExporterDescription,
               )
           ),
@@ -551,6 +553,7 @@ class AllDiagrams {
       ),
 
       DiagramBundle(
+        label: 'International Trade - Importer',
         basePainterDiagrams: [
           InternationalTrade(
               config:
