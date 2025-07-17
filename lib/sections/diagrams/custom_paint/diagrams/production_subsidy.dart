@@ -1,11 +1,16 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/label_align.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
+import '../../enums/shade_type.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
+import '../painter_methods/paint_diagram_custom_lines.dart';
+import '../painter_methods/paint_shading.dart';
 
 class ProductionSubsidy extends BaseDiagramPainter {
   ProductionSubsidy({
@@ -18,39 +23,68 @@ class ProductionSubsidy extends BaseDiagramPainter {
     final c = config.copyWith(painterSize: size);
 
     paintAxis(c, canvas, yAxisLabel: kPrice, xAxisLabel: kQ);
-
-    /// Demand
-    paintCurve(
+    paintDiagramDashedLines(
       c,
       canvas,
-      Offset(0.20, 0.25),
-      Offset(0.75, 0.75),
-      label2: kDd,
-      label2Align: LabelAlign.centerRight,
+      yAxisStartPos: 0.80,
+      xAxisEndPos: 0.20,
+      xLabel: DiagramLabel.q1.label,
+      hideYLine: true,
     );
-
-    /// Supply
-    paintCurve(
+    paintDiagramDashedLines(
       c,
       canvas,
-      Offset(0.20, 0.75),
-      Offset(0.75, 0.25),
-      label2: kSd,
-      label2Align: LabelAlign.centerRight,
+      yAxisStartPos: 0.60,
+      yLabel: DiagramLabel.pSub.label,
+      xAxisEndPos: 0.40,
+      xLabel: DiagramLabel.q2.label,
     );
 
-    /// Supply
-    paintCurve(
+    paintCustomDiagramLines(
       c,
       canvas,
-      Offset(0.30, 0.75),
-      Offset(0.75, 0.34),
-      label2: kDomesticSupplySubsidy,
+      startPos: Offset(0.10, 0.10),
+      straightEndPos: Offset(0.90, 0.90),
+      label2: DiagramLabel.dD.label,
       label2Align: LabelAlign.centerRight,
     );
-
-    /// World Line
-    paintCurve(c, canvas, Offset(kAxisIndent, 0.65), Offset(0.75, 0.65),
-        label2: kWorldSupply, label2Align: LabelAlign.centerRight);
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.10, 0.90),
+      straightEndPos: Offset(0.90, 0.10),
+      label2: DiagramLabel.sD.label,
+      label2Align: LabelAlign.centerRight,
+    );
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.30, 0.90),
+      straightEndPos: Offset(0.90, 0.30),
+      label2: DiagramLabel.sDSub.label,
+      label2Align: LabelAlign.centerRight,
+    );
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.0, 0.80),
+      straightEndPos: Offset(0.90, 0.80),
+      label1: DiagramLabel.pW.label,
+      label1Align: LabelAlign.centerLeft,
+      label2: DiagramLabel.sW.label,
+      label2Align: LabelAlign.centerRight,
+    );
+    if (model.subtype == DiagramSubtype.socialWelfare) {
+      paintShading(
+        canvas,
+        size,
+        ShadeType.welfareLoss,
+        [
+          Offset(0.20, 0.80),
+          Offset(0.40, 0.80),
+          Offset(0.40, 0.60),
+        ],
+      );
+    }
   }
 }

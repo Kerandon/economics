@@ -99,3 +99,43 @@ This continues until AR is tangent to ATC, and firms earn only normal profit.
 const kOligopolyCartelDescription = '''
 A cartel acts as a monopoly and generates abnormal profits.
 ''';
+const kInternationalTradeImporterDescription = '''
+When the world price is lower than the domestic price, a country will import the shortfall quantities of the good
+''';
+const kInternationalTradeExporterDescription = '''
+When the world price is higher than the domestic price, a country will export surplus quantities of the good
+''';
+
+const kTariffDescription = '''
+A tariff increases the world price for the domestic market.
+''';
+
+const kTariffWelfareDescription = '''
+Although domestic producers and government gains with additional tax revenue, 
+domestic consumers lose due to higher prices and less choice
+''';
+
+const kImportQuotaDescription = '''
+Welfare outcome is similar to tariffs, except the government does not earn tax revenue
+    ''';
+
+const kImportQuotaWelfareDescription = '''
+Social welfare loss due to lower consumption (right triangle) and inefficient 
+domestic producers replace more efficient global producers (left triangle)
+    ''';
+const kProductionSubsidyDescription = '''
+Domestic producers gain. Unlike other protectionist measures however domestic consumers are unaffected.
+''';
+
+const kProductionSubsidyWelfareDescription = '''
+The cost to taxpayers to fund the subsidy causes a net social welfare loss
+''';
+
+const kExportSubsidyDescription = '''
+Domestic supply increases due to the subsidy which increases the price on the world market
+''';
+
+const kExportSubsidyWelfareDescription = '''
+There is a welfare loss due to lower domestic consumption (right triangle), and the cost to tax payers to fund relatively inefficient 
+ domestic exporters
+''';

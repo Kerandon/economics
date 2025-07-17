@@ -13,11 +13,11 @@ void paintDiagramDashedLines(
   bool hideYLine = false,
   bool hideXLine = false,
 }) {
-
   final normalize = 1 - (kAxisIndent * 1.50);
   final yPos = yAxisStartPos * normalize + (kAxisIndent / 2);
-  final xEndPosNormalized = xAxisEndPos * (1- (kAxisIndent * 1.5)) + kAxisIndent;
-      //xAxisEndPos - (kAxisIndent / 2);
+  final xEndPosNormalized =
+      xAxisEndPos * (1 - (kAxisIndent * 1.5)) + kAxisIndent;
+  //xAxisEndPos - (kAxisIndent / 2);
   final xLabelY = 1 - kAxisIndent * normalize;
   if (!hideYLine) {
     paintDashedLine(
@@ -26,16 +26,15 @@ void paintDiagramDashedLines(
       p1: Offset(kAxisIndent, yPos),
       p2: Offset(xEndPosNormalized, yPos),
     );
-
-    if (yLabel != null) {
-      paintTextForDashedLines(
-        config,
-        canvas,
-        yLabel,
-        Offset(0, yPos),
-        CustomAxis.y,
-      );
-    }
+  }
+  if (yLabel != null) {
+    paintTextForDashedLines(
+      config,
+      canvas,
+      yLabel,
+      Offset(0, yPos),
+      CustomAxis.y,
+    );
   }
 
   if (!hideXLine) {
@@ -45,16 +44,15 @@ void paintDiagramDashedLines(
       p1: Offset(xEndPosNormalized, yPos),
       p2: Offset(xEndPosNormalized, 1 - kAxisIndent),
     );
-
-    if (xLabel != null) {
-      paintTextForDashedLines(
-        config,
-        canvas,
-        xLabel,
-        Offset(xEndPosNormalized, xLabelY),
-        CustomAxis.x,
-      );
-    }
+  }
+  if (xLabel != null) {
+    paintTextForDashedLines(
+      config,
+      canvas,
+      xLabel,
+      Offset(xEndPosNormalized, xLabelY),
+      CustomAxis.x,
+    );
   }
 }
 
@@ -71,7 +69,6 @@ void paintTextForDashedLines(
   final width = config.painterSize.width;
   final height = config.painterSize.height;
 
-
   final textPainter = TextPainter(
     text: TextSpan(
       text: label,
@@ -82,8 +79,6 @@ void paintTextForDashedLines(
     ),
     textDirection: TextDirection.ltr,
   )..layout(minWidth: 0, maxWidth: width);
-
-
 
   Offset offset;
   switch (axis) {

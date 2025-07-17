@@ -29,24 +29,24 @@ class Oligopoly extends BaseDiagramPainter {
       canvas,
       yAxisLabel: kPriceCostsRevenue,
       yLabelIsHorizontal: false,
-      xAxisLabel: MicroLabel.q.label,
+      xAxisLabel: DiagramLabel.q.label,
     );
 
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.20),
           straightEndPos: Offset(0.85, 0.85),
-          label2: MicroLabel.dEqualsAR.label,
+          label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
 
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.05, 0.25),
           straightEndPos: Offset(0.55, 1.05),
-          label2: MicroLabel.mr.label,
+          label2: DiagramLabel.mr.label,
           label2Align: LabelAlign.centerRight);
       paintCustomDiagramLines(
         c,
         canvas,
-        label2: MicroLabel.mc.label,
+        label2: DiagramLabel.mc.label,
         label2Align: LabelAlign.centerTop,
         startPos: Offset(0.10, 0.85),
         bezierPoints: [
@@ -69,7 +69,7 @@ class Oligopoly extends BaseDiagramPainter {
         paintTextNormalizedWithinAxis(
           c,
           canvas,
-          MicroLabel.abnormalProfit.label,
+          DiagramLabel.abnormalProfit.label,
           Offset(0.25, 0.05),
           pointerLine: Offset(0.25, 0.45),
         );
@@ -81,8 +81,8 @@ class Oligopoly extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.42,
         xAxisEndPos: 0.355,
-        yLabel: MicroLabel.p.label,
-        xLabel: MicroLabel.qpi.label,
+        yLabel: DiagramLabel.p.label,
+        xLabel: DiagramLabel.qpi.label,
       );
       paintDiagramDashedLines(
         c,
@@ -90,13 +90,13 @@ class Oligopoly extends BaseDiagramPainter {
         yAxisStartPos: 0.57,
         xAxisEndPos: 0.355,
         hideXLine: true,
-        yLabel: MicroLabel.atc.label,
+        yLabel: DiagramLabel.atc.label,
       );
 
       paintCustomDiagramLines(
         c,
         canvas,
-        label2: MicroLabel.atc.label,
+        label2: DiagramLabel.atc.label,
         label2Align: LabelAlign.centerTop,
         startPos: Offset(0.05, 0.25),
         bezierPoints: [
@@ -135,21 +135,21 @@ class Oligopoly extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.consumerSurplus.label,
+        DiagramLabel.consumerSurplus.label,
         Offset(0.25, 0.05),
         pointerLine: Offset(0.20, 0.36),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.producerSurplus.label,
+        DiagramLabel.producerSurplus.label,
         Offset(0.10, 0.95),
         pointerLine: Offset(0.20, 0.70),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.welfareLoss.label,
+        DiagramLabel.welfareLoss.label,
         Offset(0.38, 0.25),
         pointerLine: Offset(0.40, 0.50),
       );

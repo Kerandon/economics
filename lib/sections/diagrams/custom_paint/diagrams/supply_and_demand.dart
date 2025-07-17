@@ -29,8 +29,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
     paintAxis(
       c,
       canvas,
-      yAxisLabel: MicroLabel.p.label,
-      xAxisLabel: MicroLabel.q.label,
+      yAxisLabel: DiagramLabel.p.label,
+      xAxisLabel: DiagramLabel.q.label,
     );
 
     // Original equilibrium dashed lines
@@ -42,8 +42,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.50,
         xAxisEndPos: 0.50,
-        yLabel: MicroLabel.pe.label,
-        xLabel: MicroLabel.qe.label,
+        yLabel: DiagramLabel.pe.label,
+        xLabel: DiagramLabel.qe.label,
       );
 
       paintCustomDiagramLines(
@@ -55,7 +55,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
             endPoint: Offset(0.85, 0.85),
           ),
         ],
-        label2: MicroLabel.d.label,
+        label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -67,7 +67,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
             endPoint: Offset(0.15, 0.85),
           ),
         ],
-        label1: MicroLabel.s.label,
+        label1: DiagramLabel.s.label,
         label1Align: LabelAlign.centerRight,
       );
     }
@@ -89,7 +89,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
             endPoint: Offset(0.85, 0.85),
           ),
         ],
-        label2: MicroLabel.d.label,
+        label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -101,7 +101,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
             endPoint: Offset(0.15, 0.85),
           ),
         ],
-        label1: MicroLabel.s.label,
+        label1: DiagramLabel.s.label,
         label1Align: LabelAlign.centerRight,
       );
 
@@ -110,8 +110,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.50,
         xAxisEndPos: 0.50,
-        yLabel: MicroLabel.p1.label,
-        xLabel: MicroLabel.q1.label,
+        yLabel: DiagramLabel.p1.label,
+        xLabel: DiagramLabel.q1.label,
       );
     }
 
@@ -121,7 +121,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         startPos: Offset(0.10, 0.30),
         straightEndPos: Offset(0.70, 0.90),
-        label2: MicroLabel.d2.label,
+        label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );
 
@@ -130,8 +130,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.60,
         xAxisEndPos: 0.40,
-        yLabel: MicroLabel.p2.label,
-        xLabel: MicroLabel.q2.label,
+        yLabel: DiagramLabel.p2.label,
+        xLabel: DiagramLabel.q2.label,
       );
 
       paintCustomDiagramLines(
@@ -154,7 +154,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
             endPoint: Offset(0.90, 0.70),
           ),
         ],
-        label2: MicroLabel.d1.label,
+        label2: DiagramLabel.d1.label,
         label2Align: LabelAlign.centerRight,
       );
 
@@ -163,8 +163,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 0.60,
         yAxisStartPos: 0.40,
-        yLabel: MicroLabel.p2.label,
-        xLabel: MicroLabel.q2.label,
+        yLabel: DiagramLabel.p2.label,
+        xLabel: DiagramLabel.q2.label,
       );
       paintCustomDiagramLines(
           c,
@@ -184,8 +184,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 0.60,
         yAxisStartPos: 0.60,
-        yLabel: MicroLabel.p2.label,
-        xLabel: MicroLabel.q2.label,
+        yLabel: DiagramLabel.p2.label,
+        xLabel: DiagramLabel.q2.label,
       );
       paintCustomDiagramLines(
           c,
@@ -201,7 +201,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.05, 0.75),
           straightEndPos: Offset(0.70, 0.10),
-          label2: MicroLabel.s2.label,
+          label2: DiagramLabel.s2.label,
           label2Align: LabelAlign.centerRight);
 
       paintDiagramDashedLines(
@@ -209,8 +209,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.40,
         xAxisEndPos: 0.40,
-        yLabel: MicroLabel.p2.label,
-        xLabel: MicroLabel.q2.label,
+        yLabel: DiagramLabel.p2.label,
+        xLabel: DiagramLabel.q2.label,
       );
       paintCustomDiagramLines(
           c,
@@ -227,15 +227,15 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 0.30,
         yAxisStartPos: 0.70,
-        yLabel: MicroLabel.pm.label,
-        xLabel: MicroLabel.qD.label,
+        yLabel: DiagramLabel.pm.label,
+        xLabel: DiagramLabel.qD.label,
       );
       paintDiagramDashedLines(
         c,
         canvas,
         xAxisEndPos: 0.70,
         yAxisStartPos: 0.70,
-        xLabel: MicroLabel.qS.label,
+        xLabel: DiagramLabel.qS.label,
       );
       paintCustomDiagramLines(
         color: c.colorScheme.onSurface,
@@ -253,7 +253,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         arrowOnStartAngle: pi / 0.50,
         arrowOnEndAngle: pi / 0.50,
       );
-      paintText(c, canvas, MicroLabel.shortage.label, Offset(0.53, 0.98));
+      paintText(c, canvas, DiagramLabel.shortage.label, Offset(0.53, 0.98));
       paintCustomDiagramLines(
         circleAtStart: true,
         circleAtEnd: true,
@@ -275,15 +275,15 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 0.30,
         yAxisStartPos: 0.30,
-        yLabel: MicroLabel.pm.label,
-        xLabel: MicroLabel.qD.label,
+        yLabel: DiagramLabel.pm.label,
+        xLabel: DiagramLabel.qD.label,
       );
       paintDiagramDashedLines(
         c,
         canvas,
         xAxisEndPos: 0.70,
         yAxisStartPos: 0.30,
-        xLabel: MicroLabel.qS.label,
+        xLabel: DiagramLabel.qS.label,
       );
       paintCustomDiagramLines(
           strokeWidth: kCurveWidthSlim,
@@ -325,15 +325,15 @@ class SupplyAndDemand extends BaseDiagramPainter {
       paintAxis(
         c,
         canvas,
-        yAxisLabel: MicroLabel.priceCostsRevenue.label,
+        yAxisLabel: DiagramLabel.priceCostsRevenue.label,
         yLabelIsHorizontal: false,
-        xAxisLabel: MicroLabel.industryQuantity.label,
+        xAxisLabel: DiagramLabel.industryQuantity.label,
       );
     }
     if (model.subtype == DiagramSubtype.longRunEquilibrium ||
         model.subtype == DiagramSubtype.socialWelfare) {
       paintDiagramDashedLines(c, canvas,
-          yLabel: MicroLabel.pm.label,
+          yLabel: DiagramLabel.pm.label,
           hideXLine: true,
           yAxisStartPos: 0.50,
           xAxisEndPos: 1.1);
@@ -346,7 +346,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
           0.15,
         ),
         straightEndPos: Offset(0.85, 0.85),
-        label2: MicroLabel.d.label,
+        label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -354,7 +354,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         startPos: Offset(0.15, 0.85),
         straightEndPos: Offset(0.85, 0.15),
-        label2: MicroLabel.s.label,
+        label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
     }
@@ -364,7 +364,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 1.15,
         yAxisStartPos: 0.40,
-        yLabel: MicroLabel.pm.label,
+        yLabel: DiagramLabel.pm.label,
         hideXLine: true,
       );
       paintDiagramDashedLines(
@@ -372,7 +372,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 1.15,
         yAxisStartPos: 0.50,
-        yLabel: MicroLabel.pe.label,
+        yLabel: DiagramLabel.pe.label,
         hideXLine: true,
       );
       paintCustomDiagramLines(
@@ -383,7 +383,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
           0.15,
         ),
         straightEndPos: Offset(0.85, 0.85),
-        label2: MicroLabel.d.label,
+        label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -391,7 +391,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         startPos: Offset(0.10, 0.70),
         straightEndPos: Offset(0.70, 0.10),
-        label2: MicroLabel.s.label,
+        label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -399,7 +399,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         startPos: Offset(0.15, 0.85),
         straightEndPos: Offset(0.85, 0.15),
-        label2: MicroLabel.s1.label,
+        label2: DiagramLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -425,7 +425,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 1.15,
         yAxisStartPos: 0.60,
-        yLabel: MicroLabel.pm.label,
+        yLabel: DiagramLabel.pm.label,
         hideXLine: true,
       );
       paintDiagramDashedLines(
@@ -433,7 +433,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         xAxisEndPos: 1.15,
         yAxisStartPos: 0.50,
-        yLabel: MicroLabel.pe.label,
+        yLabel: DiagramLabel.pe.label,
         hideXLine: true,
       );
       paintCustomDiagramLines(
@@ -444,7 +444,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
           0.15,
         ),
         straightEndPos: Offset(0.85, 0.85),
-        label2: MicroLabel.d.label,
+        label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -452,7 +452,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         startPos: Offset(0.35, 0.85),
         straightEndPos: Offset(0.90, 0.30),
-        label2: MicroLabel.s.label,
+        label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -460,7 +460,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         canvas,
         startPos: Offset(0.15, 0.85),
         straightEndPos: Offset(0.85, 0.15),
-        label2: MicroLabel.s1.label,
+        label2: DiagramLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
 
@@ -500,7 +500,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.consumerSurplus.label,
+        DiagramLabel.consumerSurplus.label,
         Offset(0.5, 0.10),
         pointerLine: Offset(0.15, 0.30),
         style: kLabelTextStyle,
@@ -508,7 +508,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.producerSurplus.label,
+        DiagramLabel.producerSurplus.label,
         Offset(0.5, 0.90),
         pointerLine: Offset(0.15, 0.60),
         style: kLabelTextStyle,

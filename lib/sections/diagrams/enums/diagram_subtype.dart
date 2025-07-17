@@ -125,9 +125,9 @@ extension DiagramSubtypeExtension on DiagramSubtype {
       case DiagramSubtype.adValoremSalesTax:
         return 'Sales Tax (Ad Valorem)';
       case DiagramSubtype.salesTaxSocialWelfare:
-     return 'Sales Tax Social Welfare';
+     return 'Sales Tax - Social Welfare';
       case DiagramSubtype.subsidySocialWelfare:
-        return 'Subsidy Social Welfare';
+        return 'Subsidy - Social Welfare';
     }
   }
 }

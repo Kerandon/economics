@@ -1,14 +1,19 @@
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/externalities.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/import_quota.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/international_trade.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopolistic_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopoly.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/perfect_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/ppc_micro.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/production_subsidy.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/taxes_and_subsidies.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:flutter/material.dart';
+import '../custom_paint/diagrams/export_subsidy.dart';
 import '../custom_paint/diagrams/oligopoly.dart';
 import '../custom_paint/diagrams/price_controls.dart';
 import '../custom_paint/diagrams/supply_and_demand.dart';
+import '../custom_paint/diagrams/tariff.dart';
 import '../enums/diagram_subtype.dart';
 import '../enums/diagram_type.dart';
 import '../enums/unit_type.dart';
@@ -517,6 +522,174 @@ class AllDiagrams {
               description: kOligopolyCartelDescription,
             ),
           ),
+        ],
+      ),
+      /// World Trade
+      DiagramBundle(
+        basePainterDiagrams: [
+          InternationalTrade(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.internationalTrade,
+                subtype: DiagramSubtype.standard,
+                description: kInternationalTradeExporterDescription,
+              )
+          ),
+         InternationalTrade(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.internationalTrade,
+                subtype: DiagramSubtype.standard,
+                description: kInternationalTradeExporterDescription,
+              )
+          ),
+        ],
+      ),
+
+      DiagramBundle(
+        basePainterDiagrams: [
+          InternationalTrade(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.internationalTrade,
+                subtype: DiagramSubtype.standard,
+                description: kInternationalTradeExporterDescription,
+              )
+          ),
+          InternationalTrade(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.internationalTrade,
+                subtype: DiagramSubtype.standard,
+                description: kInternationalTradeExporterDescription,
+              )
+          )
+        ],
+      ),
+
+      /// Tariffs
+      DiagramBundle(
+        basePainterDiagrams: [
+         Tariff(
+           config:
+             config,
+           model: DiagramModel(
+             unit: UnitType.global,
+             type: DiagramType.tariff,
+             subtype: DiagramSubtype.standard,
+             description: kTariffDescription,
+           )
+         )
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          Tariff(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.tariff,
+                subtype: DiagramSubtype.socialWelfare,
+                description: kTariffWelfareDescription,
+              )
+          )
+        ],
+      ),
+      /// Import Quota
+      DiagramBundle(
+        basePainterDiagrams: [
+          ImportQuota(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.importQuota,
+                subtype: DiagramSubtype.standard,
+                description: kImportQuotaDescription,
+              )
+          )
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          ImportQuota(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.importQuota,
+                subtype: DiagramSubtype.socialWelfare,
+                description: kImportQuotaWelfareDescription,
+              )
+          )
+        ],
+      ),
+      /// Production Subsidy
+      DiagramBundle(
+        basePainterDiagrams: [
+          ProductionSubsidy(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.productionSubsidy,
+                subtype: DiagramSubtype.standard,
+                description: kProductionSubsidyDescription,
+              )
+          )
+        ],
+      ),
+
+      DiagramBundle(
+        basePainterDiagrams: [
+          ProductionSubsidy(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.productionSubsidy,
+                subtype: DiagramSubtype.socialWelfare,
+                description: kProductionSubsidyWelfareDescription,
+              ),
+          ),
+        ],
+      ),
+      /// Export Subsidy
+      DiagramBundle(
+        basePainterDiagrams: [
+          ExportSubsidy(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.exportSubsidy,
+                subtype: DiagramSubtype.standard,
+                description: kExportSubsidyDescription,
+              )
+          )
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          ExportSubsidy(
+              config:
+              config,
+              model: DiagramModel(
+                unit: UnitType.global,
+                type: DiagramType.exportSubsidy,
+                subtype: DiagramSubtype.socialWelfare,
+                description: kExportSubsidyWelfareDescription,
+              )
+          )
         ],
       ),
     ];

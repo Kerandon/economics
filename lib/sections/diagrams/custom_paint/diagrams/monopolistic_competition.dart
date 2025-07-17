@@ -29,12 +29,12 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       canvas,
       yAxisLabel: kPriceCostsRevenue,
       yLabelIsHorizontal: false,
-      xAxisLabel: MicroLabel.quantity.label,
+      xAxisLabel: DiagramLabel.quantity.label,
     );
     paintCustomDiagramLines(
       c,
       canvas,
-      label2: MicroLabel.mc.label,
+      label2: DiagramLabel.mc.label,
       label2Align: LabelAlign.centerTop,
       startPos: Offset(0.05, 0.70),
       bezierPoints: [
@@ -48,7 +48,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
     paintCustomDiagramLines(
       c,
       canvas,
-      label2: MicroLabel.atc.label,
+      label2: DiagramLabel.atc.label,
       label2Align: LabelAlign.centerTop,
       startPos: Offset(0.10, 0.25),
       bezierPoints: [
@@ -63,20 +63,20 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.35),
           straightEndPos: Offset(0.90, 0.75),
-          label2: MicroLabel.dEqualsAR.label,
+          label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.45),
           straightEndPos: Offset(0.60, 1.05),
-          label2: MicroLabel.mr.label,
+          label2: DiagramLabel.mr.label,
           label2Align: LabelAlign.centerRight);
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.48,
         xAxisEndPos: 0.35,
-        yLabel: MicroLabel.p.label,
-        xLabel: MicroLabel.q.label,
+        yLabel: DiagramLabel.p.label,
+        xLabel: DiagramLabel.q.label,
       );
     }
     if (model.subtype == DiagramSubtype.longRunEquilibrium) {
@@ -112,21 +112,21 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.consumerSurplus.label,
+        DiagramLabel.consumerSurplus.label,
         Offset(0.20, 0.05),
         pointerLine: Offset(0.15, 0.42),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.producerSurplus.label,
+        DiagramLabel.producerSurplus.label,
         Offset(0.10, 0.95),
         pointerLine: Offset(0.20, 0.70),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.welfareLoss.label,
+        DiagramLabel.welfareLoss.label,
         Offset(0.38, 0.25),
         pointerLine: Offset(0.40, 0.60),
       );
@@ -135,12 +135,12 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.22),
           straightEndPos: Offset(0.95, 0.70),
-          label2: MicroLabel.dEqualsAR.label,
+          label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.35),
           straightEndPos: Offset(0.70, 1.05),
-          label2: MicroLabel.mr.label,
+          label2: DiagramLabel.mr.label,
           label2Align: LabelAlign.centerRight);
       paintTitle(c, canvas, 'Monopolistic Competition - Abnormal Profit');
       paintDiagramDashedLines(
@@ -148,7 +148,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.45,
         xAxisEndPos: 0.30,
-        yLabel: MicroLabel.atc.label,
+        yLabel: DiagramLabel.atc.label,
         hideXLine: true,
       );
       paintDiagramDashedLines(
@@ -156,8 +156,8 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.33,
         xAxisEndPos: 0.30,
-        yLabel: MicroLabel.p.label,
-        xLabel: MicroLabel.q.label,
+        yLabel: DiagramLabel.p.label,
+        xLabel: DiagramLabel.q.label,
       );
       paintShading(canvas, size, ShadeType.abnormalProfit, striped: true, [
         Offset(0, 0.33),
@@ -168,7 +168,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.abnormalProfit.label,
+        DiagramLabel.abnormalProfit.label,
         Offset(0.20, 0.10),
         pointerLine: Offset(0.20, 0.38),
       );
@@ -178,27 +178,27 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.45),
           straightEndPos: Offset(0.80, 0.85),
-          label2: MicroLabel.dEqualsAR.label,
+          label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.55),
           straightEndPos: Offset(0.50, 1.05),
-          label2: MicroLabel.mr.label,
+          label2: DiagramLabel.mr.label,
           label2Align: LabelAlign.centerRight);
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.45,
         xAxisEndPos: 0.30,
-        yLabel: MicroLabel.atc.label,
-        xLabel: MicroLabel.q.label,
+        yLabel: DiagramLabel.atc.label,
+        xLabel: DiagramLabel.q.label,
       );
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.57,
         xAxisEndPos: 0.30,
-        yLabel: MicroLabel.p.label,
+        yLabel: DiagramLabel.p.label,
         hideXLine: true,
       );
       paintShading(canvas, size, ShadeType.loss, striped: true, [
@@ -210,7 +210,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.loss.label,
+        DiagramLabel.loss.label,
         Offset(0.20, 0.10),
         pointerLine: Offset(0.20, 0.48),
       );

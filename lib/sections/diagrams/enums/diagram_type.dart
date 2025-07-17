@@ -16,7 +16,7 @@ enum DiagramType {
   phillipsCurve,
   internationalTrade,
   comparativeAdvantage,
-  tariffs,
+  tariff,
   importQuota,
   productionSubsidy,
   exportSubsidy,
@@ -57,7 +57,7 @@ extension DiagramTypeExtension on DiagramType {
         return 'Monetarist-New Classical AD-AS';
       case DiagramType.phillipsCurve:
         return 'Phillips Curve';
-      case DiagramType.tariffs:
+      case DiagramType.tariff:
         return 'Tariff';
       case DiagramType.internationalTrade:
         return 'International Trade';

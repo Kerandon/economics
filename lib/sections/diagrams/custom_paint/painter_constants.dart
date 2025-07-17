@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 /// Curves
-const kCurveWidth = 5.0;
+const kCurveWidth = 4.0;
 const kCurveWidthSlim = 3.0;
 const kArrowSize = 12.0;
 
 /// Axis
-const kAxisIndent = 0.22;
+const kAxisIndent = 0.20;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 4.0;
 
 /// Text
 const kLabelFontSize = 28.0;
-const kFontSize = 26.0;
+const kFontSize = 24.0;
 const kLabelTextStyle =
     TextStyle(fontStyle: FontStyle.italic, fontSize: kFontSize * 0.90);
 
@@ -113,7 +113,7 @@ const kLowPhysicalCapital = 'Low physical capital';
 const kLowHumanCapital = 'Low human capital';
 const kLowNaturalCapital = 'Low natural capital';
 
-enum MicroLabel {
+enum DiagramLabel {
   consumerSurplus,
   producerSurplus,
   abnormalProfit,
@@ -125,6 +125,7 @@ enum MicroLabel {
   tables,
   s,
   sTax,
+  sSub,
   sm,
   sme,
   sm1,
@@ -141,13 +142,20 @@ enum MicroLabel {
   p,
   p1,
   p2,
+  pc,
+  pp,
+  pSub,
   q,
   q1,
   q2,
+  q3,
+  q4,
   qpi,
   pe,
   pme,
   qe,
+  qTax,
+  qSub,
   qS,
   qD,
   pM,
@@ -180,152 +188,201 @@ enum MicroLabel {
   srac,
   lrac,
   mcEqualsMR,
+  sD,
+  sDQ,
+  sDSub,
+  dD,
+  sW,
+  sWTariff,
+  sWQuota,
+  pW,
+  pWT,
+  pWQ,
+  pWS,
 }
 
-extension MicroLabelExtension on MicroLabel {
+extension MicroLabelExtension on DiagramLabel {
   String get label {
     switch (this) {
-      case MicroLabel.p:
+      case DiagramLabel.p:
         return 'P';
-      case MicroLabel.q:
+      case DiagramLabel.q:
         return 'Q';
-      case MicroLabel.pe:
+      case DiagramLabel.pe:
         return 'Pe';
-      case MicroLabel.qe:
+      case DiagramLabel.qe:
         return 'Qe';
-      case MicroLabel.d:
+      case DiagramLabel.d:
         return 'D';
-      case MicroLabel.d1:
+      case DiagramLabel.d1:
         return 'D₁';
-      case MicroLabel.s:
+      case DiagramLabel.s:
         return 'S';
-      case MicroLabel.s1:
+      case DiagramLabel.s1:
         return 'S₁';
-      case MicroLabel.p1:
+      case DiagramLabel.p1:
         return 'P₁';
-      case MicroLabel.p2:
+      case DiagramLabel.p2:
         return 'P₂';
-      case MicroLabel.q1:
+      case DiagramLabel.q1:
         return 'Q₁';
-      case MicroLabel.q2:
+      case DiagramLabel.q2:
         return 'Q₂';
 
-      case MicroLabel.s2:
+      case DiagramLabel.s2:
         return 'S2';
-      case MicroLabel.d2:
+      case DiagramLabel.d2:
         return 'D2';
 
-      case MicroLabel.dEqualsMPBMSB:
+      case DiagramLabel.dEqualsMPBMSB:
         return 'D=MPB=MSB';
-      case MicroLabel.mpc:
+      case DiagramLabel.mpc:
         return 'S=MPC';
-      case MicroLabel.qS:
+      case DiagramLabel.qS:
         return 'Qs';
-      case MicroLabel.qD:
+      case DiagramLabel.qD:
         return 'Qd';
-      case MicroLabel.pM:
+      case DiagramLabel.pM:
         return 'Pᴹ';
 
-      case MicroLabel.shortage:
+      case DiagramLabel.shortage:
         return 'shortage';
-      case MicroLabel.surplus:
+      case DiagramLabel.surplus:
         return 'surplus';
-      case MicroLabel.msc:
+      case DiagramLabel.msc:
         return 'MSC';
-      case MicroLabel.pOpt:
+      case DiagramLabel.pOpt:
         return 'Popt';
-      case MicroLabel.pm:
+      case DiagramLabel.pm:
         return 'Pm';
 
-      case MicroLabel.dEqualsMPB:
+      case DiagramLabel.dEqualsMPB:
         return 'D=MPB';
-      case MicroLabel.qOpt:
+      case DiagramLabel.qOpt:
         return 'Qopt';
-      case MicroLabel.qm:
+      case DiagramLabel.qm:
         return 'Qm';
-      case MicroLabel.priceCostsRevenue:
+      case DiagramLabel.priceCostsRevenue:
         return 'Price, costs & revenues (\$)';
-      case MicroLabel.quantityFirm:
+      case DiagramLabel.quantityFirm:
         return 'Quantity - Firm';
-      case MicroLabel.d1EqualsAR1MR1:
+      case DiagramLabel.d1EqualsAR1MR1:
         return 'D₁=AR₁=MR₁';
-      case MicroLabel.dEqualsARMR:
+      case DiagramLabel.dEqualsARMR:
         return 'D=AR=MR';
-      case MicroLabel.mr:
+      case DiagramLabel.mr:
         return 'MR';
-      case MicroLabel.mc:
+      case DiagramLabel.mc:
         return 'MC';
-      case MicroLabel.msb:
+      case DiagramLabel.msb:
         return 'MSB';
-      case MicroLabel.atc:
+      case DiagramLabel.atc:
         return 'ATC';
-      case MicroLabel.srac:
+      case DiagramLabel.srac:
         return 'SRAC';
-      case MicroLabel.mcEqualsMR:
+      case DiagramLabel.mcEqualsMR:
         return 'MC=MR';
-      case MicroLabel.tablets:
+      case DiagramLabel.tablets:
         return 'tablets';
-      case MicroLabel.smartPhones:
+      case DiagramLabel.smartPhones:
         return 'smart phones';
-      case MicroLabel.chairs:
+      case DiagramLabel.chairs:
         return 'chairs';
-      case MicroLabel.tables:
+      case DiagramLabel.tables:
         return 'tables';
 
-      case MicroLabel.sEqualsMPC:
+      case DiagramLabel.sEqualsMPC:
         return 'S=MPC';
 
-      case MicroLabel.sEqualsMPCMSC:
+      case DiagramLabel.sEqualsMPCMSC:
         return 'S=MPC=MSC';
 
-      case MicroLabel.sm:
+      case DiagramLabel.sm:
         return 'Sm';
-      case MicroLabel.dm:
+      case DiagramLabel.dm:
         return 'Dm';
-      case MicroLabel.industryQuantity:
+      case DiagramLabel.industryQuantity:
         return 'Quantity - Industry';
-      case MicroLabel.pm1:
+      case DiagramLabel.pm1:
         return 'Pm₁';
-      case MicroLabel.dm1:
+      case DiagramLabel.dm1:
         return 'Dm₁';
 
-      case MicroLabel.sm1:
+      case DiagramLabel.sm1:
         return 'Sm₁';
-      case MicroLabel.sm2:
+      case DiagramLabel.sm2:
         return 'Sm₂';
-      case MicroLabel.dm2:
+      case DiagramLabel.dm2:
         return 'Dm₂';
-      case MicroLabel.pm2:
+      case DiagramLabel.pm2:
         return 'Pm₂';
-      case MicroLabel.sme:
+      case DiagramLabel.sme:
         return 'Dmₑ';
-      case MicroLabel.dme:
+      case DiagramLabel.dme:
         return 'Smₑ';
 
-      case MicroLabel.pme:
+      case DiagramLabel.pme:
         return 'Pmₑ';
-      case MicroLabel.consumerSurplus:
+      case DiagramLabel.consumerSurplus:
         return 'Consumer surplus';
-      case MicroLabel.producerSurplus:
+      case DiagramLabel.producerSurplus:
         return 'Producer surplus';
-      case MicroLabel.abnormalProfit:
+      case DiagramLabel.abnormalProfit:
         return 'Abnormal profit';
-      case MicroLabel.loss:
+      case DiagramLabel.loss:
         return 'Loss';
-      case MicroLabel.dEqualsAR:
+      case DiagramLabel.dEqualsAR:
         return 'D=AR';
-      case MicroLabel.quantity:
+      case DiagramLabel.quantity:
         return 'Quantity';
-      case MicroLabel.lrac:
-      return 'LRAC';
-      case MicroLabel.welfareLoss:
+      case DiagramLabel.lrac:
+        return 'LRAC';
+      case DiagramLabel.welfareLoss:
         return 'Welfare Loss';
-      case MicroLabel.externality:
+      case DiagramLabel.externality:
         return 'Externality';
-      case MicroLabel.qpi:
+      case DiagramLabel.qpi:
         return 'Qπ';
-      case MicroLabel.sTax:
+      case DiagramLabel.sTax:
         return 'S+Tax';
+      case DiagramLabel.pc:
+        return 'Pc';
+      case DiagramLabel.pp:
+        return 'Pp';
+      case DiagramLabel.sSub:
+        return 'S+Sub';
+      case DiagramLabel.qTax:
+        return 'QTax';
+      case DiagramLabel.qSub:
+        return 'QSub';
+      case DiagramLabel.sD:
+        return 'Sd';
+      case DiagramLabel.dD:
+        return 'Dd';
+      case DiagramLabel.sW:
+        return 'Sw';
+      case DiagramLabel.pW:
+        return 'Pw';
+      case DiagramLabel.pWT:
+        return 'Pw+t';
+      case DiagramLabel.sWTariff:
+        return 'Sw + Tariff';
+      case DiagramLabel.q3:
+        return 'Q3';
+      case DiagramLabel.q4:
+        return 'Q4';
+      case DiagramLabel.sWQuota:
+        return 'SW + Quota';
+      case DiagramLabel.pWQ:
+        return 'Pw+q';
+      case DiagramLabel.sDQ:
+        return 'Sd+q';
+      case DiagramLabel.sDSub:
+        return 'Sd+sub';
+      case DiagramLabel.pSub:
+        return 'P+Sub';
+      case DiagramLabel.pWS:
+        return 'PW+Sub';
     }
   }
 }

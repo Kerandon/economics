@@ -21,8 +21,8 @@ class PPCMicro extends BaseDiagramPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
-    String xLabel = MicroLabel.smartPhones.label;
-    String yLabel = MicroLabel.tablets.label;
+    String xLabel = DiagramLabel.smartPhones.label;
+    String yLabel = DiagramLabel.tablets.label;
 
     paintAxis(
       c,

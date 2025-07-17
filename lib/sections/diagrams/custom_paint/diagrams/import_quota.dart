@@ -1,12 +1,19 @@
+import 'dart:math';
+
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/label_align.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
 
+import '../../enums/shade_type.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
+import '../painter_methods/paint_diagram_custom_lines.dart';
+import '../painter_methods/paint_shading.dart';
 
 class ImportQuota extends BaseDiagramPainter {
   ImportQuota({
@@ -20,42 +27,109 @@ class ImportQuota extends BaseDiagramPainter {
 
     paintAxis(c, canvas, yAxisLabel: kPrice, xAxisLabel: kQ);
 
-    /// Demand
-    paintCurve(
+
+    paintDiagramDashedLines(c, canvas,
+        yAxisStartPos: 0.80, xAxisEndPos: 0.21,
+    hideYLine: true,
+      xLabel: DiagramLabel.q1.label,
+    );
+    paintDiagramDashedLines(c, canvas,
+      yAxisStartPos: 0.80, xAxisEndPos: 0.80,
+      hideYLine: true,
+      xLabel: DiagramLabel.q2.label,
+    );
+    paintDiagramDashedLines(c, canvas,
+      yAxisStartPos: 0.65, xAxisEndPos: 0.35,
+      hideYLine: true,
+      xLabel: DiagramLabel.q3.label,
+    );
+    paintDiagramDashedLines(c, canvas,
+      yAxisStartPos: 0.65, xAxisEndPos: 0.65,
+      hideYLine: true,
+      xLabel: DiagramLabel.q4.label,
+    );
+    paintCustomDiagramLines(
       c,
       canvas,
-      Offset(0.20, 0.25),
-      Offset(0.75, 0.75),
-      label2: kDd,
+      startPos: Offset(0.10, 0.10),
+      straightEndPos: Offset(0.90, 0.90),
+      label2: DiagramLabel.dD.label,
       label2Align: LabelAlign.centerRight,
     );
-
-    /// Supply
-    paintCurve(
+    paintCustomDiagramLines(
       c,
       canvas,
-      Offset(0.20, 0.75),
-      Offset(0.75, 0.25),
-      label2: kSd,
+      startPos: Offset(0.10, 0.90),
+      straightEndPos: Offset(0.90, 0.10),
+      label2: DiagramLabel.sD.label,
       label2Align: LabelAlign.centerRight,
     );
-
-    /// Supply + quota
-    paintCurve(
+    paintCustomDiagramLines(
       c,
       canvas,
-      Offset(0.42, 0.65),
-      Offset(0.75, 0.35),
-      label2: kSQuota,
+      startPos: Offset(0.50, 0.80),
+      straightEndPos: Offset(0.90, 0.40),
+      label2: DiagramLabel.sDQ.label,
       label2Align: LabelAlign.centerRight,
     );
-
-    /// World Line
-    paintCurve(c, canvas, Offset(kAxisIndent, 0.65), Offset(0.75, 0.65),
-        label2: kWorldSupply, label2Align: LabelAlign.centerRight);
-
-    /// World Line + quota
-    paintCurve(c, canvas, Offset(kAxisIndent, 0.55), Offset(0.75, 0.55),
-        label2: kWorldSupplyQuota, label2Align: LabelAlign.centerRight);
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.0, 0.80),
+      straightEndPos: Offset(0.90, 0.80),
+      label1: DiagramLabel.pW.label,
+      label1Align: LabelAlign.centerLeft,
+      label2: DiagramLabel.sW.label,
+      label2Align: LabelAlign.centerRight,
+    );
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.0, 0.65),
+      straightEndPos: Offset(0.90, 0.65),
+      label1: DiagramLabel.pWQ.label,
+      label1Align: LabelAlign.centerLeft,
+      label2: DiagramLabel.sWQuota.label,
+      label2Align: LabelAlign.centerRight,
+    );
+    paintCustomDiagramLines(c, canvas,
+        startPos: Offset(0.62,0.45),
+        straightEndPos: Offset(0.72,0.45),
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi / 2
+    );
+    if(model.subtype == DiagramSubtype.socialWelfare){
+      paintShading(
+        canvas,
+        size,
+        ShadeType.consumerSurplus,
+        [
+          Offset(0.0, 0.0), // q1 at pWT
+          Offset(0.65, 0.65), // q2 at pWT
+          Offset(0.0, 0.65), // approximate top of demand curve (midpoint)
+        ],
+      );
+      paintShading(
+        canvas,
+        size,
+        ShadeType.producerSurplus,
+        [
+          Offset(0.0, 0.65),  // extend left bottom
+          Offset(0.35, 0.65), // q1 at pWT
+          Offset(0, 1.0), // q1 at supply curve (base)
+        ],
+      );
+      paintShading(
+        canvas,
+        size,
+        ShadeType.welfareLoss,
+        [
+          Offset(0.20, 0.80),
+          Offset(0.80, 0.80),
+          Offset(0.65, 0.65),
+          Offset(0.35, 0.65),
+        ],
+      );
+    }
   }
 }

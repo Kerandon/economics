@@ -34,10 +34,10 @@ class Externalities extends BaseDiagramPainter {
     final posCon = model.subtype == DiagramSubtype.positiveConsumption;
 
 
-    String supplyLabel = MicroLabel.sEqualsMPCMSC.label;
-    String demandLabel = MicroLabel.dEqualsMPBMSB.label;
+    String supplyLabel = DiagramLabel.sEqualsMPCMSC.label;
+    String demandLabel = DiagramLabel.dEqualsMPBMSB.label;
     if (negProd) {
-      supplyLabel = MicroLabel.sEqualsMPC.label;
+      supplyLabel = DiagramLabel.sEqualsMPC.label;
       paintShading(
         canvas,
         size,
@@ -55,8 +55,8 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.40,
         xAxisEndPos: 0.40,
-        yLabel: MicroLabel.pOpt.label,
-        xLabel: MicroLabel.qOpt.label,
+        yLabel: DiagramLabel.pOpt.label,
+        xLabel: DiagramLabel.qOpt.label,
       );
       paintCustomDiagramLines(
         c,
@@ -67,7 +67,7 @@ class Externalities extends BaseDiagramPainter {
             endPoint: Offset(0.10, 0.70),
           ),
         ],
-        label1: MicroLabel.msc.label,
+        label1: DiagramLabel.msc.label,
         label1Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -82,20 +82,20 @@ class Externalities extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.externality.label,
+        DiagramLabel.externality.label,
         Offset(0.90, 0.30),
         pointerLine: Offset(0.65,0.25),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.welfareLoss.label,
+        DiagramLabel.welfareLoss.label,
         Offset(0.46, 0.10),
         pointerLine: Offset(0.46,0.38),
       );
     }
     if (negCon) {
-      demandLabel = MicroLabel.dEqualsMPB.label;
+      demandLabel = DiagramLabel.dEqualsMPB.label;
       paintShading(
         canvas,
         size,
@@ -111,7 +111,7 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         startPos: Offset(0.10, 0.30),
        straightEndPos: Offset(0.70, 0.90),
-        label2: MicroLabel.msb.label,
+        label2: DiagramLabel.msb.label,
         label2Align: LabelAlign.centerRight,
       );
 
@@ -121,8 +121,8 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.60,
         xAxisEndPos: 0.41,
-        yLabel: MicroLabel.pOpt.label,
-        xLabel: MicroLabel.qOpt.label,
+        yLabel: DiagramLabel.pOpt.label,
+        xLabel: DiagramLabel.qOpt.label,
       );
       paintCustomDiagramLines(
         c,
@@ -136,20 +136,20 @@ class Externalities extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.externality.label,
+        DiagramLabel.externality.label,
         Offset(0.90, 0.65),
         pointerLine: Offset(0.65,0.75),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.welfareLoss.label,
+        DiagramLabel.welfareLoss.label,
         Offset(0.46, 0.20),
         pointerLine: Offset(0.46,0.58),
       );
     }
     if (posProd) {
-      supplyLabel = MicroLabel.sEqualsMPC.label;
+      supplyLabel = DiagramLabel.sEqualsMPC.label;
       paintShading(
         canvas,
         size,
@@ -167,8 +167,8 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.60,
         xAxisEndPos: 0.61,
-        yLabel: MicroLabel.pOpt.label,
-        xLabel: MicroLabel.qOpt.label,
+        yLabel: DiagramLabel.pOpt.label,
+        xLabel: DiagramLabel.qOpt.label,
       );
 
       paintCustomDiagramLines(
@@ -180,7 +180,7 @@ class Externalities extends BaseDiagramPainter {
             endPoint: Offset(0.30, 0.90),
           ),
         ],
-        label1: MicroLabel.msc.label,
+        label1: DiagramLabel.msc.label,
         label1Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
@@ -195,20 +195,20 @@ class Externalities extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.externality.label,
+        DiagramLabel.externality.label,
         Offset(0.90, 0.50),
         pointerLine: Offset(0.75,0.35),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.welfareLoss.label,
+        DiagramLabel.welfareLoss.label,
         Offset(0.54, 0.20),
         pointerLine: Offset(0.54,0.58),
       );
     }
     if (posCon) {
-      demandLabel = MicroLabel.dEqualsMPB.label;
+      demandLabel = DiagramLabel.dEqualsMPB.label;
       paintShading(
         canvas,
         size,
@@ -226,8 +226,8 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         yAxisStartPos: 0.40,
         xAxisEndPos: 0.61,
-        yLabel: MicroLabel.pOpt.label,
-        xLabel: MicroLabel.qOpt.label,
+        yLabel: DiagramLabel.pOpt.label,
+        xLabel: DiagramLabel.qOpt.label,
       );
       paintCustomDiagramLines(
         c,
@@ -238,14 +238,14 @@ class Externalities extends BaseDiagramPainter {
             endPoint: Offset(0.90, 0.70),
           ),
         ],
-        label2: MicroLabel.msb.label,
+        label2: DiagramLabel.msb.label,
         label2Align: LabelAlign.centerRight,
       );
 
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.welfareLoss.label,
+        DiagramLabel.welfareLoss.label,
         Offset(0.54, 0.10),
         pointerLine: Offset(0.54,0.38),
       );
@@ -261,7 +261,7 @@ class Externalities extends BaseDiagramPainter {
       paintTextNormalizedWithinAxis(
         c,
         canvas,
-        MicroLabel.externality.label,
+        DiagramLabel.externality.label,
         Offset(0.15, 0.30),
         pointerLine: Offset(0.35,0.25),
       );
@@ -273,15 +273,15 @@ class Externalities extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.51,
-      yLabel: MicroLabel.pm.label,
-      xLabel: MicroLabel.qm.label,
+      yLabel: DiagramLabel.pm.label,
+      xLabel: DiagramLabel.qm.label,
     );
 
     paintAxis(
       c,
       canvas,
-      yAxisLabel: MicroLabel.p.label,
-      xAxisLabel: MicroLabel.q.label,
+      yAxisLabel: DiagramLabel.p.label,
+      xAxisLabel: DiagramLabel.q.label,
       axisLabelMargin: AxisLabelMargin.close,
     );
 
