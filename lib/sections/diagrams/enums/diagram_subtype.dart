@@ -42,6 +42,9 @@ enum DiagramSubtype {
   standard,
   worldPrice,
   domesticMarket,
+  noGainsFromTrade,
+  absoluteAdvantage,
+  comparativeAdvantage,
   exporter,
   importer,
 }
@@ -115,7 +118,6 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Loss';
       case DiagramSubtype.naturalMonopoly:
         return 'Natural Monopoly';
-
       case DiagramSubtype.exporter:
         return 'Exporter';
       case DiagramSubtype.importer:
@@ -134,6 +136,12 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'World Price';
       case DiagramSubtype.domesticMarket:
         return 'Domestic Market';
+      case DiagramSubtype.noGainsFromTrade:
+        return 'No Gains From Trade';
+      case DiagramSubtype.absoluteAdvantage:
+        return 'Absolute Advantage';
+      case DiagramSubtype.comparativeAdvantage:
+        return 'Comparative Advantage';
     }
   }
 }

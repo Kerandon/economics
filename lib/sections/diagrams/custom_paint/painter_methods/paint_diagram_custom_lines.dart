@@ -12,8 +12,9 @@ void paintCustomDiagramLines(
     DiagramPainterConfig config,
     Canvas canvas, {
       required Offset startPos,
-      List<CustomBezier>? bezierPoints, // nullable now
-      Offset? straightEndPos,            // optional
+      List<CustomBezier>? bezierPoints,
+      Offset? straightEndPos,
+      List<Offset>? polylineOffsets, // New input
       Color? color,
       double strokeWidth = kCurveWidth,
       SizeAdjustor sizeAdjustor = const SizeAdjustor(),
@@ -31,8 +32,11 @@ void paintCustomDiagramLines(
       bool dashed = false,
     }) {
   assert(
-  (bezierPoints != null && bezierPoints.isNotEmpty) ^ (straightEndPos != null),
-  'Exactly one of bezierPoints (non-empty) or straightEndPos must be provided, but not both.',
+  (bezierPoints != null && bezierPoints.isNotEmpty ? 1 : 0) +
+      (straightEndPos != null ? 1 : 0) +
+      (polylineOffsets != null && polylineOffsets.isNotEmpty ? 1 : 0) ==
+      1,
+  'Exactly one of bezierPoints, straightEndPos, or polylineOffsets must be provided.',
   );
 
   final width = config.painterSize.width;
@@ -52,8 +56,8 @@ void paintCustomDiagramLines(
 
   path.moveTo(startX, startY);
 
+  // Handle straight line
   if (straightEndPos != null) {
-    // Draw straight line from startPos to straightEndPos
     final endX = straightEndPos.dx * width * normalize + (kAxisIndent * width);
     final endY = straightEndPos.dy * height * normalize + (kAxisIndent * (height / 2));
     path.lineTo(endX, endY);
@@ -68,7 +72,6 @@ void paintCustomDiagramLines(
       canvas.drawPath(path, paint);
     }
 
-    // Labels for straight line
     if (label1 != null) {
       paintText(
         config,
@@ -95,7 +98,6 @@ void paintCustomDiagramLines(
       );
     }
 
-    // Arrows for straight line
     if (arrowOnStart) {
       paintArrowHead(
         config,
@@ -128,10 +130,93 @@ void paintCustomDiagramLines(
       canvas.drawCircle(Offset(endX, endY), r, paint..style = PaintingStyle.fill);
     }
 
-    return; // early return after drawing straight line
+    return;
   }
 
-  // Bezier curve drawing (bezierPoints is non-null and not empty here)
+  // Handle polyline (series of straight lines)
+  if (polylineOffsets != null && polylineOffsets.isNotEmpty) {
+    for (final point in polylineOffsets) {
+      final nextX = point.dx * width * normalize + (kAxisIndent * width);
+      final nextY = point.dy * height * normalize + (kAxisIndent * (height / 2));
+      path.lineTo(nextX, nextY);
+    }
+
+    if (dashed) {
+      final dashedPath = dashPath(
+        path,
+        dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]),
+      );
+      canvas.drawPath(dashedPath, paint);
+    } else {
+      canvas.drawPath(path, paint);
+    }
+
+    if (label1 != null) {
+      paintText(
+        config,
+        canvas,
+        label1,
+        Offset(
+          startPos.dx * normalize + kAxisIndent,
+          startPos.dy * normalize + kAxisIndent / 2,
+        ),
+        labelAlign: label1Align,
+      );
+    }
+
+    if (label2 != null) {
+      final last = polylineOffsets.last;
+      paintText(
+        config,
+        canvas,
+        label2,
+        Offset(
+          last.dx * normalize + kAxisIndent,
+          last.dy * normalize + kAxisIndent / 2,
+        ),
+        labelAlign: label2Align,
+      );
+    }
+
+    if (arrowOnStart) {
+      paintArrowHead(
+        config,
+        canvas,
+        color: mainColor,
+        positionOfArrow: Offset(startX, startY),
+        rotationAngle: arrowOnStartAngle,
+      );
+    }
+
+    if (arrowOnEnd) {
+      final last = polylineOffsets.last;
+      final endX = last.dx * width * normalize + (kAxisIndent * width);
+      final endY = last.dy * height * normalize + (kAxisIndent * (height / 2));
+      final autoEndAngle = atan2(endY - startY, endX - startX);
+      paintArrowHead(
+        config,
+        canvas,
+        color: mainColor,
+        positionOfArrow: Offset(endX, endY),
+        rotationAngle: arrowOnEndAngle != 0 ? arrowOnEndAngle : autoEndAngle,
+      );
+    }
+
+    final r = circleRadius * config.averageRatio;
+    if (circleAtStart) {
+      canvas.drawCircle(Offset(startX, startY), r, paint..style = PaintingStyle.fill);
+    }
+    if (circleAtEnd) {
+      final last = polylineOffsets.last;
+      final endX = last.dx * width * normalize + (kAxisIndent * width);
+      final endY = last.dy * height * normalize + (kAxisIndent * (height / 2));
+      canvas.drawCircle(Offset(endX, endY), r, paint..style = PaintingStyle.fill);
+    }
+
+    return;
+  }
+
+  // Handle Bezier curve
   final endX = bezierPoints!.last.endPoint.dx * width * normalize + (kAxisIndent * width);
   final endY = bezierPoints.last.endPoint.dy * height * normalize + (kAxisIndent * (height / 2));
 
@@ -153,7 +238,6 @@ void paintCustomDiagramLines(
     canvas.drawPath(path, paint);
   }
 
-  // Labels for Bezier curves
   if (label1 != null) {
     paintText(
       config,
@@ -180,7 +264,6 @@ void paintCustomDiagramLines(
     );
   }
 
-  // Arrows for Bezier curves
   if (arrowOnStart) {
     paintArrowHead(
       config,

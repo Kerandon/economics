@@ -140,6 +140,7 @@ enum DiagramLabel {
   s2,
   d2,
   p,
+  pD,
   p1,
   p2,
   pc,
@@ -188,6 +189,8 @@ enum DiagramLabel {
   srac,
   lrac,
   mcEqualsMR,
+  goodA,
+  goodB,
   sD,
   sDQ,
   sDSub,
@@ -383,6 +386,12 @@ extension MicroLabelExtension on DiagramLabel {
         return 'P+Sub';
       case DiagramLabel.pWS:
         return 'PW+Sub';
+      case DiagramLabel.pD:
+        return 'Pd';
+      case DiagramLabel.goodA:
+        return 'Good A';
+      case DiagramLabel.goodB:
+        return 'Good B';
     }
   }
 }
