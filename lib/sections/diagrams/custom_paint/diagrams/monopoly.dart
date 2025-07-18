@@ -37,13 +37,14 @@ class Monopoly extends BaseDiagramPainter {
         model.subtype == DiagramSubtype.socialWelfare) {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.20),
-          straightEndPos: Offset(0.85, 0.85),
+          polylineOffsets:
+          [Offset(0.85, 0.85),],
           label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
 
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.05, 0.25),
-          straightEndPos: Offset(0.55, 1.05),
+          polylineOffsets: [Offset(0.55, 1.05),],
           label2: DiagramLabel.mr.label,
           label2Align: LabelAlign.centerRight);
       paintCustomDiagramLines(
@@ -185,7 +186,7 @@ class Monopoly extends BaseDiagramPainter {
 
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.20, 0.20),
-          straightEndPos: Offset(0.70, 0.90),
+          polylineOffsets: [Offset(0.70, 0.90),],
           label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
     }

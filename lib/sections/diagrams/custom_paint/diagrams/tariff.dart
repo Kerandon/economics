@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_custom_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
@@ -29,7 +28,7 @@ class Tariff extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.10, 0.10),
-      straightEndPos: Offset(0.90, 0.90),
+      polylineOffsets: [Offset(0.90, 0.90),],
       label2: DiagramLabel.dD.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -37,7 +36,7 @@ class Tariff extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.10, 0.90),
-      straightEndPos: Offset(0.90, 0.10),
+      polylineOffsets: [Offset(0.90, 0.10),],
       label2: DiagramLabel.sD.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -45,7 +44,7 @@ class Tariff extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.0, 0.80),
-      straightEndPos: Offset(0.90, 0.80),
+      polylineOffsets: [Offset(0.90, 0.80),],
       label1: DiagramLabel.pW.label,
       label1Align: LabelAlign.centerLeft,
       label2: DiagramLabel.sW.label,
@@ -55,7 +54,7 @@ class Tariff extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.0, 0.65),
-      straightEndPos: Offset(0.90, 0.65),
+      polylineOffsets: [Offset(0.90, 0.65),],
       label1: DiagramLabel.pWT.label,
       label1Align: LabelAlign.centerLeft,
       label2: DiagramLabel.sWTariff.label,
@@ -95,7 +94,7 @@ class Tariff extends BaseDiagramPainter {
     );
     paintCustomDiagramLines(c, canvas,
         startPos: Offset(0.85,0.76),
-    straightEndPos: Offset(0.85,0.70),
+    polylineOffsets: [Offset(0.85,0.70),],
       arrowOnEnd: true,
       arrowOnEndAngle: pi * 2
     );

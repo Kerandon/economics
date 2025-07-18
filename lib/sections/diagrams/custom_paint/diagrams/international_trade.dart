@@ -1,8 +1,6 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_normalized_within_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
@@ -39,7 +37,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.10),
-        straightEndPos: Offset(0.90, 0.90),
+        polylineOffsets: [Offset(0.90, 0.90),],
         label2: DiagramLabel.dD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -47,7 +45,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.90),
-        straightEndPos: Offset(0.90, 0.10),
+        polylineOffsets: [Offset(0.90, 0.10),],
         label2: DiagramLabel.sD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -83,7 +81,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.10),
-        straightEndPos: Offset(0.95, 0.65),
+        polylineOffsets: [ Offset(0.95, 0.65),],
         label2: DiagramLabel.dD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -91,7 +89,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.65),
-        straightEndPos: Offset(0.95, 0.10),
+        polylineOffsets: [Offset(0.95, 0.10),],
         label2: DiagramLabel.sD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -99,7 +97,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0, 0.50),
-        straightEndPos: Offset(1.0, 0.50),
+        polylineOffsets: [Offset(1.0, 0.50),],
         label1: DiagramLabel.pW.label,
         label1Align: LabelAlign.centerLeft,
         label2: DiagramLabel.sW.label,
@@ -148,7 +146,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.35),
-        straightEndPos: Offset(0.90, 0.90),
+        polylineOffsets: [ Offset(0.90, 0.90),],
         label2: DiagramLabel.dD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -156,7 +154,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.90),
-        straightEndPos: Offset(0.90, 0.35),
+        polylineOffsets: [Offset(0.90, 0.35),],
         label2: DiagramLabel.sD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -164,7 +162,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0, 0.50),
-        straightEndPos: Offset(1.0, 0.50),
+        polylineOffsets: [Offset(1.0, 0.50),],
         label1: DiagramLabel.pW.label,
         label1Align: LabelAlign.centerLeft,
         label2: DiagramLabel.sW.label,

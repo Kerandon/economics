@@ -43,11 +43,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.dEqualsARMR.label,
         label2Align: LabelAlign.centerRight,
         startPos: Offset(0, 0.50),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.90, 0.50),
-          ),
-        ],
+        polylineOffsets: [Offset(0.90, 0.50),],
       );
     }
     if (model.subtype == DiagramSubtype.abnormalProfit) {
@@ -93,11 +89,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.dEqualsARMR.label,
         label2Align: LabelAlign.centerRight,
         startPos: Offset(0, 0.40),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(1, 0.40),
-          ),
-        ],
+        polylineOffsets:[ Offset(1, 0.40),] ,
       );
 
       /// Arrows
@@ -106,7 +98,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.80, 0.41),
-        straightEndPos: Offset(0.80, 0.47),
+        polylineOffsets: [Offset(0.80, 0.47),],
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
       );
@@ -154,13 +146,13 @@ class PerfectCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.d1EqualsAR1MR1.label,
         label2Align: LabelAlign.centerRight,
         startPos: Offset(0, 0.60),
-        straightEndPos: Offset(0.90, 0.60),
+        polylineOffsets: [Offset(0.90, 0.60),]
       );
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.80, 0.53),
-        straightEndPos: Offset(0.80, 0.59),
+        polylineOffsets:[ Offset(0.80, 0.59),],
         arrowOnStart: true,
         arrowOnStartAngle: 0,
       );

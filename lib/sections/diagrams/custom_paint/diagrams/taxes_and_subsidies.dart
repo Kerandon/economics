@@ -1,4 +1,4 @@
-import 'dart:math';
+
 import 'dart:ui';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
@@ -36,7 +36,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.15, 0.15),
-      straightEndPos: Offset(0.85, 0.85),
+      polylineOffsets: [Offset(0.85, 0.85),],
       label2: DiagramLabel.d.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -44,7 +44,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.85, 0.15),
-      straightEndPos: Offset(0.15, 0.85),
+      polylineOffsets: [ Offset(0.15, 0.85),],
       label1: DiagramLabel.s.label,
       label1Align: LabelAlign.centerRight,
     );
@@ -54,7 +54,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.75, 0.05),
-        straightEndPos: Offset(0.05, 0.75),
+        polylineOffsets: [Offset(0.05, 0.75),],
         label1: DiagramLabel.sTax.label,
         label1Align: LabelAlign.centerRight,
       );
@@ -78,7 +78,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.62, 0.24),
-        straightEndPos: Offset(0.62, 0.34),
+        polylineOffsets: [Offset(0.62, 0.34),],
         arrowOnStart: true,
       );
     }
@@ -87,7 +87,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.65, 0.05),
-        straightEndPos: Offset(0.15, 0.75),
+        polylineOffsets: [Offset(0.15, 0.75),],
         label1: DiagramLabel.sTax.label,
         label1Align: LabelAlign.centerRight,
       );
@@ -95,7 +95,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.62, 0.20),
-        straightEndPos: Offset(0.62, 0.30),
+        polylineOffsets: [Offset(0.62, 0.30),],
         arrowOnStart: true,
       );
       paintDiagramDashedLines(
@@ -142,7 +142,8 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.90, 0.30),
-        straightEndPos: Offset(0.30, 0.90),
+        polylineOffsets: [ Offset(0.30, 0.90),],
+
         label1: DiagramLabel.sSub.label,
         label1Align: LabelAlign.centerRight,
       );

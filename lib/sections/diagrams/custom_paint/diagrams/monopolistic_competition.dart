@@ -62,12 +62,12 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         model.subtype == DiagramSubtype.socialWelfare) {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.35),
-          straightEndPos: Offset(0.90, 0.75),
+          polylineOffsets: [ Offset(0.90, 0.75),],
           label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.45),
-          straightEndPos: Offset(0.60, 1.05),
+          polylineOffsets: [Offset(0.60, 1.05),],
           label2: DiagramLabel.mr.label,
           label2Align: LabelAlign.centerRight);
       paintDiagramDashedLines(
@@ -134,12 +134,12 @@ class MonopolisticCompetition extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.abnormalProfit) {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.22),
-          straightEndPos: Offset(0.95, 0.70),
+          polylineOffsets: [ Offset(0.95, 0.70),],
           label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.35),
-          straightEndPos: Offset(0.70, 1.05),
+          polylineOffsets: [ Offset(0.70, 1.05),],
           label2: DiagramLabel.mr.label,
           label2Align: LabelAlign.centerRight);
       paintTitle(c, canvas, 'Monopolistic Competition - Abnormal Profit');
@@ -177,12 +177,12 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       paintTitle(c, canvas, 'Monopolistic Competition - Loss');
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.45),
-          straightEndPos: Offset(0.80, 0.85),
+          polylineOffsets: [Offset(0.80, 0.85),],
           label2: DiagramLabel.dEqualsAR.label,
           label2Align: LabelAlign.centerRight);
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.10, 0.55),
-          straightEndPos: Offset(0.50, 1.05),
+          polylineOffsets: [Offset(0.50, 1.05),],
           label2: DiagramLabel.mr.label,
           label2Align: LabelAlign.centerRight);
       paintDiagramDashedLines(

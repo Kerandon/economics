@@ -1,6 +1,5 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/label_align.dart';
@@ -60,7 +59,7 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.10, 0.10),
-      straightEndPos: Offset(0.90, 0.90),
+      polylineOffsets: [Offset(0.90, 0.90)],
       label2: DiagramLabel.dD.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -68,7 +67,7 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.10, 0.90),
-      straightEndPos: Offset(0.90, 0.10),
+      polylineOffsets: [Offset(0.90, 0.10),],
       label2: DiagramLabel.sD.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -76,7 +75,7 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.50, 0.60),
-      straightEndPos: Offset(0.90, 0.20),
+      polylineOffsets: [Offset(0.90, 0.20),],
       label2: DiagramLabel.sDSub.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -84,7 +83,8 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0, 0.35),
-      straightEndPos: Offset(0.90, 0.35),
+      polylineOffsets: [    Offset(0.90, 0.35),],
+
       label1: DiagramLabel.pW.label,
       label1Align: LabelAlign.centerLeft,
       label2: DiagramLabel.sW.label,
@@ -94,7 +94,7 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0, 0.25),
-      straightEndPos: Offset(0.90, 0.25),
+      polylineOffsets: [ Offset(0.90, 0.25),],
       label1: DiagramLabel.pWS.label,
       label1Align: LabelAlign.centerLeft,
       label2: DiagramLabel.sW.label,

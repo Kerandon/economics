@@ -120,7 +120,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
-        straightEndPos: Offset(0.70, 0.90),
+        polylineOffsets: [
+          Offset(0.70, 0.90),
+        ],
         label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -134,14 +136,13 @@ class SupplyAndDemand extends BaseDiagramPainter {
         xLabel: DiagramLabel.q2.label,
       );
 
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.68, 0.80),
-        straightEndPos: Offset(0.76, 0.80),
-        arrowOnStart: true,
-        arrowOnStartAngle: pi * -0.50
-      );
+      paintCustomDiagramLines(c, canvas,
+          startPos: Offset(0.68, 0.80),
+          polylineOffsets: [
+            Offset(0.76, 0.80),
+          ],
+          arrowOnStart: true,
+          arrowOnStartAngle: pi * -0.50);
     }
 
     if (model.subtype == DiagramSubtype.increaseInDemand) {
@@ -167,18 +168,24 @@ class SupplyAndDemand extends BaseDiagramPainter {
         xLabel: DiagramLabel.q2.label,
       );
       paintCustomDiagramLines(
-          c,
-          canvas,
-          startPos: Offset(0.70, 0.65),
-          straightEndPos: Offset(0.79, 0.65),
-          arrowOnEnd: true,
-          arrowOnEndAngle: pi * 0.50,
+        c,
+        canvas,
+        startPos: Offset(0.70, 0.65),
+    polylineOffsets:[Offset(0.79, 0.65),],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi * 0.50,
       );
     }
 
     if (model.subtype == DiagramSubtype.increaseInSupply) {
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.30, 0.90), straightEndPos: Offset(0.90, 0.30));
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.30, 0.90),
+        polylineOffsets: [
+          Offset(0.90, 0.30),
+        ],
+      );
       paintDiagramDashedLines(
         c,
         canvas,
@@ -187,20 +194,19 @@ class SupplyAndDemand extends BaseDiagramPainter {
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
       );
-      paintCustomDiagramLines(
-          c,
-          canvas,
+      paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.65, 0.40),
-          straightEndPos: Offset(0.73, 0.40),
+          polylineOffsets: [
+            Offset(0.73, 0.40),
+          ],
           arrowOnEnd: true,
-          arrowOnEndAngle: pi * 0.50
-      );
+          arrowOnEndAngle: pi * 0.50);
     }
 
     if (model.subtype == DiagramSubtype.decreaseInSupply) {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.05, 0.75),
-          straightEndPos: Offset(0.70, 0.10),
+          polylineOffsets:[ Offset(0.70, 0.10),],
           label2: DiagramLabel.s2.label,
           label2Align: LabelAlign.centerRight);
 
@@ -212,14 +218,11 @@ class SupplyAndDemand extends BaseDiagramPainter {
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
       );
-      paintCustomDiagramLines(
-          c,
-          canvas,
+      paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.57, 0.30),
-          straightEndPos: Offset(0.65, 0.30),
+        polylineOffsets:[Offset(0.65, 0.30),],
           arrowOnStart: true,
-          arrowOnStartAngle: pi * 1.50
-      );
+          arrowOnStartAngle: pi * 1.50);
     }
     if (model.subtype == DiagramSubtype.shortage) {
       paintDiagramDashedLines(
@@ -345,7 +348,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
           0.15,
           0.15,
         ),
-        straightEndPos: Offset(0.85, 0.85),
+        polylineOffsets:[Offset(0.85, 0.85),],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -353,7 +356,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        straightEndPos: Offset(0.85, 0.15),
+        polylineOffsets:[Offset(0.85, 0.15),],
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -382,7 +385,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
           0.15,
           0.15,
         ),
-        straightEndPos: Offset(0.85, 0.85),
+        polylineOffsets: [Offset(0.85, 0.85),],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -390,7 +393,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.70),
-        straightEndPos: Offset(0.70, 0.10),
+       polylineOffsets: [ Offset(0.70, 0.10),],
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -398,7 +401,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        straightEndPos: Offset(0.85, 0.15),
+        polylineOffsets: [Offset(0.85, 0.15),],
         label2: DiagramLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -406,7 +409,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.60, 0.25),
-        straightEndPos: Offset(0.68, 0.25),
+       polylineOffsets: [ Offset(0.68, 0.25),],
         arrowOnEnd: true,
         arrowOnEndAngle: pi / 2,
       );
@@ -414,7 +417,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.80, 0.41),
-        straightEndPos: Offset(0.80, 0.47),
+        polylineOffsets: [Offset(0.80, 0.47),],
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
       );
@@ -443,7 +446,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
           0.15,
           0.15,
         ),
-        straightEndPos: Offset(0.85, 0.85),
+        polylineOffsets: [
+          Offset(0.85, 0.85),
+        ],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -451,7 +456,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.35, 0.85),
-        straightEndPos: Offset(0.90, 0.30),
+        polylineOffsets: [
+          Offset(0.90, 0.30),
+        ],
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -459,7 +466,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        straightEndPos: Offset(0.85, 0.15),
+        polylineOffsets: [
+          Offset(0.85, 0.15),
+        ],
         label2: DiagramLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -470,7 +479,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.72, 0.35),
-        straightEndPos: Offset(0.80, 0.35),
+        polylineOffsets:[Offset(0.80, 0.35),],
         arrowOnStart: true,
         arrowOnStartAngle: pi / -2,
       );
@@ -480,7 +489,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.80, 0.53),
-        straightEndPos: Offset(0.80, 0.59),
+        polylineOffsets: [
+          Offset(0.80, 0.59),
+        ],
         arrowOnStart: true,
         arrowOnStartAngle: 0,
       );

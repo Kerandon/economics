@@ -13,7 +13,6 @@ void paintCustomDiagramLines(
     Canvas canvas, {
       required Offset startPos,
       List<CustomBezier>? bezierPoints,
-      Offset? straightEndPos,
       List<Offset>? polylineOffsets, // New input
       Color? color,
       double strokeWidth = kCurveWidth,
@@ -33,7 +32,7 @@ void paintCustomDiagramLines(
     }) {
   assert(
   (bezierPoints != null && bezierPoints.isNotEmpty ? 1 : 0) +
-      (straightEndPos != null ? 1 : 0) +
+
       (polylineOffsets != null && polylineOffsets.isNotEmpty ? 1 : 0) ==
       1,
   'Exactly one of bezierPoints, straightEndPos, or polylineOffsets must be provided.',
@@ -56,82 +55,6 @@ void paintCustomDiagramLines(
 
   path.moveTo(startX, startY);
 
-  // Handle straight line
-  if (straightEndPos != null) {
-    final endX = straightEndPos.dx * width * normalize + (kAxisIndent * width);
-    final endY = straightEndPos.dy * height * normalize + (kAxisIndent * (height / 2));
-    path.lineTo(endX, endY);
-
-    if (dashed) {
-      final dashedPath = dashPath(
-        path,
-        dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]),
-      );
-      canvas.drawPath(dashedPath, paint);
-    } else {
-      canvas.drawPath(path, paint);
-    }
-
-    if (label1 != null) {
-      paintText(
-        config,
-        canvas,
-        label1,
-        Offset(
-          startPos.dx * normalize + kAxisIndent,
-          startPos.dy * normalize + kAxisIndent / 2,
-        ),
-        labelAlign: label1Align,
-      );
-    }
-
-    if (label2 != null) {
-      paintText(
-        config,
-        canvas,
-        label2,
-        Offset(
-          straightEndPos.dx * normalize + kAxisIndent,
-          straightEndPos.dy * normalize + kAxisIndent / 2,
-        ),
-        labelAlign: label2Align,
-      );
-    }
-
-    if (arrowOnStart) {
-      paintArrowHead(
-        config,
-        canvas,
-        color: mainColor,
-        positionOfArrow: Offset(startX, startY),
-        rotationAngle: arrowOnStartAngle,
-      );
-    }
-
-    if (arrowOnEnd) {
-      final autoEndAngle = atan2(
-        straightEndPos.dy - startPos.dy,
-        straightEndPos.dx - startPos.dx,
-      );
-      paintArrowHead(
-        config,
-        canvas,
-        color: mainColor,
-        positionOfArrow: Offset(endX, endY),
-        rotationAngle: arrowOnEndAngle != 0 ? arrowOnEndAngle : autoEndAngle,
-      );
-    }
-
-    final r = circleRadius * config.averageRatio;
-    if (circleAtStart) {
-      canvas.drawCircle(Offset(startX, startY), r, paint..style = PaintingStyle.fill);
-    }
-    if (circleAtEnd) {
-      canvas.drawCircle(Offset(endX, endY), r, paint..style = PaintingStyle.fill);
-    }
-
-    return;
-  }
 
   // Handle polyline (series of straight lines)
   if (polylineOffsets != null && polylineOffsets.isNotEmpty) {
