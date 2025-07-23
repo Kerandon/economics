@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter/material.dart';
 
 /// Curves
@@ -202,6 +204,21 @@ enum DiagramLabel {
   pWT,
   pWQ,
   pWS,
+  EuroPerDollar,
+  quantityOfUSD,
+  qUSD,
+  supplyOfUSD,
+  demandForUSD,
+  euroUSD,
+  eR,
+  eR1,
+  eR2,
+  eRF,
+  ninety,
+  ninetyFive,
+  oneHundredAndFive,
+  exchangeRate,
+  quantityOfCurrency,
 }
 
 extension MicroLabelExtension on DiagramLabel {
@@ -233,9 +250,9 @@ extension MicroLabelExtension on DiagramLabel {
         return 'Q₂';
 
       case DiagramLabel.s2:
-        return 'S2';
+        return 'S₂';
       case DiagramLabel.d2:
-        return 'D2';
+        return 'D₂';
 
       case DiagramLabel.dEqualsMPBMSB:
         return 'D=MPB=MSB';
@@ -392,6 +409,36 @@ extension MicroLabelExtension on DiagramLabel {
         return 'Good A';
       case DiagramLabel.goodB:
         return 'Good B';
+      case DiagramLabel.EuroPerDollar:
+        return 'Euro € per USD \$';
+      case DiagramLabel.quantityOfUSD:
+        return 'Qty of USD \$';
+      case DiagramLabel.supplyOfUSD:
+        return 'Supply of USD \$';
+      case DiagramLabel.demandForUSD:
+        return 'Demand for USD \$';
+      case DiagramLabel.eR1:
+        return 'ER₁';
+      case DiagramLabel.eR2:
+        return 'ER₂';
+      case DiagramLabel.eR:
+        return 'ER';
+      case DiagramLabel.euroUSD:
+        return '€ per \$';
+      case DiagramLabel.qUSD:
+        return 'Q of \$';
+      case DiagramLabel.ninety:
+        return '0.90';
+      case DiagramLabel.ninetyFive:
+        return '0.95';
+      case DiagramLabel.oneHundredAndFive:
+        return '1.05';
+      case DiagramLabel.exchangeRate:
+        return 'Exchange Rate';
+      case DiagramLabel.quantityOfCurrency:
+        return 'Qty of Currency';
+      case DiagramLabel.eRF:
+        return 'ERf';
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:economics_app/sections/diagrams/custom_paint/diagrams/comparativ
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/externalities.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/import_quota.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/international_trade.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/j_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopolistic_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopoly.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/perfect_competition.dart';
@@ -11,6 +12,8 @@ import 'package:economics_app/sections/diagrams/custom_paint/diagrams/taxes_and_
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:flutter/material.dart';
 import '../custom_paint/diagrams/export_subsidy.dart';
+import '../custom_paint/diagrams/fixed_exchange_rate.dart';
+import '../custom_paint/diagrams/floating_exchange_rate.dart';
 import '../custom_paint/diagrams/oligopoly.dart';
 import '../custom_paint/diagrams/price_controls.dart';
 import '../custom_paint/diagrams/supply_and_demand.dart';
@@ -613,6 +616,7 @@ class AllDiagrams {
           ),
         ],
       ),
+
       /// Tariffs
       DiagramBundle(
         basePainterDiagrams: [
@@ -709,15 +713,129 @@ class AllDiagrams {
       DiagramBundle(
         basePainterDiagrams: [
           ExportSubsidy(
-              config: config,
-              model: DiagramModel(
-                unit: UnitType.global,
-                type: DiagramType.exportSubsidy,
-                subtype: DiagramSubtype.socialWelfare,
-                description: kExportSubsidyWelfareDescription,
-              ))
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.global,
+              type: DiagramType.exportSubsidy,
+              subtype: DiagramSubtype.socialWelfare,
+              description: kExportSubsidyWelfareDescription,
+            ),
+          ),
         ],
       ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          FloatingExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.floatingExchangeRate,
+              subtype: DiagramSubtype.equilibrium,
+              description: kFloatingExchangeRateEquilibriumDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          FloatingExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.floatingExchangeRate,
+              subtype: DiagramSubtype.appreciationIncreaseInDemand,
+              description: AppreciationIncreaseInDemandDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          FloatingExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.floatingExchangeRate,
+              subtype: DiagramSubtype.appreciationDecreaseInSupply,
+              description: AppreciationDecreaseInSupplyDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          FloatingExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.floatingExchangeRate,
+              subtype: DiagramSubtype.depreciationDecreaseInDemand,
+              description: DepreciationDecreaseInDemandDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          FloatingExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.floatingExchangeRate,
+              subtype: DiagramSubtype.depreciationIncreaseInSupply,
+              description: kDepreciationIncreaseInSupplyDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        label: 'Fixed Rate - Central Bank Sells Domestic Currency',
+        description: kFixedRateCentralBankSellsDomesticCurrency,
+        basePainterDiagrams: [
+          FixedExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.fixedExchangeRate,
+              subtype: DiagramSubtype.fixedRateIncreaseInDemand,
+            ),
+          ),
+          FixedExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.fixedExchangeRate,
+              subtype: DiagramSubtype.fixedRateSellCurrency,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        label: 'Fixed Rate - Central Bank Raises Interest Rates',
+        description: kFixedRateRaisesInterestRatesDescription,
+        basePainterDiagrams: [
+          FixedExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.fixedExchangeRate,
+              subtype: DiagramSubtype.fixedRateDecreaseInDemand,
+              description: '',
+            ),
+          ),
+          FixedExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.fixedExchangeRate,
+              subtype: DiagramSubtype.fixedRateRaiseInterestRates,
+              description: '',
+            ),
+          ),
+
+        ],
+      ),
+      DiagramBundle(
+       basePainterDiagrams: [
+         JCurve(config: config, model:
+         DiagramModel(
+           type: DiagramType.jCurve,
+           subtype: DiagramSubtype.standard,
+         )
+         )
+       ]
+      )
     ];
 
     for (int i = 0; i < allBundles.length; i++) {

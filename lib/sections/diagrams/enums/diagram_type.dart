@@ -22,6 +22,7 @@ enum DiagramType {
   exportSubsidy,
   floatingExchangeRate,
   fixedExchangeRate,
+  managedExchangeRate,
   jCurve,
   povertyTrap,
 }
@@ -71,16 +72,16 @@ extension DiagramTypeExtension on DiagramType {
         return 'Export Subsidy';
       case DiagramType.floatingExchangeRate:
         return 'Floating Exchange Rate';
-      case DiagramType.fixedExchangeRate:
-        return 'Fixed Exchange Rate';
       case DiagramType.jCurve:
         return 'J-Curve';
       case DiagramType.povertyTrap:
         return 'Poverty Trap';
       case DiagramType.oligopoly:
         return 'Oligopoly';
-
-
+      case DiagramType.fixedExchangeRate:
+        return 'Fixed Exchange Rate';
+      case DiagramType.managedExchangeRate:
+        return 'Managed Exchange Rate';
     }
   }
 }

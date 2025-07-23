@@ -1,13 +1,21 @@
+import 'dart:math';
+
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_box.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_title.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/label_align.dart';
+import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
 import '../../models/base_painter_painter.dart';
+import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
+import '../painter_methods/paint_diagram_custom_lines.dart';
 
 class FixedExchangeRate extends BaseDiagramPainter {
   FixedExchangeRate({
@@ -19,91 +27,178 @@ class FixedExchangeRate extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintAxis(c, canvas,
-        yAxisLabel: kExchangeRate, xAxisLabel: kQuantityOfDomesticCurrency);
-
-    paintDiagramDashedLines(
+    paintCustomDiagramLines(
       c,
       canvas,
-      yAxisStartPos: 0.50,
-      xAxisEndPos: 0.29,
-      yLabel: kExchangeRateEquilibrium1,
-      hideXLine: true,
+      startPos: Offset(0.0, 0.50),
+      polylineOffsets: [
+        Offset(0.50, 0.50),
+      ],
+      label1: DiagramLabel.ninetyFive.label,
+      label1Align: LabelAlign.centerLeft,
     );
 
-    paintDiagramDashedLines(
+    paintAxis(
       c,
       canvas,
-      yAxisStartPos: 0.59,
-      xAxisEndPos: 0.36,
-      yLabel: kExchangeRateEquilibrium2,
-      hideXLine: true,
+      yAxisLabel: DiagramLabel.exchangeRate.label,
+      yLabelIsHorizontal: false,
+      xAxisLabel: DiagramLabel.quantityOfCurrency.label,
     );
 
-    /// Demand #1
-    paintCurve(
+    paintCustomDiagramLines(
       c,
       canvas,
-      Offset(0.22, 0.28),
-      Offset(0.70, 0.78),
-      label2: kD1,
+      startPos: Offset(0.15, 0.15),
+      polylineOffsets: [
+        Offset(0.85, 0.85),
+      ],
+      label2: DiagramLabel.d1.label,
       label2Align: LabelAlign.centerRight,
     );
-
-    /// Demand #2
-    paintCurve(
+    paintCustomDiagramLines(
       c,
       canvas,
-      Offset(0.30, 0.17),
-      Offset(0.75, 0.65),
-      label2: kD2,
-      label2Align: LabelAlign.centerRight,
+      startPos: Offset(0.85, 0.15),
+      polylineOffsets: [
+        Offset(0.15, 0.85),
+      ],
+      label1: DiagramLabel.s.label,
+      label1Align: LabelAlign.centerRight,
     );
 
-    /// Supply #1
-    paintCurve(
-      c,
-      canvas,
-      Offset(0.22, 0.70),
-      Offset(0.75, 0.20),
-      label2: kS1,
-      label2Align: LabelAlign.centerRight,
-    );
+    if(model.subtype == DiagramSubtype.fixedRateIncreaseInDemand){
+      paintTitle(c, canvas, 'Fig. 1 Higher Demand For Exports');
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.40,
+        xAxisEndPos: 0.60,
+        hideXLine: true,
+        yLabel: DiagramLabel.oneHundredAndFive.label,
+      );
 
-    /// Supply #2
-    paintCurve(
-      c,
-      canvas,
-      Offset(0.35, 0.75),
-      Offset(0.80, 0.32),
-      label2: kS2,
-      label2Align: LabelAlign.centerRight,
-    );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.30, 0.10),
+        polylineOffsets: [
+          Offset(0.90, 0.70),
+        ],
+        label2: DiagramLabel.d2.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintShading(canvas, size, ShadeType.surplus,
+          [Offset(0.50, 0.50), Offset(0.70, 0.50), Offset(0.60, 0.40)]);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.65, 0.60),
+        polylineOffsets: [
+          Offset(0.73, 0.60),
+        ],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi / 2,
+      );
+    }
+    if(model.subtype == DiagramSubtype.fixedRateSellCurrency){
+      paintTitle(c, canvas, 'Fig. 2 Central Bank Sells Domestic Currency');
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.40,
+        xAxisEndPos: 0.60,
+        hideXLine: true,
+        yLabel: DiagramLabel.oneHundredAndFive.label,
+      );
 
-    paintCurve(c, canvas, Offset(0.63, 0.35), Offset(0.72, 0.35),
-        arrowAtEnd: true, color: c.colorScheme.onSurface);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.30, 0.10),
+        polylineOffsets: [
+          Offset(0.90, 0.70),
+        ],
+        label2: DiagramLabel.d2.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.68, 0.60),
+        polylineOffsets: [
+          Offset(0.76, 0.60),
+        ],
+        arrowOnStart: true,
+        arrowOnStartAngle: pi / -2,
+      );
+    }
 
-    paintCurve(c, canvas, Offset(0.61, 0.65), Offset(0.70, 0.65),
-        arrowAtEnd: true, color: c.colorScheme.onSurface);
+    if (model.subtype == DiagramSubtype.fixedRateDecreaseInDemand) {
+      paintTitle(c, canvas, 'Fig. 1 Lower Demand For Exports');
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.60,
+        xAxisEndPos: 0.40,
+        hideXLine: true,
+        yLabel: DiagramLabel.ninety.label,
+      );
 
-    paintTextBox(
-      canvas: canvas,
-      config: c,
-      text:
-          '1. Increase in supply of domestic currency on forex market\ndue to more spending on imports',
-      position: Offset(0.55, 0.10),
-      fontSize: 8,
-      linePoint: Offset(0.65, 0.35),
-    );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.15, 0.35),
+        polylineOffsets: [
+          Offset(0.70, 0.90),
+        ],
+        label2: DiagramLabel.d2.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.58, 0.70),
+        polylineOffsets: [
+          Offset(0.66, 0.70),
+        ],
+        arrowOnStart: true,
+        arrowOnStartAngle: pi / -2,
+      );
+      paintShading(canvas, size, ShadeType.surplus,
+          [Offset(0.30, 0.50), Offset(0.50, 0.50), Offset(0.40, 0.60)]);
+    }
+    if (model.subtype == DiagramSubtype.fixedRateRaiseInterestRates) {
+      paintTitle(c, canvas, 'Fig. 2 Central Banks Raises Interest Rates');
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.60,
+        xAxisEndPos: 0.40,
+        hideXLine: true,
+        yLabel: DiagramLabel.ninety.label,
+      );
 
-    paintTextBox(
-      canvas: canvas,
-      config: c,
-      text:
-          '2. Central bank uses official reserves\nto buy domestic currency thus increasing demand',
-      position: Offset(0.35, 0.92),
-      fontSize: 8,
-      linePoint: Offset(0.65, 0.65),
-    );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.15, 0.35),
+        polylineOffsets: [
+          Offset(0.70, 0.90),
+        ],
+        label2: DiagramLabel.d2.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.55, 0.70),
+        polylineOffsets: [
+          Offset(0.63, 0.70),
+        ],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi / 2,
+      );
+    }
   }
 }

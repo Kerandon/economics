@@ -139,3 +139,38 @@ const kExportSubsidyWelfareDescription = '''
 There is a welfare loss due to lower domestic consumption (right triangle), and the cost to tax payers to fund relatively inefficient 
  domestic exporters
 ''';
+
+const kFloatingExchangeRateEquilibriumDescription = '''
+The exchange rate is determined by the supply and demand for a currency
+''';
+
+const kFixedExchangeRateEquilibriumDescription = '''
+The exchange rate is determined by the supply and demand for a currency
+''';
+
+const AppreciationIncreaseInDemandDescription = '''
+''';
+
+const AppreciationDecreaseInSupplyDescription = '''
+''';
+
+const DepreciationDecreaseInDemandDescription = '''
+''';
+const kDepreciationIncreaseInSupplyDescription = '''
+''';
+
+const kFixedRateCentralBankSellsDomesticCurrency = '''
+A country fixes its interest rate at 0.95 units against another currency. 
+Suppose the demand for a country's exports increases. This leads to 
+an increased demand for the domestic currency (Fig. 1), 
+creating a shortage of the currency in the foreign exchange market. The shortage places upward pressure 
+on the exchange rate. In response, the central bank sells domestic currency 
+and buys foreign currency (Fig. 2) to maintain the fixed exchange rate target.
+''';
+
+const kFixedRateRaisesInterestRatesDescription = '''
+A country fixes its interest rate at 0.95 units against another currency. 
+Suppose there is lower demand for its exports, this causes demand to decrease (Fig. 1) creating a surplus of its currency
+on the foreign exchange market. To match the fall in demand, its central bank increases interest rates to encourage hot money flows.
+This increases demand for its currency, maintaining its fixed rate (Fig. 2).
+''';

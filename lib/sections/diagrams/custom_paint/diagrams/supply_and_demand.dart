@@ -50,10 +50,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.85, 0.85),
-          ),
+        polylineOffsets: [
+          Offset(0.85, 0.85),
         ],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
@@ -62,10 +60,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.85, 0.15),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.15, 0.85),
-          ),
+        polylineOffsets: [
+          Offset(0.15, 0.85),
         ],
         label1: DiagramLabel.s.label,
         label1Align: LabelAlign.centerRight,
@@ -84,10 +80,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.85, 0.85),
-          ),
+        polylineOffsets: [
+          Offset(0.85, 0.85),
         ],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
@@ -96,10 +90,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.85, 0.15),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.15, 0.85),
-          ),
+        polylineOffsets: [
+          Offset(0.15, 0.85),
         ],
         label1: DiagramLabel.s.label,
         label1Align: LabelAlign.centerRight,
@@ -150,10 +142,8 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.30, 0.10),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.90, 0.70),
-          ),
+        polylineOffsets: [
+          Offset(0.90, 0.70),
         ],
         label2: DiagramLabel.d1.label,
         label2Align: LabelAlign.centerRight,
@@ -171,7 +161,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.70, 0.65),
-    polylineOffsets:[Offset(0.79, 0.65),],
+        polylineOffsets: [
+          Offset(0.79, 0.65),
+        ],
         arrowOnEnd: true,
         arrowOnEndAngle: pi * 0.50,
       );
@@ -206,7 +198,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.decreaseInSupply) {
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.05, 0.75),
-          polylineOffsets:[ Offset(0.70, 0.10),],
+          polylineOffsets: [
+            Offset(0.70, 0.10),
+          ],
           label2: DiagramLabel.s2.label,
           label2Align: LabelAlign.centerRight);
 
@@ -220,7 +214,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
       );
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.57, 0.30),
-        polylineOffsets:[Offset(0.65, 0.30),],
+          polylineOffsets: [
+            Offset(0.65, 0.30),
+          ],
           arrowOnStart: true,
           arrowOnStartAngle: pi * 1.50);
     }
@@ -348,7 +344,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
           0.15,
           0.15,
         ),
-        polylineOffsets:[Offset(0.85, 0.85),],
+        polylineOffsets: [
+          Offset(0.85, 0.85),
+        ],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -356,7 +354,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        polylineOffsets:[Offset(0.85, 0.15),],
+        polylineOffsets: [
+          Offset(0.85, 0.15),
+        ],
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -385,7 +385,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
           0.15,
           0.15,
         ),
-        polylineOffsets: [Offset(0.85, 0.85),],
+        polylineOffsets: [
+          Offset(0.85, 0.85),
+        ],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -393,7 +395,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.70),
-       polylineOffsets: [ Offset(0.70, 0.10),],
+        polylineOffsets: [
+          Offset(0.70, 0.10),
+        ],
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -401,7 +405,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        polylineOffsets: [Offset(0.85, 0.15),],
+        polylineOffsets: [
+          Offset(0.85, 0.15),
+        ],
         label2: DiagramLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -409,7 +415,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.60, 0.25),
-       polylineOffsets: [ Offset(0.68, 0.25),],
+        polylineOffsets: [
+          Offset(0.68, 0.25),
+        ],
         arrowOnEnd: true,
         arrowOnEndAngle: pi / 2,
       );
@@ -417,7 +425,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.80, 0.41),
-        polylineOffsets: [Offset(0.80, 0.47),],
+        polylineOffsets: [
+          Offset(0.80, 0.47),
+        ],
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
       );
@@ -479,7 +489,9 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.72, 0.35),
-        polylineOffsets:[Offset(0.80, 0.35),],
+        polylineOffsets: [
+          Offset(0.80, 0.35),
+        ],
         arrowOnStart: true,
         arrowOnStartAngle: pi / -2,
       );

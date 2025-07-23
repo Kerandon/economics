@@ -47,6 +47,14 @@ enum DiagramSubtype {
   comparativeAdvantage,
   exporter,
   importer,
+  appreciationIncreaseInDemand,
+  appreciationDecreaseInSupply,
+  depreciationDecreaseInDemand,
+  depreciationIncreaseInSupply,
+  fixedRateIncreaseInDemand,
+  fixedRateSellCurrency,
+  fixedRateDecreaseInDemand,
+  fixedRateRaiseInterestRates,
 }
 
 extension DiagramSubtypeExtension on DiagramSubtype {
@@ -142,6 +150,22 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Absolute Advantage';
       case DiagramSubtype.comparativeAdvantage:
         return 'Comparative Advantage';
+      case DiagramSubtype.appreciationIncreaseInDemand:
+        return 'Appreciation - Increase in Demand';
+      case DiagramSubtype.appreciationDecreaseInSupply:
+        return 'Appreciation - Decrease in Supply';
+      case DiagramSubtype.depreciationDecreaseInDemand:
+        return 'Depreciation - Decrease in Demand';
+      case DiagramSubtype.depreciationIncreaseInSupply:
+        return 'Depreciation - Increase in Supply';
+      case DiagramSubtype.fixedRateIncreaseInDemand:
+        return 'Fixed Rate Example - Buying Domestic Currency';
+      case DiagramSubtype.fixedRateDecreaseInDemand:
+        return 'Fixed Rate Example - Decrease in Demand';
+      case DiagramSubtype.fixedRateSellCurrency:
+        return 'Fixed Rate Example - Sell Currency';
+      case DiagramSubtype.fixedRateRaiseInterestRates:
+        return 'Fixed Rate Example - Raise Interest Rates';
     }
   }
 }

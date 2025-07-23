@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 enum ShadeType {
   consumerSurplus,
   producerSurplus,
+  surplus,
+  shortage,
   consumerBurden,
   producerBurden,
   governmentBurden,
@@ -18,12 +20,16 @@ extension Shade on ShadeType {
         return Colors.green;
       case ShadeType.producerSurplus:
         return Colors.blue;
+      case ShadeType.surplus:
+        return Colors.cyan; // 💡 Picked a distinct color for surplus
+      case ShadeType.shortage:
+        return Colors.deepOrange; // 💡 Picked a distinct color for shortage
       case ShadeType.consumerBurden:
         return Colors.yellow;
       case ShadeType.producerBurden:
         return Colors.purple;
       case ShadeType.governmentBurden:
-        return Colors.grey; // 👈 Add your preferred color here
+        return Colors.grey;
       case ShadeType.governmentRevenue:
         return Colors.brown;
       case ShadeType.welfareLoss:
@@ -41,12 +47,16 @@ extension Shade on ShadeType {
         return 'Consumer Surplus';
       case ShadeType.producerSurplus:
         return 'Producer Surplus';
+      case ShadeType.surplus:
+        return 'Surplus';
+      case ShadeType.shortage:
+        return 'Shortage';
       case ShadeType.consumerBurden:
         return 'Consumer Burden';
       case ShadeType.producerBurden:
         return 'Producer Burden';
       case ShadeType.governmentBurden:
-        return 'Government Burden'; // 👈 Added label
+        return 'Government Burden';
       case ShadeType.governmentRevenue:
         return 'Government Revenue';
       case ShadeType.welfareLoss:
@@ -70,3 +80,4 @@ extension Shade on ShadeType {
         : '#$red$green$blue'.toUpperCase();
   }
 }
+
