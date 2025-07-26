@@ -6,6 +6,7 @@ import 'package:economics_app/sections/diagrams/custom_paint/diagrams/j_curve.da
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopolistic_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopoly.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/perfect_competition.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/poverty_trap.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/ppc_micro.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/production_subsidy.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/taxes_and_subsidies.dart';
@@ -835,6 +836,17 @@ class AllDiagrams {
          )
          )
        ]
+      ),
+      DiagramBundle(
+        label: 'Poverty Trap',
+          basePainterDiagrams: [
+            PovertyTrap(config: config, model:
+            DiagramModel(
+              type: DiagramType.povertyTrap,
+              subtype: DiagramSubtype.standard,
+            )
+            )
+          ]
       )
     ];
 

@@ -219,6 +219,10 @@ enum DiagramLabel {
   oneHundredAndFive,
   exchangeRate,
   quantityOfCurrency,
+  lowIncome,
+  lowSavings,
+  lowInvestment,
+  lowProductivity
 }
 
 extension MicroLabelExtension on DiagramLabel {
@@ -439,6 +443,14 @@ extension MicroLabelExtension on DiagramLabel {
         return 'Qty of Currency';
       case DiagramLabel.eRF:
         return 'ERf';
+      case DiagramLabel.lowIncome:
+        return 'low Income';
+      case DiagramLabel.lowSavings:
+        return 'Low Savings';
+      case DiagramLabel.lowInvestment:
+        return 'Low Investment';
+      case DiagramLabel.lowProductivity:
+        return 'Low Productivity';
     }
   }
 }

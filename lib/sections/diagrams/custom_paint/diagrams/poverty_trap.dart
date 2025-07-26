@@ -23,33 +23,37 @@ class PovertyTrap extends BaseDiagramPainter {
     paintTextBox(
       canvas: canvas,
       config: c,
-      text: kLowIncome,
+      text: DiagramLabel.lowIncome.label,
       position: Offset(kAxisIndent, 0.50),
+      showBoxBorder: true,
     );
     paintTextBox(
       canvas: canvas,
       config: c,
-      text: kLowSavings,
+      text: DiagramLabel.lowSavings.label,
       position: Offset(0.50, 0.20),
+      showBoxBorder: true,
     );
     paintTextBox(
       canvas: canvas,
       config: c,
-      text: kLowInvestment,
+      text: DiagramLabel.lowInvestment.label,
       position: Offset((1 - kAxisIndent), 0.50),
+      showBoxBorder: true,
     );
     paintTextBox(
       canvas: canvas,
       config: c,
-      text: kLowProductivity,
+      text: DiagramLabel.lowProductivity.label,
       position: Offset(0.50, 0.80),
+      showBoxBorder: true,
     );
     paintCustomBezier(c, canvas,
-        startPos: Offset(0.15, 0.43),
+        startPos: Offset(0.15, 0.40),
         points: [
           CustomBezier(
-            control: Offset(0.15, 0.22),
-            endPoint: Offset(0.35, 0.20),
+            control: Offset(0.15, 0.20),
+            endPoint: Offset(0.28, 0.20),
           ),
         ],
         drawArrowOnEnd: true,
@@ -57,11 +61,11 @@ class PovertyTrap extends BaseDiagramPainter {
     paintCustomBezier(
       c,
       canvas,
-      startPos: Offset(0.62, 0.20),
+      startPos: Offset(0.70, 0.20),
       points: [
         CustomBezier(
           control: Offset(0.85, 0.22),
-          endPoint: Offset(0.85, 0.42),
+          endPoint: Offset(0.85, 0.40),
         ),
       ],
       drawArrowOnEnd: true,
@@ -74,7 +78,7 @@ class PovertyTrap extends BaseDiagramPainter {
       points: [
         CustomBezier(
           control: Offset(0.85, 0.80),
-          endPoint: Offset(0.68, 0.80),
+          endPoint: Offset(0.75, 0.80),
         ),
       ],
       drawArrowOnEnd: true,
@@ -83,11 +87,11 @@ class PovertyTrap extends BaseDiagramPainter {
     paintCustomBezier(
       c,
       canvas,
-      startPos: Offset(0.35, 0.80),
+      startPos: Offset(0.25, 0.80),
       points: [
         CustomBezier(
           control: Offset(0.15, 0.80),
-          endPoint: Offset(0.15, 0.58),
+          endPoint: Offset(0.15, 0.60),
         ),
       ],
       drawArrowOnEnd: true,

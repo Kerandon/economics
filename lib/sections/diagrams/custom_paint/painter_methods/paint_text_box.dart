@@ -8,7 +8,7 @@ paintTextBox({
   required DiagramPainterConfig config,
   required String text,
   required Offset position,
-  double fontSize = 32,
+  double fontSize = 38,
   Offset? linePoint,
   bool addLineDot = false,
   Color? lineColor,
