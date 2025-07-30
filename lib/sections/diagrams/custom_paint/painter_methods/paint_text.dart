@@ -1,10 +1,9 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../../enums/axis_label_margin.dart';
-
-import '../../enums/indent.dart';
 import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
+
 void paintText(
     DiagramPainterConfig config,
     Canvas canvas,
@@ -15,8 +14,7 @@ void paintText(
       double angle = 0,
       LabelAlign labelAlign = LabelAlign.center,
       Axis? axis,
-      AxisLabelMargin? axisLabelMargin,
-      Indent? axisIndent,
+      bool? yLabelIsVertical,
     }) {
   fontSize *= config.averageRatio;
 
@@ -34,141 +32,80 @@ void paintText(
   final width = config.painterSize.width;
   final height = config.painterSize.height;
 
-  final textSpan = TextSpan(
-    text: label,
-    style: style,
-  );
+  final textSpan = TextSpan(text: label, style: style);
   final textPainter = TextPainter(
     text: textSpan,
     textDirection: TextDirection.ltr,
   );
+  textPainter.layout(minWidth: 0, maxWidth: width);
 
-  textPainter.layout(
-    minWidth: 0,
-    maxWidth: width,
-  );
+  Offset baseOffset = Offset(position.dx * width, position.dy * height);
 
-  Offset offset = Offset(position.dx * width, position.dy * height);
-
-  double xAlign = 0;
-  double yAlign = 0;
+  double dx = 0;
+  double dy = 0;
   final adjustment = textPainter.height / 2;
 
   switch (labelAlign) {
     case LabelAlign.center:
-      xAlign = -textPainter.width / 2;
-      yAlign = -textPainter.height / 2;
+      dx = -textPainter.width / 2;
+      dy = -textPainter.height / 2;
       break;
     case LabelAlign.centerLeft:
-      xAlign = -textPainter.width - adjustment;
-      yAlign = -textPainter.height / 2;
+      dx = -textPainter.width - adjustment;
+      dy = -textPainter.height / 2;
       break;
     case LabelAlign.centerRight:
-      xAlign = adjustment;
-      yAlign = -textPainter.height / 2;
+      dx = adjustment;
+      dy = -textPainter.height / 2;
       break;
     case LabelAlign.centerTop:
-      xAlign = -textPainter.width / 2;
-      yAlign = -textPainter.height - adjustment;
+      dx = -textPainter.width / 2;
+      dy = -textPainter.height - adjustment;
       break;
     case LabelAlign.centerBottom:
-      xAlign = -textPainter.width / 2;
-      yAlign = textPainter.height - adjustment;
+      dx = -textPainter.width / 2;
+      dy = adjustment;
       break;
   }
 
-  offset = Offset(
-    (position.dx * width) + xAlign,
-    (position.dy * height) + yAlign,
-  );
+  baseOffset = baseOffset.translate(dx, dy);
 
+  // Axis text overrides (kept as-is for labels along axes)
   if (axis != null) {
     final widthIndent = kAxisIndent * width;
     final heightIndent = kAxisIndent * height;
     final textWidth = textPainter.width;
-    double textHeight = textPainter.height;
+    final textYIndent = kAxisTextIndent * (config.painterSize.width);
 
-    // Handle vertical axis
     if (axis == Axis.vertical) {
-      switch (axisLabelMargin!) {
-        case AxisLabelMargin.close:
-          textHeight *= 1.5;
-          break;
-        case AxisLabelMargin.middle:
-          textHeight *= 3.0;
-          break;
-        case AxisLabelMargin.far:
-          textHeight *= 5;
-          break;
+      baseOffset = Offset(
+        -textWidth + widthIndent - textYIndent,
+        heightIndent / 2,
+      );
+
+      if (yLabelIsVertical == true) {
+        baseOffset = Offset(
+          widthIndent - textYIndent,
+          heightIndent / 2 + textWidth,
+        );
+        angle = math.pi / -2;
       }
-
-      final centerTextOnVerticalAxis =
-          (height - (heightIndent * 1.5) - textWidth) / 2;
-
-      switch (axisIndent!) {
-        case Indent.start:
-          offset = Offset(
-            widthIndent - textHeight,
-            height - heightIndent * 1.1,
-          );
-          break;
-        case Indent.center:
-          offset = Offset(
-            widthIndent - textHeight,
-            height - (heightIndent * 1.1) - centerTextOnVerticalAxis,
-          );
-          break;
-        case Indent.end:
-          offset = Offset(
-            widthIndent - textHeight,
-            heightIndent / 2 + textWidth,
-          );
-          break;
-      }
-    }
-
-    // Handle horizontal axis
-    else if (axis == Axis.horizontal) {
-      double horizontalAxis = (height - heightIndent + textHeight);
-
-      switch (axisLabelMargin!) {
-        case AxisLabelMargin.close:
-          horizontalAxis += textHeight * 0;
-          break;
-        case AxisLabelMargin.middle:
-          horizontalAxis += textHeight * 1.0;
-          break;
-        case AxisLabelMargin.far:
-          horizontalAxis += textHeight * 2.0;
-          break;
-      }
-
-      final centerTextOnHorizontalAxis =
-          ((width - (widthIndent * 1.5) - textWidth) / 2) + widthIndent;
-
-      switch (axisIndent!) {
-        case Indent.start:
-          offset = Offset(widthIndent, horizontalAxis);
-          break;
-        case Indent.center:
-          offset = Offset(centerTextOnHorizontalAxis, horizontalAxis);
-          break;
-        case Indent.end:
-          offset = Offset(width - (widthIndent / 2) - textWidth, horizontalAxis);
-          break;
-      }
+    } else if (axis == Axis.horizontal) {
+      double horizontalAxis = height - heightIndent + kAxisTextIndent;
+      horizontalAxis += kAxisTextIndent * width;
+      baseOffset = Offset(width - (widthIndent / 2) - textWidth, horizontalAxis);
     }
   }
 
   canvas.save();
 
-  // Pivot logic
-  final pivot = textPainter.size.centerLeft(offset);
+  // 🟢 Fix: Rotate around actual label anchor point (before alignment offset)
+  final rotationCenter = Offset(position.dx * width, position.dy * height);
 
-  canvas.translate(pivot.dx, pivot.dy);
+  canvas.translate(rotationCenter.dx, rotationCenter.dy);
   canvas.rotate(angle);
-  canvas.translate(-pivot.dx, -pivot.dy);
+  canvas.translate(-rotationCenter.dx, -rotationCenter.dy);
 
-  textPainter.paint(canvas, offset);
+  textPainter.paint(canvas, baseOffset);
   canvas.restore();
 }

@@ -1,31 +1,37 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_solid_line.dart';
 import 'package:flutter/material.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
-void paintDiagramDashedLines(
-  DiagramPainterConfig config,
-  Canvas canvas, {
-  required double yAxisStartPos,
-  required double xAxisEndPos,
-  String? yLabel,
-  String? xLabel,
-  bool hideYLine = false,
-  bool hideXLine = false,
-}) {
+void paintDiagramDashedLines(DiagramPainterConfig config,
+    Canvas canvas, {
+      required double yAxisStartPos,
+      required double xAxisEndPos,
+      String? yLabel,
+      String? xLabel,
+      bool hideYLine = false,
+      bool hideXLine = false,
+      bool makeDashed = true,
+      Color? color,
+    }) {
+  final c = color ?? config.colorScheme.onSurface;
   final normalize = 1 - (kAxisIndent * 1.50);
   final yPos = yAxisStartPos * normalize + (kAxisIndent / 2);
   final xEndPosNormalized =
       xAxisEndPos * (1 - (kAxisIndent * 1.5)) + kAxisIndent;
-  //xAxisEndPos - (kAxisIndent / 2);
   final xLabelY = 1 - kAxisIndent * normalize;
   if (!hideYLine) {
-    paintDashedLine(
-      config,
-      canvas,
-      p1: Offset(kAxisIndent, yPos),
-      p2: Offset(xEndPosNormalized, yPos),
-    );
+
+    final p1 = Offset(kAxisIndent, yPos);
+    final p2 = Offset(xEndPosNormalized, yPos);
+
+if(makeDashed){
+  paintDashedLine(config, canvas, p1: p1, p2: p2, color: c);
+}else{
+  paintSolidLine(config, canvas, p1: p1, p2: p2, color: c);
+}
+
   }
   if (yLabel != null) {
     paintTextForDashedLines(
@@ -56,14 +62,13 @@ void paintDiagramDashedLines(
   }
 }
 
-void paintTextForDashedLines(
-  DiagramPainterConfig config,
-  Canvas canvas,
-  String label,
-  Offset position,
-  CustomAxis axis, {
-  double fontSize = kFontSize,
-}) {
+void paintTextForDashedLines(DiagramPainterConfig config,
+    Canvas canvas,
+    String label,
+    Offset position,
+    CustomAxis axis, {
+      double fontSize = kFontSize,
+    }) {
   fontSize *= config.averageRatio;
 
   final width = config.painterSize.width;
@@ -78,7 +83,8 @@ void paintTextForDashedLines(
       ),
     ),
     textDirection: TextDirection.ltr,
-  )..layout(minWidth: 0, maxWidth: width);
+  )
+    ..layout(minWidth: 0, maxWidth: width);
 
   Offset offset;
   switch (axis) {

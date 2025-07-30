@@ -34,8 +34,8 @@ enum DiagramSubtype {
   loss,
   socialWelfare,
   naturalMonopoly,
-  closed,
-  open,
+  closedModel,
+  openModel,
   macro,
   fullEmployment,
   shortRun,
@@ -55,6 +55,8 @@ enum DiagramSubtype {
   fixedRateSellCurrency,
   fixedRateDecreaseInDemand,
   fixedRateRaiseInterestRates,
+  correctDeficit,
+  correctSurplus,
 }
 
 extension DiagramSubtypeExtension on DiagramSubtype {
@@ -90,9 +92,9 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Surplus';
       case DiagramSubtype.commonPoolResources:
         return 'Common Pool Resources';
-      case DiagramSubtype.closed:
+      case DiagramSubtype.closedModel:
         return 'Closed-model';
-      case DiagramSubtype.open:
+      case DiagramSubtype.openModel:
         return 'Open-model';
       case DiagramSubtype.macro:
         return 'Macro';
@@ -166,6 +168,11 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Fixed Rate Example - Sell Currency';
       case DiagramSubtype.fixedRateRaiseInterestRates:
         return 'Fixed Rate Example - Raise Interest Rates';
+      case DiagramSubtype.correctDeficit:
+     return 'Depreciation in a Deficit';
+      case DiagramSubtype.correctSurplus:
+     return 'Appreciation in a Surplus';
+
     }
   }
 }

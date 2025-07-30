@@ -1,9 +1,6 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis_lines.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
-import '../../enums/axis_label_margin.dart';
-import '../../enums/indent.dart';
 import '../painter_constants.dart';
 import 'add_axis_numerical_labels.dart';
 import 'paint_text.dart';
@@ -12,13 +9,11 @@ void paintAxis(
   DiagramPainterConfig config,
   Canvas canvas, {
   String? yAxisLabel,
-  bool yLabelIsHorizontal = true,
+  bool yLabelIsVertical = false,
   String? xAxisLabel,
   bool addNumericalAxis = false,
   double labelXIndent = kAxisLabelAdjustmentCenter,
   double labelYIndent = kAxisLabelAdjustmentCenter,
-  AxisLabelMargin axisLabelMargin = AxisLabelMargin.middle,
-  Indent indent = Indent.end,
 }) {
   paintAxisLines(config, canvas);
 
@@ -28,10 +23,9 @@ void paintAxis(
       canvas,
       yAxisLabel,
       const Offset(0, 0),
-      angle: yLabelIsHorizontal ? 0 : math.pi * 1.5,
       axis: Axis.vertical,
-      axisLabelMargin: axisLabelMargin,
-      axisIndent: indent,
+      yLabelIsVertical: yLabelIsVertical,
+
     );
   }
   if (xAxisLabel != null) {
@@ -41,8 +35,6 @@ void paintAxis(
       xAxisLabel,
       const Offset(0, 0),
       axis: Axis.horizontal,
-      axisLabelMargin: axisLabelMargin,
-      axisIndent: indent,
     );
   }
   if (addNumericalAxis == true) {

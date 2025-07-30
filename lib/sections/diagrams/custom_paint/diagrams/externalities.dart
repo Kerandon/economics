@@ -1,20 +1,16 @@
 import 'dart:math';
-
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
-import 'package:economics_app/sections/diagrams/enums/axis_label_margin.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:flutter/material.dart';
-
 import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
-
 import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 
@@ -282,7 +278,6 @@ class Externalities extends BaseDiagramPainter {
       canvas,
       yAxisLabel: DiagramLabel.p.label,
       xAxisLabel: DiagramLabel.q.label,
-      axisLabelMargin: AxisLabelMargin.close,
     );
 
 

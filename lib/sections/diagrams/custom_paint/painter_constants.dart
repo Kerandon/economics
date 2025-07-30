@@ -9,6 +9,7 @@ const kArrowSize = 12.0;
 
 /// Axis
 const kAxisIndent = 0.20;
+const kAxisTextIndent = 0.05;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 4.0;
@@ -116,6 +117,9 @@ const kLowHumanCapital = 'Low human capital';
 const kLowNaturalCapital = 'Low natural capital';
 
 enum DiagramLabel {
+  a,
+  b,
+  c,
   consumerSurplus,
   producerSurplus,
   abnormalProfit,
@@ -198,6 +202,23 @@ enum DiagramLabel {
   sDSub,
   dD,
   sW,
+  households,
+  firms,
+  landLaborCapitalEnterprise,
+  householdSpendingFirmRevenue,
+  goodsAndServices,
+  rentWagesInterestProfit,
+  factorMarkets,
+  productMarkets,
+  government,
+  financialSector,
+  foreignSector,
+  taxes,
+  governmentSpending,
+  savings,
+  investment,
+  imports,
+  exports,
   sWTariff,
   sWQuota,
   pW,
@@ -219,10 +240,18 @@ enum DiagramLabel {
   oneHundredAndFive,
   exchangeRate,
   quantityOfCurrency,
+  upperBand,
+  lowerBand,
+  tradeBalance,
+  tradeSurplus,
+  tradeDeficit,
+  tradeBalanced,
+  time,
   lowIncome,
   lowSavings,
   lowInvestment,
-  lowProductivity
+  lowProductivity,
+  depreciationDevaluation,
 }
 
 extension MicroLabelExtension on DiagramLabel {
@@ -451,6 +480,63 @@ extension MicroLabelExtension on DiagramLabel {
         return 'Low Investment';
       case DiagramLabel.lowProductivity:
         return 'Low Productivity';
+      case DiagramLabel.tradeBalance:
+        return 'Trade Balance';
+      case DiagramLabel.tradeSurplus:
+        return 'Trade\nSurplus\nX > M';
+      case DiagramLabel.tradeDeficit:
+        return 'Trade\nDeficit\nX < M';
+      case DiagramLabel.tradeBalanced:
+        return 'X = M';
+      case DiagramLabel.time:
+        return 'Time';
+      case DiagramLabel.depreciationDevaluation:
+        return 'Depreciation\n'
+            ' / Devaluation';
+      case DiagramLabel.a:
+        return 'A';
+      case DiagramLabel.b:
+        return 'B';
+      case DiagramLabel.c:
+        return 'C';
+      case DiagramLabel.upperBand:
+      return 'Upper Band';
+      case DiagramLabel.lowerBand:
+        return 'Lower Band';
+      case DiagramLabel.households:
+      return 'Households';
+      case DiagramLabel.firms:
+        return 'Firms';
+      case DiagramLabel.factorMarkets:
+        return 'Factor Markets';
+      case DiagramLabel.productMarkets:
+        return 'Product Markets';
+      case DiagramLabel.government:
+        return 'Government';
+      case DiagramLabel.financialSector:
+        return 'Financial Sector';
+      case DiagramLabel.foreignSector:
+        return 'Foreign Sector';
+      case DiagramLabel.taxes:
+        return 'Taxes';
+      case DiagramLabel.governmentSpending:
+        return 'Government Spending';
+      case DiagramLabel.savings:
+        return 'Savings';
+      case DiagramLabel.investment:
+        return 'Investment';
+      case DiagramLabel.imports:
+        return 'Imports';
+      case DiagramLabel.exports:
+        return 'Exports';
+      case DiagramLabel.landLaborCapitalEnterprise:
+        return 'Factors of Production (Land, Labor, Capital, Enterprise)';
+      case DiagramLabel.householdSpendingFirmRevenue:
+        return 'Household Spending / Firm Revenue';
+      case DiagramLabel.goodsAndServices:
+        return 'Goods & Services';
+      case DiagramLabel.rentWagesInterestProfit:
+        return 'Factor Payments (Rent, Wages, Interest, Profit)';
     }
   }
 }

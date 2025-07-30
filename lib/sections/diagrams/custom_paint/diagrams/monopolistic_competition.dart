@@ -28,7 +28,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       c,
       canvas,
       yAxisLabel: kPriceCostsRevenue,
-      yLabelIsHorizontal: false,
+      yLabelIsVertical: false,
       xAxisLabel: DiagramLabel.quantity.label,
     );
     paintCustomDiagramLines(

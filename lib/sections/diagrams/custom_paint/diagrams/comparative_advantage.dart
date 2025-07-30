@@ -21,7 +21,7 @@ class ComparativeAdvantage extends BaseDiagramPainter {
       c,
       canvas,
       yAxisLabel: DiagramLabel.goodA.label,
-      yLabelIsHorizontal: false,
+      yLabelIsVertical: false,
       xAxisLabel: DiagramLabel.goodB.label,
     );
 

@@ -99,6 +99,13 @@ This continues until AR is tangent to ATC, and firms earn only normal profit.
 const kOligopolyCartelDescription = '''
 A cartel acts as a monopoly and generates abnormal profits.
 ''';
+
+const kCircularFlowOfIncomeModelClosedDescription = '''
+''';
+
+const kCircularFlowOfIncomeModelOpenDescription = '''
+''';
+
 const kInternationalTradeImporterDescription = '''
 When the world price is lower than the domestic price, a country will import the shortfall quantities of the good
 ''';
@@ -173,4 +180,20 @@ A country fixes its interest rate at 0.95 units against another currency.
 Suppose there is lower demand for its exports, this causes demand to decrease (Fig. 1) creating a surplus of its currency
 on the foreign exchange market. To match the fall in demand, its central bank increases interest rates to encourage hot money flows.
 This increases demand for its currency, maintaining its fixed rate (Fig. 2).
+''';
+
+const kManagedExchangeRateDescription = '''
+The government allows the exchange rate to fluctuate within a set band.
+''';
+
+const kJCurveTradeDeficitDescription = '''
+A - depreciation (or devaluation) of currency\n
+B - initially the deficit becomes bigger\n
+C - over time the deficit improves and turns into a surplus \n
+''';
+
+const kJCurveTradeSurplusDescription = '''
+A - appreciation (or revaluation) of currency\n
+B - initially the surplus becomes bigger\n
+C - over time the surplus decreases and may turn into a trade deficit \n
 ''';

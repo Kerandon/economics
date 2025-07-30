@@ -325,7 +325,7 @@ class SupplyAndDemand extends BaseDiagramPainter {
         c,
         canvas,
         yAxisLabel: DiagramLabel.priceCostsRevenue.label,
-        yLabelIsHorizontal: false,
+        yLabelIsVertical: false,
         xAxisLabel: DiagramLabel.industryQuantity.label,
       );
     }

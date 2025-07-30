@@ -6,6 +6,7 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_custom_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_normalized_within_axis.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/label_align.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
@@ -24,36 +25,120 @@ class JCurve extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
+    paintTextNormalizedWithinAxis(
+        c, canvas, DiagramLabel.tradeBalance.label, Offset(-0.08, -0.08));
+
     paintCustomDiagramLines(
       c,
       canvas,
       startPos: Offset(0, 0),
       polylineOffsets: [Offset(0, 1)],
+      arrowOnStart: true,
+      arrowOnEnd: true,
+      arrowOnEndAngle: pi,
+    );
+    paintTextNormalizedWithinAxis(
+      c,
+      canvas,
+      DiagramLabel.tradeSurplus.label,
+      Offset(-0.05, 0.10),
+      align: LabelAlign.centerLeft,
     );
 
-    paintTextNormalizedWithinAxis(c, canvas, 'X > M\nSurplus', Offset(-0.05, 0.10),
+    paintTextNormalizedWithinAxis(
+      c,
+      canvas,
+      DiagramLabel.tradeBalanced.label,
+      Offset(-0.05, 0.50),
       align: LabelAlign.centerLeft,
+    );
+
+    paintTextNormalizedWithinAxis(
+      c,
+      canvas,
+      DiagramLabel.tradeDeficit.label,
+      Offset(-0.05, 0.90),
+      align: LabelAlign.centerLeft,
+    );
+    if (model.subtype == DiagramSubtype.correctDeficit) {
+      paintCustomBezier(c, canvas,
+          startPos: Offset(kAxisIndent, 0.60),
+          points: [
+            CustomBezier(
+              control: Offset(kAxisIndent + 0.10, 0.60),
+              endPoint: Offset(kAxisIndent + 0.10, 0.60),
+            ),
+            CustomBezier(
+              control: Offset(kAxisIndent + 0.40, 0.90),
+              endPoint: Offset(kAxisIndent + 0.70, 0.20),
+            ),
+          ]);
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        DiagramLabel.a.label,
+        Offset(0.15, 0.82),
+        pointerLine: Offset(0.15, 0.72),
       );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        DiagramLabel.b.label,
+        Offset(0.40, 0.94),
+        pointerLine: Offset(0.40, 0.84),
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        DiagramLabel.c.label,
+        Offset(0.83, 0.60),
+        pointerLine: Offset(0.83, 0.50),
+      );
+    }
 
-    paintTextNormalizedWithinAxis(c, canvas, 'X = M\nBalance', Offset(-0.05, 0.50),
-      align: LabelAlign.centerLeft,
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0, 0.50),
+      polylineOffsets: [Offset(1, 0.50)],
+      dashed: true,
     );
-
-    paintTextNormalizedWithinAxis(c, canvas, 'X  < M\nDeficit', Offset(-0.05, 0.90),
-      align: LabelAlign.centerLeft,
-    );
-
-
-
-    paintCustomBezier(c, canvas, startPos: Offset(kAxisIndent, 0.60), points: [
-      CustomBezier(
-        control: Offset(kAxisIndent + 0.10, 0.60),
-        endPoint: Offset(kAxisIndent + 0.10, 0.60),
-      ),
-      CustomBezier(
-        control: Offset(kAxisIndent + 0.40, 0.90),
-        endPoint: Offset(kAxisIndent + 0.70, 0.20),
-      ),
-    ]);
+    paintTextNormalizedWithinAxis(
+        c, canvas, DiagramLabel.time.label, Offset(1.0, 0.50));
+    if (model.subtype == DiagramSubtype.correctSurplus) {
+      paintCustomBezier(c, canvas,
+          startPos: Offset(kAxisIndent, 0.30),
+          points: [
+            CustomBezier(
+              control: Offset(kAxisIndent + 0.10, 0.30),
+              endPoint: Offset(kAxisIndent + 0.10, 0.30),
+            ),
+            CustomBezier(
+              control: Offset(kAxisIndent + 0.40, 0.0),
+              endPoint: Offset(kAxisIndent + 0.60, 0.60),
+            ),
+          ]);
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        DiagramLabel.a.label,
+        Offset(0.15, 0.18),
+        pointerLine: Offset(0.15, 0.28),
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        DiagramLabel.b.label,
+        Offset(0.40, 0.04),
+        pointerLine: Offset(0.40, 0.14),
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        DiagramLabel.c.label,
+        Offset(0.78, 0.40),
+        pointerLine: Offset(0.78, 0.50),
+      );
+    }
   }
 }

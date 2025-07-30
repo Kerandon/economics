@@ -29,7 +29,7 @@ class PPCMicro extends BaseDiagramPainter {
       canvas,
       xAxisLabel: xLabel,
       yAxisLabel: yLabel,
-      yLabelIsHorizontal: false,
+      yLabelIsVertical: false,
     );
 
     if (model.subtype == DiagramSubtype.opportunityCost ||

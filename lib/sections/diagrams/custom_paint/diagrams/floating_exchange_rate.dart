@@ -37,7 +37,7 @@ class FloatingExchangeRate extends BaseDiagramPainter {
       c,
       canvas,
       yAxisLabel: yAxisLabel,
-      yLabelIsHorizontal: false,
+      yLabelIsVertical: false,
       xAxisLabel: xAxisLabel,
     );
 

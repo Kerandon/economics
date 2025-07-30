@@ -6,13 +6,15 @@ import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
 void paintDashedLine(
-  DiagramPainterConfig config,
-  Canvas canvas, {
-  required Offset p1,
-  required Offset p2,
-  Iterable<double>? pattern,
-  double strokeWidth = kDashedLineWidth,
-}) {
+    DiagramPainterConfig config,
+    Canvas canvas, {
+      required Offset p1,
+      required Offset p2,
+      Iterable<double>? pattern,
+      double strokeWidth = kDashedLineWidth,
+      Color? color,
+    }) {
+  final c = color ?? config.colorScheme.onSurface;
   strokeWidth *= config.averageRatio;
   final width = config.painterSize.width;
   final height = config.painterSize.height;
@@ -27,7 +29,7 @@ void paintDashedLine(
   final points = <Offset>[];
 
   final paint = Paint()
-    ..color = config.colorScheme.onSurface.withAlpha(120)
+    ..color = c
     ..strokeWidth = strokeWidth;
 
   double t = 0;

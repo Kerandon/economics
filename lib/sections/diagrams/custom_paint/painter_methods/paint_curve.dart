@@ -72,3 +72,33 @@ void paintCurve(
         color: paint.color);
   }
 }
+void paintDashedLine(
+    DiagramPainterConfig config,
+    Canvas canvas, {
+      required Offset p1,
+      required Offset p2,
+      double dashWidth = 5.0,
+      double dashSpace = 3.0,
+    }) {
+  final paint = Paint()
+    ..color = config.colorScheme.onSurface
+    ..strokeWidth = 1.5
+    ..style = PaintingStyle.stroke;
+
+  final width = config.painterSize.width;
+  final height = config.painterSize.height;
+
+  final start = Offset(p1.dx * width, p1.dy * height);
+  final end = Offset(p2.dx * width, p2.dy * height);
+
+  final totalLength = (end - start).distance;
+  final direction = (end - start) / totalLength;
+
+  double distance = 0.0;
+  while (distance < totalLength) {
+    final dashStart = start + direction * distance;
+    final dashEnd = start + direction * (distance + dashWidth);
+    canvas.drawLine(dashStart, dashEnd, paint);
+    distance += dashWidth + dashSpace;
+  }
+}

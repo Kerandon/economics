@@ -1,3 +1,4 @@
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/circular_flow_of_income.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/comparative_advantage.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/externalities.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/import_quota.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import '../custom_paint/diagrams/export_subsidy.dart';
 import '../custom_paint/diagrams/fixed_exchange_rate.dart';
 import '../custom_paint/diagrams/floating_exchange_rate.dart';
+import '../custom_paint/diagrams/managed_exchange_rate.dart';
 import '../custom_paint/diagrams/oligopoly.dart';
 import '../custom_paint/diagrams/price_controls.dart';
 import '../custom_paint/diagrams/supply_and_demand.dart';
@@ -532,7 +534,31 @@ class AllDiagrams {
           ),
         ],
       ),
-
+      /// Circular Flow Of Income Model
+      DiagramBundle(
+        basePainterDiagrams: [
+          CircularFlowOfIncome(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.circularFlowOfIncome,
+              subtype: DiagramSubtype.closedModel,
+              description: kCircularFlowOfIncomeModelClosedDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        basePainterDiagrams: [
+          CircularFlowOfIncome(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.circularFlowOfIncome,
+              subtype: DiagramSubtype.openModel,
+              description: kCircularFlowOfIncomeModelOpenDescription,
+            ),
+          ),
+        ],
+      ),
       /// World Trade
       DiagramBundle(
         label: 'International Trade - Exporter',
@@ -785,6 +811,19 @@ class AllDiagrams {
         ],
       ),
       DiagramBundle(
+        description: 'Managed Exchange Rate',
+        basePainterDiagrams: [
+          ManagedExchangeRate(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.managedExchangeRate,
+              subtype: DiagramSubtype.appreciationIncreaseInDemand,
+              description: kManagedExchangeRateDescription,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
         label: 'Fixed Rate - Central Bank Sells Domestic Currency',
         description: kFixedRateCentralBankSellsDomesticCurrency,
         basePainterDiagrams: [
@@ -828,14 +867,26 @@ class AllDiagrams {
         ],
       ),
       DiagramBundle(
+        description: kJCurveTradeDeficitDescription,
        basePainterDiagrams: [
          JCurve(config: config, model:
          DiagramModel(
            type: DiagramType.jCurve,
-           subtype: DiagramSubtype.standard,
+           subtype: DiagramSubtype.correctDeficit,
          )
          )
        ]
+      ),
+      DiagramBundle(
+          description: kJCurveTradeSurplusDescription,
+          basePainterDiagrams: [
+            JCurve(config: config, model:
+            DiagramModel(
+              type: DiagramType.jCurve,
+              subtype: DiagramSubtype.correctSurplus,
+            )
+            )
+          ]
       ),
       DiagramBundle(
         label: 'Poverty Trap',

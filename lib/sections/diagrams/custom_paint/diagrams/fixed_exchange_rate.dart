@@ -2,10 +2,8 @@ import 'dart:math';
 
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_box.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/label_align.dart';
@@ -13,7 +11,6 @@ import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
 import '../../models/base_painter_painter.dart';
-import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../painter_methods/paint_diagram_custom_lines.dart';
 
@@ -42,7 +39,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
       c,
       canvas,
       yAxisLabel: DiagramLabel.exchangeRate.label,
-      yLabelIsHorizontal: false,
+      yLabelIsVertical: false,
       xAxisLabel: DiagramLabel.quantityOfCurrency.label,
     );
 
