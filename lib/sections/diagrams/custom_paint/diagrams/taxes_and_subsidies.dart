@@ -5,8 +5,8 @@ import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/pai
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:economics_app/sections/diagrams/models/base_painter_painter.dart';
+import '../../enums/diagram_labels.dart';
 import '../../enums/label_align.dart';
-import '../painter_constants.dart';
 import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 

@@ -16,12 +16,6 @@ class CustomDiagramBuilder extends StatelessWidget {
     final dim = size.width * dimensions;
     final diagramsToShow = [];
 
-    // DiagramModel.getSelectedDiagrams(
-    //   size,
-    //   context,
-    //   selectedDiagrams: diagrams?.toList() ?? [],
-    // ).toList();
-
     return Wrap(
       children: [
         if (diagramsToShow.isNotEmpty)

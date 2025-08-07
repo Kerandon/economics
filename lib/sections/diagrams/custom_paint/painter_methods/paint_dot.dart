@@ -10,16 +10,16 @@ void paintDot(
   Canvas canvas, {
   required Offset pos,
   double radius = kDotRadius,
-  Color color = Colors.white,
+  Color? color,
   String? label,
   LabelAlign? labelAlign,
 }) {
-  color = config.colorScheme.onSurface;
+  color = color ?? config.colorScheme.onSurfaceVariant;
   final size = config.painterSize;
   final width = config.painterSize.width;
   final height = config.painterSize.height;
   final normalize = 1 - (kAxisIndent * 1.5);
-  final r = radius * config.averageRatio;
+  final r = radius * config.averageRatio * 0.60;
   final paint = Paint()
     ..color = color
     ..style = PaintingStyle.fill;
@@ -36,8 +36,9 @@ void paintDot(
       canvas,
       label!,
       Offset(pos.dx * normalize + (kAxisIndent), (pos.dy * normalize) + (kAxisIndent/2)),
-      fontSize: kFontSize,
-      labelAlign: labelAlign ?? LabelAlign.centerTop,
+      fontSize: kFontSize *1.2,
+      labelAlign: labelAlign ?? LabelAlign.centerRight,
+      paintBackground: true
     );
   }
 }

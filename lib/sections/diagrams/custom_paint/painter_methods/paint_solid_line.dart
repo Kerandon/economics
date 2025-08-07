@@ -8,11 +8,11 @@ void paintSolidLine(
   Canvas canvas, {
   required Offset p1,
   required Offset p2,
-  double strokeWidth = kDashedLineWidth,
+  double strokeWidth = kDashedLineWidth / 2,
   Color? color,
 }) {
   final c = color ?? config.colorScheme.onSurface;
-  strokeWidth *= config.averageRatio;
+  strokeWidth *= config.averageRatio / 2;
   final width = config.painterSize.width;
   final height = config.painterSize.height;
 

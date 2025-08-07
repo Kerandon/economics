@@ -6,6 +6,7 @@ import 'package:economics_app/sections/diagrams/enums/label_align.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
+import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 
@@ -22,8 +23,8 @@ class PhillipsCurve extends BaseDiagramPainter {
     paintAxis(
       c,
       canvas,
-      yAxisLabel: kInflationRate,
-      xAxisLabel: kUnemploymentRate,
+      yAxisLabel: DiagramLabel.inflationRate.label,
+      xAxisLabel: DiagramLabel.inflationRate.label,
     );
 
     /// SRPC
@@ -34,7 +35,7 @@ class PhillipsCurve extends BaseDiagramPainter {
       points: [
         CustomBezier(control: Offset(0.30, 0.70), endPoint: Offset(0.80, 0.75)),
       ],
-      label1: kSRPC,
+      label1:  DiagramLabel.sRPC.label,
       label1Align: LabelAlign.centerRight,
     );
 
@@ -47,7 +48,7 @@ class PhillipsCurve extends BaseDiagramPainter {
         0.50,
         (1 - kAxisIndent),
       ),
-      label1: kLRPC,
+      label1: DiagramLabel.p.label,
       label1Align: LabelAlign.centerTop,
     );
   }

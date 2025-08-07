@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
 import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
-import '../painter_constants.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';

@@ -1,3 +1,87 @@
+const kPPCMicroIncreasingOppCostDescription = '''
+The sacrifice of 50 tablets to produce phones results in higher and higher opportunity costs.
+At first giving up 25 tablets results in 10 new phones, giving up 25 more tablets results in only 6 new phones, and so on.
+This occurs when the resources are not equally suited to making all goods.
+''';
+
+const kPPCMicroConstantOppCostDescription = '''
+The opportunity cost to produce more soccer balls in constant. 30 new soccer balls always costs 50 volley balls.
+This is between two products which resources can easily switch between in production.
+For example the machine or labor used to create rugby balls could just as easily produce volley balls  
+''';
+
+const kPPCMicroProductionPointsDescription = '''
+Point A represents underemployment of resources and / or inefficient use of resources.
+Point B and C represents full employment of resources, with maximum efficiency.
+A movement from B to C represents a reallocation of the same resources from tablets and towards 
+the production of phones.
+Point D is unattainable production given the country's current resources.
+''';
+
+const kPPCMicroIncreaseInProductionPotentialDescription = '''
+Increases in the potential production curve are due to improved quality and / or greater quantity of resources.
+For example, improved technology, or more factories which can produce more units of a good.
+''';
+
+const kPPCMicroDecreaseInProductionPotentialDescription = '''
+Decreases in the potential production curve are due to worsening quality and / or fewer quantity of resources.
+For example, decreases in the quality of education and skills or labor, and a shrinking labor force.
+''';
+
+const kPPCMicroActualGrowthDescription = '''
+Actual growth occurs when there is a movement inside the PPC closer the curve.
+This is due to either more employment of existing resources (e.g. a fall in the labor unemployment rate),
+or improved efficiency of existing resources (less waste).
+''';
+
+const kDemandDescription = '''
+Based on the law of demand the quantity demanded by consumers increases as the price falls.
+''';
+
+const kDemandDeterminantsDescription = '''
+There are non-price factors that can increase or decrease the demand for a good at the same market price.
+These include consumer tastes, consumer income and the relative prices of substitute goods.
+''';
+
+const kSupplyDescription = '''
+''';
+
+const kSupplyAndDemandEquilibriumDescription = '''
+The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
+Any excess supply or excess demand in the market is cleared.
+''';
+
+const kSupplyAndDemandIncreaseInDemandDescription = '''
+The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
+Any excess supply or excess demand in the market is cleared.
+''';
+
+const kSupplyAndDemandDecreaseInDemandDescription = '''
+The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
+Any excess supply or excess demand in the market is cleared.
+''';
+
+const kSupplyAndDemandIncreaseInSupplyDescription = '''
+The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
+Any excess supply or excess demand in the market is cleared.
+''';
+
+const kSupplyAndDemandDecreaseInSupplyDescription = '''
+The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
+Any excess supply or excess demand in the market is cleared.
+''';
+
+const kSupplyAndDemandShortageDescription = '''
+The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
+Any excess supply or excess demand in the market is cleared.
+''';
+
+const kSupplyAndDemandSurplusDescription = '''
+The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
+Any excess supply or excess demand in the market is cleared.
+''';
+
+
 const kFixedPerUnitSalesTax = '''
 A fixed sales tax applies a fixed tax amount for every unit sold. This increases supply and results in a higher price and a lower quantity sold.
 ''';
@@ -104,6 +188,52 @@ const kCircularFlowOfIncomeModelClosedDescription = '''
 ''';
 
 const kCircularFlowOfIncomeModelOpenDescription = '''
+''';
+
+const kAggregateDemandDescription = '''
+Aggregate demand is the sum of consumer spending, private firm investment, government spending
+and net exports
+''';
+
+const kAggregateDemandDeterminantsDescription = '''
+Determinants of aggregate demand include
+- interest rates
+- changes in government spending
+- business confidence
+- exchange rates
+''';
+
+const kDemandSideExpansionaryMonetaryPolicyDescription = '''
+The central bank will take actions to increase the money supply.
+This usually includes it buying bonds from commercial banks 
+which increases their excess cash reserves which can be lent out to 
+consumers and firms.
+An increase in the money supply causes a lower equilibrium interest rate.
+This encourages consumers to increase borrowing and spending 
+and firms to borrow to invest in capital which causes an increase 
+in aggregate demand.
+''';
+
+const kDemandSideContractionaryMonetaryPolicyDescription = '''
+The central bank will take actions to decrease the money supply.
+This usually includes it selling bonds to commercial banks 
+which decreases the excess cash reserves which can be lent out to 
+consumers and firms.
+An decrease in the money supply causes a higher equilibrium interest rate.
+This encourages consumers to decrease borrowing and spending 
+and firms to reduce borrowing to invest in capital which causes an 
+decrease in aggregate demand.
+''';
+
+const kSupplySidePoliciesLongTermGrowthDescription = '''
+Supply-Side Policies aim to achieve long-term growth.
+This can be reflected by either an increase in the LRAS curve in the
+Monetarist-New Classical Model, an increase in the Keynesian AS Curve,
+or an increase in a (macro-labelled) PPC model.
+''';
+
+const kADASFullEmploymentClassicalAndKeynesianDescription = '''
+Full employment
 ''';
 
 const kInternationalTradeImporterDescription = '''

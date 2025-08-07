@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_custom_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_box.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
-import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
+import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
@@ -27,10 +27,15 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
     const color2 = Colors.indigo;
 
     if (model.subtype == DiagramSubtype.closedModel) {
+      paintTitle(c, canvas, 'Closed Model');
+      final topIndent = 0.20;
+      final bottomIndent = 0.80;
+      final gap = 0.05;
+
       /// Arrows - Purple
       paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.50, 0.13),
-          polylineOffsets: [Offset(0.10, 0.13), Offset(0.10, 0.40)],
+          startPos: Offset(0.50, topIndent),
+          polylineOffsets: [Offset(0.10, topIndent), Offset(0.10, 0.40)],
           color: color2,
           normalizeToDiagramArea: false,
           arrowOnEnd: true,
@@ -39,14 +44,16 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.50),
-        polylineOffsets: [Offset(0.10, 0.88), Offset(0.50, 0.88)],
+        polylineOffsets: [Offset(0.10, bottomIndent),
+          Offset(0.50, bottomIndent)],
         normalizeToDiagramArea: false,
         color: color2,
       );
 
       paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.50, 0.88),
-          polylineOffsets: [Offset(0.90, 0.88), Offset(0.90, 0.60)],
+          startPos: Offset(0.50, bottomIndent),
+          polylineOffsets: [Offset(0.90, bottomIndent),
+            Offset(0.90, 0.60)],
           color: color2,
           normalizeToDiagramArea: false,
           arrowOnEnd: true,
@@ -54,7 +61,9 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
 
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.90, 0.50),
-          polylineOffsets: [Offset(0.90, 0.13), Offset(0.50, 0.13)],
+          polylineOffsets: [Offset(0.90, topIndent), Offset(0.50,
+              topIndent)
+          ],
           color: color2,
           normalizeToDiagramArea: false,
           arrowOnEnd: true,
@@ -65,7 +74,8 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.05, 0.60),
-        polylineOffsets: [Offset(0.05, 0.93), Offset(0.50, 0.93)],
+        polylineOffsets: [Offset(0.05, bottomIndent + gap),
+          Offset(0.50, bottomIndent + gap)],
         normalizeToDiagramArea: false,
         arrowOnStart: true,
         color: color1,
@@ -73,7 +83,8 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
 
       paintCustomDiagramLines(c, canvas,
           startPos: Offset(0.95, 0.40),
-          polylineOffsets: [Offset(0.95, 0.08), Offset(0.50, 0.08)],
+          polylineOffsets: [Offset(0.95, topIndent - gap),
+            Offset(0.50, topIndent - gap)],
           color: color1,
           normalizeToDiagramArea: false,
           arrowOnStart: true,
@@ -82,16 +93,16 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(0.50, 0.93),
-        polylineOffsets: [Offset(0.95, 0.93), Offset(0.95, 0.50)],
+        startPos: Offset(0.50, bottomIndent + gap),
+        polylineOffsets: [Offset(0.95, bottomIndent + gap), Offset(0.95, 0.50)],
         color: color1,
         normalizeToDiagramArea: false,
       );
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(0.50, 0.08),
-        polylineOffsets: [Offset(0.05, 0.08), Offset(0.05, 0.50)],
+        startPos: Offset(0.50, topIndent - gap),
+        polylineOffsets: [Offset(0.05, topIndent - gap), Offset(0.05, 0.50)],
         color: color1,
         normalizeToDiagramArea: false,
       );
@@ -126,7 +137,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         config: c,
         lineColor: c.colorScheme.primary,
         text: DiagramLabel.factorMarkets.label,
-        position: Offset(0.50, 0.10),
+        position: Offset(0.50, 0.18),
         showBoxBorder: true,
         dottedBorder: true,
       );
@@ -137,7 +148,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         config: c,
         lineColor: c.colorScheme.primary,
         text: DiagramLabel.productMarkets.label,
-        position: Offset(0.50, 0.90),
+        position: Offset(0.50, 0.82),
         showBoxBorder: true,
         dottedBorder: true,
       );
@@ -147,143 +158,158 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         c,
         canvas,
         DiagramLabel.landLaborCapitalEnterprise.label,
-        Offset(0.50, 0),
+        Offset(0.50, 0.10),
         style: TextStyle(color: color1, fontWeight: FontWeight.bold),
       );
       paintText(
         c,
         canvas,
         DiagramLabel.rentWagesInterestProfit.label,
-        Offset(0.50, 0.20),
+        Offset(0.50, 0.26),
+        style: TextStyle(color: color2, fontWeight: FontWeight.bold),
+      );
+      paintText(
+        c,
+        canvas,
+        DiagramLabel.householdSpendingFirmRevenue.label,
+        Offset(0.50, 0.74),
         style: TextStyle(color: color2, fontWeight: FontWeight.bold),
       );
       paintText(
         c,
         canvas,
         DiagramLabel.goodsAndServices.label,
-        Offset(0.50, 0.98),
+        Offset(0.50, 0.90),
         style: TextStyle(color: color1, fontWeight: FontWeight.bold),
-      );
-      paintText(
-        c,
-        canvas,
-        DiagramLabel.householdSpendingFirmRevenue.label,
-        Offset(0.50, 0.80),
-        style: TextStyle(color: color2, fontWeight: FontWeight.bold),
       );
     }
     if (model.subtype == DiagramSubtype.openModel) {
-      /// Factors of Production
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.08),
-          polylineOffsets: [
-            Offset(0.76, 0.08),
-          ],
-          arrowOnEnd: true,
-          arrowOnEndAngle: pi / 2,
-          normalizeToDiagramArea: false);
+      paintTitle(c, canvas, 'Open Model');
 
-      /// Factor Payments
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.90, 0.12),
-          polylineOffsets: [
-            Offset(0.28, 0.12),
-          ],
-          arrowOnEnd: true,
-          arrowOnEndAngle: pi / -2,
-          normalizeToDiagramArea: false);
+      const Color injectionColor = Colors.green;
+      const Color leakageColor = Colors.red;
+      const Color closedLoopColor = Colors.blueGrey;
 
-      /// Goods & Services
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.02),
-          polylineOffsets: [
-            Offset(0.10, 0.00),
-            Offset(0.90, 0.00),
-            Offset(0.90, 0.10),
-          ],
-          arrowOnStart: true,
-          arrowOnStartAngle: pi,
-          normalizeToDiagramArea: false);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.10),
-          polylineOffsets: [
-            Offset(0.10, 0.20),
-            Offset(0.90, 0.20),
-            Offset(0.90, 0.18),
-          ],
-          arrowOnEnd: true,
-          normalizeToDiagramArea: false);
+      final leftIndent = 0.02;
+      final rightIndent = 0.94;
+
+      /// Factor Payments (Closed Loop)
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.28, 0.20),
+        polylineOffsets: [Offset(0.90, 0.20)],
+        arrowOnStart: true,
+        arrowOnStartAngle: pi / -2,
+        normalizeToDiagramArea: false,
+        color: closedLoopColor,
+      );
+
+      /// Household Spending (Closed Loop)
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.80, 0.24),
+        polylineOffsets: [Offset(0.10, 0.24)],
+        arrowOnStart: true,
+        arrowOnStartAngle: pi / 2,
+        normalizeToDiagramArea: false,
+        color: closedLoopColor,
+      );
+
+      /// Factors of Production (Closed Loop)
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.22),
+        polylineOffsets: [
+          Offset(0.10, 0.12),
+          Offset(0.90, 0.12),
+          Offset(0.90, 0.14),
+        ],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi,
+        normalizeToDiagramArea: false,
+        color: closedLoopColor,
+      );
+
+      /// Goods and Services (Closed Loop)
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.30),
+        polylineOffsets: [
+          Offset(0.10, 0.32),
+          Offset(0.90, 0.32),
+          Offset(0.90, 0.22),
+        ],
+        arrowOnStart: true,
+        normalizeToDiagramArea: false,
+        color: closedLoopColor,
+      );
 
       /// Leakages
-      final leftIndent = 0.02;
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(leftIndent, 0.10),
-          polylineOffsets: [Offset(leftIndent, 0.70)],
-          normalizeToDiagramArea: false);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(leftIndent, 0.40),
-          polylineOffsets: [Offset(0.25, 0.40)],
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(leftIndent, 0.22),
+        polylineOffsets: [Offset(leftIndent, 0.82)],
+        normalizeToDiagramArea: false,
+        color: leakageColor,
+      );
+
+      for (final y in [0.52, 0.67, 0.82]) {
+        paintCustomDiagramLines(
+          c,
+          canvas,
+          startPos: Offset(leftIndent, y),
+          polylineOffsets: [Offset(0.25, y)],
           arrowOnEnd: true,
-          arrowOnEndAngle: pi * 0.50,
-          normalizeToDiagramArea: false);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(leftIndent, 0.55),
-          polylineOffsets: [Offset(0.25, 0.55)],
-          arrowOnEnd: true,
-          arrowOnEndAngle: pi * 0.50,
-          normalizeToDiagramArea: false);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(leftIndent, 0.70),
-          polylineOffsets: [Offset(0.25, 0.70)],
-          arrowOnEnd: true,
-          arrowOnEndAngle: pi * 0.50,
-          normalizeToDiagramArea: false);
+          arrowOnEndAngle: pi * 0.5,
+          normalizeToDiagramArea: false,
+          color: leakageColor,
+        );
+      }
 
       /// Injections
-      final rightIndent = 0.94;
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(rightIndent, 0.20),
-          polylineOffsets: [Offset(rightIndent, 0.70)],
-          arrowOnStart: true,
-          normalizeToDiagramArea: false);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(rightIndent, 0.32),
+        polylineOffsets: [Offset(rightIndent, 0.82)],
+        arrowOnStart: true,
+        normalizeToDiagramArea: false,
+        color: injectionColor,
+      );
 
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.50, 0.40),
-          polylineOffsets: [
-            Offset(rightIndent, 0.40),
-          ],
-          normalizeToDiagramArea: false);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.50, 0.55),
-          polylineOffsets: [
-            Offset(rightIndent, 0.55),
-          ],
-          normalizeToDiagramArea: false);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.50, 0.70),
-          polylineOffsets: [
-            Offset(rightIndent, 0.70),
-          ],
-          normalizeToDiagramArea: false);
+      for (final y in [0.52, 0.67, 0.82]) {
+        paintCustomDiagramLines(
+          c,
+          canvas,
+          startPos: Offset(0.50, y),
+          polylineOffsets: [Offset(rightIndent, y)],
+          normalizeToDiagramArea: false,
+          color: injectionColor,
+        );
+      }
 
-      /// Households
+      /// Text Boxes
       paintTextBox(
         canvas: canvas,
         config: c,
         lineColor: color1,
         text: DiagramLabel.households.label,
-        position: Offset(0.10, 0.10),
+        position: Offset(0.10, 0.22),
         showBoxBorder: true,
         boxBorderWidth: kCurveWidth,
       );
 
-      /// Firms
       paintTextBox(
         canvas: canvas,
         config: c,
         lineColor: color1,
         text: DiagramLabel.firms.label,
-        position: Offset(0.90, 0.10),
+        position: Offset(0.90, 0.22),
         showBoxBorder: true,
         boxBorderWidth: kCurveWidth,
       );
@@ -293,33 +319,54 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         config: c,
         lineColor: color1,
         text: DiagramLabel.government.label,
-        position: Offset(0.50, 0.40),
+        position: Offset(0.50, 0.52),
         showBoxBorder: true,
         boxBorderWidth: kCurveWidth,
       );
+
       paintTextBox(
         canvas: canvas,
         config: c,
         lineColor: color1,
         text: DiagramLabel.financialSector.label,
-        position: Offset(0.50, 0.55),
+        position: Offset(0.50, 0.67),
         showBoxBorder: true,
         boxBorderWidth: kCurveWidth,
       );
+
       paintTextBox(
         canvas: canvas,
         config: c,
         lineColor: color1,
         text: DiagramLabel.foreignSector.label,
-        position: Offset(0.50, 0.70),
+        position: Offset(0.50, 0.82),
         showBoxBorder: true,
         boxBorderWidth: kCurveWidth,
       );
 
+      /// Text Labels
+      paintText(c, canvas, DiagramLabel.factorsOfProduction.label,
+          Offset(0.50, 0.08));
       paintText(
-          c, canvas,
-          DiagramLabel.rentWagesInterestProfit.label,
-          Offset(0.50,-0.04),);
+          c, canvas, DiagramLabel.factorPayments.label, Offset(0.50, 0.16));
+      paintText(
+          c, canvas, DiagramLabel.householdSpending.label, Offset(0.50, 0.27));
+      paintText(
+          c, canvas, DiagramLabel.goodsAndServices.label, Offset(0.50, 0.36));
+
+      paintText(c, canvas, DiagramLabel.leakages.label, Offset(-0.02, 0.52),
+          angle: -pi / 2);
+      paintText(c, canvas, DiagramLabel.injections.label, Offset(0.98, 0.52),
+          angle: -pi / 2);
+
+      paintText(c, canvas, DiagramLabel.taxes.label, Offset(0.15, 0.48));
+      paintText(c, canvas, DiagramLabel.savings.label, Offset(0.15, 0.63));
+      paintText(c, canvas, DiagramLabel.imports.label, Offset(0.15, 0.78));
+
+      paintText(
+          c, canvas, DiagramLabel.governmentSpending.label, Offset(0.80, 0.48));
+      paintText(c, canvas, DiagramLabel.investment.label, Offset(0.80, 0.63));
+      paintText(c, canvas, DiagramLabel.exports.label, Offset(0.80, 0.78));
     }
   }
 }

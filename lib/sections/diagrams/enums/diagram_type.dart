@@ -1,9 +1,11 @@
 enum DiagramType {
   ppcMicro,
-  supplyDemand,
-  externalities,
+  demand,
+  supply,
+  priceMechanism,
   taxesAndSubsidies,
   priceControls,
+  externalities,
   perfectCompetition,
   monopoly,
   monopolisticCompetition,
@@ -11,8 +13,13 @@ enum DiagramType {
   ppcMacro,
   circularFlowOfIncome,
   businessCycle,
-  keynesianADAS,
+  aggregateDemand,
   classicalADAS,
+  keynesianADAS,
+  moneyMarket,
+  demandSidePolicies,
+  keynesianMultiplier,
+  supplySidePolicies,
   phillipsCurve,
   internationalTrade,
   comparativeAdvantage,
@@ -32,8 +39,8 @@ extension DiagramTypeExtension on DiagramType {
     switch (this) {
       case DiagramType.ppcMacro:
         return 'PPC Macro';
-      case DiagramType.supplyDemand:
-        return 'Supply & Demand';
+      case DiagramType.priceMechanism:
+        return 'Price Mechanism';
       case DiagramType.taxesAndSubsidies:
         return 'Taxes and Subsidies';
       case DiagramType.priceControls:
@@ -51,11 +58,9 @@ extension DiagramTypeExtension on DiagramType {
       case DiagramType.businessCycle:
         return 'Business Cycle';
       case DiagramType.ppcMicro:
-        return 'Production Possibilities Curve';
-      case DiagramType.keynesianADAS:
-        return 'Keynesian AD-AS';
+        return 'Production Possibilities Curve (PPC) - Micro';
       case DiagramType.classicalADAS:
-        return 'Monetarist-New Classical AD-AS';
+        return 'Monetarist/New Classical AD-AS Model';
       case DiagramType.phillipsCurve:
         return 'Phillips Curve';
       case DiagramType.tariff:
@@ -82,6 +87,22 @@ extension DiagramTypeExtension on DiagramType {
         return 'Fixed Exchange Rate';
       case DiagramType.managedExchangeRate:
         return 'Managed Exchange Rate';
+      case DiagramType.aggregateDemand:
+        return 'Aggregate Demand';
+      case DiagramType.keynesianADAS:
+        return 'Keynesian AD-AS Model';
+      case DiagramType.moneyMarket:
+        return 'Money Market';
+      case DiagramType.demandSidePolicies:
+        return 'Demand-Side Policies';
+      case DiagramType.supplySidePolicies:
+        return 'Supply-Side Policies';
+      case DiagramType.keynesianMultiplier:
+        return 'Keynesian Multiplier';
+      case DiagramType.demand:
+        return 'Demand';
+      case DiagramType.supply:
+        return 'Supply';
     }
   }
 }

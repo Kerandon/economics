@@ -1,6 +1,7 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
+import '../../enums/diagram_labels.dart';
 import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
@@ -19,7 +20,7 @@ class BusinessCycle extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintAxis(c, canvas, yAxisLabel: kRealGDP, xAxisLabel: kTimeYears);
+    paintAxis(c, canvas, yAxisLabel: DiagramLabel.realGDP.label, xAxisLabel: DiagramLabel.timeYears.label);
 
     paintCurve(
       c,
@@ -27,7 +28,7 @@ class BusinessCycle extends BaseDiagramPainter {
       const Offset(kAxisIndent, 0.62),
       const Offset(0.80, 0.40),
       makeDashed: true,
-      label2: kPotentialOutput,
+      label2: DiagramLabel.potentialOutput.label,
       label2Align: LabelAlign.centerRight,
     );
 

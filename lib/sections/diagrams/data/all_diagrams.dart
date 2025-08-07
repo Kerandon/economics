@@ -1,25 +1,31 @@
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/aggregate_demand.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/circular_flow_of_income.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/comparative_advantage.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/demand.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/externalities.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/import_quota.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/international_trade.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/j_curve.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/money_market.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopolistic_competition.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/monopoly.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/perfect_competition.dart';
+import 'package:economics_app/sections/diagrams/custom_paint/diagrams/phillips_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/poverty_trap.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/ppc_micro.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/production_subsidy.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/diagrams/taxes_and_subsidies.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_model.dart';
 import 'package:flutter/material.dart';
+import '../custom_paint/diagrams/classical_ad_as.dart';
 import '../custom_paint/diagrams/export_subsidy.dart';
 import '../custom_paint/diagrams/fixed_exchange_rate.dart';
 import '../custom_paint/diagrams/floating_exchange_rate.dart';
+import '../custom_paint/diagrams/keynesian_ad_as.dart';
 import '../custom_paint/diagrams/managed_exchange_rate.dart';
 import '../custom_paint/diagrams/oligopoly.dart';
 import '../custom_paint/diagrams/price_controls.dart';
-import '../custom_paint/diagrams/supply_and_demand.dart';
+import '../custom_paint/diagrams/price_mechanism.dart';
 import '../custom_paint/diagrams/tariff.dart';
 import '../enums/diagram_subtype.dart';
 import '../enums/diagram_type.dart';
@@ -53,27 +59,144 @@ class AllDiagrams {
       DiagramBundle(
         unit: UnitType.micro,
         type: DiagramType.ppcMicro,
+        description: kPPCMicroIncreasingOppCostDescription,
         basePainterDiagrams: [
           PPCMicro(
             config: config,
             model: DiagramModel(
-                unit: UnitType.micro,
-                type: DiagramType.ppcMicro,
-                subtype: DiagramSubtype.opportunityCost),
+              unit: UnitType.micro,
+              type: DiagramType.ppcMicro,
+              subtype: DiagramSubtype.increasingOpportunityCost,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.ppcMicro,
+        description: kPPCMicroConstantOppCostDescription,
+        basePainterDiagrams: [
+          PPCMicro(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.ppcMicro,
+              subtype: DiagramSubtype.constantOpportunityCost,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.ppcMicro,
+        description: kPPCMicroProductionPointsDescription,
+        basePainterDiagrams: [
+          PPCMicro(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.ppcMicro,
+              subtype: DiagramSubtype.productionPoints,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.ppcMicro,
+        description: kPPCMicroActualGrowthDescription,
+        basePainterDiagrams: [
+          PPCMicro(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.ppcMicro,
+              subtype: DiagramSubtype.actualGrowth,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.ppcMicro,
+        description: kPPCMicroIncreaseInProductionPotentialDescription,
+        basePainterDiagrams: [
+          PPCMicro(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.ppcMicro,
+              subtype: DiagramSubtype.increaseInProductionPotential,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.ppcMicro,
+        description: kPPCMicroDecreaseInProductionPotentialDescription,
+        basePainterDiagrams: [
+          PPCMicro(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.micro,
+              type: DiagramType.ppcMicro,
+              subtype: DiagramSubtype.decreaseInProductionPotential,
+            ),
           ),
         ],
       ),
 
-      /// Supply and Demand
+      /// Demand
       DiagramBundle(
         unit: UnitType.micro,
-        type: DiagramType.supplyDemand,
+        type: DiagramType.demand,
+        description: kDemandDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          Demand(
             config: config,
             model: DiagramModel(
-              unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.demand,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.demand,
+        description: kDemandDeterminantsDescription,
+        basePainterDiagrams: [
+          Demand(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.demand,
+              subtype: DiagramSubtype.determinants,
+            ),
+          ),
+        ],
+      ),
+      /// Supply
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.supply,
+        description: kSupplyDescription,
+        basePainterDiagrams: [
+          Demand(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.supply,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        unit: UnitType.micro,
+        type: DiagramType.priceMechanism,
+        description: kSupplyAndDemandEquilibriumDescription,
+        basePainterDiagrams: [
+          PriceMechanism(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.equilibrium,
               description: '',
             ),
@@ -82,13 +205,13 @@ class AllDiagrams {
       ),
       DiagramBundle(
         unit: UnitType.micro,
-        type: DiagramType.supplyDemand,
+        type: DiagramType.priceMechanism,
+        description: kSupplyAndDemandIncreaseInDemandDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
-              unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.increaseInDemand,
               description: '',
             ),
@@ -97,75 +220,71 @@ class AllDiagrams {
       ),
       DiagramBundle(
         unit: UnitType.micro,
-        type: DiagramType.supplyDemand,
+        type: DiagramType.priceMechanism,
+        description: kSupplyAndDemandDecreaseInDemandDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
               unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.decreaseInDemand,
-              description: '',
             ),
           ),
         ],
       ),
       DiagramBundle(
         unit: UnitType.micro,
-        type: DiagramType.supplyDemand,
+        type: DiagramType.priceMechanism,
+        description: kSupplyAndDemandIncreaseInSupplyDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
-              unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.increaseInSupply,
-              description: '',
             ),
           ),
         ],
       ),
       DiagramBundle(
         unit: UnitType.micro,
-        type: DiagramType.supplyDemand,
+        type: DiagramType.priceMechanism,
+        description: kSupplyAndDemandDecreaseInSupplyDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
-              unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.decreaseInSupply,
-              description: '',
             ),
           ),
         ],
       ),
       DiagramBundle(
         unit: UnitType.micro,
-        type: DiagramType.supplyDemand,
+        type: DiagramType.priceMechanism,
+        description: kSupplyAndDemandShortageDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
-              unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.shortage,
-              description: '',
             ),
           ),
         ],
       ),
       DiagramBundle(
         unit: UnitType.micro,
-        type: DiagramType.supplyDemand,
+        type: DiagramType.priceMechanism,
+        description: kSupplyAndDemandSurplusDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
-              unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.surplus,
-              description: '',
             ),
           ),
         ],
@@ -335,11 +454,11 @@ class AllDiagrams {
         label: 'Long-Run Equilibrium',
         description: kPerfectCompetitionLongRunEquilibrium,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
               unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.longRunEquilibrium,
             ),
           ),
@@ -359,11 +478,11 @@ class AllDiagrams {
         label: 'Abnormal Profits',
         description: kPerfectCompetitionAbnormalProfitProcessDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
               unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.abnormalProfit,
             ),
           ),
@@ -383,11 +502,11 @@ class AllDiagrams {
         label: 'Losses',
         description: kPerfectCompetitionLossesDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
               unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.loss,
             ),
           ),
@@ -407,11 +526,11 @@ class AllDiagrams {
         label: 'Social Welfare',
         description: kPerfectCompetitionSocialWelfareDescription,
         basePainterDiagrams: [
-          SupplyAndDemand(
+          PriceMechanism(
             config: config,
             model: DiagramModel(
               unit: UnitType.micro,
-              type: DiagramType.supplyDemand,
+              type: DiagramType.priceMechanism,
               subtype: DiagramSubtype.socialWelfare,
             ),
           ),
@@ -534,6 +653,7 @@ class AllDiagrams {
           ),
         ],
       ),
+
       /// Circular Flow Of Income Model
       DiagramBundle(
         basePainterDiagrams: [
@@ -559,6 +679,153 @@ class AllDiagrams {
           ),
         ],
       ),
+
+      /// Aggregate Demand
+      DiagramBundle(basePainterDiagrams: [
+        AggregateDemand(
+          config: config,
+          model: DiagramModel(
+            unit: UnitType.macro,
+            type: DiagramType.aggregateDemand,
+          ),
+        ),
+      ]),
+      DiagramBundle(
+        basePainterDiagrams: [
+          AggregateDemand(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.macro,
+              type: DiagramType.aggregateDemand,
+              subtype: DiagramSubtype.determinants,
+              description: kAggregateDemandDeterminantsDescription,
+            ),
+          ),
+        ],
+      ),
+
+      /// Classical ADAS
+      DiagramBundle(
+        basePainterDiagrams: [
+          ClassicalADAS(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.macro,
+              type: DiagramType.classicalADAS,
+              subtype: DiagramSubtype.fullEmploymentClassical,
+            ),
+          ),
+        ],
+      ),
+
+      /// Keynesian ADAS
+      DiagramBundle(
+        basePainterDiagrams: [
+          KeynesianADAS(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.macro,
+              type: DiagramType.keynesianADAS,
+              subtype: DiagramSubtype.fullEmploymentKeynesian,
+            ),
+          ),
+        ],
+      ),
+
+      /// Phillips Curve
+      DiagramBundle(
+        basePainterDiagrams: [
+          PhillipsCurve(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.macro,
+              type: DiagramType.phillipsCurve,
+              subtype: DiagramSubtype.shortRun,
+            ),
+          ),
+        ],
+      ),
+
+      /// Money Market
+      DiagramBundle(
+        basePainterDiagrams: [
+          MoneyMarket(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.moneyMarket,
+              description: kCircularFlowOfIncomeModelOpenDescription,
+            ),
+          ),
+        ],
+      ),
+
+      /// Demand-Side Policies
+      DiagramBundle(
+        label: 'Demand-Side: Expansionary Monetary Policy',
+        type: DiagramType.demandSidePolicies,
+        description: kDemandSideExpansionaryMonetaryPolicyDescription,
+        basePainterDiagrams: [
+          MoneyMarket(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.moneyMarket,
+            ),
+          ),
+          ClassicalADAS(
+            config: config,
+            model: DiagramModel(type: DiagramType.classicalADAS),
+          ),
+        ],
+      ),
+      DiagramBundle(
+        label: 'Demand-Side: Contractionary Monetary Policy',
+        type: DiagramType.demandSidePolicies,
+        description: kDemandSideContractionaryMonetaryPolicyDescription,
+        basePainterDiagrams: [
+          MoneyMarket(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.moneyMarket,
+            ),
+          ),
+          ClassicalADAS(
+            config: config,
+            model: DiagramModel(
+              type: DiagramType.classicalADAS,
+            ),
+          ),
+        ],
+      ),
+      DiagramBundle(
+          label: 'Keynesian Multiplier (HL)',
+          type: DiagramType.keynesianMultiplier,
+          basePainterDiagrams: [
+            KeynesianADAS(
+              config: config,
+              model: DiagramModel(
+                unit: UnitType.macro,
+                subtype: DiagramSubtype.macro,
+              ),
+            ),
+          ]),
+
+      /// Supply-Side Policies
+      DiagramBundle(
+        label: 'Long Term Growth',
+        type: DiagramType.supplySidePolicies,
+        description: kSupplySidePoliciesLongTermGrowthDescription,
+        basePainterDiagrams: [
+          ClassicalADAS(
+            config: config,
+            model: DiagramModel(
+              unit: UnitType.macro,
+              type: DiagramType.classicalADAS,
+              subtype: DiagramSubtype.increaseInSupply,
+            ),
+          ),
+        ],
+      ),
+
       /// World Trade
       DiagramBundle(
         label: 'International Trade - Exporter',
@@ -863,42 +1130,36 @@ class AllDiagrams {
               description: '',
             ),
           ),
-
         ],
       ),
       DiagramBundle(
-        description: kJCurveTradeDeficitDescription,
-       basePainterDiagrams: [
-         JCurve(config: config, model:
-         DiagramModel(
-           type: DiagramType.jCurve,
-           subtype: DiagramSubtype.correctDeficit,
-         )
-         )
-       ]
-      ),
+          description: kJCurveTradeDeficitDescription,
+          basePainterDiagrams: [
+            JCurve(
+                config: config,
+                model: DiagramModel(
+                  type: DiagramType.jCurve,
+                  subtype: DiagramSubtype.correctDeficit,
+                ))
+          ]),
       DiagramBundle(
           description: kJCurveTradeSurplusDescription,
           basePainterDiagrams: [
-            JCurve(config: config, model:
-            DiagramModel(
-              type: DiagramType.jCurve,
-              subtype: DiagramSubtype.correctSurplus,
-            )
-            )
-          ]
-      ),
-      DiagramBundle(
-        label: 'Poverty Trap',
-          basePainterDiagrams: [
-            PovertyTrap(config: config, model:
-            DiagramModel(
+            JCurve(
+                config: config,
+                model: DiagramModel(
+                  type: DiagramType.jCurve,
+                  subtype: DiagramSubtype.correctSurplus,
+                ))
+          ]),
+      DiagramBundle(label: 'Poverty Trap', basePainterDiagrams: [
+        PovertyTrap(
+            config: config,
+            model: DiagramModel(
               type: DiagramType.povertyTrap,
               subtype: DiagramSubtype.standard,
-            )
-            )
-          ]
-      )
+            ))
+      ])
     ];
 
     for (int i = 0; i < allBundles.length; i++) {

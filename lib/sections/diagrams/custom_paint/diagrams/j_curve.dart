@@ -1,10 +1,8 @@
 import 'dart:math';
 
 import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_custom_lines.dart';
-import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_text_normalized_within_axis.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/label_align.dart';
@@ -12,6 +10,7 @@ import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
 
+import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 

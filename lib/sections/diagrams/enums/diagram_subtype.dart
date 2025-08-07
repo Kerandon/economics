@@ -2,15 +2,16 @@ import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:flutter/material.dart';
 
 enum DiagramSubtype {
-  outputPoints,
-  opportunityCost,
+  productionPoints,
   increasingOpportunityCost,
   constantOpportunityCost,
-  increaseInPotentialOutput,
-  decreaseInPotentialOutput,
-  growth,
+  increaseInProductionPotential,
+  decreaseInProductionPotential,
+  actualGrowth,
   equilibrium,
   longRunEquilibrium,
+  DeterminantsOfDemand,
+  DeterminantsOfSupply,
   increaseInDemand,
   decreaseInDemand,
   increaseInSupply,
@@ -36,8 +37,19 @@ enum DiagramSubtype {
   naturalMonopoly,
   closedModel,
   openModel,
+  sras,
+  determinants,
+  increase,
+  decrease,
   macro,
-  fullEmployment,
+  shortRunMacroeconomicEquilibrium,
+  keynesianAggregateSupply,
+  fullEmploymentClassical,
+  fullEmploymentKeynesian,
+  inflationaryGapClassical,
+  inflationaryGapKeynesian,
+  deflationaryGapClassical,
+  deflationaryGapKeynesian,
   shortRun,
   standard,
   worldPrice,
@@ -62,30 +74,26 @@ enum DiagramSubtype {
 extension DiagramSubtypeExtension on DiagramSubtype {
   String toText() {
     switch (this) {
-      case DiagramSubtype.outputPoints:
-        return 'Output points';
-      case DiagramSubtype.opportunityCost:
-        return 'Opportunity cost';
+      case DiagramSubtype.productionPoints:
+        return 'Production Points';
       case DiagramSubtype.increasingOpportunityCost:
-        return 'Increasing opportunity cost';
+        return 'Increasing Opportunity Cost';
       case DiagramSubtype.constantOpportunityCost:
-        return 'Constant opportunity cost';
-      case DiagramSubtype.increaseInPotentialOutput:
-        return 'Increase in potential output';
-      case DiagramSubtype.decreaseInPotentialOutput:
-        return 'Decrease in potential output';
-      case DiagramSubtype.growth:
-        return 'Actual vs. potential growth';
+        return 'Constant Opportunity Cost';
+      case DiagramSubtype.increaseInProductionPotential:
+        return 'Increase in Potential Production';
+      case DiagramSubtype.decreaseInProductionPotential:
+        return 'Decrease in Potential Production';
       case DiagramSubtype.equilibrium:
         return 'Equilibrium';
       case DiagramSubtype.increaseInDemand:
-        return 'Increase in demand';
+        return 'Increase in Demand';
       case DiagramSubtype.decreaseInDemand:
-        return 'Decrease in demand';
+        return 'Decrease in Demand';
       case DiagramSubtype.increaseInSupply:
-        return 'Increase in supply';
+        return 'Increase in Supply';
       case DiagramSubtype.decreaseInSupply:
-        return 'Decrease in supply';
+        return 'Decrease in Supply';
       case DiagramSubtype.shortage:
         return 'Shortage';
       case DiagramSubtype.surplus:
@@ -94,11 +102,9 @@ extension DiagramSubtypeExtension on DiagramSubtype {
         return 'Common Pool Resources';
       case DiagramSubtype.closedModel:
         return 'Closed-model';
-      case DiagramSubtype.openModel:
-        return 'Open-model';
       case DiagramSubtype.macro:
         return 'Macro';
-      case DiagramSubtype.fullEmployment:
+      case DiagramSubtype.fullEmploymentClassical:
         return 'Full employment';
       case DiagramSubtype.shortRun:
         return 'Short-run';
@@ -169,10 +175,40 @@ extension DiagramSubtypeExtension on DiagramSubtype {
       case DiagramSubtype.fixedRateRaiseInterestRates:
         return 'Fixed Rate Example - Raise Interest Rates';
       case DiagramSubtype.correctDeficit:
-     return 'Depreciation in a Deficit';
+        return 'Depreciation in a Deficit';
       case DiagramSubtype.correctSurplus:
-     return 'Appreciation in a Surplus';
+        return 'Appreciation in a Surplus';
+      case DiagramSubtype.sras:
+        return 'SRAS';
+      case DiagramSubtype.fullEmploymentKeynesian:
+        return 'Full Employment (Keynesian)';
+      case DiagramSubtype.inflationaryGapClassical:
+        return 'Inflationary Gap (Classical)';
+      case DiagramSubtype.inflationaryGapKeynesian:
+        return 'Inflationary Gap (Keynesian)';
+      case DiagramSubtype.deflationaryGapClassical:
+        return 'Deflationary Gap (Classical)';
+      case DiagramSubtype.deflationaryGapKeynesian:
+        return 'Deflationary Gap (Keynesian)';
+      case DiagramSubtype.openModel:
+        return 'Open Model';
+      case DiagramSubtype.shortRunMacroeconomicEquilibrium:
+        return 'Short-Run Macroeconomic Equilibrium';
+      case DiagramSubtype.keynesianAggregateSupply:
+        return 'Keynesian Aggregate Supply';
 
+      case DiagramSubtype.increase:
+        return 'Increase';
+      case DiagramSubtype.decrease:
+        return 'Decrease';
+      case DiagramSubtype.determinants:
+        return 'Determinants';
+      case DiagramSubtype.actualGrowth:
+        return 'Actual Growth';
+      case DiagramSubtype.DeterminantsOfDemand:
+        return 'Determinants of Demand';
+      case DiagramSubtype.DeterminantsOfSupply:
+        return 'Determinants of Supply';
     }
   }
 }

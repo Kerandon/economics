@@ -15,7 +15,7 @@ void paintDashedLine(
       Color? color,
     }) {
   final c = color ?? config.colorScheme.onSurface;
-  strokeWidth *= config.averageRatio;
+  strokeWidth *= config.averageRatio / 2;
   final width = config.painterSize.width;
   final height = config.painterSize.height;
 

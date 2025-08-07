@@ -1,10 +1,10 @@
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_custom_bezier.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_labels.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/label_align.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_painter_config.dart';
-import '../painter_constants.dart';
 
 void paintKeynesianCurve({
   required DiagramPainterConfig config,
@@ -28,7 +28,7 @@ void paintKeynesianCurve({
         endPoint: Offset(0.80, 0.20),
       ),
     ],
-    label1: kKeynesianAS,
+    label1: DiagramLabel.keynesianAS.label,
     label1Align: LabelAlign.centerTop,
   );
 }

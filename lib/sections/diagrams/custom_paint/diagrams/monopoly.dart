@@ -1,9 +1,9 @@
-import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_custom_lines.dart';
 import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
+import '../../enums/diagram_labels.dart';
 import '../../enums/label_align.dart';
 import '../../enums/shade_type.dart';
 import '../../models/base_painter_painter.dart';
@@ -27,7 +27,7 @@ class Monopoly extends BaseDiagramPainter {
     paintAxis(
       c,
       canvas,
-      yAxisLabel: kPriceCostsRevenue,
+      yAxisLabel: DiagramLabel.priceCostsRevenue.label,
       yLabelIsVertical: false,
       xAxisLabel: DiagramLabel.quantity.label,
     );

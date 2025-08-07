@@ -8,6 +8,7 @@ import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
+import '../../enums/diagram_labels.dart';
 import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
@@ -16,8 +17,8 @@ import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_text.dart';
 import '../painter_methods/paint_title.dart';
 
-class SupplyAndDemand extends BaseDiagramPainter {
-  SupplyAndDemand({
+class PriceMechanism extends BaseDiagramPainter {
+  PriceMechanism({
     required DiagramPainterConfig config,
     required DiagramModel model,
   }) : super(config, model);

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_shading.dart';
@@ -10,6 +9,7 @@ import 'package:economics_app/sections/diagrams/enums/label_align.dart';
 import 'package:economics_app/sections/diagrams/enums/shade_type.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
+import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../painter_methods/paint_diagram_custom_lines.dart';

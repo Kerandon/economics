@@ -1,7 +1,8 @@
-import 'package:economics_app/sections/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_axis.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_curve.dart';
 import 'package:economics_app/sections/diagrams/custom_paint/painter_methods/paint_keyensian_curve.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_labels.dart';
+import 'package:economics_app/sections/diagrams/enums/diagram_subtype.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
 import '../../enums/label_align.dart';
@@ -19,30 +20,32 @@ class KeynesianADAS extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    /// Dashed Lines
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.69,
-      xAxisEndPos: 0.57,
-      xLabel: kYe,
-      hideYLine: true,
-    );
+    if(model.subtype == DiagramSubtype.fullEmploymentKeynesian){
+      /// Dashed Lines
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.82,
+        xAxisEndPos: 0.77,
+        xLabel: DiagramLabel.yE.label,
+      );
+
+    }
 
     paintAxis(
       c,
       canvas,
-      yAxisLabel: kPriceLevel,
-      xAxisLabel: kRealGDP,
+      yAxisLabel: DiagramLabel.priceLevel.label,
+      xAxisLabel: DiagramLabel.realGDP.label,
     );
 
     /// AD
     paintCurve(
       c,
       canvas,
-      Offset(0.40, 0.30),
-      Offset(0.77, 0.75),
-      label2: kAD,
+      Offset(0.45, 0.30),
+      Offset(0.80, 0.75),
+      label2: DiagramLabel.aD.label,
       label2Align: LabelAlign.centerRight,
     );
 

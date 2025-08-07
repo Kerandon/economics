@@ -104,7 +104,9 @@ void paintTextForDashedLines(DiagramPainterConfig config,
         position.dy * height - textPainter.height / 2,
       );
       break;
+
   }
+
 
   canvas.save();
   textPainter.paint(canvas, offset);

@@ -92,7 +92,7 @@ class _AllDiagramsPageState extends State<AllDiagramsPage> {
                 children: List.generate(bundles.length, (index) {
                   final bundle = bundles[index];
                   final label = bundle.label ?? bundle.basePainterDiagrams
-                          .map((d) => d.model.subtype?.toText() ?? '')
+                          .map((d) => d.model.subtype?.toText() ?? d.model.type?.toText())
                           .join(' & ') ;
 
                   return CustomChipButton(

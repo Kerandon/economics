@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
-
 void paintText(
     DiagramPainterConfig config,
     Canvas canvas,
@@ -15,6 +14,8 @@ void paintText(
       LabelAlign labelAlign = LabelAlign.center,
       Axis? axis,
       bool? yLabelIsVertical,
+      bool paintBackground = false,
+      Color? backgroundColor,
     }) {
   fontSize *= config.averageRatio;
 
@@ -26,8 +27,7 @@ void paintText(
   style = style?.copyWith(
     color: style.color ?? config.colorScheme.onSurface,
     fontSize: style.fontSize ?? fontSize,
-  ) ??
-      defaultStyle;
+  ) ?? defaultStyle;
 
   final width = config.painterSize.width;
   final height = config.painterSize.height;
@@ -43,7 +43,7 @@ void paintText(
 
   double dx = 0;
   double dy = 0;
-  final adjustment = textPainter.height / 2;
+  final adjustment = textPainter.height / 1.6;
 
   switch (labelAlign) {
     case LabelAlign.center:
@@ -70,7 +70,7 @@ void paintText(
 
   baseOffset = baseOffset.translate(dx, dy);
 
-  // Axis text overrides (kept as-is for labels along axes)
+  // Axis text overrides (as-is)
   if (axis != null) {
     final widthIndent = kAxisIndent * width;
     final heightIndent = kAxisIndent * height;
@@ -99,13 +99,33 @@ void paintText(
 
   canvas.save();
 
-  // 🟢 Fix: Rotate around actual label anchor point (before alignment offset)
+  // 🟢 Rotate around label's anchor point
   final rotationCenter = Offset(position.dx * width, position.dy * height);
-
   canvas.translate(rotationCenter.dx, rotationCenter.dy);
   canvas.rotate(angle);
   canvas.translate(-rotationCenter.dx, -rotationCenter.dy);
 
+  // 🟡 Optional Background
+  if (paintBackground) {
+    const padding = 1.0;
+    final bgRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(
+        baseOffset.dx - padding,
+        baseOffset.dy - padding,
+        textPainter.width + padding * 2,
+        textPainter.height + padding * 2,
+      ),
+      const Radius.circular(6),
+    );
+
+    final bgPaint = Paint()
+      ..color = backgroundColor ?? config.colorScheme.scrim
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRRect(bgRect, bgPaint);
+  }
+
+  // Draw text
   textPainter.paint(canvas, baseOffset);
   canvas.restore();
 }

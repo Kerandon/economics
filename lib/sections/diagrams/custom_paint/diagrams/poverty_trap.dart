@@ -7,6 +7,7 @@ import 'package:economics_app/sections/diagrams/models/custom_bezier.dart';
 import 'package:economics_app/sections/diagrams/models/diagram_painter_config.dart';
 import 'package:flutter/material.dart';
 
+import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 
