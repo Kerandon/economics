@@ -75,7 +75,6 @@ at the <strong>same</strong> market price. These include:</p>
 
 ''';
 
-
 const kSupplyAndDemandEquilibriumDescription = '''
 The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
 Any excess supply or excess demand in the market is cleared.
@@ -110,7 +109,6 @@ const kSupplyAndDemandSurplusDescription = '''
 The market (equilibrium) price and quantity is determined where the quantity supplied is equal to the quantity demanded.
 Any excess supply or excess demand in the market is cleared.
 ''';
-
 
 const kFixedPerUnitSalesTax = '''
 A fixed sales tax applies a fixed tax amount for every unit sold. This increases supply and results in a higher price and a lower quantity sold.

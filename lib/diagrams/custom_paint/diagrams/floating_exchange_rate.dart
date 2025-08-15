@@ -43,8 +43,7 @@ class FloatingExchangeRate extends BaseDiagramPainter {
 
     /// Appreciation - Demand Increase
     if (model.subtype == DiagramSubtype.appreciationIncreaseInDemand) {
-
-supplyCurveLabel = DiagramLabel.s.label;
+      supplyCurveLabel = DiagramLabel.s.label;
       paintDiagramDashedLines(
         c,
         canvas,
@@ -56,19 +55,14 @@ supplyCurveLabel = DiagramLabel.s.label;
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.25,
-          0.05,
-        ),
-        polylineOffsets: [
-          Offset(0.85, 0.65),
-        ],
+        startPos: Offset(0.25, 0.05),
+        polylineOffsets: [Offset(0.85, 0.65)],
         label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );
     }
 
-   /// Appreciation - Supply Decrease
+    /// Appreciation - Supply Decrease
     if (model.subtype == DiagramSubtype.appreciationDecreaseInSupply) {
       demandCurveLabel = DiagramLabel.d.label;
       paintDiagramDashedLines(
@@ -82,13 +76,8 @@ supplyCurveLabel = DiagramLabel.s.label;
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.15,
-          0.65,
-        ),
-        polylineOffsets: [
-          Offset(0.75, 0.05),
-        ],
+        startPos: Offset(0.15, 0.65),
+        polylineOffsets: [Offset(0.75, 0.05)],
         label2: DiagramLabel.s2.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -96,7 +85,7 @@ supplyCurveLabel = DiagramLabel.s.label;
 
     /// Depreciation - Demand Decrease
     if (model.subtype == DiagramSubtype.depreciationDecreaseInDemand) {
-supplyCurveLabel = DiagramLabel.s.label;
+      supplyCurveLabel = DiagramLabel.s.label;
       paintDiagramDashedLines(
         c,
         canvas,
@@ -108,19 +97,14 @@ supplyCurveLabel = DiagramLabel.s.label;
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.10,
-          0.30,
-        ),
-        polylineOffsets: [
-          Offset(0.70, 0.90),
-        ],
+        startPos: Offset(0.10, 0.30),
+        polylineOffsets: [Offset(0.70, 0.90)],
         label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );
     }
 
-  /// Depreciation - Supply increase
+    /// Depreciation - Supply increase
     if (model.subtype == DiagramSubtype.depreciationIncreaseInSupply) {
       demandCurveLabel = DiagramLabel.d.label;
       paintDiagramDashedLines(
@@ -132,17 +116,11 @@ supplyCurveLabel = DiagramLabel.s.label;
         hideXLine: true,
       );
 
-
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.35,
-          0.85,
-        ),
-        polylineOffsets: [
-          Offset(0.85, 0.35),
-        ],
+        startPos: Offset(0.35, 0.85),
+        polylineOffsets: [Offset(0.85, 0.35)],
         label2: DiagramLabel.s2.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -154,7 +132,8 @@ supplyCurveLabel = DiagramLabel.s.label;
         yLabel: equilibriumLabel,
         hideXLine: true,
       );
-    }    paintDiagramDashedLines(
+    }
+    paintDiagramDashedLines(
       c,
       canvas,
       yAxisStartPos: 0.50,
@@ -166,22 +145,15 @@ supplyCurveLabel = DiagramLabel.s.label;
       c,
       canvas,
       startPos: Offset(0.85, 0.15),
-      polylineOffsets: [
-        Offset(0.15, 0.85),
-      ],
+      polylineOffsets: [Offset(0.15, 0.85)],
       label1: supplyCurveLabel,
       label1Align: LabelAlign.centerRight,
     );
     paintCustomDiagramLines(
       c,
       canvas,
-      startPos: Offset(
-        0.15,
-        0.15,
-      ),
-      polylineOffsets: [
-        Offset(0.85, 0.85),
-      ],
+      startPos: Offset(0.15, 0.15),
+      polylineOffsets: [Offset(0.85, 0.85)],
       label2: demandCurveLabel,
       label2Align: LabelAlign.centerRight,
     );

@@ -3,9 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class AudioStateManager {
   final bool soundtrackIsOn;
 
-  AudioStateManager({
-    required this.soundtrackIsOn,
-  });
+  AudioStateManager({required this.soundtrackIsOn});
 
   AudioStateManager copyWith({bool? soundtrackIsOn}) {
     return AudioStateManager(
@@ -23,9 +21,5 @@ class AudioNotifier extends StateNotifier<AudioStateManager> {
 }
 
 final audioProvider = StateNotifierProvider<AudioNotifier, AudioStateManager>(
-  (ref) => AudioNotifier(
-    AudioStateManager(
-      soundtrackIsOn: true,
-    ),
-  ),
+  (ref) => AudioNotifier(AudioStateManager(soundtrackIsOn: true)),
 );

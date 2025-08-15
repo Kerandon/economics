@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../diagrams/data/all_diagrams.dart';
 import '../../diagrams/enums/diagram_bundle_enum.dart';
 import '../../diagrams/models/diagram_bundle.dart';
+
 class CustomTile extends StatelessWidget {
   const CustomTile({
     super.key,
@@ -12,9 +13,9 @@ class CustomTile extends StatelessWidget {
     this.diagramBundleEnum,
     required this.onTap,
   }) : assert(
-  (imageURL == null) != (diagramBundleEnum == null),
-  'Either imageURL or diagramBundleEnum must be provided, but not both.',
-  );
+         (imageURL == null) != (diagramBundleEnum == null),
+         'Either imageURL or diagramBundleEnum must be provided, but not both.',
+       );
 
   final String text;
   final String? imageURL;
@@ -28,8 +29,10 @@ class CustomTile extends StatelessWidget {
     DiagramBundle? diagram;
 
     if (diagramBundleEnum != null) {
-      diagram = AllDiagrams(size: size, colorScheme: colorScheme)
-          .getDiagramBundle(DiagramBundleEnum.microDemand);
+      diagram = AllDiagrams(
+        size: size,
+        colorScheme: colorScheme,
+      ).getDiagramBundle(DiagramBundleEnum.microDemand);
     }
 
     return Container(
@@ -37,11 +40,7 @@ class CustomTile extends StatelessWidget {
         color: Colors.transparent, // no color here to keep shadow crisp
         borderRadius: BorderRadius.circular(kRadius),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 8,
-            offset: Offset(0, 4),
-          ),
+          BoxShadow(color: Colors.black26, blurRadius: 8, offset: Offset(0, 4)),
         ],
       ),
       child: Material(
@@ -62,15 +61,15 @@ class CustomTile extends StatelessWidget {
                     ),
                     child: imageURL != null
                         ? Ink.image(
-                      image: AssetImage(imageURL!),
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      child: Container(), // required
-                    )
+                            image: AssetImage(imageURL!),
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            child: Container(), // required
+                          )
                         : CustomPaint(
-                      painter: diagram!.diagramModels.first.painter,
-                      size: Size.infinite,
-                    ),
+                            painter: diagram!.diagramModels.first.painter,
+                            size: Size.infinite,
+                          ),
                   ),
                 ),
               ),
@@ -88,9 +87,7 @@ class CustomTile extends StatelessWidget {
             ],
           ),
         ),
-
       ),
     );
-
   }
 }

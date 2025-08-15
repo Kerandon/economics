@@ -1,4 +1,3 @@
-
 import '../custom_paint/diagrams/demand.dart';
 import '../custom_paint/diagrams/ppc_micro.dart';
 import '../custom_paint/diagrams/supply.dart';
@@ -22,9 +21,7 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) {
         ),
         PPCMicro(
           config: config,
-          model: DiagramModel(
-            subtype: DiagramSubtype.constantOpportunityCost,
-          ),
+          model: DiagramModel(subtype: DiagramSubtype.constantOpportunityCost),
         ),
       ],
     ),
@@ -33,9 +30,7 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) {
       basePainterDiagrams: [
         PPCMicro(
           config: config,
-          model: DiagramModel(
-            subtype: DiagramSubtype.constantOpportunityCost,
-          ),
+          model: DiagramModel(subtype: DiagramSubtype.constantOpportunityCost),
         ),
       ],
     ),
@@ -43,9 +38,7 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) {
       basePainterDiagrams: [
         PPCMicro(
           config: config,
-          model: DiagramModel(
-            subtype: DiagramSubtype.productionPoints,
-          ),
+          model: DiagramModel(subtype: DiagramSubtype.productionPoints),
         ),
       ],
     ),
@@ -53,9 +46,7 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) {
       basePainterDiagrams: [
         PPCMicro(
           config: config,
-          model: DiagramModel(
-            subtype: DiagramSubtype.actualGrowth,
-          ),
+          model: DiagramModel(subtype: DiagramSubtype.actualGrowth),
         ),
       ],
     ),
@@ -83,10 +74,31 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) {
     /// Demand
     DiagramBundle(
       diagramBundleEnum: DiagramBundleEnum.microDemand,
+      basePainterDiagrams: [Demand(config: config, model: DiagramModel())],
+    ),
+    DiagramBundle(
+      diagramBundleEnum: DiagramBundleEnum.microDemandPriceChange,
       basePainterDiagrams: [
         Demand(
           config: config,
-          model: DiagramModel(),
+          model: DiagramModel(subtype: DiagramSubtype.priceChange),
+        ),
+      ],
+    ),
+    DiagramBundle(
+      diagramBundleEnum: DiagramBundleEnum.microDemandIndividualVsMarketDemand,
+      basePainterDiagrams: [
+        Demand(
+          config: config,
+          model: DiagramModel(subtype: DiagramSubtype.individual1),
+        ),
+        Demand(
+          config: config,
+          model: DiagramModel(subtype: DiagramSubtype.individual2),
+        ),
+        Demand(
+          config: config,
+          model: DiagramModel(subtype: DiagramSubtype.market),
         ),
       ],
     ),
@@ -95,9 +107,7 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) {
       basePainterDiagrams: [
         Demand(
           config: config,
-          model: DiagramModel(
-            subtype: DiagramSubtype.determinants,
-          ),
+          model: DiagramModel(subtype: DiagramSubtype.determinants),
         ),
       ],
     ),
@@ -105,21 +115,14 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) {
     /// Supply
     DiagramBundle(
       diagramBundleEnum: DiagramBundleEnum.microSupply,
-      basePainterDiagrams: [
-        Supply(
-          config: config,
-          model: DiagramModel(),
-        ),
-      ],
+      basePainterDiagrams: [Supply(config: config, model: DiagramModel())],
     ),
     DiagramBundle(
       diagramBundleEnum: DiagramBundleEnum.microSupplyDeterminants,
       basePainterDiagrams: [
         Supply(
           config: config,
-          model: DiagramModel(
-            subtype: DiagramSubtype.determinants,
-          ),
+          model: DiagramModel(subtype: DiagramSubtype.determinants),
         ),
       ],
     ),

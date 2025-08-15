@@ -1,4 +1,3 @@
-
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_axis_lines.dart';
 import 'package:flutter/material.dart';
 import '../../models/diagram_painter_config.dart';
@@ -26,7 +25,6 @@ void paintAxis(
       const Offset(0, 0),
       axis: Axis.vertical,
       yLabelIsVertical: yLabelIsVertical,
-
     );
   }
   if (xAxisLabel != null) {
@@ -39,10 +37,19 @@ void paintAxis(
     );
   }
   if (addNumericalAxis == true) {
-    addAxisNumericalLabels(config, canvas,
-        axis: Axis.horizontal, incrementValue: 50, totalIncrements: 5);
+    addAxisNumericalLabels(
+      config,
+      canvas,
+      axis: Axis.horizontal,
+      incrementValue: 50,
+      totalIncrements: 5,
+    );
     addAxisNumericalLabels(config, canvas, axis: Axis.vertical);
   }
-  paintText(config, canvas, '0',
-      Offset(kAxisIndent - 0.03, (1 - kAxisIndent) + 0.03));
+  paintText(
+    config,
+    canvas,
+    '0',
+    Offset(kAxisIndent - 0.03, (1 - kAxisIndent) + 0.03),
+  );
 }

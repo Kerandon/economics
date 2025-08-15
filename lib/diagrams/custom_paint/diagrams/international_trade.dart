@@ -21,7 +21,12 @@ class InternationalTrade extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintAxis(c, canvas, yAxisLabel:  DiagramLabel.price.label, xAxisLabel: DiagramLabel.q.label);
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: DiagramLabel.price.label,
+      xAxisLabel: DiagramLabel.q.label,
+    );
 
     if (model.subtype == DiagramSubtype.worldPrice) {
       paintTitle(c, canvas, 'World Market');
@@ -37,7 +42,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.10),
-        polylineOffsets: [Offset(0.90, 0.90),],
+        polylineOffsets: [Offset(0.90, 0.90)],
         label2: DiagramLabel.dD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -45,7 +50,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.90),
-        polylineOffsets: [Offset(0.90, 0.10),],
+        polylineOffsets: [Offset(0.90, 0.10)],
         label2: DiagramLabel.sD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -81,7 +86,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.10),
-        polylineOffsets: [ Offset(0.95, 0.65),],
+        polylineOffsets: [Offset(0.95, 0.65)],
         label2: DiagramLabel.dD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -89,7 +94,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.65),
-        polylineOffsets: [Offset(0.95, 0.10),],
+        polylineOffsets: [Offset(0.95, 0.10)],
         label2: DiagramLabel.sD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -97,24 +102,32 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0, 0.50),
-        polylineOffsets: [Offset(1.0, 0.50),],
+        polylineOffsets: [Offset(1.0, 0.50)],
         label1: DiagramLabel.pW.label,
         label1Align: LabelAlign.centerLeft,
         label2: DiagramLabel.sW.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.30, 1.1),
-          polylineOffsets: [
-            Offset(0.30, 1.15),
-            Offset(0.30, 1.15),
-            Offset(0.70, 1.15),
-            Offset(0.70, 1.10)
-          ],
-          arrowOnStart: true,
-          arrowOnEnd: true,
-          color: Colors.orange);
-      paintTextNormalizedWithinAxis(c, canvas, 'Q2 - Q1 is imported', Offset(0.50, 1.20));
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.30, 1.1),
+        polylineOffsets: [
+          Offset(0.30, 1.15),
+          Offset(0.30, 1.15),
+          Offset(0.70, 1.15),
+          Offset(0.70, 1.10),
+        ],
+        arrowOnStart: true,
+        arrowOnEnd: true,
+        color: Colors.orange,
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        'Q2 - Q1 is imported',
+        Offset(0.50, 1.20),
+      );
     }
     if (model.subtype == DiagramSubtype.exporter) {
       paintTitle(c, canvas, 'Domestic Market - Exporter');
@@ -146,7 +159,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.35),
-        polylineOffsets: [ Offset(0.90, 0.90),],
+        polylineOffsets: [Offset(0.90, 0.90)],
         label2: DiagramLabel.dD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -154,7 +167,7 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.90),
-        polylineOffsets: [Offset(0.90, 0.35),],
+        polylineOffsets: [Offset(0.90, 0.35)],
         label2: DiagramLabel.sD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -162,24 +175,32 @@ class InternationalTrade extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0, 0.50),
-        polylineOffsets: [Offset(1.0, 0.50),],
+        polylineOffsets: [Offset(1.0, 0.50)],
         label1: DiagramLabel.pW.label,
         label1Align: LabelAlign.centerLeft,
         label2: DiagramLabel.sW.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.30, 1.1),
-          polylineOffsets: [
-            Offset(0.30, 1.15),
-            Offset(0.30, 1.15),
-            Offset(0.70, 1.15),
-            Offset(0.70, 1.10)
-          ],
-          arrowOnStart: true,
-          arrowOnEnd: true,
-          color: Colors.orange);
-      paintTextNormalizedWithinAxis(c, canvas, 'Q2 - Q1 is Exported', Offset(0.50, 1.20));
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.30, 1.1),
+        polylineOffsets: [
+          Offset(0.30, 1.15),
+          Offset(0.30, 1.15),
+          Offset(0.70, 1.15),
+          Offset(0.70, 1.10),
+        ],
+        arrowOnStart: true,
+        arrowOnEnd: true,
+        color: Colors.orange,
+      );
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        'Q2 - Q1 is Exported',
+        Offset(0.50, 1.20),
+      );
     }
   }
 }

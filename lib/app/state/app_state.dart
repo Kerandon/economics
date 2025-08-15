@@ -12,11 +12,7 @@ class AppState {
     required this.fontSize,
   });
 
-  AppState copyWith({
-    bool? isDarkTheme,
-    int? page,
-    FontSize? fontSize,
-  }) {
+  AppState copyWith({bool? isDarkTheme, int? page, FontSize? fontSize}) {
     return AppState(
       isDarkTheme: isDarkTheme ?? this.isDarkTheme,
       page: page ?? this.page,
@@ -50,9 +46,11 @@ class AppNotifier extends StateNotifier<AppState> {
 }
 
 final appProvider = StateNotifierProvider<AppNotifier, AppState>(
-      (ref) => AppNotifier(AppState(
-    isDarkTheme: false,
-    page: 0,
-    fontSize: FontSize.medium, // Default font size
-  )),
+  (ref) => AppNotifier(
+    AppState(
+      isDarkTheme: false,
+      page: 0,
+      fontSize: FontSize.medium, // Default font size
+    ),
+  ),
 );

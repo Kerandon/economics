@@ -30,27 +30,23 @@ class ClassicalADAS extends BaseDiagramPainter {
     );
 
     if (model.subtype == DiagramSubtype.sras ||
-    model.subtype == DiagramSubtype.increase) {
+        model.subtype == DiagramSubtype.increase) {
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        polylineOffsets: [
-          Offset(0.85, 0.15),
-        ],
+        polylineOffsets: [Offset(0.85, 0.15)],
         label2: DiagramLabel.sRAS.label,
         label2Align: LabelAlign.centerRight,
       );
     }
-    if(model.subtype == DiagramSubtype.increase){
+    if (model.subtype == DiagramSubtype.increase) {
       paintTitle(c, canvas, DiagramTitle.keynesianModel.title());
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.35, 0.85),
-        polylineOffsets: [
-          Offset(0.85, 0.15),
-        ],
+        polylineOffsets: [Offset(0.85, 0.15)],
         label2: DiagramLabel.sRAS.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -64,9 +60,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
-        polylineOffsets: [
-          Offset(0.85, 0.85),
-        ],
+        polylineOffsets: [Offset(0.85, 0.85)],
         label2: aDLabel,
         label2Align: LabelAlign.centerRight,
       );
@@ -86,15 +80,13 @@ class ClassicalADAS extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        polylineOffsets: [
-          Offset(0.85, 0.15),
-        ],
+        polylineOffsets: [Offset(0.85, 0.15)],
         label2: DiagramLabel.sRAS.label,
         label2Align: LabelAlign.centerRight,
       );
     }
 
-    if(model.subtype == DiagramSubtype.keynesianAggregateSupply){
+    if (model.subtype == DiagramSubtype.keynesianAggregateSupply) {
       paintKeynesianAS(c, canvas);
     }
 
@@ -111,18 +103,12 @@ class ClassicalADAS extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.inflationaryGapKeynesian) {
-      paintTitle(
-        c,
-        canvas,
-        DiagramTitle.keynesianModel.title(),
-      );
+      paintTitle(c, canvas, DiagramTitle.keynesianModel.title());
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.55, 0.10),
-        polylineOffsets: [
-          Offset(1.0, 0.80),
-        ],
+        polylineOffsets: [Offset(1.0, 0.80)],
         label2: DiagramLabel.aD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -142,9 +128,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
-        polylineOffsets: [
-          Offset(0.60, 0.900),
-        ],
+        polylineOffsets: [Offset(0.60, 0.900)],
         label2: DiagramLabel.aD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -169,9 +153,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.50, 0.05),
-        polylineOffsets: [
-          Offset(0.50, 1.0),
-        ],
+        polylineOffsets: [Offset(0.50, 1.0)],
         label1: DiagramLabel.lRAS.label,
         label1Align: LabelAlign.centerTop,
       );
@@ -202,9 +184,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.05, 0.25),
-        polylineOffsets: [
-          Offset(0.70, 0.85),
-        ],
+        polylineOffsets: [Offset(0.70, 0.85)],
         label2: DiagramLabel.aD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -212,9 +192,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.05, 0.85),
-        polylineOffsets: [
-          Offset(0.70, 0.25),
-        ],
+        polylineOffsets: [Offset(0.70, 0.25)],
         label2: DiagramLabel.sRAS.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -236,9 +214,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.35, 0.25),
-        polylineOffsets: [
-          Offset(0.90, 0.85),
-        ],
+        polylineOffsets: [Offset(0.90, 0.85)],
         label2: DiagramLabel.aD.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -246,9 +222,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.35, 0.85),
-        polylineOffsets: [
-          Offset(0.90, 0.25),
-        ],
+        polylineOffsets: [Offset(0.90, 0.25)],
         label2: DiagramLabel.sRAS.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -262,16 +236,9 @@ paintKeynesianAS(DiagramPainterConfig c, Canvas canvas) {
     canvas,
     startPos: Offset(0.10, 0.75),
     bezierPoints: [
-      CustomBezier(
-        endPoint: Offset(0.65, 0.75),
-      ),
-      CustomBezier(
-        control: Offset(0.85, 0.70),
-        endPoint: Offset(0.85, 0.50),
-      ),
-      CustomBezier(
-        endPoint: Offset(0.85, 0.15),
-      ),
+      CustomBezier(endPoint: Offset(0.65, 0.75)),
+      CustomBezier(control: Offset(0.85, 0.70), endPoint: Offset(0.85, 0.50)),
+      CustomBezier(endPoint: Offset(0.85, 0.15)),
     ],
     label2: DiagramLabel.keynesianAS.label,
     label2Align: LabelAlign.centerTop,

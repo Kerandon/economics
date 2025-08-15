@@ -1,4 +1,3 @@
-
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
@@ -25,21 +24,25 @@ void paintDot(
     ..color = color
     ..style = PaintingStyle.fill;
   canvas.drawCircle(
-      Offset(
-        ((pos.dx * size.width) * normalize) + (width * kAxisIndent),
-        (pos.dy * size.height) * normalize + (height * (kAxisIndent / 2)),
-      ),
-      r,
-      paint);
+    Offset(
+      ((pos.dx * size.width) * normalize) + (width * kAxisIndent),
+      (pos.dy * size.height) * normalize + (height * (kAxisIndent / 2)),
+    ),
+    r,
+    paint,
+  );
   if (label?.isNotEmpty == true) {
     paintText(
       config,
       canvas,
       label!,
-      Offset(pos.dx * normalize + (kAxisIndent), (pos.dy * normalize) + (kAxisIndent/2)),
-      fontSize: kFontSize *1.2,
+      Offset(
+        pos.dx * normalize + (kAxisIndent),
+        (pos.dy * normalize) + (kAxisIndent / 2),
+      ),
+      fontSize: kFontSize * 1.2,
       labelAlign: labelAlign ?? LabelAlign.centerRight,
-      paintBackground: true
+      paintBackground: true,
     );
   }
 }

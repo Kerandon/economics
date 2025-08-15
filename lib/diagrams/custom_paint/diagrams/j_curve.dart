@@ -13,17 +13,19 @@ import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 
 class JCurve extends BaseDiagramPainter {
-  JCurve({
-    required DiagramPainterConfig config,
-    required DiagramModel model,
-  }) : super(config, model);
+  JCurve({required DiagramPainterConfig config, required DiagramModel model})
+    : super(config, model);
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
     paintTextNormalizedWithinAxis(
-        c, canvas, DiagramLabel.tradeBalance.label, Offset(-0.08, -0.08));
+      c,
+      canvas,
+      DiagramLabel.tradeBalance.label,
+      Offset(-0.08, -0.08),
+    );
 
     paintCustomDiagramLines(
       c,
@@ -58,18 +60,21 @@ class JCurve extends BaseDiagramPainter {
       align: LabelAlign.centerLeft,
     );
     if (model.subtype == DiagramSubtype.correctDeficit) {
-      paintCustomBezier(c, canvas,
-          startPos: Offset(kAxisIndent, 0.60),
-          points: [
-            CustomBezier(
-              control: Offset(kAxisIndent + 0.10, 0.60),
-              endPoint: Offset(kAxisIndent + 0.10, 0.60),
-            ),
-            CustomBezier(
-              control: Offset(kAxisIndent + 0.40, 0.90),
-              endPoint: Offset(kAxisIndent + 0.70, 0.20),
-            ),
-          ]);
+      paintCustomBezier(
+        c,
+        canvas,
+        startPos: Offset(kAxisIndent, 0.60),
+        points: [
+          CustomBezier(
+            control: Offset(kAxisIndent + 0.10, 0.60),
+            endPoint: Offset(kAxisIndent + 0.10, 0.60),
+          ),
+          CustomBezier(
+            control: Offset(kAxisIndent + 0.40, 0.90),
+            endPoint: Offset(kAxisIndent + 0.70, 0.20),
+          ),
+        ],
+      );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
@@ -101,20 +106,27 @@ class JCurve extends BaseDiagramPainter {
       dashed: true,
     );
     paintTextNormalizedWithinAxis(
-        c, canvas, DiagramLabel.time.label, Offset(1.0, 0.50));
+      c,
+      canvas,
+      DiagramLabel.time.label,
+      Offset(1.0, 0.50),
+    );
     if (model.subtype == DiagramSubtype.correctSurplus) {
-      paintCustomBezier(c, canvas,
-          startPos: Offset(kAxisIndent, 0.30),
-          points: [
-            CustomBezier(
-              control: Offset(kAxisIndent + 0.10, 0.30),
-              endPoint: Offset(kAxisIndent + 0.10, 0.30),
-            ),
-            CustomBezier(
-              control: Offset(kAxisIndent + 0.40, 0.0),
-              endPoint: Offset(kAxisIndent + 0.60, 0.60),
-            ),
-          ]);
+      paintCustomBezier(
+        c,
+        canvas,
+        startPos: Offset(kAxisIndent, 0.30),
+        points: [
+          CustomBezier(
+            control: Offset(kAxisIndent + 0.10, 0.30),
+            endPoint: Offset(kAxisIndent + 0.10, 0.30),
+          ),
+          CustomBezier(
+            control: Offset(kAxisIndent + 0.40, 0.0),
+            endPoint: Offset(kAxisIndent + 0.60, 0.60),
+          ),
+        ],
+      );
       paintTextNormalizedWithinAxis(
         c,
         canvas,

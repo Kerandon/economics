@@ -10,33 +10,33 @@ import '../../models/size_adjuster.dart';
 import '../painter_constants.dart';
 
 void paintCustomDiagramLines(
-    DiagramPainterConfig config,
-    Canvas canvas, {
-      required Offset startPos,
-      List<CustomBezier>? bezierPoints,
-      List<Offset>? polylineOffsets,
-      Color? color,
-      double strokeWidth = kCurveWidth,
-      SizeAdjustor sizeAdjustor = const SizeAdjustor(),
-      String? label1,
-      String? label2,
-      LabelAlign label1Align = LabelAlign.center,
-      LabelAlign label2Align = LabelAlign.center,
-      bool arrowOnStart = false,
-      bool arrowOnEnd = false,
-      double arrowOnStartAngle = 0,
-      double arrowOnEndAngle = 0,
-      bool circleAtEnd = false,
-      bool circleAtStart = false,
-      double circleRadius = 10,
-      bool dashed = false,
-      bool normalizeToDiagramArea = true,
-    }) {
+  DiagramPainterConfig config,
+  Canvas canvas, {
+  required Offset startPos,
+  List<CustomBezier>? bezierPoints,
+  List<Offset>? polylineOffsets,
+  Color? color,
+  double strokeWidth = kCurveWidth,
+  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
+  String? label1,
+  String? label2,
+  LabelAlign label1Align = LabelAlign.center,
+  LabelAlign label2Align = LabelAlign.center,
+  bool arrowOnStart = false,
+  bool arrowOnEnd = false,
+  double arrowOnStartAngle = 0,
+  double arrowOnEndAngle = 0,
+  bool circleAtEnd = false,
+  bool circleAtStart = false,
+  double circleRadius = 10,
+  bool dashed = false,
+  bool normalizeToDiagramArea = true,
+}) {
   assert(
-  (bezierPoints != null && bezierPoints.isNotEmpty ? 1 : 0) +
-      (polylineOffsets != null && polylineOffsets.isNotEmpty ? 1 : 0) ==
-      1,
-  'Exactly one of bezierPoints or polylineOffsets must be provided.',
+    (bezierPoints != null && bezierPoints.isNotEmpty ? 1 : 0) +
+            (polylineOffsets != null && polylineOffsets.isNotEmpty ? 1 : 0) ==
+        1,
+    'Exactly one of bezierPoints or polylineOffsets must be provided.',
   );
 
   final width = config.painterSize.width;
@@ -86,7 +86,10 @@ void paintCustomDiagramLines(
     }
 
     final dashedPath = dashed
-        ? dashPath(path, dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]))
+        ? dashPath(
+            path,
+            dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]),
+          )
         : path;
 
     canvas.drawPath(dashedPath, paint);
@@ -103,19 +106,25 @@ void paintCustomDiagramLines(
     }
 
     if (arrowOnStart) {
-      paintArrowHead(config, canvas,
-          color: mainColor,
-          positionOfArrow: start,
-          rotationAngle: arrowOnStartAngle);
+      paintArrowHead(
+        config,
+        canvas,
+        color: mainColor,
+        positionOfArrow: start,
+        rotationAngle: arrowOnStartAngle,
+      );
     }
 
     if (arrowOnEnd) {
       final end = computeOffset(polylineOffsets.last);
       final autoEndAngle = atan2(end.dy - start.dy, end.dx - start.dx);
-      paintArrowHead(config, canvas,
-          color: mainColor,
-          positionOfArrow: end,
-          rotationAngle: arrowOnEndAngle != 0 ? arrowOnEndAngle : autoEndAngle);
+      paintArrowHead(
+        config,
+        canvas,
+        color: mainColor,
+        positionOfArrow: end,
+        rotationAngle: arrowOnEndAngle != 0 ? arrowOnEndAngle : autoEndAngle,
+      );
     }
 
     final r = circleRadius * config.averageRatio;
@@ -140,7 +149,10 @@ void paintCustomDiagramLines(
   }
 
   final dashedPath = dashed
-      ? dashPath(path, dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]))
+      ? dashPath(
+          path,
+          dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]),
+        )
       : path;
 
   canvas.drawPath(dashedPath, paint);
@@ -156,18 +168,24 @@ void paintCustomDiagramLines(
   }
 
   if (arrowOnStart) {
-    paintArrowHead(config, canvas,
-        color: mainColor,
-        positionOfArrow: start,
-        rotationAngle: arrowOnStartAngle);
+    paintArrowHead(
+      config,
+      canvas,
+      color: mainColor,
+      positionOfArrow: start,
+      rotationAngle: arrowOnStartAngle,
+    );
   }
 
   if (arrowOnEnd) {
     final autoEndAngle = atan2(end.dy - start.dy, end.dx - start.dx);
-    paintArrowHead(config, canvas,
-        color: mainColor,
-        positionOfArrow: end,
-        rotationAngle: arrowOnEndAngle != 0 ? arrowOnEndAngle : autoEndAngle);
+    paintArrowHead(
+      config,
+      canvas,
+      color: mainColor,
+      positionOfArrow: end,
+      rotationAngle: arrowOnEndAngle != 0 ? arrowOnEndAngle : autoEndAngle,
+    );
   }
 
   final r = circleRadius * config.averageRatio;

@@ -18,7 +18,7 @@ class KeynesianADAS extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    if(model.subtype == DiagramSubtype.fullEmploymentKeynesian){
+    if (model.subtype == DiagramSubtype.fullEmploymentKeynesian) {
       /// Dashed Lines
       paintDiagramDashedLines(
         c,
@@ -27,7 +27,6 @@ class KeynesianADAS extends BaseDiagramPainter {
         xAxisEndPos: 0.77,
         xLabel: DiagramLabel.yE.label,
       );
-
     }
 
     paintAxis(
@@ -36,7 +35,6 @@ class KeynesianADAS extends BaseDiagramPainter {
       yAxisLabel: DiagramLabel.priceLevel.label,
       xAxisLabel: DiagramLabel.realGDP.label,
     );
-
 
     paintKeynesianCurve(config: c, canvas: canvas);
   }

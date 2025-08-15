@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../enums/label_align.dart';
@@ -14,7 +13,7 @@ void paintTextNormalizedWithinAxis(
   double fontSize = kFontSize,
   TextStyle? style,
   double angle = 0,
-     LabelAlign align = LabelAlign.center,
+  LabelAlign align = LabelAlign.center,
 }) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
@@ -25,7 +24,8 @@ void paintTextNormalizedWithinAxis(
     fontSize: fontSize,
   );
 
-  style = style?.copyWith(
+  style =
+      style?.copyWith(
         color: style.color ?? config.colorScheme.onSurface,
         fontSize: (style.fontSize ?? kFontSize) * config.averageRatio,
       ) ??
@@ -34,27 +34,20 @@ void paintTextNormalizedWithinAxis(
   final normalizedWidth = width - ((kAxisIndent * 1.5) * width);
   final normalizedHeight = height - ((kAxisIndent * 1.5) * height);
 
-  final textSpan = TextSpan(
-    text: label,
-    style: style,
-  );
+  final textSpan = TextSpan(text: label, style: style);
   final textPainter = TextPainter(
     text: textSpan,
     textDirection: TextDirection.ltr,
   );
 
-  textPainter.layout(
-    minWidth: 0,
-    maxWidth: normalizedWidth,
-  );
+  textPainter.layout(minWidth: 0, maxWidth: normalizedWidth);
 
   double alignmentX = 0;
   double alignmentY = 0;
-  switch(align){
-
+  switch (align) {
     case LabelAlign.center:
-   alignmentX = textPainter.width / 2;
-   alignmentY = textPainter.height / 2;
+      alignmentX = textPainter.width / 2;
+      alignmentY = textPainter.height / 2;
     case LabelAlign.centerLeft:
       alignmentX = textPainter.width;
       alignmentY = textPainter.height / 2;
@@ -70,12 +63,12 @@ void paintTextNormalizedWithinAxis(
   }
 
   /// First get the position, second align to the right to start from the YAxis, third center the text
-  final w = (normalizedWidth * position.dx) +
-      (kAxisIndent * width) -
-      alignmentX;
+  final w =
+      (normalizedWidth * position.dx) + (kAxisIndent * width) - alignmentX;
 
   /// First get the position, second align to the top of the YAxis, third center the text
-  final h = (normalizedHeight * position.dy) +
+  final h =
+      (normalizedHeight * position.dy) +
       ((kAxisIndent / 2) * height) -
       alignmentY;
   //(kAxisIndent / 2) * height - (textPainter.height / 2) + normalizedHeight;
@@ -83,8 +76,10 @@ void paintTextNormalizedWithinAxis(
   Offset offset = Offset(w, h);
 
   /// Start pos centered for textbox fill and line
-  final startPos =
-      Offset(w + (textPainter.width / 2), h + (textPainter.height / 2));
+  final startPos = Offset(
+    w + (textPainter.width / 2),
+    h + (textPainter.height / 2),
+  );
   if (pointerLine != null) {
     final lineEndX = (normalizedWidth * pointerLine.dx) + (kAxisIndent * width);
     final lineEndY =
@@ -92,11 +87,7 @@ void paintTextNormalizedWithinAxis(
     final linePaint = Paint()
       ..color = config.colorScheme.onSurface
       ..strokeWidth = kCurveWidth / 5;
-    canvas.drawLine(
-      startPos,
-      Offset(lineEndX, lineEndY),
-      linePaint,
-    );
+    canvas.drawLine(startPos, Offset(lineEndX, lineEndY), linePaint);
 
     canvas.drawCircle(Offset(lineEndX, lineEndY), 3, linePaint);
   }
@@ -115,10 +106,7 @@ void paintTextNormalizedWithinAxis(
         height: textPainter.height + textBoxPadding,
       ),
     );
-  canvas.drawPath(
-    boxPathFill,
-    boxPaintFill,
-  );
+  canvas.drawPath(boxPathFill, boxPaintFill);
 
   canvas.save();
 

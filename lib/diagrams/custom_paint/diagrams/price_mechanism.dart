@@ -51,9 +51,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
-        polylineOffsets: [
-          Offset(0.85, 0.85),
-        ],
+        polylineOffsets: [Offset(0.85, 0.85)],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -61,17 +59,17 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.85, 0.15),
-        polylineOffsets: [
-          Offset(0.15, 0.85),
-        ],
+        polylineOffsets: [Offset(0.15, 0.85)],
         label1: DiagramLabel.s.label,
         label1Align: LabelAlign.centerRight,
       );
     }
 
-    final isDemandShift = model.subtype == DiagramSubtype.increaseInDemand ||
+    final isDemandShift =
+        model.subtype == DiagramSubtype.increaseInDemand ||
         model.subtype == DiagramSubtype.decreaseInDemand;
-    final isSupplyShift = model.subtype == DiagramSubtype.increaseInSupply ||
+    final isSupplyShift =
+        model.subtype == DiagramSubtype.increaseInSupply ||
         model.subtype == DiagramSubtype.decreaseInSupply;
 
     if (isDemandShift || isSupplyShift) {
@@ -81,9 +79,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
-        polylineOffsets: [
-          Offset(0.85, 0.85),
-        ],
+        polylineOffsets: [Offset(0.85, 0.85)],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -91,9 +87,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.85, 0.15),
-        polylineOffsets: [
-          Offset(0.15, 0.85),
-        ],
+        polylineOffsets: [Offset(0.15, 0.85)],
         label1: DiagramLabel.s.label,
         label1Align: LabelAlign.centerRight,
       );
@@ -113,9 +107,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
-        polylineOffsets: [
-          Offset(0.70, 0.90),
-        ],
+        polylineOffsets: [Offset(0.70, 0.90)],
         label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -129,13 +121,14 @@ class PriceMechanism extends BaseDiagramPainter {
         xLabel: DiagramLabel.q2.label,
       );
 
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.68, 0.80),
-          polylineOffsets: [
-            Offset(0.76, 0.80),
-          ],
-          arrowOnStart: true,
-          arrowOnStartAngle: pi * -0.50);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.68, 0.80),
+        polylineOffsets: [Offset(0.76, 0.80)],
+        arrowOnStart: true,
+        arrowOnStartAngle: pi * -0.50,
+      );
     }
 
     if (model.subtype == DiagramSubtype.increaseInDemand) {
@@ -143,9 +136,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.30, 0.10),
-        polylineOffsets: [
-          Offset(0.90, 0.70),
-        ],
+        polylineOffsets: [Offset(0.90, 0.70)],
         label2: DiagramLabel.d1.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -162,9 +153,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.70, 0.65),
-        polylineOffsets: [
-          Offset(0.79, 0.65),
-        ],
+        polylineOffsets: [Offset(0.79, 0.65)],
         arrowOnEnd: true,
         arrowOnEndAngle: pi * 0.50,
       );
@@ -175,9 +164,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.30, 0.90),
-        polylineOffsets: [
-          Offset(0.90, 0.30),
-        ],
+        polylineOffsets: [Offset(0.90, 0.30)],
       );
       paintDiagramDashedLines(
         c,
@@ -187,23 +174,25 @@ class PriceMechanism extends BaseDiagramPainter {
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
       );
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.65, 0.40),
-          polylineOffsets: [
-            Offset(0.73, 0.40),
-          ],
-          arrowOnEnd: true,
-          arrowOnEndAngle: pi * 0.50);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.65, 0.40),
+        polylineOffsets: [Offset(0.73, 0.40)],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi * 0.50,
+      );
     }
 
     if (model.subtype == DiagramSubtype.decreaseInSupply) {
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.05, 0.75),
-          polylineOffsets: [
-            Offset(0.70, 0.10),
-          ],
-          label2: DiagramLabel.s2.label,
-          label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.05, 0.75),
+        polylineOffsets: [Offset(0.70, 0.10)],
+        label2: DiagramLabel.s2.label,
+        label2Align: LabelAlign.centerRight,
+      );
 
       paintDiagramDashedLines(
         c,
@@ -213,13 +202,14 @@ class PriceMechanism extends BaseDiagramPainter {
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
       );
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.57, 0.30),
-          polylineOffsets: [
-            Offset(0.65, 0.30),
-          ],
-          arrowOnStart: true,
-          arrowOnStartAngle: pi * 1.50);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.57, 0.30),
+        polylineOffsets: [Offset(0.65, 0.30)],
+        arrowOnStart: true,
+        arrowOnStartAngle: pi * 1.50,
+      );
     }
     if (model.subtype == DiagramSubtype.shortage) {
       paintDiagramDashedLines(
@@ -261,11 +251,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.30, 0.70),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.70, 0.70),
-          ),
-        ],
+        bezierPoints: [CustomBezier(endPoint: Offset(0.70, 0.70))],
       );
     }
 
@@ -286,20 +272,21 @@ class PriceMechanism extends BaseDiagramPainter {
         xLabel: DiagramLabel.qS.label,
       );
       paintCustomDiagramLines(
-          strokeWidth: kCurveWidthSlim,
-          color: c.colorScheme.onSurface,
-          c,
-          canvas,
-          startPos: Offset(0.30, 0.25),
-          bezierPoints: [
-            CustomBezier(endPoint: Offset(0.30, 0.20)),
-            CustomBezier(endPoint: Offset(0.70, 0.20)),
-            CustomBezier(endPoint: Offset(0.70, 0.25)),
-          ],
-          arrowOnEnd: true,
-          arrowOnStart: true,
-          arrowOnStartAngle: pi,
-          arrowOnEndAngle: pi);
+        strokeWidth: kCurveWidthSlim,
+        color: c.colorScheme.onSurface,
+        c,
+        canvas,
+        startPos: Offset(0.30, 0.25),
+        bezierPoints: [
+          CustomBezier(endPoint: Offset(0.30, 0.20)),
+          CustomBezier(endPoint: Offset(0.70, 0.20)),
+          CustomBezier(endPoint: Offset(0.70, 0.25)),
+        ],
+        arrowOnEnd: true,
+        arrowOnStart: true,
+        arrowOnStartAngle: pi,
+        arrowOnEndAngle: pi,
+      );
       paintText(c, canvas, 'surplus', Offset(0.53, 0.20));
       paintCustomDiagramLines(
         circleAtStart: true,
@@ -308,11 +295,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.30, 0.30),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.70, 0.30),
-          ),
-        ],
+        bezierPoints: [CustomBezier(endPoint: Offset(0.70, 0.30))],
       );
     }
 
@@ -332,22 +315,20 @@ class PriceMechanism extends BaseDiagramPainter {
     }
     if (model.subtype == DiagramSubtype.longRunEquilibrium ||
         model.subtype == DiagramSubtype.socialWelfare) {
-      paintDiagramDashedLines(c, canvas,
-          yLabel: DiagramLabel.pm.label,
-          hideXLine: true,
-          yAxisStartPos: 0.50,
-          xAxisEndPos: 1.1);
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yLabel: DiagramLabel.pm.label,
+        hideXLine: true,
+        yAxisStartPos: 0.50,
+        xAxisEndPos: 1.1,
+      );
 
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.15,
-          0.15,
-        ),
-        polylineOffsets: [
-          Offset(0.85, 0.85),
-        ],
+        startPos: Offset(0.15, 0.15),
+        polylineOffsets: [Offset(0.85, 0.85)],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -355,9 +336,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        polylineOffsets: [
-          Offset(0.85, 0.15),
-        ],
+        polylineOffsets: [Offset(0.85, 0.15)],
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -382,13 +361,8 @@ class PriceMechanism extends BaseDiagramPainter {
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.15,
-          0.15,
-        ),
-        polylineOffsets: [
-          Offset(0.85, 0.85),
-        ],
+        startPos: Offset(0.15, 0.15),
+        polylineOffsets: [Offset(0.85, 0.85)],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -396,9 +370,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.10, 0.70),
-        polylineOffsets: [
-          Offset(0.70, 0.10),
-        ],
+        polylineOffsets: [Offset(0.70, 0.10)],
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -406,9 +378,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        polylineOffsets: [
-          Offset(0.85, 0.15),
-        ],
+        polylineOffsets: [Offset(0.85, 0.15)],
         label2: DiagramLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -416,9 +386,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.60, 0.25),
-        polylineOffsets: [
-          Offset(0.68, 0.25),
-        ],
+        polylineOffsets: [Offset(0.68, 0.25)],
         arrowOnEnd: true,
         arrowOnEndAngle: pi / 2,
       );
@@ -426,9 +394,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.80, 0.41),
-        polylineOffsets: [
-          Offset(0.80, 0.47),
-        ],
+        polylineOffsets: [Offset(0.80, 0.47)],
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
       );
@@ -453,13 +419,8 @@ class PriceMechanism extends BaseDiagramPainter {
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.15,
-          0.15,
-        ),
-        polylineOffsets: [
-          Offset(0.85, 0.85),
-        ],
+        startPos: Offset(0.15, 0.15),
+        polylineOffsets: [Offset(0.85, 0.85)],
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -467,9 +428,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.35, 0.85),
-        polylineOffsets: [
-          Offset(0.90, 0.30),
-        ],
+        polylineOffsets: [Offset(0.90, 0.30)],
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -477,9 +436,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
-        polylineOffsets: [
-          Offset(0.85, 0.15),
-        ],
+        polylineOffsets: [Offset(0.85, 0.15)],
         label2: DiagramLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -490,9 +447,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.72, 0.35),
-        polylineOffsets: [
-          Offset(0.80, 0.35),
-        ],
+        polylineOffsets: [Offset(0.80, 0.35)],
         arrowOnStart: true,
         arrowOnStartAngle: pi / -2,
       );
@@ -502,9 +457,7 @@ class PriceMechanism extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.80, 0.53),
-        polylineOffsets: [
-          Offset(0.80, 0.59),
-        ],
+        polylineOffsets: [Offset(0.80, 0.59)],
         arrowOnStart: true,
         arrowOnStartAngle: 0,
       );

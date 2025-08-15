@@ -21,7 +21,12 @@ class ExportSubsidy extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintAxis(c, canvas, yAxisLabel: DiagramLabel.p.label, xAxisLabel: DiagramLabel.q.label);
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: DiagramLabel.p.label,
+      xAxisLabel: DiagramLabel.q.label,
+    );
 
     paintDiagramDashedLines(
       c,
@@ -67,7 +72,7 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.10, 0.90),
-      polylineOffsets: [Offset(0.90, 0.10),],
+      polylineOffsets: [Offset(0.90, 0.10)],
       label2: DiagramLabel.sD.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -75,7 +80,7 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.50, 0.60),
-      polylineOffsets: [Offset(0.90, 0.20),],
+      polylineOffsets: [Offset(0.90, 0.20)],
       label2: DiagramLabel.sDSub.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -83,7 +88,7 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0, 0.35),
-      polylineOffsets: [    Offset(0.90, 0.35),],
+      polylineOffsets: [Offset(0.90, 0.35)],
 
       label1: DiagramLabel.pW.label,
       label1Align: LabelAlign.centerLeft,
@@ -94,49 +99,33 @@ class ExportSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0, 0.25),
-      polylineOffsets: [ Offset(0.90, 0.25),],
+      polylineOffsets: [Offset(0.90, 0.25)],
       label1: DiagramLabel.pWS.label,
       label1Align: LabelAlign.centerLeft,
       label2: DiagramLabel.sW.label,
       label2Align: LabelAlign.centerRight,
     );
-    if(model.subtype == DiagramSubtype.socialWelfare){
+    if (model.subtype == DiagramSubtype.socialWelfare) {
       // Left welfare loss triangle (underconsumption)
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        [
-          Offset(0.25, 0.25), // q1 at pW
-          Offset(0.35, 0.35), // q3 at pW
-          Offset(0.25, 0.35), // q3 at pWS
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, [
+        Offset(0.25, 0.25), // q1 at pW
+        Offset(0.35, 0.35), // q3 at pW
+        Offset(0.25, 0.35), // q3 at pWS
+      ]);
 
-// Right welfare loss triangle (overproduction)
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        [
-          Offset(0.65, 0.35), // q4 at pWS
-          Offset(0.75, 0.35), // q2 at pWS
-          Offset(0.75, 0.25), // q4 at pW
-        ],
-      );
+      // Right welfare loss triangle (overproduction)
+      paintShading(canvas, size, ShadeType.welfareLoss, [
+        Offset(0.65, 0.35), // q4 at pWS
+        Offset(0.75, 0.35), // q2 at pWS
+        Offset(0.75, 0.25), // q4 at pW
+      ]);
 
-      paintShading(
-        canvas,
-        size,
-        ShadeType.governmentBurden,
-        [
-          Offset(0.25, 0.25),
-          Offset(0.75, 0.25),
-          Offset(0.65, 0.35),
-          Offset(0.35, 0.35),
-        ],
-      );
-
+      paintShading(canvas, size, ShadeType.governmentBurden, [
+        Offset(0.25, 0.25),
+        Offset(0.75, 0.25),
+        Offset(0.65, 0.35),
+        Offset(0.35, 0.35),
+      ]);
     }
   }
 }

@@ -3,22 +3,17 @@ import '../enums/diagram_bundle_enum.dart';
 import '../models/diagram_bundle.dart';
 import '../models/diagram_model.dart';
 import '../models/diagram_painter_config.dart';
-import '../utils/mixins.dart';
+import '../mixins/mixins.dart';
 import 'get_bundle_list.dart';
 
 class AllDiagrams {
   final Size size;
   final ColorScheme colorScheme;
 
-  AllDiagrams({
-    required this.size,
-    required this.colorScheme,
-  });
+  AllDiagrams({required this.size, required this.colorScheme});
 
-  DiagramBundle? getDiagramBundle(DiagramBundleEnum diagramBundleEnum,) {
-    final bundles = getDiagramBundles(
-      diagramBundleEnums: [diagramBundleEnum],
-    );
+  DiagramBundle? getDiagramBundle(DiagramBundleEnum diagramBundleEnum) {
+    final bundles = getDiagramBundles(diagramBundleEnums: [diagramBundleEnum]);
     return bundles.isNotEmpty ? bundles.first : null;
   }
 
@@ -39,7 +34,7 @@ class AllDiagrams {
       List<DiagramModel> tempModels = [];
       for (int j = 0; j < allBundles[i].basePainterDiagrams.length; j++) {
         final diagramIdentifier =
-        allBundles[i].basePainterDiagrams[j] as DiagramIdentifierMixin;
+            allBundles[i].basePainterDiagrams[j] as DiagramIdentifierMixin;
 
         tempModels.add(
           diagramIdentifier.model.copyWith(
@@ -47,9 +42,7 @@ class AllDiagrams {
           ),
         );
       }
-      allBundles[i] = allBundles[i].copyWith(
-        diagramModels: tempModels,
-      );
+      allBundles[i] = allBundles[i].copyWith(diagramModels: tempModels);
     }
 
     if (getAll) {
@@ -58,8 +51,9 @@ class AllDiagrams {
     } else if (diagramBundleEnums?.isNotEmpty ?? false) {
       // Filter by provided enums
       return allBundles
-          .where((bundle) =>
-          diagramBundleEnums!.contains(bundle.diagramBundleEnum))
+          .where(
+            (bundle) => diagramBundleEnums!.contains(bundle.diagramBundleEnum),
+          )
           .toList();
     } else {
       // Default: no bundles returned

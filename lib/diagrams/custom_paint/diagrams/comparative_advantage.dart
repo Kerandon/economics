@@ -26,9 +26,12 @@ class ComparativeAdvantage extends BaseDiagramPainter {
     );
 
     if (model.subtype == DiagramSubtype.absoluteAdvantage) {
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0, 0.20),
-          polylineOffsets: [Offset(0.60, 1.0),],);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0, 0.20),
+        polylineOffsets: [Offset(0.60, 1.0)],
+      );
     }
     if (model.subtype == DiagramSubtype.comparativeAdvantage) {}
     if (model.subtype == DiagramSubtype.noGainsFromTrade) {}

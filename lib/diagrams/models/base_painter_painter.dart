@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/mixins.dart';
+import '../mixins/mixins.dart';
 import 'diagram_model.dart';
 import 'diagram_painter_config.dart';
 
@@ -16,5 +16,4 @@ abstract class BaseDiagramPainter extends CustomPainter
     // Return true if something has changed that should repaint
     return true;
   }
-
 }

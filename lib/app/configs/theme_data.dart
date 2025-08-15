@@ -1,4 +1,3 @@
-
 import 'package:economics_app/app/enums/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,21 +29,36 @@ class CustomAppTheme {
         tertiary: AppColors.defaultAppColorDarkest,
         scrim: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
         surfaceDim: isDark ? Colors.grey.shade600 : Colors.grey.shade900,
-        surface: isDark ? AppColors.surfaceDarkTheme : AppColors.surfaceLightTheme,
-        surfaceContainerHighest: isDark ? AppColors.surfaceDarkTheme : AppColors.surfaceLightTheme,
-        surfaceTint: isDark ? AppColors.surfaceDarkThemeStronger : AppColors.surfaceLightThemeStronger,
+        surface: isDark
+            ? AppColors.surfaceDarkTheme
+            : AppColors.surfaceLightTheme,
+        surfaceContainerHighest: isDark
+            ? AppColors.surfaceDarkTheme
+            : AppColors.surfaceLightTheme,
+        surfaceTint: isDark
+            ? AppColors.surfaceDarkThemeStronger
+            : AppColors.surfaceLightThemeStronger,
         shadow: isDark ? AppColors.shadowDarkTheme : AppColors.shadowLightTheme,
         error: Colors.red,
         onPrimary: isDark ? Colors.black : Colors.white,
         onSurface: isDark ? AppColors.onSurfaceDarkTheme : Colors.black,
-        onSurfaceVariant: isDark ? AppColors.onSurfaceDarkTheme : AppColors.onSurfaceLightTheme,
+        onSurfaceVariant: isDark
+            ? AppColors.onSurfaceDarkTheme
+            : AppColors.onSurfaceLightTheme,
         onError: isDark ? Colors.black : Colors.white,
-        onSecondary: isDark ? AppColors.onSurfaceDarkTheme : AppColors.onSurfaceLightTheme,
+        onSecondary: isDark
+            ? AppColors.onSurfaceDarkTheme
+            : AppColors.onSurfaceLightTheme,
       ),
       appBarTheme: AppBarTheme(
         centerTitle: true,
-        titleTextStyle: TextStyle(color: isDark ? Colors.white : Colors.black, fontSize: 20),
-        backgroundColor: isDark ? AppColors.surfaceDarkThemeStronger : AppColors.surfaceLightThemeStronger,
+        titleTextStyle: TextStyle(
+          color: isDark ? Colors.white : Colors.black,
+          fontSize: 20,
+        ),
+        backgroundColor: isDark
+            ? AppColors.surfaceDarkThemeStronger
+            : AppColors.surfaceLightThemeStronger,
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
@@ -58,14 +72,14 @@ class CustomAppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: Colors.blue,
-        iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
-              (Set<WidgetState> states) {
-            if (states.contains(WidgetState.selected)) {
-              return const IconThemeData(color: Colors.white);
-            }
-            return const IconThemeData(color: Colors.grey);
-          },
-        ),
+        iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((
+          Set<WidgetState> states,
+        ) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: Colors.white);
+          }
+          return const IconThemeData(color: Colors.grey);
+        }),
       ),
       switchTheme: const SwitchThemeData(),
       listTileTheme: ListTileThemeData(
@@ -74,57 +88,81 @@ class CustomAppTheme {
         leadingAndTrailingTextStyle: Theme.of(context).textTheme.bodyMedium,
       ),
 
-      textTheme: GoogleFonts.robotoCondensedTextTheme(defaultTextTheme).copyWith(
-        displaySmall: defaultTextTheme.displaySmall?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.displaySmall?.fontSize ?? 36 * state.fontSize.multiplier,
-        ),
-        displayMedium: defaultTextTheme.displayMedium?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.displayMedium?.fontSize ?? 45 * state.fontSize.multiplier,
-        ),
-        displayLarge: defaultTextTheme.displayLarge?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.displayLarge?.fontSize ?? 57 * state.fontSize.multiplier,
-        ),
-        headlineSmall: defaultTextTheme.headlineSmall?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.headlineSmall?.fontSize ?? 24 * state.fontSize.multiplier,
-        ),
-        headlineMedium: defaultTextTheme.headlineMedium?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.headlineMedium?.fontSize ?? 28 * state.fontSize.multiplier,
-        ),
-        headlineLarge: defaultTextTheme.headlineLarge?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.headlineLarge?.fontSize ?? 32 * state.fontSize.multiplier,
-        ),
-        titleSmall: defaultTextTheme.titleSmall?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.titleSmall?.fontSize ?? 14 * state.fontSize.multiplier,
-        ),
-        titleMedium: defaultTextTheme.titleMedium?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.titleMedium?.fontSize ?? 16 * state.fontSize.multiplier,
-        ),
-        titleLarge: defaultTextTheme.titleLarge?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.titleLarge?.fontSize ?? 20 * state.fontSize.multiplier,
-        ),
-        bodySmall: defaultTextTheme.bodySmall?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.bodySmall?.fontSize ?? 12 * state.fontSize.multiplier,
-        ),
-        bodyMedium: defaultTextTheme.bodyMedium?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.bodyMedium?.fontSize ?? 14 * state.fontSize.multiplier,
-        ),
-        bodyLarge: defaultTextTheme.bodyLarge?.copyWith(
-          color: displayColor,
-          fontSize: defaultTextTheme.bodyLarge?.fontSize ?? 16 * state.fontSize.multiplier,
-        ),
-      ),
-
+      textTheme: GoogleFonts.robotoCondensedTextTheme(defaultTextTheme)
+          .copyWith(
+            displaySmall: defaultTextTheme.displaySmall?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.displaySmall?.fontSize ??
+                  36 * state.fontSize.multiplier,
+            ),
+            displayMedium: defaultTextTheme.displayMedium?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.displayMedium?.fontSize ??
+                  45 * state.fontSize.multiplier,
+            ),
+            displayLarge: defaultTextTheme.displayLarge?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.displayLarge?.fontSize ??
+                  57 * state.fontSize.multiplier,
+            ),
+            headlineSmall: defaultTextTheme.headlineSmall?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.headlineSmall?.fontSize ??
+                  24 * state.fontSize.multiplier,
+            ),
+            headlineMedium: defaultTextTheme.headlineMedium?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.headlineMedium?.fontSize ??
+                  28 * state.fontSize.multiplier,
+            ),
+            headlineLarge: defaultTextTheme.headlineLarge?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.headlineLarge?.fontSize ??
+                  32 * state.fontSize.multiplier,
+            ),
+            titleSmall: defaultTextTheme.titleSmall?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.titleSmall?.fontSize ??
+                  14 * state.fontSize.multiplier,
+            ),
+            titleMedium: defaultTextTheme.titleMedium?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.titleMedium?.fontSize ??
+                  16 * state.fontSize.multiplier,
+            ),
+            titleLarge: defaultTextTheme.titleLarge?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.titleLarge?.fontSize ??
+                  20 * state.fontSize.multiplier,
+            ),
+            bodySmall: defaultTextTheme.bodySmall?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.bodySmall?.fontSize ??
+                  12 * state.fontSize.multiplier,
+            ),
+            bodyMedium: defaultTextTheme.bodyMedium?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.bodyMedium?.fontSize ??
+                  14 * state.fontSize.multiplier,
+            ),
+            bodyLarge: defaultTextTheme.bodyLarge?.copyWith(
+              color: displayColor,
+              fontSize:
+                  defaultTextTheme.bodyLarge?.fontSize ??
+                  16 * state.fontSize.multiplier,
+            ),
+          ),
 
       // IconButton theme
       iconButtonTheme: IconButtonThemeData(
@@ -155,23 +193,25 @@ class CustomAppTheme {
         inputDecorationTheme: const InputDecorationTheme(
           isDense: true,
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.defaultAppColor,
-            ),
+            borderSide: BorderSide(color: AppColors.defaultAppColor),
           ),
           contentPadding: EdgeInsets.symmetric(horizontal: 10),
         ),
       ),
       tabBarTheme: TabBarThemeData(
-        dividerColor: isDark ? AppColors.dividerDarkTheme : AppColors.dividerLightTheme,
-        unselectedLabelColor: isDark ? AppColors.onSurfaceDarkTheme : AppColors.onSurfaceLightTheme,
-        unselectedLabelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+        dividerColor: isDark
+            ? AppColors.dividerDarkTheme
+            : AppColors.dividerLightTheme,
+        unselectedLabelColor: isDark
+            ? AppColors.onSurfaceDarkTheme
+            : AppColors.onSurfaceLightTheme,
+        unselectedLabelStyle: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.normal,
+        ),
         indicator: BoxDecoration(
           border: Border(
-            bottom: BorderSide(
-              color: AppColors.defaultAppColor,
-              width: 2.0,
-            ),
+            bottom: BorderSide(color: AppColors.defaultAppColor, width: 2.0),
           ),
         ),
         labelStyle: TextStyle(

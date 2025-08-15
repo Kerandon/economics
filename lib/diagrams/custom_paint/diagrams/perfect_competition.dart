@@ -42,7 +42,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.dEqualsARMR.label,
         label2Align: LabelAlign.centerRight,
         startPos: Offset(0, 0.50),
-        polylineOffsets: [Offset(0.90, 0.50),],
+        polylineOffsets: [Offset(0.90, 0.50)],
       );
     }
     if (model.subtype == DiagramSubtype.abnormalProfit) {
@@ -79,8 +79,12 @@ class PerfectCompetition extends BaseDiagramPainter {
         yLabel: DiagramLabel.pe.label,
       );
 
-      paintTextNormalizedWithinAxis(c, canvas, DiagramLabel.d1EqualsAR1MR1.label, Offset(1.0,0.50),
-      align: LabelAlign.centerRight,
+      paintTextNormalizedWithinAxis(
+        c,
+        canvas,
+        DiagramLabel.d1EqualsAR1MR1.label,
+        Offset(1.0, 0.50),
+        align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
         c,
@@ -88,7 +92,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.dEqualsARMR.label,
         label2Align: LabelAlign.centerRight,
         startPos: Offset(0, 0.40),
-        polylineOffsets:[ Offset(1, 0.40),] ,
+        polylineOffsets: [Offset(1, 0.40)],
       );
 
       /// Arrows
@@ -97,7 +101,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.80, 0.41),
-        polylineOffsets: [Offset(0.80, 0.47),],
+        polylineOffsets: [Offset(0.80, 0.47)],
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
       );
@@ -106,7 +110,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         canvas,
         DiagramLabel.abnormalProfit.label,
         Offset(0.25, 0.85),
-        pointerLine: Offset(0.25,0.45),
+        pointerLine: Offset(0.25, 0.45),
       );
     }
     if (model.subtype == DiagramSubtype.loss) {
@@ -119,16 +123,22 @@ class PerfectCompetition extends BaseDiagramPainter {
 
       /// Dashed Lines
 
-      paintDiagramDashedLines(c, canvas,
-          yAxisStartPos: 0.5,
-          xAxisEndPos: 0.45,
-          xLabel: '${DiagramLabel.q1.label} ',
-          hideYLine: true);
-      paintDiagramDashedLines(c, canvas,
-          yAxisStartPos: 0.5,
-          xAxisEndPos: 0.51,
-          xLabel: '  ${DiagramLabel.qe.label}',
-          hideYLine: true);
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.5,
+        xAxisEndPos: 0.45,
+        xLabel: '${DiagramLabel.q1.label} ',
+        hideYLine: true,
+      );
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.5,
+        xAxisEndPos: 0.51,
+        xLabel: '  ${DiagramLabel.qe.label}',
+        hideYLine: true,
+      );
       paintDiagramDashedLines(
         c,
         canvas,
@@ -145,13 +155,13 @@ class PerfectCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.d1EqualsAR1MR1.label,
         label2Align: LabelAlign.centerRight,
         startPos: Offset(0, 0.60),
-        polylineOffsets: [Offset(0.90, 0.60),]
+        polylineOffsets: [Offset(0.90, 0.60)],
       );
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.80, 0.53),
-        polylineOffsets:[ Offset(0.80, 0.59),],
+        polylineOffsets: [Offset(0.80, 0.59)],
         arrowOnStart: true,
         arrowOnStartAngle: 0,
       );
@@ -160,7 +170,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         canvas,
         DiagramLabel.loss.label,
         Offset(0.20, 0.90),
-        pointerLine: Offset(0.20,0.55),
+        pointerLine: Offset(0.20, 0.55),
       );
     }
     paintAxis(
@@ -178,10 +188,7 @@ class PerfectCompetition extends BaseDiagramPainter {
       label2Align: LabelAlign.centerTop,
       startPos: Offset(0.15, 0.65),
       bezierPoints: [
-        CustomBezier(
-          control: Offset(0.40, 1.0),
-          endPoint: Offset(0.64, 0.10),
-        ),
+        CustomBezier(control: Offset(0.40, 1.0), endPoint: Offset(0.64, 0.10)),
       ],
     );
     paintCustomDiagramLines(
@@ -191,10 +198,7 @@ class PerfectCompetition extends BaseDiagramPainter {
       label2Align: LabelAlign.centerTop,
       startPos: Offset(0.15, 0.20),
       bezierPoints: [
-        CustomBezier(
-          control: Offset(0.50, 0.80),
-          endPoint: Offset(0.85, 0.20),
-        ),
+        CustomBezier(control: Offset(0.50, 0.80), endPoint: Offset(0.85, 0.20)),
       ],
     );
 

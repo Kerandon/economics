@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 enum ShadeType {
   consumerSurplus,
   producerSurplus,
@@ -86,6 +87,4 @@ extension Shade on ShadeType {
         ? '#$alphaHex$redHex$greenHex$blueHex'.toUpperCase()
         : '#$redHex$greenHex$blueHex'.toUpperCase();
   }
-
 }
-

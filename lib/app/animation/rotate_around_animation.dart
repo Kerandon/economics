@@ -29,9 +29,12 @@ class _RotateAroundAnimationState extends State<RotateAroundAnimation>
   @override
   void initState() {
     _controller = AnimationController(
-        duration: Duration(milliseconds: widget.duration), vsync: this);
+      duration: Duration(milliseconds: widget.duration),
+      vsync: this,
+    );
     _animation = Tween<double>(begin: widget.beginValue, end: 0.0).animate(
-        CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine));
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine),
+    );
 
     if (mounted && !widget.disable) {
       _controller.forward();
@@ -56,9 +59,7 @@ class _RotateAroundAnimationState extends State<RotateAroundAnimation>
               alignment: Alignment.center,
               transform: Matrix4.identity()
                 ..setEntry(3, 2, 0.002)
-                ..rotateX(
-                  ((_animation.value) * math.pi),
-                ),
+                ..rotateX(((_animation.value) * math.pi)),
               child: widget.child,
             ),
           );

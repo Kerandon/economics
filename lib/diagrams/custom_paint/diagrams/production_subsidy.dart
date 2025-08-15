@@ -21,7 +21,12 @@ class ProductionSubsidy extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintAxis(c, canvas, yAxisLabel:  DiagramLabel.price.label, xAxisLabel: DiagramLabel.quantity.label,);
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: DiagramLabel.price.label,
+      xAxisLabel: DiagramLabel.quantity.label,
+    );
     paintDiagramDashedLines(
       c,
       canvas,
@@ -43,7 +48,7 @@ class ProductionSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.10, 0.10),
-      polylineOffsets: [Offset(0.90, 0.90),],
+      polylineOffsets: [Offset(0.90, 0.90)],
       label2: DiagramLabel.dD.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -51,7 +56,7 @@ class ProductionSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.10, 0.90),
-      polylineOffsets: [Offset(0.90, 0.10),],
+      polylineOffsets: [Offset(0.90, 0.10)],
       label2: DiagramLabel.sD.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -59,7 +64,7 @@ class ProductionSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.30, 0.90),
-      polylineOffsets: [Offset(0.90, 0.30),],
+      polylineOffsets: [Offset(0.90, 0.30)],
       label2: DiagramLabel.sDSub.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -67,23 +72,18 @@ class ProductionSubsidy extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.0, 0.80),
-      polylineOffsets: [Offset(0.90, 0.80),],
+      polylineOffsets: [Offset(0.90, 0.80)],
       label1: DiagramLabel.pW.label,
       label1Align: LabelAlign.centerLeft,
       label2: DiagramLabel.sW.label,
       label2Align: LabelAlign.centerRight,
     );
     if (model.subtype == DiagramSubtype.socialWelfare) {
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        [
-          Offset(0.20, 0.80),
-          Offset(0.40, 0.80),
-          Offset(0.40, 0.60),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, [
+        Offset(0.20, 0.80),
+        Offset(0.40, 0.80),
+        Offset(0.40, 0.60),
+      ]);
     }
   }
 }

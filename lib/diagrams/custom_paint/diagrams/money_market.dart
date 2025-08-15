@@ -11,7 +11,6 @@ class MoneyMarket extends BaseDiagramPainter {
     required DiagramModel model,
   }) : super(config, model);
 
-
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);

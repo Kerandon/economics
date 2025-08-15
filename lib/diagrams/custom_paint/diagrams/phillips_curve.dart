@@ -33,9 +33,8 @@ class PhillipsCurve extends BaseDiagramPainter {
       points: [
         CustomBezier(control: Offset(0.30, 0.70), endPoint: Offset(0.80, 0.75)),
       ],
-      label1:  DiagramLabel.sRPC.label,
+      label1: DiagramLabel.sRPC.label,
       label1Align: LabelAlign.centerRight,
     );
-
   }
 }

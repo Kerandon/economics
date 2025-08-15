@@ -1,4 +1,3 @@
-
 import '../../diagrams/enums/diagram_bundle_enum.dart';
 import '../../diagrams/models/diagram_bundle.dart';
 
@@ -9,14 +8,13 @@ class CustomSlide {
   final List<DiagramBundleEnum>? diagramBundleEnums;
   final List<DiagramBundle>? diagramBundles;
 
-  CustomSlide(
-     {
-       required this.section,
-       this.title,
-        this.content,
-        this.diagramBundleEnums,
-        this.diagramBundles,
-      });
+  CustomSlide({
+    required this.section,
+    this.title,
+    this.content,
+    this.diagramBundleEnums,
+    this.diagramBundles,
+  });
 
   CustomSlide copyWith({
     dynamic section,

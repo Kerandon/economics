@@ -1,4 +1,3 @@
-
 import 'package:economics_app/diagrams/models/size_adjuster.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +14,6 @@ class DiagramPainterConfig {
 
   /// A getter that calculates the ratio of `painterSize` to `appSize`
   Size get sizeRatio {
-
-
     return Size(
       appSize.width == 0 ? 0 : painterSize.width / appSize.width,
       appSize.height == 0 ? 0 : painterSize.height / appSize.height,

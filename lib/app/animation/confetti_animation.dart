@@ -18,8 +18,9 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
 
   @override
   void initState() {
-    _controller =
-        ConfettiController(duration: const Duration(milliseconds: 300));
+    _controller = ConfettiController(
+      duration: const Duration(milliseconds: 300),
+    );
     if (widget.animate == null) {
       _controller.play();
     }
@@ -43,7 +44,7 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return  Stack(
+    return Stack(
       children: [
         Align(
           alignment: Alignment(0, -0.50),
@@ -52,7 +53,7 @@ class _ConfettiAnimationState extends ConsumerState<ConfettiAnimation> {
             colors: const [
               Colors.amberAccent,
               Colors.redAccent,
-              Colors.pinkAccent
+              Colors.pinkAccent,
             ],
             blastDirectionality: BlastDirectionality.explosive,
             numberOfParticles: 10,
@@ -84,10 +85,14 @@ Path drawStar(Size size) {
   path.moveTo(size.width, halfWidth);
 
   for (double step = 0; step < fullAngle; step += degreesPerStep) {
-    path.lineTo(halfWidth + externalRadius * cos(step),
-        halfWidth + externalRadius * sin(step));
-    path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
-        halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+    path.lineTo(
+      halfWidth + externalRadius * cos(step),
+      halfWidth + externalRadius * sin(step),
+    );
+    path.lineTo(
+      halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+      halfWidth + internalRadius * sin(step + halfDegreesPerStep),
+    );
   }
   path.close();
   return path;

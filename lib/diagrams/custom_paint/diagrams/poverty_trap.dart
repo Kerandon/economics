@@ -47,25 +47,22 @@ class PovertyTrap extends BaseDiagramPainter {
       position: Offset(0.50, 0.80),
       showBoxBorder: true,
     );
-    paintCustomBezier(c, canvas,
-        startPos: Offset(0.15, 0.40),
-        points: [
-          CustomBezier(
-            control: Offset(0.15, 0.20),
-            endPoint: Offset(0.28, 0.20),
-          ),
-        ],
-        drawArrowOnEnd: true,
-        arrowOnEndAngle: pi * 0.50);
+    paintCustomBezier(
+      c,
+      canvas,
+      startPos: Offset(0.15, 0.40),
+      points: [
+        CustomBezier(control: Offset(0.15, 0.20), endPoint: Offset(0.28, 0.20)),
+      ],
+      drawArrowOnEnd: true,
+      arrowOnEndAngle: pi * 0.50,
+    );
     paintCustomBezier(
       c,
       canvas,
       startPos: Offset(0.70, 0.20),
       points: [
-        CustomBezier(
-          control: Offset(0.85, 0.22),
-          endPoint: Offset(0.85, 0.40),
-        ),
+        CustomBezier(control: Offset(0.85, 0.22), endPoint: Offset(0.85, 0.40)),
       ],
       drawArrowOnEnd: true,
       arrowOnEndAngle: pi,
@@ -75,10 +72,7 @@ class PovertyTrap extends BaseDiagramPainter {
       canvas,
       startPos: Offset(0.85, 0.58),
       points: [
-        CustomBezier(
-          control: Offset(0.85, 0.80),
-          endPoint: Offset(0.75, 0.80),
-        ),
+        CustomBezier(control: Offset(0.85, 0.80), endPoint: Offset(0.75, 0.80)),
       ],
       drawArrowOnEnd: true,
       arrowOnEndAngle: pi * 1.5,
@@ -88,10 +82,7 @@ class PovertyTrap extends BaseDiagramPainter {
       canvas,
       startPos: Offset(0.25, 0.80),
       points: [
-        CustomBezier(
-          control: Offset(0.15, 0.80),
-          endPoint: Offset(0.15, 0.60),
-        ),
+        CustomBezier(control: Offset(0.15, 0.80), endPoint: Offset(0.15, 0.60)),
       ],
       drawArrowOnEnd: true,
       arrowOnEndAngle: 0,

@@ -1,11 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 class CustomHeading extends StatelessWidget {
-  const CustomHeading(
-      this.text, {
-        super.key,
-      });
+  const CustomHeading(this.text, {super.key});
 
   final String text;
 

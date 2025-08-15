@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
@@ -16,10 +15,8 @@ import '../painter_methods/paint_text_normalized_within_axis.dart';
 import '../painter_methods/paint_title.dart';
 
 class Monopoly extends BaseDiagramPainter {
-  Monopoly({
-    required DiagramPainterConfig config,
-    required DiagramModel model,
-  }) : super(config, model);
+  Monopoly({required DiagramPainterConfig config, required DiagramModel model})
+    : super(config, model);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -36,18 +33,23 @@ class Monopoly extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.abnormalProfit ||
         model.subtype == DiagramSubtype.loss ||
         model.subtype == DiagramSubtype.socialWelfare) {
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.20),
-          polylineOffsets:
-          [Offset(0.85, 0.85),],
-          label2: DiagramLabel.dEqualsAR.label,
-          label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.20),
+        polylineOffsets: [Offset(0.85, 0.85)],
+        label2: DiagramLabel.dEqualsAR.label,
+        label2Align: LabelAlign.centerRight,
+      );
 
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.05, 0.25),
-          polylineOffsets: [Offset(0.55, 1.05),],
-          label2: DiagramLabel.mr.label,
-          label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.05, 0.25),
+        polylineOffsets: [Offset(0.55, 1.05)],
+        label2: DiagramLabel.mr.label,
+        label2Align: LabelAlign.centerRight,
+      );
       paintCustomDiagramLines(
         c,
         canvas,
@@ -135,18 +137,12 @@ class Monopoly extends BaseDiagramPainter {
         xLabel: DiagramLabel.q.label,
       );
 
-      paintShading(
-        canvas,
-        size,
-        ShadeType.loss,
-        striped: true,
-        [
-          Offset(0, 0.32),
-          Offset(0.36, 0.32),
-          Offset(0.36, 0.41),
-          Offset(0, 0.41),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.loss, striped: true, [
+        Offset(0, 0.32),
+        Offset(0.36, 0.32),
+        Offset(0.36, 0.41),
+        Offset(0, 0.41),
+      ]);
       paintCustomDiagramLines(
         c,
         canvas,
@@ -185,11 +181,14 @@ class Monopoly extends BaseDiagramPainter {
         label2Align: LabelAlign.centerRight,
       );
 
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.20, 0.20),
-          polylineOffsets: [Offset(0.70, 0.90),],
-          label2: DiagramLabel.dEqualsAR.label,
-          label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.20, 0.20),
+        polylineOffsets: [Offset(0.70, 0.90)],
+        label2: DiagramLabel.dEqualsAR.label,
+        label2Align: LabelAlign.centerRight,
+      );
     }
     if (model.subtype == DiagramSubtype.socialWelfare) {
       paintTitle(c, canvas, 'Monopoly - Social Welfare');
@@ -204,17 +203,11 @@ class Monopoly extends BaseDiagramPainter {
         Offset(0.36, 0.72),
         CustomBezier(control: Offset(0.20, 1.0), endPoint: Offset(0, 0.78)),
       ]);
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        striped: true,
-        [
-          Offset(0.36, 0.42),
-          Offset(0.46, 0.50),
-          Offset(0.36, 0.72),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, striped: true, [
+        Offset(0.36, 0.42),
+        Offset(0.46, 0.50),
+        Offset(0.36, 0.72),
+      ]);
       paintTextNormalizedWithinAxis(
         c,
         canvas,

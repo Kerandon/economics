@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
@@ -19,7 +18,12 @@ class BusinessCycle extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintAxis(c, canvas, yAxisLabel: DiagramLabel.realGDP.label, xAxisLabel: DiagramLabel.timeYears.label);
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: DiagramLabel.realGDP.label,
+      xAxisLabel: DiagramLabel.timeYears.label,
+    );
 
     /// Biz cycle curve
     paintCustomBezier(

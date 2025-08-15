@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
@@ -39,10 +38,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       label2Align: LabelAlign.centerTop,
       startPos: Offset(0.05, 0.70),
       bezierPoints: [
-        CustomBezier(
-          control: Offset(0.30, 1.1),
-          endPoint: Offset(0.60, 0.25),
-        ),
+        CustomBezier(control: Offset(0.30, 1.1), endPoint: Offset(0.60, 0.25)),
       ],
     );
 
@@ -53,24 +49,27 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       label2Align: LabelAlign.centerTop,
       startPos: Offset(0.10, 0.25),
       bezierPoints: [
-        CustomBezier(
-          control: Offset(0.50, 0.76),
-          endPoint: Offset(0.90, 0.25),
-        ),
+        CustomBezier(control: Offset(0.50, 0.76), endPoint: Offset(0.90, 0.25)),
       ],
     );
     if (model.subtype == DiagramSubtype.longRunEquilibrium ||
         model.subtype == DiagramSubtype.socialWelfare) {
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.35),
-          polylineOffsets: [ Offset(0.90, 0.75),],
-          label2: DiagramLabel.dEqualsAR.label,
-          label2Align: LabelAlign.centerRight);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.45),
-          polylineOffsets: [Offset(0.60, 1.05),],
-          label2: DiagramLabel.mr.label,
-          label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.35),
+        polylineOffsets: [Offset(0.90, 0.75)],
+        label2: DiagramLabel.dEqualsAR.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.45),
+        polylineOffsets: [Offset(0.60, 1.05)],
+        label2: DiagramLabel.mr.label,
+        label2Align: LabelAlign.centerRight,
+      );
       paintDiagramDashedLines(
         c,
         canvas,
@@ -98,17 +97,11 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         Offset(0.35, 0.72),
         CustomBezier(control: Offset(0.22, 0.95), endPoint: Offset(0, 0.65)),
       ]);
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        striped: true,
-        [
-          Offset(0.36, 0.48),
-          Offset(0.48, 0.55),
-          Offset(0.36, 0.72),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, striped: true, [
+        Offset(0.36, 0.48),
+        Offset(0.48, 0.55),
+        Offset(0.36, 0.72),
+      ]);
 
       paintTextNormalizedWithinAxis(
         c,
@@ -133,16 +126,22 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       );
     }
     if (model.subtype == DiagramSubtype.abnormalProfit) {
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.22),
-          polylineOffsets: [ Offset(0.95, 0.70),],
-          label2: DiagramLabel.dEqualsAR.label,
-          label2Align: LabelAlign.centerRight);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.35),
-          polylineOffsets: [ Offset(0.70, 1.05),],
-          label2: DiagramLabel.mr.label,
-          label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.22),
+        polylineOffsets: [Offset(0.95, 0.70)],
+        label2: DiagramLabel.dEqualsAR.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.35),
+        polylineOffsets: [Offset(0.70, 1.05)],
+        label2: DiagramLabel.mr.label,
+        label2Align: LabelAlign.centerRight,
+      );
       paintTitle(c, canvas, 'Monopolistic Competition - Abnormal Profit');
       paintDiagramDashedLines(
         c,
@@ -176,16 +175,22 @@ class MonopolisticCompetition extends BaseDiagramPainter {
     }
     if (model.subtype == DiagramSubtype.loss) {
       paintTitle(c, canvas, 'Monopolistic Competition - Loss');
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.45),
-          polylineOffsets: [Offset(0.80, 0.85),],
-          label2: DiagramLabel.dEqualsAR.label,
-          label2Align: LabelAlign.centerRight);
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.55),
-          polylineOffsets: [Offset(0.50, 1.05),],
-          label2: DiagramLabel.mr.label,
-          label2Align: LabelAlign.centerRight);
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.45),
+        polylineOffsets: [Offset(0.80, 0.85)],
+        label2: DiagramLabel.dEqualsAR.label,
+        label2Align: LabelAlign.centerRight,
+      );
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.10, 0.55),
+        polylineOffsets: [Offset(0.50, 1.05)],
+        label2: DiagramLabel.mr.label,
+        label2Align: LabelAlign.centerRight,
+      );
       paintDiagramDashedLines(
         c,
         canvas,

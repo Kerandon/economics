@@ -17,9 +17,10 @@ const kDashedLineWidth = 4.0;
 /// Text
 const kLabelFontSize = 28.0;
 const kFontSize = 24.0;
-const kLabelTextStyle =
-    TextStyle(fontStyle: FontStyle.italic, fontSize: kFontSize * 0.90);
+const kLabelTextStyle = TextStyle(
+  fontStyle: FontStyle.italic,
+  fontSize: kFontSize * 0.90,
+);
 
 /// Dot
 const kDotRadius = 12.0;
-

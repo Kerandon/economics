@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'app/configs/theme_data.dart';
 import 'app/state/app_state.dart';
-import 'home_page_new/pages/home_page.dart';
+import 'home_page/pages/home_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: EconApp()));

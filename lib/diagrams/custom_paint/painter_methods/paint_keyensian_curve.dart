@@ -16,18 +16,9 @@ void paintKeynesianCurve({
     canvas,
     startPos: Offset(0.20, 0.70),
     points: [
-      CustomBezier(
-        control: Offset(0.65, 0.70),
-        endPoint: Offset(0.65, 0.70),
-      ),
-      CustomBezier(
-        control: Offset(0.80, 0.70),
-        endPoint: Offset(0.80, 0.50),
-      ),
-      CustomBezier(
-        control: Offset(0.80, 0.20),
-        endPoint: Offset(0.80, 0.20),
-      ),
+      CustomBezier(control: Offset(0.65, 0.70), endPoint: Offset(0.65, 0.70)),
+      CustomBezier(control: Offset(0.80, 0.70), endPoint: Offset(0.80, 0.50)),
+      CustomBezier(control: Offset(0.80, 0.20), endPoint: Offset(0.80, 0.20)),
     ],
     label1: DiagramLabel.keynesianAS.label,
     label1Align: LabelAlign.centerTop,

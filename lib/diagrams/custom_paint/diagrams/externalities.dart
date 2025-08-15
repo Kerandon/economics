@@ -29,21 +29,15 @@ class Externalities extends BaseDiagramPainter {
     final posProd = model.subtype == DiagramSubtype.positiveProduction;
     final posCon = model.subtype == DiagramSubtype.positiveConsumption;
 
-
     String supplyLabel = DiagramLabel.sEqualsMPCMSC.label;
     String demandLabel = DiagramLabel.dEqualsMPBMSB.label;
     if (negProd) {
       supplyLabel = DiagramLabel.sEqualsMPC.label;
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        [
-          Offset(0.51, 0.50),
-          Offset(0.40, 0.40),
-          Offset(0.51, 0.30),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, [
+        Offset(0.51, 0.50),
+        Offset(0.40, 0.40),
+        Offset(0.51, 0.30),
+      ]);
 
       /// Dashed Lines Optimum
       paintDiagramDashedLines(
@@ -58,11 +52,7 @@ class Externalities extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.70, 0.10),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.10, 0.70),
-          ),
-        ],
+        bezierPoints: [CustomBezier(endPoint: Offset(0.10, 0.70))],
         label1: DiagramLabel.msc.label,
         label1Align: LabelAlign.centerRight,
       );
@@ -70,7 +60,7 @@ class Externalities extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.65, 0.20),
-    polylineOffsets: [ Offset(0.65, 0.30),],
+        polylineOffsets: [Offset(0.65, 0.30)],
         arrowOnStart: true,
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
@@ -80,33 +70,28 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         DiagramLabel.externality.label,
         Offset(0.90, 0.30),
-        pointerLine: Offset(0.65,0.25),
+        pointerLine: Offset(0.65, 0.25),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
         DiagramLabel.welfareLoss.label,
         Offset(0.46, 0.10),
-        pointerLine: Offset(0.46,0.38),
+        pointerLine: Offset(0.46, 0.38),
       );
     }
     if (negCon) {
       demandLabel = DiagramLabel.dEqualsMPB.label;
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        [
-          Offset(0.51, 0.50),
-          Offset(0.40, 0.60),
-          Offset(0.51, 0.70),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, [
+        Offset(0.51, 0.50),
+        Offset(0.40, 0.60),
+        Offset(0.51, 0.70),
+      ]);
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
-       polylineOffsets: [Offset(0.70, 0.90),],
+        polylineOffsets: [Offset(0.70, 0.90)],
         label2: DiagramLabel.msb.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -124,7 +109,7 @@ class Externalities extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.65, 0.70),
-        polylineOffsets: [ Offset(0.65, 0.80),],
+        polylineOffsets: [Offset(0.65, 0.80)],
         arrowOnStart: true,
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
@@ -134,28 +119,23 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         DiagramLabel.externality.label,
         Offset(0.90, 0.65),
-        pointerLine: Offset(0.65,0.75),
+        pointerLine: Offset(0.65, 0.75),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
         DiagramLabel.welfareLoss.label,
         Offset(0.46, 0.20),
-        pointerLine: Offset(0.46,0.58),
+        pointerLine: Offset(0.46, 0.58),
       );
     }
     if (posProd) {
       supplyLabel = DiagramLabel.sEqualsMPC.label;
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        [
-          Offset(0.50, 0.50),
-          Offset(0.60, 0.60),
-          Offset(0.50, 0.70),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, [
+        Offset(0.50, 0.50),
+        Offset(0.60, 0.60),
+        Offset(0.50, 0.70),
+      ]);
 
       /// Dashed Lines Optimum
       paintDiagramDashedLines(
@@ -171,11 +151,7 @@ class Externalities extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.90, 0.30),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.30, 0.90),
-          ),
-        ],
+        bezierPoints: [CustomBezier(endPoint: Offset(0.30, 0.90))],
         label1: DiagramLabel.msc.label,
         label1Align: LabelAlign.centerRight,
       );
@@ -183,7 +159,7 @@ class Externalities extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.75, 0.30),
-        polylineOffsets: [Offset(0.75, 0.40),],
+        polylineOffsets: [Offset(0.75, 0.40)],
         arrowOnStart: true,
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
@@ -193,28 +169,23 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         DiagramLabel.externality.label,
         Offset(0.90, 0.50),
-        pointerLine: Offset(0.75,0.35),
+        pointerLine: Offset(0.75, 0.35),
       );
       paintTextNormalizedWithinAxis(
         c,
         canvas,
         DiagramLabel.welfareLoss.label,
         Offset(0.54, 0.20),
-        pointerLine: Offset(0.54,0.58),
+        pointerLine: Offset(0.54, 0.58),
       );
     }
     if (posCon) {
       demandLabel = DiagramLabel.dEqualsMPB.label;
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        [
-          Offset(0.50, 0.30),
-          Offset(0.60, 0.40),
-          Offset(0.50, 0.50),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, [
+        Offset(0.50, 0.30),
+        Offset(0.60, 0.40),
+        Offset(0.50, 0.50),
+      ]);
 
       /// Dashed Lines Optimum
       paintDiagramDashedLines(
@@ -229,11 +200,7 @@ class Externalities extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.25, 0.05),
-        bezierPoints: [
-          CustomBezier(
-            endPoint: Offset(0.90, 0.70),
-          ),
-        ],
+        bezierPoints: [CustomBezier(endPoint: Offset(0.90, 0.70))],
         label2: DiagramLabel.msb.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -243,13 +210,13 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         DiagramLabel.welfareLoss.label,
         Offset(0.54, 0.10),
-        pointerLine: Offset(0.54,0.38),
+        pointerLine: Offset(0.54, 0.38),
       );
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.35, 0.20),
-        polylineOffsets: [Offset(0.35, 0.30),],
+        polylineOffsets: [Offset(0.35, 0.30)],
         arrowOnStart: true,
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
@@ -259,7 +226,7 @@ class Externalities extends BaseDiagramPainter {
         canvas,
         DiagramLabel.externality.label,
         Offset(0.15, 0.30),
-        pointerLine: Offset(0.35,0.25),
+        pointerLine: Offset(0.35, 0.25),
       );
     }
 
@@ -280,16 +247,11 @@ class Externalities extends BaseDiagramPainter {
       xAxisLabel: DiagramLabel.q.label,
     );
 
-
     paintCustomDiagramLines(
       c,
       canvas,
       startPos: Offset(0.15, 0.15),
-      bezierPoints: [
-        CustomBezier(
-          endPoint: Offset(0.85, 0.85),
-        ),
-      ],
+      bezierPoints: [CustomBezier(endPoint: Offset(0.85, 0.85))],
       label2: demandLabel,
       label2Align: LabelAlign.centerRight,
     );
@@ -297,11 +259,7 @@ class Externalities extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.85, 0.15),
-      bezierPoints: [
-        CustomBezier(
-          endPoint: Offset(0.15, 0.85),
-        ),
-      ],
+      bezierPoints: [CustomBezier(endPoint: Offset(0.15, 0.85))],
       label1: supplyLabel,
       label1Align: LabelAlign.centerRight,
     );

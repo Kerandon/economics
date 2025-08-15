@@ -28,13 +28,15 @@ class _HomePageNewState extends ConsumerState<HomePage> {
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: 200, // height when expanded
+            expandedHeight: size.height * 0.15, // height when expanded
             pinned: true, // stays visible when collapsed
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: Container(
                 padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.05, vertical: 4),
+                  horizontal: size.width * 0.05,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.black, // semi-transparent black
                   borderRadius: BorderRadius.circular(12), // rounded corners
@@ -53,9 +55,7 @@ class _HomePageNewState extends ConsumerState<HomePage> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: CustomHeading('Key Concepts - Slides'),
-          ),
+          SliverToBoxAdapter(child: CustomHeading('Key Concepts - Slides')),
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
             sliver: SliverGrid(
@@ -64,29 +64,24 @@ class _HomePageNewState extends ConsumerState<HomePage> {
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
               ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  final u = UnitType.values.elementAt(index);
-                  return CustomTile(
-                    text: u.name,
-                    imageURL: u.iconJpg,
-                    onTap: () {
-                      homePageNotifier.setUnit(u);
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => NotesPageContents(),
-                        ),
-                      );
-                    },
-                  );
-                },
-                childCount: 4,
-              ),
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final u = UnitType.values.elementAt(index);
+                return CustomTile(
+                  text: u.name,
+                  imageURL: u.iconJpg,
+                  onTap: () {
+                    homePageNotifier.setUnit(u);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => NotesPageContents(),
+                      ),
+                    );
+                  },
+                );
+              }, childCount: 4),
             ),
           ),
-          SliverToBoxAdapter(
-            child: CustomHeading('Review Tools'),
-          ),
+          SliverToBoxAdapter(child: CustomHeading('Review Tools')),
           SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
             sliver: SliverGrid(
@@ -107,7 +102,8 @@ class _HomePageNewState extends ConsumerState<HomePage> {
             ),
           ),
           SliverPadding(
-              padding: EdgeInsets.symmetric(vertical: size.height * 0.05)),
+            padding: EdgeInsets.symmetric(vertical: size.height * 0.05),
+          ),
         ],
       ),
     );

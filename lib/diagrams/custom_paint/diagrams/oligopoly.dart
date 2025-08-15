@@ -15,10 +15,8 @@ import '../painter_methods/paint_text_normalized_within_axis.dart';
 import '../painter_methods/paint_title.dart';
 
 class Oligopoly extends BaseDiagramPainter {
-  Oligopoly({
-    required DiagramPainterConfig config,
-    required DiagramModel model,
-  }) : super(config, model);
+  Oligopoly({required DiagramPainterConfig config, required DiagramModel model})
+    : super(config, model);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -32,83 +30,79 @@ class Oligopoly extends BaseDiagramPainter {
       xAxisLabel: DiagramLabel.q.label,
     );
 
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.10, 0.20),
-          polylineOffsets: [Offset(0.85, 0.85),],
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.10, 0.20),
+      polylineOffsets: [Offset(0.85, 0.85)],
 
-          label2: DiagramLabel.dEqualsAR.label,
-          label2Align: LabelAlign.centerRight);
+      label2: DiagramLabel.dEqualsAR.label,
+      label2Align: LabelAlign.centerRight,
+    );
 
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.05, 0.25),
-          polylineOffsets: [   Offset(0.55, 1.05),],
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.05, 0.25),
+      polylineOffsets: [Offset(0.55, 1.05)],
 
-          label2: DiagramLabel.mr.label,
-          label2Align: LabelAlign.centerRight);
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        label2: DiagramLabel.mc.label,
-        label2Align: LabelAlign.centerTop,
-        startPos: Offset(0.10, 0.85),
-        bezierPoints: [
-          CustomBezier(
-            control: Offset(0.40, 1.0),
-            endPoint: Offset(0.55, 0.10),
-          ),
-        ],
-      );
+      label2: DiagramLabel.mr.label,
+      label2Align: LabelAlign.centerRight,
+    );
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      label2: DiagramLabel.mc.label,
+      label2Align: LabelAlign.centerTop,
+      startPos: Offset(0.10, 0.85),
+      bezierPoints: [
+        CustomBezier(control: Offset(0.40, 1.0), endPoint: Offset(0.55, 0.10)),
+      ],
+    );
 
+    paintTitle(c, canvas, 'Oligopoly - Cartel');
+    paintShading(canvas, size, ShadeType.abnormalProfit, striped: true, [
+      Offset(0, 0.42),
+      Offset(0.35, 0.42),
+      Offset(0.35, 0.57),
+      Offset(0, 0.57),
+    ]);
+    paintTextNormalizedWithinAxis(
+      c,
+      canvas,
+      DiagramLabel.abnormalProfit.label,
+      Offset(0.25, 0.05),
+      pointerLine: Offset(0.25, 0.45),
+    );
 
+    /// Dashed Lines
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.42,
+      xAxisEndPos: 0.355,
+      yLabel: DiagramLabel.p.label,
+      xLabel: DiagramLabel.qpi.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.57,
+      xAxisEndPos: 0.355,
+      hideXLine: true,
+      yLabel: DiagramLabel.atc.label,
+    );
 
-        paintTitle(c, canvas, 'Oligopoly - Cartel');
-        paintShading(canvas, size, ShadeType.abnormalProfit, striped: true, [
-          Offset(0, 0.42),
-          Offset(0.35, 0.42),
-          Offset(0.35, 0.57),
-          Offset(0, 0.57),
-        ]);
-        paintTextNormalizedWithinAxis(
-          c,
-          canvas,
-          DiagramLabel.abnormalProfit.label,
-          Offset(0.25, 0.05),
-          pointerLine: Offset(0.25, 0.45),
-        );
-
-
-      /// Dashed Lines
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.42,
-        xAxisEndPos: 0.355,
-        yLabel: DiagramLabel.p.label,
-        xLabel: DiagramLabel.qpi.label,
-      );
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.57,
-        xAxisEndPos: 0.355,
-        hideXLine: true,
-        yLabel: DiagramLabel.atc.label,
-      );
-
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        label2: DiagramLabel.atc.label,
-        label2Align: LabelAlign.centerTop,
-        startPos: Offset(0.05, 0.25),
-        bezierPoints: [
-          CustomBezier(
-            control: Offset(0.40, 0.92),
-            endPoint: Offset(0.85, 0.25),
-          ),
-        ],
-      );
-
+    paintCustomDiagramLines(
+      c,
+      canvas,
+      label2: DiagramLabel.atc.label,
+      label2Align: LabelAlign.centerTop,
+      startPos: Offset(0.05, 0.25),
+      bezierPoints: [
+        CustomBezier(control: Offset(0.40, 0.92), endPoint: Offset(0.85, 0.25)),
+      ],
+    );
 
     if (model.subtype == DiagramSubtype.socialWelfare) {
       paintTitle(c, canvas, 'Monopoly - Social Welfare');
@@ -123,17 +117,11 @@ class Oligopoly extends BaseDiagramPainter {
         Offset(0.36, 0.72),
         CustomBezier(control: Offset(0.20, 1.0), endPoint: Offset(0, 0.78)),
       ]);
-      paintShading(
-        canvas,
-        size,
-        ShadeType.welfareLoss,
-        striped: true,
-        [
-          Offset(0.36, 0.42),
-          Offset(0.46, 0.50),
-          Offset(0.36, 0.72),
-        ],
-      );
+      paintShading(canvas, size, ShadeType.welfareLoss, striped: true, [
+        Offset(0.36, 0.42),
+        Offset(0.46, 0.50),
+        Offset(0.36, 0.72),
+      ]);
       paintTextNormalizedWithinAxis(
         c,
         canvas,

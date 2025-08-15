@@ -35,30 +35,24 @@ class AggregateDemand extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.25, 0.20),
-      polylineOffsets: [
-        Offset(0.75, 0.80),
-      ],
+      polylineOffsets: [Offset(0.75, 0.80)],
       label2: aDLabel,
       label2Align: LabelAlign.centerRight,
     );
-    if(model.subtype == DiagramSubtype.determinants){
+    if (model.subtype == DiagramSubtype.determinants) {
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.50, 0.20),
-        polylineOffsets: [
-          Offset(1.0, 0.80),
-        ],
-        label2:DiagramLabel.aD2.label,
+        polylineOffsets: [Offset(1.0, 0.80)],
+        label2: DiagramLabel.aD2.label,
         label2Align: LabelAlign.centerRight,
       );
       paintCustomDiagramLines(
         c,
         canvas,
         startPos: Offset(0.05, 0.25),
-        polylineOffsets: [
-          Offset(0.50, 0.80),
-        ],
+        polylineOffsets: [Offset(0.50, 0.80)],
         label2: DiagramLabel.aD3.label,
         label2Align: LabelAlign.centerRight,
       );
@@ -66,21 +60,17 @@ class AggregateDemand extends BaseDiagramPainter {
         c,
         canvas,
         startPos: Offset(0.57, 0.50),
-        polylineOffsets: [
-          Offset(0.65, 0.50),
-        ],
-       arrowOnEnd: true,
-        arrowOnEndAngle: pi / 2
+        polylineOffsets: [Offset(0.65, 0.50)],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi / 2,
       );
       paintCustomDiagramLines(
-          c,
-          canvas,
-          startPos: Offset(0.43, 0.50),
-          polylineOffsets: [
-            Offset(0.35, 0.50),
-          ],
-          arrowOnEnd: true,
-          arrowOnEndAngle: pi / -2
+        c,
+        canvas,
+        startPos: Offset(0.43, 0.50),
+        polylineOffsets: [Offset(0.35, 0.50)],
+        arrowOnEnd: true,
+        arrowOnEndAngle: pi / -2,
       );
     }
   }

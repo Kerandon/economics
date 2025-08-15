@@ -11,6 +11,4 @@ class PriceControls extends BaseDiagramPainter {
     final c = config.copyWith(painterSize: size);
     paintAxis(c, canvas);
   }
-
-
 }

@@ -5,13 +5,13 @@ import '../painter_constants.dart';
 
 /// for pointsAndBeziers, takes [Offset] and [CustomBezier]
 void paintShading(
-    Canvas canvas,
-    Size size,
-    ShadeType shade,
-    List<dynamic> pointsAndBeziers, {
-      bool striped = true,
-      double stripeSpacing = 8.0,
-    }) {
+  Canvas canvas,
+  Size size,
+  ShadeType shade,
+  List<dynamic> pointsAndBeziers, {
+  bool striped = true,
+  double stripeSpacing = 8.0,
+}) {
   final width = size.width;
   final height = size.height;
   final normalize = 1 - (kAxisIndent * 1.5);

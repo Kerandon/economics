@@ -21,18 +21,20 @@ class ManagedExchangeRate extends BaseDiagramPainter {
     final c = config.copyWith(painterSize: size);
 
     /// Upper band
-    paintDiagramDashedLines(c,
+    paintDiagramDashedLines(
+      c,
       canvas,
       yAxisStartPos: 0.30,
       xAxisEndPos: 1.0,
-    hideXLine: true,
-    yLabel: DiagramLabel.upperBand.label,
-    makeDashed: false,
+      hideXLine: true,
+      yLabel: DiagramLabel.upperBand.label,
+      makeDashed: false,
       color: Colors.red,
     );
 
     /// Lower band
-    paintDiagramDashedLines(c,
+    paintDiagramDashedLines(
+      c,
       canvas,
       yAxisStartPos: 0.70,
       xAxisEndPos: 1.0,
@@ -41,9 +43,6 @@ class ManagedExchangeRate extends BaseDiagramPainter {
       makeDashed: false,
       color: Colors.red,
     );
-
-
-
 
     paintAxis(
       c,
@@ -56,9 +55,7 @@ class ManagedExchangeRate extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.15, 0.15),
-      polylineOffsets: [
-        Offset(0.85, 0.85),
-      ],
+      polylineOffsets: [Offset(0.85, 0.85)],
       label2: DiagramLabel.d1.label,
       label2Align: LabelAlign.centerRight,
     );
@@ -66,9 +63,7 @@ class ManagedExchangeRate extends BaseDiagramPainter {
       c,
       canvas,
       startPos: Offset(0.85, 0.15),
-      polylineOffsets: [
-        Offset(0.15, 0.85),
-      ],
+      polylineOffsets: [Offset(0.15, 0.85)],
       label1: DiagramLabel.s.label,
       label1Align: LabelAlign.centerRight,
     );
@@ -94,13 +89,8 @@ class ManagedExchangeRate extends BaseDiagramPainter {
       paintCustomDiagramLines(
         c,
         canvas,
-        startPos: Offset(
-          0.25,
-          0.05,
-        ),
-        polylineOffsets: [
-          Offset(0.85, 0.65),
-        ],
+        startPos: Offset(0.25, 0.05),
+        polylineOffsets: [Offset(0.85, 0.65)],
         label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );

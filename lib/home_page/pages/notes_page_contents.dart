@@ -1,4 +1,3 @@
-
 import 'package:economics_app/diagrams/enums/unit_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,22 +16,26 @@ class NotesPageContents extends ConsumerWidget {
     final subunits = unit.subunits; // Uses the extension getter
 
     return Scaffold(
-        appBar: AppBar(),
-        body: ListView(
-          children: [
-            ...subunits.map(
-              ((e) => ListTile(
-                    leading: Text(e.id),
-                    title: Text(e.title),
-                    trailing: Icon(Icons.arrow_forward_ios_outlined),
-                    onTap: () {
-                      homePageNotifier.setSubunit(e);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => NotesExpansionTilePage()));
-                    },
-                  )),
-            ),
-          ],
-        ));
+      appBar: AppBar(title: Text(unit.title)),
+      body: ListView(
+        children: [
+          ...subunits.map(
+            ((e) => ListTile(
+              leading: Text(e.id),
+              title: Text(e.title),
+              trailing: Icon(Icons.arrow_forward_ios_outlined),
+              onTap: () {
+                homePageNotifier.setSubunit(e);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => NotesExpansionTilePage(),
+                  ),
+                );
+              },
+            )),
+          ),
+        ],
+      ),
+    );
   }
 }

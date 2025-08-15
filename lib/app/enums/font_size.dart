@@ -1,14 +1,4 @@
-enum FontSize {
-
-  tiny,
-  small,
-  medium,
-  big,
-  large,
-  huge,
-
-
-}
+enum FontSize { tiny, small, medium, big, large, huge }
 
 extension FontSizeExtension on FontSize {
   double get multiplier {

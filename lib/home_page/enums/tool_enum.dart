@@ -1,9 +1,6 @@
 import '../../diagrams/enums/diagram_bundle_enum.dart';
 
-enum Tool {
-  diagrams,
-  calculations,
-}
+enum Tool { diagrams, calculations }
 
 extension ToolExtension on Tool {
   String get title {

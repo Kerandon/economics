@@ -1,4 +1,5 @@
 enum DiagramTitle {
+  microDemandPriceChange,
   keynesianModel,
   monetaristNewClassicalModel,
   srasIncreaseDecrease,
@@ -7,6 +8,8 @@ enum DiagramTitle {
 extension ToTitle on DiagramTitle {
   String title() {
     switch (this) {
+      case DiagramTitle.microDemandPriceChange:
+        return 'Micro Demand Price Change';
       case DiagramTitle.keynesianModel:
         return 'Keynesian Model';
       case DiagramTitle.monetaristNewClassicalModel:
@@ -16,4 +19,3 @@ extension ToTitle on DiagramTitle {
     }
   }
 }
-

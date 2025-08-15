@@ -1,4 +1,4 @@
-
+import 'package:economics_app/diagrams/diagram_widgets/full_screen_diagrams_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../models/diagram_bundle.dart';
@@ -9,7 +9,10 @@ class DiagramBundleWidget extends StatelessWidget {
   const DiagramBundleWidget({
     super.key,
     required this.diagramBundle,
+    this.fitAll = true,
   });
+
+  final bool fitAll;
 
   @override
   Widget build(BuildContext context) {
@@ -21,46 +24,81 @@ class DiagramBundleWidget extends StatelessWidget {
     }
 
     final maxDimension = size.width < size.height ? size.width : size.height;
-    final maxAllowedSize = maxDimension * 0.8;
+    final maxAllowedSize = maxDimension * 0.90;
 
-    if (diagrams.length == 1) {
-      final diagramSize = maxAllowedSize.clamp(0, maxAllowedSize).toDouble();
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: InteractiveViewer(
+        maxScale: 5,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (fitAll) ...[
+                  IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                            FullScreenDiagramsDialog(diagramBundle),
+                      );
+                    },
+                    icon: Icon(Icons.zoom_in_outlined),
+                  ),
+                ],
+              ],
+            ),
+            diagrams.length == 1
+                ? Center(
+                    child: SizedBox(
+                      width: maxAllowedSize,
+                      height: maxAllowedSize,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: size.height * 0.02,
+                        ),
+                        child: CustomPaint(
+                          painter: diagrams.first.painter,
+                          size: Size(maxAllowedSize, maxAllowedSize),
+                        ),
+                      ),
+                    ),
+                  )
+                : SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: diagrams.map((diagram) {
+                        int count = 1;
+                        if (fitAll) {
+                          count = diagrams.length;
+                        }
+                        final individualSize =
+                            (maxAllowedSize)
+                                .clamp(50, maxAllowedSize)
+                                .toDouble() /
+                            count;
 
-      return Center(
-        child: SizedBox(
-          width: diagramSize,
-          height: diagramSize,
-          child: CustomPaint(
-            painter: diagrams.first.painter,
-            size: Size(diagramSize, diagramSize),
-          ),
+                        return Padding(
+                          padding: EdgeInsets.all(
+                            fitAll ? 0 : size.width * 0.03,
+                          ),
+                          child: SizedBox(
+                            width: individualSize,
+                            height: individualSize,
+                            child: CustomPaint(
+                              painter: diagram.painter,
+                              size: Size(individualSize, individualSize),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+          ],
         ),
-      );
-    } else {
-      // For multiple diagrams, reduce size proportionally and wrap in a Row
-      final count = diagrams.length;
-      final individualSize =
-      (maxAllowedSize / count).clamp(50, maxAllowedSize).toDouble();
-
-      return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: diagrams.map((diagram) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: SizedBox(
-                width: individualSize,
-                height: individualSize,
-                child: CustomPaint(
-                  painter: diagram.painter,
-                  size: Size(individualSize, individualSize),
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      );
-    }
+      ),
+    );
   }
 }

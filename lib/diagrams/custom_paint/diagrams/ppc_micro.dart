@@ -13,10 +13,8 @@ import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_dot.dart';
 
 class PPCMicro extends BaseDiagramPainter {
-  PPCMicro({
-    required DiagramPainterConfig config,
-    required DiagramModel model,
-  }) : super(config, model);
+  PPCMicro({required DiagramPainterConfig config, required DiagramModel model})
+    : super(config, model);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -42,10 +40,7 @@ class PPCMicro extends BaseDiagramPainter {
         bezierPoints: [
           CustomBezier(
             control: Offset(0.70, 0.35),
-            endPoint: Offset(
-              0.80,
-              (1),
-            ),
+            endPoint: Offset(0.80, (1)),
           ),
         ],
       );
@@ -149,8 +144,11 @@ class PPCMicro extends BaseDiagramPainter {
       }
     }
     if (model.subtype == DiagramSubtype.constantOpportunityCost) {
-      paintCustomDiagramLines(c, canvas,
-          startPos: Offset(0.0, 0.20), polylineOffsets: [Offset(0.80, 1.0)],
+      paintCustomDiagramLines(
+        c,
+        canvas,
+        startPos: Offset(0.0, 0.20),
+        polylineOffsets: [Offset(0.80, 1.0)],
       );
       paintDiagramDashedLines(
         c,
@@ -194,36 +192,11 @@ class PPCMicro extends BaseDiagramPainter {
         hideXLine: true,
         xLabel: '120',
       );
-      paintDot(
-        c,
-        canvas,
-        pos: Offset(0.0, 0.20),
-        label: DiagramLabel.a.label,
-      );
-      paintDot(
-        c,
-        canvas,
-        pos: Offset(0.20, 0.40),
-        label: DiagramLabel.b.label,
-      );
-      paintDot(
-        c,
-        canvas,
-        pos: Offset(0.40, 0.60),
-        label: DiagramLabel.c.label,
-      );
-      paintDot(
-        c,
-        canvas,
-        pos: Offset(0.60, 0.80),
-        label: DiagramLabel.d.label,
-      );
-      paintDot(
-        c,
-        canvas,
-        pos: Offset(0.80, 1.00),
-        label: DiagramLabel.e.label,
-      );
+      paintDot(c, canvas, pos: Offset(0.0, 0.20), label: DiagramLabel.a.label);
+      paintDot(c, canvas, pos: Offset(0.20, 0.40), label: DiagramLabel.b.label);
+      paintDot(c, canvas, pos: Offset(0.40, 0.60), label: DiagramLabel.c.label);
+      paintDot(c, canvas, pos: Offset(0.60, 0.80), label: DiagramLabel.d.label);
+      paintDot(c, canvas, pos: Offset(0.80, 1.00), label: DiagramLabel.e.label);
     }
     bool increaseInPotential = true;
     if (model.subtype == DiagramSubtype.decreaseInProductionPotential) {
@@ -231,8 +204,12 @@ class PPCMicro extends BaseDiagramPainter {
     }
     if (model.subtype == DiagramSubtype.increaseInProductionPotential ||
         model.subtype == DiagramSubtype.decreaseInProductionPotential) {
-      final String label1 = increaseInPotential ? DiagramLabel.pPC1.label : DiagramLabel.pPC2.label;
-      final String label2 = increaseInPotential ? DiagramLabel.pPC2.label : DiagramLabel.pPC1.label;
+      final String label1 = increaseInPotential
+          ? DiagramLabel.pPC1.label
+          : DiagramLabel.pPC2.label;
+      final String label2 = increaseInPotential
+          ? DiagramLabel.pPC2.label
+          : DiagramLabel.pPC1.label;
 
       paintDot(c, canvas, pos: Offset(0.59, 0.70), label: label1);
       paintDot(c, canvas, pos: Offset(0.74, 0.50), label: label2);
@@ -244,10 +221,7 @@ class PPCMicro extends BaseDiagramPainter {
         bezierPoints: [
           CustomBezier(
             control: Offset(0.85, 0.25),
-            endPoint: Offset(
-              0.90,
-              (1.0),
-            ),
+            endPoint: Offset(0.90, (1.0)),
           ),
         ],
       );
@@ -258,30 +232,26 @@ class PPCMicro extends BaseDiagramPainter {
         bezierPoints: [
           CustomBezier(
             control: Offset(0.60, 0.45),
-            endPoint: Offset(
-              0.70,
-              (1),
-            ),
+            endPoint: Offset(0.70, (1)),
           ),
         ],
       );
 
-
       if (model.subtype == DiagramSubtype.increaseInProductionPotential ||
           model.subtype == DiagramSubtype.decreaseInProductionPotential) {
-        paintCustomDiagramLines(c, canvas,
-            startPos: Offset(0.60, 0.60),
-            polylineOffsets: [
-              Offset(0.68, 0.55),
-            ],
-            arrowOnStart: !increaseInPotential,
-            arrowOnStartAngle: math.pi * 1.3,
-            arrowOnEnd: increaseInPotential,
-            arrowOnEndAngle: math.pi / 3);
+        paintCustomDiagramLines(
+          c,
+          canvas,
+          startPos: Offset(0.60, 0.60),
+          polylineOffsets: [Offset(0.68, 0.55)],
+          arrowOnStart: !increaseInPotential,
+          arrowOnStartAngle: math.pi * 1.3,
+          arrowOnEnd: increaseInPotential,
+          arrowOnEndAngle: math.pi / 3,
+        );
       }
     }
     if (model.subtype == DiagramSubtype.actualGrowth) {
-
       paintDot(
         c,
         canvas,
@@ -289,15 +259,15 @@ class PPCMicro extends BaseDiagramPainter {
         label: DiagramLabel.a.label,
         labelAlign: LabelAlign.centerLeft,
       );
-      paintDot(
+      paintDot(c, canvas, pos: Offset(0.40, 0.60), label: DiagramLabel.b.label);
+      paintCustomDiagramLines(
         c,
         canvas,
-        pos: Offset(0.40, 0.60),
-        label: DiagramLabel.b.label,
+        startPos: Offset(0.25, 0.68),
+        polylineOffsets: [Offset(0.34, 0.63)],
+        arrowOnEnd: true,
+        arrowOnEndAngle: math.pi / 3.5,
       );
-      paintCustomDiagramLines(c, canvas, startPos: Offset(0.25,0.68),polylineOffsets: [Offset(0.34,0.63)],
-      arrowOnEnd: true,
-      arrowOnEndAngle: math.pi / 3.5);
     }
   }
 }

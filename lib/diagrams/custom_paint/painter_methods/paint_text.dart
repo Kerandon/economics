@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import '../../enums/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
+
 void paintText(
-    DiagramPainterConfig config,
-    Canvas canvas,
-    String label,
-    Offset position, {
-      double fontSize = kFontSize,
-      TextStyle? style,
-      double angle = 0,
-      LabelAlign labelAlign = LabelAlign.center,
-      Axis? axis,
-      bool? yLabelIsVertical,
-      bool paintBackground = false,
-      Color? backgroundColor,
-    }) {
+  DiagramPainterConfig config,
+  Canvas canvas,
+  String label,
+  Offset position, {
+  double fontSize = kFontSize,
+  TextStyle? style,
+  double angle = 0,
+  LabelAlign labelAlign = LabelAlign.center,
+  Axis? axis,
+  bool? yLabelIsVertical,
+  bool paintBackground = false,
+  Color? backgroundColor,
+}) {
   fontSize *= config.averageRatio;
 
   final defaultStyle = TextStyle(
@@ -24,10 +25,12 @@ void paintText(
     fontSize: fontSize,
   );
 
-  style = style?.copyWith(
-    color: style.color ?? config.colorScheme.onSurface,
-    fontSize: style.fontSize ?? fontSize,
-  ) ?? defaultStyle;
+  style =
+      style?.copyWith(
+        color: style.color ?? config.colorScheme.onSurface,
+        fontSize: style.fontSize ?? fontSize,
+      ) ??
+      defaultStyle;
 
   final width = config.painterSize.width;
   final height = config.painterSize.height;
@@ -93,7 +96,10 @@ void paintText(
     } else if (axis == Axis.horizontal) {
       double horizontalAxis = height - heightIndent + kAxisTextIndent;
       horizontalAxis += kAxisTextIndent * width;
-      baseOffset = Offset(width - (widthIndent / 2) - textWidth, horizontalAxis);
+      baseOffset = Offset(
+        width - (widthIndent / 2) - textWidth,
+        horizontalAxis,
+      );
     }
   }
 

@@ -32,27 +32,35 @@ class _PopOutAnimationState extends State<PopOutAnimation>
   @override
   void initState() {
     _controller = AnimationController(
-        vsync: this,
-        duration: Duration(
-          milliseconds: widget.duration,
-        ));
+      vsync: this,
+      duration: Duration(milliseconds: widget.duration),
+    );
     _animation = TweenSequence<double>([
       if (!widget.addPop) ...[
         TweenSequenceItem(
-            tween: Tween<double>(begin: widget.startPos, end: 1.0)
-                .chain(CurveTween(curve: Curves.bounceInOut)),
-            weight: 80),
+          tween: Tween<double>(
+            begin: widget.startPos,
+            end: 1.0,
+          ).chain(CurveTween(curve: Curves.bounceInOut)),
+          weight: 80,
+        ),
       ],
       if (widget.addPop) ...[
         TweenSequenceItem(
-            tween: Tween<double>(begin: widget.startPos, end: 1.1)
-                .chain(CurveTween(curve: Curves.bounceOut)),
-            weight: 40),
+          tween: Tween<double>(
+            begin: widget.startPos,
+            end: 1.1,
+          ).chain(CurveTween(curve: Curves.bounceOut)),
+          weight: 40,
+        ),
         TweenSequenceItem(
-            tween: Tween<double>(begin: 1.1, end: 1.0)
-                .chain(CurveTween(curve: Curves.bounceIn)),
-            weight: 80),
-      ]
+          tween: Tween<double>(
+            begin: 1.1,
+            end: 1.0,
+          ).chain(CurveTween(curve: Curves.bounceIn)),
+          weight: 80,
+        ),
+      ],
     ]).animate(_controller);
 
     _controller.addStatusListener((status) {
@@ -86,14 +94,16 @@ class _PopOutAnimationState extends State<PopOutAnimation>
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()
-                ..setEntry(3, 2, 0.001)
-                ..scale(_animation.value),
-              child: widget.child);
-        });
+      animation: _animation,
+      builder: (context, child) {
+        return Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.identity()
+            ..setEntry(3, 2, 0.001)
+            ..scale(_animation.value),
+          child: widget.child,
+        );
+      },
+    );
   }
 }

@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
-void paintAxisLines(DiagramPainterConfig config, Canvas canvas,
-    {Color color = Colors.white, double strokeWidth = kAxisWidth}) {
+void paintAxisLines(
+  DiagramPainterConfig config,
+  Canvas canvas, {
+  Color color = Colors.white,
+  double strokeWidth = kAxisWidth,
+}) {
   final double width = config.painterSize.width;
   final double height = config.painterSize.height;
 
@@ -16,8 +20,10 @@ void paintAxisLines(DiagramPainterConfig config, Canvas canvas,
   final startYOffset = Offset(width * kAxisIndent, height * kAxisIndent / 2);
   final endYOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
   final startXOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
-  final endXOffset =
-      Offset(width * (1 - kAxisIndent / 2), height * (1 - kAxisIndent));
+  final endXOffset = Offset(
+    width * (1 - kAxisIndent / 2),
+    height * (1 - kAxisIndent),
+  );
   canvas
     ..drawLine(startYOffset, endYOffset, axisPaint)
     ..drawLine(startXOffset, endXOffset, axisPaint);
@@ -31,8 +37,12 @@ void paintAxisLines(DiagramPainterConfig config, Canvas canvas,
   paintArrowHead(config, canvas, positionOfArrow: startYOffset);
 
   /// X Axis Arrow
-  paintArrowHead(config, canvas,
-      positionOfArrow: endXOffset, rotationAngle: pi / 2);
+  paintArrowHead(
+    config,
+    canvas,
+    positionOfArrow: endXOffset,
+    rotationAngle: pi / 2,
+  );
 
   canvas.save();
   canvas.drawPath(path, paint);

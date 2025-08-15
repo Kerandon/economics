@@ -29,6 +29,7 @@ enum DiagramLabel {
   s1,
   d1,
   demand,
+  dMarket,
   supply,
   s2,
   s3,
@@ -36,6 +37,7 @@ enum DiagramLabel {
   d3,
   p,
   price,
+  price$,
   pD,
   p1,
   p2,
@@ -43,6 +45,7 @@ enum DiagramLabel {
   pp,
   pSub,
   q,
+  quantityOfChocolateBars,
   q1,
   q2,
   q3,
@@ -538,7 +541,7 @@ extension MicroLabelExtension on DiagramLabel {
       case DiagramLabel.timeYears:
         return 'Time (Years)';
       case DiagramLabel.price:
-        return 'Time (Years)';
+        return 'Price';
       case DiagramLabel.sRPC:
         return 'SRPC';
       case DiagramLabel.yE:
@@ -557,6 +560,12 @@ extension MicroLabelExtension on DiagramLabel {
         return 'Supply';
       case DiagramLabel.s3:
         return 'S3';
+      case DiagramLabel.price$:
+        return 'Price\n(\$)';
+      case DiagramLabel.quantityOfChocolateBars:
+        return 'Quantity of Choc. Bars';
+      case DiagramLabel.dMarket:
+        return 'D (Market)';
     }
   }
 }
