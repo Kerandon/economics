@@ -1,7 +1,11 @@
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../diagrams/diagram_widgets/diagram_bundle_widget.dart';
+import '../custom_widgets/custom_text_box.dart';
 import '../data/get_slides_by_key.dart';
+import '../enums/text_box_type.dart';
 import '../state_management/home_page_state.dart';
 
 class NotesExpansionTilePage extends ConsumerWidget {
@@ -21,53 +25,80 @@ class NotesExpansionTilePage extends ConsumerWidget {
       appBar: AppBar(title: Text(homePageState.selectedSubunit?.title ?? '')),
       body: ListView(
         children: slides.map((s) {
-          return ExpansionTile(
-            title: Text(s.title ?? 'No title'),
-            children: [
-              Container(
-                color: Colors.green,
-                child: Column(
-                  children: [
-                    if (s.contents?.isNotEmpty ?? false)
-                      ...s.contents!.map((c) {
-                        return Column(
-                          children: [
-                            if (c.alert?.isNotEmpty ?? false)
-                              Container(
-                                color: Colors.red,
-                                child: Text(c.alert ?? 'No alert'),
-                              ),
-                            if (c.tip?.isNotEmpty ?? false)
-                              Container(
-                                color: Colors.blue,
-                                child: Text(c.tip ?? 'no tip'),
-                              ),
-                            if (c.content?.isNotEmpty ?? false)
-                              Container(
-                                color: Colors.purpleAccent,
-                                child: Text(c.content ?? 'no content'),
-                              ),
-                            if (c.diagramBundles?.isNotEmpty ?? false)
-                              Container(
-                                height: 500,
-                                width: 500,
-                                color: Colors.orange,
-                                child: Row(
-                                  children: [
-                                    ...c.diagramBundles!.map(
-                                      (b) =>
-                                          DiagramBundleWidget(diagramBundle: b),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                          ],
-                        );
-                      }),
-                  ],
-                ),
+          return Container(
+            color: s.hl == true ? theme.primaryColorDark : theme.primaryColor,
+            child: ExpansionTile(
+              textColor: Colors.white,
+              initiallyExpanded: true,
+              title: HtmlWidget(
+                '${s.title} ${s.hl == true ? '<strong>(HL)</strong>' : ''}',
               ),
-            ],
+              children: [
+                Container(
+                  color: theme.colorScheme.surface,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * kPageIndentHorizontal,
+                          vertical: size.height * kPageIndentVertical,
+                        ),
+                        child: Column(
+                          children: [
+                            if (s.contents?.isNotEmpty ?? false)
+                              ...s.contents!.map((c) {
+                                return Column(
+                                  children: [
+                                    if (c.term != null)
+                                      CustomTextBox(
+                                        text:
+                                            '<strong>${c.term?.term}</strong> ${c.term?.explanation}',
+                                        type: TextBoxType.term,
+                                      ),
+
+                                    if (c.alert?.isNotEmpty ?? false)
+                                      CustomTextBox(
+                                        text: c.alert ?? '',
+                                        type: TextBoxType.alert,
+                                      ),
+                                    if (c.tip?.isNotEmpty ?? false)
+                                      CustomTextBox(
+                                        text: c.tip ?? '',
+                                        type: TextBoxType.tip,
+                                      ),
+                                    if (c.keyContent != null)
+                                      CustomTextBox(
+                                        text:
+                                            '<h3>${c.keyContent?.title}</h3> <p>${c.keyContent?.content}</p>',
+                                        type: TextBoxType.keyContent,
+                                      ),
+                                    if (c.content?.isNotEmpty ?? false)
+                                      CustomTextBox(
+                                        text: c.content ?? '',
+                                        type: TextBoxType.content,
+                                      ),
+
+                                    if (c.diagramBundles?.isNotEmpty ?? false)
+                                      Row(
+                                        children: [
+                                          ...c.diagramBundles!.map(
+                                            (b) => DiagramBundleWidget(
+                                              diagramBundle: b,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                );
+                              }),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           );
         }).toList(),
       ),

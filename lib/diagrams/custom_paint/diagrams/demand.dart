@@ -151,6 +151,12 @@ class Demand extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.determinants) {
+      paintAxis(
+        c,
+        canvas,
+        yAxisLabel: DiagramLabel.p.label,
+        xAxisLabel: DiagramLabel.q.label,
+      );
       paintDemand(c, canvas);
     }
 

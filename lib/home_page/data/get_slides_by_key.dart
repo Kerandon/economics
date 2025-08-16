@@ -4,13 +4,13 @@ import '../../diagrams/data/all_diagrams.dart';
 import '../../diagrams/enums/unit_type.dart';
 import '../models/custom_slide.dart';
 
-List<CustomSlide2> getSlides({
+List<CustomSlide> getSlides({
   required Size size,
   required ThemeData theme,
   dynamic key,
 }) {
-  final List<CustomSlide2> allSlides = slides2.toList();
-  final List<CustomSlide2> allSlidesPopulated = [];
+  final List<CustomSlide> allSlides = slides.toList();
+  final List<CustomSlide> allSlidesPopulated = [];
 
   for (var slide in allSlides) {
     if (slide.contents?.isNotEmpty ?? false) {
