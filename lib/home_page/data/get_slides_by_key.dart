@@ -1,19 +1,43 @@
 import 'package:economics_app/home_page/data/get_slides.dart';
+import 'package:flutter/material.dart';
+import '../../diagrams/data/all_diagrams.dart';
 import '../../diagrams/enums/unit_type.dart';
 import '../models/custom_slide.dart';
 
-List<CustomSlide> getSlidesByKey(dynamic key) {
-  final allSlides = slides.toList();
+List<CustomSlide2> getSlides({
+  required Size size,
+  required ThemeData theme,
+  dynamic key,
+}) {
+  final List<CustomSlide2> allSlides = slides2.toList();
+  final List<CustomSlide2> allSlidesPopulated = [];
+
+  for (var slide in allSlides) {
+    if (slide.contents?.isNotEmpty ?? false) {
+      // Map over contents and add diagramBundles where needed
+      final updatedContents = slide.contents!.map((content) {
+        if (content.diagramBundleEnums?.isNotEmpty ?? false) {
+          final diagramBundles = AllDiagrams(
+            size: size,
+            colorScheme: theme.colorScheme,
+          ).getDiagramBundles(diagramBundleEnums: content.diagramBundleEnums);
+          return content.copyWith(diagramBundles: diagramBundles.toList());
+        }
+        return content;
+      }).toList();
+
+      allSlidesPopulated.add(slide.copyWith(contents: updatedContents));
+    } else {
+      // If slide has no contents, just add as-is
+      allSlidesPopulated.add(slide);
+    }
+  }
+
   if (key is UnitType) {
-    return allSlides.where((slide) => slide.section == key).toList();
-  }
-  // If key is a Subunit, filter by that subunit
-  else if (key is Subunit) {
-    return allSlides.where((slide) => slide.section == key).toList();
+    return allSlidesPopulated.where((slide) => slide.section == key).toList();
+  } else if (key is Subunit) {
+    return allSlidesPopulated.where((slide) => slide.section == key).toList();
   }
 
-  // Add more type checks for UnitType or String if you want, e.g.:
-
-  // If key type is not handled, return all slides or empty list
   return [];
 }

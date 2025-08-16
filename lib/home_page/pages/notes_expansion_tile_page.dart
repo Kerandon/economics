@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../app/configs/constants.dart';
-import '../../diagrams/data/all_diagrams.dart';
 import '../../diagrams/diagram_widgets/diagram_bundle_widget.dart';
 import '../data/get_slides_by_key.dart';
-import '../models/custom_slide.dart';
 import '../state_management/home_page_state.dart';
 
 class NotesExpansionTilePage extends ConsumerWidget {
@@ -16,50 +12,64 @@ class NotesExpansionTilePage extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final homePageState = ref.watch(homePageProvider);
-    final slides = getSlidesByKey(homePageState.selectedSubunit);
+    final slides = getSlides(
+      size: size,
+      theme: theme,
+      key: homePageState.selectedSubunit,
+    );
     return Scaffold(
       appBar: AppBar(title: Text(homePageState.selectedSubunit?.title ?? '')),
       body: ListView(
-        children: [
-          ...slides.map((CustomSlide s) {
-            final diagramBundles = AllDiagrams(
-              size: size,
-              colorScheme: theme.colorScheme,
-            ).getDiagramBundles(diagramBundleEnums: s.diagramBundleEnums);
-            return ExpansionTile(
-              initiallyExpanded: true,
-              tilePadding: EdgeInsets
-                  .zero, // remove default padding so Container fills header
-              title: Container(
-                width: double.infinity, // make container full width
-                color: theme.colorScheme.primary, // background color
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ), // padding inside header
-                child: Text(
-                  s.title ?? 'No title',
-                  style: theme
-                      .primaryTextTheme
-                      .titleMedium, // ensure contrast text style
+        children: slides.map((s) {
+          return ExpansionTile(
+            title: Text(s.title ?? 'No title'),
+            children: [
+              Container(
+                color: Colors.green,
+                child: Column(
+                  children: [
+                    if (s.contents?.isNotEmpty ?? false)
+                      ...s.contents!.map((c) {
+                        return Column(
+                          children: [
+                            if (c.alert?.isNotEmpty ?? false)
+                              Container(
+                                color: Colors.red,
+                                child: Text(c.alert ?? 'No alert'),
+                              ),
+                            if (c.tip?.isNotEmpty ?? false)
+                              Container(
+                                color: Colors.blue,
+                                child: Text(c.tip ?? 'no tip'),
+                              ),
+                            if (c.content?.isNotEmpty ?? false)
+                              Container(
+                                color: Colors.purpleAccent,
+                                child: Text(c.content ?? 'no content'),
+                              ),
+                            if (c.diagramBundles?.isNotEmpty ?? false)
+                              Container(
+                                height: 500,
+                                width: 500,
+                                color: Colors.orange,
+                                child: Row(
+                                  children: [
+                                    ...c.diagramBundles!.map(
+                                      (b) =>
+                                          DiagramBundleWidget(diagramBundle: b),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        );
+                      }),
+                  ],
                 ),
               ),
-              children: [
-                if (s.content?.isNotEmpty ?? false) ...[
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: size.width * kPageIndentHorizontal,
-                    ),
-                    child: HtmlWidget(s.content ?? "No content"),
-                  ),
-                ],
-                ...diagramBundles.map(
-                  (b) => DiagramBundleWidget(diagramBundle: b),
-                ),
-              ],
-            );
-          }),
-        ],
+            ],
+          );
+        }).toList(),
       ),
     );
   }
