@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
+import '../../enums/diagram_bundle_enum.dart';
 import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
 import '../../enums/label_align.dart';
@@ -20,6 +22,20 @@ class Supply extends BaseDiagramPainter {
     final c = config.copyWith(painterSize: size);
 
     var supplyLabel = DiagramLabel.supply.label;
+
+    if (model.diagramBundleEnum == DiagramBundleEnum.microSupplyPriceChanges) {
+      paintTitle(c, canvas, 'Title');
+    }
+
+    if (model.subtype == DiagramSubtype.priceChange) {
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.30,
+        xAxisEndPos: 0.30,
+      );
+    }
+
     if (model.subtype == DiagramSubtype.determinants) {
       supplyLabel = DiagramLabel.s1.label;
     }
@@ -108,3 +124,21 @@ class Supply extends BaseDiagramPainter {
     }
   }
 }
+
+class Supply2 extends BaseDiagramPainter2 {
+  Supply2(super.config, super.diagramBundleEnum);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = config.copyWith(painterSize: size);
+
+    if (diagramBundleEnum == DiagramBundleEnum.microSupplyPriceChanges) {
+      paintAxis(c, canvas, xAxisLabel: 'Price Changes');
+    }
+    if (diagramBundleEnum == DiagramBundleEnum.microSupplyDeterminants) {
+      paintAxis(c, canvas, xAxisLabel: 'Price Determinants');
+    }
+  }
+}
+
+

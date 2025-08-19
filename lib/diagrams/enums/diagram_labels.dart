@@ -150,7 +150,9 @@ enum DiagramLabel {
   yE,
   yInf,
   yDef,
-  sWTariff,
+  dW,
+  dS,
+  sWT,
   sWQuota,
   pW,
   pWT,
@@ -187,385 +189,203 @@ enum DiagramLabel {
 
 extension MicroLabelExtension on DiagramLabel {
   String get label {
-    switch (this) {
-      case DiagramLabel.p:
-        return 'P';
-      case DiagramLabel.q:
-        return 'Q';
-      case DiagramLabel.pe:
-        return 'Pe';
-      case DiagramLabel.qe:
-        return 'Qe';
-      case DiagramLabel.d:
-        return 'D';
-      case DiagramLabel.d1:
-        return 'D₁';
-      case DiagramLabel.s:
-        return 'S';
-      case DiagramLabel.s1:
-        return 'S₁';
-      case DiagramLabel.p1:
-        return 'P₁';
-      case DiagramLabel.p2:
-        return 'P₂';
-      case DiagramLabel.q1:
-        return 'Q₁';
-      case DiagramLabel.q2:
-        return 'Q₂';
+    return switch (this) {
+      DiagramLabel.p => 'P',
+      DiagramLabel.q => 'Q',
+      DiagramLabel.pe => 'Pe',
+      DiagramLabel.qe => 'Qe',
+      DiagramLabel.d => 'D',
+      DiagramLabel.d1 => 'D₁',
+      DiagramLabel.s => 'S',
+      DiagramLabel.s1 => 'S₁',
+      DiagramLabel.p1 => 'P₁',
+      DiagramLabel.p2 => 'P₂',
+      DiagramLabel.q1 => 'Q₁',
+      DiagramLabel.q2 => 'Q₂',
 
-      case DiagramLabel.s2:
-        return 'S₂';
-      case DiagramLabel.d2:
-        return 'D₂';
+      DiagramLabel.s2 => 'S₂',
+      DiagramLabel.d2 => 'D₂',
 
-      case DiagramLabel.dEqualsMPBMSB:
-        return 'D=MPB=MSB';
-      case DiagramLabel.mpc:
-        return 'S=MPC';
-      case DiagramLabel.qS:
-        return 'Qs';
-      case DiagramLabel.qD:
-        return 'Qd';
-      case DiagramLabel.pM:
-        return 'Pᴹ';
+      DiagramLabel.dEqualsMPBMSB => 'D=MPB=MSB',
+      DiagramLabel.mpc => 'S=MPC',
+      DiagramLabel.qS => 'Qs',
+      DiagramLabel.qD => 'Qd',
+      DiagramLabel.pM => 'Pᴹ',
 
-      case DiagramLabel.shortage:
-        return 'shortage';
-      case DiagramLabel.surplus:
-        return 'surplus';
-      case DiagramLabel.msc:
-        return 'MSC';
-      case DiagramLabel.pOpt:
-        return 'Popt';
-      case DiagramLabel.pm:
-        return 'Pm';
+      DiagramLabel.shortage => 'shortage',
+      DiagramLabel.surplus => 'surplus',
+      DiagramLabel.msc => 'MSC',
+      DiagramLabel.pOpt => 'Popt',
+      DiagramLabel.pm => 'Pm',
 
-      case DiagramLabel.dEqualsMPB:
-        return 'D=MPB';
-      case DiagramLabel.qOpt:
-        return 'Qopt';
-      case DiagramLabel.qm:
-        return 'Qm';
-      case DiagramLabel.priceCostsRevenue:
-        return 'Price,\nCosts,\nRevenues\n(\$)';
-      case DiagramLabel.quantityFirm:
-        return 'Quantity - Firm';
-      case DiagramLabel.d1EqualsAR1MR1:
-        return 'D₁=AR₁=MR₁';
-      case DiagramLabel.dEqualsARMR:
-        return 'D=AR=MR';
-      case DiagramLabel.mr:
-        return 'MR';
-      case DiagramLabel.mc:
-        return 'MC';
-      case DiagramLabel.msb:
-        return 'MSB';
-      case DiagramLabel.atc:
-        return 'ATC';
-      case DiagramLabel.srac:
-        return 'SRAC';
-      case DiagramLabel.mcEqualsMR:
-        return 'MC=MR';
-      case DiagramLabel.tablets:
-        return 'Tablets';
-      case DiagramLabel.phones:
-        return 'Phones';
-      case DiagramLabel.soccerBalls:
-        return 'Soccer Balls';
-      case DiagramLabel.volleyBalls:
-        return 'Volley Balls';
+      DiagramLabel.dEqualsMPB => 'D=MPB',
+      DiagramLabel.qOpt => 'Qopt',
+      DiagramLabel.qm => 'Qm',
+      DiagramLabel.priceCostsRevenue => 'Price,\nCosts,\nRevenues\n(\$)',
+      DiagramLabel.quantityFirm => 'Quantity - Firm',
+      DiagramLabel.d1EqualsAR1MR1 => 'D₁=AR₁=MR₁',
+      DiagramLabel.dEqualsARMR => 'D=AR=MR',
+      DiagramLabel.mr => 'MR',
+      DiagramLabel.mc => 'MC',
+      DiagramLabel.msb => 'MSB',
+      DiagramLabel.atc => 'ATC',
+      DiagramLabel.srac => 'SRAC',
+      DiagramLabel.mcEqualsMR => 'MC=MR',
+      DiagramLabel.tablets => 'Tablets',
+      DiagramLabel.phones => 'Phones',
+      DiagramLabel.soccerBalls => 'Soccer Balls',
+      DiagramLabel.volleyBalls => 'Volley Balls',
 
-      case DiagramLabel.sEqualsMPC:
-        return 'S=MPC';
+      DiagramLabel.sEqualsMPC => 'S=MPC',
 
-      case DiagramLabel.sEqualsMPCMSC:
-        return 'S=MPC=MSC';
+      DiagramLabel.sEqualsMPCMSC => 'S=MPC=MSC',
 
-      case DiagramLabel.sm:
-        return 'Sm';
-      case DiagramLabel.dm:
-        return 'Dm';
-      case DiagramLabel.industryQuantity:
-        return 'Quantity - Industry';
-      case DiagramLabel.pm1:
-        return 'Pm₁';
-      case DiagramLabel.dm1:
-        return 'Dm₁';
+      DiagramLabel.sm => 'Sm',
+      DiagramLabel.dm => 'Dm',
+      DiagramLabel.industryQuantity => 'Quantity - Industry',
+      DiagramLabel.pm1 => 'Pm₁',
+      DiagramLabel.dm1 => 'Dm₁',
 
-      case DiagramLabel.sm1:
-        return 'Sm₁';
-      case DiagramLabel.sm2:
-        return 'Sm₂';
-      case DiagramLabel.dm2:
-        return 'Dm₂';
-      case DiagramLabel.pm2:
-        return 'Pm₂';
-      case DiagramLabel.sme:
-        return 'Dmₑ';
-      case DiagramLabel.dme:
-        return 'Smₑ';
+      DiagramLabel.sm1 => 'Sm₁',
+      DiagramLabel.sm2 => 'Sm₂',
+      DiagramLabel.dm2 => 'Dm₂',
+      DiagramLabel.pm2 => 'Pm₂',
+      DiagramLabel.sme => 'Dmₑ',
+      DiagramLabel.dme => 'Smₑ',
 
-      case DiagramLabel.pme:
-        return 'Pmₑ';
-      case DiagramLabel.consumerSurplus:
-        return 'Consumer surplus';
-      case DiagramLabel.producerSurplus:
-        return 'Producer surplus';
-      case DiagramLabel.abnormalProfit:
-        return 'Abnormal profit';
-      case DiagramLabel.loss:
-        return 'Loss';
-      case DiagramLabel.dEqualsAR:
-        return 'D=AR';
-      case DiagramLabel.quantity:
-        return 'Quantity';
-      case DiagramLabel.lrac:
-        return 'LRAC';
-      case DiagramLabel.welfareLoss:
-        return 'Welfare Loss';
-      case DiagramLabel.externality:
-        return 'Externality';
-      case DiagramLabel.qpi:
-        return 'Qπ';
-      case DiagramLabel.sTax:
-        return 'S+Tax';
-      case DiagramLabel.pc:
-        return 'Pc';
-      case DiagramLabel.pp:
-        return 'Pp';
-      case DiagramLabel.sSub:
-        return 'S+Sub';
-      case DiagramLabel.qTax:
-        return 'QTax';
-      case DiagramLabel.qSub:
-        return 'QSub';
-      case DiagramLabel.sD:
-        return 'Sd';
-      case DiagramLabel.dD:
-        return 'Dd';
-      case DiagramLabel.sW:
-        return 'Sw';
-      case DiagramLabel.pW:
-        return 'Pw';
-      case DiagramLabel.pWT:
-        return 'Pw+t';
-      case DiagramLabel.sWTariff:
-        return 'Sw + Tariff';
-      case DiagramLabel.q3:
-        return 'Q3';
-      case DiagramLabel.q4:
-        return 'Q4';
-      case DiagramLabel.sWQuota:
-        return 'SW + Quota';
-      case DiagramLabel.pWQ:
-        return 'Pw+q';
-      case DiagramLabel.sDQ:
-        return 'Sd+q';
-      case DiagramLabel.sDSub:
-        return 'Sd+sub';
-      case DiagramLabel.pSub:
-        return 'P+Sub';
-      case DiagramLabel.pWS:
-        return 'PW+Sub';
-      case DiagramLabel.pD:
-        return 'Pd';
-      case DiagramLabel.goodA:
-        return 'Good A';
-      case DiagramLabel.goodB:
-        return 'Good B';
-      case DiagramLabel.euroPerDollar:
-        return 'Euro € per USD \$';
-      case DiagramLabel.quantityOfUSD:
-        return 'Qty of USD \$';
-      case DiagramLabel.supplyOfUSD:
-        return 'Supply of USD \$';
-      case DiagramLabel.demandForUSD:
-        return 'Demand for USD \$';
-      case DiagramLabel.eR1:
-        return 'ER₁';
-      case DiagramLabel.eR2:
-        return 'ER₂';
-      case DiagramLabel.eR:
-        return 'ER';
-      case DiagramLabel.euroUSD:
-        return '€ per \$';
-      case DiagramLabel.qUSD:
-        return 'Q of \$';
-      case DiagramLabel.ninety:
-        return '0.90';
-      case DiagramLabel.ninetyFive:
-        return '0.95';
-      case DiagramLabel.oneHundredAndFive:
-        return '1.05';
-      case DiagramLabel.exchangeRate:
-        return 'Exchange Rate';
-      case DiagramLabel.quantityOfCurrency:
-        return 'Qty of Currency';
-      case DiagramLabel.eRF:
-        return 'ERf';
-      case DiagramLabel.lowIncome:
-        return 'low Income';
-      case DiagramLabel.lowSavings:
-        return 'Low Savings';
-      case DiagramLabel.lowInvestment:
-        return 'Low Investment';
-      case DiagramLabel.lowProductivity:
-        return 'Low Productivity';
-      case DiagramLabel.tradeBalance:
-        return 'Trade Balance';
-      case DiagramLabel.tradeSurplus:
-        return 'Trade\nSurplus\nX > M';
-      case DiagramLabel.tradeDeficit:
-        return 'Trade\nDeficit\nX < M';
-      case DiagramLabel.tradeBalanced:
-        return 'X = M';
-      case DiagramLabel.time:
-        return 'Time';
-      case DiagramLabel.depreciationDevaluation:
-        return 'Depreciation\n'
-            ' / Devaluation';
-      case DiagramLabel.a:
-        return 'A';
-      case DiagramLabel.b:
-        return 'B';
-      case DiagramLabel.c:
-        return 'C';
-      case DiagramLabel.upperBand:
-        return 'Upper Band';
-      case DiagramLabel.lowerBand:
-        return 'Lower Band';
-      case DiagramLabel.households:
-        return 'Households';
-      case DiagramLabel.firms:
-        return 'Firms';
-      case DiagramLabel.factorMarkets:
-        return 'Factor Markets';
-      case DiagramLabel.productMarkets:
-        return 'Product Markets';
-      case DiagramLabel.government:
-        return 'Government';
-      case DiagramLabel.financialSector:
-        return 'Financial Sector';
-      case DiagramLabel.foreignSector:
-        return 'Foreign Sector';
-      case DiagramLabel.taxes:
-        return 'Taxes';
-      case DiagramLabel.governmentSpending:
-        return 'Govt. Spending';
-      case DiagramLabel.savings:
-        return 'Savings';
-      case DiagramLabel.investment:
-        return 'Investment';
-      case DiagramLabel.imports:
-        return 'Imports';
-      case DiagramLabel.exports:
-        return 'Exports';
-      case DiagramLabel.landLaborCapitalEnterprise:
-        return 'Factors of Production (Land, Labor, Capital, Enterprise)';
-      case DiagramLabel.householdSpendingFirmRevenue:
-        return 'Household Spending / Firm Revenue';
-      case DiagramLabel.goodsAndServices:
-        return 'Goods & Services';
-      case DiagramLabel.rentWagesInterestProfit:
-        return 'Factor Payments (Rent, Wages, Interest, Profit)';
-      case DiagramLabel.factorsOfProduction:
-        return 'Factors of Production';
-      case DiagramLabel.factorPayments:
-        return 'Factor Payments';
-      case DiagramLabel.householdSpending:
-        return 'Household Spending';
-      case DiagramLabel.leakages:
-        return 'Leakages';
-      case DiagramLabel.injections:
-        return 'Injections';
-      case DiagramLabel.priceLevel:
-        return 'Price Level';
-      case DiagramLabel.realGDP:
-        return 'Real GDP';
-      case DiagramLabel.aggregateDemand:
-        return 'Aggregate Demand';
-      case DiagramLabel.aD:
-        return 'AD';
-      case DiagramLabel.aggregateSupply:
-        return 'AS';
-      case DiagramLabel.aS:
-        return 'AS';
-      case DiagramLabel.shortRunAggregateSupply:
-        return 'Short-Run Aggregate Supply';
-      case DiagramLabel.sRAS:
-        return 'SRAS';
-      case DiagramLabel.longRunAggregateSupply:
-        return 'Long-Run Aggregate Supply';
-      case DiagramLabel.lRAS:
-        return 'LRAS';
-      case DiagramLabel.pL:
-        return 'PL'; // Common Y-axis label in AD/AS diagrams
-      case DiagramLabel.yF:
-        return 'Yf'; // Full capacity output
-      case DiagramLabel.yInf:
-        return 'Yinf'; // Output beyond full employment
-      case DiagramLabel.yDef:
-        return 'Ydef'; // Output below full employment
-      case DiagramLabel.keynesianAS:
-        return 'Keynesian AS';
-      case DiagramLabel.monetaristsNewClassical:
-        return 'Monetarist/New Classical Model';
-      case DiagramLabel.keynesian:
-        return 'Keynesian Model';
-      case DiagramLabel.aD1:
-        return 'AD1';
-      case DiagramLabel.aD2:
-        return 'AD2';
-      case DiagramLabel.aD3:
-        return 'AD3';
-      case DiagramLabel.interestRate:
-        return 'Interest Rate';
-      case DiagramLabel.quantityOfMoney:
-        return 'Quantity of Money';
-      case DiagramLabel.sM:
-        return 'Sm';
-      case DiagramLabel.dM:
-        return 'Dm';
-      case DiagramLabel.sM1:
-        return 'Sm1';
-      case DiagramLabel.sM2:
-        return 'Sm2';
-      case DiagramLabel.inflationRate:
-        return 'Inflation Rate';
-      case DiagramLabel.unemploymentRate:
-        return 'Unemployment Rate';
-      case DiagramLabel.lRPC:
-        return 'LRPC';
-      case DiagramLabel.potentialOutput:
-        return 'Potential Output';
-      case DiagramLabel.timeYears:
-        return 'Time (Years)';
-      case DiagramLabel.price:
-        return 'Price';
-      case DiagramLabel.sRPC:
-        return 'SRPC';
-      case DiagramLabel.yE:
-        return 'Ye';
-      case DiagramLabel.e:
-        return 'E';
-      case DiagramLabel.pPC1:
-        return 'PPC1';
-      case DiagramLabel.pPC2:
-        return 'PPC2';
-      case DiagramLabel.demand:
-        return 'Demand';
-      case DiagramLabel.d3:
-        return 'D3';
-      case DiagramLabel.supply:
-        return 'Supply';
-      case DiagramLabel.s3:
-        return 'S3';
-      case DiagramLabel.price$:
-        return 'Price\n(\$)';
-      case DiagramLabel.quantityOfChocolateBars:
-        return 'Quantity of Choc. Bars';
-      case DiagramLabel.dMarket:
-        return 'D (Market)';
-    }
+      DiagramLabel.pme => 'Pmₑ',
+      DiagramLabel.consumerSurplus => 'Consumer surplus',
+      DiagramLabel.producerSurplus => 'Producer surplus',
+      DiagramLabel.abnormalProfit => 'Abnormal profit',
+      DiagramLabel.loss => 'Loss',
+      DiagramLabel.dEqualsAR => 'D=AR',
+      DiagramLabel.quantity => 'Quantity',
+      DiagramLabel.lrac => 'LRAC',
+      DiagramLabel.welfareLoss => 'Welfare Loss',
+      DiagramLabel.externality => 'Externality',
+      DiagramLabel.qpi => 'Qπ',
+      DiagramLabel.sTax => 'S+Tax',
+      DiagramLabel.pc => 'Pc',
+      DiagramLabel.pp => 'Pp',
+      DiagramLabel.sSub => 'S+Sub',
+      DiagramLabel.qTax => 'QTax',
+      DiagramLabel.qSub => 'QSub',
+      DiagramLabel.sD => 'Sd',
+      DiagramLabel.dD => 'Dd',
+      DiagramLabel.sW => 'Sw',
+      DiagramLabel.pW => 'Pw',
+      DiagramLabel.pWT => 'Pw+t',
+      DiagramLabel.sWT => 'Sw+t',
+      DiagramLabel.q3 => 'Q3',
+      DiagramLabel.q4 => 'Q4',
+      DiagramLabel.sWQuota => 'SW + Quota',
+      DiagramLabel.pWQ => 'Pw+q',
+      DiagramLabel.sDQ => 'Sd+q',
+      DiagramLabel.sDSub => 'Sd+sub',
+      DiagramLabel.pSub => 'P+Sub',
+      DiagramLabel.pWS => 'PW+Sub',
+      DiagramLabel.pD => 'Pd',
+      DiagramLabel.goodA => 'Good A',
+      DiagramLabel.goodB => 'Good B',
+      DiagramLabel.euroPerDollar => 'Euro € per USD \$',
+      DiagramLabel.quantityOfUSD => 'Qty of USD \$',
+      DiagramLabel.supplyOfUSD => 'Supply of USD \$',
+      DiagramLabel.demandForUSD => 'Demand for USD \$',
+      DiagramLabel.eR1 => 'ER₁',
+      DiagramLabel.eR2 => 'ER₂',
+      DiagramLabel.eR => 'ER',
+      DiagramLabel.euroUSD => '€ per \$',
+      DiagramLabel.qUSD => 'Q of \$',
+      DiagramLabel.ninety => '0.90',
+      DiagramLabel.ninetyFive => '0.95',
+      DiagramLabel.oneHundredAndFive => '1.05',
+      DiagramLabel.exchangeRate => 'Exchange Rate',
+      DiagramLabel.quantityOfCurrency => 'Qty of Currency',
+      DiagramLabel.eRF => 'ERf',
+      DiagramLabel.lowIncome => 'low Income',
+      DiagramLabel.lowSavings => 'Low Savings',
+      DiagramLabel.lowInvestment => 'Low Investment',
+      DiagramLabel.lowProductivity => 'Low Productivity',
+      DiagramLabel.tradeBalance => 'Trade Balance',
+      DiagramLabel.tradeSurplus => 'Trade\nSurplus\nX > M',
+      DiagramLabel.tradeDeficit => 'Trade\nDeficit\nX < M',
+      DiagramLabel.tradeBalanced => 'X = M',
+      DiagramLabel.time => 'Time',
+      DiagramLabel.depreciationDevaluation => 'Depreciation\n'
+            ' / Devaluation',
+      DiagramLabel.a => 'A',
+      DiagramLabel.b => 'B',
+      DiagramLabel.c => 'C',
+      DiagramLabel.upperBand => 'Upper Band',
+      DiagramLabel.lowerBand => 'Lower Band',
+      DiagramLabel.households => 'Households',
+      DiagramLabel.firms => 'Firms',
+      DiagramLabel.factorMarkets => 'Factor Markets',
+      DiagramLabel.productMarkets => 'Product Markets',
+      DiagramLabel.government => 'Government',
+      DiagramLabel.financialSector => 'Financial Sector',
+      DiagramLabel.foreignSector => 'Foreign Sector',
+      DiagramLabel.taxes => 'Taxes',
+      DiagramLabel.governmentSpending => 'Govt. Spending',
+      DiagramLabel.savings => 'Savings',
+      DiagramLabel.investment => 'Investment',
+      DiagramLabel.imports => 'Imports',
+      DiagramLabel.exports => 'Exports',
+      DiagramLabel.landLaborCapitalEnterprise => 'Factors of Production (Land, Labor, Capital, Enterprise)',
+      DiagramLabel.householdSpendingFirmRevenue => 'Household Spending / Firm Revenue',
+      DiagramLabel.goodsAndServices => 'Goods & Services',
+      DiagramLabel.rentWagesInterestProfit => 'Factor Payments (Rent, Wages, Interest, Profit)',
+      DiagramLabel.factorsOfProduction => 'Factors of Production',
+      DiagramLabel.factorPayments => 'Factor Payments',
+      DiagramLabel.householdSpending => 'Household Spending',
+      DiagramLabel.leakages => 'Leakages',
+      DiagramLabel.injections => 'Injections',
+      DiagramLabel.priceLevel => 'Price Level',
+      DiagramLabel.realGDP => 'Real GDP',
+      DiagramLabel.aggregateDemand => 'Aggregate Demand',
+      DiagramLabel.aD => 'AD',
+      DiagramLabel.aggregateSupply => 'AS',
+      DiagramLabel.aS => 'AS',
+      DiagramLabel.shortRunAggregateSupply => 'Short-Run Aggregate Supply',
+      DiagramLabel.sRAS => 'SRAS',
+      DiagramLabel.longRunAggregateSupply => 'Long-Run Aggregate Supply',
+      DiagramLabel.lRAS => 'LRAS',
+      DiagramLabel.pL => 'PL', // Common Y-axis label in AD/AS diagrams
+      DiagramLabel.yF => 'Yf', // Full capacity output
+      DiagramLabel.yInf => 'Yinf', // Output beyond full employment
+      DiagramLabel.yDef => 'Ydef', // Output below full employment
+      DiagramLabel.keynesianAS => 'Keynesian AS',
+      DiagramLabel.monetaristsNewClassical => 'Monetarist/New Classical Model',
+      DiagramLabel.keynesian => 'Keynesian Model',
+      DiagramLabel.aD1 => 'AD1',
+      DiagramLabel.aD2 => 'AD2',
+      DiagramLabel.aD3 => 'AD3',
+      DiagramLabel.interestRate => 'Interest Rate',
+      DiagramLabel.quantityOfMoney => 'Quantity of Money',
+      DiagramLabel.sM => 'Sm',
+      DiagramLabel.dM => 'Dm',
+      DiagramLabel.sM1 => 'Sm1',
+      DiagramLabel.sM2 => 'Sm2',
+      DiagramLabel.inflationRate => 'Inflation Rate',
+      DiagramLabel.unemploymentRate => 'Unemployment Rate',
+      DiagramLabel.lRPC => 'LRPC',
+      DiagramLabel.potentialOutput => 'Potential Output',
+      DiagramLabel.timeYears => 'Time (Years)',
+      DiagramLabel.price => 'Price',
+      DiagramLabel.sRPC => 'SRPC',
+      DiagramLabel.yE => 'Ye',
+      DiagramLabel.e => 'E',
+      DiagramLabel.pPC1 => 'PPC1',
+      DiagramLabel.pPC2 => 'PPC2',
+      DiagramLabel.demand => 'Demand',
+      DiagramLabel.d3 => 'D3',
+      DiagramLabel.supply => 'Supply',
+      DiagramLabel.s3 => 'S3',
+      DiagramLabel.price$ => 'Price\n(\$)',
+      DiagramLabel.quantityOfChocolateBars => 'Quantity of Choc. Bars',
+      DiagramLabel.dMarket => 'D (Market)',
+      DiagramLabel.dW => 'Dw',
+      DiagramLabel.dS => 'Sw',
+    };
   }
 }

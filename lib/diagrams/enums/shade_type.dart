@@ -12,6 +12,8 @@ enum ShadeType {
   welfareLoss,
   abnormalProfit,
   loss,
+  lost,
+  gained,
 }
 
 extension Shade on ShadeType {
@@ -39,6 +41,10 @@ extension Shade on ShadeType {
         return Colors.lightBlue;
       case ShadeType.loss:
         return Colors.red;
+      case ShadeType.lost:
+        return Colors.blueGrey;
+      case ShadeType.gained:
+        return Colors.green;
     }
   }
 
@@ -66,6 +72,10 @@ extension Shade on ShadeType {
         return 'Abnormal Profits';
       case ShadeType.loss:
         return 'Loss';
+      case ShadeType.lost:
+    return 'Lost Surplus';
+      case ShadeType.gained:
+        return 'Gained Surplus';
     }
   }
 

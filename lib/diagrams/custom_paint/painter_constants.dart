@@ -9,7 +9,7 @@ const kArrowSize = 12.0;
 
 /// Axis
 const kAxisIndent = 0.20;
-const kAxisTextIndent = 0.06;
+const kAxisTextIndent = 0.08;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 4.0;

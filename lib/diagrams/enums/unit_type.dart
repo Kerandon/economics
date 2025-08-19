@@ -1,8 +1,8 @@
 enum UnitType {
-  intro('1', 'Introduction to economics'),
+  intro('1', 'Introduction'),
   micro('2', 'Microeconomics'),
   macro('3', 'Macroeconomics'),
-  global('4', 'The global economy');
+  global('4', 'The Global Economy');
 
   final String id;
   final String title;

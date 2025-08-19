@@ -1,20 +1,20 @@
-import 'custom_slide_content.dart';
+import 'package:economics_app/home_page/models/slide_content.dart';
 
-class CustomSlide {
+class Slide {
   final dynamic section;
   final String? title;
-  final List<CustomSlideContent>? contents;
+  final List<SlideContent>? contents;
   final bool? hl;
 
-  CustomSlide({this.section, this.title, this.contents, this.hl = false});
+  Slide({this.section, this.title, this.contents, this.hl = false});
 
-  CustomSlide copyWith({
+  Slide copyWith({
     dynamic section,
     String? title,
-    List<CustomSlideContent>? contents,
+    List<SlideContent>? contents,
     bool? hl,
   }) {
-    return CustomSlide(
+    return Slide(
       section: section ?? this.section,
       title: title ?? this.title,
       contents: contents ?? this.contents,

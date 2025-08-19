@@ -32,7 +32,7 @@ class CustomTile extends StatelessWidget {
       diagram = AllDiagrams(
         size: size,
         colorScheme: colorScheme,
-      ).getDiagramBundle(DiagramBundleEnum.microDemand);
+      ).getDiagramBundle2(DiagramBundleEnum.microSupplyDeterminants);
     }
 
     return Container(
@@ -67,7 +67,7 @@ class CustomTile extends StatelessWidget {
                             child: Container(), // required
                           )
                         : CustomPaint(
-                            painter: diagram!.diagramModels.first.painter,
+                            painter: diagram?.basePainterDiagrams.first,
                             size: Size.infinite,
                           ),
                   ),
@@ -78,6 +78,7 @@ class CustomTile extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   text,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

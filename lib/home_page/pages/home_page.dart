@@ -67,7 +67,7 @@ class _HomePageNewState extends ConsumerState<HomePage> {
               delegate: SliverChildBuilderDelegate((context, index) {
                 final u = UnitType.values.elementAt(index);
                 return CustomTile(
-                  text: u.name,
+                  text: u.title,
                   imageURL: u.iconJpg,
                   onTap: () {
                     homePageNotifier.setUnit(u);

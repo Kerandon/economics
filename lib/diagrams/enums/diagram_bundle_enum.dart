@@ -1,33 +1,25 @@
 enum DiagramBundleEnum {
   microPPCConstantOppCost,
   microPPCIncreaseOppCost,
-  microDemand,
   microDemandPriceChange,
-  microDemandIndividualVsMarketDemand,
+  microDemandIndividual1,
+  microDemandIndividual2,
+  microDemandMarket,
+  microDemandIndividualVsMarket,
   microDemandDeterminants,
-  microSupply,
+  microSupplyPriceChanges,
   microSupplyDeterminants,
+  globalWorldPrice,
+  globalWorldPriceStandAlone,
+  globalNetExporter,
+  globalNetImporter,
+  globalTariff,
+  globalTariffWelfare,
+  globalTariffConsumerSurplus,
+  globalTariffConsumerSurplusChange,
+  globalTariffProducerSurplus,
+  globalTariffProducerSurplusChange,
+  globalTariffWelfareLoss,
+  globalTariffGovernmentRevenue,
 }
 
-extension DiagramBundleExtension on DiagramBundleEnum {
-  String get title {
-    switch (this) {
-      case DiagramBundleEnum.microPPCConstantOppCost:
-        return 'Micro PPC Constant Opp Cost';
-      case DiagramBundleEnum.microPPCIncreaseOppCost:
-        return 'Micro PPC Constant Opp Cost';
-      case DiagramBundleEnum.microDemand:
-        return 'Micro PPC Constant Opp Cost';
-      case DiagramBundleEnum.microDemandPriceChange:
-        return 'Demand For Chocolate Bars (Per Week)';
-      case DiagramBundleEnum.microDemandIndividualVsMarketDemand:
-        return 'Individual Vs. Market Demand';
-      case DiagramBundleEnum.microDemandDeterminants:
-        return 'Micro PPC Constant Opp Cost';
-      case DiagramBundleEnum.microSupply:
-        return 'Micro PPC Constant Opp Cost';
-      case DiagramBundleEnum.microSupplyDeterminants:
-        return 'Micro PPC Constant Opp Cost';
-    }
-  }
-}

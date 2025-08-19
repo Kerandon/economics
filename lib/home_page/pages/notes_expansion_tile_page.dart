@@ -56,25 +56,25 @@ class NotesExpansionTilePage extends ConsumerWidget {
                                         type: TextBoxType.term,
                                       ),
 
-                                    if (c.alert?.isNotEmpty ?? false)
+                                    if (c.alert != null)
                                       CustomTextBox(
-                                        text: c.alert ?? '',
+                                        text: c.alert?.text ?? '',
                                         type: TextBoxType.alert,
                                       ),
-                                    if (c.tip?.isNotEmpty ?? false)
+                                    if (c.tip != null)
                                       CustomTextBox(
-                                        text: c.tip ?? '',
+                                        text: c.tip?.text ?? '',
                                         type: TextBoxType.tip,
                                       ),
                                     if (c.keyContent != null)
                                       CustomTextBox(
                                         text:
-                                            '<h3>${c.keyContent?.title}</h3> <p>${c.keyContent?.content}</p>',
+                                            '<strong>${c.keyContent?.title}</strong> ${c.keyContent?.content}',
                                         type: TextBoxType.keyContent,
                                       ),
-                                    if (c.content?.isNotEmpty ?? false)
+                                    if (c.content != null)
                                       CustomTextBox(
-                                        text: c.content ?? '',
+                                        text: c.content?.text ?? '',
                                         type: TextBoxType.content,
                                       ),
 

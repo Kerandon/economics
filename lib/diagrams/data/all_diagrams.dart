@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../enums/diagram_bundle_enum.dart';
 import '../models/diagram_bundle.dart';
-import '../models/diagram_model.dart';
 import '../models/diagram_painter_config.dart';
-import '../mixins/mixins.dart';
 import 'get_bundle_list.dart';
 
 class AllDiagrams {
@@ -12,7 +10,7 @@ class AllDiagrams {
 
   AllDiagrams({required this.size, required this.colorScheme});
 
-  DiagramBundle? getDiagramBundle(DiagramBundleEnum diagramBundleEnum) {
+  DiagramBundle? getDiagramBundle2(DiagramBundleEnum diagramBundleEnum) {
     final bundles = getDiagramBundles(diagramBundleEnums: [diagramBundleEnum]);
     return bundles.isNotEmpty ? bundles.first : null;
   }
@@ -29,21 +27,6 @@ class AllDiagrams {
 
     // Create bundles
     final allBundles = getBundleList(config).toList();
-
-    for (int i = 0; i < allBundles.length; i++) {
-      List<DiagramModel> tempModels = [];
-      for (int j = 0; j < allBundles[i].basePainterDiagrams.length; j++) {
-        final diagramIdentifier =
-            allBundles[i].basePainterDiagrams[j] as DiagramIdentifierMixin;
-
-        tempModels.add(
-          diagramIdentifier.model.copyWith(
-            painter: allBundles[i].basePainterDiagrams[j],
-          ),
-        );
-      }
-      allBundles[i] = allBundles[i].copyWith(diagramModels: tempModels);
-    }
 
     if (getAll) {
       // Return all bundles

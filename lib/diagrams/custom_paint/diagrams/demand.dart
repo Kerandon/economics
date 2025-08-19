@@ -5,27 +5,22 @@ import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/diagram_labels.dart';
-import '../../enums/diagram_subtype.dart';
 import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
-import '../../models/diagram_model.dart';
-import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_demand.dart';
 import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 
-class Demand extends BaseDiagramPainter {
-  Demand({required DiagramPainterConfig config, required DiagramModel model})
-    : super(config, model);
+class Demand extends BaseDiagramPainter2 {
+  Demand(super.config, super.diagramBundleEnum);
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    if (model.subtype == DiagramSubtype.priceChange) {
+    if (diagramBundleEnum == DiagramBundleEnum.microDemandPriceChange) {
       paintDemand(c, canvas);
-      paintTitle(c, canvas, DiagramBundleEnum.microDemandPriceChange.title);
       paintAxis(
         c,
         canvas,
@@ -49,8 +44,7 @@ class Demand extends BaseDiagramPainter {
         xLabel: '10',
       );
     }
-
-    if (model.subtype == DiagramSubtype.individual1) {
+    if (diagramBundleEnum == DiagramBundleEnum.microDemandIndividual1) {
       paintCustomDiagramLines(
         c,
         canvas,
@@ -83,7 +77,7 @@ class Demand extends BaseDiagramPainter {
         xAxisLabel: DiagramLabel.quantityOfChocolateBars.label,
       );
     }
-    if (model.subtype == DiagramSubtype.individual2) {
+    if (diagramBundleEnum == DiagramBundleEnum.microDemandIndividual2) {
       paintTitle(c, canvas, 'Sarah');
       paintDiagramDashedLines(
         c,
@@ -116,7 +110,7 @@ class Demand extends BaseDiagramPainter {
         label2Align: LabelAlign.centerRight,
       );
     }
-    if (model.subtype == DiagramSubtype.market) {
+    if (diagramBundleEnum == DiagramBundleEnum.microDemandIndividualVsMarket) {
       paintCustomDiagramLines(
         c,
         canvas,
@@ -149,8 +143,7 @@ class Demand extends BaseDiagramPainter {
         xAxisLabel: DiagramLabel.quantityOfChocolateBars.label,
       );
     }
-
-    if (model.subtype == DiagramSubtype.determinants) {
+    if (diagramBundleEnum == DiagramBundleEnum.microDemandDeterminants) {
       paintAxis(
         c,
         canvas,
@@ -158,9 +151,7 @@ class Demand extends BaseDiagramPainter {
         xAxisLabel: DiagramLabel.q.label,
       );
       paintDemand(c, canvas);
-    }
 
-    if (model.subtype == DiagramSubtype.determinants) {
       paintDiagramDashedLines(
         c,
         canvas,
@@ -224,3 +215,4 @@ class Demand extends BaseDiagramPainter {
     }
   }
 }
+

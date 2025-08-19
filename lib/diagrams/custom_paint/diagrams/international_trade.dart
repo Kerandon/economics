@@ -1,21 +1,17 @@
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_demand.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_supply.dart';
+import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
-import '../../enums/diagram_subtype.dart';
 import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
-import '../../models/diagram_model.dart';
-import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/paint_text_normalized_within_axis.dart';
 import '../painter_methods/paint_title.dart';
 
-class InternationalTrade extends BaseDiagramPainter {
-  InternationalTrade({
-    required DiagramPainterConfig config,
-    required DiagramModel model,
-  }) : super(config, model);
+class InternationalTrade extends BaseDiagramPainter2 {
+InternationalTrade(super.config, super.diagramBundleEnum);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -27,36 +23,31 @@ class InternationalTrade extends BaseDiagramPainter {
       yAxisLabel: DiagramLabel.price.label,
       xAxisLabel: DiagramLabel.q.label,
     );
-
-    if (model.subtype == DiagramSubtype.worldPrice) {
+    if(diagramBundleEnum == DiagramBundleEnum.globalWorldPriceStandAlone){
       paintTitle(c, canvas, 'World Market');
-      paintDiagramDashedLines(
-        c,
+      paintDiagramDashedLines(c,
         canvas,
         yAxisStartPos: 0.50,
-        xAxisEndPos: 1.2,
+        xAxisEndPos: 1,
         yLabel: DiagramLabel.pW.label,
         hideXLine: true,
       );
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.10, 0.10),
-        polylineOffsets: [Offset(0.90, 0.90)],
-        label2: DiagramLabel.dD.label,
-        label2Align: LabelAlign.centerRight,
-      );
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.10, 0.90),
-        polylineOffsets: [Offset(0.90, 0.10)],
-        label2: DiagramLabel.sD.label,
-        label2Align: LabelAlign.centerRight,
-      );
+      paintDemand(c, canvas, label: DiagramLabel.dW.label);
+      paintSupply(c, canvas, label: DiagramLabel.sW.label);
     }
-
-    if (model.subtype == DiagramSubtype.importer) {
+    if(diagramBundleEnum == DiagramBundleEnum.globalWorldPrice){
+      paintTitle(c, canvas, 'World Market');
+      paintDiagramDashedLines(c,
+          canvas,
+          yAxisStartPos: 0.50,
+          xAxisEndPos: 1.2,
+          yLabel: DiagramLabel.pW.label,
+          hideXLine: true,
+      );
+      paintDemand(c, canvas, label: DiagramLabel.dW.label);
+      paintSupply(c, canvas, label: DiagramLabel.sW.label);
+    }
+    if (diagramBundleEnum == DiagramBundleEnum.globalNetImporter) {
       paintTitle(c, canvas, 'Domestic Market - Importer');
       paintDiagramDashedLines(
         c,
@@ -108,28 +99,9 @@ class InternationalTrade extends BaseDiagramPainter {
         label2: DiagramLabel.sW.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.30, 1.1),
-        polylineOffsets: [
-          Offset(0.30, 1.15),
-          Offset(0.30, 1.15),
-          Offset(0.70, 1.15),
-          Offset(0.70, 1.10),
-        ],
-        arrowOnStart: true,
-        arrowOnEnd: true,
-        color: Colors.orange,
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        'Q2 - Q1 is imported',
-        Offset(0.50, 1.20),
-      );
+
     }
-    if (model.subtype == DiagramSubtype.exporter) {
+    if (diagramBundleEnum == DiagramBundleEnum.globalNetExporter) {
       paintTitle(c, canvas, 'Domestic Market - Exporter');
       paintDiagramDashedLines(
         c,
@@ -180,26 +152,7 @@ class InternationalTrade extends BaseDiagramPainter {
         label1Align: LabelAlign.centerLeft,
         label2: DiagramLabel.sW.label,
         label2Align: LabelAlign.centerRight,
-      );
-      paintCustomDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.30, 1.1),
-        polylineOffsets: [
-          Offset(0.30, 1.15),
-          Offset(0.30, 1.15),
-          Offset(0.70, 1.15),
-          Offset(0.70, 1.10),
-        ],
-        arrowOnStart: true,
-        arrowOnEnd: true,
-        color: Colors.orange,
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        'Q2 - Q1 is Exported',
-        Offset(0.50, 1.20),
+
       );
     }
   }

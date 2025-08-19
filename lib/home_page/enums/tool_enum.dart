@@ -25,7 +25,7 @@ extension ToolExtension on Tool {
     switch (this) {
       case Tool.diagrams:
         return DiagramBundleEnum
-            .microDemand; // replace with your actual image path
+            .microDemandPriceChange; // replace with your actual image path
       case Tool.calculations:
         return null; // replace with your actual image path
     }

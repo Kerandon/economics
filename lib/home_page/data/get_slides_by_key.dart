@@ -1,18 +1,19 @@
-import 'package:economics_app/home_page/data/get_slides.dart';
+
 import 'package:flutter/material.dart';
 import '../../diagrams/data/all_diagrams.dart';
 import '../../diagrams/enums/unit_type.dart';
-import '../models/custom_slide.dart';
+import '../models/slide.dart';
+import 'get_all_slides.dart';
 
-List<CustomSlide> getSlides({
+List<Slide> getSlides({
   required Size size,
   required ThemeData theme,
   dynamic key,
 }) {
-  final List<CustomSlide> allSlides = slides.toList();
-  final List<CustomSlide> allSlidesPopulated = [];
+  final List<Slide> all = allSlides.toList();
+  final List<Slide> allSlidesPopulated = [];
 
-  for (var slide in allSlides) {
+  for (var slide in all) {
     if (slide.contents?.isNotEmpty ?? false) {
       // Map over contents and add diagramBundles where needed
       final updatedContents = slide.contents!.map((content) {
