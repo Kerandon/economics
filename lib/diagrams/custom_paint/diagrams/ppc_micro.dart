@@ -8,8 +8,8 @@ import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_dot.dart';
 
 class PPCMicro extends BaseDiagramPainter {
@@ -33,7 +33,7 @@ class PPCMicro extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.increasingOpportunityCost ||
         model.subtype == DiagramSubtype.productionPoints ||
         model.subtype == DiagramSubtype.actualGrowth) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.20),
@@ -144,7 +144,7 @@ class PPCMicro extends BaseDiagramPainter {
       }
     }
     if (model.subtype == DiagramSubtype.constantOpportunityCost) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.0, 0.20),
@@ -214,7 +214,7 @@ class PPCMicro extends BaseDiagramPainter {
       paintDot(c, canvas, pos: Offset(0.59, 0.70), label: label1);
       paintDot(c, canvas, pos: Offset(0.74, 0.50), label: label2);
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.10),
@@ -225,7 +225,7 @@ class PPCMicro extends BaseDiagramPainter {
           ),
         ],
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.30),
@@ -239,7 +239,7 @@ class PPCMicro extends BaseDiagramPainter {
 
       if (model.subtype == DiagramSubtype.increaseInProductionPotential ||
           model.subtype == DiagramSubtype.decreaseInProductionPotential) {
-        paintCustomDiagramLines(
+        paintDiagramLines(
           c,
           canvas,
           startPos: Offset(0.60, 0.60),
@@ -260,7 +260,7 @@ class PPCMicro extends BaseDiagramPainter {
         labelAlign: LabelAlign.centerLeft,
       );
       paintDot(c, canvas, pos: Offset(0.40, 0.60), label: DiagramLabel.b.label);
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.25, 0.68),

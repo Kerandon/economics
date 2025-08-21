@@ -6,12 +6,12 @@ import '../../enums/diagram_labels.dart';
 import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_title.dart';
 
 class InternationalTrade extends BaseDiagramPainter2 {
-InternationalTrade(super.config, super.diagramBundleEnum);
+  InternationalTrade(super.config, super.diagramBundleEnum);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -23,9 +23,10 @@ InternationalTrade(super.config, super.diagramBundleEnum);
       yAxisLabel: DiagramLabel.price.label,
       xAxisLabel: DiagramLabel.q.label,
     );
-    if(diagramBundleEnum == DiagramBundleEnum.globalWorldPriceStandAlone){
+    if (diagramBundleEnum == DiagramBundleEnum.globalWorldPriceStandAlone) {
       paintTitle(c, canvas, 'World Market');
-      paintDiagramDashedLines(c,
+      paintDiagramDashedLines(
+        c,
         canvas,
         yAxisStartPos: 0.50,
         xAxisEndPos: 1,
@@ -35,14 +36,15 @@ InternationalTrade(super.config, super.diagramBundleEnum);
       paintDemand(c, canvas, label: DiagramLabel.dW.label);
       paintSupply(c, canvas, label: DiagramLabel.sW.label);
     }
-    if(diagramBundleEnum == DiagramBundleEnum.globalWorldPrice){
+    if (diagramBundleEnum == DiagramBundleEnum.globalWorldPrice) {
       paintTitle(c, canvas, 'World Market');
-      paintDiagramDashedLines(c,
-          canvas,
-          yAxisStartPos: 0.50,
-          xAxisEndPos: 1.2,
-          yLabel: DiagramLabel.pW.label,
-          hideXLine: true,
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.50,
+        xAxisEndPos: 1.2,
+        yLabel: DiagramLabel.pW.label,
+        hideXLine: true,
       );
       paintDemand(c, canvas, label: DiagramLabel.dW.label);
       paintSupply(c, canvas, label: DiagramLabel.sW.label);
@@ -73,7 +75,7 @@ InternationalTrade(super.config, super.diagramBundleEnum);
         xLabel: DiagramLabel.q2.label,
         hideYLine: true,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.10),
@@ -81,7 +83,7 @@ InternationalTrade(super.config, super.diagramBundleEnum);
         label2: DiagramLabel.dD.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.65),
@@ -89,7 +91,7 @@ InternationalTrade(super.config, super.diagramBundleEnum);
         label2: DiagramLabel.sD.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.50),
@@ -99,7 +101,6 @@ InternationalTrade(super.config, super.diagramBundleEnum);
         label2: DiagramLabel.sW.label,
         label2Align: LabelAlign.centerRight,
       );
-
     }
     if (diagramBundleEnum == DiagramBundleEnum.globalNetExporter) {
       paintTitle(c, canvas, 'Domestic Market - Exporter');
@@ -127,7 +128,7 @@ InternationalTrade(super.config, super.diagramBundleEnum);
         xLabel: DiagramLabel.q2.label,
         hideYLine: true,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.35),
@@ -135,7 +136,7 @@ InternationalTrade(super.config, super.diagramBundleEnum);
         label2: DiagramLabel.dD.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.90),
@@ -143,7 +144,7 @@ InternationalTrade(super.config, super.diagramBundleEnum);
         label2: DiagramLabel.sD.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.50),
@@ -152,7 +153,6 @@ InternationalTrade(super.config, super.diagramBundleEnum);
         label1Align: LabelAlign.centerLeft,
         label2: DiagramLabel.sW.label,
         label2Align: LabelAlign.centerRight,
-
       );
     }
   }

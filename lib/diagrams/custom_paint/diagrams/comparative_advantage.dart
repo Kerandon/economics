@@ -5,7 +5,7 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 
 class ComparativeAdvantage extends BaseDiagramPainter {
   ComparativeAdvantage({
@@ -26,7 +26,7 @@ class ComparativeAdvantage extends BaseDiagramPainter {
     );
 
     if (model.subtype == DiagramSubtype.absoluteAdvantage) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0, 0.20),

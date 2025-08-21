@@ -1,5 +1,3 @@
-
-
 // class FullScreenDiagramsDialog extends StatelessWidget {
 //   const FullScreenDiagramsDialog(this.bundle, {super.key});
 //

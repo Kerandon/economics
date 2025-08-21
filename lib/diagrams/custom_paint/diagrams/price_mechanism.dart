@@ -10,8 +10,8 @@ import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_text.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
@@ -47,7 +47,7 @@ class PriceMechanism extends BaseDiagramPainter {
         xLabel: DiagramLabel.qe.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
@@ -55,7 +55,7 @@ class PriceMechanism extends BaseDiagramPainter {
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.85, 0.15),
@@ -75,7 +75,7 @@ class PriceMechanism extends BaseDiagramPainter {
     if (isDemandShift || isSupplyShift) {
       // Base curves
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
@@ -83,7 +83,7 @@ class PriceMechanism extends BaseDiagramPainter {
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.85, 0.15),
@@ -103,7 +103,7 @@ class PriceMechanism extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.decreaseInDemand) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
@@ -121,7 +121,7 @@ class PriceMechanism extends BaseDiagramPainter {
         xLabel: DiagramLabel.q2.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.68, 0.80),
@@ -132,7 +132,7 @@ class PriceMechanism extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.increaseInDemand) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.30, 0.10),
@@ -149,7 +149,7 @@ class PriceMechanism extends BaseDiagramPainter {
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.70, 0.65),
@@ -160,7 +160,7 @@ class PriceMechanism extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.increaseInSupply) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.30, 0.90),
@@ -174,7 +174,7 @@ class PriceMechanism extends BaseDiagramPainter {
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.65, 0.40),
@@ -185,7 +185,7 @@ class PriceMechanism extends BaseDiagramPainter {
     }
 
     if (model.subtype == DiagramSubtype.decreaseInSupply) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.05, 0.75),
@@ -202,7 +202,7 @@ class PriceMechanism extends BaseDiagramPainter {
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.57, 0.30),
@@ -227,7 +227,7 @@ class PriceMechanism extends BaseDiagramPainter {
         yAxisStartPos: 0.70,
         xLabel: DiagramLabel.qS.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         color: c.colorScheme.onSurface,
         strokeWidth: kCurveWidthSlim,
         c,
@@ -244,7 +244,7 @@ class PriceMechanism extends BaseDiagramPainter {
         arrowOnEndAngle: pi / 0.50,
       );
       paintText(c, canvas, DiagramLabel.shortage.label, Offset(0.53, 0.98));
-      paintCustomDiagramLines(
+      paintDiagramLines(
         circleAtStart: true,
         circleAtEnd: true,
         color: Colors.red,
@@ -271,7 +271,7 @@ class PriceMechanism extends BaseDiagramPainter {
         yAxisStartPos: 0.30,
         xLabel: DiagramLabel.qS.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         strokeWidth: kCurveWidthSlim,
         color: c.colorScheme.onSurface,
         c,
@@ -288,7 +288,7 @@ class PriceMechanism extends BaseDiagramPainter {
         arrowOnEndAngle: pi,
       );
       paintText(c, canvas, 'surplus', Offset(0.53, 0.20));
-      paintCustomDiagramLines(
+      paintDiagramLines(
         circleAtStart: true,
         circleAtEnd: true,
         color: Colors.red,
@@ -324,7 +324,7 @@ class PriceMechanism extends BaseDiagramPainter {
         xAxisEndPos: 1.1,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
@@ -332,7 +332,7 @@ class PriceMechanism extends BaseDiagramPainter {
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
@@ -358,7 +358,7 @@ class PriceMechanism extends BaseDiagramPainter {
         yLabel: DiagramLabel.pe.label,
         hideXLine: true,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
@@ -366,7 +366,7 @@ class PriceMechanism extends BaseDiagramPainter {
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.70),
@@ -374,7 +374,7 @@ class PriceMechanism extends BaseDiagramPainter {
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
@@ -382,7 +382,7 @@ class PriceMechanism extends BaseDiagramPainter {
         label2: DiagramLabel.s1.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.60, 0.25),
@@ -390,7 +390,7 @@ class PriceMechanism extends BaseDiagramPainter {
         arrowOnEnd: true,
         arrowOnEndAngle: pi / 2,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.80, 0.41),
@@ -416,7 +416,7 @@ class PriceMechanism extends BaseDiagramPainter {
         yLabel: DiagramLabel.pe.label,
         hideXLine: true,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
@@ -424,7 +424,7 @@ class PriceMechanism extends BaseDiagramPainter {
         label2: DiagramLabel.d.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.35, 0.85),
@@ -432,7 +432,7 @@ class PriceMechanism extends BaseDiagramPainter {
         label2: DiagramLabel.s.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
@@ -443,7 +443,7 @@ class PriceMechanism extends BaseDiagramPainter {
 
       //Arrow across
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.72, 0.35),
@@ -453,7 +453,7 @@ class PriceMechanism extends BaseDiagramPainter {
       );
 
       /// Arrow up
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.80, 0.53),

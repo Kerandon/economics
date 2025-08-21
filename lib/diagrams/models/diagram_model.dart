@@ -11,7 +11,11 @@ class DiagramModel extends Equatable {
   const DiagramModel({this.subtype, this.painter, this.diagramBundleEnum});
 
   // CopyWith method
-  DiagramModel copyWith({DiagramSubtype? subtype, CustomPainter? painter, DiagramBundleEnum? diagramBundleEnum}) {
+  DiagramModel copyWith({
+    DiagramSubtype? subtype,
+    CustomPainter? painter,
+    DiagramBundleEnum? diagramBundleEnum,
+  }) {
     return DiagramModel(
       subtype: subtype ?? this.subtype,
       diagramBundleEnum: diagramBundleEnum ?? this.diagramBundleEnum,

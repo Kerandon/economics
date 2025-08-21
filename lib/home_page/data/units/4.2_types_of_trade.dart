@@ -25,6 +25,8 @@ List<Slide> get typesOfTradeProtectionSlides => [
         '''),
     ],
   ),
+
+  /// Tariff
   Slide(
     section: Subunit.typesTradeProtection,
     title: 'Tariff',
@@ -34,7 +36,20 @@ is a tax (known as a custom duty) imposed by a government on imported goods or s
 with the goal of protecting domestic industries from foreign competition and to raise tax revenue.
 
         '''),
-      SlideContent.text('''
+
+      SlideContent.textWithDiagram('''
+        <h3>Before the Tariff</h3>
+<p>The world price (p<sub>W</sub>) is lower than the domestic price, so the domestic market is a net importer of the good.</p>
+
+<p>Domestic consumers benefit from the low world price and consume from Q2 to 0. Only domestic producers who are more competitive than the world price can supply the domestic market (Q1 to 0). The remaining domestic demand is met by imports (Q4 to Q3).</p>
+
+<h3>After the Tariff</h3>
+<p>Once the tariff is imposed, the price of imported goods rises to (p<sub>W</sub> + T). The higher price causes domestic producers to expand supply along their supply curve from Q1/p<sub>W</sub> to Q3/(p<sub>W</sub> + T), reducing reliance on imports (Q3 - Q1).</p>
+
+<p>At the same time, higher prices reduce consumer demand, moving up along the demand curve, so domestic sales decrease from Q2 to Q4.</p>
+
+          ''', DiagramBundleEnum.globalTariff),
+      SlideContent.textWithDiagram('''
       <h2>Welfare Analysis</h2>
       <p>Before the tariff,
       global resources are allocated as efficiently as possible.
@@ -43,23 +58,22 @@ with the goal of protecting domestic industries from foreign competition and to 
    The social welfare impacts however are 
       unevenly distributed in the domestic market: domestic producers and government gain at the expense of 
       domestic consumers.  </p>
-      
-      ''',
-      ),
+     
+      ''', DiagramBundleEnum.globalTariffWelfare),
 
       SlideContent.textWithDiagram('''
       <h2>Consumer Surplus</h2>
         <em>(Net welfare loss)</em>
       <h3>Before the tariff</h3>
       <p>Consumers bought Q4-0 of the good. Total surplus is the  green plus grey areas.
-      This is shown as a <strong>contraction</strong>
-      upwards on the domestic demand curve from Q4/Pw to Q3/Pw+t. 
-      Total domestic sales are now Q3-0 
+      
       <h3>After the tariff</h3>
        <p>After the tariff the domestic price increases from Pw to Pw+t for
       domestic consumers and they buy less of the good. 
-     The green area is the consumer surplus after the tariff,
-      And the grey area is lost consumer surplus.</p>
+      This is shown as a <strong>contraction</strong>
+      upwards on the domestic demand curve from Q4/Pw to Q3/Pw+t. 
+      Total domestic sales are now Q3-0 
+     The higher price causes the consumer surplus to shrink with the green area only representing the consumer surplus after the tariff.</p>
       ''', DiagramBundleEnum.globalTariffConsumerSurplusChange),
       SlideContent.textWithDiagram('''
       <h2>Producer Surplus</h3>
@@ -85,8 +99,7 @@ with the goal of protecting domestic industries from foreign competition and to 
         all imported goods (Q3-Q2) X (Pw+t-Pw).</p>
         <p>This represents a welfare gain because the tax revenue 
         can be used by governments to benefit the public.</p>
-      ''',
-          DiagramBundleEnum.globalTariffGovernmentRevenue),
+      ''', DiagramBundleEnum.globalTariffGovernmentRevenue),
       SlideContent.textWithDiagram('''
        <h2>Welfare Loss</h2>
        <p>While the gains and losses are mixed, the imposition of a tariff results in an overall net-loss to society, 
@@ -100,20 +113,53 @@ with the goal of protecting domestic industries from foreign competition and to 
     After the tariff domestic consumption shrinks the whole market by Q4-Q3, reducing consumer surplus - and social surplus as it is not gained by anyone.
      
        </li></ul>
-      ''',
-          DiagramBundleEnum.globalTariffWelfareLoss),
-      SlideContent.textWithDiagram('''
-        <h3>Before the Tariff</h3>
-<p>The world price (p<sub>W</sub>) is lower than the domestic price, so the domestic market is a net importer of the good.</p>
+      ''', DiagramBundleEnum.globalTariffWelfareLoss),
+    ],
+  ),
 
-<p>Domestic consumers benefit from the low world price and consume from Q2 to 0. Only domestic producers who are more competitive than the world price can supply the domestic market (Q1 to 0). The remaining domestic demand is met by imports (Q4 to Q3).</p>
+  /// Import Quota
+  Slide(
+    section: Subunit.typesTradeProtection,
+    title: 'Import Quota',
+    contents: [
+      SlideContent.termWithContentAndDiagram(
+        'Import Quota',
+        'is a legal <strong>quantitative limit</strong> on the amount of a good'
+            ' that can be imported into a country over a period of time (usually one year)',
+        '''
+              <p>An import quota is similar to a tariff in that
+              it increases the price of the good in the domestic market, benefiting
+              domestic producers while making consumers worse off.</p>
+              
+              <p>However, an import quota has one key distinction: unlike a tariff it <strong>does not</strong> generate 
+              tax revenue for the government. </p>
+              <h3>Import Quota Diagram</h3>
+              <p>Like the tariff diagram, the domestic market is a net importer 
+              (shown by the Pw/Sw horizontal curve drawn below where Sd and Dd intersect).
+              After the import quota is applied, <strong>a new supply curve</strong> is created. 
+              The new supply curve is domestic supply <strong>plus</strong> the fixed quota which
+              can be imported. 
+              To draw this new supply curve shift the domestic supply right by the quota amount (sd+q).
+              Where this new supply curve intersects with domestic demand 
+              determines the new domestic market price and quantity.
 
-<h3>After the Tariff</h3>
-<p>Once the tariff is imposed, the price of imported goods rises to (p<sub>W</sub> + T). The higher price causes domestic producers to expand supply along their supply curve from Q1/p<sub>W</sub> to Q3/(p<sub>W</sub> + T), reducing reliance on imports (Q3 - Q1).</p>
-
-<p>At the same time, higher prices reduce consumer demand, moving up along the demand curve, so domestic sales decrease from Q2 to Q4.</p>
-
-          ''', DiagramBundleEnum.globalTariff),
+              
+              </p>
+                  ''',
+        DiagramBundleEnum.globalImportQuota,
+      ),
+      SlideContent.alert(
+        'The Sd+q curve should not cross under the Pw/Sw curve, '
+        'because foreign exporters would not sell their good below the world price.',
+      ),
+      SlideContent.tip('''
+        A government may grant foreign exporters the import quota licenses. 
+        In this case, foreign exporters benefit from the higher price, 
+        even though the quantity they can sell is restricted. 
+        This is why an import quota is often considered a less aggressive 
+        form of trade protectionism compared to a tariff, '
+            'where foreign exporters do not gain from the higher price.
+            '''),
     ],
   ),
 ];

@@ -7,8 +7,8 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 
 class ProductionSubsidy extends BaseDiagramPainter {
@@ -44,7 +44,7 @@ class ProductionSubsidy extends BaseDiagramPainter {
       xLabel: DiagramLabel.q2.label,
     );
 
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.10, 0.10),
@@ -52,7 +52,7 @@ class ProductionSubsidy extends BaseDiagramPainter {
       label2: DiagramLabel.dD.label,
       label2Align: LabelAlign.centerRight,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.10, 0.90),
@@ -60,7 +60,7 @@ class ProductionSubsidy extends BaseDiagramPainter {
       label2: DiagramLabel.sD.label,
       label2Align: LabelAlign.centerRight,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.30, 0.90),
@@ -68,7 +68,7 @@ class ProductionSubsidy extends BaseDiagramPainter {
       label2: DiagramLabel.sDSub.label,
       label2Align: LabelAlign.centerRight,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.0, 0.80),

@@ -8,8 +8,8 @@ import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 import '../painter_methods/paint_title.dart';
@@ -33,7 +33,7 @@ class Monopoly extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.abnormalProfit ||
         model.subtype == DiagramSubtype.loss ||
         model.subtype == DiagramSubtype.socialWelfare) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.20),
@@ -42,7 +42,7 @@ class Monopoly extends BaseDiagramPainter {
         label2Align: LabelAlign.centerRight,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.05, 0.25),
@@ -50,7 +50,7 @@ class Monopoly extends BaseDiagramPainter {
         label2: DiagramLabel.mr.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         label2: DiagramLabel.mc.label,
@@ -101,7 +101,7 @@ class Monopoly extends BaseDiagramPainter {
         yLabel: DiagramLabel.atc.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         label2: DiagramLabel.atc.label,
@@ -143,7 +143,7 @@ class Monopoly extends BaseDiagramPainter {
         Offset(0.36, 0.41),
         Offset(0, 0.41),
       ]);
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         label2: DiagramLabel.atc.label,
@@ -167,7 +167,7 @@ class Monopoly extends BaseDiagramPainter {
 
     if (model.subtype == DiagramSubtype.naturalMonopoly) {
       paintTitle(c, canvas, 'Natural Monopoly');
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.05, 0.35),
@@ -181,7 +181,7 @@ class Monopoly extends BaseDiagramPainter {
         label2Align: LabelAlign.centerRight,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.20, 0.20),

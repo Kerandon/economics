@@ -8,8 +8,9 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
+
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_title.dart';
 
@@ -23,7 +24,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.0, 0.50),
@@ -40,7 +41,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
       xAxisLabel: DiagramLabel.quantityOfCurrency.label,
     );
 
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.15, 0.15),
@@ -48,7 +49,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
       label2: DiagramLabel.d1.label,
       label2Align: LabelAlign.centerRight,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.85, 0.15),
@@ -68,7 +69,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
         yLabel: DiagramLabel.oneHundredAndFive.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.30, 0.10),
@@ -81,7 +82,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
         Offset(0.70, 0.50),
         Offset(0.60, 0.40),
       ]);
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.65, 0.60),
@@ -101,7 +102,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
         yLabel: DiagramLabel.oneHundredAndFive.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.30, 0.10),
@@ -109,7 +110,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
         label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.68, 0.60),
@@ -130,7 +131,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
         yLabel: DiagramLabel.ninety.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.35),
@@ -138,7 +139,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
         label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.58, 0.70),
@@ -163,7 +164,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
         yLabel: DiagramLabel.ninety.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.35),
@@ -171,7 +172,7 @@ class FixedExchangeRate extends BaseDiagramPainter {
         label2: DiagramLabel.d2.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.55, 0.70),

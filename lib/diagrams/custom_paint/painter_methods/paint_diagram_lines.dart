@@ -9,7 +9,7 @@ import '../../models/diagram_painter_config.dart';
 import '../../models/size_adjuster.dart';
 import '../painter_constants.dart';
 
-void paintCustomDiagramLines(
+void paintDiagramLines(
   DiagramPainterConfig config,
   Canvas canvas, {
   required Offset startPos,
@@ -195,4 +195,5 @@ void paintCustomDiagramLines(
   if (circleAtEnd) {
     canvas.drawCircle(end, r, paint..style = PaintingStyle.fill);
   }
+  // Factory method to create a straight polyline
 }

@@ -8,7 +8,7 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 
 class AggregateDemand extends BaseDiagramPainter {
   AggregateDemand({
@@ -31,7 +31,7 @@ class AggregateDemand extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.determinants) {
       aDLabel = DiagramLabel.aD1.label;
     }
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.25, 0.20),
@@ -40,7 +40,7 @@ class AggregateDemand extends BaseDiagramPainter {
       label2Align: LabelAlign.centerRight,
     );
     if (model.subtype == DiagramSubtype.determinants) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.50, 0.20),
@@ -48,7 +48,7 @@ class AggregateDemand extends BaseDiagramPainter {
         label2: DiagramLabel.aD2.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.05, 0.25),
@@ -56,7 +56,7 @@ class AggregateDemand extends BaseDiagramPainter {
         label2: DiagramLabel.aD3.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.57, 0.50),
@@ -64,7 +64,7 @@ class AggregateDemand extends BaseDiagramPainter {
         arrowOnEnd: true,
         arrowOnEndAngle: pi / 2,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.43, 0.50),

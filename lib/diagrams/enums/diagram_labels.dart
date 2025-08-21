@@ -153,7 +153,7 @@ enum DiagramLabel {
   dW,
   dS,
   sWT,
-  sWQuota,
+  sWQ,
   pW,
   pWT,
   pWQ,
@@ -278,7 +278,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.sWT => 'Sw+t',
       DiagramLabel.q3 => 'Q3',
       DiagramLabel.q4 => 'Q4',
-      DiagramLabel.sWQuota => 'SW + Quota',
+      DiagramLabel.sWQ => 'Sw+q',
       DiagramLabel.pWQ => 'Pw+q',
       DiagramLabel.sDQ => 'Sd+q',
       DiagramLabel.sDSub => 'Sd+sub',
@@ -311,7 +311,8 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.tradeDeficit => 'Trade\nDeficit\nX < M',
       DiagramLabel.tradeBalanced => 'X = M',
       DiagramLabel.time => 'Time',
-      DiagramLabel.depreciationDevaluation => 'Depreciation\n'
+      DiagramLabel.depreciationDevaluation =>
+        'Depreciation\n'
             ' / Devaluation',
       DiagramLabel.a => 'A',
       DiagramLabel.b => 'B',
@@ -331,10 +332,13 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.investment => 'Investment',
       DiagramLabel.imports => 'Imports',
       DiagramLabel.exports => 'Exports',
-      DiagramLabel.landLaborCapitalEnterprise => 'Factors of Production (Land, Labor, Capital, Enterprise)',
-      DiagramLabel.householdSpendingFirmRevenue => 'Household Spending / Firm Revenue',
+      DiagramLabel.landLaborCapitalEnterprise =>
+        'Factors of Production (Land, Labor, Capital, Enterprise)',
+      DiagramLabel.householdSpendingFirmRevenue =>
+        'Household Spending / Firm Revenue',
       DiagramLabel.goodsAndServices => 'Goods & Services',
-      DiagramLabel.rentWagesInterestProfit => 'Factor Payments (Rent, Wages, Interest, Profit)',
+      DiagramLabel.rentWagesInterestProfit =>
+        'Factor Payments (Rent, Wages, Interest, Profit)',
       DiagramLabel.factorsOfProduction => 'Factors of Production',
       DiagramLabel.factorPayments => 'Factor Payments',
       DiagramLabel.householdSpending => 'Household Spending',

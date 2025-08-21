@@ -9,8 +9,8 @@ import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 import '../painter_methods/paint_title.dart';
@@ -36,7 +36,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         yLabel: DiagramLabel.pe.label,
         xLabel: DiagramLabel.qe.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         label2: DiagramLabel.dEqualsARMR.label,
@@ -86,7 +86,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         Offset(1.0, 0.50),
         align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         label2: DiagramLabel.dEqualsARMR.label,
@@ -97,7 +97,7 @@ class PerfectCompetition extends BaseDiagramPainter {
 
       /// Arrows
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.80, 0.41),
@@ -147,7 +147,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         hideXLine: true,
         yLabel: DiagramLabel.p.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         label1: DiagramLabel.p.label,
@@ -157,7 +157,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         startPos: Offset(0, 0.60),
         polylineOffsets: [Offset(0.90, 0.60)],
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.80, 0.53),
@@ -181,7 +181,7 @@ class PerfectCompetition extends BaseDiagramPainter {
       xAxisLabel: DiagramLabel.quantityFirm.label,
     );
 
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       label2: DiagramLabel.mc.label,
@@ -191,7 +191,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         CustomBezier(control: Offset(0.40, 1.0), endPoint: Offset(0.64, 0.10)),
       ],
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       label2: DiagramLabel.atc.label,

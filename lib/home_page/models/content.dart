@@ -3,5 +3,4 @@ class Content {
   final bool? hl;
 
   Content(this.text, {this.hl = false});
-  
 }

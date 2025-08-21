@@ -10,8 +10,8 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 
 class Supply extends BaseDiagramPainter {
   Supply({required DiagramPainterConfig config, required DiagramModel model})
@@ -47,7 +47,7 @@ class Supply extends BaseDiagramPainter {
       xAxisLabel: DiagramLabel.q.label,
     );
 
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.20, 0.80),
@@ -81,7 +81,7 @@ class Supply extends BaseDiagramPainter {
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q3.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.20, 0.80),
@@ -89,7 +89,7 @@ class Supply extends BaseDiagramPainter {
         label2: supplyLabel,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.70),
@@ -97,7 +97,7 @@ class Supply extends BaseDiagramPainter {
         label2: DiagramLabel.s2.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.30, 0.90),
@@ -105,7 +105,7 @@ class Supply extends BaseDiagramPainter {
         label2: DiagramLabel.s3.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.66, 0.40),
@@ -113,7 +113,7 @@ class Supply extends BaseDiagramPainter {
         arrowOnEnd: true,
         arrowOnEndAngle: pi * 0.5,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.46, 0.40),
@@ -140,5 +140,3 @@ class Supply2 extends BaseDiagramPainter2 {
     }
   }
 }
-
-

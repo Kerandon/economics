@@ -6,8 +6,8 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 
 class FloatingExchangeRate extends BaseDiagramPainter {
   FloatingExchangeRate({
@@ -52,7 +52,7 @@ class FloatingExchangeRate extends BaseDiagramPainter {
         yLabel: DiagramLabel.eR2.label,
         hideXLine: true,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.25, 0.05),
@@ -73,7 +73,7 @@ class FloatingExchangeRate extends BaseDiagramPainter {
         yLabel: DiagramLabel.eR2.label,
         hideXLine: true,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.65),
@@ -94,7 +94,7 @@ class FloatingExchangeRate extends BaseDiagramPainter {
         yLabel: DiagramLabel.eR2.label,
         hideXLine: true,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
@@ -116,7 +116,7 @@ class FloatingExchangeRate extends BaseDiagramPainter {
         hideXLine: true,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.35, 0.85),
@@ -141,7 +141,7 @@ class FloatingExchangeRate extends BaseDiagramPainter {
       yLabel: equilibriumLabel,
       hideXLine: true,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.85, 0.15),
@@ -149,7 +149,7 @@ class FloatingExchangeRate extends BaseDiagramPainter {
       label1: supplyCurveLabel,
       label1Align: LabelAlign.centerRight,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.15, 0.15),

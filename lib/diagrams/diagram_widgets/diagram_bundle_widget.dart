@@ -73,8 +73,7 @@ class DiagramBundleWidget extends StatelessWidget {
                                 width: individualSize,
                                 height: individualSize,
                                 child: CustomPaint(
-                                  painter:
-                                      diagram,
+                                  painter: diagram,
                                   size: Size(individualSize, individualSize),
                                 ),
                               ),

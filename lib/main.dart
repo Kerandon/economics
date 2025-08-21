@@ -38,18 +38,23 @@ class TestDiagram extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ...AllDiagrams(size: size, colorScheme: colorScheme)
-                .getDiagramBundles(getAll: true)
-                .map((e) {
-                  return Column(children: [
-                    ...e.basePainterDiagrams.map((d) => Container(
-                        color: Colors.green,
-                        width: 200,
-                        height: 200,
-                        child: CustomPaint(painter: d,)))
-                  ],);
-
-                }),
+            ...AllDiagrams(
+              size: size,
+              colorScheme: colorScheme,
+            ).getDiagramBundles(getAll: true).map((e) {
+              return Column(
+                children: [
+                  ...e.basePainterDiagrams.map(
+                    (d) => Container(
+                      color: Colors.green,
+                      width: 200,
+                      height: 200,
+                      child: CustomPaint(painter: d),
+                    ),
+                  ),
+                ],
+              );
+            }),
           ],
         ),
       ),

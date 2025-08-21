@@ -3,8 +3,6 @@ import '../../../diagrams/enums/unit_type.dart';
 import '../../models/slide.dart';
 import '../../models/slide_content.dart';
 
-
-
 List<Slide> get supplySlides => [
   /// Supply
   Slide(
@@ -47,4 +45,3 @@ List<Slide> get supplySlides => [
     ],
   ),
 ];
-

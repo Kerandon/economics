@@ -73,7 +73,7 @@ extension Shade on ShadeType {
       case ShadeType.loss:
         return 'Loss';
       case ShadeType.lost:
-    return 'Lost Surplus';
+        return 'Lost Surplus';
       case ShadeType.gained:
         return 'Gained Surplus';
     }

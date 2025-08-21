@@ -19,8 +19,8 @@ abstract class BaseDiagramPainter extends CustomPainter
   }
 }
 
-abstract class BaseDiagramPainter2 extends CustomPainter with DiagramIdentifierMixin2
-{
+abstract class BaseDiagramPainter2 extends CustomPainter
+    with DiagramIdentifierMixin2 {
   final DiagramPainterConfig config;
   @override
   final DiagramBundleEnum diagramBundleEnum;

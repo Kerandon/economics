@@ -3,5 +3,4 @@ class Tip {
   final bool? hl;
 
   Tip(this.text, {this.hl = false});
-
 }

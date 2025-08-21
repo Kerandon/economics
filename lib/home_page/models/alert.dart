@@ -3,5 +3,4 @@ class Alert {
   final bool? hl;
 
   Alert(this.text, {this.hl = false});
-
 }

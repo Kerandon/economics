@@ -5,8 +5,8 @@ import '../../enums/label_align.dart';
 import '../../enums/shade_type.dart';
 import '../../models/base_painter_painter.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 
 class TaxesAndSubsidies extends BaseDiagramPainter {
@@ -31,7 +31,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
       xLabel: DiagramLabel.qe.label,
     );
 
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.15, 0.15),
@@ -39,7 +39,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
       label2: DiagramLabel.d.label,
       label2Align: LabelAlign.centerRight,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.85, 0.15),
@@ -49,7 +49,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
     );
     if (model.subtype == DiagramSubtype.perUnitSalesTax ||
         model.subtype == DiagramSubtype.salesTaxSocialWelfare) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.75, 0.05),
@@ -73,7 +73,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
         yLabel: DiagramLabel.pp.label,
         hideXLine: true,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.62, 0.24),
@@ -82,7 +82,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
       );
     }
     if (model.subtype == DiagramSubtype.adValoremSalesTax) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.65, 0.05),
@@ -90,7 +90,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
         label1: DiagramLabel.sTax.label,
         label1Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.62, 0.20),
@@ -137,7 +137,7 @@ class TaxesAndSubsidies extends BaseDiagramPainter {
     }
     if (model.subtype == DiagramSubtype.subsidy ||
         model.subtype == DiagramSubtype.subsidySocialWelfare) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.90, 0.30),

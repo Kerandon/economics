@@ -8,8 +8,8 @@ import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 import '../painter_methods/paint_title.dart';
@@ -31,7 +31,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       yLabelIsVertical: false,
       xAxisLabel: DiagramLabel.quantity.label,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       label2: DiagramLabel.mc.label,
@@ -42,7 +42,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       ],
     );
 
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       label2: DiagramLabel.atc.label,
@@ -54,7 +54,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
     );
     if (model.subtype == DiagramSubtype.longRunEquilibrium ||
         model.subtype == DiagramSubtype.socialWelfare) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.35),
@@ -62,7 +62,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.dEqualsAR.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.45),
@@ -126,7 +126,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
       );
     }
     if (model.subtype == DiagramSubtype.abnormalProfit) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.22),
@@ -134,7 +134,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.dEqualsAR.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.35),
@@ -175,7 +175,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
     }
     if (model.subtype == DiagramSubtype.loss) {
       paintTitle(c, canvas, 'Monopolistic Competition - Loss');
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.45),
@@ -183,7 +183,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         label2: DiagramLabel.dEqualsAR.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.55),

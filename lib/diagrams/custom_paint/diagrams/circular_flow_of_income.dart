@@ -6,7 +6,8 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
+
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_text.dart';
 import '../painter_methods/paint_text_box.dart';
 import '../painter_methods/paint_title.dart';
@@ -32,7 +33,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       final gap = 0.05;
 
       /// Arrows - Purple
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.50, topIndent),
@@ -42,7 +43,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.50),
@@ -54,7 +55,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         color: color2,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.50, bottomIndent),
@@ -65,7 +66,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         arrowOnEndAngle: pi / 0.50,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.90, 0.50),
@@ -77,7 +78,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       );
 
       /// Arrows - Orange
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.05, 0.60),
@@ -90,7 +91,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         color: color1,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.95, 0.40),
@@ -104,7 +105,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         arrowOnStartAngle: pi,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.50, bottomIndent + gap),
@@ -112,7 +113,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
         color: color1,
         normalizeToDiagramArea: false,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.50, topIndent - gap),
@@ -208,7 +209,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       final rightIndent = 0.94;
 
       /// Factor Payments (Closed Loop)
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.28, 0.20),
@@ -220,7 +221,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       );
 
       /// Household Spending (Closed Loop)
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.80, 0.24),
@@ -232,7 +233,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       );
 
       /// Factors of Production (Closed Loop)
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.22),
@@ -248,7 +249,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       );
 
       /// Goods and Services (Closed Loop)
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
@@ -263,7 +264,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       );
 
       /// Leakages
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(leftIndent, 0.22),
@@ -273,7 +274,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       );
 
       for (final y in [0.52, 0.67, 0.82]) {
-        paintCustomDiagramLines(
+        paintDiagramLines(
           c,
           canvas,
           startPos: Offset(leftIndent, y),
@@ -286,7 +287,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       }
 
       /// Injections
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(rightIndent, 0.32),
@@ -297,7 +298,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       );
 
       for (final y in [0.52, 0.67, 0.82]) {
-        paintCustomDiagramLines(
+        paintDiagramLines(
           c,
           canvas,
           startPos: Offset(0.50, y),

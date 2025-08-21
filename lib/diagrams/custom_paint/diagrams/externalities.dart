@@ -9,8 +9,9 @@ import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
+
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 
@@ -48,7 +49,7 @@ class Externalities extends BaseDiagramPainter {
         yLabel: DiagramLabel.pOpt.label,
         xLabel: DiagramLabel.qOpt.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.70, 0.10),
@@ -56,7 +57,7 @@ class Externalities extends BaseDiagramPainter {
         label1: DiagramLabel.msc.label,
         label1Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.65, 0.20),
@@ -87,7 +88,7 @@ class Externalities extends BaseDiagramPainter {
         Offset(0.40, 0.60),
         Offset(0.51, 0.70),
       ]);
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
@@ -105,7 +106,7 @@ class Externalities extends BaseDiagramPainter {
         yLabel: DiagramLabel.pOpt.label,
         xLabel: DiagramLabel.qOpt.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.65, 0.70),
@@ -147,7 +148,7 @@ class Externalities extends BaseDiagramPainter {
         xLabel: DiagramLabel.qOpt.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.90, 0.30),
@@ -155,7 +156,7 @@ class Externalities extends BaseDiagramPainter {
         label1: DiagramLabel.msc.label,
         label1Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.75, 0.30),
@@ -196,7 +197,7 @@ class Externalities extends BaseDiagramPainter {
         yLabel: DiagramLabel.pOpt.label,
         xLabel: DiagramLabel.qOpt.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.25, 0.05),
@@ -212,7 +213,7 @@ class Externalities extends BaseDiagramPainter {
         Offset(0.54, 0.10),
         pointerLine: Offset(0.54, 0.38),
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.35, 0.20),
@@ -247,7 +248,7 @@ class Externalities extends BaseDiagramPainter {
       xAxisLabel: DiagramLabel.q.label,
     );
 
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.15, 0.15),
@@ -255,7 +256,7 @@ class Externalities extends BaseDiagramPainter {
       label2: demandLabel,
       label2Align: LabelAlign.centerRight,
     );
-    paintCustomDiagramLines(
+    paintDiagramLines(
       c,
       canvas,
       startPos: Offset(0.85, 0.15),

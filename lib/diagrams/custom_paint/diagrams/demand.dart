@@ -9,8 +9,9 @@ import '../../enums/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../painter_methods/paint_axis.dart';
 import '../painter_methods/paint_demand.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
+
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 
 class Demand extends BaseDiagramPainter2 {
   Demand(super.config, super.diagramBundleEnum);
@@ -45,7 +46,7 @@ class Demand extends BaseDiagramPainter2 {
       );
     }
     if (diagramBundleEnum == DiagramBundleEnum.microDemandIndividual1) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.12, 0.20),
@@ -101,7 +102,7 @@ class Demand extends BaseDiagramPainter2 {
         yAxisLabel: DiagramLabel.price$.label,
         xAxisLabel: DiagramLabel.quantityOfChocolateBars.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.20, 0.20),
@@ -111,7 +112,7 @@ class Demand extends BaseDiagramPainter2 {
       );
     }
     if (diagramBundleEnum == DiagramBundleEnum.microDemandIndividualVsMarket) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.20, 0.20),
@@ -179,7 +180,7 @@ class Demand extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q3.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.10, 0.30),
@@ -187,7 +188,7 @@ class Demand extends BaseDiagramPainter2 {
         label2: DiagramLabel.d3.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.30, 0.10),
@@ -196,7 +197,7 @@ class Demand extends BaseDiagramPainter2 {
         label2Align: LabelAlign.centerRight,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.36, 0.40),
@@ -204,7 +205,7 @@ class Demand extends BaseDiagramPainter2 {
         arrowOnEnd: true,
         arrowOnEndAngle: pi * 1.5,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.46, 0.40),
@@ -215,4 +216,3 @@ class Demand extends BaseDiagramPainter2 {
     }
   }
 }
-

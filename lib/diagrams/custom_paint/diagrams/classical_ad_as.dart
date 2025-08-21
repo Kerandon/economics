@@ -8,8 +8,9 @@ import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/paint_axis.dart';
-import '../painter_methods/paint_diagram_custom_lines.dart';
+
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_title.dart';
 
 class ClassicalADAS extends BaseDiagramPainter {
@@ -31,7 +32,7 @@ class ClassicalADAS extends BaseDiagramPainter {
 
     if (model.subtype == DiagramSubtype.sras ||
         model.subtype == DiagramSubtype.increase) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
@@ -42,7 +43,7 @@ class ClassicalADAS extends BaseDiagramPainter {
     }
     if (model.subtype == DiagramSubtype.increase) {
       paintTitle(c, canvas, DiagramTitle.keynesianModel.title());
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.35, 0.85),
@@ -56,7 +57,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         model.subtype == DiagramSubtype.fullEmploymentKeynesian) {
       var aDLabel = DiagramLabel.aggregateDemand.label;
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
@@ -76,7 +77,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         xLabel: DiagramLabel.yF.label,
       );
 
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.85),
@@ -104,7 +105,7 @@ class ClassicalADAS extends BaseDiagramPainter {
 
     if (model.subtype == DiagramSubtype.inflationaryGapKeynesian) {
       paintTitle(c, canvas, DiagramTitle.keynesianModel.title());
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.55, 0.10),
@@ -124,7 +125,7 @@ class ClassicalADAS extends BaseDiagramPainter {
 
     if (model.subtype == DiagramSubtype.deflationaryGapKeynesian) {
       paintTitle(c, canvas, DiagramTitle.keynesianModel.title());
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.15, 0.15),
@@ -149,7 +150,7 @@ class ClassicalADAS extends BaseDiagramPainter {
     if (model.subtype == DiagramSubtype.fullEmploymentClassical ||
         model.subtype == DiagramSubtype.inflationaryGapClassical ||
         model.subtype == DiagramSubtype.deflationaryGapClassical) {
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.50, 0.05),
@@ -180,7 +181,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         yLabel: DiagramLabel.pL.label,
         xLabel: DiagramLabel.yDef.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.05, 0.25),
@@ -188,7 +189,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         label2: DiagramLabel.aD.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.05, 0.85),
@@ -210,7 +211,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         yLabel: DiagramLabel.pL.label,
         xLabel: DiagramLabel.yInf.label,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.35, 0.25),
@@ -218,7 +219,7 @@ class ClassicalADAS extends BaseDiagramPainter {
         label2: DiagramLabel.aD.label,
         label2Align: LabelAlign.centerRight,
       );
-      paintCustomDiagramLines(
+      paintDiagramLines(
         c,
         canvas,
         startPos: Offset(0.35, 0.85),
@@ -231,7 +232,7 @@ class ClassicalADAS extends BaseDiagramPainter {
 }
 
 paintKeynesianAS(DiagramPainterConfig c, Canvas canvas) {
-  paintCustomDiagramLines(
+  paintDiagramLines(
     c,
     canvas,
     startPos: Offset(0.10, 0.75),
