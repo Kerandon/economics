@@ -10,7 +10,7 @@ void paintShading(
   ShadeType shade,
   List<dynamic> pointsAndBeziers, {
   bool striped = true,
-  double stripeSpacing = 8.0,
+  double stripeSpacing = 9.0,
 }) {
   final width = size.width;
   final height = size.height;
@@ -56,8 +56,8 @@ void paintShading(
 
     final stripePaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
-      ..color = shade.setShadeColor().withAlpha(155);
+      ..strokeWidth = 2
+      ..color = shade.setShadeColor().withAlpha(150);
 
     // Draw diagonal lines as stripes
     for (double y = -size.height; y < size.height * 2; y += stripeSpacing) {

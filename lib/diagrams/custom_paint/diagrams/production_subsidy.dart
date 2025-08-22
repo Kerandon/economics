@@ -1,3 +1,4 @@
+import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
@@ -11,11 +12,8 @@ import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 
-class ProductionSubsidy extends BaseDiagramPainter {
-  ProductionSubsidy({
-    required DiagramPainterConfig config,
-    required DiagramModel model,
-  }) : super(config, model);
+class ProductionSubsidy extends BaseDiagramPainter2 {
+  ProductionSubsidy(super.config, super.diagramBundleEnum);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -78,7 +76,7 @@ class ProductionSubsidy extends BaseDiagramPainter {
       label2: DiagramLabel.sW.label,
       label2Align: LabelAlign.centerRight,
     );
-    if (model.subtype == DiagramSubtype.socialWelfare) {
+    if (diagramBundleEnum == DiagramBundleEnum.globalTariffProducerSurplus) {
       paintShading(canvas, size, ShadeType.welfareLoss, [
         Offset(0.20, 0.80),
         Offset(0.40, 0.80),

@@ -50,7 +50,7 @@ with the goal of protecting domestic industries from foreign competition and to 
 
           ''', DiagramBundleEnum.globalTariff),
       SlideContent.textWithDiagram('''
-      <h2>Welfare Analysis</h2>
+      <h1>Welfare Analysis</h1>
       <p>Before the tariff,
       global resources are allocated as efficiently as possible.
       However, the imposition of a tariff causes a <strong>miss-allocation of global resources</strong>
@@ -76,7 +76,7 @@ with the goal of protecting domestic industries from foreign competition and to 
      The higher price causes the consumer surplus to shrink with the green area only representing the consumer surplus after the tariff.</p>
       ''', DiagramBundleEnum.globalTariffConsumerSurplusChange),
       SlideContent.textWithDiagram('''
-      <h2>Producer Surplus</h3>
+      <h2>Producer Surplus</h2>
   <em>(Net welfare gain)</em>
       <h3>Before the tariff</h3>
       <p>Only the most efficient domestic producers who are below the 
@@ -133,14 +133,15 @@ with the goal of protecting domestic industries from foreign competition and to 
               
               <p>However, an import quota has one key distinction: unlike a tariff it <strong>does not</strong> generate 
               tax revenue for the government. </p>
-              <h3>Import Quota Diagram</h3>
+              <h1>Import Quota Diagram</h1>
               <p>Like the tariff diagram, the domestic market is a net importer 
               (shown by the Pw/Sw horizontal curve drawn below where Sd and Dd intersect).
               After the import quota is applied, <strong>a new supply curve</strong> is created. 
               The new supply curve is domestic supply <strong>plus</strong> the fixed quota which
               can be imported. 
-              To draw this new supply curve shift the domestic supply right by the quota amount (sd+q).
-              Where this new supply curve intersects with domestic demand 
+              To draw this new supply curve, add the quota amount to the right of the domestic
+              supply curve (shifting horizontally right).
+              Where this new supply curve (Sd+q) intersects with domestic demand (Dd)
               determines the new domestic market price and quantity.
 
               
@@ -160,6 +161,78 @@ with the goal of protecting domestic industries from foreign competition and to 
         form of trade protectionism compared to a tariff, '
             'where foreign exporters do not gain from the higher price.
             '''),
+      SlideContent.textWithDiagram('''
+<h1>Welfare Analysis</h1>
+<p>Like the welfare effects of a tariff, domestic producers gain due to the higher domestic price
+and producer surplus increases, 
+while domestic consumers are worse off who now face a higher domestic price and consumer surplus decreases. 
+However, unlike a tariff the government does not gain tax revenue. This rectangle area in the center of 
+the diagram (Q3 - Q2) X (Pw+q - Pw), which is tax revenue under a tariff diagram, is now lost to 
+society. Society loses overall as the total social surplus is smaller.
+</p>
+''', DiagramBundleEnum.globalImportQuotaWelfare),
+
+      SlideContent.textWithDiagram('''
+  <h3>Consumers</h3>
+  
+        <em>(Net welfare loss)</em>
+  <p>Domestic consumers lose out. Before the tariff, they benefited from free-trade and the low world price (Pw),
+  importing Q4-0. After the import quota, the restricted supply pushes up the domestic price, and there is a
+  contraction in domestic demand from Pw/Q4 to Pw+q/Q3, which results in a decrease in consumer surplus.</p> 
+  ''', DiagramBundleEnum.globalImportQuotaConsumerSurplusChange),
+
+      SlideContent.textWithDiagram('''
+  <h3>Producers</h3>
+  
+        <em>(Net welfare gain)</em>
+  <p>Domestic producers in the protected industry gain. Before the import quota, only the most efficient domestic
+  producers could compete with the low world price (Pw) selling only Q1-0.
+  After the restriction in imports, the domestic market price increases to Pw+q and 
+  domestic producers increase their sales from Q1-0 to Q2-0, increasing total producer surplus.</p> 
+  ''', DiagramBundleEnum.globalImportQuotaConsumerSurplusChange),
+      SlideContent.textWithDiagram('''
+  <h3>Social Welfare Loss (Dead-Weight Loss)</h3>
+ 
+  <p>An import quota creates an relatively large area of dead-weight loss compared to a tariff, which can
+  be separated into three areas on the diagram, all of which represent <strong>lost consumer surplus</strong>:</p>
+<ul>
+    <li><strong>Left triangle (inefficiency in production):</strong> Like a tariff, inefficient 
+    domestic producers replace efficient foreign exporters (Q2-Q1) X (Pw+q - Pw).</li>
+  <li><strong>Middle rectangle (not picked up by government):</strong> Unlike a tariff, this rectangle (Q3-Q2) X (Pw+q - Pw) 
+  is lost to society because it is
+  not picked up by the government in the form of tax revenue.</li>
+ <strong>Right triangle (loss of consumption):</strong> This consumer surplus (Q4-Q3) X (Pw+q - Pw) 
+ is caused by the market shrinking in size by Q4-Q3.
+  </li>
+
+
+  </li></ul>
+  </p> 
+  ''', DiagramBundleEnum.globalImportQuotaWelfareLoss),
+    ],
+  ),
+  Slide(
+    section: Subunit.typesTradeProtection,
+    title: 'Production Subsidy',
+    contents: [
+      SlideContent.termWithContentAndDiagram(
+        'Production Subsidy',
+
+        '''A payment made by the government to domestic producers for each unit of output, aimed at helping domestic firms compete with imported goods.
+''',
+        '''
+        <h1>Production Subsidy Diagram</h1>
+        <p>
+        The diagram assumes the domestic market is a net importer of the good, with world price (Pw) below 
+        where Sd and Dd intersect.
+        Like a subsidy diagram in microeconomics, draw a new supply curve under the existing one (the vertical 
+        distance being the size of the subsidy per unit). 
+        Important to note that the world price hasn't changed, only that domestic producers are now more 
+        competitive and can sell more at the world price (extending from Q1 to Q2).
+        </p>
+        ''',
+        DiagramBundleEnum.globalProductionSubsidy,
+      ),
     ],
   ),
 ];

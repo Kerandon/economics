@@ -1,4 +1,5 @@
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_demand.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_supply.dart';
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
@@ -89,23 +90,52 @@ class ImportQuota extends BaseDiagramPainter2 {
       label2: DiagramLabel.sWQ.label,
       label2Align: LabelAlign.centerRight,
     );
-    if (diagramBundleEnum == DiagramBundleEnum.globalTariffWelfare) {
-      paintShading(canvas, size, ShadeType.consumerSurplus, [
-        Offset(0.0, 0.0), // q1 at pWT
-        Offset(0.65, 0.65), // q2 at pWT
-        Offset(0.0, 0.65), // approximate top of demand curve (midpoint)
+    if (diagramBundleEnum == DiagramBundleEnum.globalImportQuotaWelfare) {
+      _paintConsumerSurplus(canvas, size);
+      _paintProducerSurplus(canvas, size);
+      _paintWelfareLoss(canvas, size);
+    }
+    if(diagramBundleEnum == DiagramBundleEnum.globalImportQuotaConsumerSurplusChange){
+      _paintConsumerSurplus(canvas, size);
+      paintShading(canvas, size, ShadeType.lostConsumerSurplus, [
+        Offset(0.0, 0.65),
+        Offset(0.65,0.65),
+        Offset(0.80,0.80),
+        Offset(0, 0.80),
       ]);
-      paintShading(canvas, size, ShadeType.producerSurplus, [
-        Offset(0.0, 0.65), // extend left bottom
-        Offset(0.35, 0.65), // q1 at pWT
-        Offset(0, 1.0), // q1 at supply curve (base)
-      ]);
-      paintShading(canvas, size, ShadeType.welfareLoss, [
-        Offset(0.20, 0.80),
-        Offset(0.80, 0.80),
-        Offset(0.65, 0.65),
-        Offset(0.35, 0.65),
+      paintLegend(canvas, size, [
+        LegendEntry.fromShade(ShadeType.consumerSurplus),
+        LegendEntry.fromShade(ShadeType.lostConsumerSurplus),
+
       ]);
     }
+    if(diagramBundleEnum == DiagramBundleEnum.globalImportQuotaWelfareLoss){
+      _paintWelfareLoss(canvas, size);
+    }
+  }
+
+  void _paintProducerSurplus(Canvas canvas, Size size) {
+    paintShading(canvas, size, ShadeType.producerSurplus, [
+      Offset(0.0, 0.65), // extend left bottom
+      Offset(0.35, 0.65), // q1 at pWT
+      Offset(0, 1.0), // q1 at supply curve (base)
+    ]);
+  }
+
+  void _paintConsumerSurplus(Canvas canvas, Size size) {
+    paintShading(canvas, size, ShadeType.consumerSurplus, [
+      Offset(0.0, 0.0), // q1 at pWT
+      Offset(0.65, 0.65), // q2 at pWT
+      Offset(0.0, 0.65), // approximate top of demand curve (midpoint)
+    ]);
+  }
+
+  void _paintWelfareLoss(Canvas canvas, Size size) {
+    paintShading(canvas, size, ShadeType.welfareLoss, [
+      Offset(0.20, 0.80),
+      Offset(0.80, 0.80),
+      Offset(0.65, 0.65),
+      Offset(0.35, 0.65),
+    ]);
   }
 }

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 enum ShadeType {
   consumerSurplus,
+  gainedConsumerSurplus,
+  lostConsumerSurplus,
   producerSurplus,
+  gainedProducerSurplus,
+  lostProducerSurplus,
   surplus,
   shortage,
   consumerBurden,
@@ -12,12 +16,12 @@ enum ShadeType {
   welfareLoss,
   abnormalProfit,
   loss,
-  lost,
-  gained,
 }
 
 extension Shade on ShadeType {
   Color setShadeColor() {
+    const gainedColor = Colors.indigo;
+    const lostColor = Colors.blueGrey;
     switch (this) {
       case ShadeType.consumerSurplus:
         return Colors.green;
@@ -34,17 +38,21 @@ extension Shade on ShadeType {
       case ShadeType.governmentBurden:
         return Colors.grey;
       case ShadeType.governmentRevenue:
-        return Colors.brown;
+        return Colors.deepPurple;
       case ShadeType.welfareLoss:
-        return Colors.orange;
+        return Colors.red;
       case ShadeType.abnormalProfit:
         return Colors.lightBlue;
       case ShadeType.loss:
         return Colors.red;
-      case ShadeType.lost:
-        return Colors.blueGrey;
-      case ShadeType.gained:
-        return Colors.green;
+      case ShadeType.gainedConsumerSurplus:
+        return gainedColor;
+      case ShadeType.lostConsumerSurplus:
+        return lostColor;
+      case ShadeType.gainedProducerSurplus:
+        return gainedColor;
+      case ShadeType.lostProducerSurplus:
+        return lostColor;
     }
   }
 
@@ -72,10 +80,14 @@ extension Shade on ShadeType {
         return 'Abnormal Profits';
       case ShadeType.loss:
         return 'Loss';
-      case ShadeType.lost:
-        return 'Lost Surplus';
-      case ShadeType.gained:
-        return 'Gained Surplus';
+      case ShadeType.gainedConsumerSurplus:
+        return 'Gained Consumer Surplus';
+      case ShadeType.lostConsumerSurplus:
+        return 'Lost Consumer Surplus';
+      case ShadeType.gainedProducerSurplus:
+        return 'Gained Producer Surplus';
+      case ShadeType.lostProducerSurplus:
+        return 'Lost Producer Surplus';
     }
   }
 

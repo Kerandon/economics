@@ -1,5 +1,6 @@
 import 'package:economics_app/diagrams/custom_paint/diagrams/import_quota.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/international_trade.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/production_subsidy.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/tariff.dart';
 
 import '../custom_paint/diagrams/demand.dart';
@@ -98,21 +99,51 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
     ],
   ),
   DiagramBundle(
-    diagramBundleEnum: DiagramBundleEnum.globalImportQuotaConsumerSurplus,
+    diagramBundleEnum: DiagramBundleEnum.globalImportQuotaConsumerSurplusChange,
     basePainterDiagrams: [
-      ImportQuota(config, DiagramBundleEnum.globalImportQuotaConsumerSurplus),
+      ImportQuota(config, DiagramBundleEnum.globalImportQuotaConsumerSurplusChange),
     ],
   ),
   DiagramBundle(
-    diagramBundleEnum: DiagramBundleEnum.globalImportQuotaProducerSurplus,
+    diagramBundleEnum: DiagramBundleEnum.globalImportQuotaProducerSurplusChange,
     basePainterDiagrams: [
-      ImportQuota(config, DiagramBundleEnum.globalImportQuotaProducerSurplus),
+      ImportQuota(config, DiagramBundleEnum.globalImportQuotaProducerSurplusChange),
     ],
   ),
   DiagramBundle(
     diagramBundleEnum: DiagramBundleEnum.globalImportQuotaWelfareLoss,
     basePainterDiagrams: [
       ImportQuota(config, DiagramBundleEnum.globalImportQuotaWelfareLoss),
+    ],
+  ),
+  DiagramBundle(
+    diagramBundleEnum: DiagramBundleEnum.globalProductionSubsidy,
+    basePainterDiagrams: [
+      ProductionSubsidy(config, DiagramBundleEnum.globalProductionSubsidy,),
+    ],
+  ),
+  DiagramBundle(
+    diagramBundleEnum: DiagramBundleEnum.globalProductionSubsidyWelfare,
+    basePainterDiagrams: [
+      ProductionSubsidy(config, DiagramBundleEnum.globalProductionSubsidyWelfare,),
+    ],
+  ),
+  DiagramBundle(
+    diagramBundleEnum: DiagramBundleEnum.globalProductionSubsidyConsumerSurplus,
+    basePainterDiagrams: [
+      ProductionSubsidy(config, DiagramBundleEnum.globalProductionSubsidyConsumerSurplus,),
+    ],
+  ),
+  DiagramBundle(
+    diagramBundleEnum: DiagramBundleEnum.globalProductionSubsidyProducerSurplus,
+    basePainterDiagrams: [
+      ProductionSubsidy(config, DiagramBundleEnum.globalProductionSubsidyProducerSurplus,),
+    ],
+  ),
+  DiagramBundle(
+    diagramBundleEnum: DiagramBundleEnum.globalProductionSubsidyWelfareLoss,
+    basePainterDiagrams: [
+      ProductionSubsidy(config,  DiagramBundleEnum.globalProductionSubsidyWelfareLoss,),
     ],
   ),
 ];

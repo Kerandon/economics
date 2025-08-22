@@ -20,16 +20,16 @@ class Tariff extends BaseDiagramPainter2 {
     final c = config.copyWith(painterSize: size);
 
     if (diagramBundleEnum == DiagramBundleEnum.globalTariffConsumerSurplus) {
-      paintConsumerSurplus(canvas, size);
+      _paintConsumerSurplus(canvas, size);
     }
     if (diagramBundleEnum ==
         DiagramBundleEnum.globalTariffConsumerSurplusChange) {
-      paintConsumerSurplus(canvas, size);
+      _paintConsumerSurplus(canvas, size);
     }
 
     if (diagramBundleEnum ==
         DiagramBundleEnum.globalTariffConsumerSurplusChange) {
-      paintShading(canvas, size, ShadeType.lost, [
+      paintShading(canvas, size, ShadeType.lostConsumerSurplus, [
         Offset(0, 0.65),
         Offset(0.65, 0.65),
         Offset(0.80, 0.80),
@@ -39,14 +39,13 @@ class Tariff extends BaseDiagramPainter2 {
       paintLegend(canvas, size, [
         LegendEntry.fromShade(ShadeType.consumerSurplus),
         LegendEntry.fromShade(
-          ShadeType.lost,
-          customLabel: 'Lost Consumer Surplus',
+          ShadeType.lostConsumerSurplus
         ),
       ]);
     }
     if (diagramBundleEnum ==
         DiagramBundleEnum.globalTariffProducerSurplusChange) {
-      paintShading(canvas, size, ShadeType.gained, [
+      paintShading(canvas, size, ShadeType.gainedProducerSurplus, [
         Offset(0.0, 0.65),
         Offset(0.35, 0.65),
         Offset(0.20, 0.80),
@@ -59,29 +58,26 @@ class Tariff extends BaseDiagramPainter2 {
       ]);
       paintLegend(canvas, size, [
         LegendEntry.fromShade(ShadeType.producerSurplus),
-        LegendEntry.fromShade(
-          ShadeType.gained,
-          customLabel: 'Gained Producer Surplus',
-        ),
+        LegendEntry.fromShade(ShadeType.gainedProducerSurplus),
       ]);
     }
     if (diagramBundleEnum == DiagramBundleEnum.globalTariffGovernmentRevenue) {
-      paintGovernmentRevenue(canvas, size);
+      _paintGovernmentRevenue(canvas, size);
       paintLegend(canvas, size, [
         LegendEntry.fromShade(ShadeType.governmentRevenue),
       ]);
     }
     if (diagramBundleEnum == DiagramBundleEnum.globalTariffWelfareLoss) {
-      paintWelfareLossLeft(canvas, size);
+      _paintWelfareLossLeft(canvas, size);
 
-      paintWelfareLossRight(canvas, size);
+      _paintWelfareLossRight(canvas, size);
       paintLegend(canvas, size, [LegendEntry.fromShade(ShadeType.welfareLoss)]);
     }
     if (diagramBundleEnum == DiagramBundleEnum.globalTariffWelfare) {
-      paintGovernmentRevenue(canvas, size);
-      paintWelfareLossRight(canvas, size);
-      paintWelfareLossLeft(canvas, size);
-      paintConsumerSurplus(canvas, size);
+      _paintGovernmentRevenue(canvas, size);
+      _paintWelfareLossRight(canvas, size);
+      _paintWelfareLossLeft(canvas, size);
+      _paintConsumerSurplus(canvas, size);
       paintShading(canvas, size, ShadeType.producerSurplus, [
         Offset(0.0, 0.65), // extend left bottom
         Offset(0.35, 0.65), // q1 at pWT
@@ -157,7 +153,7 @@ class Tariff extends BaseDiagramPainter2 {
     );
   }
 
-  void paintConsumerSurplus(Canvas canvas, Size size) {
+  void _paintConsumerSurplus(Canvas canvas, Size size) {
     paintShading(canvas, size, ShadeType.consumerSurplus, [
       Offset(0.0, 0.0), // q1 at pWT
       Offset(0.65, 0.65), // q2 at pWT
@@ -165,7 +161,7 @@ class Tariff extends BaseDiagramPainter2 {
     ]);
   }
 
-  void paintWelfareLossLeft(Canvas canvas, Size size) {
+  void _paintWelfareLossLeft(Canvas canvas, Size size) {
     paintShading(canvas, size, ShadeType.welfareLoss, [
       Offset(0.20, 0.80), // q1 at pW
       Offset(0.35, 0.80), // q3 at pW
@@ -173,7 +169,7 @@ class Tariff extends BaseDiagramPainter2 {
     ]);
   }
 
-  void paintWelfareLossRight(Canvas canvas, Size size) {
+  void _paintWelfareLossRight(Canvas canvas, Size size) {
     paintShading(canvas, size, ShadeType.welfareLoss, [
       Offset(0.65, 0.80), // q4 at pW
       Offset(0.80, 0.80), // q2 at pW
@@ -181,7 +177,7 @@ class Tariff extends BaseDiagramPainter2 {
     ]);
   }
 
-  void paintGovernmentRevenue(Canvas canvas, Size size) {
+  void _paintGovernmentRevenue(Canvas canvas, Size size) {
     paintShading(canvas, size, ShadeType.governmentRevenue, [
       Offset(0.35, 0.80), // q3 at pW
       Offset(0.65, 0.80), // q4 at pW

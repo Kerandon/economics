@@ -28,4 +28,9 @@ enum DiagramBundleEnum {
   globalImportQuotaProducerSurplus,
   globalImportQuotaProducerSurplusChange,
   globalImportQuotaWelfareLoss,
+  globalProductionSubsidy,
+  globalProductionSubsidyConsumerSurplus,
+  globalProductionSubsidyProducerSurplus,
+  globalProductionSubsidyWelfareLoss,
+  globalProductionSubsidyWelfare,
 }
