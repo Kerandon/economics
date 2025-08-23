@@ -233,6 +233,63 @@ society. Society loses overall as the total social surplus is smaller.
         ''',
         DiagramBundleEnum.globalProductionSubsidy,
       ),
+      SlideContent.textWithDiagram(
+      '''
+      <h3>Welfare Analysis</h3>
+      Like all forms of trade protectionism, domestic producers gain, however, 
+      unlike tariffs, import quotas or export subsides, <strong>consumers are not worse off</strong> because
+      they are able to continue to buy the same quantity at the world price.
+      Society overall still loses however as the government must use tax revenue to pay for the subsidy,
+      resulting in a <strong>dead-weight loss</strong>.
+      <p>Note consumer surplus crosses over with 
+      the gain in producer surplus (section above Pw) and the dead-weight loss (between Q2 - Q1).</p>
+      ''',
+      DiagramBundleEnum.globalProductionSubsidyWelfare,
+      ),SlideContent.tip('''
+      Unlike a tariff, import quota or export subsidy, a production subsidy <strong>does not</strong>
+    is the only trade barrier where consumers are not made worse off. 
+    Consumers continue to the good at the same world price, although they
+    increase the share of domestic purchases and decrease their purchase of imports.
+      '''),
+      SlideContent.textWithDiagram(
+        '''
+      <h3>Consumer Surplus</h3>
+<p>Because a production subsidy does not change the market price consumer surplus is unchanged. 
+Consumers continue to purchase the good at the world price Pw,
+although they switch from spending Q2-Q1 on imported goods to domestic goods.</p>
+      ''',
+        DiagramBundleEnum.globalProductionSubsidyConsumerSurplus,
+      ),
+      SlideContent.textWithDiagram(
+      '''
+      <h3>Producer Surplus</h3>
+      The subsidy lowers the costs of production and therefore increases their ability to compete
+      with imports, increasing producer surplus.
+      ''',
+      DiagramBundleEnum.globalProductionSubsidyProducerSurplusChange,),
+      SlideContent.textWithDiagram(
+        '''
+      <h3>Government Expenditure</h3>
+  <p>The government needs to fund all domestic production. 
+  This is calculated by (Q2 - 0) X (Pw+Sub - Pw). Because the government must use public funding
+  to pay for this subsidy it is counted as a welfare loss for society.</p>
+  
+      ''',
+        DiagramBundleEnum.globalProductionSubsidyWelfareLoss,
+      ),
+      SlideContent.textWithDiagram(
+        '''
+      <h3>Dead-Weight Loss</h3>
+  <p>Because the government needs to use taxpayer revenue to pay for the subsidy it a 
+  creates a dead-weight loss, represented increased production by relatively inefficient domestic firms 
+  from Q2 - Q1.</p><p>
+  The entire rectangle is a loss for society because the public needs to pay for it.
+  However, the area above Sd curve (between Pw and P _ Sub) is new producer surplus.
+  </p>
+  
+      ''',
+        DiagramBundleEnum.globalProductionSubsidyWelfareLoss,
+     ),
     ],
   ),
 ];

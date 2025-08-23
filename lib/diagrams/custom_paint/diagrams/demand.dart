@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/legend_display.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/diagram_labels.dart';
@@ -15,6 +16,7 @@ import '../painter_methods/paint_diagram_lines.dart';
 
 class Demand extends BaseDiagramPainter2 {
   Demand(super.config, super.diagramBundleEnum);
+
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -215,4 +217,6 @@ class Demand extends BaseDiagramPainter2 {
       );
     }
   }
+
+
 }

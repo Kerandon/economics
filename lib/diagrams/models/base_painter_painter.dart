@@ -1,6 +1,7 @@
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 
+import '../enums/legend_display.dart';
 import '../mixins/mixins.dart';
 import 'diagram_model.dart';
 import 'diagram_painter_config.dart';
@@ -18,16 +19,20 @@ abstract class BaseDiagramPainter extends CustomPainter
     return true;
   }
 }
-
 abstract class BaseDiagramPainter2 extends CustomPainter
     with DiagramIdentifierMixin2 {
   final DiagramPainterConfig config;
   @override
   final DiagramBundleEnum diagramBundleEnum;
-
-  BaseDiagramPainter2(this.config, this.diagramBundleEnum);
   @override
-  bool shouldRepaint(covariant BaseDiagramPainter2 oldDelegate) {
-    return true;
-  }
+  final LegendDisplay legendDisplay;
+
+  BaseDiagramPainter2(
+      this.config,
+      this.diagramBundleEnum, {
+        LegendDisplay? legendDisplay, // optional param
+      }) : legendDisplay = legendDisplay ?? diagramBundleEnum.defaultLegendDisplay;
+
+  @override
+  bool shouldRepaint(covariant BaseDiagramPainter2 oldDelegate) => true;
 }

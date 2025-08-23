@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 enum ShadeType {
   consumerSurplus,
+  originalConsumerSurplus,
   gainedConsumerSurplus,
   lostConsumerSurplus,
   producerSurplus,
+  originalProducerSurplus,
   gainedProducerSurplus,
   lostProducerSurplus,
   surplus,
@@ -20,13 +22,15 @@ enum ShadeType {
 
 extension Shade on ShadeType {
   Color setShadeColor() {
+    const consumerSurplusColor = Colors.green;
+    const producerSurplusColor = Colors.blue;
     const gainedColor = Colors.indigo;
     const lostColor = Colors.blueGrey;
     switch (this) {
       case ShadeType.consumerSurplus:
-        return Colors.green;
+        return consumerSurplusColor;
       case ShadeType.producerSurplus:
-        return Colors.blue;
+        return producerSurplusColor;
       case ShadeType.surplus:
         return Colors.cyan; // 💡 Picked a distinct color for surplus
       case ShadeType.shortage:
@@ -53,6 +57,10 @@ extension Shade on ShadeType {
         return gainedColor;
       case ShadeType.lostProducerSurplus:
         return lostColor;
+      case ShadeType.originalConsumerSurplus:
+        return consumerSurplusColor;
+      case ShadeType.originalProducerSurplus:
+        return producerSurplusColor;
     }
   }
 
@@ -88,6 +96,10 @@ extension Shade on ShadeType {
         return 'Gained Producer Surplus';
       case ShadeType.lostProducerSurplus:
         return 'Lost Producer Surplus';
+      case ShadeType.originalConsumerSurplus:
+        return 'Original Consumer Surplus';
+      case ShadeType.originalProducerSurplus:
+        return 'Original Producer Surplus';
     }
   }
 

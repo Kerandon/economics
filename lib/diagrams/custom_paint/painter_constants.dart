@@ -8,7 +8,7 @@ const kCurveWidthSlim = 3.0;
 const kArrowSize = 8.0;
 
 /// Axis
-const kAxisIndent = 0.26;
+const kAxisIndent = 0.30;
 const kAxisTextIndent = 0.08;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;

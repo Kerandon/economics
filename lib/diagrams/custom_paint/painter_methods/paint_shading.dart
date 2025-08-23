@@ -5,13 +5,14 @@ import '../painter_constants.dart';
 
 /// for pointsAndBeziers, takes [Offset] and [CustomBezier]
 void paintShading(
-  Canvas canvas,
-  Size size,
-  ShadeType shade,
-  List<dynamic> pointsAndBeziers, {
-  bool striped = true,
-  double stripeSpacing = 9.0,
-}) {
+    Canvas canvas,
+    Size size,
+    ShadeType shade,
+    List<dynamic> pointsAndBeziers, {
+      bool striped = true,
+      double stripeSpacing = 9.0,
+      bool invertStripes = false, // NEW parameter
+    }) {
   final width = size.width;
   final height = size.height;
   final normalize = 1 - (kAxisIndent * 1.5);
@@ -50,7 +51,6 @@ void paintShading(
   path.close();
 
   if (striped) {
-    // Save canvas so we can clip temporarily
     canvas.save();
     canvas.clipPath(path);
 
@@ -59,13 +59,24 @@ void paintShading(
       ..strokeWidth = 2
       ..color = shade.setShadeColor().withAlpha(150);
 
-    // Draw diagonal lines as stripes
-    for (double y = -size.height; y < size.height * 2; y += stripeSpacing) {
-      canvas.drawLine(
-        Offset(0, y),
-        Offset(size.width, y + size.width),
-        stripePaint,
-      );
+    if (invertStripes) {
+      // Draw stripes from bottom-left to top-right
+      for (double y = size.height * 2; y > -size.height; y -= stripeSpacing) {
+        canvas.drawLine(
+          Offset(0, y),
+          Offset(size.width, y - size.width),
+          stripePaint,
+        );
+      }
+    } else {
+      // Original direction: top-left to bottom-right
+      for (double y = -size.height; y < size.height * 2; y += stripeSpacing) {
+        canvas.drawLine(
+          Offset(0, y),
+          Offset(size.width, y + size.width),
+          stripePaint,
+        );
+      }
     }
 
     canvas.restore();

@@ -1,8 +1,11 @@
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
 import '../../enums/label_align.dart';
+import '../../enums/legend_display.dart';
 import '../../enums/shade_type.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
@@ -13,12 +16,22 @@ import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 
 class ProductionSubsidy extends BaseDiagramPainter2 {
-  ProductionSubsidy(super.config, super.diagramBundleEnum);
+  ProductionSubsidy(
+      super.config,
+      super.diagramBundleEnum, {
+        super.legendDisplay,
+      });
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
+    if(legendDisplay == LegendDisplay.shading){
+      paintText(c, canvas, 'FUCK ITS SHADING', Offset(0.50,0.50));
+    }
+    if(legendDisplay == LegendDisplay.letters){
+      paintText(c, canvas, 'FUCK ITS LETTERS', Offset(0.50,0.50));
+    }
     paintAxis(
       c,
       canvas,
@@ -76,12 +89,68 @@ class ProductionSubsidy extends BaseDiagramPainter2 {
       label2: DiagramLabel.sW.label,
       label2Align: LabelAlign.centerRight,
     );
-    if (diagramBundleEnum == DiagramBundleEnum.globalTariffProducerSurplus) {
-      paintShading(canvas, size, ShadeType.welfareLoss, [
-        Offset(0.20, 0.80),
-        Offset(0.40, 0.80),
-        Offset(0.40, 0.60),
+    if (diagramBundleEnum == DiagramBundleEnum.globalProductionSubsidyWelfare) {
+      _paintWelfareLoss(canvas, size);
+      _paintConsumerSurplus(canvas, size);
+      _paintProducerSurplus(canvas, size);
+      paintLegend(canvas, size, [
+        LegendEntry.fromShade(ShadeType.consumerSurplus),
+        LegendEntry.fromShade(ShadeType.producerSurplus),
+        LegendEntry.fromShade(ShadeType.welfareLoss),
       ]);
     }
+    if (diagramBundleEnum ==
+        DiagramBundleEnum.globalProductionSubsidyConsumerSurplus) {
+      _paintConsumerSurplus(canvas, size);
+      paintLegend(canvas, size, [
+        LegendEntry.fromShade(ShadeType.consumerSurplus),
+      ]);
+    }
+    if (diagramBundleEnum ==
+        DiagramBundleEnum.globalProductionSubsidyProducerSurplusChange) {
+      _originalProducerSurplus(canvas, size);
+      paintShading(canvas, size, ShadeType.gainedProducerSurplus, [
+        Offset(0.0, 0.80),
+        Offset(0.20, 0.80),
+        Offset(0.40, 0.60),
+        Offset(0.0, 0.60),
+      ]);
+      paintLegend(canvas, size, [
+        LegendEntry.fromShade(ShadeType.originalProducerSurplus),
+        LegendEntry.fromShade(ShadeType.gainedProducerSurplus),
+      ]);
+    }
+  }
+
+  void _originalProducerSurplus(Canvas canvas, Size size) {
+    paintShading(canvas, size, ShadeType.producerSurplus, [
+      Offset(0.0, 1.0),
+      Offset(0.20, 0.80),
+      Offset(0.0, 0.80),
+    ]);
+  }
+
+  void _paintProducerSurplus(Canvas canvas, Size size) {
+    paintShading(canvas, size, ShadeType.producerSurplus, [
+      Offset(0.0, 1.0),
+      Offset(0.40, 0.60),
+      Offset(0.0, 0.60),
+    ]);
+  }
+
+  void _paintConsumerSurplus(Canvas canvas, Size size) {
+    paintShading(canvas, size, ShadeType.consumerSurplus, invertStripes: true, [
+      Offset(0.0, 0.0),
+      Offset(0.0, 0.80),
+      Offset(0.80, 0.80),
+    ]);
+  }
+
+  void _paintWelfareLoss(Canvas canvas, Size size) {
+    paintShading(canvas, size, ShadeType.welfareLoss, [
+      Offset(0.20, 0.80),
+      Offset(0.40, 0.80),
+      Offset(0.40, 0.60),
+    ]);
   }
 }

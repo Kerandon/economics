@@ -13,7 +13,7 @@ import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_shading.dart';
 
 class ImportQuota extends BaseDiagramPainter2 {
-  ImportQuota(super.config, super.diagramBundleEnum);
+  ImportQuota(super.config, super.diagramBundleEnum, );
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -138,4 +138,5 @@ class ImportQuota extends BaseDiagramPainter2 {
       Offset(0.35, 0.65),
     ]);
   }
+
 }

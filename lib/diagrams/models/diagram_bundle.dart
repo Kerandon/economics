@@ -29,17 +29,17 @@ import 'base_painter_painter.dart';
 //     );
 //   }
 // }
-
 class DiagramBundle {
   final DiagramBundleEnum? diagramBundleEnum;
   final String? title;
   final List<BaseDiagramPainter2> basePainterDiagrams;
 
-  DiagramBundle({
-    this.diagramBundleEnum,
-    this.title,
-    List<BaseDiagramPainter2>? basePainterDiagrams,
-  }) : basePainterDiagrams = basePainterDiagrams ?? [];
+  // Positional parameters: required first, optional last
+  DiagramBundle(
+      this.diagramBundleEnum,
+      this.basePainterDiagrams, [
+        this.title,
+      ]);
 
   DiagramBundle copyWith({
     DiagramBundleEnum? diagramBundleEnum,
@@ -47,9 +47,9 @@ class DiagramBundle {
     List<BaseDiagramPainter2>? basePainterDiagrams,
   }) {
     return DiagramBundle(
-      diagramBundleEnum: diagramBundleEnum ?? this.diagramBundleEnum,
-      title: title ?? this.diagramBundleEnum?.name,
-      basePainterDiagrams: basePainterDiagrams ?? this.basePainterDiagrams,
+      diagramBundleEnum ?? this.diagramBundleEnum,
+      basePainterDiagrams ?? this.basePainterDiagrams,
+      title ?? this.title ?? this.diagramBundleEnum?.name,
     );
   }
 }

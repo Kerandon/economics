@@ -19,6 +19,8 @@ class Tariff extends BaseDiagramPainter2 {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
+    // Example: paint full background if needed
+    paintFullRect(canvas, size, shade: ShadeType.welfareLoss);
     if (diagramBundleEnum == DiagramBundleEnum.globalTariffConsumerSurplus) {
       _paintConsumerSurplus(canvas, size);
     }
@@ -184,5 +186,15 @@ class Tariff extends BaseDiagramPainter2 {
       Offset(0.65, 0.65), // q4 at pWT
       Offset(0.35, 0.65), // q3 at pWT
     ]);
+  }
+}
+extension PainterHelpers on BaseDiagramPainter2 {
+  /// Paints a full rectangle covering the entire canvas with the given color or ShadeType.
+  void paintFullRect(Canvas canvas, Size size, {Color? color, ShadeType? shade}) {
+    final paint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = color ?? shade?.setShadeColor() ?? Colors.grey;
+
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), paint);
   }
 }
