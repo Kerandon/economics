@@ -10,20 +10,24 @@ void paintAxisLines(
   Color color = Colors.white,
   double strokeWidth = kAxisWidth,
 }) {
-  final double width = config.painterSize.width;
-  final double height = config.painterSize.height;
+
+  final widthAndHeight = config.painterSize.width;
+  final indent = widthAndHeight * kAxisIndent;
 
   final axisPaint = Paint()
     ..color = config.colorScheme.onSurface
     ..strokeWidth = kCurveWidth * config.averageRatio;
 
-  final startYOffset = Offset(width * kAxisIndent, height * kAxisIndent / 2);
-  final endYOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
-  final startXOffset = Offset(width * kAxisIndent, height * (1 - kAxisIndent));
-  final endXOffset = Offset(
-    width * (1 - kAxisIndent / 2),
-    height * (1 - kAxisIndent),
-  );
+  final indentXLeft = indent * 1.5;
+  final indentYTop = indent * 0.50;
+  final indentYBottom = widthAndHeight - (indent * 1.5);
+  final indentXRight = widthAndHeight * (1 - (kAxisIndent * 0.50));
+
+  final startYOffset = Offset(indentXLeft, indentYTop);
+  final endYOffset = Offset(indentXLeft, indentYBottom);
+  final startXOffset = Offset(indentXLeft, indentYBottom);
+  final endXOffset = Offset(indentXRight, indentYBottom);
+
   canvas
     ..drawLine(startYOffset, endYOffset, axisPaint)
     ..drawLine(startXOffset, endXOffset, axisPaint);
