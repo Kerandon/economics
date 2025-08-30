@@ -2,17 +2,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
-import '../../enums/label_align.dart';
-import '../../enums/shade_type.dart';
+import '../painter_methods/axis/label_align.dart';
+import '../shade/shade_type.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_diagram_lines.dart';
-import '../painter_methods/paint_shading.dart';
+import '../shade/paint_shading.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 
 class Externalities extends BaseDiagramPainter {

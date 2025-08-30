@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
-import '../../enums/label_align.dart';
+import 'axis/label_align.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_painter_config.dart';
 import '../../models/size_adjuster.dart';
@@ -31,6 +30,7 @@ void paintDiagramLines(
   double circleRadius = 10,
   bool dashed = false,
   bool normalizeToDiagramArea = true,
+  Color? backgroundColor,
 }) {
   assert(
     (bezierPoints != null && bezierPoints.isNotEmpty ? 1 : 0) +
@@ -39,19 +39,18 @@ void paintDiagramLines(
     'Exactly one of bezierPoints or polylineOffsets must be provided.',
   );
 
-  final width = config.painterSize.width;
-  final height = config.painterSize.height;
+  final widthAndHeight = config.painterSize.width;
+  final normalize = normalizeToDiagramArea ? 1 - (kAxisIndent * 2) : 1.0;
+  final widthAndHeightNormalized = widthAndHeight * normalize;
+  final indent = widthAndHeight * kAxisIndent;
+
   final mainColor = color ?? config.colorScheme.primary;
-  final normalize = normalizeToDiagramArea ? 1 - (kAxisIndent * 1.5) : 1.0;
 
   Offset computeOffset(Offset pos) {
-    final dx = pos.dx * width * normalize;
-    final dy = pos.dy * height * normalize;
+    final dx = pos.dx * widthAndHeightNormalized;
+    final dy = pos.dy * widthAndHeightNormalized;
     if (normalizeToDiagramArea) {
-      return Offset(
-        dx + (kAxisIndent * width),
-        dy + (kAxisIndent * (height / 2)),
-      );
+      return Offset(dx + indent * 1.5, dy + indent * 0.50);
     } else {
       return Offset(dx, dy);
     }
@@ -61,8 +60,8 @@ void paintDiagramLines(
     var dx = pos.dx * normalize;
     var dy = pos.dy * normalize;
     if (normalizeToDiagramArea) {
-      dx += kAxisIndent;
-      dy += kAxisIndent / 2;
+      dx += kAxisIndent * 1.5;
+      dy += kAxisIndent * 0.50;
     }
     return Offset(dx, dy);
   }
@@ -96,13 +95,14 @@ void paintDiagramLines(
 
     if (label1 != null) {
       final labelOffset = computeTextOffset(startPos);
-      paintText(config, canvas, label1, labelOffset, labelAlign: label1Align);
+      // paintText(config, canvas, label1, labelOffset, labelAlign: label1Align);
     }
 
     if (label2 != null) {
       final last = polylineOffsets.last;
       final labelOffset = computeTextOffset(last);
-      paintText(config, canvas, label2, labelOffset, labelAlign: label2Align);
+      paintLabelText(canvas, config, 'label 3', labelOffset);
+      // paintText(config, canvas, label2, labelOffset, labelAlign: label2Align);
     }
 
     if (arrowOnStart) {
@@ -159,12 +159,12 @@ void paintDiagramLines(
 
   if (label1 != null) {
     final labelOffset = computeTextOffset(startPos);
-    paintText(config, canvas, label1, labelOffset, labelAlign: label1Align);
+    // paintText(config, canvas, label1, labelOffset, labelAlign: label1Align);
   }
 
   if (label2 != null) {
     final labelOffset = computeTextOffset(bezierPoints.last.endPoint);
-    paintText(config, canvas, label2, labelOffset, labelAlign: label2Align);
+    // paintText(config, canvas, label2, labelOffset, labelAlign: label2Align);
   }
 
   if (arrowOnStart) {
@@ -196,4 +196,84 @@ void paintDiagramLines(
     canvas.drawCircle(end, r, paint..style = PaintingStyle.fill);
   }
   // Factory method to create a straight polyline
+}
+
+void paintLabelText(
+  Canvas canvas,
+  DiagramPainterConfig config,
+  String label,
+  Offset pos, {
+  Color? backgroundColor,
+  LabelAlign labelAlign = LabelAlign.center,
+}) {
+  final widthAndHeight = config.painterSize.width;
+  final fontSize = kFontSize * config.averageRatio;
+  final indent = widthAndHeight * kAxisIndent;
+  final paddingFromAxis = 24;
+  // final Offset position = Offset(
+  //   pos.dx * widthAndHeight,
+  //   pos.dy * widthAndHeight,
+  // );
+
+  /// Text Painter Methods
+  final style = TextStyle(
+    color: config.colorScheme.onSurface,
+    fontSize: fontSize,
+  );
+  final textSpan = TextSpan(text: label, style: style);
+  final textPainter = TextPainter(
+    text: textSpan,
+    textDirection: TextDirection.ltr,
+  );
+  textPainter.layout(minWidth: 0, maxWidth: widthAndHeight);
+  Offset baseOffset = Offset(pos.dx * widthAndHeight, pos.dy * widthAndHeight);
+
+  double dx = 0;
+  double dy = 0;
+  final adjustment = 8.0;
+
+  switch (labelAlign) {
+    case LabelAlign.center:
+      dx = -textPainter.width / 2;
+      dy = -textPainter.height / 2;
+      break;
+    case LabelAlign.centerLeft:
+      dx = -textPainter.width - adjustment;
+      dy = -textPainter.height / 2;
+      break;
+    case LabelAlign.centerRight:
+      dx = adjustment;
+      dy = -textPainter.height / 2;
+      break;
+    case LabelAlign.centerTop:
+      dx = -textPainter.width / 2;
+      dy = -textPainter.height - adjustment;
+      break;
+    case LabelAlign.centerBottom:
+      dx = -textPainter.width / 2;
+      dy = adjustment;
+      break;
+  }
+
+  baseOffset = baseOffset.translate(dx, dy);
+  if (backgroundColor != null) {
+    const padding = 1.0;
+    final bgRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(
+        baseOffset.dx - padding,
+        baseOffset.dy - padding,
+        textPainter.width + padding * 2,
+        textPainter.height + padding * 2,
+      ),
+      const Radius.circular(6),
+    );
+
+    final bgPaint = Paint()
+      ..color = backgroundColor ?? config.colorScheme.scrim
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRRect(bgRect, bgPaint);
+  }
+
+  textPainter.paint(canvas, baseOffset);
 }

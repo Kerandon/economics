@@ -77,7 +77,7 @@ class NotesExpansionTilePage extends ConsumerWidget {
                                         text: c.content?.text ?? '',
                                         type: TextBoxType.content,
                                       ),
-
+                                    if (c.widget != null) c.widget!,
                                     if (c.diagramBundles?.isNotEmpty ?? false)
                                       Row(
                                         children: [

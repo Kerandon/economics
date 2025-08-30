@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import '../../models/base_painter_painter.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 
 class PriceControls extends BaseDiagramPainter {
   PriceControls(super.config, super.model);

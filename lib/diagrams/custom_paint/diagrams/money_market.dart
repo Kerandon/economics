@@ -3,7 +3,7 @@ import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 
 class MoneyMarket extends BaseDiagramPainter {
   MoneyMarket({

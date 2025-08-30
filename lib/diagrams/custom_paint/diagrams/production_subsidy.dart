@@ -1,36 +1,34 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
-import '../../enums/diagram_subtype.dart';
-import '../../enums/label_align.dart';
-import '../../enums/legend_display.dart';
-import '../../enums/shade_type.dart';
+import '../painter_methods/axis/label_align.dart';
+import '../painter_methods/legend/legend_display.dart';
+import '../painter_methods/legend/legend_entry.dart';
+import '../shade/shade_type.dart';
 import '../../models/base_painter_painter.dart';
-import '../../models/diagram_model.dart';
-import '../../models/diagram_painter_config.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_diagram_lines.dart';
-import '../painter_methods/paint_shading.dart';
+import '../shade/paint_shading.dart';
 
 class ProductionSubsidy extends BaseDiagramPainter2 {
   ProductionSubsidy(
-      super.config,
-      super.diagramBundleEnum, {
-        super.legendDisplay,
-      });
+    super.config,
+    super.diagramBundleEnum, {
+    super.legendDisplay,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    if(legendDisplay == LegendDisplay.shading){
-      paintText(c, canvas, 'FUCK ITS SHADING', Offset(0.50,0.50));
+    if (legendDisplay == LegendDisplay.shading) {
+      paintText(c, canvas, 'FUCK ITS SHADING', Offset(0.50, 0.50));
     }
-    if(legendDisplay == LegendDisplay.letters){
-      paintText(c, canvas, 'FUCK ITS LETTERS', Offset(0.50,0.50));
+    if (legendDisplay == LegendDisplay.letters) {
+      paintText(c, canvas, 'FUCK ITS LETTERS', Offset(0.50, 0.50));
     }
     paintAxis(
       c,

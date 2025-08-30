@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../enums/label_align.dart';
+import 'axis/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 

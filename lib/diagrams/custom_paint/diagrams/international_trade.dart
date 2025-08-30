@@ -1,11 +1,11 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_demand.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_supply.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/helper_methods/paint_demand.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/helper_methods/paint_supply.dart';
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
-import '../../enums/label_align.dart';
+import '../painter_methods/axis/label_align.dart';
 import '../../models/base_painter_painter.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_diagram_lines.dart';
 import '../painter_methods/paint_title.dart';

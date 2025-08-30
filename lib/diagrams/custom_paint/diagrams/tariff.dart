@@ -1,16 +1,17 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_demand.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_supply.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/helper_methods/paint_demand.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/helper_methods/paint_supply.dart';
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
-import '../../enums/label_align.dart';
-import '../../enums/shade_type.dart';
+import '../painter_methods/axis/label_align.dart';
+import '../painter_methods/legend/legend_entry.dart';
+import '../shade/shade_type.dart';
 import '../../models/base_painter_painter.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_diagram_lines.dart';
-import '../painter_methods/paint_shading.dart';
+import '../shade/paint_shading.dart';
 
 class Tariff extends BaseDiagramPainter2 {
   Tariff(super.config, super.diagramBundleEnum);
@@ -20,7 +21,7 @@ class Tariff extends BaseDiagramPainter2 {
     final c = config.copyWith(painterSize: size);
 
     // Example: paint full background if needed
-    paintFullRect(canvas, size, shade: ShadeType.welfareLoss);
+
     if (diagramBundleEnum == DiagramBundleEnum.globalTariffConsumerSurplus) {
       _paintConsumerSurplus(canvas, size);
     }
@@ -40,9 +41,7 @@ class Tariff extends BaseDiagramPainter2 {
 
       paintLegend(canvas, size, [
         LegendEntry.fromShade(ShadeType.consumerSurplus),
-        LegendEntry.fromShade(
-          ShadeType.lostConsumerSurplus
-        ),
+        LegendEntry.fromShade(ShadeType.lostConsumerSurplus),
       ]);
     }
     if (diagramBundleEnum ==
@@ -186,15 +185,5 @@ class Tariff extends BaseDiagramPainter2 {
       Offset(0.65, 0.65), // q4 at pWT
       Offset(0.35, 0.65), // q3 at pWT
     ]);
-  }
-}
-extension PainterHelpers on BaseDiagramPainter2 {
-  /// Paints a full rectangle covering the entire canvas with the given color or ShadeType.
-  void paintFullRect(Canvas canvas, Size size, {Color? color, ShadeType? shade}) {
-    final paint = Paint()
-      ..style = PaintingStyle.fill
-      ..color = color ?? shade?.setShadeColor() ?? Colors.grey;
-
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), paint);
   }
 }

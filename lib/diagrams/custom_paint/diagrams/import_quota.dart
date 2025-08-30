@@ -1,19 +1,20 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_demand.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_supply.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/helper_methods/paint_demand.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/helper_methods/paint_supply.dart';
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
-import '../../enums/label_align.dart';
-import '../../enums/shade_type.dart';
+import '../painter_methods/axis/label_align.dart';
+import '../painter_methods/legend/legend_entry.dart';
+import '../shade/shade_type.dart';
 import '../../models/base_painter_painter.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_diagram_lines.dart';
-import '../painter_methods/paint_shading.dart';
+import '../shade/paint_shading.dart';
 
 class ImportQuota extends BaseDiagramPainter2 {
-  ImportQuota(super.config, super.diagramBundleEnum, );
+  ImportQuota(super.config, super.diagramBundleEnum);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -95,21 +96,21 @@ class ImportQuota extends BaseDiagramPainter2 {
       _paintProducerSurplus(canvas, size);
       _paintWelfareLoss(canvas, size);
     }
-    if(diagramBundleEnum == DiagramBundleEnum.globalImportQuotaConsumerSurplusChange){
+    if (diagramBundleEnum ==
+        DiagramBundleEnum.globalImportQuotaConsumerSurplusChange) {
       _paintConsumerSurplus(canvas, size);
       paintShading(canvas, size, ShadeType.lostConsumerSurplus, [
         Offset(0.0, 0.65),
-        Offset(0.65,0.65),
-        Offset(0.80,0.80),
+        Offset(0.65, 0.65),
+        Offset(0.80, 0.80),
         Offset(0, 0.80),
       ]);
       paintLegend(canvas, size, [
         LegendEntry.fromShade(ShadeType.consumerSurplus),
         LegendEntry.fromShade(ShadeType.lostConsumerSurplus),
-
       ]);
     }
-    if(diagramBundleEnum == DiagramBundleEnum.globalImportQuotaWelfareLoss){
+    if (diagramBundleEnum == DiagramBundleEnum.globalImportQuotaWelfareLoss) {
       _paintWelfareLoss(canvas, size);
     }
   }
@@ -138,5 +139,4 @@ class ImportQuota extends BaseDiagramPainter2 {
       Offset(0.35, 0.65),
     ]);
   }
-
 }

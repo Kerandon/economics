@@ -1,5 +1,4 @@
-import '../custom_paint/diagrams/production_subsidy.dart';
-import 'legend_display.dart';
+import '../custom_paint/painter_methods/legend/legend_display.dart';
 
 enum DiagramBundleEnum {
   microPPCConstantOppCost,
@@ -16,6 +15,9 @@ enum DiagramBundleEnum {
   globalWorldPriceStandAlone,
   globalNetExporter,
   globalNetImporter,
+  globalAbsoluteAdvantageDifferentGoods,
+  globalAbsoluteAdvantageBothGoods,
+  globalComparativeAdvantage,
   globalTariff,
   globalTariffWelfare,
   globalTariffConsumerSurplus,
@@ -38,6 +40,7 @@ enum DiagramBundleEnum {
   globalProductionSubsidyWelfareLoss,
   globalProductionSubsidyWelfare,
 }
+
 extension DiagramBundleEnumDisplay on DiagramBundleEnum {
   LegendDisplay get defaultLegendDisplay {
     switch (this) {
@@ -49,7 +52,7 @@ extension DiagramBundleEnumDisplay on DiagramBundleEnum {
       case DiagramBundleEnum.globalProductionSubsidyWelfareLoss:
         return LegendDisplay.letters;
 
-    // Add more mappings for other diagram types if needed
+      // Add more mappings for other diagram types if needed
       default:
         return LegendDisplay.shading; // fallback
     }

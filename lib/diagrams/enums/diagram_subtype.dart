@@ -1,4 +1,4 @@
-import 'package:economics_app/diagrams/enums/shade_type.dart';
+import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
 import 'package:flutter/material.dart';
 
 enum DiagramSubtype {

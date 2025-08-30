@@ -1,7 +1,6 @@
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
-import '../../enums/label_align.dart';
+import 'axis/label_align.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_painter_config.dart';
 import '../../models/size_adjuster.dart';
@@ -44,25 +43,24 @@ void paintCustomBezier(
 
   canvas.drawPath(path, paint);
   if (label1 != null) {
-    paintText(
-      config,
-      canvas,
-      label1,
-      Offset(
-        points[points.length - 1].endPoint.dx,
-        points[points.length - 1].endPoint.dy,
-      ),
-      labelAlign: label1Align,
-    );
+    // paintText(
+    //   config,
+    //   canvas,
+    //   label1,
+    //   Offset(
+    //     points[points.length - 1].endPoint.dx,
+    //     points[points.length - 1].endPoint.dy,
+    //   ),
+    // );
   }
   if (label2 != null) {
-    paintText(
-      config,
-      canvas,
-      label2,
-      Offset(startPos.dx, startPos.dy),
-      labelAlign: label2Align,
-    );
+    // paintText(
+    //   config,
+    //   canvas,
+    //   label2,
+    //   Offset(startPos.dx, startPos.dy),
+    //   labelAlign: label2Align,
+    // );
   }
   if (drawArrowOnStart) {
     paintArrowHead(

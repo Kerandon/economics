@@ -1,13 +1,13 @@
 import 'dart:ui';
 import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
-import '../../enums/label_align.dart';
-import '../../enums/shade_type.dart';
+import '../painter_methods/axis/label_align.dart';
+import '../shade/shade_type.dart';
 import '../../models/base_painter_painter.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_diagram_lines.dart';
-import '../painter_methods/paint_shading.dart';
+import '../shade/paint_shading.dart';
 
 class TaxesAndSubsidies extends BaseDiagramPainter {
   TaxesAndSubsidies(super.config, super.model);

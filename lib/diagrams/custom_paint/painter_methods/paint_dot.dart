@@ -1,7 +1,5 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
-
-import '../../enums/label_align.dart';
+import 'axis/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
@@ -32,17 +30,17 @@ void paintDot(
     paint,
   );
   if (label?.isNotEmpty == true) {
-    paintText(
-      config,
-      canvas,
-      label!,
-      Offset(
-        pos.dx * normalize + (kAxisIndent),
-        (pos.dy * normalize) + (kAxisIndent / 2),
-      ),
-      fontSize: kFontSize * 1.2,
-      labelAlign: labelAlign ?? LabelAlign.centerRight,
-      paintBackground: true,
-    );
+    // paintText(
+    //   config,
+    //   canvas,
+    //   label!,
+    //   Offset(
+    //     pos.dx * normalize + (kAxisIndent),
+    //     (pos.dy * normalize) + (kAxisIndent / 2),
+    //   ),
+    //   fontSize: kFontSize * 1.2,
+    //   labelAlign: labelAlign ?? LabelAlign.centerRight,
+    //   paintBackground: true,
+    // );
   }
 }

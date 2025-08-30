@@ -1,6 +1,7 @@
 import 'package:economics_app/home_page/models/key_content.dart';
 import 'package:economics_app/home_page/models/term.dart';
 import 'package:economics_app/home_page/models/tip.dart';
+import 'package:flutter/material.dart';
 import '../../diagrams/enums/diagram_bundle_enum.dart';
 import '../../diagrams/models/diagram_bundle.dart';
 import 'alert.dart';
@@ -14,6 +15,7 @@ class SlideContent {
   final Tip? tip;
   final List<DiagramBundleEnum>? diagramBundleEnums;
   final List<DiagramBundle>? diagramBundles;
+  final Widget? widget; // 🔹 NEW: Property to hold a custom widget.
 
   SlideContent({
     this.content,
@@ -23,6 +25,7 @@ class SlideContent {
     this.tip,
     this.diagramBundleEnums,
     this.diagramBundles,
+    this.widget, // 🔹 NEW: Add to the constructor.
   });
 
   SlideContent copyWith({
@@ -33,6 +36,7 @@ class SlideContent {
     Tip? tip,
     List<DiagramBundleEnum>? diagramBundleEnums,
     List<DiagramBundle>? diagramBundles,
+    Widget? widget,
   }) {
     return SlideContent(
       content: content ?? this.content,
@@ -42,6 +46,7 @@ class SlideContent {
       tip: tip ?? this.tip,
       diagramBundleEnums: diagramBundleEnums ?? this.diagramBundleEnums,
       diagramBundles: diagramBundles ?? this.diagramBundles,
+      widget: widget ?? this.widget,
     );
   }
 
@@ -71,6 +76,10 @@ class SlideContent {
   factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
 
   factory SlideContent.tip(String text) => SlideContent(tip: Tip(text));
+
+  // 🔹 NEW: Factory constructor to create a slide with just a custom widget.
+  factory SlideContent.customWidget(Widget widget) =>
+      SlideContent(widget: widget);
 
   // ========== COMBINATION HELPERS ==========
   factory SlideContent.textWithDiagram(

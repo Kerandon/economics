@@ -2,10 +2,10 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_custom
 
 import 'package:flutter/material.dart';
 
-import '../../enums/diagram_labels.dart';
-import '../../enums/label_align.dart';
-import '../../models/custom_bezier.dart';
-import '../../models/diagram_painter_config.dart';
+import '../../../enums/diagram_labels.dart';
+import '../axis/label_align.dart';
+import '../../../models/custom_bezier.dart';
+import '../../../models/diagram_painter_config.dart';
 
 void paintKeynesianCurve({
   required DiagramPainterConfig config,

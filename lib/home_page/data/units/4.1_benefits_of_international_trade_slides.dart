@@ -1,4 +1,6 @@
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/home_page/custom_widgets/simple_table.dart';
+import 'package:flutter/material.dart';
 
 import '../../../diagrams/enums/unit_type.dart';
 import '../../models/slide.dart';
@@ -60,6 +62,61 @@ buy the good.
 </ul>
 
       '''),
+    ],
+  ),
+  Slide(
+    section: Subunit.benefitsTrade,
+    title: 'Comparative Advantage',
+    hl: true,
+    contents: [
+      SlideContent.term(
+        '''
+        Absolute Advantage
+      ''',
+        '''is when a country can produce the more of a good using fewer resources.
+
+      ''',
+      ),
+      SlideContent.text('''
+        As the below table shows, France has an <strong>absolute advantage</strong>
+        in the production of wine while Spain has an <strong>absolute advantage</strong>
+        in the production of beer. 
+        '''),
+      SlideContent.customWidget(
+        SimpleTable(
+          title: 'Wine & Cheese Production\n(Per Worker Each Day)',
+          headers: ['', 'Cheese (kg)', 'Wine (bottles)'],
+          data: [
+            ['France', '120', '16'],
+            ['Spain', '140', '12'],
+          ],
+          cellStyles: [
+            [
+              TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.deepOrange),
+              TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold),
+            ],
+            [
+              TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold),
+              TextStyle(color: Colors.deepPurple),
+            ],
+          ],
+        ),
+      ),
+
+      SlideContent.diagram(
+        DiagramBundleEnum.globalAbsoluteAdvantageDifferentGoods,
+      ),
+
+      SlideContent.term(
+        '''
+        Comparative Advantage
+      ''',
+        '''is when a country can produce the more of a good using fewer resources.
+
+      ''',
+      ),
     ],
   ),
 ];

@@ -1,15 +1,34 @@
 import 'dart:math';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/paint_grid_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:flutter/material.dart';
-import '../../models/diagram_painter_config.dart';
-import '../painter_constants.dart';
+import 'grid_lines/grid_line_style.dart';
+import '../../../models/diagram_painter_config.dart';
+import '../../painter_constants.dart';
 
 void paintAxisLines(
   DiagramPainterConfig config,
   Canvas canvas, {
-  Color color = Colors.white,
+  Color? color,
   double strokeWidth = kAxisWidth,
+  double? xMaxValue,
+  double? yMaxValue,
+  int? xDivisions,
+  int? yDivisions,
+  GridLineStyle gridLineStyle = GridLineStyle.full, // New enum property
+  int decimalPlaces = 0,
 }) {
+  // Assertions for consistent axis configs
+  assert(
+    (xMaxValue == null && xDivisions == null) ||
+        (xMaxValue != null && xDivisions != null),
+    'If xMaxValue is provided, xDivisions must also be provided (and vice versa).',
+  );
+  assert(
+    (yMaxValue == null && yDivisions == null) ||
+        (yMaxValue != null && yDivisions != null),
+    'If yMaxValue is provided, yDivisions must also be provided (and vice versa).',
+  );
 
   final widthAndHeight = config.painterSize.width;
   final indent = widthAndHeight * kAxisIndent;
@@ -28,19 +47,13 @@ void paintAxisLines(
   final startXOffset = Offset(indentXLeft, indentYBottom);
   final endXOffset = Offset(indentXRight, indentYBottom);
 
+  // Draw the main X and Y axes
   canvas
     ..drawLine(startYOffset, endYOffset, axisPaint)
     ..drawLine(startXOffset, endXOffset, axisPaint);
 
-  /// Arrow-head
-
-  final path = Path();
-  final paint = Paint()..color = Colors.white;
-
-  /// Y Axis Arrow
+  // Draw arrow-heads
   paintArrowHead(config, canvas, positionOfArrow: startYOffset);
-
-  /// X Axis Arrow
   paintArrowHead(
     config,
     canvas,
@@ -48,7 +61,17 @@ void paintAxisLines(
     rotationAngle: pi / 2,
   );
 
-  canvas.save();
-  canvas.drawPath(path, paint);
-  canvas.restore();
+  // Draw gridlines only if style is not none
+  if (gridLineStyle != GridLineStyle.none) {
+    paintGridLines(
+      config,
+      canvas,
+      xMaxValue: xMaxValue,
+      yMaxValue: yMaxValue,
+      xDivisions: xDivisions,
+      yDivisions: yDivisions,
+      gridLineStyle: gridLineStyle,
+      decimalPlaces: decimalPlaces,
+    );
+  }
 }

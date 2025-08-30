@@ -1,8 +1,9 @@
+import 'package:economics_app/diagrams/custom_paint/diagrams/comparative_advantage.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/import_quota.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/international_trade.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/production_subsidy.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/tariff.dart';
-import 'package:economics_app/diagrams/enums/legend_display.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 
 import '../custom_paint/diagrams/demand.dart';
 import '../custom_paint/diagrams/supply.dart';
@@ -33,6 +34,20 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   DiagramBundle(DiagramBundleEnum.globalNetExporter, [
     InternationalTrade(config, DiagramBundleEnum.globalWorldPrice),
     InternationalTrade(config, DiagramBundleEnum.globalNetExporter),
+  ]),
+
+  /// Comparative Advantage
+  DiagramBundle(DiagramBundleEnum.globalAbsoluteAdvantageDifferentGoods, [
+    ComparativeAdvantage(
+      config,
+      DiagramBundleEnum.globalAbsoluteAdvantageDifferentGoods,
+    ),
+  ]),
+  DiagramBundle(DiagramBundleEnum.globalAbsoluteAdvantageBothGoods, [
+    ComparativeAdvantage(
+      config,
+      DiagramBundleEnum.globalAbsoluteAdvantageBothGoods,
+    ),
   ]),
 
   /// 4.2 Types of Trade Protection

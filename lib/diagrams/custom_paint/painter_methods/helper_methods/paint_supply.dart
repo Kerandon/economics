@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 
-import '../../enums/label_align.dart';
-import '../../models/diagram_painter_config.dart';
+import '../axis/label_align.dart';
+import '../../../models/diagram_painter_config.dart';
 
 void paintSupply(
   DiagramPainterConfig c,

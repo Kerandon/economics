@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../enums/diagram_subtype.dart';
-import '../../enums/label_align.dart';
+import '../painter_methods/axis/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';

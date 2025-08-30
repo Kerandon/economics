@@ -150,6 +150,8 @@ enum DiagramLabel {
   yE,
   yInf,
   yDef,
+  cheese,
+  wineBottles,
   dW,
   dS,
   sWT,
@@ -390,6 +392,8 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.dMarket => 'D (Market)',
       DiagramLabel.dW => 'Dw',
       DiagramLabel.dS => 'Sw',
+      DiagramLabel.cheese => 'Cheese\n',
+      DiagramLabel.wineBottles => 'Wine\n',
     };
   }
 }

@@ -9,8 +9,9 @@ void paintTitle(DiagramPainterConfig config, Canvas canvas, String label) {
     config,
     canvas,
     label,
-    Offset(0.50, 0.0),
-    fontSize: kFontSize * 1,
+    Offset(0.5, 0.0),
+    alignment: TextAlignment.center,
+    fontSize: kFontSize * 1.4,
     style: TextStyle(
       fontStyle: FontStyle.italic,
       color: config.colorScheme.secondary,

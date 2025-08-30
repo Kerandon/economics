@@ -35,11 +35,7 @@ class DiagramBundle {
   final List<BaseDiagramPainter2> basePainterDiagrams;
 
   // Positional parameters: required first, optional last
-  DiagramBundle(
-      this.diagramBundleEnum,
-      this.basePainterDiagrams, [
-        this.title,
-      ]);
+  DiagramBundle(this.diagramBundleEnum, this.basePainterDiagrams, [this.title]);
 
   DiagramBundle copyWith({
     DiagramBundleEnum? diagramBundleEnum,

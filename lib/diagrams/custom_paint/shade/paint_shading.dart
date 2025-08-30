@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../enums/shade_type.dart';
+import 'shade_type.dart';
 import '../../models/custom_bezier.dart';
 import '../painter_constants.dart';
 
 /// for pointsAndBeziers, takes [Offset] and [CustomBezier]
 void paintShading(
-    Canvas canvas,
-    Size size,
-    ShadeType shade,
-    List<dynamic> pointsAndBeziers, {
-      bool striped = true,
-      double stripeSpacing = 9.0,
-      bool invertStripes = false, // NEW parameter
-    }) {
+  Canvas canvas,
+  Size size,
+  ShadeType shade,
+  List<dynamic> pointsAndBeziers, {
+  bool striped = true,
+  double stripeSpacing = 9.0,
+  bool invertStripes = false, // NEW parameter
+}) {
   final width = size.width;
   final height = size.height;
-  final normalize = 1 - (kAxisIndent * 1.5);
+  final normalize = 1 - (kAxisIndent * 2);
 
   final fillPaint = Paint()
     ..style = PaintingStyle.fill

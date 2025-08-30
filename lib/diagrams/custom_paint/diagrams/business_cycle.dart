@@ -5,7 +5,7 @@ import '../../models/custom_bezier.dart';
 import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
-import '../painter_methods/paint_axis.dart';
+import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_custom_bezier.dart';
 
 class BusinessCycle extends BaseDiagramPainter {
