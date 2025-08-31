@@ -35,8 +35,9 @@ void paintGridLines(
   if (xMaxValue == null ||
       yMaxValue == null ||
       xDivisions == null ||
-      yDivisions == null)
+      yDivisions == null) {
     return;
+  }
 
   final yStepValue = yMaxValue / yDivisions;
   final yStepSize = (indentYBottom - indentYTop) / yDivisions;

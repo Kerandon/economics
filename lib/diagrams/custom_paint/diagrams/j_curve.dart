@@ -9,7 +9,7 @@ import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_custom_bezier.dart';
-import '../painter_methods/paint_diagram_lines.dart';
+import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../painter_methods/paint_text_normalized_within_axis.dart';
 
 class JCurve extends BaseDiagramPainter {

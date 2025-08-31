@@ -6,7 +6,7 @@ import '../shade/shade_type.dart';
 import '../../models/base_painter_painter.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/paint_diagram_lines.dart';
+import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../shade/paint_shading.dart';
 
 class TaxesAndSubsidies extends BaseDiagramPainter {

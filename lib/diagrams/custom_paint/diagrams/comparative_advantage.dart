@@ -8,7 +8,7 @@ import '../../models/base_painter_painter.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/legend/legend_entry.dart';
 import '../painter_methods/legend/legend_shape.dart';
-import '../painter_methods/paint_diagram_lines.dart';
+import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 
 class ComparativeAdvantage extends BaseDiagramPainter2 {
   ComparativeAdvantage(super.config, super.diagramBundleEnum);

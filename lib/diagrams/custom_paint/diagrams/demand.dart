@@ -7,9 +7,9 @@ import '../../enums/diagram_labels.dart';
 import '../painter_methods/axis/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../painter_methods/axis/paint_axis.dart';
-import '../painter_methods/helper_methods/paint_demand.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/paint_diagram_lines.dart';
+import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
+import '../painter_methods/shortcut_methods/paint_demand.dart';
 
 class Demand extends BaseDiagramPainter2 {
   Demand(super.config, super.diagramBundleEnum);

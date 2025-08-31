@@ -6,7 +6,7 @@ import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/helper_methods/paint_keyensian_curve.dart';
+import '../painter_methods/shortcut_methods/paint_keyensian_curve.dart';
 
 class KeynesianADAS extends BaseDiagramPainter {
   KeynesianADAS({

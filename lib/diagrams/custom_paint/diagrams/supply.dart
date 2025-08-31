@@ -11,7 +11,7 @@ import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/paint_diagram_lines.dart';
+import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 
 class Supply extends BaseDiagramPainter {
   Supply({required DiagramPainterConfig config, required DiagramModel model})

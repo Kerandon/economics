@@ -24,18 +24,22 @@ List<Slide> get benefitsOfInternationalTradeSlides => [
     title: 'Gains from Trade',
     contents: [
       SlideContent.textWithDiagram('''
-        The world price & supply curve is drawn as perfectly elastic
-            determined by the intersection of global supply and demand. 
-            This model assumes that world market is so large compared to the domestic market, 
-            that the domestic market is a <strong>price taker</strong> and cannot affect the world price.
-            This means that the domestic market can import as much as it needs if it pays the world price.
-            Or the domestic market could export as much as it is able to at the world price.
+          <h2>The World Market</h2>
+      Global demand for a good is simply the sum of all the country's demand, and global supply the sum of all country's supply 
+      of a good, which sets the world price of the good. 
             ''', DiagramBundleEnum.globalWorldPriceStandAlone),
+      SlideContent.tip('''
+        If the domestic market was closed-off from international (known as an autarky), the 
+price of the good would be set by domestic supply and demand.
+However, virtually all countries trade internationally and therefore 
+the price of the good is actually set by the world price. 
+        '''),
       SlideContent.textWithDiagram('''
-          If the domestic price is <strong>higher</strong> than the world price, the domestic market will 
-          import the good at the lower world price. 
-          Only domestic producers which are more competitive (cheaper) than the world price will continue to sell 
-          in the domestic market.
+      <h2>Domestic Market</h2>
+The global market sets the price for the <strong>domestic market</strong>.
+
+The world price is the same as world supply and drawn as perfectly elastic (horizontal line) because
+the model assumes the domestic market is small compared to the world market and cannot influence the price.
           ''', DiagramBundleEnum.globalNetImporter),
       SlideContent.textWithDiagram('''
                  
