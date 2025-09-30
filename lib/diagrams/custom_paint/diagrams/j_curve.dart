@@ -103,7 +103,7 @@ class JCurve extends BaseDiagramPainter {
       canvas,
       startPos: Offset(0, 0.50),
       polylineOffsets: [Offset(1, 0.50)],
-      dashed: true,
+      curveStyle: CurveStyle.dashed,
     );
     paintTextNormalizedWithinAxis(
       c,

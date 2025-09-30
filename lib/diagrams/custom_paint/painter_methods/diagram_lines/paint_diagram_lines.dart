@@ -9,6 +9,8 @@ import '../../../models/diagram_painter_config.dart';
 import '../../../models/size_adjuster.dart';
 import '../../painter_constants.dart';
 
+enum CurveStyle { standard, dashed, dotted, bold }
+
 void paintDiagramLines(
   DiagramPainterConfig config,
   Canvas canvas, {
@@ -29,7 +31,7 @@ void paintDiagramLines(
   bool circleAtEnd = false,
   bool circleAtStart = false,
   double circleRadius = 10,
-  bool dashed = false,
+  CurveStyle curveStyle = CurveStyle.standard,
   bool normalizeToDiagramArea = true,
   Color? backgroundColor,
 }) {
@@ -67,16 +69,39 @@ void paintDiagramLines(
     return Offset(dx, dy);
   }
 
+  // Configure paint based on curve style
   final paint = Paint()
     ..style = PaintingStyle.stroke
     ..color = mainColor
-    ..strokeWidth = strokeWidth * config.averageRatio;
+    ..strokeWidth =
+        (curveStyle == CurveStyle.bold ? strokeWidth * 2 : strokeWidth) *
+        config.averageRatio;
 
   final path = Path();
 
   // --- Start point
   final Offset start = computeOffset(startPos);
   path.moveTo(start.dx, start.dy);
+
+  // Function to apply dash or dot style
+  Path applyCurveStyle(Path inputPath) {
+    switch (curveStyle) {
+      case CurveStyle.dashed:
+        return dashPath(
+          inputPath,
+          dashArray: CircularIntervalList<double>(<double>[8.0, 5.0]),
+        );
+      case CurveStyle.dotted:
+        return dashPath(
+          inputPath,
+          dashArray: CircularIntervalList<double>(<double>[2.0, 4.0]),
+        );
+      case CurveStyle.bold:
+      case CurveStyle.standard:
+      default:
+        return inputPath;
+    }
+  }
 
   // --- Polyline path
   if (polylineOffsets != null && polylineOffsets.isNotEmpty) {
@@ -85,14 +110,8 @@ void paintDiagramLines(
       path.lineTo(next.dx, next.dy);
     }
 
-    final dashedPath = dashed
-        ? dashPath(
-            path,
-            dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]),
-          )
-        : path;
-
-    canvas.drawPath(dashedPath, paint);
+    final styledPath = applyCurveStyle(path);
+    canvas.drawPath(styledPath, paint);
 
     if (label1 != null) {
       final labelOffset = computeTextOffset(startPos);
@@ -160,14 +179,8 @@ void paintDiagramLines(
     path.quadraticBezierTo(control.dx, control.dy, endPoint.dx, endPoint.dy);
   }
 
-  final dashedPath = dashed
-      ? dashPath(
-          path,
-          dashArray: CircularIntervalList<double>(<double>[10.0, 5.0]),
-        )
-      : path;
-
-  canvas.drawPath(dashedPath, paint);
+  final styledPath = applyCurveStyle(path);
+  canvas.drawPath(styledPath, paint);
 
   if (arrowOnStart) {
     paintArrowHead(
@@ -197,5 +210,4 @@ void paintDiagramLines(
   if (circleAtEnd) {
     canvas.drawCircle(end, r, paint..style = PaintingStyle.fill);
   }
-  // Factory method to create a straight polyline
 }

@@ -49,6 +49,24 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
       DiagramBundleEnum.globalAbsoluteAdvantageBothGoods,
     ),
   ]),
+  DiagramBundle(
+    DiagramBundleEnum.globalComparativeAdvantageTradeAndConsumption,
+    [
+      ComparativeAdvantage(
+        config,
+        DiagramBundleEnum.globalComparativeAdvantageTradeAndConsumption,
+      ),
+    ],
+  ),
+  DiagramBundle(
+    DiagramBundleEnum.globalComparativeAdvantageTradeAndConsumptionMixed,
+    [
+      ComparativeAdvantage(
+        config,
+        DiagramBundleEnum.globalComparativeAdvantageTradeAndConsumptionMixed,
+      ),
+    ],
+  ),
 
   /// 4.2 Types of Trade Protection
   DiagramBundle(DiagramBundleEnum.globalTariff, [

@@ -21,7 +21,7 @@ class InternationalTrade extends BaseDiagramPainter2 {
       c,
       canvas,
       yAxisLabel: DiagramLabel.price.label,
-      xAxisLabel: DiagramLabel.q.label,
+      xAxisLabel: DiagramLabel.quantity.label,
     );
     if (diagramBundleEnum == DiagramBundleEnum.globalWorldPriceStandAlone) {
       paintTitle(c, canvas, 'World Market');

@@ -1,6 +1,6 @@
 import '../../diagrams/enums/diagram_bundle_enum.dart';
 
-enum Tool { diagrams, calculations }
+enum Tool { diagrams, calculations, terms }
 
 extension ToolExtension on Tool {
   String get title {
@@ -9,6 +9,8 @@ extension ToolExtension on Tool {
         return 'Diagrams';
       case Tool.calculations:
         return 'Calculations';
+      case Tool.terms:
+        return 'Terms';
     }
   }
 
@@ -18,6 +20,8 @@ extension ToolExtension on Tool {
         return null; // replace with your actual image path
       case Tool.calculations:
         return 'assets/images/calculations.jpg'; // replace with your actual image path
+      case Tool.terms:
+        return 'assets/images/terms.jpg';
     }
   }
 
@@ -27,6 +31,8 @@ extension ToolExtension on Tool {
         return DiagramBundleEnum
             .microDemandPriceChange; // replace with your actual image path
       case Tool.calculations:
+        return null; // replace with your actual image path
+      case Tool.terms:
         return null; // replace with your actual image path
     }
   }

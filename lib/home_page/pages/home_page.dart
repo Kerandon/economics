@@ -1,4 +1,5 @@
 import 'package:economics_app/app/configs/constants.dart';
+import 'package:economics_app/home_page/pages/terms_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../diagrams/enums/unit_type.dart';
@@ -95,9 +96,13 @@ class _HomePageNewState extends ConsumerState<HomePage> {
                   text: Tool.values.elementAt(index).title,
                   imageURL: Tool.values.elementAt(index).imageUrl,
                   diagramBundleEnum: Tool.values.elementAt(index).diagram,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => TermsPage()),
+                    );
+                  },
                 ),
-                childCount: 2,
+                childCount: Tool.values.length,
               ),
             ),
           ),

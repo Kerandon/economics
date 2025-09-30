@@ -18,6 +18,8 @@ enum DiagramBundleEnum {
   globalAbsoluteAdvantageDifferentGoods,
   globalAbsoluteAdvantageBothGoods,
   globalComparativeAdvantage,
+  globalComparativeAdvantageTradeAndConsumption,
+  globalComparativeAdvantageTradeAndConsumptionMixed,
   globalTariff,
   globalTariffWelfare,
   globalTariffConsumerSurplus,

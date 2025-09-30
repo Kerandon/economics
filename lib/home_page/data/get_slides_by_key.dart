@@ -33,11 +33,10 @@ List<Slide> getSlides({
     }
   }
 
-  if (key is UnitType) {
-    return allSlidesPopulated.where((slide) => slide.section == key).toList();
-  } else if (key is Subunit) {
+  if (key is UnitType || key is Subunit) {
     return allSlidesPopulated.where((slide) => slide.section == key).toList();
   }
 
-  return [];
+  // If no key is provided, return all slides
+  return allSlidesPopulated;
 }
