@@ -1,7 +1,13 @@
 class Term {
   final String term;
   final String explanation;
-  final bool? hl;
+  final Tag? tag;
 
-  Term({required this.term, required this.explanation, this.hl = false});
+  Term({required this.term, required this.explanation, this.tag, });
+}
+
+enum Tag {
+  hl,
+  supplement
+
 }

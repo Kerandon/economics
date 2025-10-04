@@ -1,6 +1,8 @@
+import 'package:economics_app/home_page/models/term.dart';
+
 class Content {
   final String text;
-  final bool? hl;
+  final Tag? tag;
 
-  Content(this.text, {this.hl = false});
+  Content(this.text, {this.tag});
 }

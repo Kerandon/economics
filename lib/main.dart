@@ -1,5 +1,4 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/diagrams/data/all_diagrams.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'app/configs/theme_data.dart';

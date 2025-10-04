@@ -1,7 +1,9 @@
+import 'package:economics_app/home_page/models/term.dart';
+
 class KeyContent {
   final String title;
   final String content;
-  final bool? hl;
+  final Tag? tag;
 
-  KeyContent({required this.title, required this.content, this.hl = false});
+  KeyContent({required this.title, required this.content, this.tag});
 }

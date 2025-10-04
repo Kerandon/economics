@@ -98,7 +98,7 @@ void paintDiagramLines(
         );
       case CurveStyle.bold:
       case CurveStyle.standard:
-      default:
+
         return inputPath;
     }
   }
