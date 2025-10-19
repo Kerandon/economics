@@ -3,11 +3,7 @@ class Term {
   final String explanation;
   final Tag? tag;
 
-  Term({required this.term, required this.explanation, this.tag, });
+  Term({required this.term, required this.explanation, this.tag});
 }
 
-enum Tag {
-  hl,
-  supplement
-
-}
+enum Tag { hl, supplement }

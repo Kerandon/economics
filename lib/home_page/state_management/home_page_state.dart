@@ -1,24 +1,39 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../diagrams/enums/unit_type.dart';
+import '../../diagrams/models/diagram_bundle.dart';
 
 class HomePageState {
-  final UnitType selectedUnit;
-  final Subunit?
-  selectedSubunit; // allow null initially or default to first subunit
+  final UnitType? selectedUnit;
+  final Subunit? selectedSubunit;
+  final Subunit? selectedDiagramSubunit;
+  final String? selectedDiagramId;
 
-  HomePageState({required this.selectedUnit, this.selectedSubunit});
+  HomePageState({
+    this.selectedUnit,
+    this.selectedSubunit,
+    this.selectedDiagramSubunit,
+    this.selectedDiagramId,
+  });
 
-  HomePageState copyWith({UnitType? selectedUnit, Subunit? selectedSubunit}) {
+  HomePageState copyWith({
+    UnitType? selectedUnit,
+    Subunit? selectedSubunit,
+    Subunit? selectedDiagramSubunit,
+    String? selectedDiagramID,
+  }) {
     return HomePageState(
       selectedUnit: selectedUnit ?? this.selectedUnit,
       selectedSubunit: selectedSubunit ?? this.selectedSubunit,
+      selectedDiagramSubunit:
+          selectedDiagramSubunit ?? this.selectedDiagramSubunit,
+      selectedDiagramId: selectedDiagramID ?? this.selectedDiagramId,
     );
   }
 }
 
-class EditHomePageNotifier extends StateNotifier<HomePageState> {
-  EditHomePageNotifier(super._state);
+class HomePageNotifier extends StateNotifier<HomePageState> {
+  HomePageNotifier(super._state);
 
   void setUnit(UnitType unit) {
     // When unit changes, optionally reset selectedSubunit to first subunit of new unit
@@ -32,14 +47,23 @@ class EditHomePageNotifier extends StateNotifier<HomePageState> {
       state = state.copyWith(selectedSubunit: subunit);
     }
   }
+
+  void setDiagramSubunit(Subunit subunit) {
+    state = state.copyWith(selectedDiagramSubunit: subunit);
+  }
+
+  void setSelectedDiagramId(String id) {
+    state = state.copyWith(selectedDiagramID: id);
+  }
 }
 
-final homePageProvider =
-    StateNotifierProvider<EditHomePageNotifier, HomePageState>(
-      (ref) => EditHomePageNotifier(
-        HomePageState(
-          selectedUnit: UnitType.intro,
-          selectedSubunit: UnitType.intro.subunits.first,
-        ),
-      ),
-    );
+final homePageProvider = StateNotifierProvider<HomePageNotifier, HomePageState>(
+  (ref) => HomePageNotifier(
+    HomePageState(
+      selectedUnit: UnitType.intro,
+      selectedSubunit: UnitType.intro.subunits.first,
+      selectedDiagramSubunit: Subunit.whatIsEconomics,
+      selectedDiagramId: '',
+    ),
+  ),
+);

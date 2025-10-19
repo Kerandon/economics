@@ -12,6 +12,11 @@ List<Slide> get demandSlides => [
     title: kKeyTerms,
     contents: [
       SlideContent.term(
+        'A Market',
+        'is where buyers and sellers meet to exchange goods, services or resources (physically or virtually).',
+      ),
+
+      SlideContent.term(
         'Demand',
         'is the various quantities of a good or service that a consumer is willing and able to buy at different prices during a particular time period, ceteris paribus.',
       ),
@@ -21,7 +26,6 @@ List<Slide> get demandSlides => [
       ),
 
       SlideContent.term(
-        tag: Tag.supplement,
         'Derived Demand',
         'is the demand for a good, service or resource that arises from the demand for a related good, service or resource.',
       ),
@@ -35,11 +39,7 @@ List<Slide> get demandSlides => [
       ),
       SlideContent.term(
         'Increase Or Decrease In Demand',
-        'is when a non-price determinant of demand changes the demand for a good or service at every price. This is shown by a shift in the entire demand curve.',
-      ),
-      SlideContent.term(
-        'Market Demand',
-        'is the total (aggregate) quantity of a good or service demanded by all consumers in a market at various prices, over a specific period of time, ceteris paribus.',
+        'is when a non-price determinant of demand changes demand at every price. This is shown by a shift in the entire demand curve.',
       ),
       SlideContent.term(
         'Normal Good',
@@ -47,7 +47,7 @@ List<Slide> get demandSlides => [
       ),
       SlideContent.term(
         'Inferior Good',
-        'a is a good for which demand increases when consumers’ real income falls. Typical examples include public transportation or second-hand clothes.',
+        'is a good for which demand increases when consumers’ real income falls. Typical examples include public transportation or second-hand clothes.',
       ),
       SlideContent.term(
         'Substitute Good',
@@ -55,27 +55,31 @@ List<Slide> get demandSlides => [
       ),
       SlideContent.term(
         'Complement Good',
-        'is a good which are consumed together. Price and demand move in opposite directions. For example, if the price of cars increase, the demand for gasoline falls.,',
+        'is a good consumed jointly with another. Price and demand move in opposite directions. For example, if the price of cars increases, the demand for petrol falls.',
       ),
       SlideContent.term(
         tag: Tag.hl,
-        'The Law of Diminishing Marginal Returns', 'states that as consumption of a good increases, the marginal utility (extra satisfaction) decreases with each additional unit consumed, ceteris paribus.',
+        'The Law of Diminishing Marginal Returns',
+        'states that as consumption of a good increases, the marginal utility (extra satisfaction) decreases with each additional unit consumed, ceteris paribus.',
       ),
 
       SlideContent.term(
         tag: Tag.hl,
         'Substitution effect',
-        'occurs when a fall in the price of a good makes it relatively cheaper compared to substitutes, causing consumers to switch from other goods and increase quantity demanded.',
+        'is when a fall in the price of a good makes it relatively cheaper compared to substitutes, causing consumers to switch from substitutes and increase quantity demanded.',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'Income Effect',
+        'is when a fall in the price of a good increases a consumers’ purchasing power, allowing them to buy more of the good.',
       ),
 
       SlideContent.term(
-        tag: Tag.supplement,
         'Conspicuous Consumption',
         'refers to individuals who make purchases of luxury to display their wealth or status rather than for their practical utility.',
       ),
 
       SlideContent.term(
-        tag: Tag.supplement,
         'Veblen Good',
         'is a type of luxury good which is used to show wealth or status. It shows a positive relationship between price and quantity demanded, making it an exception to the law of demand',
       ),
@@ -83,10 +87,9 @@ List<Slide> get demandSlides => [
       SlideContent.term(
         tag: Tag.supplement,
         'Giffen Good',
-        'is a staple good that make up a large proportion of consumers’ expenditure. When its price rises, consumers buy more of the good, creating a positive relationship between price and quantity demanded making it an exception to the law of demand. The increase in demand is due to the income effect of the higher price outweighing the substitution effect.',),
-
-
-],
+        'is a staple good that make up a large proportion of consumers’ expenditure. When its price rises, consumers buy more of the good, creating a positive relationship between price and quantity demanded, making it an exception to the law of demand. The increase in demand occurs because the income effect of the higher price outweighs the substitution effect.',
+      ),
+    ],
   ),
 
   Slide(
@@ -102,7 +105,6 @@ List<Slide> get demandSlides => [
 <li>Number of consumers</li>
 </ul>
 '''),
-      SlideContent.diagram(DiagramBundleEnum.microDemandDeterminants),
     ],
   ),
 
@@ -126,7 +128,7 @@ List<Slide> get demandSlides => [
 </ul>
 '''),
       SlideContent.diagram(
-        DiagramBundleEnum.microDemandPriceChange,
+        DiagramBundleEnum.microDemandExtension,
       ), // 🔧 placeholder for now
     ],
   ),
@@ -146,7 +148,7 @@ List<Slide> get demandSlides => [
 </ul>
 '''),
       SlideContent.diagram(
-        DiagramBundleEnum.microDemandPriceChange,
+        DiagramBundleEnum.microDemandExtension,
       ), // 🔧 placeholder
     ],
   ),

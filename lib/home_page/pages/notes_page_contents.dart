@@ -13,27 +13,28 @@ class NotesPageContents extends ConsumerWidget {
     final homePageNotifier = ref.read(homePageProvider.notifier);
 
     final unit = homePageState.selectedUnit; // This should be a UnitType
-    final subunits = unit.subunits; // Uses the extension getter
+    final subunits = unit?.subunits; // Uses the extension getter
 
     return Scaffold(
-      appBar: AppBar(title: Text(unit.title)),
+      appBar: AppBar(title: Text(unit?.title ?? '')),
       body: ListView(
         children: [
-          ...subunits.map(
-            ((e) => ListTile(
-              leading: Text(e.id),
-              title: Text(e.title),
-              trailing: Icon(Icons.arrow_forward_ios_outlined),
-              onTap: () {
-                homePageNotifier.setSubunit(e);
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => NotesExpansionTilePage(),
-                  ),
-                );
-              },
-            )),
-          ),
+          if (subunits?.isNotEmpty ?? false)
+            ...subunits!.map(
+              ((e) => ListTile(
+                leading: Text(e.id),
+                title: Text(e.title),
+                trailing: Icon(Icons.arrow_forward_ios_outlined),
+                onTap: () {
+                  homePageNotifier.setSubunit(e);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => NotesExpansionTilePage(),
+                    ),
+                  );
+                },
+              )),
+            ),
         ],
       ),
     );

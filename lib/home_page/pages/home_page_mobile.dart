@@ -1,27 +1,27 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/home_page/pages/terms_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../diagrams/enums/unit_type.dart';
 import '../custom_widgets/custom_heading.dart';
 import '../custom_widgets/custom_tile.dart';
-import '../enums/tool_enum.dart';
+import '../enums/resources_enum.dart';
 import '../state_management/home_page_state.dart';
 import 'notes_page_contents.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class HomePageMobile extends ConsumerStatefulWidget {
+  const HomePageMobile({super.key});
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageNewState();
+  ConsumerState<HomePageMobile> createState() => _HomePageNewState();
 }
 
-class _HomePageNewState extends ConsumerState<HomePage> {
+class _HomePageNewState extends ConsumerState<HomePageMobile> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     final homePageNotifier = ref.read(homePageProvider.notifier);
+
     return Scaffold(
       drawer: Drawer(),
       appBar: AppBar(),
@@ -93,16 +93,19 @@ class _HomePageNewState extends ConsumerState<HomePage> {
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) => CustomTile(
-                  text: Tool.values.elementAt(index).title,
-                  imageURL: Tool.values.elementAt(index).imageUrl,
-                  diagramBundleEnum: Tool.values.elementAt(index).diagram,
+                  text: Resource.values.elementAt(index).title,
+                  imageURL: Resource.values.elementAt(index).imageUrl,
+                  diagramBundleEnum: Resource.values.elementAt(index).diagram,
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => TermsPage()),
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            Resource.values.elementAt(index).page,
+                      ),
                     );
                   },
                 ),
-                childCount: Tool.values.length,
+                childCount: Resource.values.length,
               ),
             ),
           ),

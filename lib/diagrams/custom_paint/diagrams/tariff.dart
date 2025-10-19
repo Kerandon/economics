@@ -97,7 +97,6 @@ class Tariff extends BaseDiagramPainter2 {
       yAxisLabel: DiagramLabel.price.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
-    paintDemand(c, canvas, extend: true, label: DiagramLabel.dD.label);
     paintSupply(c, canvas, extend: true, label: DiagramLabel.sD.label);
     paintDiagramLines(
       c,

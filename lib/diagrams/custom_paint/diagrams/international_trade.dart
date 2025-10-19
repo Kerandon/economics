@@ -33,7 +33,6 @@ class InternationalTrade extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.pW.label,
         hideXLine: true,
       );
-      paintDemand(c, canvas, label: DiagramLabel.dW.label);
       paintSupply(c, canvas, label: DiagramLabel.sW.label);
     }
     if (diagramBundleEnum == DiagramBundleEnum.globalWorldPrice) {
@@ -46,7 +45,6 @@ class InternationalTrade extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.pW.label,
         hideXLine: true,
       );
-      paintDemand(c, canvas, label: DiagramLabel.dW.label);
       paintSupply(c, canvas, label: DiagramLabel.sW.label);
     }
     if (diagramBundleEnum == DiagramBundleEnum.globalNetImporter) {

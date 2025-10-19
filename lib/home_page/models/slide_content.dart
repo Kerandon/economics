@@ -59,15 +59,13 @@ class SlideContent {
         keyContent: KeyContent(title: title, content: content, tag: tag),
       );
 
-  factory SlideContent.term(
-    String term,
-    String explanation, {Tag? tag}) => SlideContent(
-    term: Term(term: term, explanation: explanation, tag: tag),
-  );
+  factory SlideContent.term(String term, String explanation, {Tag? tag}) =>
+      SlideContent(
+        term: Term(term: term, explanation: explanation, tag: tag),
+      );
 
   factory SlideContent.diagram(DiagramBundleEnum diagram) =>
       SlideContent(diagramBundleEnums: [diagram]);
-
 
   factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
 
@@ -79,7 +77,9 @@ class SlideContent {
 
   factory SlideContent.textWithDiagram(
     String content,
-    DiagramBundleEnum diagram,{Tag? tag}) => SlideContent(
+    DiagramBundleEnum diagram, {
+    Tag? tag,
+  }) => SlideContent(
     content: Content(content, tag: tag),
     diagramBundleEnums: [diagram],
   );
@@ -88,10 +88,11 @@ class SlideContent {
     String term,
     String explanation,
     String content,
-    DiagramBundleEnum diagram,{Tag? tag}) => SlideContent(
+    DiagramBundleEnum diagram, {
+    Tag? tag,
+  }) => SlideContent(
     term: Term(term: term, explanation: explanation, tag: tag),
     content: Content(content, tag: tag),
     diagramBundleEnums: [diagram],
   );
-
 }

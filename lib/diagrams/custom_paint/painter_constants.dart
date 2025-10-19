@@ -3,25 +3,25 @@
 import 'package:flutter/material.dart';
 
 /// Curves
-const kCurveWidth = 2.5;
-const kCurveWidthSlim = 3.0;
-const kArrowSize = 8.0;
+const kCurveWidth = 5.0;
+const kCurveWidthSlim = 4.0;
+const kArrowSize = 12.0;
 
 /// Axis & Labels
 
-const kAxisIndent = 0.16;
+const kAxisIndent = 0.18;
 const kAxisTextIndent = 0.08;
 const kAxisLabelAdjustmentCenter = 2.5;
 const kAxisWidth = 0.30;
-const kDashedLineWidth = 3.0;
+const kDashedLineWidth = 5.0;
 
 /// Text
-const kLabelFontSize = 22.0;
-const kFontSize = 16.0;
+const kLabelFontSize = 20.0;
+const kFontSize = 32.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
-  fontSize: kFontSize * 0.90,
+  fontSize: kFontSize * 1.0,
 );
 
 /// Dot
-const kDotRadius = 12.0;
+const kDotRadius = 16.0;

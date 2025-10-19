@@ -1,38 +1,14 @@
-import 'package:economics_app/app/configs/constants.dart';
+import '../../../app/configs/constants.dart';
 import '../../../diagrams/enums/unit_type.dart';
 import '../../models/slide.dart';
 import '../../models/slide_content.dart';
 
-List<Slide> get benefitsOfInternationalTradeSlides => [
+List<Slide> get bopSlides => [
+  /// 'Definition & Types of Protection',
   Slide(
-    section: Subunit.benefitsTrade,
+    section: Subunit.balanceOfPayments,
     title: kKeyTerms,
     contents: [
-      SlideContent.term(
-        'Autarky',
-        'A country which is self-sufficient and does not engage in international trade (also known as a closed economy).',
-      ),
-
-      SlideContent.term(
-        'International Trade',
-        'The exchange of goods and services between countries across national borders.',
-      ),
-
-      SlideContent.term(
-        'Free Trade',
-        'International trade without government-imposed restrictions such as tariffs, quotas, or subsidies.',
-      ),
-
-      SlideContent.term(
-        'International Specialization',
-        'When a country concentrates its production on one or a few industries, often where it has a comparative advantage.',
-      ),
-
-      SlideContent.term(
-        'Gains from Trade',
-        'The economic benefits countries gain from engaging in international trade, including higher consumption possibilities, increased production efficiency, and greater social surplus.',
-      ),
-
       SlideContent.term(
         'Balance of Payments (BOP)',
         'A financial record of a country’s transactions with the rest of the world over a year.',
@@ -60,11 +36,12 @@ List<Slide> get benefitsOfInternationalTradeSlides => [
 
       SlideContent.term(
         'Primary Income',
-        'Net Factor Income earned from abroad (income earned abroad - income send abroad)',
+        'Income earned by residents from foreign factors of production or paid to foreigners from domestic factors, including wages (temporary workers abroad), rents, interest, and profits.',
       ),
+
       SlideContent.term(
         'Secondary Income (Current Transfers)',
-        'Unilateral transfers with no exchange of goods or services, including foreign aid and remittances from migrant workers based overseas (12 months or more).',
+        'Unilateral transfers with no exchange of goods or services, including foreign aid and remittances from migrant workers permanently based overseas (12 months or more).',
       ),
 
       SlideContent.term(
@@ -96,7 +73,6 @@ List<Slide> get benefitsOfInternationalTradeSlides => [
         'Capital Flight',
         'Large-scale outflow of money and financial assets from a country, usually due to political or economic instability.',
       ),
-
       SlideContent.term(
         'Expenditure-Switching Policies',
         'Policies aimed at reducing a current account deficit by encouraging consumption of domestic goods over imports, through export promotion, trade protection, or currency devaluation.',

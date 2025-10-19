@@ -21,7 +21,7 @@ List<Slide> get whatIsEconomicsSlides => [
       ),
       SlideContent.term(
         'Microeconomics',
-        'is the study of individual behavior and markets. Including the topics of supply & demand, market failure and government intervention in markets.',
+        'is the study of individual behavior and markets. Including the topics of supply and demand, market failure and government intervention in markets.',
       ),
       SlideContent.term(
         'Macroeconomics',
@@ -73,7 +73,7 @@ List<Slide> get whatIsEconomicsSlides => [
       ),
       SlideContent.term(
         'Economic Goods',
-        'refer to goods which result in an economic cost to produce and consume. Due to their scarcity, they can command a price when sold.',
+        'refer to goods which result in an opportunity cost to produce and consume. Due to their scarcity, they can command a price when sold.',
       ),
       SlideContent.term(
         'Free Goods',
@@ -93,35 +93,35 @@ List<Slide> get whatIsEconomicsSlides => [
       ),
       SlideContent.term(
         'Rationing',
-        'is the process of allocating (apportioning) scarce goods and services in society.',
+        'Is the process of allocating (apportioning) scarce goods and services in society.',
       ),
       SlideContent.term(
         'Private Sector',
-        'refers to part of the economy that is made up by private individuals and firms.',
+        'Refers to part of the economy that is made up by private individuals and firms.',
       ),
       SlideContent.term(
         'Public Sector',
-        'refers to part of the economy that is controlled by the state (government).',
+        'Refers to part of the economy that is controlled by the state (government).',
       ),
       SlideContent.term(
         'The Production Possibilities Curve (PPC)',
-        'is a model which shows the maximum combination of any two goods an economy can produce at any point in time, given current fixed resources. It demonstrates the concepts of choice, opportunity costs and scarcity.',
+        'Is a model which shows the maximum combination of any two goods an economy can produce at any point in time, given current fixed resources. It demonstrates the concepts of choice, opportunity costs and scarcity.',
       ),
       SlideContent.term(
         'The Circular Flow of Income Model',
-        ' is a visual representation of economic activity, which shows the interdependence of different sectors in an economy and the flows of money, output and resources.',
+        ' Is a visual representation of economic activity, which shows the interdependence of different sectors in an economy and the flows of money, output and resources.',
       ),
       SlideContent.term(
         'Injection',
-        'represents money entering the economy, that expands economic activity',
+        'Represents money entering the economy, that expands economic activity. The three main injections are investment, government spending and export revenue.',
       ),
       SlideContent.term(
         'Leakages',
-        'represents money that leaves the economy, reducing economic activity. The three main leakages are savings, taxes and imports expenditure.',
+        'Represents money that leaves the economy, reducing economic activity. The three main leakages are savings, taxes and import expenditure.',
       ),
       SlideContent.term(
         'The Circular Economy',
-        'is a model that aims to eliminate waste and pollution, keep products and materials in use, and regenerate natural systems to ensure sustainability.',
+        'Is a model that aims to eliminate waste and pollution, keep products and materials in use, and regenerate natural systems to ensure sustainability.',
       ),
     ],
   ),

@@ -1,4 +1,5 @@
 import 'package:economics_app/diagrams/custom_paint/diagrams/comparative_advantage.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/elasticities.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/import_quota.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/international_trade.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/production_subsidy.dart';
@@ -13,16 +14,82 @@ import '../models/diagram_painter_config.dart';
 
 List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   /// 1.1 PPC
-  DiagramBundle(DiagramBundleEnum.microSupplyDeterminants, [
-    Supply2(config, DiagramBundleEnum.microSupplyPriceChanges),
-    Supply2(config, DiagramBundleEnum.microSupplyDeterminants),
-  ]),
 
   /// 2.1 Demand
-  DiagramBundle(DiagramBundleEnum.microDemandPriceChange, [
-    Demand(config, DiagramBundleEnum.microDemandPriceChange),
+  DiagramBundle(DiagramBundleEnum.microDemandExtension, [
+    Demand(config, DiagramBundleEnum.microDemandExtension),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandContraction, [
+    Demand(config, DiagramBundleEnum.microDemandContraction),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandIncrease, [
+    Demand(config, DiagramBundleEnum.microDemandIncrease),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandDecrease, [
+    Demand(config, DiagramBundleEnum.microDemandDecrease),
   ]),
 
+  /// 2.2 Supply
+  DiagramBundle(DiagramBundleEnum.microSupplyExtension, [
+    Supply(config, DiagramBundleEnum.microSupplyExtension),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSupplyContraction, [
+    Supply(config, DiagramBundleEnum.microSupplyContraction),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSupplyIncrease, [
+    Supply(config, DiagramBundleEnum.microSupplyIncrease),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSupplyDecrease, [
+    Supply(config, DiagramBundleEnum.microSupplyDecrease),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microMarginalProduct, [
+    Supply(config, DiagramBundleEnum.microMarginalProduct),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microTotalAndMarginalProduct, [
+    Supply(config, DiagramBundleEnum.microTotalAndMarginalProduct),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microMarginalCost, [
+    Supply(config, DiagramBundleEnum.microMarginalCost),
+  ]),
+
+  /// 2.3 Competitive Market Equilibrium
+  /// 2.4 Critique of the maximizing behaviour of consumers and producers (HL only)
+  /// 2.5 Elasticity of demand (includes HL only sub-topics)
+  DiagramBundle(DiagramBundleEnum.microDemandElastic, [
+    Elasticities(config, DiagramBundleEnum.microDemandElastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandInelastic, [
+    Elasticities(config, DiagramBundleEnum.microDemandInelastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandUnitElastic, [
+    Elasticities(config, DiagramBundleEnum.microDemandUnitElastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandPerfectlyElastic, [
+    Elasticities(config, DiagramBundleEnum.microDemandPerfectlyElastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandPerfectlyInelastic, [
+    Elasticities(config, DiagramBundleEnum.microDemandPerfectlyInelastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandEngelCurve, [
+    Elasticities(config, DiagramBundleEnum.microDemandEngelCurve),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSupplyElastic, [
+    Elasticities(config, DiagramBundleEnum.microSupplyElastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSupplyInelastic, [
+    Elasticities(config, DiagramBundleEnum.microSupplyInelastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSupplyUnitElastic, [
+    Elasticities(config, DiagramBundleEnum.microSupplyUnitElastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSupplyPerfectlyInelastic, [
+    Elasticities(config, DiagramBundleEnum.microSupplyPerfectlyInelastic),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSupplyPerfectlyElastic, [
+    Elasticities(config, DiagramBundleEnum.microSupplyPerfectlyElastic),
+  ]),
+
+  /// 2.6 Elasticity of supply (includes HL only sub-topics)
   /// 4.1 Benefits of International Trade
   DiagramBundle(DiagramBundleEnum.globalWorldPriceStandAlone, [
     InternationalTrade(config, DiagramBundleEnum.globalWorldPriceStandAlone),

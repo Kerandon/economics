@@ -30,12 +30,12 @@ List<Slide> get critiqueSlides => [
       SlideContent.term(
         tag: Tag.hl,
         'Bounded Rationality',
-        'refers to humans having limited in cognitive ability, time and imperfect information which constrains rational decision making',
+        'refers to humans having limited cognitive ability, time, and imperfect information, which constrains rational decision-making.',
       ),
       SlideContent.term(
         tag: Tag.hl,
         'Bounded Self-Control',
-        'refers to humans’ limited self-control. Individuals may consume beyond the point where they maximize their utility for a good. For example, eating chocolate while on a diet.',
+        'refers to humans’ limited self-control. Individuals may consume beyond the point their maximum utility. For example, eating chocolate while on a diet.',
       ),
       SlideContent.term(
         tag: Tag.hl,
@@ -50,12 +50,27 @@ List<Slide> get critiqueSlides => [
       SlideContent.term(
         tag: Tag.hl,
         'Nudge Theory',
-        'is the study of how indirect suggestions and positive reinforcements can influence the behavior of individuals or groups.',
+        'is the study of how indirect suggestions can influence the behavior of individuals and groups.',
       ),
       SlideContent.term(
         tag: Tag.hl,
         'Choice Architecture',
-        'studies how choices presented to consumers can influence decision making (part of nudges).',
+        'studies how the presentation of choices to consumers can influence decision making.',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'Default Choice',
+        'is the usual choice, or the choice if nothing is selected.',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'Restricted Choice',
+        'is when consumers face a limited set of options.',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'Mandated Choice',
+        'is when a consumer must choose between different options. ',
       ),
       SlideContent.term(
         tag: Tag.hl,
@@ -85,14 +100,14 @@ List<Slide> get critiqueSlides => [
       SlideContent.term(
         tag: Tag.hl,
         'Corporate Social Responsibility (CSR)',
-        'is when firms consider social and environmental impacts in their business operations.',
+        'is when firms take responsibility for the social and environmental impacts of their business operations.',
       ),
       SlideContent.term(
         tag: Tag.hl,
         'Satisficing',
         'is when an individual or firm settles for a satisfactory outcome rather than striving for the optimal one.',
       ),
-      SlideContent.diagram(DiagramBundleEnum.microDemandPriceChange),
+      SlideContent.diagram(DiagramBundleEnum.microDemandExtension),
     ],
   ),
 ];

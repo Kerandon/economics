@@ -60,7 +60,7 @@ class ImportQuota extends BaseDiagramPainter2 {
       hideYLine: true,
       xLabel: DiagramLabel.q4.label,
     );
-    paintDemand(c, canvas, label: DiagramLabel.dD.label, extend: true);
+
     paintSupply(c, canvas, label: DiagramLabel.sD.label, extend: true);
     paintDiagramLines(
       c,

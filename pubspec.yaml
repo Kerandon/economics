@@ -44,6 +44,7 @@ dependencies:
   pdf: ^3.11.3
   printing: ^5.14.2
   html: ^0.15.6
+  responsive_framework: ^1.5.1
 
 dev_dependencies:
   flutter_test:

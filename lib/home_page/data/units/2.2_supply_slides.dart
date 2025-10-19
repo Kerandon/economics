@@ -12,7 +12,6 @@ List<Slide> get supplySlides => [
     title: kKeyTerms,
     contents: [
       SlideContent.term(
-        tag: Tag.hl,
         'Supply',
         'is the various quantities of a good or service a firm is willing and able to sell at different prices, during a particular time period, ceteris paribus.',
       ),
@@ -27,7 +26,7 @@ List<Slide> get supplySlides => [
       ),
       SlideContent.term(
         'Increase Or Decrease In Supply',
-        'is when a non-price determinant of supply changes the supply of a good or service at every price. This is shown by a shift of the entire supply curve.',
+        'is when a non-price determinant of supply changes supply at every price. This is shown by a shift of the entire supply curve.',
       ),
       SlideContent.term(
         'Market Supply',
@@ -70,7 +69,7 @@ List<Slide> get supplySlides => [
           <li>Number of firms</li>
         </ul>
         '''),
-      SlideContent.diagram(DiagramBundleEnum.microDemandPriceChange),
+      SlideContent.diagram(DiagramBundleEnum.microDemandExtension),
       // 🔧 placeholder
     ],
   ),

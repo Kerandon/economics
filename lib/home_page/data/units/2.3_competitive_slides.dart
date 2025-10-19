@@ -26,22 +26,22 @@ List<Slide> get competitiveMarketEquilibrium => [
 
       SlideContent.term(
         'Price Signals',
-        'provide information to producers regarding where resources are required and to consumers to change consumption.',
+        'provide information to producers regarding where resources are needed and to consumers how to change consumption.',
       ),
 
       SlideContent.term(
         'Incentives',
-        'provide motivation to change behavior. Higher price create an incentive to producers to supply more to maximize profit, and consumers to buy less to maximize utility.',
+        'motivate consumers and producers to change behavior. For example, higher prices encourage producers to sell more to maximize profit and for consumers to buy less to maximum utility.',
       ),
 
       SlideContent.term(
         'Price Rationing',
-        'is when scarce goods and services are rationed by the price mechanism. When the quantity demanded of a good exceeds its quantity supplied, the price will rise and only those willing and able to pay will obtain the good.',
+        'is when scarce goods and services are rationed by the <strong>price mechanism</strong>. When there is a shortage, the price will rise and only those willing and able to pay will obtain the good.',
       ),
 
       SlideContent.term(
         'Non-Price Rationing',
-        'is when scarce goods and services are allocated by methods other than price, such as queueing, lotteries, or on a needs basis.',
+        'is when scarce goods and services are allocated by methods <strong>other than by price</strong>, such as queueing, lotteries, or on a needs basis.',
       ),
 
       SlideContent.term(
@@ -51,26 +51,25 @@ List<Slide> get competitiveMarketEquilibrium => [
 
       SlideContent.term(
         'Consumer Surplus',
-        'is the total welfare gained by consumers who are able to buy a product for a lower price than they are willing to pay. It is measured by the area below the demand curve (representing marginal benefit) and above the market price.',
+        'is the welfare gained by consumers who are able to buy a product for a lower price than they are willing to pay. It is measured by the area below the demand curve (representing marginal benefit) and above the market price.',
       ),
 
       SlideContent.term(
         'Producer Surplus',
-        'is the total welfare gained by producers by selling a good at a higher price they are willing to accept. It is measured by the area above the supply curve (representing the marginal cost of production) and below the market price.',
+        'is the welfare gained by producers by selling a good at a higher price than they are willing to accept. It is measured by the area above the supply curve (representing marginal cost) and below the market price.',
       ),
 
       SlideContent.term(
         'Social Surplus (Welfare)',
-        'is the sum of consumer and producer surplus at a given level of output. Social welfare is maximized when the price mechanism clears the market of any excess demand or supply. When social welfare is maximized, the market is allocatively efficient.',
+        'is the sum of consumer and producer surplus at a given level of output. Social welfare is maximized when the market is cleared of any excess demand or supply, resulting in allocative efficiency.',
       ),
 
       SlideContent.term(
         'Allocative Efficiency',
-        'is when resources are allocated in a way that maximizes social welfare, meaning the quantity of goods produced reflects what is most desired by society. This happens at the quantity where marginal benefit equals marginal cost.',
+        'is when resources are allocated to maximize social welfare, producing the quantity of goods <strong>most desired by society</strong>. This happens where <strong>marginal benefit equals marginal cost.</strong>',
       ),
 
       SlideContent.term(
-        tag: Tag.supplement,
         'Pareto Efficiency',
         'is when resources are allocated so that it is impossible to make one person better off without making someone else worse off.',
       ),

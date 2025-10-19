@@ -32,7 +32,7 @@ class CustomTile extends StatelessWidget {
       diagram = AllDiagrams(
         size: size,
         colorScheme: colorScheme,
-      ).getDiagramBundle2(DiagramBundleEnum.microSupplyDeterminants);
+      ).getDiagramBundle2(DiagramBundleEnum.microDemandIncrease);
     }
 
     return Container(

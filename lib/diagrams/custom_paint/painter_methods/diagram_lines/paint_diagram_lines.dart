@@ -8,6 +8,10 @@ import '../../../models/custom_bezier.dart';
 import '../../../models/diagram_painter_config.dart';
 import '../../../models/size_adjuster.dart';
 import '../../painter_constants.dart';
+// Note: This file assumes the existence of helper functions/classes
+// like DiagramPainterConfig, CustomBezier, LabelAlign, kCurveWidth,
+// kAxisIndent, SizeAdjustor, dashPath, CircularIntervalList,
+// paintLabelText, paintArrowHead, and atan2.
 
 enum CurveStyle { standard, dashed, dotted, bold }
 
@@ -98,12 +102,11 @@ void paintDiagramLines(
         );
       case CurveStyle.bold:
       case CurveStyle.standard:
-
         return inputPath;
     }
   }
 
-  // --- Polyline path
+  // --- Polyline path (Existing correct logic)
   if (polylineOffsets != null && polylineOffsets.isNotEmpty) {
     for (final point in polylineOffsets) {
       final next = computeOffset(point);
@@ -113,6 +116,7 @@ void paintDiagramLines(
     final styledPath = applyCurveStyle(path);
     canvas.drawPath(styledPath, paint);
 
+    // Label 1: Start position
     if (label1 != null) {
       final labelOffset = computeTextOffset(startPos);
       paintLabelText(
@@ -124,6 +128,7 @@ void paintDiagramLines(
       );
     }
 
+    // Label 2: Last polyline point
     if (label2 != null) {
       final last = polylineOffsets.last;
       final labelOffset = computeTextOffset(last);
@@ -170,7 +175,8 @@ void paintDiagramLines(
     return;
   }
 
-  // --- Bezier path
+  // --- Bezier path (Fix applied here)
+
   final end = computeOffset(bezierPoints!.last.endPoint);
 
   for (final point in bezierPoints) {
@@ -181,6 +187,32 @@ void paintDiagramLines(
 
   final styledPath = applyCurveStyle(path);
   canvas.drawPath(styledPath, paint);
+
+  // --- ADDED: Label 1 (Start position) for Bezier
+  if (label1 != null) {
+    final labelOffset = computeTextOffset(startPos);
+    paintLabelText(
+      canvas,
+      config,
+      label1,
+      labelOffset,
+      labelAlign: label1Align,
+    );
+  }
+
+  // --- ADDED: Label 2 (End position) for Bezier
+  if (label2 != null) {
+    // We use the raw endPoint from the last Bezier segment to compute the text offset
+    final lastRawPoint = bezierPoints!.last.endPoint;
+    final labelOffset = computeTextOffset(lastRawPoint);
+    paintLabelText(
+      canvas,
+      config,
+      label2,
+      labelOffset,
+      labelAlign: label2Align,
+    );
+  }
 
   if (arrowOnStart) {
     paintArrowHead(
