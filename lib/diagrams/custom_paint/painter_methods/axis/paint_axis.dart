@@ -37,7 +37,6 @@ void paintAxis(
       canvas,
       axis: CustomAxis.y,
       label: yAxisLabel,
-      extendYLabelPadding: (yMaxValue != null && yDivisions != null),
     );
   }
   if (xAxisLabel != null) {

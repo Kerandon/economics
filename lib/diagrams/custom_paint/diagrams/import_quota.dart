@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../painter_methods/axis/label_align.dart';
 import '../painter_methods/legend/legend_entry.dart';
-import '../painter_methods/shortcut_methods/paint_demand.dart';
+import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 import '../painter_methods/shortcut_methods/paint_supply.dart';
 import '../shade/shade_type.dart';
 import '../../models/base_painter_painter.dart';

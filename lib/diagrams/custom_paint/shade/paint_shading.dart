@@ -10,7 +10,7 @@ void paintShading(
   ShadeType shade,
   List<dynamic> pointsAndBeziers, {
   bool striped = true,
-  double stripeSpacing = 9.0,
+  double stripeSpacing = 4.0,
   bool invertStripes = false, // NEW parameter
 }) {
   final width = size.width;
@@ -27,7 +27,7 @@ void paintShading(
   bool isFirst = true;
 
   Offset toCanvasCoords(double dx, double dy) {
-    final x = dx * width * normalize + (kAxisIndent * width);
+    final x = dx * width * normalize + ((kAxisIndent * 1.5) * width);
     final y = dy * height * normalize + (kAxisIndent * (height / 2));
     return Offset(x, y);
   }

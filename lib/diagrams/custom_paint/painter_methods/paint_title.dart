@@ -11,7 +11,7 @@ void paintTitle(DiagramPainterConfig config, Canvas canvas, String label) {
     label,
     Offset(0.5, 0.0),
     alignment: TextAlignment.center,
-    fontSize: kFontSize * 1.4,
+    fontSize: kFontMedium * 1.1,
     style: TextStyle(
       fontStyle: FontStyle.italic,
       color: config.colorScheme.secondary,

@@ -1,34 +1,39 @@
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dashed_line.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_solid_line.dart';
 import 'package:flutter/material.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
 void paintDiagramDashedLines(
-  DiagramPainterConfig config,
-  Canvas canvas, {
-  required double yAxisStartPos,
-  required double xAxisEndPos,
-  String? yLabel,
-  String? xLabel,
-  bool hideYLine = false,
-  bool hideXLine = false,
-  bool makeDashed = true,
-  Color? color,
-  Color? backgroundColor,
-}) {
+    DiagramPainterConfig config,
+    Canvas canvas, {
+      required double yAxisStartPos,
+      required double xAxisEndPos,
+      String? yLabel,
+      String? xLabel,
+      bool hideYLine = false,
+      bool hideXLine = false,
+      bool makeDashed = true,
+      Color? color,
+      Color? backgroundColor,
+      bool showDotAtIntersection = false, // 👈 NEW property
+      double dotRadius = kDotRadius, // optional radius
+      Color? dotColor, // optional color override
+    }) {
   final c = color ?? config.colorScheme.onSurface;
 
-  // Axis box (normalized) with the requested vertical shift:
+  // Axis box (normalized)
   final top = kAxisIndent * 0.50;
   final bottom = 1 - (kAxisIndent * 1.5);
   final left = kAxisIndent * 1.5;
-
   final spanY = bottom - top; // == 1 - 2*kAxisIndent
 
-  final yPos = top + yAxisStartPos * spanY; // normalized 0..1
-  final xEndPos = left + xAxisEndPos * spanY; // normalized 0..1
+  // Normalized positions
+  final yPos = top + yAxisStartPos * spanY;
+  final xEndPos = left + xAxisEndPos * spanY;
 
+  // Draw horizontal (Y) line
   if (!hideYLine) {
     final p1 = Offset(left, yPos);
     final p2 = Offset(xEndPos, yPos);
@@ -39,17 +44,12 @@ void paintDiagramDashedLines(
     }
   }
 
+  // Y label
   if (yLabel != null) {
-    // x is ignored in Y mode; pass 0.0. y is honored.
-    _paintTextForDashedLines(
-      config,
-      canvas,
-      yLabel,
-      yAxisStartPos,
-      CustomAxis.y,
-    );
+    _paintTextForDashedLines(config, canvas, yLabel, yAxisStartPos, CustomAxis.y);
   }
 
+  // Draw vertical (X) line
   if (!hideXLine) {
     paintDashedLine(
       config,
@@ -60,16 +60,23 @@ void paintDiagramDashedLines(
     );
   }
 
+  // X label
   if (xLabel != null) {
-    _paintTextForDashedLines(
+    _paintTextForDashedLines(config, canvas, xLabel, xAxisEndPos, CustomAxis.x);
+  }
+
+  // 👇 Draw dot at intersection if requested
+  if (showDotAtIntersection) {
+    paintDotAbsolute(
       config,
       canvas,
-      xLabel,
-      xAxisEndPos, // <-- dy is now respected
-      CustomAxis.x,
+      pos: Offset(xEndPos * config.painterSize.width, yPos * config.painterSize.width), // direct coordinates of intersection
+      radius: dotRadius,
+      color: dotColor ?? c,
     );
   }
 }
+
 
 void _paintTextForDashedLines(
   DiagramPainterConfig config,
@@ -77,7 +84,7 @@ void _paintTextForDashedLines(
   String label,
   double pos, // normalized 0..1 in both axes
   CustomAxis axis, {
-  double fontSize = kFontSize,
+  double fontSize = kFontMedium,
 }) {
   fontSize *= config.averageRatio;
 
@@ -125,3 +132,18 @@ void _paintTextForDashedLines(
 }
 
 enum CustomAxis { x, y }
+
+void paintDotAbsolute(
+    DiagramPainterConfig config,
+    Canvas canvas, {
+      required Offset pos,
+      double radius = kDotRadius,
+      Color? color,
+    }) {
+  final r = radius * config.averageRatio * 0.60;
+  final paint = Paint()
+    ..color = color ?? config.colorScheme.onSurfaceVariant
+    ..style = PaintingStyle.fill;
+
+  canvas.drawCircle(pos, r, paint);
+}

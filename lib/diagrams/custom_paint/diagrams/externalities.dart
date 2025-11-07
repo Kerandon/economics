@@ -1,268 +1,153 @@
 import 'dart:math';
+
+import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
+import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
+import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
+import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:flutter/material.dart';
-import '../../enums/diagram_labels.dart';
-import '../../enums/diagram_subtype.dart';
-import '../painter_methods/axis/label_align.dart';
-import '../shade/shade_type.dart';
+
+import '../../enums/diagram_bundle_enum.dart';
 import '../../models/base_painter_painter.dart';
-import '../../models/custom_bezier.dart';
-import '../../models/diagram_model.dart';
 import '../../models/diagram_painter_config.dart';
-import '../painter_methods/axis/paint_axis.dart';
 
-import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
-import '../shade/paint_shading.dart';
-import '../painter_methods/paint_text_normalized_within_axis.dart';
-
-class Externalities extends BaseDiagramPainter {
-  Externalities({
-    required DiagramPainterConfig config,
-    required DiagramModel model,
-  }) : super(config, model);
+class Externalities extends BaseDiagramPainter2 {
+  Externalities(super.config, super.diagramBundleEnum);
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
-
-    final negProd = model.subtype == DiagramSubtype.negativeProduction;
-    final negCon = model.subtype == DiagramSubtype.negativeConsumption;
-    final posProd = model.subtype == DiagramSubtype.positiveProduction;
-    final posCon = model.subtype == DiagramSubtype.positiveConsumption;
-
-    String supplyLabel = DiagramLabel.sEqualsMPCMSC.label;
-    String demandLabel = DiagramLabel.dEqualsMPBMSB.label;
-    if (negProd) {
-      supplyLabel = DiagramLabel.sEqualsMPC.label;
-      paintShading(canvas, size, ShadeType.welfareLoss, [
-        Offset(0.51, 0.50),
-        Offset(0.40, 0.40),
-        Offset(0.51, 0.30),
-      ]);
-
-      /// Dashed Lines Optimum
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.40,
-        xAxisEndPos: 0.40,
-        yLabel: DiagramLabel.pOpt.label,
-        xLabel: DiagramLabel.qOpt.label,
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.70, 0.10),
-        bezierPoints: [CustomBezier(endPoint: Offset(0.10, 0.70))],
-        label1: DiagramLabel.msc.label,
-        label1Align: LabelAlign.centerRight,
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.65, 0.20),
-        polylineOffsets: [Offset(0.65, 0.30)],
-        arrowOnStart: true,
-        arrowOnEnd: true,
-        arrowOnEndAngle: pi,
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        DiagramLabel.externality.label,
-        Offset(0.90, 0.30),
-        pointerLine: Offset(0.65, 0.25),
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        DiagramLabel.welfareLoss.label,
-        Offset(0.46, 0.10),
-        pointerLine: Offset(0.46, 0.38),
-      );
+    c.painterSize;
+    paintAxis(c, canvas, yAxisLabel: DiagramLabel.price.label,xAxisLabel: DiagramLabel.quantityUnits.label);
+    switch (diagramBundleEnum) {
+      case DiagramBundleEnum.microNegativeConsumptionExternalityWelfare:
+        _paintNegativeConsumptionWelfare(c, canvas, size);
+      case DiagramBundleEnum.microNegativeProductionExternalityWelfare:
+        _paintNegativeProductionWelfare(c, canvas, size);
+      case DiagramBundleEnum.microPositiveConsumptionExternalityWelfare:
+        _paintPositiveConsumptionWelfare(c, canvas, size);
+      case DiagramBundleEnum.microPositiveProductionExternalityWelfare:
+        _paintPositiveProductionWelfare(c, canvas, size);
+      default:
     }
-    if (negCon) {
-      demandLabel = DiagramLabel.dEqualsMPB.label;
-      paintShading(canvas, size, ShadeType.welfareLoss, [
-        Offset(0.51, 0.50),
-        Offset(0.40, 0.60),
-        Offset(0.51, 0.70),
-      ]);
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.10, 0.30),
-        polylineOffsets: [Offset(0.70, 0.90)],
-        label2: DiagramLabel.msb.label,
-        label2Align: LabelAlign.centerRight,
-      );
-
-      /// Dashed Lines Optimum
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.60,
-        xAxisEndPos: 0.41,
-        yLabel: DiagramLabel.pOpt.label,
-        xLabel: DiagramLabel.qOpt.label,
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.65, 0.70),
-        polylineOffsets: [Offset(0.65, 0.80)],
-        arrowOnStart: true,
-        arrowOnEnd: true,
-        arrowOnEndAngle: pi,
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        DiagramLabel.externality.label,
-        Offset(0.90, 0.65),
-        pointerLine: Offset(0.65, 0.75),
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        DiagramLabel.welfareLoss.label,
-        Offset(0.46, 0.20),
-        pointerLine: Offset(0.46, 0.58),
-      );
-    }
-    if (posProd) {
-      supplyLabel = DiagramLabel.sEqualsMPC.label;
-      paintShading(canvas, size, ShadeType.welfareLoss, [
-        Offset(0.50, 0.50),
-        Offset(0.60, 0.60),
-        Offset(0.50, 0.70),
-      ]);
-
-      /// Dashed Lines Optimum
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.60,
-        xAxisEndPos: 0.61,
-        yLabel: DiagramLabel.pOpt.label,
-        xLabel: DiagramLabel.qOpt.label,
-      );
-
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.90, 0.30),
-        bezierPoints: [CustomBezier(endPoint: Offset(0.30, 0.90))],
-        label1: DiagramLabel.msc.label,
-        label1Align: LabelAlign.centerRight,
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.75, 0.30),
-        polylineOffsets: [Offset(0.75, 0.40)],
-        arrowOnStart: true,
-        arrowOnEnd: true,
-        arrowOnEndAngle: pi,
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        DiagramLabel.externality.label,
-        Offset(0.90, 0.50),
-        pointerLine: Offset(0.75, 0.35),
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        DiagramLabel.welfareLoss.label,
-        Offset(0.54, 0.20),
-        pointerLine: Offset(0.54, 0.58),
-      );
-    }
-    if (posCon) {
-      demandLabel = DiagramLabel.dEqualsMPB.label;
-      paintShading(canvas, size, ShadeType.welfareLoss, [
-        Offset(0.50, 0.30),
-        Offset(0.60, 0.40),
-        Offset(0.50, 0.50),
-      ]);
-
-      /// Dashed Lines Optimum
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.40,
-        xAxisEndPos: 0.61,
-        yLabel: DiagramLabel.pOpt.label,
-        xLabel: DiagramLabel.qOpt.label,
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.25, 0.05),
-        bezierPoints: [CustomBezier(endPoint: Offset(0.90, 0.70))],
-        label2: DiagramLabel.msb.label,
-        label2Align: LabelAlign.centerRight,
-      );
-
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        DiagramLabel.welfareLoss.label,
-        Offset(0.54, 0.10),
-        pointerLine: Offset(0.54, 0.38),
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.35, 0.20),
-        polylineOffsets: [Offset(0.35, 0.30)],
-        arrowOnStart: true,
-        arrowOnEnd: true,
-        arrowOnEndAngle: pi,
-      );
-      paintTextNormalizedWithinAxis(
-        c,
-        canvas,
-        DiagramLabel.externality.label,
-        Offset(0.15, 0.30),
-        pointerLine: Offset(0.35, 0.25),
-      );
-    }
-
-    /// Dashed Lines market
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.50,
-      xAxisEndPos: 0.51,
-      yLabel: DiagramLabel.pm.label,
-      xLabel: DiagramLabel.qm.label,
-    );
-
-    paintAxis(
-      c,
-      canvas,
-      yAxisLabel: DiagramLabel.p.label,
-      xAxisLabel: DiagramLabel.q.label,
-    );
-
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0.15, 0.15),
-      bezierPoints: [CustomBezier(endPoint: Offset(0.85, 0.85))],
-      label2: demandLabel,
-      label2Align: LabelAlign.centerRight,
-    );
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0.85, 0.15),
-      bezierPoints: [CustomBezier(endPoint: Offset(0.15, 0.85))],
-      label1: supplyLabel,
-      label1Align: LabelAlign.centerRight,
-    );
   }
+}
+
+void _paintNegativeConsumptionWelfare(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+) {
+
+
+}
+
+void _paintNegativeProductionWelfare(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+) {}
+
+void _paintPositiveConsumptionWelfare(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+) {
+  paintLegendTable(canvas, c, headers: ['', DiagramLabel.freeMarket.label, DiagramLabel.sociallyOptimumOutput.label], data: [
+    [DiagramLabel.consumerSurplus.label, '+(B,D)', '+(A,B,C)'],
+    [DiagramLabel.producerSurplus.label, '+(G)', '+(D,E,F,G)'],
+    [DiagramLabel.externalBenefits.label, '+(A,E)', '-'],
+    [DiagramLabel.socialWelfare.label, '+(A,B,D,E,G)', '+(A,B,C,D,E,F,G)'],
+    [DiagramLabel.welfareLoss.label, '-(C,F)', '-'],
+  ]);
+  paintShading(canvas, size, ShadeType.welfareLoss, [Offset(0.305,0.37),Offset(0.305, 0.61),Offset(0.46,0.50)]);
+  paintText2(c, canvas, DiagramLabel.welfareLoss.label, Offset(0.45,0.30), pointerLine: Offset(0.40,0.50));
+  paintText2(c, canvas, DiagramLabel.a.label, Offset(0.10,0.30));
+  paintText2(c, canvas, DiagramLabel.b.label, Offset(0.05,0.45));
+  paintText2(c, canvas, DiagramLabel.c.label, Offset(0.35,0.45));
+  paintText2(c, canvas, DiagramLabel.d.label, Offset(0.10,0.55));
+  paintText2(c, canvas, DiagramLabel.e.label, Offset(0.26,0.53));
+  paintText2(c, canvas, DiagramLabel.f.label, Offset(0.35,0.54));
+  paintText2(c, canvas, DiagramLabel.g.label, Offset(0.10,0.70));
+  paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.61, xAxisEndPos: 0.305,
+    yLabel: DiagramLabel.pm.label, xLabel: DiagramLabel.qm.label,
+    hideXLine: true,
+  );
+  paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.39, xAxisEndPos: 0.305,
+    hideYLine: true,
+  );
+  paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.495, xAxisEndPos: 0.455,
+      yLabel: DiagramLabel.pOpt.label, xLabel: DiagramLabel.qOpt.label
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.demand, label: DiagramLabel.msb.label, horizontalShift: -0.04,
+      lengthAdjustment: kExtendBy5, angle: -0.10
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.demand, label: DiagramLabel.dEqualsMPB.label, horizontalShift: -0.15,
+      verticalShift: kExtendBy15,
+      lengthAdjustment: -kExtendBy20, angle: -0.10
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.supply, label: DiagramLabel.sEqualsMPCMSC.label, angle: 0.12,
+      horizontalShift: -0.05);
+  paintLineSegment(c, canvas, origin: Offset(0.65,0.775), angle: -pi/2, length: 0.16,endStyle:LineEndStyle.arrowBothEnds);
+  paintText2(c, canvas, DiagramLabel.externalBenefits.label, Offset(0.90,0.68),
+      pointerLine: Offset(0.65,0.78));
+
+
+
+}
+
+
+
+
+void _paintPositiveProductionWelfare(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+) {
+  paintLegendTable(canvas, c, headers: ['', DiagramLabel.freeMarket.label, DiagramLabel.sociallyOptimumOutput.label], data: [
+    [DiagramLabel.consumerSurplus.label, '+A', '+(A,B,C,D)'],
+    [DiagramLabel.producerSurplus.label, '+(B,E)', '+(B,E)'],
+    [DiagramLabel.externalBenefits.label, '+(F,C)', '-'],
+    [DiagramLabel.socialWelfare.label, '+(A,B,E,F,C)', '+(A,B,C,D,E,F,G)'],
+    [DiagramLabel.welfareLoss.label, '-(D,G)', '-'],
+  ]);
+  paintShading(canvas, size, ShadeType.welfareLoss, [Offset(0.40,0.42),Offset(0.40, 0.635),Offset(0.54,0.53)]);
+  paintText2(c, canvas, DiagramLabel.welfareLoss.label, Offset(0.46,0.20), pointerLine: Offset(0.46,0.50));
+  paintText2(c, canvas, DiagramLabel.a.label, Offset(0.15,0.32));
+  paintText2(c, canvas, DiagramLabel.b.label, Offset(0.15,0.47));
+  paintText2(c, canvas, DiagramLabel.c.label, Offset(0.37,0.49));
+  paintText2(c, canvas, DiagramLabel.d.label, Offset(0.43,0.49));
+  paintText2(c, canvas, DiagramLabel.e.label, Offset(0.08,0.60));
+  paintText2(c, canvas, DiagramLabel.f.label, Offset(0.26,0.65));
+  paintText2(c, canvas, DiagramLabel.g.label, Offset(0.43,0.56));
+  paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.63, xAxisEndPos: 0.40,
+   xLabel: DiagramLabel.qm.label,
+    hideXLine: true,
+    hideYLine: true,
+  );
+  paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.42, xAxisEndPos: 0.40,
+    hideXLine: true, yLabel: DiagramLabel.pm.label,
+  );
+  paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.42, xAxisEndPos: 0.40,
+    hideYLine: true,
+  );
+  paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.53, xAxisEndPos: 0.535,
+      yLabel: DiagramLabel.pOpt.label, xLabel: DiagramLabel.qOpt.label
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.demand, label: DiagramLabel.dEqualsMPBMSB.label, horizontalShift: -0.06,
+      verticalShift: -kExtendBy5,
+      lengthAdjustment: 0, angle: -0.10
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.supply, label: DiagramLabel.sEqualsMPC.label, angle: 0.12,
+      horizontalShift: -0.10, verticalShift: -0.080, lengthAdjustment: -kExtendBy10);
+  paintMarketCurve(c, canvas, type: MarketCurveType.supply, label: DiagramLabel.msc.label, angle: 0.12,
+      horizontalShift: -0.05, verticalShift: kExtendBy10);
+  paintLineSegment(c, canvas, origin: Offset(0.65,0.333), angle: -pi/2, length: 0.16,endStyle:LineEndStyle.arrowBothEnds);
+  paintText2(c, canvas, DiagramLabel.externalBenefits.label, Offset(0.90,0.45),
+      pointerLine: Offset(0.65,0.33));
 }

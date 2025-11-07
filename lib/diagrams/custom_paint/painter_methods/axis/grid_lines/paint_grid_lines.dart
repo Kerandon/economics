@@ -77,7 +77,7 @@ void paintGridLines(
       text: yLabel,
       style: TextStyle(
         color: config.colorScheme.onSurface,
-        fontSize: kFontSize * config.averageRatio,
+        fontSize: kFontMedium * config.averageRatio,
       ),
     );
     textPainter.layout();
@@ -122,7 +122,7 @@ void paintGridLines(
       text: xLabel,
       style: TextStyle(
         color: config.colorScheme.onSurface,
-        fontSize: kFontSize * config.averageRatio,
+        fontSize: kFontMedium * config.averageRatio,
       ),
     );
     textPainter.layout();

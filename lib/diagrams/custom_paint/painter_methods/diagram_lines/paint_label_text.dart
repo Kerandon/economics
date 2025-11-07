@@ -13,7 +13,7 @@ void paintLabelText(
   LabelAlign labelAlign = LabelAlign.center,
 }) {
   final widthAndHeight = config.painterSize.width;
-  final fontSize = kFontSize * config.averageRatio;
+  final fontSize = kFontMedium * config.averageRatio;
   final padding = widthAndHeight * 0.01;
 
   /// Text Painter Methods

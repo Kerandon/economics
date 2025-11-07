@@ -9,8 +9,6 @@ void paintDot(
   required Offset pos,
   double radius = kDotRadius,
   Color? color,
-  String? label,
-  LabelAlign? labelAlign,
 }) {
   color = color ?? config.colorScheme.onSurfaceVariant;
   final size = config.painterSize;
@@ -29,18 +27,5 @@ void paintDot(
     r,
     paint,
   );
-  if (label?.isNotEmpty == true) {
-    // paintText(
-    //   config,
-    //   canvas,
-    //   label!,
-    //   Offset(
-    //     pos.dx * normalize + (kAxisIndent),
-    //     (pos.dy * normalize) + (kAxisIndent / 2),
-    //   ),
-    //   fontSize: kFontSize * 1.2,
-    //   labelAlign: labelAlign ?? LabelAlign.centerRight,
-    //   paintBackground: true,
-    // );
-  }
+
 }

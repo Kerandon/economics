@@ -8,7 +8,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legen
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_normalized_within_axis.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
 import '../../enums/diagram_bundle_enum.dart';
@@ -26,7 +26,7 @@ import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-import '../painter_methods/shortcut_methods/paint_demand.dart';
+import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 
 class Supply extends BaseDiagramPainter2 {
   Supply(super.config, super.diagramBundleEnum);
@@ -159,7 +159,7 @@ class Supply extends BaseDiagramPainter2 {
     }
     if (diagramBundleEnum == DiagramBundleEnum.microMarginalProduct ||
         diagramBundleEnum == DiagramBundleEnum.microTotalAndMarginalProduct) {
-      final labelSize = kFontSize / 1.8;
+      final labelSize = kFontMedium / 1.8;
       final labelYPos = 0.05;
       paintAxis(
         c,
@@ -176,7 +176,7 @@ class Supply extends BaseDiagramPainter2 {
           startPos: Offset(0, 1.0),
           bezierPoints: [
             CustomBezier(
-              endPoint: Offset(0.76, 0.19),
+              endPoint: Offset(0.73, 0.19),
               control: Offset(0.21, 0.15),
             ),
             CustomBezier(
@@ -222,21 +222,21 @@ class Supply extends BaseDiagramPainter2 {
           ),
         ]);
 
-        paintTextNormalizedWithinAxis(
+        paintText2(
           c,
           canvas,
           DiagramLabel.increasingReturns.label,
           Offset(0.28, labelYPos),
           fontSize: labelSize,
         );
-        paintTextNormalizedWithinAxis(
+        paintText2(
           c,
           canvas,
           DiagramLabel.diminishingReturns.label,
           Offset(0.60, labelYPos),
           fontSize: labelSize,
         );
-        paintTextNormalizedWithinAxis(
+        paintText2(
           c,
           canvas,
           DiagramLabel.negativeReturns.label,
@@ -265,14 +265,14 @@ class Supply extends BaseDiagramPainter2 {
           xAxisEndPos: 0.45,
           hideYLine: true,
         );
-        paintTextNormalizedWithinAxis(
+        paintText2(
           c,
           canvas,
           DiagramLabel.increasingReturns.label,
           Offset(0.30, labelYPos),
           fontSize: labelSize,
         );
-        paintTextNormalizedWithinAxis(
+        paintText2(
           c,
           canvas,
           DiagramLabel.diminishingReturns.label,
@@ -307,7 +307,7 @@ class Supply extends BaseDiagramPainter2 {
             control: const Offset(0.50, 1.3),
           ),
         ],
-        label2: DiagramLabel.marginalProduct.label,
+        label2: DiagramLabel.marginalCost.label,
         label2Align: LabelAlign.centerTop,
       );
     }

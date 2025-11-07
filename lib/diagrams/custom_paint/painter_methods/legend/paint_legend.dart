@@ -17,9 +17,9 @@ void paintLegend(
   LegendAlignment alignment = LegendAlignment.right,
 }) {
   final textColor = brightness == Brightness.dark ? Colors.white : Colors.black;
-  final textStyle = TextStyle(color: textColor, fontSize: kFontSize * 0.60);
+  final textStyle = TextStyle(color: textColor, fontSize: kFontSmall);
   final textPainter = TextPainter(textDirection: TextDirection.ltr);
-
+  margin = size.width * 0.05;
   double maxWidth = size.width - margin * 2;
   List<List<LegendItem>> rows = [[]];
   double currentRowWidth = 0;
@@ -41,7 +41,7 @@ void paintLegend(
     currentRowWidth += itemWidth + (rows.last.length > 1 ? spacing : 0);
   }
 
-  double currentY = size.height - legendBoxSize - size.height * 0.06;
+  double currentY = size.height - legendBoxSize - size.height * 0.12;
 
   for (final row in rows.reversed) {
     double rowWidth =

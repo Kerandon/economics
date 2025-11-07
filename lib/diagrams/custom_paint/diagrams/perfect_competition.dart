@@ -12,7 +12,7 @@ import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../shade/paint_shading.dart';
-import '../painter_methods/paint_text_normalized_within_axis.dart';
+import '../painter_methods/paint_text_2.dart';
 import '../painter_methods/paint_title.dart';
 
 class PerfectCompetition extends BaseDiagramPainter {
@@ -79,12 +79,11 @@ class PerfectCompetition extends BaseDiagramPainter {
         yLabel: DiagramLabel.pe.label,
       );
 
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.d1EqualsAR1MR1.label,
         Offset(1.0, 0.50),
-        align: LabelAlign.centerRight,
       );
       paintDiagramLines(
         c,
@@ -105,7 +104,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         arrowOnEnd: true,
         arrowOnEndAngle: pi,
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.abnormalProfit.label,
@@ -165,7 +164,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         arrowOnStart: true,
         arrowOnStartAngle: 0,
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.loss.label,

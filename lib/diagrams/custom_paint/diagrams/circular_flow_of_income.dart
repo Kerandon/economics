@@ -407,7 +407,7 @@ class CircularFlowOfIncome extends BaseDiagramPainter {
       paintText(
         c,
         canvas,
-        DiagramLabel.governmentSpending.label,
+        DiagramLabel.governmentBudget.label,
         Offset(0.80, 0.48),
       );
       paintText(c, canvas, DiagramLabel.investment.label, Offset(0.80, 0.63));

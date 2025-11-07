@@ -11,7 +11,7 @@ import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../shade/paint_shading.dart';
-import '../painter_methods/paint_text_normalized_within_axis.dart';
+import '../painter_methods/paint_text_2.dart';
 import '../painter_methods/paint_title.dart';
 
 class MonopolisticCompetition extends BaseDiagramPainter {
@@ -103,21 +103,21 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         Offset(0.36, 0.72),
       ]);
 
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.consumerSurplus.label,
         Offset(0.20, 0.05),
         pointerLine: Offset(0.15, 0.42),
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.producerSurplus.label,
         Offset(0.10, 0.95),
         pointerLine: Offset(0.20, 0.70),
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.welfareLoss.label,
@@ -165,7 +165,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         Offset(0.30, 0.45),
         Offset(0.00, 0.45),
       ]);
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.abnormalProfit.label,
@@ -213,7 +213,7 @@ class MonopolisticCompetition extends BaseDiagramPainter {
         Offset(0.30, 0.57),
         Offset(0.00, 0.57),
       ]);
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.loss.label,

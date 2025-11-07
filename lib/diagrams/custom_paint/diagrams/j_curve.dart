@@ -10,7 +10,7 @@ import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 import '../painter_methods/paint_custom_bezier.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
-import '../painter_methods/paint_text_normalized_within_axis.dart';
+import '../painter_methods/paint_text_2.dart';
 
 class JCurve extends BaseDiagramPainter {
   JCurve({required DiagramPainterConfig config, required DiagramModel model})
@@ -20,7 +20,7 @@ class JCurve extends BaseDiagramPainter {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintTextNormalizedWithinAxis(
+    paintText2(
       c,
       canvas,
       DiagramLabel.tradeBalance.label,
@@ -36,28 +36,25 @@ class JCurve extends BaseDiagramPainter {
       arrowOnEnd: true,
       arrowOnEndAngle: pi,
     );
-    paintTextNormalizedWithinAxis(
+    paintText2(
       c,
       canvas,
       DiagramLabel.tradeSurplus.label,
       Offset(-0.05, 0.10),
-      align: LabelAlign.centerLeft,
     );
 
-    paintTextNormalizedWithinAxis(
+    paintText2(
       c,
       canvas,
       DiagramLabel.tradeBalanced.label,
       Offset(-0.05, 0.50),
-      align: LabelAlign.centerLeft,
     );
 
-    paintTextNormalizedWithinAxis(
+    paintText2(
       c,
       canvas,
       DiagramLabel.tradeDeficit.label,
       Offset(-0.05, 0.90),
-      align: LabelAlign.centerLeft,
     );
     if (model.subtype == DiagramSubtype.correctDeficit) {
       paintCustomBezier(
@@ -75,21 +72,21 @@ class JCurve extends BaseDiagramPainter {
           ),
         ],
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.a.label,
         Offset(0.15, 0.82),
         pointerLine: Offset(0.15, 0.72),
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.b.label,
         Offset(0.40, 0.94),
         pointerLine: Offset(0.40, 0.84),
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.c.label,
@@ -105,7 +102,7 @@ class JCurve extends BaseDiagramPainter {
       polylineOffsets: [Offset(1, 0.50)],
       curveStyle: CurveStyle.dashed,
     );
-    paintTextNormalizedWithinAxis(
+    paintText2(
       c,
       canvas,
       DiagramLabel.time.label,
@@ -127,21 +124,21 @@ class JCurve extends BaseDiagramPainter {
           ),
         ],
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.a.label,
         Offset(0.15, 0.18),
         pointerLine: Offset(0.15, 0.28),
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.b.label,
         Offset(0.40, 0.04),
         pointerLine: Offset(0.40, 0.14),
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.c.label,

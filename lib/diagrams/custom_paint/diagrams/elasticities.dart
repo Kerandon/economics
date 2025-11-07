@@ -1,10 +1,15 @@
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/label_align.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_normalized_within_axis.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
+import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
+import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
-
 import '../../enums/diagram_bundle_enum.dart';
 import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
@@ -12,7 +17,7 @@ import '../../models/diagram_painter_config.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_arrow_helper.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/shortcut_methods/paint_demand.dart';
+import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'dart:math' as math;
 
 class Elasticities extends BaseDiagramPainter2 {
@@ -22,24 +27,30 @@ class Elasticities extends BaseDiagramPainter2 {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    final isEngelCurve =
-        diagramBundleEnum == DiagramBundleEnum.microDemandEngelCurve;
+    String yLabel = DiagramLabel.price.label;
+
+    if (diagramBundleEnum == DiagramBundleEnum.microDemandEngelCurve) {
+      yLabel = DiagramLabel.income.label;
+    } else if (diagramBundleEnum ==
+        DiagramBundleEnum.microDemandElasticityRevenueChange) {
+      yLabel = DiagramLabel.revenue.label;
+    }
 
     paintAxis(
       c,
       canvas,
-      yAxisLabel: isEngelCurve
-          ? DiagramLabel.income.label
-          : DiagramLabel.price.label,
+      yAxisLabel: yLabel,
       xAxisLabel: DiagramLabel.quantity.label,
     );
 
     switch (diagramBundleEnum) {
-      case DiagramBundleEnum.microDemandElastic:
-        _paintElastic(c, canvas);
+      case DiagramBundleEnum.microDemandElastic ||
+          DiagramBundleEnum.microDemandElasticRevenue:
+        _paintElastic(c, canvas, size);
         break;
-      case DiagramBundleEnum.microDemandInelastic:
-        _paintInelastic(c, canvas);
+      case DiagramBundleEnum.microDemandInelastic ||
+          DiagramBundleEnum.microDemandInelasticRevenue:
+        _paintInelastic(c, canvas, size);
         break;
       case DiagramBundleEnum.microDemandUnitElastic:
         _paintUnitElastic(c, canvas);
@@ -53,6 +64,11 @@ class Elasticities extends BaseDiagramPainter2 {
       case DiagramBundleEnum.microDemandEngelCurve:
         _paintDemandEngelCurve(c, canvas);
         break;
+      case DiagramBundleEnum.microDemandElasticityChange:
+        _paintMicroDemandElasticityChange(c, canvas);
+        break;
+      case DiagramBundleEnum.microDemandElasticityRevenueChange:
+        _paintMicroDemandRevenueChange(c, canvas);
       case DiagramBundleEnum.microSupplyElastic:
         _paintSupplyElastic(c, canvas);
         break;
@@ -68,17 +84,20 @@ class Elasticities extends BaseDiagramPainter2 {
       case DiagramBundleEnum.microSupplyPerfectlyInelastic:
         _paintSupplyPerfectlyInelastic(c, canvas);
         break;
+      case DiagramBundleEnum.microSupplyPrimaryCommodities:
+        _paintMicroSupplyPrimaryCommodities(c, canvas, size);
 
       default:
     }
   }
 
-  void _paintElastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintElastic(DiagramPainterConfig c, Canvas canvas, Size size) {
+    paintTitle(c, canvas, 'Price Elastic Demand');
     paintMarketCurve(
       c,
       canvas,
       type: MarketCurveType.demand,
-      elasticityAngle: -0.40, // flatter (elastic)
+      angle: -0.40, // flatter (elastic)
     );
 
     paintDiagramDashedLines(
@@ -111,14 +130,47 @@ class Elasticities extends BaseDiagramPainter2 {
       origin: const Offset(-0.1, 0.51),
       angle: math.pi / 2,
     );
+    if (diagramBundleEnum == DiagramBundleEnum.microDemandElasticRevenue) {
+      paintShading(canvas, size, ShadeType.loss, [
+        Offset(0.00, 0.45),
+        Offset(0.36, 0.45),
+        Offset(0.36, 0.60),
+        Offset(0.00, 0.60),
+      ]);
+      paintShading(canvas, size, ShadeType.gainedRevenue, [
+        Offset(0.36, 0.60),
+        Offset(0.74, 0.60),
+        Offset(0.74, 1.0),
+        Offset(0.36, 1.0),
+      ]);
+      paintText2(c, canvas, DiagramLabel.a.label, Offset(0.18, 0.80));
+      paintText2(c, canvas, DiagramLabel.b.label, Offset(0.18, 0.52));
+      paintText2(c, canvas, DiagramLabel.c.label, Offset(0.55, 0.80));
+
+      paintLegend(canvas, size, [
+        LegendEntry(
+          label:
+              '${DiagramLabel.a.label} ${DiagramLabel.revenueUnchanged.label}',
+          color: Colors.grey,
+        ),
+        LegendEntry(
+          label: '${DiagramLabel.b.label} Revenue Loss',
+          color: Colors.red,
+        ),
+        LegendEntry(
+          label: '${DiagramLabel.c.label} Revenue Gain',
+          color: Colors.green,
+        ),
+      ]);
+    }
   }
 
-  void _paintInelastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintInelastic(DiagramPainterConfig c, Canvas canvas, Size size) {
     paintMarketCurve(
       c,
       canvas,
       type: MarketCurveType.demand,
-      elasticityAngle: 0.40, // steeper (inelastic)
+      angle: 0.40, // steeper (inelastic)
     );
 
     paintDiagramDashedLines(
@@ -126,8 +178,8 @@ class Elasticities extends BaseDiagramPainter2 {
       canvas,
       yAxisStartPos: 0.45,
       xAxisEndPos: 0.475,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: DiagramLabel.p2.label,
+      xLabel: DiagramLabel.q2.label,
     );
 
     paintDiagramDashedLines(
@@ -135,22 +187,56 @@ class Elasticities extends BaseDiagramPainter2 {
       canvas,
       yAxisStartPos: 0.60,
       xAxisEndPos: 0.54,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: DiagramLabel.p1.label,
+      xLabel: DiagramLabel.q1.label,
     );
 
     paintArrowHelper(
       c,
       canvas,
-      origin: const Offset(0.50, 1.10),
-      angle: math.pi * 2,
+      origin: const Offset(0.52, 1.10),
+      angle: math.pi,
     );
     paintArrowHelper(
       c,
       canvas,
-      origin: const Offset(-0.1, 0.51),
-      angle: math.pi / 2,
+      origin: const Offset(-0.1, 0.53),
+      angle: -math.pi / 2,
     );
+    if (diagramBundleEnum == DiagramBundleEnum.microDemandInelasticRevenue) {
+      paintTitle(c, canvas, 'Price Inelastic Demand');
+      paintShading(canvas, size, ShadeType.gainedRevenue, [
+        Offset(0.00, 0.45),
+        Offset(0.48, 0.45),
+        Offset(0.48, 0.60),
+        Offset(0.00, 0.60),
+      ]);
+      paintShading(canvas, size, ShadeType.loss, [
+        Offset(0.48, 0.60),
+        Offset(0.54, 0.60),
+        Offset(0.54, 1.0),
+        Offset(0.48, 1.0),
+      ]);
+      paintText2(c, canvas, DiagramLabel.a.label, Offset(0.25, 0.80));
+      paintText2(c, canvas, DiagramLabel.b.label, Offset(0.25, 0.52));
+      paintText2(c, canvas, DiagramLabel.c.label, Offset(0.51, 0.80));
+
+      paintLegend(canvas, size, [
+        LegendEntry(
+          label:
+              '${DiagramLabel.a.label} ${DiagramLabel.revenueUnchanged.label}',
+          color: Colors.grey,
+        ),
+        LegendEntry(
+          label: '${DiagramLabel.b.label} Revenue Gain',
+          color: Colors.green,
+        ),
+        LegendEntry(
+          label: '${DiagramLabel.c.label} Revenue Loss',
+          color: Colors.red,
+        ),
+      ]);
+    }
   }
 
   void _paintUnitElastic(DiagramPainterConfig c, Canvas canvas) {
@@ -197,7 +283,7 @@ class Elasticities extends BaseDiagramPainter2 {
     );
   }
 
-  _paintDemandPerfectlyElastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintDemandPerfectlyElastic(DiagramPainterConfig c, Canvas canvas) {
     paintDiagramDashedLines(
       c,
       canvas,
@@ -224,7 +310,7 @@ class Elasticities extends BaseDiagramPainter2 {
     );
   }
 
-  _paintDemandPerfectlyInelastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintDemandPerfectlyInelastic(DiagramPainterConfig c, Canvas canvas) {
     paintDiagramDashedLines(
       c,
       canvas,
@@ -242,8 +328,140 @@ class Elasticities extends BaseDiagramPainter2 {
     );
   }
 
-  _paintDemandEngelCurve(DiagramPainterConfig c, Canvas canvas) {
-    final dashedColor = c.colorScheme.onSurfaceVariant.withAlpha(100);
+  void _paintMicroDemandElasticityChange(
+    DiagramPainterConfig c,
+    Canvas canvas,
+  ) {
+    paintMarketCurve(
+      c,
+      canvas,
+      type: MarketCurveType.demand,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.25,
+      xAxisEndPos: 0.25,
+      yLabel: DiagramLabel.p1.label,
+      xLabel: DiagramLabel.q1.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.50,
+      xAxisEndPos: 0.50,
+      yLabel: DiagramLabel.p2.label,
+      xLabel: DiagramLabel.q2.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.75,
+      xAxisEndPos: 0.75,
+      yLabel: DiagramLabel.p3.label,
+      xLabel: DiagramLabel.q3.label,
+    );
+    paintArrowHelper(
+      c,
+      canvas,
+      origin: Offset(0.35, 0.25),
+      angle: math.pi * 0.25,
+      arrowBothEnds: true,
+      length: 0.30,
+    );
+    paintArrowHelper(
+      c,
+      canvas,
+      origin: Offset(0.75, 0.65),
+      angle: math.pi * 0.25,
+      arrowBothEnds: true,
+      length: 0.30,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.elasticDemand.label,
+      Offset(0.40, 0.20),
+      horizontalPivot: LabelPivot.left,
+      fontSize: kFontSmall,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.inelasticDemand.label,
+      Offset(0.80, 0.65),
+      horizontalPivot: LabelPivot.left,
+      fontSize: kFontSmall,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.unitElasticDemand.label,
+      Offset(0.65, 0.40),
+      horizontalPivot: LabelPivot.left,
+      fontSize: kFontSmall,
+      pointerLine: Offset(0.50, 0.50),
+    );
+  }
+
+  void _paintMicroDemandRevenueChange(DiagramPainterConfig c, Canvas canvas) {
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0, 1),
+      bezierPoints: [
+        CustomBezier(control: Offset(0.50, -0.70), endPoint: Offset(1, 1)),
+      ],
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.36,
+      xAxisEndPos: 0.25,
+      hideYLine: true,
+      xLabel: DiagramLabel.q1.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.36,
+      xAxisEndPos: 0.75,
+      hideYLine: true,
+      xLabel: DiagramLabel.q3.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.16,
+      xAxisEndPos: 0.50,
+      hideYLine: true,
+      xLabel: DiagramLabel.q2.label,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.pedSmaller1.label,
+      Offset(0.20, 0.25),
+      fontSize: kFontSmall,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.pedEqual1.label,
+      Offset(0.50, 0.08),
+      fontSize: kFontSmall,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.pedBigger1.label,
+      Offset(0.80, 0.25),
+      fontSize: kFontSmall,
+    );
+  }
+
+  void _paintDemandEngelCurve(DiagramPainterConfig c, Canvas canvas) {
+    final dashedColor = c.colorScheme.onSurfaceVariant.withAlpha(155);
     paintDiagramLines(
       c,
       canvas,
@@ -286,29 +504,29 @@ class Elasticities extends BaseDiagramPainter2 {
       curveStyle: CurveStyle.dashed,
       color: dashedColor,
     );
-    paintTextNormalizedWithinAxis(
+    paintText2(
       c,
       canvas,
       DiagramLabel.normalGoodLuxury.label,
-      Offset(0.32, 0.60),
-      fontSize: kLabelFontSize,
-      pointerLine: Offset(0.32, 0.68),
+      Offset(0.20, 0.65),
+      fontSize: kFontSmall,
+      pointerLine: Offset(0.20, 0.78),
     );
-    paintTextNormalizedWithinAxis(
+    paintText2(
       c,
       canvas,
       DiagramLabel.normalGoodNecessity.label,
-      Offset(0.83, 0.50),
-      fontSize: kLabelFontSize,
-      pointerLine: Offset(0.64, 0.50),
+      Offset(0.75, 0.70),
+      fontSize: kFontSmall,
+      pointerLine: Offset(0.57, 0.60),
     );
-    paintTextNormalizedWithinAxis(
+    paintText2(
       c,
       canvas,
       DiagramLabel.inferiorGood.label,
-      Offset(0.40, 0.10),
-      fontSize: kLabelFontSize,
-      pointerLine: Offset(0.40, 0.225),
+      Offset(0.50, 0.20),
+      fontSize: kFontSmall,
+      pointerLine: Offset(0.50, 0.32),
     );
   }
 
@@ -317,7 +535,7 @@ class Elasticities extends BaseDiagramPainter2 {
       c,
       canvas,
       type: MarketCurveType.supply,
-      elasticityAngle: 0.40, // flatter (elastic)
+      angle: 0.40, // flatter (elastic)
     );
 
     paintDiagramDashedLines(
@@ -357,7 +575,7 @@ class Elasticities extends BaseDiagramPainter2 {
       c,
       canvas,
       type: MarketCurveType.supply,
-      elasticityAngle: -0.40, // flatter (elastic)
+      angle: -0.40, // flatter (elastic)
     );
 
     paintDiagramDashedLines(
@@ -471,5 +689,84 @@ class Elasticities extends BaseDiagramPainter2 {
       origin: const Offset(-0.1, 0.51),
       angle: -math.pi / 2,
     );
+  }
+
+  void _paintMicroSupplyPrimaryCommodities(
+    DiagramPainterConfig c,
+    Canvas canvas,
+    Size size,
+  ) {
+    paintMarketCurve(
+      c,
+      canvas,
+      type: MarketCurveType.demand,
+      angle: math.pi * 0.15,
+    );
+    paintMarketCurve(
+      c,
+      canvas,
+      type: MarketCurveType.supply,
+      angle: math.pi * -0.15,
+      horizontalShift: -0.10,
+      label: DiagramLabel.s2.label,
+    );
+    paintMarketCurve(
+      c,
+      canvas,
+      type: MarketCurveType.supply,
+      angle: math.pi * -0.15,
+      horizontalShift: 0.10,
+      label: DiagramLabel.s1.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.35,
+      xAxisEndPos: 0.45,
+      yLabel: DiagramLabel.p2.label,
+      xLabel: DiagramLabel.q2.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.65,
+      xAxisEndPos: 0.55,
+      yLabel: DiagramLabel.p1.label,
+      xLabel: DiagramLabel.q1.label,
+    );
+    paintArrowHelper(c, canvas, origin: Offset(0.58, 0.30), angle: math.pi);
+    paintArrowHelper(
+      c,
+      canvas,
+      origin: Offset(-0.06, 0.50),
+      angle: math.pi * 1.5,
+    );
+    paintArrowHelper(c, canvas, origin: Offset(0.52, 1.11), angle: math.pi * 1);
+    paintText2(c, canvas, DiagramLabel.a.label, Offset(0.20, 0.80));
+    paintText2(c, canvas, DiagramLabel.b.label, Offset(0.20, 0.50));
+    paintText2(c, canvas, DiagramLabel.c.label, Offset(0.51, 0.93));
+paintLegendTable(canvas, config,
+    normalizedTopLeft: Offset(kAxisIndent * 2,(1-kAxisIndent * 1.5)),
+    title: 'Revenue',
+    headers: ['P1,Q1','P2,Q2'], data: [['A,C', 'A,B']]);
+    paintShading(canvas, size, ShadeType.gainedRevenue, [
+      Offset(0.00, 0.35),
+      Offset(0.45, 0.35),
+      Offset(0.45, 0.65),
+      Offset(0.0, 0.65),
+
+    ],);
+    paintShading(canvas, size, ShadeType.revenueUnchanged, [
+      Offset(0.00, 0.65),
+      Offset(0.45, 0.65),
+      Offset(0.45, 1.0),
+      Offset(0.0, 1.0),
+    ]);
+    paintShading(canvas, size, ShadeType.lostRevenue, [
+      Offset(0.45, 0.65),
+      Offset(0.55, 0.65),
+      Offset(0.55, 1.0),
+      Offset(0.45, 1.0),
+    ]);
   }
 }

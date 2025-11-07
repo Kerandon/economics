@@ -1,4 +1,4 @@
-import 'package:economics_app/home_page/pages/all_diagrams_page_web.dart';
+import 'package:economics_app/home_page/pages/diagrams_display_web/all_diagrams_page_web.dart';
 import 'package:economics_app/home_page/pages/terms_page.dart';
 import 'package:flutter/material.dart';
 

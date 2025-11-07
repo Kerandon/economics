@@ -12,8 +12,8 @@ void paintAxisLabels(
   extendYLabelPadding = false,
 }) {
   final widthAndHeight = config.painterSize.width;
-  final fontSize = kFontSize * config.averageRatio;
-  final indent = widthAndHeight * kAxisIndent;
+  final fontSize = kFontMedium * config.averageRatio;
+  final indent = widthAndHeight * kAxisIndent * 1.05;
 
   Offset pos = Offset(0, 0);
 
@@ -28,7 +28,7 @@ void paintAxisLabels(
     textDirection: TextDirection.ltr,
   );
   textPainter.layout(minWidth: 0, maxWidth: widthAndHeight);
-  var labelPadding = widthAndHeight * 0.08;
+  var labelPadding = widthAndHeight * 0.05;
   switch (axis) {
     case CustomAxis.x:
       pos = Offset(

@@ -9,7 +9,7 @@ void paintText(
   Canvas canvas,
   String label,
   Offset position, {
-  double fontSize = kFontSize,
+  double fontSize = kFontMedium,
   TextStyle? style,
   double angle = 0,
   TextAlignment alignment = TextAlignment.center,

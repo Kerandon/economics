@@ -14,7 +14,7 @@ import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../shade/paint_shading.dart';
 import '../painter_methods/paint_text.dart';
-import '../painter_methods/paint_text_normalized_within_axis.dart';
+import '../painter_methods/paint_text_2.dart';
 import '../painter_methods/paint_title.dart';
 
 class PriceMechanism extends BaseDiagramPainter {
@@ -474,7 +474,7 @@ class PriceMechanism extends BaseDiagramPainter {
         Offset(0, 1),
       ]);
 
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.consumerSurplus.label,
@@ -482,7 +482,7 @@ class PriceMechanism extends BaseDiagramPainter {
         pointerLine: Offset(0.15, 0.30),
         style: kLabelTextStyle,
       );
-      paintTextNormalizedWithinAxis(
+      paintText2(
         c,
         canvas,
         DiagramLabel.producerSurplus.label,

@@ -10,7 +10,7 @@ import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_arrow_helper.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
-import '../painter_methods/shortcut_methods/paint_demand.dart';
+import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 
 class Demand extends BaseDiagramPainter2 {
   Demand(super.config, super.diagramBundleEnum);

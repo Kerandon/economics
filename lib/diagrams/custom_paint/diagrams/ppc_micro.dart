@@ -50,25 +50,21 @@ class PPCMicro extends BaseDiagramPainter {
           c,
           canvas,
           pos: Offset(0.20, 0.80),
-          label: DiagramLabel.a.label,
         );
         paintDot(
           c,
           canvas,
           pos: Offset(0.39, 0.35),
-          label: DiagramLabel.b.label,
         );
         paintDot(
           c,
           canvas,
           pos: Offset(0.71, 0.70),
-          label: DiagramLabel.c.label,
         );
         paintDot(
           c,
           canvas,
           pos: Offset(0.80, 0.30),
-          label: DiagramLabel.c.label,
         );
       }
 
@@ -115,31 +111,31 @@ class PPCMicro extends BaseDiagramPainter {
           c,
           canvas,
           pos: Offset(0.0, 0.20),
-          label: DiagramLabel.a.label,
+
         );
         paintDot(
           c,
           canvas,
           pos: Offset(0.46, 0.40),
-          label: DiagramLabel.b.label,
+
         );
         paintDot(
           c,
           canvas,
           pos: Offset(0.65, 0.60),
-          label: DiagramLabel.c.label,
+
         );
         paintDot(
           c,
           canvas,
           pos: Offset(0.75, 0.80),
-          label: DiagramLabel.d.label,
+
         );
         paintDot(
           c,
           canvas,
           pos: Offset(0.80, 1.00),
-          label: DiagramLabel.e.label,
+
         );
       }
     }
@@ -192,11 +188,11 @@ class PPCMicro extends BaseDiagramPainter {
         hideXLine: true,
         xLabel: '120',
       );
-      paintDot(c, canvas, pos: Offset(0.0, 0.20), label: DiagramLabel.a.label);
-      paintDot(c, canvas, pos: Offset(0.20, 0.40), label: DiagramLabel.b.label);
-      paintDot(c, canvas, pos: Offset(0.40, 0.60), label: DiagramLabel.c.label);
-      paintDot(c, canvas, pos: Offset(0.60, 0.80), label: DiagramLabel.d.label);
-      paintDot(c, canvas, pos: Offset(0.80, 1.00), label: DiagramLabel.e.label);
+      // paintDot(c, canvas, pos: Offset(0.0, 0.20), label: DiagramLabel.a.label);
+      // paintDot(c, canvas, pos: Offset(0.20, 0.40), label: DiagramLabel.b.label);
+      // paintDot(c, canvas, pos: Offset(0.40, 0.60), label: DiagramLabel.c.label);
+      // paintDot(c, canvas, pos: Offset(0.60, 0.80), label: DiagramLabel.d.label);
+      // paintDot(c, canvas, pos: Offset(0.80, 1.00), label: DiagramLabel.e.label);
     }
     bool increaseInPotential = true;
     if (model.subtype == DiagramSubtype.decreaseInProductionPotential) {
@@ -211,8 +207,8 @@ class PPCMicro extends BaseDiagramPainter {
           ? DiagramLabel.pPC2.label
           : DiagramLabel.pPC1.label;
 
-      paintDot(c, canvas, pos: Offset(0.59, 0.70), label: label1);
-      paintDot(c, canvas, pos: Offset(0.74, 0.50), label: label2);
+      // paintDot(c, canvas, pos: Offset(0.59, 0.70), label: label1);
+      // paintDot(c, canvas, pos: Offset(0.74, 0.50), label: label2);
 
       paintDiagramLines(
         c,
@@ -256,10 +252,11 @@ class PPCMicro extends BaseDiagramPainter {
         c,
         canvas,
         pos: Offset(0.20, 0.70),
-        label: DiagramLabel.a.label,
-        labelAlign: LabelAlign.centerLeft,
+        // label: DiagramLabel.a.label,
+        // labelAlign: LabelAlign.centerLeft,
       );
-      paintDot(c, canvas, pos: Offset(0.40, 0.60), label: DiagramLabel.b.label);
+      paintDot(c, canvas, pos: Offset(0.40, 0.60),
+      );
       paintDiagramLines(
         c,
         canvas,
