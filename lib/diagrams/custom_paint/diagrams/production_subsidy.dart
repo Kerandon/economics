@@ -16,7 +16,7 @@ import '../shade/paint_shading.dart';
 class ProductionSubsidy extends BaseDiagramPainter2 {
   ProductionSubsidy(
     super.config,
-    super.diagramBundleEnum, {
+    super.bundle, {
     super.legendDisplay,
   });
 
@@ -87,7 +87,7 @@ class ProductionSubsidy extends BaseDiagramPainter2 {
       label2: DiagramLabel.sW.label,
       label2Align: LabelAlign.centerRight,
     );
-    if (diagramBundleEnum == DiagramBundleEnum.globalProductionSubsidyWelfare) {
+    if (bundle == DiagramBundleEnum.globalProductionSubsidyWelfare) {
       _paintWelfareLoss(canvas, size);
       _paintConsumerSurplus(canvas, size);
       _paintProducerSurplus(canvas, size);
@@ -97,14 +97,14 @@ class ProductionSubsidy extends BaseDiagramPainter2 {
         LegendEntry.fromShade(ShadeType.welfareLoss),
       ]);
     }
-    if (diagramBundleEnum ==
+    if (bundle ==
         DiagramBundleEnum.globalProductionSubsidyConsumerSurplus) {
       _paintConsumerSurplus(canvas, size);
       paintLegend(canvas, size, [
         LegendEntry.fromShade(ShadeType.consumerSurplus),
       ]);
     }
-    if (diagramBundleEnum ==
+    if (bundle ==
         DiagramBundleEnum.globalProductionSubsidyProducerSurplusChange) {
       _originalProducerSurplus(canvas, size);
       paintShading(canvas, size, ShadeType.gainedProducerSurplus, [

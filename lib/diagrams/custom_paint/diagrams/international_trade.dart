@@ -11,7 +11,7 @@ import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 import '../painter_methods/shortcut_methods/paint_supply.dart';
 
 class InternationalTrade extends BaseDiagramPainter2 {
-  InternationalTrade(super.config, super.diagramBundleEnum);
+  InternationalTrade(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -23,7 +23,7 @@ class InternationalTrade extends BaseDiagramPainter2 {
       yAxisLabel: DiagramLabel.price.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
-    if (diagramBundleEnum == DiagramBundleEnum.globalWorldPriceStandAlone) {
+    if (bundle == DiagramBundleEnum.globalWorldPriceStandAlone) {
       paintTitle(c, canvas, 'World Market');
       paintDiagramDashedLines(
         c,
@@ -35,7 +35,7 @@ class InternationalTrade extends BaseDiagramPainter2 {
       );
       paintSupply(c, canvas, label: DiagramLabel.sW.label);
     }
-    if (diagramBundleEnum == DiagramBundleEnum.globalWorldPrice) {
+    if (bundle == DiagramBundleEnum.globalWorldPrice) {
       paintTitle(c, canvas, 'World Market');
       paintDiagramDashedLines(
         c,
@@ -47,7 +47,7 @@ class InternationalTrade extends BaseDiagramPainter2 {
       );
       paintSupply(c, canvas, label: DiagramLabel.sW.label);
     }
-    if (diagramBundleEnum == DiagramBundleEnum.globalNetImporter) {
+    if (bundle == DiagramBundleEnum.globalNetImporter) {
       paintTitle(c, canvas, 'Domestic Market - Importer');
       paintDiagramDashedLines(
         c,
@@ -100,7 +100,7 @@ class InternationalTrade extends BaseDiagramPainter2 {
         label2Align: LabelAlign.centerRight,
       );
     }
-    if (diagramBundleEnum == DiagramBundleEnum.globalNetExporter) {
+    if (bundle == DiagramBundleEnum.globalNetExporter) {
       paintTitle(c, canvas, 'Domestic Market - Exporter');
       paintDiagramDashedLines(
         c,

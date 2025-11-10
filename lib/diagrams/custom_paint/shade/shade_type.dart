@@ -48,7 +48,7 @@ extension Shade on ShadeType {
       case ShadeType.governmentBurden:
         return Colors.grey;
       case ShadeType.governmentRevenue:
-        return Colors.deepPurple;
+        return Colors.deepOrange;
       case ShadeType.gainedRevenue:
         return consumerSurplusColor;
       case ShadeType.welfareLoss:
@@ -72,9 +72,9 @@ extension Shade on ShadeType {
       case ShadeType.noChange: // 🆕 Light grey
         return noChangeColor;
       case ShadeType.lostRevenue:
-return Colors.deepOrange;
+return lostColor;
       case ShadeType.revenueUnchanged:
-        return Colors.grey;
+        return Colors.grey.shade100;
     }
   }
 

@@ -6,11 +6,11 @@ import '../painter_constants.dart';
 Future<void> paintLegendTable(
     Canvas canvas,
     DiagramPainterConfig config, {
-      Offset normalizedTopLeft = const Offset(kAxisIndent * 1.5, 1 - (kAxisIndent * 0.80)),
+      Offset normalizedTopLeft = const Offset(kAxisIndent * 1.5, 1 - (kAxisIndent * 1.1)),
       required List<String> headers,
       required List<List<String>> data,
-      double cellHeight = 28,
-      double headerHeight = 32,
+      double cellHeight = 20,
+      double headerHeight = 20,
       Color? borderColor,
       Color? headerColor,
       TextStyle? headerStyle,

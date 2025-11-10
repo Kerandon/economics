@@ -10,7 +10,9 @@ void paintShading(
   ShadeType shade,
   List<dynamic> pointsAndBeziers, {
   bool striped = true,
-  double stripeSpacing = 4.0,
+  double stripeSpacing = 20.0,
+      double strokeWidth = 16,
+      int alpha = 130,
   bool invertStripes = false, // NEW parameter
 }) {
   final width = size.width;
@@ -56,8 +58,8 @@ void paintShading(
 
     final stripePaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
-      ..color = shade.setShadeColor().withAlpha(150);
+      ..strokeWidth = strokeWidth
+      ..color = shade.setShadeColor().withAlpha(alpha);
 
     if (invertStripes) {
       // Draw stripes from bottom-left to top-right

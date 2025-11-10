@@ -12,7 +12,7 @@ import '../painter_methods/legend/legend_shape.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 
 class ComparativeAdvantage extends BaseDiagramPainter2 {
-  ComparativeAdvantage(super.config, super.diagramBundleEnum);
+  ComparativeAdvantage(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -40,7 +40,7 @@ class ComparativeAdvantage extends BaseDiagramPainter2 {
       LegendEntry(label: 'France', color: franceColor, shape: LegendShape.line),
     ]);
     paintTitle(c, canvas, 'Wine & Cheese Production');
-    if (diagramBundleEnum ==
+    if (bundle ==
         DiagramBundleEnum.globalAbsoluteAdvantageDifferentGoods) {
       paintDiagramLines(
         c,
@@ -57,9 +57,9 @@ class ComparativeAdvantage extends BaseDiagramPainter2 {
         color: spainColor,
       );
     }
-    if (diagramBundleEnum ==
+    if (bundle ==
             DiagramBundleEnum.globalAbsoluteAdvantageBothGoods ||
-        diagramBundleEnum ==
+        bundle ==
             DiagramBundleEnum.globalComparativeAdvantageTradeAndConsumption) {
       paintDiagramLines(
         c,
@@ -76,9 +76,9 @@ class ComparativeAdvantage extends BaseDiagramPainter2 {
         color: spainColor,
       );
     }
-    if (diagramBundleEnum ==
+    if (bundle ==
             DiagramBundleEnum.globalComparativeAdvantageTradeAndConsumption ||
-        diagramBundleEnum ==
+        bundle ==
             DiagramBundleEnum
                 .globalComparativeAdvantageTradeAndConsumptionMixed) {
       paintDiagramLines(
@@ -98,7 +98,7 @@ class ComparativeAdvantage extends BaseDiagramPainter2 {
         curveStyle: CurveStyle.dashed,
       );
 
-      if (diagramBundleEnum ==
+      if (bundle ==
           DiagramBundleEnum
               .globalComparativeAdvantageTradeAndConsumptionMixed) {
         paintDiagramDashedLines(

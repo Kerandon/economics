@@ -14,7 +14,7 @@ import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../shade/paint_shading.dart';
 
 class Tariff extends BaseDiagramPainter2 {
-  Tariff(super.config, super.diagramBundleEnum);
+  Tariff(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -22,15 +22,15 @@ class Tariff extends BaseDiagramPainter2 {
 
     // Example: paint full background if needed
 
-    if (diagramBundleEnum == DiagramBundleEnum.globalTariffConsumerSurplus) {
+    if (bundle == DiagramBundleEnum.globalTariffConsumerSurplus) {
       _paintConsumerSurplus(canvas, size);
     }
-    if (diagramBundleEnum ==
+    if (bundle ==
         DiagramBundleEnum.globalTariffConsumerSurplusChange) {
       _paintConsumerSurplus(canvas, size);
     }
 
-    if (diagramBundleEnum ==
+    if (bundle ==
         DiagramBundleEnum.globalTariffConsumerSurplusChange) {
       paintShading(canvas, size, ShadeType.lostConsumerSurplus, [
         Offset(0, 0.65),
@@ -44,7 +44,7 @@ class Tariff extends BaseDiagramPainter2 {
         LegendEntry.fromShade(ShadeType.lostConsumerSurplus),
       ]);
     }
-    if (diagramBundleEnum ==
+    if (bundle ==
         DiagramBundleEnum.globalTariffProducerSurplusChange) {
       paintShading(canvas, size, ShadeType.gainedProducerSurplus, [
         Offset(0.0, 0.65),
@@ -62,19 +62,19 @@ class Tariff extends BaseDiagramPainter2 {
         LegendEntry.fromShade(ShadeType.gainedProducerSurplus),
       ]);
     }
-    if (diagramBundleEnum == DiagramBundleEnum.globalTariffGovernmentRevenue) {
+    if (bundle == DiagramBundleEnum.globalTariffGovernmentRevenue) {
       _paintGovernmentRevenue(canvas, size);
       paintLegend(canvas, size, [
         LegendEntry.fromShade(ShadeType.governmentRevenue),
       ]);
     }
-    if (diagramBundleEnum == DiagramBundleEnum.globalTariffWelfareLoss) {
+    if (bundle == DiagramBundleEnum.globalTariffWelfareLoss) {
       _paintWelfareLossLeft(canvas, size);
 
       _paintWelfareLossRight(canvas, size);
       paintLegend(canvas, size, [LegendEntry.fromShade(ShadeType.welfareLoss)]);
     }
-    if (diagramBundleEnum == DiagramBundleEnum.globalTariffWelfare) {
+    if (bundle == DiagramBundleEnum.globalTariffWelfare) {
       _paintGovernmentRevenue(canvas, size);
       _paintWelfareLossRight(canvas, size);
       _paintWelfareLossLeft(canvas, size);

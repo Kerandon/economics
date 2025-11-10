@@ -24,15 +24,15 @@ abstract class BaseDiagramPainter2 extends CustomPainter
     with DiagramIdentifierMixin2 {
   final DiagramPainterConfig config;
   @override
-  final DiagramBundleEnum diagramBundleEnum;
+  final DiagramBundleEnum bundle;
   @override
   final LegendDisplay legendDisplay;
 
   BaseDiagramPainter2(
     this.config,
-    this.diagramBundleEnum, {
+    this.bundle, {
     LegendDisplay? legendDisplay, // optional param
-  }) : legendDisplay = legendDisplay ?? diagramBundleEnum.defaultLegendDisplay;
+  }) : legendDisplay = legendDisplay ?? bundle.defaultLegendDisplay;
 
   @override
   bool shouldRepaint(covariant BaseDiagramPainter2 oldDelegate) => true;

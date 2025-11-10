@@ -14,7 +14,7 @@ import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../shade/paint_shading.dart';
 
 class ImportQuota extends BaseDiagramPainter2 {
-  ImportQuota(super.config, super.diagramBundleEnum);
+  ImportQuota(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -91,12 +91,12 @@ class ImportQuota extends BaseDiagramPainter2 {
       label2: DiagramLabel.sWQ.label,
       label2Align: LabelAlign.centerRight,
     );
-    if (diagramBundleEnum == DiagramBundleEnum.globalImportQuotaWelfare) {
+    if (bundle == DiagramBundleEnum.globalImportQuotaWelfare) {
       _paintConsumerSurplus(canvas, size);
       _paintProducerSurplus(canvas, size);
       _paintWelfareLoss(canvas, size);
     }
-    if (diagramBundleEnum ==
+    if (bundle ==
         DiagramBundleEnum.globalImportQuotaConsumerSurplusChange) {
       _paintConsumerSurplus(canvas, size);
       paintShading(canvas, size, ShadeType.lostConsumerSurplus, [
@@ -110,7 +110,7 @@ class ImportQuota extends BaseDiagramPainter2 {
         LegendEntry.fromShade(ShadeType.lostConsumerSurplus),
       ]);
     }
-    if (diagramBundleEnum == DiagramBundleEnum.globalImportQuotaWelfareLoss) {
+    if (bundle == DiagramBundleEnum.globalImportQuotaWelfareLoss) {
       _paintWelfareLoss(canvas, size);
     }
   }

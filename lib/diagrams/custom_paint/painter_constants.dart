@@ -13,18 +13,18 @@ const kExtendBy20 = 0.20;
 
 /// Axis & Labels
 
-const kAxisIndent = 0.18;
+const kAxisIndent = 0.20;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 5.0;
 
 /// Text
-const kFontSmallest = 16.0;
-const kFontSmall = 20.0;
-const kFontMedium = 30.0;
+const kFontSmallest = 14.0;
+const kFontSmall = 16.0;
+const kFontMedium = 26.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
   fontSize: kFontMedium
 );
 
 /// Dot
-const kDotRadius = 18.0;
+const kDotRadius = 12.0;

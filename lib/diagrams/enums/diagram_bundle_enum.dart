@@ -44,20 +44,27 @@ enum DiagramBundleEnum {
   microSubsidy,
   microSubsidyInelasticPED,
   microSubsidyElasticPED,
+  microNegativeProductionExternality,
   microNegativeProductionExternalityWelfare,
-  microNegativeConsumptionExternalityWelfare,
-  microPositiveProductionExternalityWelfare,
-  microPositiveConsumptionExternalityWelfare,
   microNegativeProductionExternalityPigouvianTax,
   microNegativeProductionExternalityRegulations,
+  microCarbonTax,
+  microTradablePollutionPermits,
+  microCommonPoolResources,
+  microNegativeConsumptionExternality,
+  microNegativeConsumptionExternalityWelfare,
   microNegativeConsumptionExternalityPigouvianTax,
   microNegativeConsumptionExternalityPublicAwareness,
-  microCommonPoolResourcesExternality,
-  positiveConsumptionExternalitySubsidy,
-  positiveConsumptionExternalityAdvertising,
-  positiveConsumptionExternalityDirectProvision,
-  positiveProductionExternalitySubsidy,
-  positiveProductionExternalityDirectProvision,
+  microNegativeConsumptionExternalityGovernmentRegulations,
+  microPositiveProductionExternality,
+  microPositiveProductionExternalityWelfare,
+  microPositiveConsumptionExternality,
+  microPositiveConsumptionExternalityWelfare,
+  microPositiveConsumptionExternalitySubsidy,
+  microPositiveConsumptionExternalityAdvertising,
+  microPositiveConsumptionExternalityDirectProvision,
+  microPositiveProductionExternalitySubsidy,
+  microPositiveProductionExternalityDirectProvision,
   globalWorldPrice,
   globalWorldPriceStandAlone,
   globalNetExporter,
@@ -168,6 +175,83 @@ extension DiagramBundleEnumUnit on DiagramBundleEnum {
     DiagramBundleEnum.microTotalAndMarginalProduct => Subunit.supply,
     DiagramBundleEnum.microMarginalCost => Subunit.supply,
 
+    DiagramBundleEnum.microDemandElastic => Subunit.elasticityDemand,
+    DiagramBundleEnum.microDemandInelastic => Subunit.elasticityDemand,
+    DiagramBundleEnum.microDemandUnitElastic => Subunit.elasticityDemand,
+    DiagramBundleEnum.microDemandPerfectlyElastic => Subunit.elasticityDemand,
+    DiagramBundleEnum.microDemandPerfectlyInelastic => Subunit.elasticityDemand,
+    DiagramBundleEnum.microDemandEngelCurve => Subunit.elasticityDemand,
+    DiagramBundleEnum.microDemandInelasticRevenue => Subunit.elasticityDemand,
+    DiagramBundleEnum.microDemandElasticRevenue => Subunit.elasticityDemand,
+    DiagramBundleEnum.microSupplyElastic => Subunit.elasticitySupply,
+    DiagramBundleEnum.microSupplyInelastic => Subunit.elasticitySupply,
+    DiagramBundleEnum.microSupplyUnitElastic => Subunit.elasticitySupply,
+    DiagramBundleEnum.microSupplyPerfectlyElastic => Subunit.elasticitySupply,
+    DiagramBundleEnum.microSupplyPerfectlyInelastic => Subunit.elasticitySupply,
+    DiagramBundleEnum.microDemandElasticityRevenueChange =>
+      Subunit.elasticityDemand,
+    DiagramBundleEnum.microDemandElasticityChange => Subunit.elasticityDemand,
+    DiagramBundleEnum.microSupplyPrimaryCommodities => Subunit.elasticitySupply,
+    DiagramBundleEnum.microPriceCeiling => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microPriceFloor => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microNationalMinimumWage => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microNationalMinimumWageWelfare =>
+      Subunit.roleOfGovernment,
+    DiagramBundleEnum.microNationalMinimumWageInelasticDemandAndSupply =>
+      Subunit.roleOfGovernment,
+    DiagramBundleEnum.microAgriculturalPriceFloor => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microIndirectTax => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microSubsidy => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microIndirectTaxInelasticPED => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microIndirectTaxElasticPED => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microSubsidyInelasticPED => Subunit.roleOfGovernment,
+    DiagramBundleEnum.microSubsidyElasticPED => Subunit.roleOfGovernment,
+
+    DiagramBundleEnum.microNegativeProductionExternalityWelfare =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microNegativeConsumptionExternalityWelfare =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microPositiveProductionExternalityWelfare =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microPositiveConsumptionExternalityWelfare =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microNegativeProductionExternalityPigouvianTax =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microNegativeProductionExternalityRegulations =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microNegativeProductionExternality =>
+      Subunit.marketFailureExternalities,
+
+    DiagramBundleEnum.microCarbonTax => Subunit.marketFailureExternalities,
+
+    DiagramBundleEnum.microTradablePollutionPermits =>
+      Subunit.marketFailureExternalities,
+
+    DiagramBundleEnum.microNegativeConsumptionExternality =>
+      Subunit.marketFailureExternalities,
+
+    DiagramBundleEnum.microPositiveProductionExternality =>
+      Subunit.marketFailureExternalities,
+
+    DiagramBundleEnum.microPositiveConsumptionExternality =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microNegativeConsumptionExternalityPigouvianTax =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microNegativeConsumptionExternalityPublicAwareness =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microCommonPoolResources =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microPositiveConsumptionExternalitySubsidy =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microPositiveConsumptionExternalityDirectProvision =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microPositiveProductionExternalitySubsidy =>
+      Subunit.marketFailureExternalities,
+    DiagramBundleEnum.microPositiveProductionExternalityDirectProvision =>
+      Subunit.marketFailureExternalities,
+
     DiagramBundleEnum.globalWorldPrice => Subunit.benefitsTrade,
     DiagramBundleEnum.globalWorldPriceStandAlone => Subunit.benefitsTrade,
     DiagramBundleEnum.globalNetExporter => Subunit.benefitsTrade,
@@ -216,53 +300,8 @@ extension DiagramBundleEnumUnit on DiagramBundleEnum {
       Subunit.typesTradeProtection,
     DiagramBundleEnum.globalProductionSubsidyWelfare =>
       Subunit.typesTradeProtection,
-
-    DiagramBundleEnum.microDemandElastic => Subunit.elasticityDemand,
-    DiagramBundleEnum.microDemandInelastic => Subunit.elasticityDemand,
-    DiagramBundleEnum.microDemandUnitElastic => Subunit.elasticityDemand,
-    DiagramBundleEnum.microDemandPerfectlyElastic => Subunit.elasticityDemand,
-    DiagramBundleEnum.microDemandPerfectlyInelastic => Subunit.elasticityDemand,
-    DiagramBundleEnum.microDemandEngelCurve => Subunit.elasticityDemand,
-    DiagramBundleEnum.microDemandInelasticRevenue => Subunit.elasticityDemand,
-    DiagramBundleEnum.microDemandElasticRevenue => Subunit.elasticityDemand,
-    DiagramBundleEnum.microSupplyElastic => Subunit.elasticitySupply,
-    DiagramBundleEnum.microSupplyInelastic => Subunit.elasticitySupply,
-    DiagramBundleEnum.microSupplyUnitElastic => Subunit.elasticitySupply,
-    DiagramBundleEnum.microSupplyPerfectlyElastic => Subunit.elasticitySupply,
-    DiagramBundleEnum.microSupplyPerfectlyInelastic => Subunit.elasticitySupply,
-    DiagramBundleEnum.microDemandElasticityRevenueChange =>
-      Subunit.elasticityDemand,
-    DiagramBundleEnum.microDemandElasticityChange => Subunit.elasticityDemand,
-    DiagramBundleEnum.microSupplyPrimaryCommodities => Subunit.elasticitySupply,
-    DiagramBundleEnum.microPriceCeiling => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microPriceFloor => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microNationalMinimumWage =>
-      Subunit.roleOfGovernment,
-    DiagramBundleEnum.microNationalMinimumWageWelfare => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microNationalMinimumWageInelasticDemandAndSupply => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microAgriculturalPriceFloor =>
-      Subunit.roleOfGovernment,
-    DiagramBundleEnum.microIndirectTax => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microSubsidy => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microIndirectTaxInelasticPED => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microIndirectTaxElasticPED => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microSubsidyInelasticPED => Subunit.roleOfGovernment,
-    DiagramBundleEnum.microSubsidyElasticPED => Subunit.roleOfGovernment,
-
-    DiagramBundleEnum.microNegativeProductionExternalityWelfare => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.microNegativeConsumptionExternalityWelfare => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.microPositiveProductionExternalityWelfare => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.microPositiveConsumptionExternalityWelfare => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.microNegativeProductionExternalityPigouvianTax => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.microNegativeProductionExternalityRegulations => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.microNegativeConsumptionExternalityPigouvianTax => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.microNegativeConsumptionExternalityPublicAwareness => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.microCommonPoolResourcesExternality => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.positiveConsumptionExternalitySubsidy => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.positiveConsumptionExternalityAdvertising => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.positiveConsumptionExternalityDirectProvision => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.positiveProductionExternalitySubsidy => Subunit.marketFailureExternalities,
-    DiagramBundleEnum.positiveProductionExternalityDirectProvision => Subunit.marketFailureExternalities,
-
+    DiagramBundleEnum
+        .microNegativeConsumptionExternalityGovernmentRegulations =>
+      Subunit.typesTradeProtection,
   };
 }

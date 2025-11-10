@@ -17,14 +17,14 @@ import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 
 class TaxesAndSubsidies extends BaseDiagramPainter2 {
-  TaxesAndSubsidies(super.config, super.diagramBundleEnum);
+  TaxesAndSubsidies(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
     c.painterSize;
 
-    switch (diagramBundleEnum) {
+    switch (bundle) {
       case DiagramBundleEnum.microIndirectTax:
         _paintIndirectTax(c, canvas, size);
       case DiagramBundleEnum.microIndirectTaxInelasticPED:

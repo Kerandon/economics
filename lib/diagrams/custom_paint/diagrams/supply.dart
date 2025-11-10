@@ -7,6 +7,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legen
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_shape.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
@@ -29,109 +30,88 @@ import 'package:flutter/material.dart';
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 
 class Supply extends BaseDiagramPainter2 {
-  Supply(super.config, super.diagramBundleEnum);
+  Supply(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
+
+    String yLabel = DiagramLabel.price.label;
+    String xLabel = DiagramLabel.quantity.label;
+    if(bundle == DiagramBundleEnum.microMarginalProduct || bundle== DiagramBundleEnum.microTotalAndMarginalProduct){
+      yLabel = DiagramLabel.product.label;
+      xLabel = DiagramLabel.input.label;
+    }
+    if(bundle == DiagramBundleEnum.microMarginalCost){
+      yLabel = DiagramLabel.costs.label;
+      xLabel = DiagramLabel.quantity.label;
+    }
+
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: yLabel,
+      xAxisLabel: xLabel,
+    );
     // Supply extension/contraction (movement along the curve)
-    if (diagramBundleEnum == DiagramBundleEnum.microSupplyExtension ||
-        diagramBundleEnum == DiagramBundleEnum.microSupplyContraction) {
+    if (bundle == DiagramBundleEnum.microSupplyExtension ||
+        bundle == DiagramBundleEnum.microSupplyContraction) {
       paintMarketCurve(c, canvas, type: MarketCurveType.supply);
-      paintAxis(
-        c,
-        canvas,
-        yAxisLabel: DiagramLabel.price$.label,
-        xAxisLabel: DiagramLabel.quantityOfChocolateBars.label,
-      );
+
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.40,
         xAxisEndPos: 0.60,
-        yLabel: '\$12',
-        xLabel: '24',
+        yLabel: DiagramLabel.p2.label,
+        xLabel: DiagramLabel.q2.label,
+        showDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.60,
         xAxisEndPos: 0.40,
-        yLabel: '\$8',
-        xLabel: '16',
+        yLabel: DiagramLabel.p1.label,
+        xLabel: DiagramLabel.q1.label,
+        showDotAtIntersection: true,
       );
-      if (diagramBundleEnum == DiagramBundleEnum.microSupplyExtension) {
-        paintArrowHelper(c, canvas, origin: Offset(0.40, 0.50), angle: -pi / 4);
+      if (bundle == DiagramBundleEnum.microSupplyExtension) {
+        paintLineSegment(c, canvas, origin: Offset(0.42, 0.51), angle: -pi / 4, length: 0.15);
       }
-      if (diagramBundleEnum == DiagramBundleEnum.microSupplyContraction) {
-        paintArrowHelper(
-          c,
-          canvas,
-          origin: Offset(0.40, 0.50),
-          angle: pi * 2.75,
-        );
+      if (bundle == DiagramBundleEnum.microSupplyContraction) {
+        paintLineSegment(c, canvas, origin: Offset(0.44, 0.48), angle: pi / 1.35, length: 0.15);
       }
     }
 
     // Supply increase (rightward shift)
-    if (diagramBundleEnum == DiagramBundleEnum.microSupplyIncrease) {
-      paintAxis(
-        c,
-        canvas,
-        yAxisLabel: DiagramLabel.p.label,
-        xAxisLabel: DiagramLabel.q.label,
-      );
+    if (bundle == DiagramBundleEnum.microSupplyIncrease) {
 
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.50,
-        xAxisEndPos: 0.50,
-        yLabel: DiagramLabel.p.label,
-        xLabel: DiagramLabel.q1.label,
-        hideYLine: true,
-      );
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.50,
-        xAxisEndPos: 0.70,
-        yLabel: DiagramLabel.p.label,
-        xLabel: DiagramLabel.q2.label,
-      );
+
       paintMarketCurve(
         c,
         canvas,
         type: MarketCurveType.supply,
-        label: DiagramLabel.s1.label,
+        label: DiagramLabel.s1.label, horizontalShift: -0.10
       );
       paintMarketCurve(
         c,
         canvas,
         type: MarketCurveType.supply,
         label: DiagramLabel.s2.label,
-        horizontalShift: 0.20,
+        horizontalShift: 0.10,
       );
-      paintArrowHelper(c, canvas, origin: Offset(0.69, 0.40), angle: pi * 2);
-    }
-
-    // Supply decrease (leftward shift)
-    if (diagramBundleEnum == DiagramBundleEnum.microSupplyDecrease) {
-      paintAxis(
-        c,
-        canvas,
-        yAxisLabel: DiagramLabel.p.label,
-        xAxisLabel: DiagramLabel.q.label,
-      );
+      paintLineSegment(c, canvas, origin: Offset(0.58, 0.40), angle: pi * 2);
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.50,
         xAxisEndPos: 0.40,
         yLabel: DiagramLabel.p.label,
-        xLabel: DiagramLabel.q2.label,
+        xLabel: DiagramLabel.q1.label,
         hideYLine: true,
+        showDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -139,8 +119,14 @@ class Supply extends BaseDiagramPainter2 {
         yAxisStartPos: 0.50,
         xAxisEndPos: 0.60,
         yLabel: DiagramLabel.p.label,
-        xLabel: DiagramLabel.q1.label,
+        xLabel: DiagramLabel.q2.label,
+        showDotAtIntersection: true,
       );
+    }
+
+    // Supply decrease (leftward shift)
+    if (bundle == DiagramBundleEnum.microSupplyDecrease) {
+
       paintMarketCurve(
         c,
         canvas,
@@ -155,21 +141,32 @@ class Supply extends BaseDiagramPainter2 {
         label: DiagramLabel.s2.label,
         horizontalShift: -0.10,
       );
-      paintArrowHelper(c, canvas, origin: Offset(0.60, 0.40), angle: pi / 1);
-    }
-    if (diagramBundleEnum == DiagramBundleEnum.microMarginalProduct ||
-        diagramBundleEnum == DiagramBundleEnum.microTotalAndMarginalProduct) {
-      final labelSize = kFontMedium / 1.8;
-      final labelYPos = 0.05;
-      paintAxis(
+      paintDiagramDashedLines(
         c,
         canvas,
-        xAxisLabel: DiagramLabel.input.label,
-
-        yAxisLabel: DiagramLabel.product.label,
+        yAxisStartPos: 0.50,
+        xAxisEndPos: 0.40,
+        yLabel: DiagramLabel.p.label,
+        xLabel: DiagramLabel.q2.label,
+        hideYLine: true,
+        showDotAtIntersection: true,
       );
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.50,
+        xAxisEndPos: 0.60,
+        yLabel: DiagramLabel.p.label,
+        xLabel: DiagramLabel.q1.label,
+        showDotAtIntersection: true,
+      );
+      paintLineSegment(c, canvas, origin: Offset(0.61, 0.40), angle: pi / 1);
+    }
+    if (bundle == DiagramBundleEnum.microMarginalProduct ||
+        bundle == DiagramBundleEnum.microTotalAndMarginalProduct) {
+      final labelYPos = 0.05;
 
-      if (diagramBundleEnum == DiagramBundleEnum.microTotalAndMarginalProduct) {
+      if (bundle == DiagramBundleEnum.microTotalAndMarginalProduct) {
         paintDiagramLines(
           c,
           canvas,
@@ -180,7 +177,7 @@ class Supply extends BaseDiagramPainter2 {
               control: Offset(0.21, 0.15),
             ),
             CustomBezier(
-              endPoint: Offset(0.83, 0.27),
+              endPoint: Offset(0.83, 0.23),
               control: Offset(0.78, 0.19),
             ),
           ],
@@ -225,34 +222,31 @@ class Supply extends BaseDiagramPainter2 {
         paintText2(
           c,
           canvas,
-          DiagramLabel.increasingReturns.label,
-          Offset(0.28, labelYPos),
-          fontSize: labelSize,
+          'Increasing\nReturns',
+          Offset(0.15, labelYPos),
         );
         paintText2(
           c,
           canvas,
-          DiagramLabel.diminishingReturns.label,
-          Offset(0.60, labelYPos),
-          fontSize: labelSize,
+          'Diminishing\nReturns',
+          Offset(0.52, labelYPos),
         );
         paintText2(
           c,
           canvas,
-          DiagramLabel.negativeReturns.label,
+          'Negative\nReturns',
           Offset(0.90, labelYPos),
-          fontSize: labelSize,
         );
       }
-      if (diagramBundleEnum == DiagramBundleEnum.microMarginalProduct) {
+      if (bundle == DiagramBundleEnum.microMarginalProduct) {
         paintDiagramLines(
           c,
           canvas,
           startPos: Offset(0.05, 0.95),
           bezierPoints: [
             CustomBezier(
-              endPoint: Offset(0.80, 0.60),
-              control: Offset(0.38, -0.5),
+              endPoint: Offset(0.80, 0.50),
+              control: Offset(0.34, -0.43),
             ),
           ],
           label2: DiagramLabel.marginalProduct.label,
@@ -269,27 +263,25 @@ class Supply extends BaseDiagramPainter2 {
           c,
           canvas,
           DiagramLabel.increasingReturns.label,
-          Offset(0.30, labelYPos),
-          fontSize: labelSize,
+          Offset(0.22, labelYPos),
         );
         paintText2(
           c,
           canvas,
           DiagramLabel.diminishingReturns.label,
-          Offset(0.80, labelYPos),
-          fontSize: labelSize,
+          Offset(0.68, labelYPos),
         );
         paintLegend(canvas, size, [
           LegendEntry(
             label: DiagramLabel.diminishingReturnsSetIn.label,
-            color: Colors.red,
+            color: Colors.black,
             shape: LegendShape.circle,
           ),
         ]);
-        paintDot(c, canvas, pos: Offset(0.52, 0.11), color: Colors.red);
+        paintDot(c, canvas, pos: Offset(0.53, 0.11), color: Colors.black);
       }
     }
-    if (diagramBundleEnum == DiagramBundleEnum.microMarginalCost) {
+    if (bundle == DiagramBundleEnum.microMarginalCost) {
       paintAxis(
         c,
         canvas,
@@ -309,6 +301,9 @@ class Supply extends BaseDiagramPainter2 {
         ],
         label2: DiagramLabel.marginalCost.label,
         label2Align: LabelAlign.centerTop,
+      );
+      paintDiagramDashedLines(c, canvas, yAxisStartPos: 0, xAxisEndPos: 0.39, hideYLine: true,
+      xLabel: 'Diminishing\nReturns\nSets In'
       );
     }
   }

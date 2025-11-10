@@ -27,21 +27,21 @@ class DiagramBundleWidgetWeb extends StatelessWidget {
 
     return Container(
       // The GlobalKey is associated via super.key
-      padding: const EdgeInsets.symmetric(vertical: 32.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
             child: Text(
               bundle.title ?? bundle.diagramBundleEnum?.toText ?? '',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 2),
           // --- Side-by-Side Layout for Bundles with 2 Diagrams ---
           if (bundle.basePainterDiagrams.length == 2)
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(2.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: bundle.basePainterDiagrams
@@ -61,11 +61,11 @@ class DiagramBundleWidgetWeb extends StatelessWidget {
           // --- Wrapped Layout for other Bundles (1, 3, 4, etc.) ---
           else
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(2.0),
               child: Wrap(
                 alignment: WrapAlignment.center,
-                spacing: 16,
-                runSpacing: 16,
+                spacing: 2,
+                runSpacing: 2,
                 children: bundle.basePainterDiagrams
                     .map(
                       (d) => SizedBox(

@@ -18,13 +18,13 @@ void paintMarketCurve(
     }) {
   // Base start/end depending on curve type
   final baseStart = switch (type) {
-    MarketCurveType.demand => const Offset(0.10, 0.10),
-    MarketCurveType.supply => const Offset(0.10, 0.90),
+    MarketCurveType.demand => const Offset(0.15, 0.15),
+    MarketCurveType.supply => const Offset(0.15, 0.85),
   };
 
   final baseEnd = switch (type) {
-    MarketCurveType.demand => const Offset(0.90, 0.90),
-    MarketCurveType.supply => const Offset(0.90, 0.10),
+    MarketCurveType.demand => const Offset(0.85, 0.85),
+    MarketCurveType.supply => const Offset(0.85, 0.15),
   };
 
   // Compute adjusted start and end (shorten or extend evenly)

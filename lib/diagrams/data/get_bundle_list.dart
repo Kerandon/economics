@@ -74,10 +74,14 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
     Elasticities(config, DiagramBundleEnum.microDemandPerfectlyInelastic),
   ]),
   DiagramBundle(
-    title: 'PED and Firm Revenue',
     DiagramBundleEnum.microDemandElasticRevenue,
     [
       Elasticities(config, DiagramBundleEnum.microDemandElasticRevenue),
+    ],
+  ),
+  DiagramBundle(
+    DiagramBundleEnum.microDemandInelasticRevenue,
+    [
       Elasticities(config, DiagramBundleEnum.microDemandInelasticRevenue),
     ],
   ),
@@ -145,24 +149,36 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   ]),
 
   /// 2.8 Market failure—externalities and common pool or common access resources
+  /// Negative Production Externality
+  DiagramBundle(DiagramBundleEnum.microNegativeProductionExternality, [
+      Externalities(config, DiagramBundleEnum.microNegativeProductionExternality),
+    ]),
   DiagramBundle(DiagramBundleEnum.microNegativeProductionExternalityWelfare, [
     Externalities(config, DiagramBundleEnum.microNegativeProductionExternalityWelfare),
   ]),
-  DiagramBundle(DiagramBundleEnum.microNegativeConsumptionExternalityWelfare, [
-    Externalities(config, DiagramBundleEnum.microNegativeConsumptionExternalityWelfare),
-  ]),
-  DiagramBundle(DiagramBundleEnum.microPositiveConsumptionExternalityWelfare, [
-    Externalities(config, DiagramBundleEnum.microPositiveConsumptionExternalityWelfare),
-  ]),
-  DiagramBundle(DiagramBundleEnum.microPositiveProductionExternalityWelfare, [
-    Externalities(config, DiagramBundleEnum.microPositiveProductionExternalityWelfare),
-  ]),
-
   DiagramBundle(DiagramBundleEnum.microNegativeProductionExternalityPigouvianTax, [
     Externalities(config, DiagramBundleEnum.microNegativeProductionExternalityPigouvianTax),
   ]),
   DiagramBundle(DiagramBundleEnum.microNegativeProductionExternalityRegulations, [
     Externalities(config, DiagramBundleEnum.microNegativeProductionExternalityRegulations),
+  ]),
+
+  DiagramBundle(DiagramBundleEnum.microCommonPoolResources, [
+    Externalities(config, DiagramBundleEnum.microCommonPoolResources),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microCarbonTax, [
+    Externalities(config, DiagramBundleEnum.microCarbonTax),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microTradablePollutionPermits, [
+    Externalities(config, DiagramBundleEnum.microTradablePollutionPermits),
+  ]),
+
+  /// Negative Consumption
+  DiagramBundle(DiagramBundleEnum.microNegativeConsumptionExternality, [
+    Externalities(config, DiagramBundleEnum.microNegativeConsumptionExternality),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microNegativeConsumptionExternalityWelfare, [
+    Externalities(config, DiagramBundleEnum.microNegativeConsumptionExternalityWelfare),
   ]),
   DiagramBundle(DiagramBundleEnum.microNegativeConsumptionExternalityPigouvianTax, [
     Externalities(config, DiagramBundleEnum.microNegativeConsumptionExternalityPigouvianTax),
@@ -170,24 +186,39 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   DiagramBundle(DiagramBundleEnum.microNegativeConsumptionExternalityPublicAwareness, [
     Externalities(config, DiagramBundleEnum.microNegativeConsumptionExternalityPublicAwareness),
   ]),
-  DiagramBundle(DiagramBundleEnum.microCommonPoolResourcesExternality, [
-    Externalities(config, DiagramBundleEnum.microCommonPoolResourcesExternality),
+  /// Positive Production Externality
+  DiagramBundle(DiagramBundleEnum.microPositiveProductionExternality, [
+    Externalities(config, DiagramBundleEnum.microPositiveProductionExternality),
   ]),
-  DiagramBundle(DiagramBundleEnum.positiveConsumptionExternalitySubsidy, [
-    Externalities(config, DiagramBundleEnum.positiveConsumptionExternalitySubsidy),
+
+  DiagramBundle(DiagramBundleEnum.microPositiveProductionExternalityWelfare, [
+    Externalities(config, DiagramBundleEnum.microPositiveProductionExternalityWelfare),
   ]),
-  DiagramBundle(DiagramBundleEnum.positiveConsumptionExternalityAdvertising, [
-    Externalities(config, DiagramBundleEnum.positiveConsumptionExternalityAdvertising),
+
+  DiagramBundle(DiagramBundleEnum.microPositiveProductionExternalitySubsidy, [
+    Externalities(config, DiagramBundleEnum.microPositiveProductionExternalitySubsidy),
   ]),
-  DiagramBundle(DiagramBundleEnum.positiveConsumptionExternalityDirectProvision, [
-    Externalities(config, DiagramBundleEnum.positiveConsumptionExternalityDirectProvision),
+  DiagramBundle(DiagramBundleEnum.microPositiveProductionExternalityDirectProvision, [
+    Externalities(config, DiagramBundleEnum.microPositiveProductionExternalityDirectProvision),
   ]),
-  DiagramBundle(DiagramBundleEnum.positiveProductionExternalitySubsidy, [
-    Externalities(config, DiagramBundleEnum.positiveProductionExternalitySubsidy),
+/// Positive Consumption Externality
+  DiagramBundle(DiagramBundleEnum.microPositiveConsumptionExternality, [
+    Externalities(config, DiagramBundleEnum.microPositiveConsumptionExternality),
   ]),
-  DiagramBundle(DiagramBundleEnum.positiveProductionExternalityDirectProvision, [
-    Externalities(config, DiagramBundleEnum.positiveProductionExternalityDirectProvision),
+  DiagramBundle(DiagramBundleEnum.microPositiveConsumptionExternalityWelfare, [
+    Externalities(config, DiagramBundleEnum.microPositiveConsumptionExternalityWelfare),
   ]),
+  DiagramBundle(DiagramBundleEnum.microPositiveConsumptionExternalitySubsidy, [
+    Externalities(config, DiagramBundleEnum.microPositiveConsumptionExternalitySubsidy),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising, [
+    Externalities(config, DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microPositiveConsumptionExternalityDirectProvision, [
+    Externalities(config, DiagramBundleEnum.microPositiveConsumptionExternalityDirectProvision),
+  ]),
+
+
 
   /// 4.1 Benefits of International Trade
   DiagramBundle(DiagramBundleEnum.globalWorldPriceStandAlone, [

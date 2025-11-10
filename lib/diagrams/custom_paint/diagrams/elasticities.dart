@@ -4,6 +4,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_line
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
@@ -21,7 +22,7 @@ import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'dart:math' as math;
 
 class Elasticities extends BaseDiagramPainter2 {
-  Elasticities(super.config, super.diagramBundleEnum);
+  Elasticities(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -29,9 +30,9 @@ class Elasticities extends BaseDiagramPainter2 {
 
     String yLabel = DiagramLabel.price.label;
 
-    if (diagramBundleEnum == DiagramBundleEnum.microDemandEngelCurve) {
+    if (bundle == DiagramBundleEnum.microDemandEngelCurve) {
       yLabel = DiagramLabel.income.label;
-    } else if (diagramBundleEnum ==
+    } else if (bundle ==
         DiagramBundleEnum.microDemandElasticityRevenueChange) {
       yLabel = DiagramLabel.revenue.label;
     }
@@ -43,7 +44,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisLabel: DiagramLabel.quantity.label,
     );
 
-    switch (diagramBundleEnum) {
+    switch (bundle) {
       case DiagramBundleEnum.microDemandElastic ||
           DiagramBundleEnum.microDemandElasticRevenue:
         _paintElastic(c, canvas, size);
@@ -92,7 +93,6 @@ class Elasticities extends BaseDiagramPainter2 {
   }
 
   void _paintElastic(DiagramPainterConfig c, Canvas canvas, Size size) {
-    paintTitle(c, canvas, 'Price Elastic Demand');
     paintMarketCurve(
       c,
       canvas,
@@ -107,6 +107,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.36,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -116,22 +117,24 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.74,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
+      showDotAtIntersection: true,
     );
 
-    paintArrowHelper(
+    paintLineSegment(
       c,
       canvas,
       origin: const Offset(0.54, 1.10),
       angle: math.pi * 2,
+      length: 0.30,
     );
-    paintArrowHelper(
+    paintLineSegment(
       c,
       canvas,
       origin: const Offset(-0.1, 0.51),
       angle: math.pi / 2,
     );
-    if (diagramBundleEnum == DiagramBundleEnum.microDemandElasticRevenue) {
-      paintShading(canvas, size, ShadeType.loss, [
+    if (bundle == DiagramBundleEnum.microDemandElasticRevenue) {
+      paintShading(canvas, size, ShadeType.lostRevenue, [
         Offset(0.00, 0.45),
         Offset(0.36, 0.45),
         Offset(0.36, 0.60),
@@ -143,25 +146,15 @@ class Elasticities extends BaseDiagramPainter2 {
         Offset(0.74, 1.0),
         Offset(0.36, 1.0),
       ]);
-      paintText2(c, canvas, DiagramLabel.a.label, Offset(0.18, 0.80));
-      paintText2(c, canvas, DiagramLabel.b.label, Offset(0.18, 0.52));
-      paintText2(c, canvas, DiagramLabel.c.label, Offset(0.55, 0.80));
 
       paintLegend(canvas, size, [
-        LegendEntry(
-          label:
-              '${DiagramLabel.a.label} ${DiagramLabel.revenueUnchanged.label}',
-          color: Colors.grey,
-        ),
-        LegendEntry(
-          label: '${DiagramLabel.b.label} Revenue Loss',
-          color: Colors.red,
-        ),
-        LegendEntry(
-          label: '${DiagramLabel.c.label} Revenue Gain',
-          color: Colors.green,
-        ),
+        LegendEntry.fromShade(ShadeType.lostRevenue, customLabel: ' A Loss'),
+        LegendEntry.fromShade(ShadeType.revenueUnchanged, customLabel: ' B Unchanged'),
+        LegendEntry.fromShade(ShadeType.gainedRevenue, customLabel: ' C Gain'),
       ]);
+      paintText2(c, canvas, DiagramLabel.b.label, Offset(0.15, 0.80));
+      paintText2(c, canvas, DiagramLabel.a.label, Offset(0.15, 0.52));
+      paintText2(c, canvas, DiagramLabel.c.label, Offset(0.55, 0.80));
     }
   }
 
@@ -180,6 +173,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.475,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -189,22 +183,23 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.54,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
+      showDotAtIntersection: true,
     );
 
-    paintArrowHelper(
+    paintLineSegment(
       c,
       canvas,
       origin: const Offset(0.52, 1.10),
       angle: math.pi,
+      length: 0.050
     );
-    paintArrowHelper(
+    paintLineSegment(
       c,
       canvas,
       origin: const Offset(-0.1, 0.53),
       angle: -math.pi / 2,
     );
-    if (diagramBundleEnum == DiagramBundleEnum.microDemandInelasticRevenue) {
-      paintTitle(c, canvas, 'Price Inelastic Demand');
+    if (bundle == DiagramBundleEnum.microDemandInelasticRevenue) {
       paintShading(canvas, size, ShadeType.gainedRevenue, [
         Offset(0.00, 0.45),
         Offset(0.48, 0.45),
@@ -245,7 +240,7 @@ class Elasticities extends BaseDiagramPainter2 {
       canvas,
       startPos: Offset(0.10, 0.10),
       bezierPoints: [
-        CustomBezier(endPoint: Offset(0.90, 0.90), control: Offset(0.10, 0.90)),
+        CustomBezier(endPoint: Offset(0.90, 0.90), control: Offset(0.09, 0.90)),
       ],
       label2: DiagramLabel.d.label,
       label2Align: LabelAlign.centerRight,
@@ -255,9 +250,10 @@ class Elasticities extends BaseDiagramPainter2 {
       c,
       canvas,
       yAxisStartPos: 0.50,
-      xAxisEndPos: 0.17,
+      xAxisEndPos: 0.16,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -267,19 +263,24 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.35,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
+      showDotAtIntersection: true,
     );
 
-    paintArrowHelper(
+    paintLineSegment(
       c,
       canvas,
       origin: const Offset(0.25, 1.10),
       angle: math.pi * 2,
+      length:
+        0.15
     );
-    paintArrowHelper(
+    paintLineSegment(
       c,
       canvas,
       origin: const Offset(-0.1, 0.62),
       angle: math.pi / 2,
+        length:
+        0.15
     );
   }
 
@@ -289,7 +290,7 @@ class Elasticities extends BaseDiagramPainter2 {
       canvas,
       yAxisStartPos: 0.40,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.p1.label,
+      yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q.label,
     );
     paintDiagramDashedLines(
@@ -297,7 +298,7 @@ class Elasticities extends BaseDiagramPainter2 {
       canvas,
       yAxisStartPos: 0.60,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.p2.label,
+      yLabel: DiagramLabel.p1.label,
       hideXLine: true,
     );
     paintDiagramLines(
@@ -307,6 +308,14 @@ class Elasticities extends BaseDiagramPainter2 {
       polylineOffsets: [Offset(0.50, 0.10)],
       label2: DiagramLabel.d.label,
       label2Align: LabelAlign.centerTop,
+    );
+    paintLineSegment(
+        c,
+        canvas,
+        origin: const Offset(-0.1, 0.51),
+        angle: -math.pi / 2,
+        length:
+        0.15
     );
   }
 
@@ -327,7 +336,61 @@ class Elasticities extends BaseDiagramPainter2 {
       label2Align: LabelAlign.centerRight,
     );
   }
-
+  void _paintMicroDemandRevenueChange(DiagramPainterConfig c, Canvas canvas) {
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0, 1),
+      bezierPoints: [
+        CustomBezier(control: Offset(0.50, -0.70), endPoint: Offset(1, 1)),
+      ],
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.36,
+      xAxisEndPos: 0.25,
+      hideYLine: true,
+      xLabel: DiagramLabel.q1.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.36,
+      xAxisEndPos: 0.75,
+      hideYLine: true,
+      xLabel: DiagramLabel.q3.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.16,
+      xAxisEndPos: 0.50,
+      hideYLine: true,
+      xLabel: DiagramLabel.q2.label,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.pedSmaller1.label,
+      Offset(0.20, 0.25),
+      fontSize: kFontSmall,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.pedEqual1.label,
+      Offset(0.50, 0.08),
+      fontSize: kFontSmall,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.pedBigger1.label,
+      Offset(0.80, 0.25),
+      fontSize: kFontSmall,
+    );
+  }
   void _paintMicroDemandElasticityChange(
     DiagramPainterConfig c,
     Canvas canvas,
@@ -401,62 +464,6 @@ class Elasticities extends BaseDiagramPainter2 {
       horizontalPivot: LabelPivot.left,
       fontSize: kFontSmall,
       pointerLine: Offset(0.50, 0.50),
-    );
-  }
-
-  void _paintMicroDemandRevenueChange(DiagramPainterConfig c, Canvas canvas) {
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0, 1),
-      bezierPoints: [
-        CustomBezier(control: Offset(0.50, -0.70), endPoint: Offset(1, 1)),
-      ],
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.36,
-      xAxisEndPos: 0.25,
-      hideYLine: true,
-      xLabel: DiagramLabel.q1.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.36,
-      xAxisEndPos: 0.75,
-      hideYLine: true,
-      xLabel: DiagramLabel.q3.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.16,
-      xAxisEndPos: 0.50,
-      hideYLine: true,
-      xLabel: DiagramLabel.q2.label,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.pedSmaller1.label,
-      Offset(0.20, 0.25),
-      fontSize: kFontSmall,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.pedEqual1.label,
-      Offset(0.50, 0.08),
-      fontSize: kFontSmall,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.pedBigger1.label,
-      Offset(0.80, 0.25),
-      fontSize: kFontSmall,
     );
   }
 
@@ -747,7 +754,6 @@ class Elasticities extends BaseDiagramPainter2 {
     paintText2(c, canvas, DiagramLabel.c.label, Offset(0.51, 0.93));
 paintLegendTable(canvas, config,
     normalizedTopLeft: Offset(kAxisIndent * 2,(1-kAxisIndent * 1.5)),
-    title: 'Revenue',
     headers: ['P1,Q1','P2,Q2'], data: [['A,C', 'A,B']]);
     paintShading(canvas, size, ShadeType.gainedRevenue, [
       Offset(0.00, 0.35),

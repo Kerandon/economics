@@ -17,19 +17,19 @@ import '../painter_methods/paint_legend_table.dart';
 import '../painter_methods/paint_line_segment.dart';
 
 class PriceControls extends BaseDiagramPainter2 {
-  PriceControls(super.config, super.diagramBundleEnum);
+  PriceControls(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    switch (diagramBundleEnum) {
+    switch (bundle) {
       case DiagramBundleEnum.microPriceCeiling:
         _paintPriceCeiling(c, canvas, size);
       case DiagramBundleEnum.microPriceFloor:
         _paintPriceFloor(c, canvas, size);
       case DiagramBundleEnum.microNationalMinimumWage || DiagramBundleEnum.microNationalMinimumWageWelfare:
-        _paintNMW(c, canvas, size, diagramBundleEnum);
+        _paintNMW(c, canvas, size, bundle);
       case DiagramBundleEnum.microNationalMinimumWageInelasticDemandAndSupply:
         _paintNMWInelasticDemand(c, canvas, size);
       case DiagramBundleEnum.microAgriculturalPriceFloor:

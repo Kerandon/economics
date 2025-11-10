@@ -8,6 +8,6 @@ mixin DiagramIdentifierMixin {
 }
 
 mixin DiagramIdentifierMixin2 {
-  DiagramBundleEnum get diagramBundleEnum;
+  DiagramBundleEnum get bundle;
   LegendDisplay get legendDisplay;
 }

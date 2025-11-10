@@ -13,6 +13,7 @@ void paintLegend(
   double spacing = 8.0,
   double textSpacing = 4.0,
   double margin = 20,
+      double yAdjustment = kAxisIndent * 0.85,
   Brightness brightness = Brightness.light,
   LegendAlignment alignment = LegendAlignment.right,
 }) {
@@ -40,8 +41,8 @@ void paintLegend(
     rows.last.add(LegendItem(entry, textPainter.width));
     currentRowWidth += itemWidth + (rows.last.length > 1 ? spacing : 0);
   }
-
-  double currentY = size.height - legendBoxSize - size.height * 0.12;
+/// LEGEND Y POSITION
+  double currentY = size.height - legendBoxSize - (size.height * yAdjustment);
 
   for (final row in rows.reversed) {
     double rowWidth =

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
 import 'package:flutter/material.dart';
@@ -13,61 +14,68 @@ import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 
 class Demand extends BaseDiagramPainter2 {
-  Demand(super.config, super.diagramBundleEnum);
+  Demand(super.config, super.bundle);
 
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
-
-    if (diagramBundleEnum == DiagramBundleEnum.microDemandExtension ||
-        diagramBundleEnum == DiagramBundleEnum.microDemandContraction) {
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: DiagramLabel.price.label,
+      xAxisLabel: DiagramLabel.quantity.label,
+    );
+    if (bundle == DiagramBundleEnum.microDemandExtension ||
+        bundle == DiagramBundleEnum.microDemandContraction) {
       paintMarketCurve(c, canvas, type: MarketCurveType.demand);
-      paintAxis(
-        c,
-        canvas,
-        yAxisLabel: DiagramLabel.price$.label,
-        xAxisLabel: DiagramLabel.quantityOfChocolateBars.label,
-      );
+
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.40,
         xAxisEndPos: 0.40,
-        yLabel: '\$9',
-        xLabel: '8',
+        yLabel: DiagramLabel.p1.label,
+        xLabel: DiagramLabel.q1.label,
+        showDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.60,
         xAxisEndPos: 0.60,
-        yLabel: '\$7',
-        xLabel: '10',
+        yLabel: DiagramLabel.p2.label,
+        xLabel: DiagramLabel.q2.label,
+        showDotAtIntersection: true,
       );
-      if (diagramBundleEnum == DiagramBundleEnum.microDemandExtension) {
-        paintArrowHelper(c, canvas, origin: Offset(0.55, 0.45), angle: pi / 4);
+      if (bundle == DiagramBundleEnum.microDemandExtension) {
+        paintLineSegment(c, canvas, origin: Offset(0.52,0.46), angle: pi / 4, length: 0.20);
       }
-      if (diagramBundleEnum == DiagramBundleEnum.microDemandContraction) {
-        paintArrowHelper(
+      if (bundle == DiagramBundleEnum.microDemandContraction) {
+        paintLineSegment(
           c,
           canvas,
-          origin: Offset(0.55, 0.45),
+          origin: Offset(0.53, 0.47),
           angle: pi * 3.25,
+            length: 0.20
         );
       }
     }
-    if (diagramBundleEnum == DiagramBundleEnum.microDemandIncrease) {
-      paintAxis(
-        c,
-        canvas,
-        yAxisLabel: DiagramLabel.p.label,
-        xAxisLabel: DiagramLabel.q.label,
-      );
+    if (bundle == DiagramBundleEnum.microDemandIncrease) {
+
       paintMarketCurve(
         c,
         canvas,
         type: MarketCurveType.demand,
         label: DiagramLabel.d1.label,
+      );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.demand,
+        label: DiagramLabel.d2.label,
+        horizontalShift: 0.10,
+        verticalShift: -0.10,
+          lengthAdjustment: -0.05,
       );
       paintDiagramDashedLines(
         c,
@@ -77,6 +85,7 @@ class Demand extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q1.label,
         hideYLine: true,
+        showDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -85,27 +94,13 @@ class Demand extends BaseDiagramPainter2 {
         xAxisEndPos: 0.70,
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q2.label,
+        showDotAtIntersection: true,
       );
 
-      paintDiagramLines(
-        c,
-        canvas,
-        startPos: Offset(0.30, 0.10),
-        polylineOffsets: [Offset(0.90, 0.70)],
-        label2: DiagramLabel.d2.label,
-        label2Align: LabelAlign.centerRight,
-      );
-
-      paintArrowHelper(c, canvas, origin: Offset(0.48, 0.40), angle: pi * 2);
+      paintLineSegment(c, canvas, origin: Offset(0.49, 0.40), angle: pi * 2);
     }
 
-    if (diagramBundleEnum == DiagramBundleEnum.microDemandDecrease) {
-      paintAxis(
-        c,
-        canvas,
-        yAxisLabel: DiagramLabel.p.label,
-        xAxisLabel: DiagramLabel.q.label,
-      );
+    if (bundle == DiagramBundleEnum.microDemandDecrease) {
       paintMarketCurve(
         c,
         canvas,
@@ -117,7 +112,9 @@ class Demand extends BaseDiagramPainter2 {
         canvas,
         type: MarketCurveType.demand,
         label: DiagramLabel.d1.label,
-        horizontalShift: 0.20,
+        horizontalShift: 0.10,
+        lengthAdjustment: -0.10,
+        verticalShift: -0.10
       );
       paintDiagramDashedLines(
         c,
@@ -127,6 +124,7 @@ class Demand extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q2.label,
         hideYLine: true,
+        showDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -135,9 +133,10 @@ class Demand extends BaseDiagramPainter2 {
         xAxisEndPos: 0.70,
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q1.label,
+        showDotAtIntersection: true,
       );
 
-      paintArrowHelper(c, canvas, origin: Offset(0.51, 0.40), angle: pi / 1);
+      paintLineSegment(c, canvas, origin: Offset(0.51, 0.40), angle: pi / 1);
     }
   }
 }

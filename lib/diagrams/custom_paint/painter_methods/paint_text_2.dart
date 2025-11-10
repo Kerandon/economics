@@ -135,7 +135,7 @@ void paintText2(
   }
 
   // Draw background box aligned perfectly with text
-  final textBoxPadding = 0.50;
+  final textBoxPadding = 2;
   final boxPaintFill = Paint()
     ..style = PaintingStyle.fill
     ..color = config.colorScheme.surface;
