@@ -16,6 +16,15 @@ enum DiagramBundleEnum {
   microMarginalProduct,
   microTotalAndMarginalProduct,
   microMarginalCost,
+  microShortage,
+  microSurplus,
+  microDemandIncreasePriceMechanism,
+  microDemandDecreasePriceMechanism,
+  microPriceRationing,
+  microConsumerSurplus,
+  microProducerSurplus,
+  microAllocativeEfficiency,
+  microMarginalBenefit,
   microDemandElastic,
   microDemandInelastic,
   microDemandUnitElastic,
@@ -174,7 +183,18 @@ extension DiagramBundleEnumUnit on DiagramBundleEnum {
     DiagramBundleEnum.microMarginalProduct => Subunit.supply,
     DiagramBundleEnum.microTotalAndMarginalProduct => Subunit.supply,
     DiagramBundleEnum.microMarginalCost => Subunit.supply,
+    DiagramBundleEnum.microAllocativeEfficiency => Subunit.competitiveMarket,
 
+    DiagramBundleEnum.microShortage => Subunit.competitiveMarket,
+    DiagramBundleEnum.microSurplus => Subunit.competitiveMarket,
+    DiagramBundleEnum.microDemandIncreasePriceMechanism =>
+      Subunit.competitiveMarket,
+    DiagramBundleEnum.microDemandDecreasePriceMechanism =>
+      Subunit.competitiveMarket,
+    DiagramBundleEnum.microPriceRationing => Subunit.competitiveMarket,
+    DiagramBundleEnum.microConsumerSurplus => Subunit.competitiveMarket,
+    DiagramBundleEnum.microProducerSurplus => Subunit.competitiveMarket,
+    DiagramBundleEnum.microMarginalBenefit => Subunit.competitiveMarket,
     DiagramBundleEnum.microDemandElastic => Subunit.elasticityDemand,
     DiagramBundleEnum.microDemandInelastic => Subunit.elasticityDemand,
     DiagramBundleEnum.microDemandUnitElastic => Subunit.elasticityDemand,
@@ -215,6 +235,9 @@ extension DiagramBundleEnumUnit on DiagramBundleEnum {
       Subunit.marketFailureExternalities,
     DiagramBundleEnum.microPositiveConsumptionExternalityWelfare =>
       Subunit.marketFailureExternalities,
+    DiagramBundleEnum
+        .microNegativeConsumptionExternalityGovernmentRegulations =>
+      Subunit.marketFailureExternalities,
     DiagramBundleEnum.microNegativeProductionExternalityPigouvianTax =>
       Subunit.marketFailureExternalities,
     DiagramBundleEnum.microNegativeProductionExternalityRegulations =>
@@ -245,6 +268,7 @@ extension DiagramBundleEnumUnit on DiagramBundleEnum {
       Subunit.marketFailureExternalities,
     DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising =>
       Subunit.marketFailureExternalities,
+
     DiagramBundleEnum.microPositiveConsumptionExternalityDirectProvision =>
       Subunit.marketFailureExternalities,
     DiagramBundleEnum.microPositiveProductionExternalitySubsidy =>
@@ -300,8 +324,6 @@ extension DiagramBundleEnumUnit on DiagramBundleEnum {
       Subunit.typesTradeProtection,
     DiagramBundleEnum.globalProductionSubsidyWelfare =>
       Subunit.typesTradeProtection,
-    DiagramBundleEnum
-        .microNegativeConsumptionExternalityGovernmentRegulations =>
-      Subunit.typesTradeProtection,
+
   };
 }

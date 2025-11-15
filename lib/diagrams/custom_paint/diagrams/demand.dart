@@ -36,7 +36,7 @@ class Demand extends BaseDiagramPainter2 {
         xAxisEndPos: 0.40,
         yLabel: DiagramLabel.p1.label,
         xLabel: DiagramLabel.q1.label,
-        showDotAtIntersection: true,
+        addDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -45,7 +45,7 @@ class Demand extends BaseDiagramPainter2 {
         xAxisEndPos: 0.60,
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
-        showDotAtIntersection: true,
+        addDotAtIntersection: true,
       );
       if (bundle == DiagramBundleEnum.microDemandExtension) {
         paintLineSegment(c, canvas, origin: Offset(0.52,0.46), angle: pi / 4, length: 0.20);
@@ -85,7 +85,7 @@ class Demand extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q1.label,
         hideYLine: true,
-        showDotAtIntersection: true,
+        addDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -94,7 +94,7 @@ class Demand extends BaseDiagramPainter2 {
         xAxisEndPos: 0.70,
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q2.label,
-        showDotAtIntersection: true,
+        addDotAtIntersection: true,
       );
 
       paintLineSegment(c, canvas, origin: Offset(0.49, 0.40), angle: pi * 2);
@@ -124,7 +124,7 @@ class Demand extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q2.label,
         hideYLine: true,
-        showDotAtIntersection: true,
+        addDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -133,7 +133,7 @@ class Demand extends BaseDiagramPainter2 {
         xAxisEndPos: 0.70,
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q1.label,
-        showDotAtIntersection: true,
+        addDotAtIntersection: true,
       );
 
       paintLineSegment(c, canvas, origin: Offset(0.51, 0.40), angle: pi / 1);

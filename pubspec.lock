@@ -243,14 +243,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_to_pdf:
-    dependency: "direct main"
-    description:
-      name: flutter_to_pdf
-      sha256: beaa0840b670c201f49ed0a8ca2e5a889b6cc5221a5330cd7bc2d4e312fddf01
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.4.1"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

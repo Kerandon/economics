@@ -11,13 +11,17 @@ enum ShadeType {
   lostProducerSurplus,
   surplus,
   shortage,
+  consumerBurden,
+  producerBurden,
   consumerIncidence,
   producerIncidence,
+  consumerGain,
+  producerGain,
   governmentBurden,
   governmentRevenue,
   gainedRevenue,
   lostRevenue,
-  revenueUnchanged,// same color as governmentRevenue
+  revenueUnchanged, // same color as governmentRevenue
   welfareLoss,
   abnormalProfit,
   loss,
@@ -30,7 +34,9 @@ extension Shade on ShadeType {
     const producerSurplusColor = Colors.blue;
     const gainedColor = Colors.indigo;
     const lostColor = Colors.blueGrey;
-    const noChangeColor = Colors.grey; // light grey
+    const noChangeColor = Colors.grey;
+    const consumerIncidenceColor = Colors.lightGreenAccent;
+    const producerIncidenceColor = Colors.orangeAccent; // light grey
 
     switch (this) {
       case ShadeType.consumerSurplus:
@@ -42,9 +48,9 @@ extension Shade on ShadeType {
       case ShadeType.shortage:
         return Colors.deepOrange;
       case ShadeType.consumerIncidence:
-        return Colors.green;
+        return consumerIncidenceColor;
       case ShadeType.producerIncidence:
-        return Colors.blueAccent;
+        return producerIncidenceColor;
       case ShadeType.governmentBurden:
         return Colors.grey;
       case ShadeType.governmentRevenue:
@@ -72,9 +78,17 @@ extension Shade on ShadeType {
       case ShadeType.noChange: // 🆕 Light grey
         return noChangeColor;
       case ShadeType.lostRevenue:
-return lostColor;
+        return lostColor;
       case ShadeType.revenueUnchanged:
-        return Colors.grey.shade100;
+        return Colors.grey.shade400;
+      case ShadeType.consumerBurden:
+        return consumerIncidenceColor;
+      case ShadeType.producerBurden:
+        return producerIncidenceColor;
+      case ShadeType.consumerGain:
+        return consumerIncidenceColor;
+      case ShadeType.producerGain:
+        return producerIncidenceColor;
     }
   }
 
@@ -119,9 +133,18 @@ return lostColor;
       case ShadeType.noChange: // 🆕 Label
         return 'No Change';
       case ShadeType.lostRevenue:
- return 'Revenue Loss';
+        return 'Revenue Loss';
       case ShadeType.revenueUnchanged:
         return 'Revenue';
+      case ShadeType.consumerBurden:
+        return 'Consumer Burden';
+      case ShadeType.producerBurden:
+        return 'Producer Burden';
+
+      case ShadeType.consumerGain:
+        return 'Consumer Gain';
+      case ShadeType.producerGain:
+        return 'Producer Gain';
     }
   }
 }

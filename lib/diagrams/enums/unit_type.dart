@@ -20,8 +20,8 @@ enum Subunit {
   ),
 
   // Micro
-  demand('2.1', 'Demand (includes HL only sub-topics)', UnitType.micro),
-  supply('2.2', 'Supply (includes HL only sub-topics)', UnitType.micro),
+  demand('2.1', 'Demand', UnitType.micro),
+  supply('2.2', 'Supply', UnitType.micro),
   competitiveMarket('2.3', 'Competitive market equilibrium', UnitType.micro),
   critiqueBehaviour(
     '2.4',
@@ -30,22 +30,22 @@ enum Subunit {
   ),
   elasticityDemand(
     '2.5',
-    'Elasticity of demand (includes HL only sub-topics)',
+    'Elasticity of demand',
     UnitType.micro,
   ),
   elasticitySupply(
     '2.6',
-    'Elasticity of supply (includes HL only sub-topics)',
+    'Elasticity of supply',
     UnitType.micro,
   ),
   roleOfGovernment(
     '2.7',
-    'Role of government in microeconomics (includes HL only calculation)',
+    'Role of government in microeconomics',
     UnitType.micro,
   ),
   marketFailureExternalities(
     '2.8',
-    'Market failure—externalities and common pool or common access resources (includes HL only calculation)',
+    'Market failure—externalities and common pool or common access resources',
     UnitType.micro,
   ),
   marketFailurePublicGoods(

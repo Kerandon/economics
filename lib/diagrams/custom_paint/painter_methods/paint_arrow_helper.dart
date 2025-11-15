@@ -11,7 +11,7 @@ import '../painter_constants.dart';
 import 'axis/label_align.dart';
 import 'diagram_lines/paint_diagram_lines.dart';
 import 'diagram_lines/paint_label_text.dart';
-void paintArrowHelper(
+void paintArrowHelperRedundant(
     DiagramPainterConfig config,
     Canvas canvas, {
       required Offset origin,

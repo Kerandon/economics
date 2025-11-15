@@ -1,4 +1,5 @@
 import 'package:economics_app/diagrams/custom_paint/diagrams/comparative_advantage.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/competitive_market.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/elasticities.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/externalities.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/import_quota.dart';
@@ -56,6 +57,30 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   ]),
 
   /// 2.3 Competitive Market Equilibrium
+  DiagramBundle(DiagramBundleEnum.microShortage, [
+    CompetitiveMarket(config, DiagramBundleEnum.microShortage),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microSurplus, [
+    CompetitiveMarket(config, DiagramBundleEnum.microSurplus),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandIncreasePriceMechanism, [
+    CompetitiveMarket(config, DiagramBundleEnum.microDemandIncreasePriceMechanism),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microDemandDecreasePriceMechanism, [
+    CompetitiveMarket(config, DiagramBundleEnum.microDemandDecreasePriceMechanism),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microPriceRationing, [
+    CompetitiveMarket(config, DiagramBundleEnum.microPriceRationing),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microConsumerSurplus, [
+    CompetitiveMarket(config, DiagramBundleEnum.microConsumerSurplus),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microProducerSurplus, [
+    CompetitiveMarket(config, DiagramBundleEnum.microProducerSurplus),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microAllocativeEfficiency, [
+    CompetitiveMarket(config, DiagramBundleEnum.microAllocativeEfficiency),
+  ]),
   /// 2.4 Critique of the maximizing behaviour of consumers and producers (HL only)
   /// 2.5 Elasticity of demand (includes HL only sub-topics)
   DiagramBundle(DiagramBundleEnum.microDemandElastic, [

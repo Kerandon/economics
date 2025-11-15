@@ -8,18 +8,18 @@ const kCurveWidthSlim = 2.0;
 const kArrowSize = 12.0;
 const kExtendBy5 = 0.05;
 const kExtendBy10 = 0.10;
-const kExtendBy15 = 0.15;
+const kExtendBy15 = 0.18;
 const kExtendBy20 = 0.20;
 
 /// Axis & Labels
 
-const kAxisIndent = 0.20;
+const kAxisIndent = 0.15;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 5.0;
 
 /// Text
 const kFontSmallest = 14.0;
-const kFontSmall = 16.0;
+const kFontSmall = 22.0;
 const kFontMedium = 26.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,

@@ -26,7 +26,7 @@ class Externalities extends BaseDiagramPainter2 {
     paintAxis(
       c,
       canvas,
-      yAxisLabel: DiagramLabel.priceCostsBenefits.label,
+      yAxisLabel: DiagramLabel.price.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
     switch (bundle) {
@@ -38,6 +38,8 @@ class Externalities extends BaseDiagramPainter2 {
         _paintNegativeProduction(c, canvas, size, bundle);
       case DiagramBundleEnum.microCarbonTax:
         _paintCarbonTax(c, canvas, size);
+      case DiagramBundleEnum.microTradablePollutionPermits:
+        _paintTradablePermits(c, canvas, size);
       case DiagramBundleEnum.microNegativeConsumptionExternality ||
           DiagramBundleEnum.microNegativeConsumptionExternalityWelfare ||
           DiagramBundleEnum.microNegativeConsumptionExternalityPigouvianTax ||
@@ -52,7 +54,7 @@ class Externalities extends BaseDiagramPainter2 {
           DiagramBundleEnum.microPositiveConsumptionExternalityWelfare ||
           DiagramBundleEnum.microPositiveConsumptionExternalitySubsidy ||
           DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising ||
-          DiagramBundleEnum.microPositiveProductionExternalityDirectProvision:
+          DiagramBundleEnum.microPositiveConsumptionExternalityDirectProvision:
         _paintPositiveConsumption(c, canvas, size, bundle);
       default:
     }
@@ -253,16 +255,16 @@ void _paintCarbonTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     canvas,
     yAxisStartPos: 0.44,
     xAxisEndPos: 0.275,
-    yLabel: 'POpt1',
-    xLabel: '   Q\nOpt1 ',
+    yLabel: DiagramLabel.pc1.label,
+    xLabel: '   Q\nopt1 ',
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.52,
     xAxisEndPos: 0.37,
-    yLabel: 'POpt2',
-    xLabel: '  Q\nOpt2',
+    yLabel: DiagramLabel.pc2.label,
+    xLabel: '  Q\nopt2',
   );
   paintDiagramDashedLines(
     c,
@@ -305,6 +307,31 @@ void _paintCarbonTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     polylineOffsets: [Offset(0.80, 0.05)],
     label2: 'MSC1 with\ncarbon-intensive\nenergy sources',
     label2Align: LabelAlign.centerRight,
+  );
+}
+
+void _paintTradablePermits(DiagramPainterConfig c, Canvas canvas, Size size) {
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.50,
+    xAxisEndPos: 0.50,
+    yLabel: DiagramLabel.p.label,
+    xLabel: DiagramLabel.q.label,
+  );
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.50, 1.0),
+    polylineOffsets: [Offset(0.50, 0.15)],
+    label2: DiagramLabel.supplyOfPermits.label,
+    label2Align: LabelAlign.centerTop,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.demand,
+    label: DiagramLabel.demandForPermits.label,
   );
 }
 
@@ -582,7 +609,7 @@ void _paintPositiveProduction(
     paintLineSegment(
       c,
       canvas,
-      origin: Offset(-0.12, 0.47),
+      origin: Offset(-0.14, 0.47),
       angle: pi / 2,
       length: 0.09,
       endStyle: LineEndStyle.arrow,
@@ -590,7 +617,7 @@ void _paintPositiveProduction(
     paintLineSegment(
       c,
       canvas,
-      origin: Offset(0.46, 1.08),
+      origin: Offset(0.46, 1.10),
       angle: -pi / 0.50,
       length: 0.09,
       endStyle: LineEndStyle.arrow,
@@ -816,7 +843,7 @@ void _paintPositiveConsumption(
       xAxisEndPos: 0.285,
       yLabel: DiagramLabel.pm.label,
       xLabel: DiagramLabel.qm.label,
-      showDotAtIntersection: true,
+      addDotAtIntersection: true,
     );
   }
   if (bundle == DiagramBundleEnum.microPositiveConsumptionExternalitySubsidy) {
@@ -851,7 +878,7 @@ void _paintPositiveConsumption(
       xAxisEndPos: 0.45,
       yLabel: DiagramLabel.pc.label,
       hideXLine: true,
-      showDotAtIntersection: true,
+      addDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -864,15 +891,44 @@ void _paintPositiveConsumption(
   }
   if (bundle ==
       DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising) {
-    paintLineSegment(c, canvas, origin: Offset(0.60,0.70), length: 0.18);
+    paintLineSegment(c, canvas, origin: Offset(0.60, 0.70), length: 0.18);
     paintDiagramDashedLines(
       c,
       canvas,
       yAxisStartPos: 0.495,
       xAxisEndPos: 0.455,
-      showDotAtIntersection: true,
+      addDotAtIntersection: true,
       yLabel: DiagramLabel.pOpt.label,
       xLabel: DiagramLabel.qOpt.label,
+    );
+  }
+
+  if (bundle ==
+      DiagramBundleEnum.microPositiveConsumptionExternalityDirectProvision) {
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0, 0.95),
+      polylineOffsets: [Offset(0.80, 0.50)],
+      label2: DiagramLabel.mPCPlusSubsidy.label,
+      label2Align: LabelAlign.centerRight,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.49,
+      xAxisEndPos: 0.46,
+      yLabel: DiagramLabel.pp.label,
+      xLabel: DiagramLabel.qOpt.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.70,
+      xAxisEndPos: 0.46,
+      hideXLine: true,
+      yLabel: DiagramLabel.pc.label,
+      addDotAtIntersection: true,
     );
   }
 }

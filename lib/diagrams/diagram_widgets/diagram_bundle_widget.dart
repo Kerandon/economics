@@ -24,7 +24,6 @@ class DiagramBundleWidget extends StatelessWidget {
     final maxAllowedSize = maxDimension * 0.90;
 
     return Container(
-      color: Colors.lightBlue.withAlpha(50),
       child: Padding(
         padding: const EdgeInsets.all(6.0),
         child: InteractiveViewer(

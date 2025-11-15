@@ -23,7 +23,7 @@ class DiagramBundleWidgetWeb extends StatelessWidget {
     final double sideBySideSize = contentWidth * 0.44;
 
     // Sizing for wrapped diagrams: increased divisor to prevent overflow
-    final double wrapSize = contentWidth / 1.3;
+    final double wrapSize = contentWidth / 1.8;
 
     return Container(
       // The GlobalKey is associated via super.key

@@ -12,90 +12,112 @@ List<Slide> get demandSlides => [
     title: kKeyTerms,
     contents: [
       SlideContent.term(
-        'A Market',
-        'is where buyers and sellers meet to exchange goods, services or resources (physically or virtually).',
+        'Market',
+        'Where buyers and sellers meet to exchange goods, services or resources.',
       ),
 
       SlideContent.term(
         'Demand',
-        'is the various quantities of a good or service that a consumer is willing and able to buy at different prices during a particular time period, ceteris paribus.',
+        'The quantities of a good or service a consumer is willing and able to buy at different prices, ceteris paribus.',
       ),
+
       SlideContent.term(
         'The Law of Demand',
-        'states that there is a negative relationship between the price of a good or service and the quantity demanded over a particular period of time, ceteris paribus.',
+        'There is a negative relationship between price and quantity demanded, ceteris paribus.',
       ),
 
       SlideContent.term(
         'Derived Demand',
-        'is the demand for a good, service or resource that arises from the demand for a related good, service or resource.',
+        'Demand for a good, service, or resource that comes from the demand for a related good or resource.',
       ),
+
       SlideContent.term(
         'Market Demand',
-        'is the total (aggregate) quantity of a good or service demanded by all consumers in a market at various prices, over a specific period of time, ceteris paribus.',
+        'The total quantity demanded by all consumers in a market at various prices over a period, ceteris paribus.',
       ),
+
       SlideContent.term(
         'Change in Quantity Demanded',
-        'is when a change in the price of the good or service leads to a movement along the demand curve. A fall in price leads to an <strong>extension</strong> in demand, while a rise in price leads to a <strong>contraction</strong> in demand.',
+        'A price change causes movement along the demand curve. A fall in price causes <strong>extension</strong> in demand, and a rise in price causes <strong>contraction</strong> in demand.',
       ),
+
       SlideContent.term(
-        'Increase Or Decrease In Demand',
-        'is when a non-price determinant of demand changes demand at every price. This is shown by a shift in the entire demand curve.',
+        'Increase or Decrease in Demand',
+        'A change in a non-price factor shifts the entire demand curve, changing demand at all prices.',
       ),
+
       SlideContent.term(
         'Normal Good',
-        'is a good for which demand increases when consumers’ real income rises.',
+        'Demand rises when consumers’ income increases.',
       ),
+
       SlideContent.term(
         'Inferior Good',
-        'is a good for which demand increases when consumers’ real income falls. Typical examples include public transportation or second-hand clothes.',
+        'Demand rises when consumers’ income falls (e.g., public transport, second-hand clothes).',
       ),
+
       SlideContent.term(
         'Substitute Good',
-        'is an alternative good which satisfies a similar want or need. The price of the substitute and demand move in the same direction. For example, if the price of Cola increases, the demand for Pepsi increases',
+        'An alternative good satisfying a similar need. When the price of one increases, demand for the substitute increases (e.g., Cola and Pepsi).',
       ),
+
       SlideContent.term(
         'Complement Good',
-        'is a good consumed jointly with another. Price and demand move in opposite directions. For example, if the price of cars increases, the demand for petrol falls.',
-      ),
-      SlideContent.term(
-        tag: Tag.hl,
-        'The Law of Diminishing Marginal Returns',
-        'states that as consumption of a good increases, the marginal utility (extra satisfaction) decreases with each additional unit consumed, ceteris paribus.',
+        'A good consumed with another. When the price of one increases, demand for the other decreases (e.g., cars and petrol).',
       ),
 
       SlideContent.term(
         tag: Tag.hl,
-        'Substitution effect',
-        'is when a fall in the price of a good makes it relatively cheaper compared to substitutes, causing consumers to switch from substitutes and increase quantity demanded.',
+        'The Law of Diminishing Marginal Utility',
+        'As consumption increases, marginal utility decreases with each additional unit, ceteris paribus.',
       ),
+
+      SlideContent.term(
+        tag: Tag.hl,
+        'Substitution Effect',
+        'A fall in the price of a good makes it relatively cheaper compared to substitutes, causing consumers to switch to it and increase quantity demanded.',
+      ),
+
       SlideContent.term(
         tag: Tag.hl,
         'Income Effect',
-        'is when a fall in the price of a good increases a consumers’ purchasing power, allowing them to buy more of the good.',
+        'A fall in the price of a good increases consumers’ purchasing power, allowing them to buy more of the good.',
       ),
 
-      SlideContent.term(
-        'Conspicuous Consumption',
-        'refers to individuals who make purchases of luxury to display their wealth or status rather than for their practical utility.',
-      ),
-
-      SlideContent.term(
-        'Veblen Good',
-        'is a type of luxury good which is used to show wealth or status. It shows a positive relationship between price and quantity demanded, making it an exception to the law of demand',
-      ),
-
-      SlideContent.term(
-        tag: Tag.supplement,
-        'Giffen Good',
-        'is a staple good that make up a large proportion of consumers’ expenditure. When its price rises, consumers buy more of the good, creating a positive relationship between price and quantity demanded, making it an exception to the law of demand. The increase in demand occurs because the income effect of the higher price outweighs the substitution effect.',
-      ),
+      // SlideContent.term(
+      //   'Conspicuous Consumption',
+      //   'refers to individuals who make purchases of luxury to display their wealth or status rather than for their practical utility.',
+      // ),
+      //
+      // SlideContent.term(
+      //   'Veblen Good',
+      //   'is a type of luxury good which is used to show wealth or status. It shows a positive relationship between price and quantity demanded, making it an exception to the law of demand',
+      // ),
+      //
+      // SlideContent.term(
+      //   tag: Tag.supplement,
+      //   'Giffen Good',
+      //   'is a staple good that make up a large proportion of consumers’ expenditure. When its price rises, consumers buy more of the good, creating a positive relationship between price and quantity demanded, making it an exception to the law of demand. The increase in demand occurs because the income effect of the higher price outweighs the substitution effect.',
+      // ),
     ],
   ),
-
   Slide(
+    title: 'Changes In Demand',
     section: Subunit.demand,
-    title: 'Non-Price Determinants of Demand',
     contents: [
+      SlideContent.text(
+        'An <strong>extension in demand (L)</strong> or <strong>contraction in demand (R)</strong> is '
+            'a movement along the demand curve caused by a change in the <strong>price</strong> of a good (or a shift'
+            ' of the supply curve).',
+      ),
+      SlideContent(
+        diagramBundleEnums: [
+          DiagramBundleEnum.microDemandExtension,
+          DiagramBundleEnum.microDemandContraction,
+
+        ],
+      ),
+      SlideContent.text('An <strong>increase (L)</strong> or <strong>decrease in demand (R)</strong> is caused by <strong>non-price determinants</strong>'),
       SlideContent.key('Non-Price Determinants of Demand', '''
 <ul>
 <li>Consumer Income</li>
@@ -105,9 +127,15 @@ List<Slide> get demandSlides => [
 <li>Number of consumers</li>
 </ul>
 '''),
+      SlideContent(
+        diagramBundleEnums: [
+          DiagramBundleEnum.microDemandIncrease,
+          DiagramBundleEnum.microDemandDecrease,
+        ],
+      ),
+
     ],
   ),
-
   Slide(
     section: Subunit.demand,
     title: 'Reasons For Downward Sloping Demand',
@@ -117,39 +145,9 @@ List<Slide> get demandSlides => [
 <ul>
 <li>Income effect</li>
 <li>Substitution effect</li>
-<li>Diminishing marginal utility</li>
+<li>The Law of Diminishing Marginal Utility</li>
 </ul>
-''', tag: Tag.hl),
-      SlideContent.text('''
-<ul>
-<li><strong>Income effect:</strong> As the price of a good falls, consumers can afford to buy more with the same income, increasing demand.</li>
-<li><strong>Substitution effect:</strong> When the price of a good falls, it becomes relatively cheaper compared to substitutes, so consumers switch towards it.</li>
-<li><strong>Diminishing marginal utility:</strong> Each additional unit consumed gives less satisfaction, so consumers are only willing to buy more at lower prices.</li>
-</ul>
-'''),
-      SlideContent.diagram(
-        DiagramBundleEnum.microDemandExtension,
-      ), // 🔧 placeholder for now
-    ],
-  ),
-
-  Slide(
-    section: Subunit.supply,
-    title: 'Non-Price Determinants of Supply',
-    contents: [
-      SlideContent.key('Non-Price Determinants of Supply', '''
-<ul>
-<li>Changes in costs of factors of production (FOPs)</li>
-<li>Prices of related goods (joint and competitive supply)</li>
-<li>Indirect taxes and subsidies</li>
-<li>Future price expectations</li>
-<li>Changes in technology</li>
-<li>Number of firms</li>
-</ul>
-'''),
-      SlideContent.diagram(
-        DiagramBundleEnum.microDemandExtension,
-      ), // 🔧 placeholder
+''', tag: Tag.hl), // 🔧 placeholder for now
     ],
   ),
 ];

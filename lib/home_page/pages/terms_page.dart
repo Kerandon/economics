@@ -60,6 +60,8 @@ class TermsPage extends ConsumerWidget {
               ),
               // ------------------------------------------------------------------
               // Terms Display
+// ------------------------------------------------------------------
+// Terms Display (Updated)
               for (var unit in UnitType.values)
                 ExpansionTile(
                   initiallyExpanded: true,
@@ -71,42 +73,57 @@ class TermsPage extends ConsumerWidget {
                           initiallyExpanded: true,
                           title: Text(subunit.title),
                           children: [
-                            for (var term in termsBySubunit[subunit]!)
-                              Container(
-                                color: term.tag == Tag.hl
-                                    ? theme.primaryColorDark
-                                    : term.tag == Tag.supplement
-                                    ? Colors.orange
-                                    : theme.primaryColor,
-                                child: ExpansionTile(
-                                  minTileHeight: 0,
-                                  initiallyExpanded: true,
-                                  textColor: Colors.white,
-                                  title: HtmlWidget(
-                                    '${term.term} ${term.tag == Tag.hl ? '<strong>(HL)</strong>' : ''}'
-                                    '${term.tag == Tag.supplement ? '<strong>(Supplement)</strong>' : ''}',
-                                  ),
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      color: theme.colorScheme.surface,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                            size.width * kPageIndentHorizontal,
-                                        vertical:
-                                            size.height *
-                                            kPageIndentVertical /
-                                            4,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  for (var term in termsBySubunit[subunit]!)
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const Text("• ", style: TextStyle(fontSize: 16)),
+                                          Expanded(
+                                            child: RichText(
+                                              text: TextSpan(
+                                                style: theme.textTheme.bodyMedium,
+                                                children: [
+                                                  TextSpan(
+                                                    text: term.term,
+                                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                                  ),
+                                                  if (term.tag == Tag.hl)
+                                                    const TextSpan(
+                                                      text: ' (HL)',
+                                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                                    ),
+                                                  if (term.tag == Tag.supplement)
+                                                    const TextSpan(
+                                                      text: ' (Supplement)',
+                                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                                    ),
+                                                  const TextSpan(text: '\n'),
+                                                  TextSpan(
+                                                    text: term.explanation,
+                                                    style: theme.textTheme.bodyMedium,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      child: HtmlWidget(term.explanation),
                                     ),
-                                  ],
-                                ),
+                                ],
                               ),
+                            ),
                           ],
                         ),
                   ],
                 ),
+
             ],
           ),
         ),

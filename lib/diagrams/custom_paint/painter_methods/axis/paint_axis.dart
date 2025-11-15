@@ -3,14 +3,15 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_a
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_zero.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/grid_line_style.dart';
+import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:flutter/material.dart';
 import '../../../models/diagram_painter_config.dart';
 
 void paintAxis(
   DiagramPainterConfig config,
   Canvas canvas, {
-  String? yAxisLabel,
-  String? xAxisLabel,
+  String yAxisLabel = 'Price',
+  String xAxisLabel = 'Quantity',
   double? xMaxValue, // Custom max value for the X-axis
   double? yMaxValue, // Custom max value for the Y-axis
   int? xDivisions, // Custom number of divisions for the X-axis

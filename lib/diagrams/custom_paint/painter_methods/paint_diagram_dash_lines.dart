@@ -17,7 +17,7 @@ void paintDiagramDashedLines(
       bool makeDashed = true,
       Color? color,
       Color? backgroundColor,
-      bool showDotAtIntersection = false, // 👈 NEW property
+      bool addDotAtIntersection = false, // 👈 NEW property
       double dotRadius = kDotRadius, // optional radius
       Color? dotColor, // optional color override
     }) {
@@ -66,7 +66,7 @@ void paintDiagramDashedLines(
   }
 
   // 👇 Draw dot at intersection if requested
-  if (showDotAtIntersection) {
+  if (addDotAtIntersection) {
     paintDotAbsolute(
       config,
       canvas,

@@ -5,7 +5,7 @@ import '../../diagrams/enums/unit_type.dart';
 import '../custom_widgets/custom_tile.dart';
 import '../enums/resources_enum.dart';
 import '../state_management/home_page_state.dart';
-import 'notes_page_contents.dart';
+import 'notes_page.dart';
 
 class HomePageWeb extends ConsumerStatefulWidget {
   const HomePageWeb({super.key});

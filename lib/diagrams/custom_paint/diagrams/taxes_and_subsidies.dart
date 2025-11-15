@@ -4,6 +4,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legen
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_arrow_helper.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
@@ -23,7 +24,12 @@ class TaxesAndSubsidies extends BaseDiagramPainter2 {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
     c.painterSize;
-
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: DiagramLabel.price.label,
+      xAxisLabel: DiagramLabel.quantity.label,
+    );
     switch (bundle) {
       case DiagramBundleEnum.microIndirectTax:
         _paintIndirectTax(c, canvas, size);
@@ -48,14 +54,14 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     c,
     headers: ['', DiagramLabel.freeMarket.label, 'Indirect Tax'],
     data: [
-      [(DiagramLabel.consumerSurplus.label), 'A,B,C,D', '-B,-C,-D'],
-      [(DiagramLabel.producerSurplus.label), 'E,F,G,H,I', '-E,-F,-G'],
+      [(DiagramLabel.consumerSurplus.label), '+(A,B,C,D)', '+A'],
+      [(DiagramLabel.producerSurplus.label), '+(E,F,G,H,I)', '+(H,I)'],
       [
         (DiagramLabel.governmentBudget.label),
         '-',
-        '+B,+C,+D,+E,+F,+G',
+        '+(B,C,E,F)',
       ],
-      [(DiagramLabel.socialWelfare.label), 'A,B,C,D,E,F,G,H,I', '-D,-G'],
+      [(DiagramLabel.socialWelfare.label), '+(A,B,C,D,E,F,G,H,I)', '+(A,B,C,E,F,H,I) -(D,G)'],
     ],
   );
   paintShading(canvas, size, ShadeType.welfareLoss, [
@@ -64,10 +70,10 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     Offset(0.425, 0.68),
   ]);
 
-  paintArrowHelper(
+  paintLineSegment(
     c,
     canvas,
-    origin: Offset(0.60, 0.38),
+    origin: Offset(0.60, 0.39),
     angle: -pi / 2,
     length: 0.18,
   );
@@ -82,18 +88,11 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
   paintText2(c, canvas, DiagramLabel.h.label, Offset(0.05, 0.74));
   paintText2(c, canvas, DiagramLabel.i.label, Offset(0.25, 0.74));
 
-  paintAxis(
-    c,
-    canvas,
-    yAxisLabel: DiagramLabel.price$.label,
-    xAxisLabel: DiagramLabel.quantityUnits.label,
-  );
   paintMarketCurve(
     c,
     canvas,
     type: MarketCurveType.demand,
     label: DiagramLabel.dEqualsMB.label,
-    lengthAdjustment: -kExtendBy15,
   );
   paintMarketCurve(
     c,
@@ -101,7 +100,6 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     type: MarketCurveType.supply,
     horizontalShift: -kExtendBy10,
     verticalShift: -kExtendBy5,
-    lengthAdjustment: -kExtendBy20,
     label: DiagramLabel.sTax.label,
     color: Colors.red,
   );
@@ -111,7 +109,6 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     type: MarketCurveType.supply,
     label: DiagramLabel.sEqualsMC.label,
     verticalShift: 0.10,
-    lengthAdjustment: -kExtendBy15,
   );
   paintText2(
     c,
@@ -135,7 +132,7 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.425,
     yLabel: DiagramLabel.pc.label,
     xLabel: DiagramLabel.qTax.label,
-    showDotAtIntersection: true,
+    addDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -144,7 +141,7 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.425,
     yLabel: DiagramLabel.pp.label,
     hideXLine: true,
-    showDotAtIntersection: true,
+    addDotAtIntersection: true,
   );
 }
 
@@ -153,14 +150,14 @@ _paintIndirectTaxInelasticDemand(
   Canvas canvas,
   Size size,
 ) {
-  paintArrowHelper(
+  paintLineSegment(
     c,
     canvas,
     origin: Offset(0.60, 0.41),
     angle: -pi / 2,
     length: 0.18,
   );
-  paintText2(c, canvas, '\$3\nTax', Offset(0.66, 0.32));
+  paintText2(c, canvas, DiagramLabel.tax.label, Offset(0.66, 0.32));
   paintShading(canvas, size, ShadeType.consumerIncidence, [
     Offset(0, 0.40),
     Offset(0.46, 0.40),
@@ -174,30 +171,30 @@ _paintIndirectTaxInelasticDemand(
     Offset(0.0, 0.64),
   ], striped: true);
   paintLegend(canvas, size, [
-    LegendEntry.fromShade(ShadeType.consumerIncidence),
+    LegendEntry.fromShade(ShadeType.consumerBurden),
 
-    LegendEntry.fromShade(ShadeType.producerIncidence),
+    LegendEntry.fromShade(ShadeType.producerBurden),
   ]);
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.58,
     xAxisEndPos: 0.525,
-    yLabel: '5.5',
-    xLabel: '120',
+    yLabel: DiagramLabel.pe.label,
+    xLabel:  DiagramLabel.qe.label,
   );
 
   paintAxis(
     c,
     canvas,
-    yAxisLabel: DiagramLabel.price$.label,
-    xAxisLabel: DiagramLabel.quantityUnits.label,
+    yAxisLabel: DiagramLabel.price.label,
+    xAxisLabel: DiagramLabel.quantity.label,
   );
   paintMarketCurve(
     c,
     canvas,
     type: MarketCurveType.demand,
-    lengthAdjustment: -kExtendBy20,
+    lengthAdjustment: -kExtendBy10,
     angle: 0.40,
   );
   paintMarketCurve(
@@ -206,7 +203,7 @@ _paintIndirectTaxInelasticDemand(
     type: MarketCurveType.supply,
     horizontalShift: -kExtendBy10,
     verticalShift: -kExtendBy5,
-    lengthAdjustment: -kExtendBy20,
+    lengthAdjustment: -kExtendBy5,
     label: DiagramLabel.sTax.label,
     color: Colors.red,
     angle: 0.10,
@@ -216,7 +213,7 @@ _paintIndirectTaxInelasticDemand(
     canvas,
     type: MarketCurveType.supply,
     verticalShift: 0.10,
-    lengthAdjustment: -kExtendBy15,
+    lengthAdjustment: -kExtendBy5,
     angle: 0.10,
   );
   paintDiagramDashedLines(
@@ -224,19 +221,20 @@ _paintIndirectTaxInelasticDemand(
     canvas,
     yAxisStartPos: 0.40,
     xAxisEndPos: 0.46,
-    yLabel: '8',
-    xLabel: '110    ',
-    showDotAtIntersection: true,
+    yLabel: DiagramLabel.pc.label,
+    xLabel: '${DiagramLabel.qTax.label}     ',
+    addDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.64,
     xAxisEndPos: 0.46,
-    yLabel: '5',
+    yLabel: DiagramLabel.pp.label,
     hideXLine: true,
-    showDotAtIntersection: true,
+    addDotAtIntersection: true,
   );
+  paintLineSegment(c, canvas, origin: Offset(0.50,1.09), angle: -pi, length: 0.05);
 }
 
 _paintIndirectTaxElasticDemand(
@@ -244,14 +242,14 @@ _paintIndirectTaxElasticDemand(
   Canvas canvas,
   Size size,
 ) {
-  paintArrowHelper(
+  paintLineSegment(
     c,
     canvas,
-    origin: Offset(0.60, 0.38),
+    origin: Offset(0.60, 0.385),
     angle: -pi / 2,
     length: 0.18,
   );
-  paintText2(c, canvas, '\$3\nTax', Offset(0.66, 0.32));
+  paintText2(c, canvas, DiagramLabel.tax.label, Offset(0.66, 0.32));
   paintShading(canvas, size, ShadeType.consumerIncidence, [
     Offset(0, 0.47),
     Offset(0.39, 0.47),
@@ -265,16 +263,11 @@ _paintIndirectTaxElasticDemand(
     Offset(0.0, 0.71),
   ], striped: true);
   paintLegend(canvas, size, [
-    LegendEntry.fromShade(ShadeType.consumerIncidence),
-    LegendEntry.fromShade(ShadeType.producerIncidence),
+    LegendEntry.fromShade(ShadeType.consumerBurden),
+    LegendEntry.fromShade(ShadeType.producerBurden),
   ]);
 
-  paintAxis(
-    c,
-    canvas,
-    yAxisLabel: DiagramLabel.price$.label,
-    xAxisLabel: DiagramLabel.quantityUnits.label,
-  );
+
   paintMarketCurve(
     c,
     canvas,
@@ -288,7 +281,7 @@ _paintIndirectTaxElasticDemand(
     type: MarketCurveType.supply,
     horizontalShift: -kExtendBy10,
     verticalShift: -kExtendBy5,
-    lengthAdjustment: -kExtendBy20,
+    lengthAdjustment: -kExtendBy5,
     label: DiagramLabel.sTax.label,
     color: Colors.red,
   );
@@ -297,33 +290,35 @@ _paintIndirectTaxElasticDemand(
     canvas,
     type: MarketCurveType.supply,
     verticalShift: 0.10,
-    lengthAdjustment: -kExtendBy15,
+    lengthAdjustment: -kExtendBy5,
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.53,
     xAxisEndPos: 0.58,
-    yLabel: '5.5',
-    xLabel: '120',
+    yLabel: DiagramLabel.pe.label,
+    xLabel: DiagramLabel.qe.label,
+    addDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.47,
     xAxisEndPos: 0.39,
-    yLabel: '6',
-    xLabel: '80',
-    showDotAtIntersection: true,
+    yLabel: DiagramLabel.pc.label,
+    xLabel: DiagramLabel.qTax.label,
+    addDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.71,
-    xAxisEndPos: 0.38,
-    yLabel: '3',
-    hideXLine: true,showDotAtIntersection: true,
+    xAxisEndPos: 0.39,
+    yLabel: DiagramLabel.pp.label,
+    hideXLine: true,addDotAtIntersection: true,
   );
+  paintLineSegment(c, canvas, origin: Offset(0.50,1.09), angle: -pi, length: 0.15);
 }
 
 void _paintSubsidy(DiagramPainterConfig c, Canvas canvas, Size size) {
@@ -341,36 +336,30 @@ void _paintSubsidy(DiagramPainterConfig c, Canvas canvas, Size size) {
   paintText2(c, canvas, DiagramLabel.f.label, Offset(0.50, 0.42));
   paintText2(c, canvas, DiagramLabel.g.label, Offset(0.46, 0.50));
   paintText2(c, canvas, DiagramLabel.h.label, Offset(0.10, 0.62));
-  paintArrowHelper(
+  paintLineSegment(
     c,
     canvas,
     origin: Offset(0.70, 0.26),
     angle: pi / 2,
     length: 0.18,
   );
-  paintText2(c, canvas, 'Subsidy', Offset(0.80, 0.170));
+  paintText2(c, canvas, DiagramLabel.subsidy.label, Offset(0.795, 0.165));
   paintLegendTable(
     canvas,
     c,
-    headers: ['', DiagramLabel.freeMarket.label, 'Subsidy'],
+    headers: ['', DiagramLabel.freeMarket.label, DiagramLabel.subsidy.label],
     data: [
-      [(DiagramLabel.consumerSurplus.label), 'A,B', '+D,+E,+G'],
-      [(DiagramLabel.producerSurplus.label), 'D,H', '+B,+C'],
-      [(DiagramLabel.governmentBudget.label), '-', '-B,-C,-D,-E,-F,-G'],
+      [(DiagramLabel.consumerSurplus.label), '+(A,B)', '+(A,B,D,E,G)'],
+      [(DiagramLabel.producerSurplus.label), '+(D,H)', '+(B,C,D,H)'],
+      [(DiagramLabel.governmentBudget.label), '-', '-(B,C,D,E,F,G)'],
       [
         (DiagramLabel.socialWelfare.label),
-        'A,B,D,H',
-        '-F',
+        '+(A,B,D,H)',
+        '+(A,B,D,H) -F',
       ],
     ],
   );
 
-  paintAxis(
-    c,
-    canvas,
-    yAxisLabel: DiagramLabel.price$.label,
-    xAxisLabel: DiagramLabel.quantityUnits.label,
-  );
   paintMarketCurve(
     c,
     canvas,
@@ -383,7 +372,7 @@ void _paintSubsidy(DiagramPainterConfig c, Canvas canvas, Size size) {
     type: MarketCurveType.supply,
     horizontalShift: kExtendBy5,
     verticalShift: kExtendBy5,
-    lengthAdjustment: -kExtendBy10,
+    lengthAdjustment: -kExtendBy5,
     label: DiagramLabel.sSub.label,
     color: Colors.red,
   );
@@ -394,7 +383,7 @@ void _paintSubsidy(DiagramPainterConfig c, Canvas canvas, Size size) {
     label: DiagramLabel.sEqualsMC.label,
     horizontalShift: -kExtendBy5,
     verticalShift: -kExtendBy10,
-    lengthAdjustment: -kExtendBy10,
+    lengthAdjustment: -kExtendBy5,
   );  paintText2(
     c,
     canvas,
@@ -408,7 +397,7 @@ void _paintSubsidy(DiagramPainterConfig c, Canvas canvas, Size size) {
     yAxisStartPos: 0.55,
     xAxisEndPos: 0.55,
     yLabel: DiagramLabel.pc.label,
-    hideXLine: true,showDotAtIntersection: true,
+    hideXLine: true,addDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -425,7 +414,7 @@ void _paintSubsidy(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.55,
     yLabel: DiagramLabel.pp.label,
     xLabel: DiagramLabel.qSub.label,
-    showDotAtIntersection: true,
+    addDotAtIntersection: true,
   );
 }
 
@@ -435,33 +424,27 @@ void _paintSubsidyInelasticDemand(
   Size size,
 ) {
 
-  paintShading(canvas, size, ShadeType.producerIncidence, [
+  paintShading(canvas, size, ShadeType.producerGain, [
     Offset(0, 0.325),
     Offset(0.52, 0.325),
     Offset(0.52, 0.38),
     Offset(0.0, 0.38),
   ], striped: true);
-  paintShading(canvas, size, ShadeType.consumerIncidence, [
+  paintShading(canvas, size, ShadeType.consumerGain, [
     Offset(0, 0.38),
     Offset(0.52, 0.38),
     Offset(0.52, 0.575),
     Offset(0.0, 0.575),
   ], striped: true);
-  paintArrowHelper(
+  paintLineSegment(
     c,
     canvas,
     origin: Offset(0.70, 0.26),
     angle: pi / 2,
     length: 0.18,
   );
-  paintText2(c, canvas, 'Subsidy', Offset(0.80, 0.170));
+  paintText2(c, canvas, DiagramLabel.subsidy.label, Offset(0.80, 0.170));
 
-  paintAxis(
-    c,
-    canvas,
-    yAxisLabel: DiagramLabel.price$.label,
-    xAxisLabel: DiagramLabel.quantityUnits.label,
-  );
   paintMarketCurve(
     c,
     canvas,
@@ -488,7 +471,7 @@ void _paintSubsidyInelasticDemand(
     yAxisStartPos: 0.575,
     xAxisEndPos: 0.52,
     yLabel: DiagramLabel.pc.label,
-    hideXLine: true,showDotAtIntersection: true,
+    hideXLine: true,addDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -519,7 +502,7 @@ void _paintSubsidyInelasticDemand(
     xAxisEndPos: 0.52,
     yLabel: DiagramLabel.pp.label,
     xLabel: '      ${DiagramLabel.qSub.label}',
-    showDotAtIntersection: true,
+    addDotAtIntersection: true,
   );
   paintLegend(canvas, size, [
     LegendEntry.fromShade(ShadeType.consumerIncidence),
@@ -545,21 +528,15 @@ void _paintSubsidyElasticDemand(
     Offset(0.58, 0.52),
     Offset(0.0, 0.52),
   ], striped: true);
-  paintArrowHelper(
+  paintLineSegment(
     c,
     canvas,
     origin: Offset(0.70, 0.26),
     angle: pi / 2,
     length: 0.18,
   );
-  paintText2(c, canvas, 'Subsidy', Offset(0.80, 0.170));
+  paintText2(c, canvas, DiagramLabel.subsidy.label, Offset(0.80, 0.170));
 
-  paintAxis(
-    c,
-    canvas,
-    yAxisLabel: DiagramLabel.price$.label,
-    xAxisLabel: DiagramLabel.quantityUnits.label,
-  );
   paintMarketCurve(
     c,
     canvas,
@@ -586,7 +563,7 @@ void _paintSubsidyElasticDemand(
     yAxisStartPos: 0.52,
     xAxisEndPos: 0.58,
     yLabel: DiagramLabel.pc.label,
-    hideXLine: true,showDotAtIntersection: true,
+    hideXLine: true,addDotAtIntersection: true,
   );
   paintDiagramDashedLines(
       c,
@@ -619,7 +596,7 @@ void _paintSubsidyElasticDemand(
     xAxisEndPos: 0.58,
     yLabel: DiagramLabel.pp.label,
     xLabel: '      ${DiagramLabel.qSub.label}',
-    showDotAtIntersection: true,
+    addDotAtIntersection: true,
   );
   paintLegend(canvas, size, [
     LegendEntry.fromShade(ShadeType.consumerIncidence),

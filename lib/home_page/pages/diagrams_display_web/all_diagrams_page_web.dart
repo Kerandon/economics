@@ -128,7 +128,7 @@ class _AllDiagramsPageWebState extends ConsumerState<AllDiagramsPageWeb> {
           build: (pw.Context context) {
             return pw.GridView(
               crossAxisCount: diagramsPerRow, // 3 horizontal
-              childAspectRatio: 1.2, // Taller aspect to allow space for titles
+              childAspectRatio: 1.1, // Taller aspect to allow space for titles
               children: group.map((row) {
                 // Determine the size for the content based on whether it's 1 or 2 diagrams
                 final cellWidth = context.page.pageFormat.availableWidth / diagramsPerRow;

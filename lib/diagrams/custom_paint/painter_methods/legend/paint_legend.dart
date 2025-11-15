@@ -13,7 +13,7 @@ void paintLegend(
   double spacing = 8.0,
   double textSpacing = 4.0,
   double margin = 20,
-      double yAdjustment = kAxisIndent * 0.85,
+      double yAdjustment = kAxisIndent * 0.50,
   Brightness brightness = Brightness.light,
   LegendAlignment alignment = LegendAlignment.right,
 }) {

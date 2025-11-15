@@ -2,46 +2,77 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../../app/configs/constants.dart';
 import '../enums/text_box_type.dart';
-
 class CustomTextBox extends StatelessWidget {
-  const CustomTextBox({required this.text, required this.type, super.key});
+  const CustomTextBox({
+    this.term,
+    required this.text,
+    required this.type,
+    this.isHL = false, // flag for HL terms
+    super.key,
+  });
 
-  final String text;
+  final String? term; // nullable term
+  final String text; // explanation or content
   final TextBoxType type;
+  final bool isHL; // true if HL term
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
-    Color color = Colors.deepPurpleAccent;
+    // Term color based on type
+    Color termColor;
     switch (type) {
       case TextBoxType.term:
-        color = Colors.deepPurple;
+        termColor = Colors.deepOrange;
+        break;
       case TextBoxType.alert:
-        color = Colors.red;
+        termColor = Colors.redAccent;
+        break;
       case TextBoxType.tip:
-        color = Colors.teal;
+        termColor = Colors.teal;
+        break;
       case TextBoxType.content:
-        color = theme.colorScheme.onSurface;
+        termColor = theme.colorScheme.onSurface;
+        break;
       case TextBoxType.keyContent:
-        color = Colors.deepOrange;
+        termColor = Colors.deepOrange;
+        break;
     }
 
-    final isContent = type == TextBoxType.content;
     return Padding(
-      padding: EdgeInsets.only(bottom: size.height * kPageIndentVertical / 2),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(kRadius),
-          border: isContent
-              ? null
-              : Border.all(
-                  color: color, // Set your border color here
-                  width: 2, // Optional: set border thickness
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Bullet
+          Text(
+            "• ",
+            style: TextStyle(color: termColor, fontSize: 16),
+          ),
+          // Term + text
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (term != null)
+                  Text(
+                    isHL ? '$term (HL)' : term!,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: termColor,
+                    ),
+                  ),
+                HtmlWidget(
+                  text,
+                  textStyle: TextStyle(
+                    color: theme.colorScheme.onSurface,
+                    height: 1.3,
+                  ),
                 ),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        child: HtmlWidget(text, textStyle: TextStyle(color: color)),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

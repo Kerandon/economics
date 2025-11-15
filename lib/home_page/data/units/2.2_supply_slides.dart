@@ -1,3 +1,5 @@
+import 'package:economics_app/home_page/custom_widgets/simple_table.dart';
+
 import '../../../app/configs/constants.dart';
 import '../../../diagrams/enums/diagram_bundle_enum.dart';
 import '../../../diagrams/enums/unit_type.dart';
@@ -13,43 +15,53 @@ List<Slide> get supplySlides => [
     contents: [
       SlideContent.term(
         'Supply',
-        'is the various quantities of a good or service a firm is willing and able to sell at different prices, during a particular time period, ceteris paribus.',
+        'The quantities of a good a firm is willing and able to produce at various prices, ceteris paribus.',
       ),
 
       SlideContent.term(
         'The Law of Supply',
-        'states that there is a positive relationship between the price of a good and its quantity supplied, ceteris paribus.',
+        'As the price of a good increases, its quantity supplied increases, ceteris paribus.',
       ),
+
       SlideContent.term(
-        'Change In Quantity Supplied',
-        'is when a change in the price of a good or service leads to a movement up or down the supply curve. An increase in price results in an <strong>extension</strong> in supply, while a fall in price leads to a <strong>contraction</strong> in supply.',
+        'Change in Quantity Supplied',
+        'A movement along the supply curve due to a change in price: higher prices cause an extension, lower prices a contraction.',
       ),
+
       SlideContent.term(
-        'Increase Or Decrease In Supply',
-        'is when a non-price determinant of supply changes supply at every price. This is shown by a shift of the entire supply curve.',
+        'Increase or Decrease in Supply',
+        'A shift of the supply curve caused by a change in a non-price determinant of supply.',
       ),
+
       SlideContent.term(
         'Market Supply',
-        'is the total (aggregate) quantity of a good or service supplied by all producers in a market at different prices, over a specific period of time, ceteris paribus.',
+        'The total quantity supplied by all firms in a market at various prices, ceteris paribus.',
       ),
+
       SlideContent.term(
-        'Costs of production',
-        'are the expenses a firm incurs in the process of producing goods or services. They include all payments for resources as well as opportunity costs of using those resources.',
+        'Costs of Production',
+        'The monetary payments and opportunity costs a firm incurs when producing a good or service.',
       ),
+
       SlideContent.term(
         'Supply Shock',
-        'is an unexpected event that significantly increase or decrease supply. Typical examples include political instability, natural disasters or technological breakthroughs',
-      ),
-      SlideContent.term(
-        tag: Tag.hl,
-        'Marginal Product',
-        'is the additional output that results from employing one more input, ceteris paribus. <strong>MP = ∆Total Product ÷ ∆Input</strong>',
+        'An unexpected event that suddenly raises or reduces supply, e.g., natural disasters or technological change.',
       ),
 
       SlideContent.term(
         tag: Tag.hl,
+        'Marginal Product',
+        'The extra output produced by employing one more unit of an input. <strong>MP = ∆TP ÷ ∆Input</strong>',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'The Law Of Diminishing Marginal Returns ',
+        'States that in the short-run, as additional units of a variable factor of production are added to one or more fixed factors of production, the marginal product will eventually decrease, as diminishing returns set in, ceteris paribus',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
         'Marginal Cost',
-        'is the change in cost incurred when producing one more unit of a good, ceteris paribus. <strong>MC = ∆Total Cost ÷ ∆Quantity</strong>',
+        'The extra cost of producing one more unit of output. <strong>MC = ∆TC ÷ ∆Q</strong>',
       ),
     ],
   ),
@@ -57,11 +69,26 @@ List<Slide> get supplySlides => [
   /// Supply
   Slide(
     section: Subunit.supply,
-    title: 'Non-Price Determinants of Supply',
+    title: 'Changes in Supply',
     contents: [
+      SlideContent.text(
+        'An <strong>extension in supply (R)</strong> or <strong>contraction in supply (L)</strong> '
+        'is a movement along the supply curve caused by a change in the <strong>price</strong> of the good '
+        '(or due to a shift in the demand curve).',
+      ),
+
+      SlideContent(
+        diagramBundleEnums: [
+          DiagramBundleEnum.microSupplyContraction,
+          DiagramBundleEnum.microSupplyExtension,
+        ],
+      ),
+      SlideContent.text(
+        'An <strong>increase in supply (L)</strong> or a <strong>decrease in supply (R) </strong> is caused by <strong>non-price</strong> determinants.',
+      ),
       SlideContent.key('Non-Price Determinants of Supply', '''
         <ul>
-          <li>Changes in costs of factors of production (FOPs)</li>
+          <li>Changes in costs of factors of production (e.g., wages, raw materials, capital, energy, transport)</li>
           <li>Prices of related goods (joint and competitive supply)</li>
           <li>Indirect taxes and subsidies</li>
           <li>Future price expectations</li>
@@ -69,8 +96,71 @@ List<Slide> get supplySlides => [
           <li>Number of firms</li>
         </ul>
         '''),
-      SlideContent.diagram(DiagramBundleEnum.microDemandExtension),
-      // 🔧 placeholder
+      SlideContent(
+        diagramBundleEnums: [
+          DiagramBundleEnum.microSupplyIncrease,
+          DiagramBundleEnum.microSupplyDecrease,
+        ],
+      ),
     ],
+  ),
+  Slide(
+    section: Subunit.supply,
+    title: 'Assumptions underlying the law of supply',
+    hl: true,
+    contents: [
+      SlideContent.text(
+          'Marginal Product (MP) is the additional output produced by one more unit of a variable input, ceteris paribus. '
+              'It is calculated as: MP = ∆Total Output ÷ ∆Labor.'
+      ),
+      SlideContent.text(
+          'When labor increases from 2 to 3, output rises from 7 to 10. '
+              'MP = 10 - 7 = 3 units.'
+      ),
+      SlideContent.customWidget(
+        SimpleTable(
+          headers: ['Labor', 'Output', 'Marginal Product (MP)'],
+          data: [
+            ['1', '3', '3'],   // 3 - 0 = 3
+            ['2', '7', '4'],   // 7 - 3 = 4
+            ['3', '10', '3'],  // 10 - 7 = 3
+            ['4', '12', '2'],  // 12 - 10 = 2
+            ['5', '13', '1'],  // 13 - 12 = 1
+            ['6', '12', '-1'], // 12 - 13 = -1
+          ],
+        ),
+      ),
+
+
+      SlideContent.text(
+        '<strong>The Law of Diminishing Marginal Returns</strong> '
+            'states that the extra output must eventually fall. '
+            'In the table, diminishing returns sets in when the third unit of labor is hired. '
+            'Diminishing returns is due to factors such as overcrowding, and full use of fixed resources (thus in the short-run only).',
+      ),
+
+      SlideContent(
+        diagramBundleEnums: [
+          DiagramBundleEnum.microMarginalProduct,
+          DiagramBundleEnum.microTotalAndMarginalProduct,
+        ],
+      ),
+      SlideContent.text('Marginal Cost is inversely related to Marginal Product.'),
+      SlideContent(
+        diagramBundleEnums: [
+          DiagramBundleEnum.microMarginalProduct,
+          DiagramBundleEnum.microMarginalCost,
+        ],
+      ),
+      SlideContent.key('Reasons for the upwards sloping supply curve', '''
+        <ul>
+          <li>Firms are motivated to increase quantity supplied as prices rise to maximize profit
+ </li>
+          <li>Increasing marginal costs (The Law of Diminishing Marginal Returns)</li>
+          <li>Rising opportunity costs of using resources which were used in other production</li>
+        </ul>
+        '''),
+    ],
+
   ),
 ];

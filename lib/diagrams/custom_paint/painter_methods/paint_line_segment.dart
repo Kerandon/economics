@@ -130,49 +130,40 @@ void paintLineSegment(
     case LineEndStyle.none:
       break;
   }
-// --- 4. Label ---
+/// --- 4. Label ---
   if (label != null) {
-    // 1. Calculate midpoint in normalized coordinates
+    // Midpoint of the line
     final Offset midNormalized = Offset(
       (startPos.dx + endPos.dx) / 2,
-      (startPos.dy + endPos.dy) / 2,
+      /// ARBITARY FIX ______________________________________________________
+      (startPos.dy + endPos.dy) / 1.98,
     );
 
-    // ⭐ Adjusted label offset for clearer spacing (Increased to 0.05)
-    double labelOffsetPx = config.painterSize.width * 0.04;
+    // Fixed distance from the line (independent of text length)
+    final double labelOffsetPx = config.painterSize.width * 0.06;
 
-    final bool usingDiagramNormalize = normalizeToDiagramArea;
-    final double normalizeFactor = usingDiagramNormalize ? (1.0 - (kAxisIndent * 2)) : 1.0;
-    final double deltaNormalizedScalar = labelOffsetPx / (config.painterSize.width * normalizeFactor);
-
-    // Perpendicular unit vector (in normalized coordinate space)
+    // Perpendicular unit vector
     final Offset perpUnit = Offset(-sin(angle), cos(angle));
     Offset deltaNormalized;
 
     switch (labelAlign) {
       case LabelAlign.centerTop:
-      // ⭐ FIX 1: Multiply by -1 to invert the direction relative to Canvas Y-axis.
-      // centerTop means above the line (negative Y in diagram space),
-      // which often corresponds to positive Canvas Y-axis when perpendicular to a horizontal line.
-      // We use perpUnit * -1 to flip the offset direction, which corrects the alignment.
-        deltaNormalized = perpUnit * deltaNormalizedScalar * -1;
+      // "Top" = visually above the line → negative Y offset in Canvas space
+        deltaNormalized = perpUnit * -labelOffsetPx / config.painterSize.width;
         break;
 
       case LabelAlign.centerBottom:
-      // ⭐ FIX 1: Multiply by +1 (or leave as is) for centerBottom.
-      // centerBottom means below the line (positive Y in diagram space).
-        deltaNormalized = perpUnit * deltaNormalizedScalar * 1;
+      // "Bottom" = visually below the line → positive Y offset in Canvas space
+        deltaNormalized = perpUnit * labelOffsetPx / config.painterSize.width;
         break;
 
       default:
-      // ⭐ FIX 2: Ensure it's exactly centered on the line for any other alignment choice
-        deltaNormalized = Offset.zero;
+        deltaNormalized = Offset.zero; // centered on the line
         break;
     }
 
     final Offset labelNormalizedPos = midNormalized + deltaNormalized;
 
-    // Use paintText2
     paintText2(
       fontSize: kFontSmall,
       config,
