@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/grid_line_style.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/label_align.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
@@ -22,6 +23,9 @@ class CompetitiveMarket extends BaseDiagramPainter2 {
   @override
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
+    if(bundle != DiagramBundleEnum.microMarginalBenefit){
+      paintAxis(c, canvas);
+    }
 
     if (bundle == DiagramBundleEnum.microShortage ||
         bundle == DiagramBundleEnum.microSurplus) {
@@ -47,7 +51,7 @@ class CompetitiveMarket extends BaseDiagramPainter2 {
       );
     }
 
-    paintAxis(c, canvas);
+
     switch (bundle) {
       case DiagramBundleEnum.microShortage || DiagramBundleEnum.microSurplus:
         _paintShortageOrSurplus(c, canvas, size, bundle);
@@ -55,6 +59,8 @@ class CompetitiveMarket extends BaseDiagramPainter2 {
           DiagramBundleEnum.microDemandDecreasePriceMechanism ||
           DiagramBundleEnum.microPriceRationing:
         _paintIncreaseOrDecreaseInDemand(c, canvas, size, bundle);
+      case DiagramBundleEnum.microMarginalBenefit:
+        _paintMarginalBenefit(c, canvas, size);
       case DiagramBundleEnum.microConsumerSurplus ||
           DiagramBundleEnum.microProducerSurplus ||
           DiagramBundleEnum.microAllocativeEfficiency:
@@ -300,6 +306,51 @@ void _paintIncreaseOrDecreaseInDemand(
     );
     paintLineSegment(c, canvas, origin: Offset(-0.10, 0.49), angle: pi / 2);
   }
+}
+
+void _paintMarginalBenefit(DiagramPainterConfig c, Canvas canvas, Size size) {
+  paintAxis(c, canvas,
+      drawGridlines: true,
+      gridLineStyle: GridLineStyle.indents,
+      yMaxValue: 100,xMaxValue: 10, xDivisions: 10, yDivisions: 10);
+  paintText2(c, canvas, '90', Offset(0.05,0.05));
+  paintText2(c, canvas, '80', Offset(0.15,0.15));
+  paintText2(c, canvas, '70', Offset(0.25,0.25));
+  paintText2(c, canvas, '60', Offset(0.35,0.35));
+  paintText2(c, canvas, '50', Offset(0.45,0.45));
+  paintText2(c, canvas, '40', Offset(0.55,0.55));
+  paintText2(c, canvas, '30', Offset(0.65,0.65));
+  paintText2(c, canvas, '20', Offset(0.75,0.75));
+  paintText2(c, canvas, '10', Offset(0.85,0.85));
+  paintText2(c, canvas, '0', Offset(0.95,0.95));
+  paintDiagramLines(
+    strokeWidth: 10,
+    c,
+    canvas,
+    startPos: Offset(0, 0.10),
+    polylineOffsets: [
+      Offset(0.10, 0.10),
+      Offset(0.10, 0.20),
+      Offset(0.20, 0.20),
+      Offset(0.20, 0.30),
+      Offset(0.30, 0.30),
+      Offset(0.30, 0.40),
+      Offset(0.40, 0.40),
+      Offset(0.40, 0.50),
+      Offset(0.50, 0.50),
+      Offset(0.50, 0.60),
+      Offset(0.60, 0.60),
+      Offset(0.60, 0.70),
+      Offset(0.70, 0.70),
+      Offset(0.70, 0.80),
+      Offset(0.80, 0.80),
+      Offset(0.80, 0.90),
+      Offset(0.90, 0.90),
+      Offset(0.90, 1.0),
+    ],
+  );
+  paintLineSegment(c, canvas, origin: Offset(0.56,0.42),angle: pi/4, length: 1.2);
+  paintText2(c, canvas, 'The Law Of Diminishing\nMarginal Utility\nleads to falling MB', Offset(0.72,0.20));
 }
 
 void _paintConsumerProducerSurplusAllocativeEfficiency(

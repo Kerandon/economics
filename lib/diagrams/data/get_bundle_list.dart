@@ -72,6 +72,9 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   DiagramBundle(DiagramBundleEnum.microPriceRationing, [
     CompetitiveMarket(config, DiagramBundleEnum.microPriceRationing),
   ]),
+  DiagramBundle(DiagramBundleEnum.microMarginalBenefit, [
+    CompetitiveMarket(config, DiagramBundleEnum.microMarginalBenefit),
+  ]),
   DiagramBundle(DiagramBundleEnum.microConsumerSurplus, [
     CompetitiveMarket(config, DiagramBundleEnum.microConsumerSurplus),
   ]),
