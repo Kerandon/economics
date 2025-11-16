@@ -57,6 +57,9 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   ]),
 
   /// 2.3 Competitive Market Equilibrium
+  DiagramBundle(DiagramBundleEnum.microMarketEquilibrium, [
+    CompetitiveMarket(config, DiagramBundleEnum.microMarketEquilibrium),
+  ]),
   DiagramBundle(DiagramBundleEnum.microShortage, [
     CompetitiveMarket(config, DiagramBundleEnum.microShortage),
   ]),

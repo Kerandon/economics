@@ -66,6 +66,8 @@ class SlideContent {
 
   factory SlideContent.diagram(DiagramBundleEnum diagram) =>
       SlideContent(diagramBundleEnums: [diagram]);
+  factory SlideContent.diagrams(List<DiagramBundleEnum> diagrams) =>
+      SlideContent(diagramBundleEnums: diagrams);
 
   factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
 

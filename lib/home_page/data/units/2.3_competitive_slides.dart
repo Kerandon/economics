@@ -1,3 +1,6 @@
+import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/home_page/custom_widgets/simple_table.dart';
+
 import '../../../app/configs/constants.dart';
 import '../../../diagrams/enums/unit_type.dart';
 import '../../models/slide.dart';
@@ -31,8 +34,7 @@ List<Slide> get competitiveMarketEquilibrium => [
 
       SlideContent.term(
         'Incentives',
-          'Motivations created by price changes that encourage consumers and producers to adjust behaviour to maximise profit or benefit.'
-
+        'Motivations created by price changes that encourage consumers and producers to adjust behaviour to maximise profit or benefit.',
       ),
 
       SlideContent.term(
@@ -60,7 +62,6 @@ List<Slide> get competitiveMarketEquilibrium => [
         'The sum of consumer and producer surplus; maximized at market equilibrium.',
       ),
 
-
       SlideContent.term(
         'Allocative Efficiency',
         'The quantity of goods most desired by society, representing maximum social welfare (<strong>MSB = MSC</strong>)',
@@ -70,6 +71,123 @@ List<Slide> get competitiveMarketEquilibrium => [
         'Pareto Efficiency',
         'Resources are allocated so that it is impossible to make one person better off without making someone else worse off.',
       ),
+    ],
+  ),
+  Slide(
+    section: Subunit.competitiveMarket,
+    title: 'Market equilibrium',
+    contents: [
+      SlideContent.text(
+        'Market equilibrium is the market price where the quantity demanded (Qd) is equal to quantity supplied (Qs)',
+      ),
+      SlideContent.diagram(DiagramBundleEnum.microMarketEquilibrium),
+      SlideContent.text(
+        'Market disequilibrium is either when <strong>Qd > Qs (shortage) (L)</strong> '
+        'or when <strong>Qs > Qd (R)</strong>  at the current market price.',
+      ),
+      SlideContent.diagrams([
+        DiagramBundleEnum.microShortage,
+        DiagramBundleEnum.microSurplus,
+      ]),
+    ],
+  ),
+  Slide(
+    section: Subunit.competitiveMarket,
+    title: 'Resource Allocation - Price Mechanism',
+    contents: [
+      SlideContent.text(
+        'The price mechanism allocates resources and rations goods and services through three key functions:'
+        '<ul><li>Price signalling</li>'
+        '<li>Incentives</li>'
+        '<li>Price Rationing</li>'
+        '</ul>',
+      ),
+      SlideContent.text(
+        '<ul>'
+        '<li><strong>(L)</strong> Demand increases leading to a shortage at P1,Q1 creating upward pressure on price '
+        'signalling to producers to allocate more resources to production, as profit incentives increase. '
+        'Consumers respond to higher prices by reducing consumption. '
+        'Qs rises and Qd falls until the surplus is cleared at P2,Q2.</li>'
+        '<li><strong>(R)</strong> Demand falls leading to a surplus at P1,Q1, creating downward pressure on price, '
+        'signalling to producers to reduce resource allocation, '
+        'while lower prices provide an incentive to consumers to increase consumption to maximize utility.'
+        'Qs falls and Qd rises until the surplus is cleared at P2,Q2.</li>'
+        '</ul>',
+      ),
+
+      SlideContent.diagrams([
+        DiagramBundleEnum.microDemandIncreasePriceMechanism,
+        DiagramBundleEnum.microDemandDecreasePriceMechanism,
+      ]),
+
+      SlideContent.text(
+        'Price rationing is how the price mechanism allocates scarce goods and services among consumers. '
+        'E.g., when there is a shortage, price rises and only consumers willing to pay the higher price obtain the good'
+        ' (thereby \'rationing\' the good).',
+      ),
+
+      SlideContent.diagram(DiagramBundleEnum.microPriceRationing),
+    ],
+  ),
+  Slide(
+    title: 'The Law of Diminishing Marginal Utility',
+    section: Subunit.competitiveMarket,
+    contents: [
+      SlideContent.text(
+        'As consumption increases the additional utility (satisfaction) falls. '
+        'This is because consumers become more and more satiated with a good the more they consume. '
+        'This is known as <strong>The Law of Diminishing Marginal Utility</strong>.',
+      ),
+      SlideContent.customWidget(
+        SimpleTable(
+          headers: ['Slices of Pizza', 'Total Utility', 'Marginal Utility'],
+          data: [
+            ['1', '10', '10'],
+            ['2', '18', '8'],
+            ['3', '23', '5'],
+            ['4', '23', '0'],
+            ['5', '19', '-4'],
+          ],
+        ),
+      ),
+      SlideContent.text(
+        'Marginal Utility = ΔTotal Utility / ΔQuantity <strong>(MU = ΔTU / ΔQ)</strong>. '
+        'The additional utility of the second slice of pizza is (18 − 10) / (2 − 1) = 8 MU. '
+        'Maximum satiation occurs when four slices are eaten. A fifth slice may make the consumer feel sick, resulting in negative marginal utility.',
+      ),
+    ],
+  ),
+  Slide(
+    title: 'Marginal Benefit and Marginal Cost',
+    section: Subunit.competitiveMarket,
+    contents: [
+      SlideContent.text('Marginal Benefit (MB) represents the maximum a consumer is willing to pay for one more unit of a good'
+          ' (a quantifiable way to measure marginal utility).\n'
+          'MB is the demand curve.'),
+      SlideContent.diagram(DiagramBundleEnum.microMarginalBenefit),
+      SlideContent.text('Marginal Cost (MC) represents the additional cost for a firm to supply one more unit of a good'
+          ' (underpinned by The Law of Diminishing Marginal Utility).\n'
+          'MC is the supply curve.'),
+      SlideContent.diagram(DiagramBundleEnum.microMarginalBenefit),
+    ]
+  ),
+  Slide(
+    title: 'Consumer, Producer and Social Surplus',
+    section: Subunit.competitiveMarket,
+    contents: [
+      SlideContent.text(
+        'Consumer Surplus is calculated the area below the marginal benefit curve (demand) and above the market price.',
+      ),
+      SlideContent.diagrams([
+        DiagramBundleEnum.microConsumerSurplus,
+        DiagramBundleEnum.microProducerSurplus,
+      ]),
+      SlideContent.text(
+        'Allocative Efficiency is achieved when <strong>MB = MC</strong>. At this quantity any surpluses or shortages are cleared from the market, and'
+        ' the <strong>sum</strong> of consumer surplus and producer surplus is maximized.'
+        ' This represents the most efficient allocation of resources from society\'s point of view.',
+      ),
+      SlideContent.diagrams([DiagramBundleEnum.microAllocativeEfficiency]),
     ],
   ),
 ];

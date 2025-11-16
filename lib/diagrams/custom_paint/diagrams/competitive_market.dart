@@ -28,7 +28,7 @@ class CompetitiveMarket extends BaseDiagramPainter2 {
     }
 
     if (bundle == DiagramBundleEnum.microShortage ||
-        bundle == DiagramBundleEnum.microSurplus) {
+        bundle == DiagramBundleEnum.microSurplus || bundle == DiagramBundleEnum.microMarketEquilibrium) {
       paintDiagramDashedLines(
         c,
         canvas,
