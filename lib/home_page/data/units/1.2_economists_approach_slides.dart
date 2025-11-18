@@ -34,10 +34,7 @@ List<Slide> get economistsApproach => [
         'Laissez-Faire',
         'A French term meaning "let do, let be"; refers to minimal government intervention, where free markets drive competition and efficiency.',
       ),
-      SlideContent.term(
-        'Law',
-        'A statement that is universally true.',
-      ),
+      SlideContent.term('Law', 'A statement that is universally true.'),
       SlideContent.term(
         'Logic',
         'The use of reasoning to draw valid conclusions.',
@@ -78,7 +75,6 @@ List<Slide> get economistsApproach => [
         'Utility',
         'The satisfaction or benefit gained from consuming a good or service.',
       ),
-
     ],
   ),
 ];

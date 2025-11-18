@@ -25,13 +25,11 @@ class Tariff extends BaseDiagramPainter2 {
     if (bundle == DiagramBundleEnum.globalTariffConsumerSurplus) {
       _paintConsumerSurplus(canvas, size);
     }
-    if (bundle ==
-        DiagramBundleEnum.globalTariffConsumerSurplusChange) {
+    if (bundle == DiagramBundleEnum.globalTariffConsumerSurplusChange) {
       _paintConsumerSurplus(canvas, size);
     }
 
-    if (bundle ==
-        DiagramBundleEnum.globalTariffConsumerSurplusChange) {
+    if (bundle == DiagramBundleEnum.globalTariffConsumerSurplusChange) {
       paintShading(canvas, size, ShadeType.lostConsumerSurplus, [
         Offset(0, 0.65),
         Offset(0.65, 0.65),
@@ -44,8 +42,7 @@ class Tariff extends BaseDiagramPainter2 {
         LegendEntry.fromShade(ShadeType.lostConsumerSurplus),
       ]);
     }
-    if (bundle ==
-        DiagramBundleEnum.globalTariffProducerSurplusChange) {
+    if (bundle == DiagramBundleEnum.globalTariffProducerSurplusChange) {
       paintShading(canvas, size, ShadeType.gainedProducerSurplus, [
         Offset(0.0, 0.65),
         Offset(0.35, 0.65),

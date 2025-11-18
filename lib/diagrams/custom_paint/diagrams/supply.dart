@@ -23,24 +23,20 @@ class Supply extends BaseDiagramPainter2 {
   void paint(Canvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-
     String yLabel = DiagramLabel.price.label;
     String xLabel = DiagramLabel.quantity.label;
-    if(bundle == DiagramBundleEnum.microMarginalProduct || bundle== DiagramBundleEnum.microTotalAndMarginalProduct){
+    if (bundle == DiagramBundleEnum.microMarginalProduct ||
+        bundle == DiagramBundleEnum.microTotalAndMarginalProduct) {
       yLabel = DiagramLabel.product.label;
       xLabel = DiagramLabel.input.label;
     }
-    if(bundle == DiagramBundleEnum.microMarginalCost || bundle == DiagramBundleEnum.microMarginalCostSupplyCurve){
+    if (bundle == DiagramBundleEnum.microMarginalCost ||
+        bundle == DiagramBundleEnum.microMarginalCostSupplyCurve) {
       yLabel = DiagramLabel.costs.label;
       xLabel = DiagramLabel.quantity.label;
     }
 
-    paintAxis(
-      c,
-      canvas,
-      yAxisLabel: yLabel,
-      xAxisLabel: xLabel,
-    );
+    paintAxis(c, canvas, yAxisLabel: yLabel, xAxisLabel: xLabel);
     // Supply extension/contraction (movement along the curve)
     if (bundle == DiagramBundleEnum.microSupplyExtension ||
         bundle == DiagramBundleEnum.microSupplyContraction) {
@@ -65,22 +61,33 @@ class Supply extends BaseDiagramPainter2 {
         addDotAtIntersection: true,
       );
       if (bundle == DiagramBundleEnum.microSupplyExtension) {
-        paintLineSegment(c, canvas, origin: Offset(0.42, 0.51), angle: -pi / 4, length: 0.15);
+        paintLineSegment(
+          c,
+          canvas,
+          origin: Offset(0.42, 0.51),
+          angle: -pi / 4,
+          length: 0.15,
+        );
       }
       if (bundle == DiagramBundleEnum.microSupplyContraction) {
-        paintLineSegment(c, canvas, origin: Offset(0.44, 0.48), angle: pi / 1.35, length: 0.15);
+        paintLineSegment(
+          c,
+          canvas,
+          origin: Offset(0.44, 0.48),
+          angle: pi / 1.35,
+          length: 0.15,
+        );
       }
     }
 
     // Supply increase (rightward shift)
     if (bundle == DiagramBundleEnum.microSupplyIncrease) {
-
-
       paintMarketCurve(
         c,
         canvas,
         type: MarketCurveType.supply,
-        label: DiagramLabel.s1.label, horizontalShift: -0.10
+        label: DiagramLabel.s1.label,
+        horizontalShift: -0.10,
       );
       paintMarketCurve(
         c,
@@ -113,7 +120,6 @@ class Supply extends BaseDiagramPainter2 {
 
     // Supply decrease (leftward shift)
     if (bundle == DiagramBundleEnum.microSupplyDecrease) {
-
       paintMarketCurve(
         c,
         canvas,
@@ -206,24 +212,9 @@ class Supply extends BaseDiagramPainter2 {
           ),
         ]);
 
-        paintText2(
-          c,
-          canvas,
-          'Increasing\nReturns',
-          Offset(0.15, labelYPos),
-        );
-        paintText2(
-          c,
-          canvas,
-          'Diminishing\nReturns',
-          Offset(0.52, labelYPos),
-        );
-        paintText2(
-          c,
-          canvas,
-          'Negative\nReturns',
-          Offset(0.90, labelYPos),
-        );
+        paintText2(c, canvas, 'Increasing\nReturns', Offset(0.15, labelYPos));
+        paintText2(c, canvas, 'Diminishing\nReturns', Offset(0.52, labelYPos));
+        paintText2(c, canvas, 'Negative\nReturns', Offset(0.90, labelYPos));
         paintDot(c, canvas, pos: Offset(0.32, 0.34), color: Colors.black);
         paintDot(c, canvas, pos: Offset(0.32, 0.685), color: Colors.black);
         paintDot(c, canvas, pos: Offset(0.76, 0.195), color: Colors.black);
@@ -293,8 +284,13 @@ class Supply extends BaseDiagramPainter2 {
         label2: DiagramLabel.marginalCost.label,
         label2Align: LabelAlign.centerTop,
       );
-      paintDiagramDashedLines(c, canvas, yAxisStartPos: 0, xAxisEndPos: 0.385, hideYLine: true,
-      xLabel: 'Diminishing\nReturns\nSets In'
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0,
+        xAxisEndPos: 0.385,
+        hideYLine: true,
+        xLabel: 'Diminishing\nReturns\nSets In',
       );
       paintDot(c, canvas, pos: Offset(0.385, 0.855), color: Colors.black);
     }

@@ -96,7 +96,6 @@ List<Slide> get roleOfGovernmentSlides => [
         'Underallocation of resources',
         'When too few resources are allocated to the production of a good, causing allocative inefficiency (MSB > MSC).',
       ),
-
     ],
   ),
 ];

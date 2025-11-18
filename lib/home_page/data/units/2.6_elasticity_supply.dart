@@ -9,7 +9,7 @@ List<Slide> get elasticitySupplySlides => [
     title: kKeyTerms,
     contents: [
       SlideContent.term(
-        'Perfectly price elastic supply (PES = ∞)',
+        'Perfectly price elastic supply (PES = infinity)',
         'When producers can supply any quantity at a given price.',
       ),
       SlideContent.term(
@@ -28,7 +28,6 @@ List<Slide> get elasticitySupplySlides => [
         'Unitary price elasticity of supply (PES = 1)',
         'When the percentage change in quantity supplied equals the percentage change in price.',
       ),
-
     ],
   ),
 ];

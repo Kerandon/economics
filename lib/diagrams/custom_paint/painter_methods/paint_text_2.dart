@@ -3,27 +3,29 @@ import 'package:flutter/material.dart';
 import 'axis/label_align.dart';
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
+
 enum LabelPivot {
-  left,    // text starts at anchor, grows right
-  center,  // text centered on anchor
-  right,   // text ends at anchor, grows left
-  top,     // text aligned to top of anchor
-  middle,  // text vertically centered
-  bottom,  // text aligned to bottom of anchor
+  left, // text starts at anchor, grows right
+  center, // text centered on anchor
+  right, // text ends at anchor, grows left
+  top, // text aligned to top of anchor
+  middle, // text vertically centered
+  bottom, // text aligned to bottom of anchor
 }
+
 void paintText2(
-    DiagramPainterConfig config,
-    Canvas canvas,
-    String label,
-    Offset position, {
-      Offset? pointerLine,
-      double fontSize = kFontMedium,
-      TextStyle? style,
-      double angle = 0,
-      LabelPivot horizontalPivot = LabelPivot.center,
-      LabelPivot verticalPivot = LabelPivot.middle,
-      bool normalize = true,
-    }) {
+  DiagramPainterConfig config,
+  Canvas canvas,
+  String label,
+  Offset position, {
+  Offset? pointerLine,
+  double fontSize = kFontMedium,
+  TextStyle? style,
+  double angle = 0,
+  LabelPivot horizontalPivot = LabelPivot.center,
+  LabelPivot verticalPivot = LabelPivot.middle,
+  bool normalize = true,
+}) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
   fontSize *= config.averageRatio;
@@ -33,10 +35,11 @@ void paintText2(
     fontSize: fontSize,
   );
 
-  style = style?.copyWith(
-    color: style.color ?? config.colorScheme.onSurface,
-    fontSize: (style.fontSize ?? kFontMedium) * config.averageRatio,
-  ) ??
+  style =
+      style?.copyWith(
+        color: style.color ?? config.colorScheme.onSurface,
+        fontSize: (style.fontSize ?? kFontMedium) * config.averageRatio,
+      ) ??
       defaultStyle;
 
   final textSpan = TextSpan(text: label, style: style);
@@ -85,25 +88,27 @@ void paintText2(
   final bottomMarginRatio = 1.5;
 
   // Normalized width/height of the drawable chart area
-  final normalizedWidthRatio = 1.0 - leftMarginRatio * kAxisIndent - rightMarginRatio * kAxisIndent;
-  final normalizedHeightRatio = 1.0 - topMarginRatio * kAxisIndent - bottomMarginRatio * kAxisIndent;
+  final normalizedWidthRatio =
+      1.0 - leftMarginRatio * kAxisIndent - rightMarginRatio * kAxisIndent;
+  final normalizedHeightRatio =
+      1.0 - topMarginRatio * kAxisIndent - bottomMarginRatio * kAxisIndent;
 
   // X calculation for text
   double w = normalize
-      ? (width * normalizedWidthRatio) * position.dx + leftMarginRatio * kAxisIndent * width
+      ? (width * normalizedWidthRatio) * position.dx +
+            leftMarginRatio * kAxisIndent * width
       : width * position.dx;
 
   // H calculation for text (slightly complex due to vertical alignment logic)
   // Let's rely on the original logic for H for now, as you stated it's correct.
   double h = normalize
       ? (height - 2 * kAxisIndent * height - textPainter.height) * position.dy +
-      (kAxisIndent / 2 * height) +
-      textPainter.height / 2
+            (kAxisIndent / 2 * height) +
+            textPainter.height / 2
       : height * position.dy;
 
   final offset = Offset(w - alignmentX, h - alignmentY);
   // ---------------------------------------------
-
 
   // Draw pointer line if provided
   if (pointerLine != null) {

@@ -28,7 +28,8 @@ class PriceControls extends BaseDiagramPainter2 {
         _paintPriceCeiling(c, canvas, size);
       case DiagramBundleEnum.microPriceFloor:
         _paintPriceFloor(c, canvas, size);
-      case DiagramBundleEnum.microNationalMinimumWage || DiagramBundleEnum.microNationalMinimumWageWelfare:
+      case DiagramBundleEnum.microNationalMinimumWage ||
+          DiagramBundleEnum.microNationalMinimumWageWelfare:
         _paintNMW(c, canvas, size, bundle);
       case DiagramBundleEnum.microNationalMinimumWageInelasticDemandAndSupply:
         _paintNMWInelasticDemand(c, canvas, size);
@@ -53,7 +54,10 @@ void _paintPriceCeiling(DiagramPainterConfig c, Canvas canvas, Size size) {
   paintLegendTable(
     canvas,
     c,
-    headers: ['', DiagramLabel.freeMarket.label, (DiagramLabel.priceCeiling.label)
+    headers: [
+      '',
+      DiagramLabel.freeMarket.label,
+      (DiagramLabel.priceCeiling.label),
     ],
     data: [
       [(DiagramLabel.consumerSurplus.label), '+(A,B)', '+(A,C)'],
@@ -108,12 +112,13 @@ void _paintPriceCeiling(DiagramPainterConfig c, Canvas canvas, Size size) {
     DiagramLabel.welfareLoss.label,
     Offset(0.75, 0.50),
     pointerLine: Offset(0.40, 0.50),
-  );  paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.25,
-      xAxisEndPos: 0.25,
-      hideYLine: true,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.25,
+    xAxisEndPos: 0.25,
+    hideYLine: true,
   );
   paintDiagramDashedLines(
     c,
@@ -123,7 +128,7 @@ void _paintPriceCeiling(DiagramPainterConfig c, Canvas canvas, Size size) {
     xLabel: DiagramLabel.qSStar.label,
 
     hideYLine: true,
-    addDotAtIntersection: true
+    addDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -132,7 +137,7 @@ void _paintPriceCeiling(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.75,
     xLabel: DiagramLabel.qD.label,
     addDotAtIntersection: true,
-    hideYLine: true
+    hideYLine: true,
   );
   paintDiagramDashedLines(
     c,
@@ -141,11 +146,10 @@ void _paintPriceCeiling(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.50,
     yLabel: DiagramLabel.pe.label,
     xLabel: DiagramLabel.qe.label,
-
   );
 }
 
-void _paintPriceFloor(DiagramPainterConfig c, Canvas canvas, Size size){
+void _paintPriceFloor(DiagramPainterConfig c, Canvas canvas, Size size) {
   paintShading(canvas, size, ShadeType.welfareLoss, [
     Offset(0.25, 0.75),
     Offset(0.25, 0.25),
@@ -245,9 +249,13 @@ void _paintPriceFloor(DiagramPainterConfig c, Canvas canvas, Size size){
   );
 }
 
-void _paintNMW(DiagramPainterConfig c, Canvas canvas, Size size, DiagramBundleEnum bundle) {
-
-  if(bundle == DiagramBundleEnum.microNationalMinimumWageWelfare){
+void _paintNMW(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+  DiagramBundleEnum bundle,
+) {
+  if (bundle == DiagramBundleEnum.microNationalMinimumWageWelfare) {
     paintText2(
       c,
       canvas,
@@ -352,13 +360,15 @@ void _paintNMW(DiagramPainterConfig c, Canvas canvas, Size size, DiagramBundleEn
     xAxisEndPos: 0.70,
     hideYLine: true,
     xLabel: DiagramLabel.qS.label,
-    addDotAtIntersection:
-      true,
+    addDotAtIntersection: true,
   );
-
 }
 
-void _paintNMWInelasticDemand(DiagramPainterConfig c, Canvas canvas, Size size) {
+void _paintNMWInelasticDemand(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+) {
   paintText2(
     c,
     canvas,
@@ -366,11 +376,11 @@ void _paintNMWInelasticDemand(DiagramPainterConfig c, Canvas canvas, Size size) 
     Offset(0.85, 0.50),
     pointerLine: Offset(0.46, 0.50),
   );
-    paintShading(canvas, size, ShadeType.welfareLoss, [
-      Offset(0.44, 0.65),
-      Offset(0.44, 0.30),
-      Offset(0.5, 0.50),
-    ]);
+  paintShading(canvas, size, ShadeType.welfareLoss, [
+    Offset(0.44, 0.65),
+    Offset(0.44, 0.30),
+    Offset(0.5, 0.50),
+  ]);
 
   paintDiagramDashedLines(
     c,
@@ -414,7 +424,7 @@ void _paintNMWInelasticDemand(DiagramPainterConfig c, Canvas canvas, Size size) 
 
     label: DiagramLabel.dL.label,
     angle: 0.50,
-      lengthAdjustment: -kExtendBy15
+    lengthAdjustment: -kExtendBy15,
   );
   paintMarketCurve(
     c,
@@ -423,7 +433,7 @@ void _paintNMWInelasticDemand(DiagramPainterConfig c, Canvas canvas, Size size) 
 
     label: DiagramLabel.sL.label,
     angle: -0.40,
-      lengthAdjustment: -kExtendBy15
+    lengthAdjustment: -kExtendBy15,
   );
 
   paintDiagramLines(
@@ -451,12 +461,15 @@ void _paintNMWInelasticDemand(DiagramPainterConfig c, Canvas canvas, Size size) 
     xAxisEndPos: 0.58,
     hideYLine: true,
     xLabel: DiagramLabel.qS.label,
-    addDotAtIntersection:
-    true,
+    addDotAtIntersection: true,
   );
-
 }
-void _paintAgriculturalPriceFloor(DiagramPainterConfig c, Canvas canvas, Size size) {
+
+void _paintAgriculturalPriceFloor(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+) {
   paintText2(
     c,
     canvas,
@@ -469,29 +482,56 @@ void _paintAgriculturalPriceFloor(DiagramPainterConfig c, Canvas canvas, Size si
     Offset(0.30, 1.0),
     Offset(0.70, 1.0),
     Offset(0.70, 0.30),
-    Offset(0.50,0.50)
+    Offset(0.50, 0.50),
   ]);
   paintLegendTable(
     canvas,
     c,
-    headers: ['', DiagramLabel.freeMarket.label, DiagramLabel.priceFloorAgri.label],
+    headers: [
+      '',
+      DiagramLabel.freeMarket.label,
+      DiagramLabel.priceFloorAgri.label,
+    ],
     data: [
       [(DiagramLabel.consumerSurplus.label), '+(A,B,C)', '+A'],
       [(DiagramLabel.producerSurplus.label), '+(D,E)', '+(B,C,D,E,F)'],
       [(DiagramLabel.governmentBudget.label), '-', '-(C,D,E,F,G,H,I)'],
-      [(DiagramLabel.socialWelfare.label), '+(A,B,C,D,E)', '+(A,B,D) -(C,-E,-G,-H,-I)'],
+      [
+        (DiagramLabel.socialWelfare.label),
+        '+(A,B,C,D,E)',
+        '+(A,B,D) -(C,-E,-G,-H,-I)',
+      ],
     ],
   );
 
-  paintLineSegment(c, canvas, origin: Offset(0.50,0.24), endStyle: LineEndStyle.arrowRightAngles, length: 0.40,
-  label: DiagramLabel.governmentBoughtSurplusQsMinusQd.label, labelAlign: LabelAlign.centerTop
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.50, 0.24),
+    endStyle: LineEndStyle.arrowRightAngles,
+    length: 0.40,
+    label: DiagramLabel.governmentBoughtSurplusQsMinusQd.label,
+    labelAlign: LabelAlign.centerTop,
   );
-  paintLineSegment(c, canvas, origin: Offset(0.15,1.10), endStyle: LineEndStyle.arrowRightAngles, length: 0.28,
-      label: DiagramLabel.freeMarket.label, labelAlign: LabelAlign.centerBottom
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.15, 1.10),
+    endStyle: LineEndStyle.arrowRightAngles,
+    length: 0.28,
+    label: DiagramLabel.freeMarket.label,
+    labelAlign: LabelAlign.centerBottom,
   );
-  paintLineSegment(c, canvas, origin: Offset(0.50,1.10), endStyle: LineEndStyle.arrowRightAngles, length: 0.40,
-      label: DiagramLabel.government.label, labelAlign: LabelAlign.centerBottom
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.50, 1.10),
+    endStyle: LineEndStyle.arrowRightAngles,
+    length: 0.40,
+    label: DiagramLabel.government.label,
+    labelAlign: LabelAlign.centerBottom,
   );
+
   /// Letters
   paintText2(c, canvas, DiagramLabel.a.label, Offset(0.12, 0.20));
   paintText2(c, canvas, DiagramLabel.b.label, Offset(0.12, 0.40));

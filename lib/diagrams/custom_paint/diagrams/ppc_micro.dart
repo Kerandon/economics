@@ -46,26 +46,10 @@ class PPCMicro extends BaseDiagramPainter {
       );
 
       if (model.subtype == DiagramSubtype.productionPoints) {
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.20, 0.80),
-        );
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.39, 0.35),
-        );
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.71, 0.70),
-        );
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.80, 0.30),
-        );
+        paintDot(c, canvas, pos: Offset(0.20, 0.80));
+        paintDot(c, canvas, pos: Offset(0.39, 0.35));
+        paintDot(c, canvas, pos: Offset(0.71, 0.70));
+        paintDot(c, canvas, pos: Offset(0.80, 0.30));
       }
 
       if (model.subtype == DiagramSubtype.increasingOpportunityCost) {
@@ -107,36 +91,11 @@ class PPCMicro extends BaseDiagramPainter {
           xAxisEndPos: 0.82,
           xLabel: '20',
         );
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.0, 0.20),
-
-        );
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.46, 0.40),
-
-        );
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.65, 0.60),
-
-        );
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.75, 0.80),
-
-        );
-        paintDot(
-          c,
-          canvas,
-          pos: Offset(0.80, 1.00),
-
-        );
+        paintDot(c, canvas, pos: Offset(0.0, 0.20));
+        paintDot(c, canvas, pos: Offset(0.46, 0.40));
+        paintDot(c, canvas, pos: Offset(0.65, 0.60));
+        paintDot(c, canvas, pos: Offset(0.75, 0.80));
+        paintDot(c, canvas, pos: Offset(0.80, 1.00));
       }
     }
     if (model.subtype == DiagramSubtype.constantOpportunityCost) {
@@ -255,8 +214,7 @@ class PPCMicro extends BaseDiagramPainter {
         // label: DiagramLabel.a.label,
         // labelAlign: LabelAlign.centerLeft,
       );
-      paintDot(c, canvas, pos: Offset(0.40, 0.60),
-      );
+      paintDot(c, canvas, pos: Offset(0.40, 0.60));
       paintDiagramLines(
         c,
         canvas,

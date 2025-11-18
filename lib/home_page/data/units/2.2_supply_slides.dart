@@ -15,11 +15,11 @@ List<Slide> get supplySlides => [
     contents: [
       SlideContent.term(
         'Change in Quantity Supplied',
-        'A movement along the supply curve due to a change in price: higher prices cause an extension, lower prices a contraction.',
+        'A movement along the supply curve. Higher prices cause an <strong>extension</strong>, lower prices a <strong>contraction</strong>.',
       ),
       SlideContent.term(
         'Costs of Production',
-        'The monetary payments and opportunity costs a firm incurs when producing a good or service.',
+        'The costs a firm incurs when producing a good or service.',
       ),
       SlideContent.term(
         'Increase or Decrease in Supply',

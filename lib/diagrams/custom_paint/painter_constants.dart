@@ -23,7 +23,7 @@ const kFontSmall = 22.0;
 const kFontMedium = 26.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
-  fontSize: kFontMedium
+  fontSize: kFontMedium,
 );
 
 /// Dot

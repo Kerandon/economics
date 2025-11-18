@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../../app/configs/constants.dart';
 import '../enums/text_box_type.dart';
+
 class CustomTextBox extends StatelessWidget {
   const CustomTextBox({
     this.term,
@@ -45,10 +46,7 @@ class CustomTextBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Bullet
-          Text(
-            "• ",
-            style: TextStyle(color: termColor, fontSize: 16),
-          ),
+          Text("• ", style: TextStyle(color: termColor, fontSize: 16)),
           // Term + text
           Expanded(
             child: Column(

@@ -40,8 +40,7 @@ class ComparativeAdvantage extends BaseDiagramPainter2 {
       LegendEntry(label: 'France', color: franceColor, shape: LegendShape.line),
     ]);
     paintTitle(c, canvas, 'Wine & Cheese Production');
-    if (bundle ==
-        DiagramBundleEnum.globalAbsoluteAdvantageDifferentGoods) {
+    if (bundle == DiagramBundleEnum.globalAbsoluteAdvantageDifferentGoods) {
       paintDiagramLines(
         c,
         canvas,
@@ -57,8 +56,7 @@ class ComparativeAdvantage extends BaseDiagramPainter2 {
         color: spainColor,
       );
     }
-    if (bundle ==
-            DiagramBundleEnum.globalAbsoluteAdvantageBothGoods ||
+    if (bundle == DiagramBundleEnum.globalAbsoluteAdvantageBothGoods ||
         bundle ==
             DiagramBundleEnum.globalComparativeAdvantageTradeAndConsumption) {
       paintDiagramLines(

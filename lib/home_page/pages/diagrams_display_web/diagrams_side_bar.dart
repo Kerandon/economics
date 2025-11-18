@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../diagrams/enums/unit_type.dart';
 import '../../../diagrams/models/diagram_bundle.dart';
 
-
 class DiagramsSidebar extends ConsumerWidget {
   final Map<UnitType, Map<Subunit, List<DiagramBundle>>> bundlesByUnit;
   final List<UnitType> sortedUnits;

@@ -13,7 +13,7 @@ List<Slide> get demandSlides => [
     contents: [
       SlideContent.term(
         'Change in Quantity Demanded',
-        'A price change causes movement along the demand curve. A fall in price causes <strong>extension</strong> in demand, and a rise in price causes <strong>contraction</strong> in demand.',
+        'A movement along the demand curve. A fall in price causes an <strong>extension</strong>, a rise in price causes a <strong>contraction</strong>.',
       ),
       SlideContent.term(
         'Complement Good',
@@ -51,11 +51,7 @@ List<Slide> get demandSlides => [
         'Market Demand',
         'The total quantity demanded by all consumers in a market at various prices over a period, ceteris paribus.',
       ),
-      SlideContent.term(
-        'Marginal Utility',
-        'The extra utility (benefit) when one more unit of a good is consumed (<strong>MU = ∆TU ÷ ∆Q</strong>).',
-        tag: Tag.hl,
-      ),
+
       SlideContent.term(
         'Normal Good',
         'Demand rises when consumers’ income increases.',
@@ -77,18 +73,21 @@ List<Slide> get demandSlides => [
         'Utility',
         'The benefit or satisfaction derived from consuming a good.',
       ),
-
+      SlideContent.term(
+        tag: Tag.hl,
+        'Marginal Utility',
+        'The extra utility (benefit) when one more unit of a good is consumed (<strong>MU = ∆TU ÷ ∆Q</strong>).',
+      ),
       SlideContent.term(
         'The Law of Diminishing Marginal Utility',
         'States that the additional satisfaction (marginal utility) from consuming extra units of a good eventually decreases, ceteris paribus.',
         tag: Tag.hl,
       ),
 
-
       SlideContent.term(
         tag: Tag.supplement,
         'Giffen Good',
-        'A staple good that make up a large proportion of consumers’ expenditure. When its price rises, consumers buy more of the good, creating a positive relationship between price and quantity demanded, making it an exception to the law of demand. The increase in demand occurs because the income effect of the higher price outweighs the substitution effect.',
+        'A staple good that make up a large proportion of consumers’ expenditure. When its price rises, consumers buy more of the good (exception to the law of demand).',
       ),
       SlideContent.term(
         tag: Tag.supplement,
@@ -96,11 +95,11 @@ List<Slide> get demandSlides => [
         'Consumption of luxury goods to display their wealth or status rather than for their practical utility.',
       ),
 
-      SlideContent.term(        tag: Tag.supplement,
+      SlideContent.term(
+        tag: Tag.supplement,
         'Veblen Good',
-        'A type of luxury good which is used to show wealth or status. It shows a positive relationship between price and quantity demanded, making it an exception to the law of demand',
+        'A type of luxury good which is used to show wealth or status. Quantity demanded increases when price rises (exception to the law of demand).',
       ),
-
     ],
   ),
   Slide(
@@ -109,17 +108,18 @@ List<Slide> get demandSlides => [
     contents: [
       SlideContent.text(
         'An <strong>extension in demand (L)</strong> or <strong>contraction in demand (R)</strong> is '
-            'a movement along the demand curve caused by a change in the <strong>price</strong> of a good (or a shift'
-            ' of the supply curve).',
+        'a movement along the demand curve caused by a change in the <strong>price</strong> of a good (or a shift'
+        ' of the supply curve).',
       ),
       SlideContent(
         diagramBundleEnums: [
           DiagramBundleEnum.microDemandExtension,
           DiagramBundleEnum.microDemandContraction,
-
         ],
       ),
-      SlideContent.text('An <strong>increase (L)</strong> or <strong>decrease in demand (R)</strong> is caused by <strong>non-price determinants</strong>'),
+      SlideContent.text(
+        'An <strong>increase (L)</strong> or <strong>decrease in demand (R)</strong> is caused by <strong>non-price determinants</strong>',
+      ),
       SlideContent.key('Non-Price Determinants of Demand', '''
 <ul>
 <li>Consumer Income</li>
@@ -135,7 +135,6 @@ List<Slide> get demandSlides => [
           DiagramBundleEnum.microDemandDecrease,
         ],
       ),
-
     ],
   ),
   Slide(

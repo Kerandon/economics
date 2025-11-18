@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
 import '../../diagrams/diagram_widgets/diagram_bundle_widget.dart';
 import '../custom_widgets/custom_text_box.dart';
 import '../data/get_slides_by_key.dart';
@@ -42,12 +41,12 @@ class _NotesPageState extends ConsumerState<NotesPage> {
     }
 
     return Scaffold(
-
       appBar: AppBar(
-        title: Text('${homePageState.selectedSubunit?.id} ${homePageState.selectedSubunit?.title}' ?? ''),
-        actions: [
-
-        ],
+        title: Text(
+          '${homePageState.selectedSubunit?.id} ${homePageState.selectedSubunit?.title}' ??
+              '',
+        ),
+        actions: [],
       ),
       body: ListView(
         controller: _scrollController,
@@ -56,8 +55,9 @@ class _NotesPageState extends ConsumerState<NotesPage> {
           // TABLE OF CONTENTS
           Card(
             elevation: 3,
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -88,7 +88,11 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: Row(
                           children: [
-                            Icon(Icons.circle, size: 6, color: theme.primaryColor),
+                            Icon(
+                              Icons.circle,
+                              size: 6,
+                              color: theme.primaryColor,
+                            ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
@@ -208,19 +212,28 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                                   if (c.diagramBundles?.isNotEmpty ?? false)
                                     LayoutBuilder(
                                       builder: (context, constraints) {
-                                        final availableWidth = constraints.maxWidth;
+                                        final availableWidth =
+                                            constraints.maxWidth;
 
                                         // Make diagrams bigger + smoother scaling
                                         final diagramWidth =
-                                        (availableWidth * 0.65).clamp(150.0, 400.0);
+                                            (availableWidth * 0.65).clamp(
+                                              150.0,
+                                              400.0,
+                                            );
 
                                         return SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: c.diagramBundles!.map((diagram) {
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: c.diagramBundles!.map((
+                                              diagram,
+                                            ) {
                                               return Padding(
-                                                padding: const EdgeInsets.only(right: 12),
+                                                padding: const EdgeInsets.only(
+                                                  right: 12,
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     SizedBox(
@@ -228,9 +241,11 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                                                       height: diagramWidth,
                                                       child: FittedBox(
                                                         fit: BoxFit.contain,
-                                                        child: DiagramBundleWidget(
-                                                          diagramBundle: diagram,
-                                                        ),
+                                                        child:
+                                                            DiagramBundleWidget(
+                                                              diagramBundle:
+                                                                  diagram,
+                                                            ),
                                                       ),
                                                     ),
                                                     if (diagram.title != null)
@@ -238,8 +253,11 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                                                         width: diagramWidth,
                                                         child: Text(
                                                           diagram.title!,
-                                                          textAlign: TextAlign.center,
-                                                          style: theme.textTheme.bodySmall,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: theme
+                                                              .textTheme
+                                                              .bodySmall,
                                                         ),
                                                       ),
                                                   ],
@@ -250,7 +268,6 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                                         );
                                       },
                                     ),
-
                                 ],
                               );
                             }).toList(),
@@ -330,9 +347,7 @@ class DiagramRow extends StatelessWidget {
                     // pass diagram to your DiagramBundleWidget.
                     // if DiagramBundleWidget expects a specific type, cast here:
                     // DiagramBundleWidget(diagramBundle: diagram as YourType)
-                    child: DiagramBundleWidget(
-                      diagramBundle: diagram,
-                    ),
+                    child: DiagramBundleWidget(diagramBundle: diagram),
                   ),
                 ),
                 if (diagramTitle.isNotEmpty)
@@ -352,4 +367,3 @@ class DiagramRow extends StatelessWidget {
     );
   }
 }
-

@@ -17,10 +17,10 @@ class LegendEntry {
 
   /// Convenience constructor for ShadeType with custom label and shape
   factory LegendEntry.fromShade(
-      ShadeType shade, {
-        String? customLabel, // Allows overriding the label
-        LegendShape shape = LegendShape.square,
-      }) {
+    ShadeType shade, {
+    String? customLabel, // Allows overriding the label
+    LegendShape shape = LegendShape.square,
+  }) {
     return LegendEntry(
       // Automatically uses the enum's defaultLabel if customLabel is null
       label: customLabel ?? shade.defaultLabel,

@@ -22,7 +22,15 @@ List<Slide> get competitiveMarketEquilibrium => [
       ),
       SlideContent.term(
         'Consumer Surplus',
-        'The difference between what consumers are willing to pay and the market price; area under demand and above price.',
+        'The difference between what consumers are willing to pay and the market price; area under demand (MB) and above price.',
+      ),
+      SlideContent.term(
+        'Producer Surplus',
+        'The difference between the market price and the minimum price producers are willing to accept; area above supply (MC) and below price.',
+      ),
+      SlideContent.term(
+        'Social Surplus (Community Surplus)',
+        'The sum of consumer and producer surplus; maximized at market equilibrium.',
       ),
       SlideContent.term(
         'Excess Demand',
@@ -32,22 +40,12 @@ List<Slide> get competitiveMarketEquilibrium => [
         'Excess Supply',
         'When quantity supplied exceeds quantity demanded at the current price (surplus).',
       ),
-      SlideContent.term(
-        'Incentives',
-        'Motivations created by price changes that encourage consumers and producers to adjust behavior to maximize profit or benefit.',
-      ),
+
       SlideContent.term(
         'Marginal Benefit',
         'The additional benefit gained from consuming one more unit, measured by the maximum a consumer is willing to pay.',
       ),
-      SlideContent.term(
-        'Non-Price Rationing',
-        'Allocation of goods using methods other than price, such as queueing, lotteries, or needs-based systems.',
-      ),
-      SlideContent.term(
-        'Pareto Efficiency',
-        'Resources are allocated so that it is impossible to make one person better off without making someone else worse off.',
-      ),
+
       SlideContent.term(
         'Price Mechanism',
         'How prices adjust to allocate resources, goods, and services in response to changes in demand and supply, through price signals, incentives, and rationing.',
@@ -57,14 +55,22 @@ List<Slide> get competitiveMarketEquilibrium => [
         'Information conveyed by price changes that guide consumer and producer decisions.',
       ),
       SlideContent.term(
-        'Producer Surplus',
-        'The difference between the market price and the minimum price producers are willing to accept; area above supply and below price.',
+        'Incentives',
+        'Motivations created by price changes that encourage consumers and producers to adjust behavior to maximize profit or benefit.',
       ),
       SlideContent.term(
-        'Social Surplus (Community Surplus)',
-        'The sum of consumer and producer surplus; maximized at market equilibrium.',
+        'Price Rationing',
+        'When scarce goods and services are allocated by the price mechanism. E.g., when a good is in shortage, its price rises and only those willing and able to pay can obtain it.',
       ),
-
+      SlideContent.term(
+        'Non-Price Rationing',
+        'Allocation of goods using methods other than price, such as queueing, lotteries, or needs-based systems.',
+      ),
+      SlideContent.term(
+        tag: Tag.supplement,
+        'Pareto Efficiency',
+        'Resources are allocated so that it is impossible to make one person better off without making someone else worse off.',
+      ),
     ],
   ),
   Slide(

@@ -115,7 +115,6 @@ List<Slide> get whatIsEconomicsSlides => [
         'The Production Possibilities Curve (PPC)',
         'A model showing the maximum combination of any two goods an economy can produce at a given time, demonstrating choice, opportunity cost, and scarcity.',
       ),
-
     ],
   ),
   Slide(

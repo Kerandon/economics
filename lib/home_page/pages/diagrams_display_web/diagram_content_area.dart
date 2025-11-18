@@ -4,7 +4,6 @@ import '../../../diagrams/enums/unit_type.dart';
 import '../../../diagrams/models/diagram_bundle.dart';
 import 'diagram_bundle_widget.dart';
 
-
 class DiagramsContentArea extends StatelessWidget {
   final List<UnitType> sortedUnits;
   final Map<UnitType, Map<Subunit, List<DiagramBundle>>> bundlesByUnit;
@@ -24,10 +23,12 @@ class DiagramsContentArea extends StatelessWidget {
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.02),
+          horizontal: MediaQuery.of(context).size.width * 0.02,
+        ),
         child: SingleChildScrollView(
           controller: scrollController,
-          child: LayoutBuilder( // Use LayoutBuilder to get the actual width inside the padding
+          child: LayoutBuilder(
+            // Use LayoutBuilder to get the actual width inside the padding
             builder: (context, constraints) {
               final contentWidth = constraints.maxWidth;
 
@@ -47,10 +48,12 @@ class DiagramsContentArea extends StatelessWidget {
                           '${unit.id}_${subunit.id}_${bundle.diagramBundleEnum?.toText}';
 
                       return DiagramBundleWidgetWeb(
-                        key: diagramKeys[id], // Using the GlobalKey as the widget key
+                        key:
+                            diagramKeys[id], // Using the GlobalKey as the widget key
                         bundle: bundle,
                         id: id,
-                        contentWidth: contentWidth, // Pass the constrained width
+                        contentWidth:
+                            contentWidth, // Pass the constrained width
                       );
                     });
                   });

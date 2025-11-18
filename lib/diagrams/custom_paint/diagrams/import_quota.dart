@@ -96,8 +96,7 @@ class ImportQuota extends BaseDiagramPainter2 {
       _paintProducerSurplus(canvas, size);
       _paintWelfareLoss(canvas, size);
     }
-    if (bundle ==
-        DiagramBundleEnum.globalImportQuotaConsumerSurplusChange) {
+    if (bundle == DiagramBundleEnum.globalImportQuotaConsumerSurplusChange) {
       _paintConsumerSurplus(canvas, size);
       paintShading(canvas, size, ShadeType.lostConsumerSurplus, [
         Offset(0.0, 0.65),

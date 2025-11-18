@@ -1,28 +1,31 @@
-
 import 'package:flutter/material.dart';
 
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
+
 Future<void> paintLegendTable(
-    Canvas canvas,
-    DiagramPainterConfig config, {
-      Offset normalizedTopLeft = const Offset(kAxisIndent * 1.5, 1 - (kAxisIndent * 0.50)),
-      required List<String> headers,
-      required List<List<String>> data,
-      double cellHeight = 20,
-      double headerHeight = 20,
-      Color? borderColor,
-      Color? headerColor,
-      TextStyle? headerStyle,
-      TextStyle? cellStyle,
-      String? title,
-      double titleHeight = 30,
-      TextStyle? titleStyle,
-      String? caption,
-      double captionHeight = 22,
-      TextStyle? captionStyle,
-      double cellPadding = 12.0,
-    }) async {
+  Canvas canvas,
+  DiagramPainterConfig config, {
+  Offset normalizedTopLeft = const Offset(
+    kAxisIndent * 1.5,
+    1 - (kAxisIndent * 0.50),
+  ),
+  required List<String> headers,
+  required List<List<String>> data,
+  double cellHeight = 20,
+  double headerHeight = 20,
+  Color? borderColor,
+  Color? headerColor,
+  TextStyle? headerStyle,
+  TextStyle? cellStyle,
+  String? title,
+  double titleHeight = 30,
+  TextStyle? titleStyle,
+  String? caption,
+  double captionHeight = 22,
+  TextStyle? captionStyle,
+  double cellPadding = 12.0,
+}) async {
   // ✅ Default color for all table elements
   final primaryColor = config.colorScheme.onSurface;
 
@@ -54,40 +57,42 @@ Future<void> paintLegendTable(
   }
 
   // ✅ Default text styles
-  final effectiveHeaderStyle = headerStyle ??
+  final effectiveHeaderStyle =
+      headerStyle ??
       TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: kFontSmall * 0.80,
         color: primaryColor,
       );
 
-  final effectiveCellStyle = cellStyle ??
-      TextStyle(
-        fontSize: kFontSmall * 0.90,
-        color: primaryColor,
-      );
+  final effectiveCellStyle =
+      cellStyle ?? TextStyle(fontSize: kFontSmall * 0.90, color: primaryColor);
 
-  final effectiveTitleStyle = titleStyle ??
+  final effectiveTitleStyle =
+      titleStyle ??
       TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: kFontSmall * 0.80,
         color: primaryColor,
       );
 
-  final effectiveCaptionStyle = captionStyle ??
-      TextStyle(
-        fontSize: 12,
-        color: primaryColor,
-      );
+  final effectiveCaptionStyle =
+      captionStyle ?? TextStyle(fontSize: 12, color: primaryColor);
 
   for (int col = 0; col < numColumns; col++) {
-    final headerTextWidth = measureTextWidth(headers[col], effectiveHeaderStyle);
+    final headerTextWidth = measureTextWidth(
+      headers[col],
+      effectiveHeaderStyle,
+    );
     columnWidths[col] = headerTextWidth + cellPadding * 2;
   }
 
   for (int row = 0; row < data.length; row++) {
     for (int col = 0; col < numColumns && col < data[row].length; col++) {
-      final cellTextWidth = measureTextWidth(data[row][col], effectiveCellStyle);
+      final cellTextWidth = measureTextWidth(
+        data[row][col],
+        effectiveCellStyle,
+      );
       final requiredWidth = cellTextWidth + cellPadding * 2;
       if (requiredWidth > columnWidths[col]) {
         columnWidths[col] = requiredWidth;
@@ -112,8 +117,14 @@ Future<void> paintLegendTable(
   }
 
   // Draw header background
-  final headerRect = Rect.fromLTWH(startX, startY, totalTableWidth, headerHeight);
-  final paintHeader = Paint()..color = headerColor ?? primaryColor.withOpacity(0.1);
+  final headerRect = Rect.fromLTWH(
+    startX,
+    startY,
+    totalTableWidth,
+    headerHeight,
+  );
+  final paintHeader = Paint()
+    ..color = headerColor ?? primaryColor.withOpacity(0.1);
   canvas.drawRect(headerRect, paintHeader);
 
   double currentX = startX;

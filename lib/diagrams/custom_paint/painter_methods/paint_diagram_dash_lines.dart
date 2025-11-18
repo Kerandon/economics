@@ -6,21 +6,21 @@ import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
 void paintDiagramDashedLines(
-    DiagramPainterConfig config,
-    Canvas canvas, {
-      required double yAxisStartPos,
-      required double xAxisEndPos,
-      String? yLabel,
-      String? xLabel,
-      bool hideYLine = false,
-      bool hideXLine = false,
-      bool makeDashed = true,
-      Color? color,
-      Color? backgroundColor,
-      bool addDotAtIntersection = false, // 👈 NEW property
-      double dotRadius = kDotRadius, // optional radius
-      Color? dotColor, // optional color override
-    }) {
+  DiagramPainterConfig config,
+  Canvas canvas, {
+  required double yAxisStartPos,
+  required double xAxisEndPos,
+  String? yLabel,
+  String? xLabel,
+  bool hideYLine = false,
+  bool hideXLine = false,
+  bool makeDashed = true,
+  Color? color,
+  Color? backgroundColor,
+  bool addDotAtIntersection = false, // 👈 NEW property
+  double dotRadius = kDotRadius, // optional radius
+  Color? dotColor, // optional color override
+}) {
   final c = color ?? config.colorScheme.onSurface;
 
   // Axis box (normalized)
@@ -46,7 +46,13 @@ void paintDiagramDashedLines(
 
   // Y label
   if (yLabel != null) {
-    _paintTextForDashedLines(config, canvas, yLabel, yAxisStartPos, CustomAxis.y);
+    _paintTextForDashedLines(
+      config,
+      canvas,
+      yLabel,
+      yAxisStartPos,
+      CustomAxis.y,
+    );
   }
 
   // Draw vertical (X) line
@@ -70,13 +76,15 @@ void paintDiagramDashedLines(
     paintDotAbsolute(
       config,
       canvas,
-      pos: Offset(xEndPos * config.painterSize.width, yPos * config.painterSize.width), // direct coordinates of intersection
+      pos: Offset(
+        xEndPos * config.painterSize.width,
+        yPos * config.painterSize.width,
+      ), // direct coordinates of intersection
       radius: dotRadius,
       color: dotColor ?? c,
     );
   }
 }
-
 
 void _paintTextForDashedLines(
   DiagramPainterConfig config,
@@ -134,12 +142,12 @@ void _paintTextForDashedLines(
 enum CustomAxis { x, y }
 
 void paintDotAbsolute(
-    DiagramPainterConfig config,
-    Canvas canvas, {
-      required Offset pos,
-      double radius = kDotRadius,
-      Color? color,
-    }) {
+  DiagramPainterConfig config,
+  Canvas canvas, {
+  required Offset pos,
+  double radius = kDotRadius,
+  Color? color,
+}) {
   final r = radius * config.averageRatio * 0.60;
   final paint = Paint()
     ..color = color ?? config.colorScheme.onSurfaceVariant

@@ -11,7 +11,7 @@ List<Slide> get externalitiesSlides => [
     contents: [
       SlideContent.term(
         'Carbon tax',
-        'An indirect tax on carbon emissions to reduce their social cost.',
+        'An indirect tax on carbon emissions to reduce its external cost.',
       ),
       SlideContent.term(
         'Club goods',
@@ -19,15 +19,23 @@ List<Slide> get externalitiesSlides => [
       ),
       SlideContent.term(
         'Collective self-governance',
-        'Local communities managing common-pool resources sustainably through shared rules and cooperation.',
+        'Communities managing common-pool resources sustainably through shared rules and cooperation.',
       ),
       SlideContent.term(
         'Common pool resources',
-        'Goods that are rivalrous but non-excludable, making them vulnerable to overuse and depletion, e.g., ocean fisheries.',
+        'Natural resources that are rivalrous but non-excludable, making them vulnerable to overuse and depletion, e.g., ocean fisheries.',
       ),
       SlideContent.term(
         'Demerit good',
         'A good that creates negative externalities but is consumed more than socially desirable, often because it is relatively affordable or consumers do not appreciate its social costs.',
+      ),
+      SlideContent.term(
+        'Excludability',
+        'The extent to which access to a good or resource can be restricted, usually by price.',
+      ),
+      SlideContent.term(
+        'Rivalrous',
+        'Consumption of a good or resource reduces the amount available for others.',
       ),
       SlideContent.term(
         'Externalities',
@@ -37,11 +45,7 @@ List<Slide> get externalitiesSlides => [
         'Internalizing the externality',
         'Including external costs or benefits in the market price of a good or service.',
       ),
-      SlideContent.term(
-        tag: Tag.supplement,
-        'Jevons paradox',
-        'The idea that improvements in resource-use efficiency can lead to increased consumption and total energy use (i.e., counter-productive).',
-      ),
+
       SlideContent.term(
         'Marginal private benefit',
         'The extra benefit to consumers when one more unit is consumed.',
@@ -72,11 +76,15 @@ List<Slide> get externalitiesSlides => [
       ),
       SlideContent.term(
         'Non-renewable resources',
-        'Resources that cannot be replenished within a human timescale, e.g., fossil fuels.',
+        'Resources that cannot be replenished e.g., fossil fuels.',
       ),
       SlideContent.term(
         'Pigouvian tax',
-        'An indirect tax on activities that create negative externalities to correct market inefficiency.',
+        'An indirect tax on activities that generate negative externalities, aimed at reducing external costs and correcting market failure.',
+      ),
+      SlideContent.term(
+        'Property Rights',
+        'Legal ownership and control over property (both tangible and non-tangible).',
       ),
       SlideContent.term(
         'Positive consumption externality',
@@ -104,23 +112,26 @@ List<Slide> get externalitiesSlides => [
       ),
       SlideContent.term(
         'Tragedy of the commons',
-        'Illustrates how individuals acting in self-interest overuse a shared resource, leading to its depletion.',
+        'Illustrates how individuals acting in self-interest overuse a shared resource (common pool resource), leading to its depletion.',
       ),
       SlideContent.term(
         'Tradable pollution permits',
-        'Government-issued permits to emit carbon that can be traded on a secondary market, reducing social cost.',
+        'Permits allocated by the government to emit carbon that can be traded on a secondary market, which aim to reduce the external cost of carbon emissions.',
       ),
       SlideContent.term(
         'Unsustainable Production',
-        'Production that leads to depletion and degradation of resources.',
+        'Over production that depletes and degrades natural resources over time, reducing the ability of future generations to meet their needs.',
+      ),
+
+      SlideContent.term(
+        tag: Tag.supplement,
+        'Jevons paradox',
+        'The idea that improvements in resource-use efficiency can lead to increased consumption and total energy use (i.e., counter-productive).',
       ),
       SlideContent.term(
-        'Excludability',
-        'The extent to which access to a good or resource can be restricted, usually by price.',
-      ),
-      SlideContent.term(
-        'Rivalrous',
-        'Consumption of a good or resource reduces the amount available for others.',
+        tag: Tag.supplement,
+        'Coase Theorem',
+        'Private parties can efficiently resolve externalities through bargaining, as long as property rights are defined and transaction costs are low.',
       ),
     ],
   ),

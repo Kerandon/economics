@@ -14,11 +14,7 @@ import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../shade/paint_shading.dart';
 
 class ProductionSubsidy extends BaseDiagramPainter2 {
-  ProductionSubsidy(
-    super.config,
-    super.bundle, {
-    super.legendDisplay,
-  });
+  ProductionSubsidy(super.config, super.bundle, {super.legendDisplay});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -97,8 +93,7 @@ class ProductionSubsidy extends BaseDiagramPainter2 {
         LegendEntry.fromShade(ShadeType.welfareLoss),
       ]);
     }
-    if (bundle ==
-        DiagramBundleEnum.globalProductionSubsidyConsumerSurplus) {
+    if (bundle == DiagramBundleEnum.globalProductionSubsidyConsumerSurplus) {
       _paintConsumerSurplus(canvas, size);
       paintLegend(canvas, size, [
         LegendEntry.fromShade(ShadeType.consumerSurplus),

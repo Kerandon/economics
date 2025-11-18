@@ -27,5 +27,4 @@ void paintDot(
     r,
     paint,
   );
-
 }

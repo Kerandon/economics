@@ -28,16 +28,8 @@ enum Subunit {
     'Critique of the maximizing behaviour of consumers and producers (HL only)',
     UnitType.micro,
   ),
-  elasticityDemand(
-    '2.5',
-    'Elasticity of demand',
-    UnitType.micro,
-  ),
-  elasticitySupply(
-    '2.6',
-    'Elasticity of supply',
-    UnitType.micro,
-  ),
+  elasticityDemand('2.5', 'Elasticity of demand', UnitType.micro),
+  elasticitySupply('2.6', 'Elasticity of supply', UnitType.micro),
   roleOfGovernment(
     '2.7',
     'Role of government in microeconomics',
@@ -45,12 +37,12 @@ enum Subunit {
   ),
   marketFailureExternalities(
     '2.8',
-    'Market failure—externalities and common pool or common access resources',
+    'Market failure externalities and common pool or common access resources',
     UnitType.micro,
   ),
   marketFailurePublicGoods(
     '2.9',
-    'Market failure—public goods',
+    'Market failure public goods',
     UnitType.micro,
   ),
   marketFailureAsymmetric(
@@ -60,7 +52,7 @@ enum Subunit {
   ),
   marketFailurePower(
     '2.11',
-    'Market failure—market power (HL only)',
+    'Market failure market power (HL only)',
     UnitType.micro,
   ),
   marketEquity(
@@ -92,12 +84,12 @@ enum Subunit {
   ),
   demandManagementMonetary(
     '3.5',
-    'Demand management—monetary policy (includes HL only sub-topics)',
+    'Demand management monetary policy (includes HL only sub-topics)',
     UnitType.macro,
   ),
   demandManagementFiscal(
     '3.6',
-    'Demand management—fiscal policy (includes HL only sub-topics)',
+    'Demand management fiscal policy (includes HL only sub-topics)',
     UnitType.macro,
   ),
   supplySidePolicies('3.7', 'Supply-side policies', UnitType.macro),

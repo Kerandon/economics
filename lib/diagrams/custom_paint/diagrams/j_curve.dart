@@ -36,12 +36,7 @@ class JCurve extends BaseDiagramPainter {
       arrowOnEnd: true,
       arrowOnEndAngle: pi,
     );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.tradeSurplus.label,
-      Offset(-0.05, 0.10),
-    );
+    paintText2(c, canvas, DiagramLabel.tradeSurplus.label, Offset(-0.05, 0.10));
 
     paintText2(
       c,
@@ -50,12 +45,7 @@ class JCurve extends BaseDiagramPainter {
       Offset(-0.05, 0.50),
     );
 
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.tradeDeficit.label,
-      Offset(-0.05, 0.90),
-    );
+    paintText2(c, canvas, DiagramLabel.tradeDeficit.label, Offset(-0.05, 0.90));
     if (model.subtype == DiagramSubtype.correctDeficit) {
       paintCustomBezier(
         c,
@@ -102,12 +92,7 @@ class JCurve extends BaseDiagramPainter {
       polylineOffsets: [Offset(1, 0.50)],
       curveStyle: CurveStyle.dashed,
     );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.time.label,
-      Offset(1.0, 0.50),
-    );
+    paintText2(c, canvas, DiagramLabel.time.label, Offset(1.0, 0.50));
     if (model.subtype == DiagramSubtype.correctSurplus) {
       paintCustomBezier(
         c,

@@ -47,14 +47,14 @@ class DiagramBundleWidgetWeb extends StatelessWidget {
                 children: bundle.basePainterDiagrams
                     .map(
                       (d) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: SizedBox(
-                      width: sideBySideSize,
-                      height: sideBySideSize,
-                      child: CustomPaint(painter: d),
-                    ),
-                  ),
-                )
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: SizedBox(
+                          width: sideBySideSize,
+                          height: sideBySideSize,
+                          child: CustomPaint(painter: d),
+                        ),
+                      ),
+                    )
                     .toList(),
               ),
             )
@@ -69,11 +69,11 @@ class DiagramBundleWidgetWeb extends StatelessWidget {
                 children: bundle.basePainterDiagrams
                     .map(
                       (d) => SizedBox(
-                    width: wrapSize,
-                    height: wrapSize,
-                    child: CustomPaint(painter: d),
-                  ),
-                )
+                        width: wrapSize,
+                        height: wrapSize,
+                        child: CustomPaint(painter: d),
+                      ),
+                    )
                     .toList(),
               ),
             ),

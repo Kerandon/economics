@@ -33,12 +33,7 @@ void paintAxis(
   );
 
   if (yAxisLabel != null) {
-    paintAxisLabels(
-      config,
-      canvas,
-      axis: CustomAxis.y,
-      label: yAxisLabel,
-    );
+    paintAxisLabels(config, canvas, axis: CustomAxis.y, label: yAxisLabel);
   }
   if (xAxisLabel != null) {
     paintAxisLabels(config, canvas, axis: CustomAxis.x, label: xAxisLabel);

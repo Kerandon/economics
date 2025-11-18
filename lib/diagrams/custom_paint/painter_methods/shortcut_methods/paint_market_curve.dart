@@ -4,18 +4,20 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_line
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import '../axis/label_align.dart';
 import '../../../models/diagram_painter_config.dart';
+
 void paintMarketCurve(
-    DiagramPainterConfig config,
-    Canvas canvas, {
-      required MarketCurveType type,
-      String? label,
-      double lengthAdjustment = 0.0, // +ve = extend, -ve = shorten, applied evenly both ends
-      double horizontalShift = 0.0,
-      double verticalShift = 0.0,
-      double angle = 0.0,
-      CurveStyle curveStyle = CurveStyle.standard,
-      Color? color,
-    }) {
+  DiagramPainterConfig config,
+  Canvas canvas, {
+  required MarketCurveType type,
+  String? label,
+  double lengthAdjustment =
+      0.0, // +ve = extend, -ve = shorten, applied evenly both ends
+  double horizontalShift = 0.0,
+  double verticalShift = 0.0,
+  double angle = 0.0,
+  CurveStyle curveStyle = CurveStyle.standard,
+  Color? color,
+}) {
   // Base start/end depending on curve type
   final baseStart = switch (type) {
     MarketCurveType.demand => const Offset(0.15, 0.15),
@@ -51,7 +53,8 @@ void paintMarketCurve(
   }
 
   // Apply horizontal & vertical shifts
-  Offset shift(Offset o) => Offset(o.dx + horizontalShift, o.dy + verticalShift);
+  Offset shift(Offset o) =>
+      Offset(o.dx + horizontalShift, o.dy + verticalShift);
   start = shift(start);
   end = shift(end);
 

@@ -14,7 +14,6 @@ import 'diagram_content_area.dart';
 import 'diagram_row.dart';
 import 'diagrams_side_bar.dart';
 
-
 class AllDiagramsPageWeb extends ConsumerStatefulWidget {
   const AllDiagramsPageWeb({super.key});
 
@@ -31,7 +30,8 @@ class _AllDiagramsPageWebState extends ConsumerState<AllDiagramsPageWeb> {
   // --- Constants for PDF Layout ---
   static const int diagramsPerCol = 4; // Length-wise
   static const int diagramsPerRow = 3; // Horizontal
-  static const int diagramsPerPage = diagramsPerCol * diagramsPerRow; // 12 total
+  static const int diagramsPerPage =
+      diagramsPerCol * diagramsPerRow; // 12 total
 
   @override
   void initState() {
@@ -73,7 +73,7 @@ class _AllDiagramsPageWebState extends ConsumerState<AllDiagramsPageWeb> {
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
       ).then(
-            (_) => Future.delayed(const Duration(milliseconds: 500), () {
+        (_) => Future.delayed(const Duration(milliseconds: 500), () {
           _isManualScroll = false;
         }),
       );
@@ -131,8 +131,11 @@ class _AllDiagramsPageWebState extends ConsumerState<AllDiagramsPageWeb> {
               childAspectRatio: 1.1, // Taller aspect to allow space for titles
               children: group.map((row) {
                 // Determine the size for the content based on whether it's 1 or 2 diagrams
-                final cellWidth = context.page.pageFormat.availableWidth / diagramsPerRow;
-                final imageWidth = row.images.length == 2 ? cellWidth * 0.45 : cellWidth * 0.9;
+                final cellWidth =
+                    context.page.pageFormat.availableWidth / diagramsPerRow;
+                final imageWidth = row.images.length == 2
+                    ? cellWidth * 0.45
+                    : cellWidth * 0.9;
 
                 return pw.Container(
                   padding: const pw.EdgeInsets.all(8),
@@ -151,22 +154,25 @@ class _AllDiagramsPageWebState extends ConsumerState<AllDiagramsPageWeb> {
                       // Layout 1 or 2 images side-by-side
                       row.images.length == 2
                           ? pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
-                        children: row.images.map(
-                              (img) => pw.Image(
-                            img,
-                            width: imageWidth,
-                            height: imageWidth,
-                            fit: pw.BoxFit.contain,
-                          ),
-                        ).toList(),
-                      )
+                              mainAxisAlignment:
+                                  pw.MainAxisAlignment.spaceEvenly,
+                              children: row.images
+                                  .map(
+                                    (img) => pw.Image(
+                                      img,
+                                      width: imageWidth,
+                                      height: imageWidth,
+                                      fit: pw.BoxFit.contain,
+                                    ),
+                                  )
+                                  .toList(),
+                            )
                           : pw.Image(
-                        row.images.first,
-                        width: imageWidth,
-                        height: imageWidth,
-                        fit: pw.BoxFit.contain,
-                      ),
+                              row.images.first,
+                              width: imageWidth,
+                              height: imageWidth,
+                              fit: pw.BoxFit.contain,
+                            ),
                     ],
                   ),
                 );
@@ -234,9 +240,9 @@ class _AllDiagramsPageWebState extends ConsumerState<AllDiagramsPageWeb> {
             onPressed: _isExporting
                 ? null
                 : () async {
-              // Export diagrams at a suitable resolution for the PDF grid cell
-              await _exportToPDF(allBundles, 400);
-            },
+                    // Export diagrams at a suitable resolution for the PDF grid cell
+                    await _exportToPDF(allBundles, 400);
+                  },
           ),
         ],
       ),

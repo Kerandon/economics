@@ -29,7 +29,7 @@ List<Slide> get critiqueSlides => [
       SlideContent.term(
         tag: Tag.hl,
         'Biases',
-        'The use of heuristics (mental shortcuts) in decision-making, which can lead consumers away from fully rational choices. Examples include rules of thumb, anchoring, availability bias, and framing.',
+        'The use of heuristics (mental shortcuts) in decision-making, which leads consumers away from fully rational choices. E.g., rules of thumb, anchoring, availability bias, and framing.',
       ),
       SlideContent.term(
         tag: Tag.hl,
@@ -126,7 +126,6 @@ List<Slide> get critiqueSlides => [
         'Satisficing',
         'When an individual or firm settles for a satisfactory outcome rather than striving for the optimal one, e.g., balancing profit maximization with multiple objectives.',
       ),
-
     ],
   ),
   Slide(
@@ -148,15 +147,13 @@ List<Slide> get critiqueSlides => [
 <li><strong>Utility Maximization</strong></li>
 </ul>
 '''),
-
-
     ],
   ),
   Slide(
-      section: Subunit.critiqueBehaviour,
-      title: 'Limitations of the assumptions of rational consumer choice (A03)',
-  contents: [
-    SlideContent.text('''
+    section: Subunit.critiqueBehaviour,
+    title: 'Limitations of the assumptions of rational consumer choice (A03)',
+    contents: [
+      SlideContent.text('''
     Behavioral economics challenges the idea of consumer rationality, based on the following limitations:
    Behavioral economics challenges the idea of consumer rationality, based on the following limitations:
 <ul>
@@ -175,16 +172,14 @@ List<Slide> get critiqueSlides => [
   <li>Imperfect information</li>
 </ul>
 
-        '''
-    ),
-  ],
+        '''),
+    ],
   ),
   Slide(
     title: 'Behavioural economics in action (A03)',
     section: Subunit.critiqueBehaviour,
     contents: [
-      SlideContent.text(
-        '''
+      SlideContent.text('''
   
 
     <strong>Choice Architecture</strong> studies how the presentation of choices to consumers can influence decision-making.
@@ -204,17 +199,14 @@ List<Slide> get critiqueSlides => [
   <li>Adding footprints on steps to encourage physical activity over elevators.</li>
 </ul>
 
-        '''
-      ),
-
+        '''),
     ],
   ),
   Slide(
     title: 'Business objectives (A03)',
     section: Subunit.critiqueBehaviour,
     contents: [
-      SlideContent.text(
-          '''
+      SlideContent.text('''
 <p><strong>Alternative Business Objectives</strong></p>
 <ul>
   <li>Corporate Social Responsibility (CSR)</li>
@@ -224,9 +216,7 @@ List<Slide> get critiqueSlides => [
   <li>Satisficing</li>
 </ul>
 
-        '''
-      ),
-
+        '''),
     ],
-  )
+  ),
 ];

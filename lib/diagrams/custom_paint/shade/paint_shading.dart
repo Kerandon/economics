@@ -11,8 +11,8 @@ void paintShading(
   List<dynamic> pointsAndBeziers, {
   bool striped = true,
   double stripeSpacing = 20.0,
-      double strokeWidth = 16,
-      int alpha = 130,
+  double strokeWidth = 16,
+  int alpha = 130,
   bool invertStripes = false, // NEW parameter
 }) {
   final width = size.width;

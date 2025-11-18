@@ -60,8 +60,8 @@ class TermsPage extends ConsumerWidget {
               ),
               // ------------------------------------------------------------------
               // Terms Display
-// ------------------------------------------------------------------
-// Terms Display (Updated)
+              // ------------------------------------------------------------------
+              // Terms Display (Updated)
               for (var unit in UnitType.values)
                 ExpansionTile(
                   initiallyExpanded: true,
@@ -71,43 +71,64 @@ class TermsPage extends ConsumerWidget {
                       if (termsBySubunit[subunit]?.isNotEmpty ?? false)
                         ExpansionTile(
                           initiallyExpanded: true,
-                          title: Text(subunit.title),
+                          title: Text('${subunit.id} ${subunit.title}'),
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   for (var term in termsBySubunit[subunit]!)
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0,
+                                      ),
                                       child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          const Text("• ", style: TextStyle(fontSize: 16)),
+                                          const Text(
+                                            "• ",
+                                            style: TextStyle(fontSize: 16),
+                                          ),
                                           Expanded(
                                             child: RichText(
                                               text: TextSpan(
-                                                style: theme.textTheme.bodyMedium,
+                                                style:
+                                                    theme.textTheme.bodyMedium,
                                                 children: [
                                                   TextSpan(
                                                     text: term.term,
-                                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
                                                   if (term.tag == Tag.hl)
                                                     const TextSpan(
                                                       text: ' (HL)',
-                                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
-                                                  if (term.tag == Tag.supplement)
+                                                  if (term.tag ==
+                                                      Tag.supplement)
                                                     const TextSpan(
                                                       text: ' (Supplement)',
-                                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
                                                   const TextSpan(text: '\n'),
                                                   TextSpan(
                                                     text: term.explanation,
-                                                    style: theme.textTheme.bodyMedium,
+                                                    style: theme
+                                                        .textTheme
+                                                        .bodyMedium,
                                                   ),
                                                 ],
                                               ),
@@ -123,7 +144,6 @@ class TermsPage extends ConsumerWidget {
                         ),
                   ],
                 ),
-
             ],
           ),
         ),

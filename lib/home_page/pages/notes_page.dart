@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../state_management/home_page_state.dart';
 import 'notes_expansion_tile_page.dart';
 
-
 class NotesPageContents extends ConsumerWidget {
   const NotesPageContents({super.key});
 
@@ -28,11 +27,9 @@ class NotesPageContents extends ConsumerWidget {
                 trailing: Icon(Icons.arrow_forward_ios_outlined),
                 onTap: () {
                   homePageNotifier.setSubunit(e);
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => NotesPage(),
-                    ),
-                  );
+                  Navigator.of(
+                    context,
+                  ).push(MaterialPageRoute(builder: (context) => NotesPage()));
                 },
               )),
             ),

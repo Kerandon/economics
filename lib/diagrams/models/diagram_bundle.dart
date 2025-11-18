@@ -8,7 +8,12 @@ class DiagramBundle {
   final String? description;
 
   // Positional parameters: required first, optional last
-  DiagramBundle(this.diagramBundleEnum, this.basePainterDiagrams, {this.title, this.description});
+  DiagramBundle(
+    this.diagramBundleEnum,
+    this.basePainterDiagrams, {
+    this.title,
+    this.description,
+  });
 
   DiagramBundle copyWith({
     DiagramBundleEnum? diagramBundleEnum,

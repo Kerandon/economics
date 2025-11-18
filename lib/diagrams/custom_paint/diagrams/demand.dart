@@ -48,7 +48,13 @@ class Demand extends BaseDiagramPainter2 {
         addDotAtIntersection: true,
       );
       if (bundle == DiagramBundleEnum.microDemandExtension) {
-        paintLineSegment(c, canvas, origin: Offset(0.52,0.46), angle: pi / 4, length: 0.20);
+        paintLineSegment(
+          c,
+          canvas,
+          origin: Offset(0.52, 0.46),
+          angle: pi / 4,
+          length: 0.20,
+        );
       }
       if (bundle == DiagramBundleEnum.microDemandContraction) {
         paintLineSegment(
@@ -56,12 +62,11 @@ class Demand extends BaseDiagramPainter2 {
           canvas,
           origin: Offset(0.53, 0.47),
           angle: pi * 3.25,
-            length: 0.20
+          length: 0.20,
         );
       }
     }
     if (bundle == DiagramBundleEnum.microDemandIncrease) {
-
       paintMarketCurve(
         c,
         canvas,
@@ -75,7 +80,7 @@ class Demand extends BaseDiagramPainter2 {
         label: DiagramLabel.d2.label,
         horizontalShift: 0.10,
         verticalShift: -0.10,
-          lengthAdjustment: -0.05,
+        lengthAdjustment: -0.05,
       );
       paintDiagramDashedLines(
         c,
@@ -114,7 +119,7 @@ class Demand extends BaseDiagramPainter2 {
         label: DiagramLabel.d1.label,
         horizontalShift: 0.10,
         lengthAdjustment: -0.10,
-        verticalShift: -0.10
+        verticalShift: -0.10,
       );
       paintDiagramDashedLines(
         c,
