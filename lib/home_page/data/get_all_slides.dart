@@ -23,6 +23,8 @@ List<Slide> get allSlides => [
   ...supplySlides,
   ...competitiveMarketEquilibrium,
   ...critiqueSlides,
+  ...elasticityDemandSlides,
+  ...elasticitySupplySlides,
   ...roleOfGovernmentSlides,
   ...externalitiesSlides,
   ...publicGoodsSlides,

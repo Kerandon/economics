@@ -56,6 +56,7 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
     Supply(config, DiagramBundleEnum.microMarginalCost),
   ]),
 
+
   /// 2.3 Competitive Market Equilibrium
   DiagramBundle(DiagramBundleEnum.microMarketEquilibrium, [
     CompetitiveMarket(config, DiagramBundleEnum.microMarketEquilibrium),
@@ -86,6 +87,9 @@ List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   ]),
   DiagramBundle(DiagramBundleEnum.microAllocativeEfficiency, [
     CompetitiveMarket(config, DiagramBundleEnum.microAllocativeEfficiency),
+  ]),
+  DiagramBundle(DiagramBundleEnum.microMarginalCostSteps, [
+    CompetitiveMarket(config, DiagramBundleEnum.microMarginalCostSteps),
   ]),
   /// 2.4 Critique of the maximizing behaviour of consumers and producers (HL only)
   /// 2.5 Elasticity of demand (includes HL only sub-topics)

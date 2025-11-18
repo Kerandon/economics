@@ -13,64 +13,58 @@ List<Slide> get competitiveMarketEquilibrium => [
     title: kKeyTerms,
     contents: [
       SlideContent.term(
+        'Allocative Efficiency',
+        'The quantity of goods most desired by society, representing maximum social welfare (<strong>MSB = MSC</strong>).',
+      ),
+      SlideContent.term(
         'Competitive Market Equilibrium',
-        'The market price at which the quantity demanded equals the quantity supplied. The market is cleared of any shortages or surpluses.',
+        'The market price at which quantity demanded equals quantity supplied, clearing the market of shortages or surpluses.',
       ),
-
-      SlideContent.term(
-        'Excess Demand',
-        'When quantity demanded exceeds quantity supplied at the current price (shortage).',
-      ),
-
-      SlideContent.term(
-        'Excess Supply',
-        'When quantity supplied exceeds quantity demanded at the current price (surplus).',
-      ),
-
-      SlideContent.term(
-        'Price Signals',
-        'Information conveyed by price changes that guide consumer and producer decisions.',
-      ),
-
-      SlideContent.term(
-        'Incentives',
-        'Motivations created by price changes that encourage consumers and producers to adjust behaviour to maximise profit or benefit.',
-      ),
-
-      SlideContent.term(
-        'Non-Price Rationing',
-        'Allocation of goods using methods other than price, such as queueing, lotteries, or needs-based systems.',
-      ),
-
-      SlideContent.term(
-        'Marginal Benefit',
-        'The extra benefit from consuming one more unit; the maximum a consumer is willing to pay for the next unit.',
-      ),
-
       SlideContent.term(
         'Consumer Surplus',
         'The difference between what consumers are willing to pay and the market price; area under demand and above price.',
       ),
-
       SlideContent.term(
-        'Producer Surplus',
-        'The difference between the market price and the minimum price producers are willing to accept; area above supply and below price.',
+        'Excess Demand',
+        'When quantity demanded exceeds quantity supplied at the current price (shortage).',
       ),
-
       SlideContent.term(
-        'Social Surplus (Welfare)',
-        'The sum of consumer and producer surplus; maximized at market equilibrium.',
+        'Excess Supply',
+        'When quantity supplied exceeds quantity demanded at the current price (surplus).',
       ),
-
       SlideContent.term(
-        'Allocative Efficiency',
-        'The quantity of goods most desired by society, representing maximum social welfare (<strong>MSB = MSC</strong>)',
+        'Incentives',
+        'Motivations created by price changes that encourage consumers and producers to adjust behavior to maximize profit or benefit.',
       ),
-
+      SlideContent.term(
+        'Marginal Benefit',
+        'The additional benefit gained from consuming one more unit, measured by the maximum a consumer is willing to pay.',
+      ),
+      SlideContent.term(
+        'Non-Price Rationing',
+        'Allocation of goods using methods other than price, such as queueing, lotteries, or needs-based systems.',
+      ),
       SlideContent.term(
         'Pareto Efficiency',
         'Resources are allocated so that it is impossible to make one person better off without making someone else worse off.',
       ),
+      SlideContent.term(
+        'Price Mechanism',
+        'How prices adjust to allocate resources, goods, and services in response to changes in demand and supply, through price signals, incentives, and rationing.',
+      ),
+      SlideContent.term(
+        'Price Signals',
+        'Information conveyed by price changes that guide consumer and producer decisions.',
+      ),
+      SlideContent.term(
+        'Producer Surplus',
+        'The difference between the market price and the minimum price producers are willing to accept; area above supply and below price.',
+      ),
+      SlideContent.term(
+        'Social Surplus (Community Surplus)',
+        'The sum of consumer and producer surplus; maximized at market equilibrium.',
+      ),
+
     ],
   ),
   Slide(
@@ -161,15 +155,21 @@ List<Slide> get competitiveMarketEquilibrium => [
     title: 'Marginal Benefit and Marginal Cost',
     section: Subunit.competitiveMarket,
     contents: [
-      SlideContent.text('Marginal Benefit (MB) represents the maximum a consumer is willing to pay for one more unit of a good'
-          ' (a quantifiable way to measure marginal utility).\n'
-          'MB is the demand curve.'),
-      SlideContent.diagram(DiagramBundleEnum.microMarginalBenefit),
-      SlideContent.text('Marginal Cost (MC) represents the additional cost for a firm to supply one more unit of a good'
-          ' (underpinned by The Law of Diminishing Marginal Utility).\n'
-          'MC is the supply curve.'),
-      SlideContent.diagram(DiagramBundleEnum.microMarginalBenefit),
-    ]
+      SlideContent.text(
+        'Marginal Benefit (MB) represents the maximum a consumer is willing to pay for one more unit of a good'
+        ' (a quantifiable way to measure marginal utility).\n'
+        'MB is the demand curve.',
+      ),
+      SlideContent.diagrams([
+        DiagramBundleEnum.microMarginalBenefit,
+        DiagramBundleEnum.microMarginalCostSteps,
+      ]),
+      SlideContent.text(
+        'Marginal Cost (MC) represents the additional cost for a firm to supply one more unit of a good'
+        ' (underpinned by The Law of Diminishing Marginal Utility).\n'
+        'MC is the supply curve.',
+      ),
+    ],
   ),
   Slide(
     title: 'Consumer, Producer and Social Surplus',

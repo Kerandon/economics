@@ -5,29 +5,30 @@ import '../../models/slide_content.dart';
 
 List<Slide> get elasticitySupplySlides => [
   Slide(
-    section: Subunit.elasticityDemand,
+    section: Subunit.elasticitySupply,
     title: kKeyTerms,
     contents: [
       SlideContent.term(
-        'Price inelastic supply (PES < 1)',
-        'is when the quantity supplied of a good is relatively unresponsive to a change in its price.',
-      ),
-      SlideContent.term(
-        'Price elastic supply (PES > 1)',
-        'is when the quantity supplied of a good is relatively responsive to a change in its price.',
-      ),
-      SlideContent.term(
-        'Unitary price elasticity of supply (PES = 1)',
-        'is when the percentage change in quantity supplied is equal to the percentage change in price.',
+        'Perfectly price elastic supply (PES = ∞)',
+        'When producers can supply any quantity at a given price.',
       ),
       SlideContent.term(
         'Perfectly price inelastic supply (PES = 0)',
-        'is when a change in the price of a good has no impact on its quantity supplied.',
+        'When a change in price causes no change in quantity supplied.',
       ),
       SlideContent.term(
-        'Perfectly price elastic supply (PES = ∞)',
-        'is when a firm can essentially supply an infinite quantity of a good at a given price.',
+        'Price elastic supply (PES > 1)',
+        'When the quantity supplied is relatively responsive to a change in price.',
       ),
+      SlideContent.term(
+        'Price inelastic supply (PES < 1)',
+        'When the quantity supplied is relatively unresponsive to a change in price.',
+      ),
+      SlideContent.term(
+        'Unitary price elasticity of supply (PES = 1)',
+        'When the percentage change in quantity supplied equals the percentage change in price.',
+      ),
+
     ],
   ),
 ];

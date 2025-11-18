@@ -16,6 +16,8 @@ enum DiagramBundleEnum {
   microMarginalProduct,
   microTotalAndMarginalProduct,
   microMarginalCost,
+  microMarginalCostSteps,
+  microMarginalCostSupplyCurve,
   microMarketEquilibrium,
   microShortage,
   microSurplus,
@@ -192,11 +194,13 @@ extension DiagramBundleEnumUnit on DiagramBundleEnum {
       Subunit.competitiveMarket,
     DiagramBundleEnum.microDemandDecreasePriceMechanism =>
       Subunit.competitiveMarket,
+    DiagramBundleEnum.microMarginalCostSupplyCurve => Subunit.competitiveMarket,
     DiagramBundleEnum.microAllocativeEfficiency => Subunit.competitiveMarket,
     DiagramBundleEnum.microPriceRationing => Subunit.competitiveMarket,
     DiagramBundleEnum.microConsumerSurplus => Subunit.competitiveMarket,
     DiagramBundleEnum.microProducerSurplus => Subunit.competitiveMarket,
     DiagramBundleEnum.microMarginalBenefit => Subunit.competitiveMarket,
+    DiagramBundleEnum.microMarginalCostSteps => Subunit.competitiveMarket,
     DiagramBundleEnum.microDemandElastic => Subunit.elasticityDemand,
     DiagramBundleEnum.microDemandInelastic => Subunit.elasticityDemand,
     DiagramBundleEnum.microDemandUnitElastic => Subunit.elasticityDemand,
@@ -326,6 +330,5 @@ extension DiagramBundleEnumUnit on DiagramBundleEnum {
       Subunit.typesTradeProtection,
     DiagramBundleEnum.globalProductionSubsidyWelfare =>
       Subunit.typesTradeProtection,
-
   };
 }

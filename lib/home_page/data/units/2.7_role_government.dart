@@ -9,53 +9,94 @@ List<Slide> get roleOfGovernmentSlides => [
     title: kKeyTerms,
     contents: [
       SlideContent.term(
-        'Command and Control',
-        'refers to government laws and regulations which must be followed.',
-      ),
-      SlideContent.term(
-        'Direct Provision',
-        'is when the government supplies a good directly.',
+        'Ad Valorem Tax',
+        'A percentage tax based on the value of the good.',
       ),
       SlideContent.term(
         'Agricultural price floor',
-        'is a minimum price (price floor) implemented to support farmer’s incomes.',
+        'A minimum price set above the equilibrium price to support farmers’ incomes.',
+      ),
+      SlideContent.term(
+        'Allocative Inefficiency',
+        'Market failure that results in a socially undesirable level of output (MSB > MSC or MSB < MSC).',
+      ),
+      SlideContent.term(
+        'Command and Control',
+        'Government laws and regulations that must be followed.',
       ),
       SlideContent.term(
         'Deadweight Loss (Welfare Loss)',
-        'represents social welfare lost to society due to the inefficient allocation of resources.',
+        'The loss of total social welfare due to an inefficient allocation of resources.',
       ),
       SlideContent.term(
-        'Parallel Markets',
-        'involve economic transactions which are unrecorded and unregulated and are usually illegal.',
-      ),
-      SlideContent.term(
-        'Rent Control',
-        'is a maximum price (price ceiling) on rent which aim to make housing more affordable for low income groups.',
+        'Direct Provision',
+        'When the government directly supplies a good or service.',
       ),
       SlideContent.term(
         'Direct Tax',
-        'is when taxpayers cannot shift the tax burden and must pay directly to the government. Examples include personal income tax and corporation tax.',
+        'A tax paid directly to the government by the taxpayer. The taxpayer cannot shift the tax burden, e.g., personal income tax, corporation tax.',
+      ),
+      SlideContent.term(
+        'Governance',
+        'The laws, processes, institutions, and exercise of authority used to manage resources.',
       ),
       SlideContent.term(
         'Indirect Tax',
-        'is a tax on the spending on goods and services. The seller must pay the tax, but it usually passes part of the tax burden to consumers by raising prices. Examples include general sales taxes (value added taxes) and excise taxes.',
+        'A tax on spending on goods and services. The tax burden can be shifted, e.g., sales tax or excise tax.',
+      ),
+      SlideContent.term(
+        'Market-based approach',
+        'Policies to correct market failure by internalizing the costs or benefits of an externality into the market price, e.g., taxes, subsidies, tradable permits.',
+      ),
+      SlideContent.term(
+        'Market failure',
+        'An inefficient allocation of resources in a free market. Causes include externalities, common pool resources, public goods, and market power.',
+      ),
+      SlideContent.term(
+        'National Minimum Wage',
+        'A legally set minimum wage above the equilibrium level to increase earnings of low-income workers.',
+      ),
+      SlideContent.term(
+        'Overallocation of resources',
+        'When too many resources are allocated to the production of a good, causing allocative inefficiency (MSB < MSC).',
+      ),
+      SlideContent.term(
+        'Parallel Markets',
+        'Economic transactions that are unrecorded, unregulated, and often illegal.',
+      ),
+      SlideContent.term(
+        'Price Ceiling',
+        'A legal maximum price set below equilibrium to make essential goods more affordable for low-income consumers.',
+      ),
+      SlideContent.term(
+        'Price Controls',
+        'Government intervention in markets by imposing a minimum (price floor) or maximum (price ceiling) price.',
+      ),
+      SlideContent.term(
+        'Price Floor',
+        'A legally set minimum price above the market equilibrium, e.g., minimum wage, agricultural price floor.',
+      ),
+      SlideContent.term(
+        'Rent Control',
+        'A maximum price (price ceiling) on rent intended to make housing more affordable for low-income groups.',
       ),
       SlideContent.term(
         'Specific Tax',
-        'is a fixed amount added to each unit of a good sold.',
-      ),
-      SlideContent.term(
-        'Ad Valorem Tax',
-        'is a percentage tax based on the value of a good.',
-      ),
-      SlideContent.term(
-        'Tax Incidence',
-        'is the manner in which the tax burden is divided between consumers and producers.',
+        'A fixed amount of tax added per unit of a good sold.',
       ),
       SlideContent.term(
         'Subsidy',
-        'is financial assistance from the government paid to producers to lower the cost of production and increase the supply of a good.',
+        'Financial incentive from the government to producers to lower production costs and increase supply.',
       ),
+      SlideContent.term(
+        'Tax Incidence',
+        'How the burden of a tax is shared between consumers and producers.',
+      ),
+      SlideContent.term(
+        'Underallocation of resources',
+        'When too few resources are allocated to the production of a good, causing allocative inefficiency (MSB > MSC).',
+      ),
+
     ],
   ),
 ];

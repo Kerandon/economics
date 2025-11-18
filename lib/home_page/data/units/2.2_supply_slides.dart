@@ -14,20 +14,13 @@ List<Slide> get supplySlides => [
     title: kKeyTerms,
     contents: [
       SlideContent.term(
-        'Supply',
-        'The quantities of a good a firm is willing and able to produce at various prices, ceteris paribus.',
-      ),
-
-      SlideContent.term(
-        'The Law of Supply',
-        'As the price of a good increases, its quantity supplied increases, ceteris paribus.',
-      ),
-
-      SlideContent.term(
         'Change in Quantity Supplied',
         'A movement along the supply curve due to a change in price: higher prices cause an extension, lower prices a contraction.',
       ),
-
+      SlideContent.term(
+        'Costs of Production',
+        'The monetary payments and opportunity costs a firm incurs when producing a good or service.',
+      ),
       SlideContent.term(
         'Increase or Decrease in Supply',
         'A shift of the supply curve caused by a change in a non-price determinant of supply.',
@@ -39,29 +32,55 @@ List<Slide> get supplySlides => [
       ),
 
       SlideContent.term(
-        'Costs of Production',
-        'The monetary payments and opportunity costs a firm incurs when producing a good or service.',
+        'Supply',
+        'The quantities of a good a firm is willing and able to produce at various prices, ceteris paribus.',
       ),
-
+      SlideContent.term(
+        'Supply Curve',
+        'Plots the relationship between the price of a good and the quantity supplied, showing a positive (direct) relationship, ceteris paribus.',
+      ),
       SlideContent.term(
         'Supply Shock',
-        'An unexpected event that suddenly raises or reduces supply, e.g., natural disasters or technological change.',
+        'An unexpected event that suddenly raises or reduces supply, e.g., natural disasters or technological changes.',
       ),
-
       SlideContent.term(
-        tag: Tag.hl,
-        'Marginal Product',
-        'The extra output produced by employing one more unit of an input. <strong>MP = ∆TP ÷ ∆Input</strong>',
+        'The Law of Supply',
+        'As the price of a good increases, its quantity supplied increases, ceteris paribus.',
       ),
       SlideContent.term(
         tag: Tag.hl,
-        'The Law Of Diminishing Marginal Returns ',
-        'States that in the short-run, as additional units of a variable factor of production are added to one or more fixed factors of production, the marginal product will eventually decrease, as diminishing returns set in, ceteris paribus',
+        'Average Product',
+        'Total output produced by a firm divided by the quantity of input used. <strong>AP = TP ÷ Input</strong>.',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'The Law of Diminishing Marginal Returns',
+        'In the short-run, as additional units of a variable factor are added to fixed factors, marginal product eventually decreases, ceteris paribus.',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'Long-run',
+        'A time period where all factors of production (inputs) are variable.',
       ),
       SlideContent.term(
         tag: Tag.hl,
         'Marginal Cost',
-        'The extra cost of producing one more unit of output. <strong>MC = ∆TC ÷ ∆Q</strong>',
+        'The extra cost of producing one more unit of output. <strong>MC = ∆TC ÷ ∆Q</strong>.',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'Marginal Product',
+        'The extra output produced by employing one more unit of an input. <strong>MP = ∆TP ÷ ∆Input</strong>.',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'Short-run',
+        'A time period where at least one factor of production (input) is fixed (e.g., capital), with one or more variable factors (e.g., labor).',
+      ),
+      SlideContent.term(
+        tag: Tag.hl,
+        'Total Product',
+        'Total output produced by a firm.',
       ),
     ],
   ),
@@ -110,33 +129,32 @@ List<Slide> get supplySlides => [
     hl: true,
     contents: [
       SlideContent.text(
-          'Marginal Product (MP) is the additional output produced by one more unit of a variable input, ceteris paribus. '
-              'It is calculated as: MP = ∆Total Output ÷ ∆Labor.'
+        'Marginal Product (MP) is the additional output produced by one more unit of a variable input, ceteris paribus. '
+        'It is calculated as: MP = ∆Total Output ÷ ∆Labor.',
       ),
       SlideContent.text(
-          'When labor increases from 2 to 3, output rises from 7 to 10. '
-              'MP = 10 - 7 = 3 units.'
+        'When labor increases from 2 to 3, output rises from 7 to 10. '
+        'MP = 10 - 7 = 3 units.',
       ),
       SlideContent.customWidget(
         SimpleTable(
           headers: ['Labor', 'Output', 'Marginal Product (MP)'],
           data: [
-            ['1', '3', '3'],   // 3 - 0 = 3
-            ['2', '7', '4'],   // 7 - 3 = 4
-            ['3', '10', '3'],  // 10 - 7 = 3
-            ['4', '12', '2'],  // 12 - 10 = 2
-            ['5', '13', '1'],  // 13 - 12 = 1
+            ['1', '3', '3'], // 3 - 0 = 3
+            ['2', '7', '4'], // 7 - 3 = 4
+            ['3', '10', '3'], // 10 - 7 = 3
+            ['4', '12', '2'], // 12 - 10 = 2
+            ['5', '13', '1'], // 13 - 12 = 1
             ['6', '12', '-1'], // 12 - 13 = -1
           ],
         ),
       ),
 
-
       SlideContent.text(
         '<strong>The Law of Diminishing Marginal Returns</strong> '
-            'states that the extra output must eventually fall. '
-            'In the table, diminishing returns sets in when the third unit of labor is hired. '
-            'Diminishing returns is due to factors such as overcrowding, and full use of fixed resources (thus in the short-run only).',
+        'states that the extra output must eventually fall. '
+        'In the table, diminishing returns sets in when the third unit of labor is hired. '
+        'Diminishing returns is due to factors such as overcrowding, and full use of fixed resources (thus in the short-run only).',
       ),
 
       SlideContent(
@@ -145,7 +163,9 @@ List<Slide> get supplySlides => [
           DiagramBundleEnum.microTotalAndMarginalProduct,
         ],
       ),
-      SlideContent.text('Marginal Cost is inversely related to Marginal Product.'),
+      SlideContent.text(
+        'Marginal Cost is inversely related to Marginal Product.',
+      ),
       SlideContent(
         diagramBundleEnums: [
           DiagramBundleEnum.microMarginalProduct,
@@ -161,6 +181,5 @@ List<Slide> get supplySlides => [
         </ul>
         '''),
     ],
-
   ),
 ];

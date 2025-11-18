@@ -30,7 +30,7 @@ class Supply extends BaseDiagramPainter2 {
       yLabel = DiagramLabel.product.label;
       xLabel = DiagramLabel.input.label;
     }
-    if(bundle == DiagramBundleEnum.microMarginalCost){
+    if(bundle == DiagramBundleEnum.microMarginalCost || bundle == DiagramBundleEnum.microMarginalCostSupplyCurve){
       yLabel = DiagramLabel.costs.label;
       xLabel = DiagramLabel.quantity.label;
     }

@@ -59,8 +59,8 @@ class CompetitiveMarket extends BaseDiagramPainter2 {
           DiagramBundleEnum.microDemandDecreasePriceMechanism ||
           DiagramBundleEnum.microPriceRationing:
         _paintIncreaseOrDecreaseInDemand(c, canvas, size, bundle);
-      case DiagramBundleEnum.microMarginalBenefit:
-        _paintMarginalBenefit(c, canvas, size);
+      case DiagramBundleEnum.microMarginalBenefit || DiagramBundleEnum.microMarginalCostSteps:
+        _paintMarginalBenefitAndMarginalCostSteps(c, canvas, size, bundle);
       case DiagramBundleEnum.microConsumerSurplus ||
           DiagramBundleEnum.microProducerSurplus ||
           DiagramBundleEnum.microAllocativeEfficiency:
@@ -308,49 +308,105 @@ void _paintIncreaseOrDecreaseInDemand(
   }
 }
 
-void _paintMarginalBenefit(DiagramPainterConfig c, Canvas canvas, Size size) {
+void _paintMarginalBenefitAndMarginalCostSteps(DiagramPainterConfig c, Canvas canvas, Size size, DiagramBundleEnum bundle) {
   paintAxis(c, canvas,
       drawGridlines: true,
       gridLineStyle: GridLineStyle.indents,
-      yMaxValue: 100,xMaxValue: 10, xDivisions: 10, yDivisions: 10);
-  paintText2(c, canvas, '90', Offset(0.05,0.05));
-  paintText2(c, canvas, '80', Offset(0.15,0.15));
-  paintText2(c, canvas, '70', Offset(0.25,0.25));
-  paintText2(c, canvas, '60', Offset(0.35,0.35));
-  paintText2(c, canvas, '50', Offset(0.45,0.45));
-  paintText2(c, canvas, '40', Offset(0.55,0.55));
-  paintText2(c, canvas, '30', Offset(0.65,0.65));
-  paintText2(c, canvas, '20', Offset(0.75,0.75));
-  paintText2(c, canvas, '10', Offset(0.85,0.85));
-  paintText2(c, canvas, '0', Offset(0.95,0.95));
-  paintDiagramLines(
-    strokeWidth: 10,
-    c,
-    canvas,
-    startPos: Offset(0, 0.10),
-    polylineOffsets: [
-      Offset(0.10, 0.10),
-      Offset(0.10, 0.20),
-      Offset(0.20, 0.20),
-      Offset(0.20, 0.30),
-      Offset(0.30, 0.30),
-      Offset(0.30, 0.40),
-      Offset(0.40, 0.40),
-      Offset(0.40, 0.50),
-      Offset(0.50, 0.50),
-      Offset(0.50, 0.60),
-      Offset(0.60, 0.60),
-      Offset(0.60, 0.70),
-      Offset(0.70, 0.70),
-      Offset(0.70, 0.80),
-      Offset(0.80, 0.80),
-      Offset(0.80, 0.90),
-      Offset(0.90, 0.90),
-      Offset(0.90, 1.0),
-    ],
-  );
-  paintLineSegment(c, canvas, origin: Offset(0.56,0.42),angle: pi/4, length: 1.2);
-  paintText2(c, canvas, 'The Law Of Diminishing\nMarginal Utility\nleads to falling MB', Offset(0.72,0.20));
+      yMaxValue: 100,
+      xMaxValue: 10,
+      xDivisions: 10,
+      yDivisions: 10);
+  if (bundle == DiagramBundleEnum.microMarginalBenefit) {
+  paintText2(c, canvas, '90', Offset(0.05, 0.05));
+  paintText2(c, canvas, '80', Offset(0.15, 0.15));
+  paintText2(c, canvas, '70', Offset(0.25, 0.25));
+  paintText2(c, canvas, '60', Offset(0.35, 0.35));
+  paintText2(c, canvas, '50', Offset(0.45, 0.45));
+  paintText2(c, canvas, '40', Offset(0.55, 0.55));
+  paintText2(c, canvas, '30', Offset(0.65, 0.65));
+  paintText2(c, canvas, '20', Offset(0.75, 0.75));
+  paintText2(c, canvas, '10', Offset(0.85, 0.85));
+  paintText2(c, canvas, '0', Offset(0.95, 0.95));
+
+
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0, 0.10),
+      polylineOffsets: [
+        Offset(0.10, 0.10),
+        Offset(0.10, 0.20),
+        Offset(0.20, 0.20),
+        Offset(0.20, 0.30),
+        Offset(0.30, 0.30),
+        Offset(0.30, 0.40),
+        Offset(0.40, 0.40),
+        Offset(0.40, 0.50),
+        Offset(0.50, 0.50),
+        Offset(0.50, 0.60),
+        Offset(0.60, 0.60),
+        Offset(0.60, 0.70),
+        Offset(0.70, 0.70),
+        Offset(0.70, 0.80),
+        Offset(0.80, 0.80),
+        Offset(0.80, 0.90),
+        Offset(0.90, 0.90),
+        Offset(0.90, 1.0),
+        Offset(1.0, 1.0),
+      ],
+    );
+    paintLineSegment(
+        c, canvas, origin: Offset(0.56, 0.42), angle: pi / 4, length: 1.1);
+    paintText2(c, canvas,
+        'The Law Of Diminishing\nMarginal Utility\nleads to falling MB',
+        Offset(0.72, 0.20));
+  }if(bundle == DiagramBundleEnum.microMarginalCostSteps){
+    paintText2(c, canvas, '0', Offset(0.05, 0.95));
+    paintText2(c, canvas, '10', Offset(0.15, 0.85));
+    paintText2(c, canvas, '20', Offset(0.25, 0.75));
+    paintText2(c, canvas, '30', Offset(0.35, 0.65));
+    paintText2(c, canvas, '40', Offset(0.45, 0.55));
+    paintText2(c, canvas, '50', Offset(0.55, 0.45));
+    paintText2(c, canvas, '60', Offset(0.65, 0.35));
+    paintText2(c, canvas, '70', Offset(0.75, 0.25));
+    paintText2(c, canvas, '80', Offset(0.85, 0.15));
+    paintText2(c, canvas, '90', Offset(0.95, 0.05));
+    paintDiagramLines(
+      color: Colors.deepOrange,
+      c,
+      canvas,
+      startPos: Offset(0.0, 1.0),
+      polylineOffsets: [
+        Offset(0.10, 1.0),  // horizontal flat
+        Offset(0.10, 0.90), // down
+        Offset(0.20, 0.90), // horizontal
+        Offset(0.20, 0.80), // down
+        Offset(0.30, 0.80),
+        Offset(0.30, 0.70),
+        Offset(0.40, 0.70),
+        Offset(0.40, 0.60),
+        Offset(0.50, 0.60),
+        Offset(0.50, 0.50),
+        Offset(0.60, 0.50),
+        Offset(0.60, 0.40),
+        Offset(0.70, 0.40),
+        Offset(0.70, 0.30),
+        Offset(0.80, 0.30),
+        Offset(0.80, 0.20),
+        Offset(0.90, 0.20),
+        Offset(0.90, 0.10),
+        Offset(1.0,  0.10), // reach right edge
+
+      ],
+    );
+
+    paintLineSegment(
+        c, canvas, origin: Offset(0.42, 0.46), angle: pi * -0.25, length: 1.1);
+    paintText2(c, canvas,
+        'The Law Of Diminishing\nMarginal Returns\nleads to rising MC',
+        Offset(0.36, 0.20));
+
+  }
 }
 
 void _paintConsumerProducerSurplusAllocativeEfficiency(
