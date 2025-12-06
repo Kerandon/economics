@@ -10,7 +10,7 @@ import '../../models/term.dart';
 List<Slide> get supplySlides => [
   /// Terms
   Slide(
-    section: Subunit.supply,
+    subunit: Subunit.supply,
     title: kKeyTerms,
     contents: [
       SlideContent.term(
@@ -87,7 +87,7 @@ List<Slide> get supplySlides => [
 
   /// Supply
   Slide(
-    section: Subunit.supply,
+    subunit: Subunit.supply,
     title: 'Changes in Supply',
     contents: [
       SlideContent.text(
@@ -97,9 +97,9 @@ List<Slide> get supplySlides => [
       ),
 
       SlideContent(
-        diagramBundleEnums: [
-          DiagramBundleEnum.microSupplyContraction,
-          DiagramBundleEnum.microSupplyExtension,
+        diagramEnums: [
+          DiagramEnum.microSupplyContraction,
+          DiagramEnum.microSupplyExtension,
         ],
       ),
       SlideContent.text(
@@ -116,15 +116,15 @@ List<Slide> get supplySlides => [
         </ul>
         '''),
       SlideContent(
-        diagramBundleEnums: [
-          DiagramBundleEnum.microSupplyIncrease,
-          DiagramBundleEnum.microSupplyDecrease,
+        diagramEnums: [
+          DiagramEnum.microSupplyIncrease,
+          DiagramEnum.microSupplyDecrease,
         ],
       ),
     ],
   ),
   Slide(
-    section: Subunit.supply,
+    subunit: Subunit.supply,
     title: 'Assumptions underlying the law of supply',
     hl: true,
     contents: [
@@ -158,18 +158,18 @@ List<Slide> get supplySlides => [
       ),
 
       SlideContent(
-        diagramBundleEnums: [
-          DiagramBundleEnum.microMarginalProduct,
-          DiagramBundleEnum.microTotalAndMarginalProduct,
+        diagramEnums: [
+          DiagramEnum.microMarginalProduct,
+          DiagramEnum.microTotalAndMarginalProduct,
         ],
       ),
       SlideContent.text(
         'Marginal Cost is inversely related to Marginal Product.',
       ),
       SlideContent(
-        diagramBundleEnums: [
-          DiagramBundleEnum.microMarginalProduct,
-          DiagramBundleEnum.microMarginalCost,
+        diagramEnums: [
+          DiagramEnum.microMarginalProduct,
+          DiagramEnum.microMarginalCost,
         ],
       ),
       SlideContent.key('Reasons for the upwards sloping supply curve', '''

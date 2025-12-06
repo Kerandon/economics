@@ -13,9 +13,9 @@ class SlideContent {
   final Term? term;
   final Alert? alert;
   final Tip? tip;
-  final List<DiagramBundleEnum>? diagramBundleEnums;
+  final List<DiagramEnum>? diagramEnums;
   final List<DiagramBundle>? diagramBundles;
-  final Widget? widget; // 🔹 NEW: Property to hold a custom widget.
+  final List<DiagramWidget>? diagramWidgets;
 
   SlideContent({
     this.content,
@@ -23,9 +23,9 @@ class SlideContent {
     this.term,
     this.alert,
     this.tip,
-    this.diagramBundleEnums,
+    this.diagramEnums,
     this.diagramBundles,
-    this.widget, // 🔹 NEW: Add to the constructor.
+    this.diagramWidgets, // 🔹 NEW: Add to the constructor.
   });
 
   SlideContent copyWith({
@@ -34,9 +34,9 @@ class SlideContent {
     Term? term,
     Alert? alert,
     Tip? tip,
-    List<DiagramBundleEnum>? diagramBundleEnums,
+    List<DiagramEnum>? diagramEnums,
     List<DiagramBundle>? diagramBundles,
-    Widget? widget,
+    List<DiagramWidget>? diagramWidgets,
   }) {
     return SlideContent(
       content: content ?? this.content,
@@ -44,9 +44,11 @@ class SlideContent {
       term: term ?? this.term,
       alert: alert ?? this.alert,
       tip: tip ?? this.tip,
-      diagramBundleEnums: diagramBundleEnums ?? this.diagramBundleEnums,
+      diagramWidgets: diagramWidgets ?? this.diagramWidgets,
+      diagramEnums: diagramEnums ?? this.diagramEnums,
+
+      /// make redundant
       diagramBundles: diagramBundles ?? this.diagramBundles,
-      widget: widget ?? this.widget,
     );
   }
 
@@ -64,37 +66,38 @@ class SlideContent {
         term: Term(term: term, explanation: explanation, tag: tag),
       );
 
-  factory SlideContent.diagram(DiagramBundleEnum diagram) =>
-      SlideContent(diagramBundleEnums: [diagram]);
-  factory SlideContent.diagrams(List<DiagramBundleEnum> diagrams) =>
-      SlideContent(diagramBundleEnums: diagrams);
+  /// make redundant
+  factory SlideContent.diagram(DiagramEnum diagram) =>
+      SlideContent(diagramEnums: [diagram]);
+
+  factory SlideContent.diagrams(List<DiagramEnum> diagrams) =>
+      SlideContent(diagramEnums: diagrams);
 
   factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
 
   factory SlideContent.tip(String text) => SlideContent(tip: Tip(text));
 
   // 🔹 NEW: Factory constructor to create a slide with just a custom widget.
-  factory SlideContent.customWidget(Widget widget) =>
-      SlideContent(widget: widget);
+  factory SlideContent.customWidget(Widget widget) => SlideContent();
 
   factory SlideContent.textWithDiagram(
     String content,
-    DiagramBundleEnum diagram, {
+    DiagramEnum diagram, {
     Tag? tag,
   }) => SlideContent(
     content: Content(content, tag: tag),
-    diagramBundleEnums: [diagram],
+    diagramEnums: [diagram],
   );
 
   factory SlideContent.termWithContentAndDiagram(
     String term,
     String explanation,
     String content,
-    DiagramBundleEnum diagram, {
+    DiagramEnum diagram, {
     Tag? tag,
   }) => SlideContent(
     term: Term(term: term, explanation: explanation, tag: tag),
     content: Content(content, tag: tag),
-    diagramBundleEnums: [diagram],
+    diagramEnums: [diagram],
   );
 }

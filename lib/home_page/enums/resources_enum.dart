@@ -25,10 +25,10 @@ extension ResourceExtension on Resource {
     }
   }
 
-  DiagramBundleEnum? get diagram {
+  DiagramEnum? get diagram {
     switch (this) {
       case Resource.diagrams:
-        return DiagramBundleEnum
+        return DiagramEnum
             .microDemandExtension; // replace with your actual image path
       case Resource.terms:
         return null; // replace with your actual image path

@@ -87,10 +87,10 @@ enum DiagramLabel {
   q3,
   q4,
   qpi,
-  pe,
+  pE,
   we,
   pme,
-  qe,
+  qE,
   qTax,
   qSub,
   subsidy,
@@ -155,6 +155,8 @@ enum DiagramLabel {
   rMax,
   priceCostsRevenue,
   industryQuantity,
+  industry,
+  firm,
   quantity,
   quantityFirm,
   dEqualsARMR,
@@ -277,8 +279,8 @@ extension MicroLabelExtension on DiagramLabel {
     return switch (this) {
       DiagramLabel.p => 'P',
       DiagramLabel.q => 'Q',
-      DiagramLabel.pe => 'Pe',
-      DiagramLabel.qe => 'Qe',
+      DiagramLabel.pE => 'Pe',
+      DiagramLabel.qE => 'Qe',
       DiagramLabel.d => 'D',
       DiagramLabel.d1 => 'D₁',
       DiagramLabel.s => 'S',
@@ -310,7 +312,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.qOpt => 'Qopt',
       DiagramLabel.qm => 'Qm',
       DiagramLabel.priceCostsRevenue => 'Price,\nCosts,\nRevenues\n(\$)',
-      DiagramLabel.quantityFirm => 'Quantity - Firm',
+      DiagramLabel.quantityFirm => 'Firm Quantity',
       DiagramLabel.d1EqualsAR1MR1 => 'D₁=AR₁=MR₁',
       DiagramLabel.dEqualsARMR => 'D=AR=MR',
       DiagramLabel.mr => 'MR',
@@ -330,7 +332,7 @@ extension MicroLabelExtension on DiagramLabel {
 
       DiagramLabel.sm => 'Sm',
       DiagramLabel.dm => 'Dm',
-      DiagramLabel.industryQuantity => 'Quantity - Industry',
+      DiagramLabel.industryQuantity => 'Industry Quantity',
       DiagramLabel.pm1 => 'Pm₁',
       DiagramLabel.dm1 => 'Dm₁',
 
@@ -564,6 +566,8 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.qOpt2 => 'Qopt2',
       DiagramLabel.supplyOfPermits => 'Supply of Permits',
       DiagramLabel.demandForPermits => 'Demand\nfor Permits',
+      DiagramLabel.industry => 'Industry',
+      DiagramLabel.firm => 'Firm',
     };
   }
 }

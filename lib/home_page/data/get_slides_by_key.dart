@@ -16,13 +16,25 @@ List<Slide> getSlides({
     if (slide.contents?.isNotEmpty ?? false) {
       // Map over contents and add diagramBundles where needed
       final updatedContents = slide.contents!.map((content) {
-        if (content.diagramBundleEnums?.isNotEmpty ?? false) {
-          final diagramBundles = AllDiagrams(
+        if (content.diagramEnums?.isNotEmpty ?? false) {
+          // final diagramBundles = AllDiagrams(
+          //   size: size,
+          //   colorScheme: theme.colorScheme,
+          // ).getDiagramBundles(diagramBundleEnums: content.diagramEnums);
+          // return content.copyWith(diagramBundles: diagramBundles.toList());
+
+          final diagramWidgets = AllDiagrams2(
             size: size,
             colorScheme: theme.colorScheme,
-          ).getDiagramBundles(diagramBundleEnums: content.diagramBundleEnums);
-          return content.copyWith(diagramBundles: diagramBundles.toList());
+          ).getDiagramWidgets(content.diagramEnums);
+
+          // for(var d in diagramWidgets){
+          //   print('d is ${d.basePainterDiagram.diagram.name}');
+          // }
+
+          return content.copyWith(diagramWidgets: diagramWidgets.toList());
         }
+
         return content;
       }).toList();
 
@@ -34,7 +46,7 @@ List<Slide> getSlides({
   }
 
   if (key is UnitType || key is Subunit) {
-    return allSlidesPopulated.where((slide) => slide.section == key).toList();
+    return allSlidesPopulated.where((slide) => slide.subunit == key).toList();
   }
 
   // If no key is provided, return all slides

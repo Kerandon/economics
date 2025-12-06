@@ -8,7 +8,7 @@ import '../../models/term.dart';
 
 List<Slide> get elasticityDemandSlides => [
   Slide(
-    section: Subunit.elasticityDemand,
+    subunit: Subunit.elasticityDemand,
     title: kKeyTerms,
     contents: [
       SlideContent.term(
@@ -100,23 +100,23 @@ List<Slide> get elasticityDemandSlides => [
     ],
   ),
   Slide(
-    section: Subunit.elasticityDemand,
+    subunit: Subunit.elasticityDemand,
     title: 'Importance of PED for firms and government decision-making (AO3)',
     contents: [],
   ),
   Slide(
-    section: Subunit.elasticityDemand,
+    subunit: Subunit.elasticityDemand,
     hl: true,
     title: 'PED and Primary Commodities and Manufactured Goods (AO3)',
     contents: [],
   ),
   Slide(
-    section: Subunit.elasticityDemand,
+    subunit: Subunit.elasticityDemand,
     title: 'Income elasticity of demand (YED) (A02, A04)',
     contents: [],
   ),
   Slide(
-    section: Subunit.elasticityDemand,
+    subunit: Subunit.elasticityDemand,
     title: 'Importance of income elasticity of demand (YED) (A03)',
     contents: [],
   ),

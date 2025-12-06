@@ -11,7 +11,7 @@ void paintKeynesianCurve({
   required DiagramPainterConfig config,
   required Canvas canvas,
 }) {
-  paintCustomBezier(
+  paintCustomBezierRedundant(
     config,
     canvas,
     startPos: Offset(0.20, 0.70),

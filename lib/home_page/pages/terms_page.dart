@@ -22,8 +22,8 @@ class TermsPage extends ConsumerWidget {
     for (var s in slides) {
       if (s.contents?.isNotEmpty ?? false) {
         for (var c in s.contents!.toList()) {
-          if (c.term != null && s.section is Subunit) {
-            final subunit = s.section as Subunit;
+          if (c.term != null && s.subunit is Subunit) {
+            final subunit = s.subunit as Subunit;
             termsBySubunit.putIfAbsent(subunit, () => []).add(c.term!);
           }
         }

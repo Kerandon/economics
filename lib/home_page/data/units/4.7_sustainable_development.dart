@@ -5,7 +5,7 @@ import '../../models/slide.dart';
 List<Slide> get sustainableDevelopmentSlides => [
   /// 'Definition & Types of Protection',
   Slide(
-    section: Subunit.sustainableDevelopment,
+    subunit: Subunit.sustainableDevelopment,
     title: kKeyTerms,
     contents: [],
   ),

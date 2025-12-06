@@ -6,7 +6,7 @@ import '../../models/slide_content.dart';
 List<Slide> get exchangeRateSlides => [
   /// 'Definition & Types of Protection',
   Slide(
-    section: Subunit.exchangeRates,
+    subunit: Subunit.exchangeRates,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

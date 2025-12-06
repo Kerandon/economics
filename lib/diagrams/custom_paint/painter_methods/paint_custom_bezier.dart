@@ -6,7 +6,7 @@ import '../../models/diagram_painter_config.dart';
 import '../../models/size_adjuster.dart';
 import '../painter_constants.dart';
 
-void paintCustomBezier(
+void paintCustomBezierRedundant(
   DiagramPainterConfig config,
   Canvas canvas, {
   required Offset startPos,

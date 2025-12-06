@@ -1,3 +1,5 @@
+import '../../home_page/enums/skill.dart';
+
 enum UnitType {
   intro('1', 'Introduction'),
   micro('2', 'Microeconomics'),
@@ -47,7 +49,7 @@ enum Subunit {
   ),
   marketFailureAsymmetric(
     '2.10',
-    'Market failure—asymmetric information (HL only)',
+    'Market failure asymmetric information (HL only)',
     UnitType.micro,
   ),
   marketFailurePower(
@@ -150,4 +152,195 @@ extension UnitExt on UnitType {
 
   List<Subunit> get subunits =>
       Subunit.values.where((s) => s.unit == this).toList();
+}
+
+enum SyllabusPoint {
+  lawOfDemand(
+    Subunit.demand,
+    'The law of demand: relationship between price and quantity demanded',
+    [Skill.a02],
+  ),
+  assumptionsLawOfDemand(
+    Subunit.demand,
+    'Assumptions underlying the law of demand',
+    [Skill.a02],
+    hlOnly: true,
+  ),
+  demandCurve(Subunit.demand, 'Demand curve', [Skill.a04]),
+  individualVsMarketDemand(
+    Subunit.demand,
+    'Relationship between individual and market demand',
+    [Skill.a02],
+  ),
+  nonPriceDeterminants(Subunit.demand, 'Non-price determinants of demand', [
+    Skill.a02,
+  ]),
+  movementsAndShiftsOfDemand(
+    Subunit.demand,
+    'Movements along the demand curve and shifts of the demand curve',
+    [Skill.a02, Skill.a04],
+  ),
+
+  /// UNIT 2.10 — Market Failure & Market Power (HL)
+  // Perfect competition
+  perfectCompetitionCharacteristics(
+    Subunit.marketFailurePower,
+    'Perfect competition: many firms, free entry, homogeneous products',
+    [Skill.a02],
+  ),
+
+  // Monopoly
+  monopolyCharacteristics(
+    Subunit.marketFailurePower,
+    'Monopoly: single or dominant firm, high barriers to entry, no close substitutes',
+    [Skill.a02],
+  ),
+  naturalMonopoly(
+    Subunit.marketFailurePower,
+    'Natural monopoly and economies of scale',
+    [Skill.a03, Skill.a04],
+  ),
+  // Imperfect competition general
+  imperfectCompetitionOverview(
+    Subunit.marketFailurePower,
+    'Imperfect competition: varying degrees of market power, firm as price maker',
+    [Skill.a02],
+  ),
+
+  // Monopolistic competition
+  monopolisticCompetitionCharacteristics(
+    Subunit.marketFailurePower,
+    'Monopolistic competition: many firms, free entry, product differentiation',
+    [Skill.a02],
+  ),
+  monopolisticCompetitionProfitMaximizationSR(
+    Subunit.marketFailurePower,
+    'Monopolistic competition profit maximization in the short run',
+    [Skill.a03, Skill.a04],
+  ),
+  monopolisticCompetitionProfitMaximizationLR(
+    Subunit.marketFailurePower,
+    'Monopolistic competition profit maximization in the long run',
+    [Skill.a03, Skill.a04],
+  ),
+  monopolisticCompetitionEfficiency(
+    Subunit.marketFailurePower,
+    'Monopolistic competition: allocative inefficiency but greater product variety',
+    [Skill.a03],
+  ),
+  monopolisticCompetitionDiagrams(
+    Subunit.marketFailurePower,
+    'Monopolistic competition diagrams: abnormal profit, normal profit, losses',
+    [Skill.a03, Skill.a04],
+  ),
+
+  // Oligopoly
+  oligopolyCharacteristics(
+    Subunit.marketFailurePower,
+    'Oligopoly: few large firms, high barriers to entry, interdependence',
+    [Skill.a02],
+  ),
+  oligopolyCollusiveVsNonCollusive(
+    Subunit.marketFailurePower,
+    'Oligopoly: collusive vs non-collusive behaviour, risk of price war, incentives to cheat',
+    [Skill.a03],
+  ),
+  oligopolyGameTheory(
+    Subunit.marketFailurePower,
+    'Game theory payoff matrix (HL only)',
+    [Skill.a03],
+    hlOnly: true,
+  ),
+  oligopolyCompetition(
+    Subunit.marketFailurePower,
+    'Oligopoly price and non-price competition',
+    [Skill.a02],
+  ),
+  oligopolyConcentrationRatios(
+    Subunit.marketFailurePower,
+    'Market concentration and concentration ratios',
+    [Skill.a02],
+  ),
+  oligopolyDiagrams(
+    Subunit.marketFailurePower,
+    'Collusive oligopoly diagram acting like a monopoly',
+    [Skill.a03, Skill.a04],
+  ),
+
+  // Rational producer behaviour (HL only)
+  profitMaximizationHL(
+    Subunit.marketFailurePower,
+    'Rational producer behaviour: profit maximization (TR - TC, MC = MR)',
+    [Skill.a02],
+    hlOnly: true,
+  ),
+  abnormalProfitDefinition(
+    Subunit.marketFailurePower,
+    'Abnormal profit (AR > AC)',
+    [Skill.a02],
+  ),
+  normalProfitDefinition(
+    Subunit.marketFailurePower,
+    'Normal profit (AR = AC)',
+    [Skill.a02],
+  ),
+  lossDefinition(Subunit.marketFailurePower, 'Losses (AR < AC)', [Skill.a02]),
+  hlCalculations(
+    Subunit.marketFailurePower,
+    'HL calculations: profit, MC, MR, AC, AR from data',
+    [Skill.a04],
+    hlOnly: true,
+  ),
+
+  // Market failure — market power
+  meaningOfMarketPower(
+    Subunit.marketFailurePower,
+    'Meaning and degrees of market power',
+    [Skill.a02],
+  ),
+
+  // Stakeholders + info failures
+  stakeholderConsequences(
+    Subunit.marketFailurePower,
+    'Consequences of market power for stakeholders',
+    [Skill.a02],
+  ),
+  freeRiderProblem(Subunit.marketFailurePower, 'Free rider problem', [
+    Skill.a02,
+  ]),
+  adverseSelection(Subunit.marketFailurePower, 'Adverse selection', [
+    Skill.a02,
+  ]),
+  moralHazard(Subunit.marketFailurePower, 'Moral hazard', [Skill.a02]),
+
+  // Benefits & Risks of Market Power
+  benefitsLargeFirms(
+    Subunit.marketFailurePower,
+    'Advantages of large firms: economies of scale, R&D investment, innovation',
+    [Skill.a03],
+  ),
+  risksLargeFirms(
+    Subunit.marketFailurePower,
+    'Risks of markets dominated by one or few large firms: output, price, consumer choice',
+    [Skill.a03],
+  ),
+
+  // Government intervention
+  governmentInterventionMarketPower(
+    Subunit.marketFailurePower,
+    'Government response to abuse of market power: legislation, regulation, fines, public ownership',
+    [Skill.a03],
+  );
+
+  final Subunit subunit;
+  final String title;
+  final List<Skill> skills;
+  final bool hlOnly;
+
+  const SyllabusPoint(
+    this.subunit,
+    this.title,
+    this.skills, {
+    this.hlOnly = false,
+  });
 }

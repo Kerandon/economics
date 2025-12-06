@@ -8,7 +8,7 @@ import '../../models/slide_content.dart';
 List<Slide> get typesOfTradeProtectionSlides => [
   /// 'Definition & Types of Protection',
   Slide(
-    section: Subunit.typesTradeProtection,
+    subunit: Subunit.typesTradeProtection,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

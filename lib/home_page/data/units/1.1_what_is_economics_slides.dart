@@ -8,7 +8,7 @@ import '../../models/term.dart';
 
 List<Slide> get whatIsEconomicsSlides => [
   Slide(
-    section: Subunit.whatIsEconomics,
+    subunit: Subunit.whatIsEconomics,
     title: kKeyTerms,
     contents: [
       SlideContent.term(
@@ -118,13 +118,11 @@ List<Slide> get whatIsEconomicsSlides => [
     ],
   ),
   Slide(
-    section: Subunit.whatIsEconomics,
+    subunit: Subunit.whatIsEconomics,
     title: kKeyTerms,
     contents: [
       SlideContent(
-        diagramBundleEnums: [
-          DiagramBundleEnum.globalAbsoluteAdvantageBothGoods,
-        ],
+        diagramEnums: [DiagramEnum.globalAbsoluteAdvantageBothGoods],
       ),
     ],
   ),

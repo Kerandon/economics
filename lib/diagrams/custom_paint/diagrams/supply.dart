@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_shape.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
@@ -25,21 +26,21 @@ class Supply extends BaseDiagramPainter2 {
 
     String yLabel = DiagramLabel.price.label;
     String xLabel = DiagramLabel.quantity.label;
-    if (bundle == DiagramBundleEnum.microMarginalProduct ||
-        bundle == DiagramBundleEnum.microTotalAndMarginalProduct) {
+    if (bundle == DiagramEnum.microMarginalProduct ||
+        bundle == DiagramEnum.microTotalAndMarginalProduct) {
       yLabel = DiagramLabel.product.label;
       xLabel = DiagramLabel.input.label;
     }
-    if (bundle == DiagramBundleEnum.microMarginalCost ||
-        bundle == DiagramBundleEnum.microMarginalCostSupplyCurve) {
+    if (bundle == DiagramEnum.microMarginalCost ||
+        bundle == DiagramEnum.microMarginalCostSupplyCurve) {
       yLabel = DiagramLabel.costs.label;
       xLabel = DiagramLabel.quantity.label;
     }
 
     paintAxis(c, canvas, yAxisLabel: yLabel, xAxisLabel: xLabel);
     // Supply extension/contraction (movement along the curve)
-    if (bundle == DiagramBundleEnum.microSupplyExtension ||
-        bundle == DiagramBundleEnum.microSupplyContraction) {
+    if (bundle == DiagramEnum.microSupplyExtension ||
+        bundle == DiagramEnum.microSupplyContraction) {
       paintMarketCurve(c, canvas, type: MarketCurveType.supply);
 
       paintDiagramDashedLines(
@@ -49,7 +50,7 @@ class Supply extends BaseDiagramPainter2 {
         xAxisEndPos: 0.60,
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
-        addDotAtIntersection: true,
+        showDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -58,9 +59,9 @@ class Supply extends BaseDiagramPainter2 {
         xAxisEndPos: 0.40,
         yLabel: DiagramLabel.p1.label,
         xLabel: DiagramLabel.q1.label,
-        addDotAtIntersection: true,
+        showDotAtIntersection: true,
       );
-      if (bundle == DiagramBundleEnum.microSupplyExtension) {
+      if (bundle == DiagramEnum.microSupplyExtension) {
         paintLineSegment(
           c,
           canvas,
@@ -69,7 +70,7 @@ class Supply extends BaseDiagramPainter2 {
           length: 0.15,
         );
       }
-      if (bundle == DiagramBundleEnum.microSupplyContraction) {
+      if (bundle == DiagramEnum.microSupplyContraction) {
         paintLineSegment(
           c,
           canvas,
@@ -81,7 +82,7 @@ class Supply extends BaseDiagramPainter2 {
     }
 
     // Supply increase (rightward shift)
-    if (bundle == DiagramBundleEnum.microSupplyIncrease) {
+    if (bundle == DiagramEnum.microSupplyIncrease) {
       paintMarketCurve(
         c,
         canvas,
@@ -105,7 +106,7 @@ class Supply extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q1.label,
         hideYLine: true,
-        addDotAtIntersection: true,
+        showDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -114,12 +115,12 @@ class Supply extends BaseDiagramPainter2 {
         xAxisEndPos: 0.60,
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q2.label,
-        addDotAtIntersection: true,
+        showDotAtIntersection: true,
       );
     }
 
     // Supply decrease (leftward shift)
-    if (bundle == DiagramBundleEnum.microSupplyDecrease) {
+    if (bundle == DiagramEnum.microSupplyDecrease) {
       paintMarketCurve(
         c,
         canvas,
@@ -142,7 +143,7 @@ class Supply extends BaseDiagramPainter2 {
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q2.label,
         hideYLine: true,
-        addDotAtIntersection: true,
+        showDotAtIntersection: true,
       );
       paintDiagramDashedLines(
         c,
@@ -151,15 +152,15 @@ class Supply extends BaseDiagramPainter2 {
         xAxisEndPos: 0.60,
         yLabel: DiagramLabel.p.label,
         xLabel: DiagramLabel.q1.label,
-        addDotAtIntersection: true,
+        showDotAtIntersection: true,
       );
       paintLineSegment(c, canvas, origin: Offset(0.61, 0.40), angle: pi / 1);
     }
-    if (bundle == DiagramBundleEnum.microMarginalProduct ||
-        bundle == DiagramBundleEnum.microTotalAndMarginalProduct) {
+    if (bundle == DiagramEnum.microMarginalProduct ||
+        bundle == DiagramEnum.microTotalAndMarginalProduct) {
       final labelYPos = 0.05;
 
-      if (bundle == DiagramBundleEnum.microTotalAndMarginalProduct) {
+      if (bundle == DiagramEnum.microTotalAndMarginalProduct) {
         paintDiagramLines(
           c,
           canvas,
@@ -220,7 +221,7 @@ class Supply extends BaseDiagramPainter2 {
         paintDot(c, canvas, pos: Offset(0.76, 0.195), color: Colors.black);
         paintDot(c, canvas, pos: Offset(0.76, 1.0), color: Colors.black);
       }
-      if (bundle == DiagramBundleEnum.microMarginalProduct) {
+      if (bundle == DiagramEnum.microMarginalProduct) {
         paintDiagramLines(
           c,
           canvas,
@@ -263,7 +264,7 @@ class Supply extends BaseDiagramPainter2 {
         paintDot(c, canvas, pos: Offset(0.45, 0.125), color: Colors.black);
       }
     }
-    if (bundle == DiagramBundleEnum.microMarginalCost) {
+    if (bundle == DiagramEnum.microMarginalCost) {
       paintAxis(
         c,
         canvas,
@@ -295,4 +296,8 @@ class Supply extends BaseDiagramPainter2 {
       paintDot(c, canvas, pos: Offset(0.385, 0.855), color: Colors.black);
     }
   }
+
+  @override
+  // TODO: implement legendDisplay
+  LegendDisplay get legendDisplay => throw UnimplementedError();
 }

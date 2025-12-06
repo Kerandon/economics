@@ -6,7 +6,7 @@ import '../../models/slide_content.dart';
 List<Slide> get bopSlides => [
   /// 'Definition & Types of Protection',
   Slide(
-    section: Subunit.balanceOfPayments,
+    subunit: Subunit.balanceOfPayments,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

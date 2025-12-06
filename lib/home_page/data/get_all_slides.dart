@@ -17,8 +17,8 @@ import 'package:economics_app/home_page/data/units/4.2_trade_protection.dart';
 import '../models/slide.dart';
 
 List<Slide> get allSlides => [
-  // ...whatIsEconomicsSlides,
-  // ...economistsApproach,
+  ...whatIsEconomicsSlides,
+  ...economistsApproach,
   ...demandSlides,
   ...supplySlides,
   ...competitiveMarketEquilibrium,
@@ -27,9 +27,9 @@ List<Slide> get allSlides => [
   ...elasticitySupplySlides,
   ...roleOfGovernmentSlides,
   ...externalitiesSlides,
-  // ...publicGoodsSlides,
-  // ...asymmetricInfoSlides,
-  // ...marketPowerSlides,
+  ...publicGoodsSlides,
+  ...asymmetricInfoSlides,
+  ...marketPowerSlides,
   // ...inabilityAchieveEquitySlides,
   // ...benefitsOfInternationalTradeSlides,
   // ...typesOfTradeProtectionSlides,

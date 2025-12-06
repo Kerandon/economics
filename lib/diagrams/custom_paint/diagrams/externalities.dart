@@ -3,6 +3,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/label_align.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
@@ -30,56 +31,57 @@ class Externalities extends BaseDiagramPainter2 {
       xAxisLabel: DiagramLabel.quantity.label,
     );
     switch (bundle) {
-      case DiagramBundleEnum.microNegativeProductionExternality ||
-          DiagramBundleEnum.microNegativeProductionExternalityWelfare ||
-          DiagramBundleEnum.microCommonPoolResources ||
-          DiagramBundleEnum.microNegativeProductionExternalityPigouvianTax ||
-          DiagramBundleEnum.microNegativeProductionExternalityRegulations:
+      case DiagramEnum.microNegativeProductionExternality ||
+          DiagramEnum.microNegativeProductionExternalityWelfare ||
+          DiagramEnum.microCommonPoolResources ||
+          DiagramEnum.microNegativeProductionExternalityPigouvianTax ||
+          DiagramEnum.microNegativeProductionExternalityRegulations:
         _paintNegativeProduction(c, canvas, size, bundle);
-      case DiagramBundleEnum.microCarbonTax:
+      case DiagramEnum.microCarbonTax:
         _paintCarbonTax(c, canvas, size);
-      case DiagramBundleEnum.microTradablePollutionPermits:
+      case DiagramEnum.microTradablePollutionPermits:
         _paintTradablePermits(c, canvas, size);
-      case DiagramBundleEnum.microNegativeConsumptionExternality ||
-          DiagramBundleEnum.microNegativeConsumptionExternalityWelfare ||
-          DiagramBundleEnum.microNegativeConsumptionExternalityPigouvianTax ||
-          DiagramBundleEnum.microNegativeConsumptionExternalityPublicAwareness:
+      case DiagramEnum.microNegativeConsumptionExternality ||
+          DiagramEnum.microNegativeConsumptionExternalityWelfare ||
+          DiagramEnum.microNegativeConsumptionExternalityPigouvianTax ||
+          DiagramEnum.microNegativeConsumptionExternalityPublicAwareness:
         _paintNegativeConsumption(c, canvas, size, bundle);
-      case DiagramBundleEnum.microPositiveProductionExternality ||
-          DiagramBundleEnum.microPositiveProductionExternalityWelfare ||
-          DiagramBundleEnum.microPositiveProductionExternalitySubsidy ||
-          DiagramBundleEnum.microPositiveProductionExternalityDirectProvision:
+      case DiagramEnum.microPositiveProductionExternality ||
+          DiagramEnum.microPositiveProductionExternalityWelfare ||
+          DiagramEnum.microPositiveProductionExternalitySubsidy ||
+          DiagramEnum.microPositiveProductionExternalityDirectProvision:
         _paintPositiveProduction(c, canvas, size, bundle);
-      case DiagramBundleEnum.microPositiveConsumptionExternality ||
-          DiagramBundleEnum.microPositiveConsumptionExternalityWelfare ||
-          DiagramBundleEnum.microPositiveConsumptionExternalitySubsidy ||
-          DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising ||
-          DiagramBundleEnum.microPositiveConsumptionExternalityDirectProvision:
+      case DiagramEnum.microPositiveConsumptionExternality ||
+          DiagramEnum.microPositiveConsumptionExternalityWelfare ||
+          DiagramEnum.microPositiveConsumptionExternalitySubsidy ||
+          DiagramEnum.microPositiveConsumptionExternalityAdvertising ||
+          DiagramEnum.microPositiveConsumptionExternalityDirectProvision:
         _paintPositiveConsumption(c, canvas, size, bundle);
       default:
     }
   }
+
+  @override
+  // TODO: implement legendDisplay
+  LegendDisplay get legendDisplay => throw UnimplementedError();
 }
 
 void _paintNegativeProduction(
   DiagramPainterConfig c,
   Canvas canvas,
   Size size,
-  DiagramBundleEnum bundle,
+  DiagramEnum bundle,
 ) {
   String yLabel = DiagramLabel.pOpt.label;
   String supplyLabel = DiagramLabel.msc.label;
   String arrowLabel = DiagramLabel.externalCost.label;
   LineEndStyle lineEndStyle = LineEndStyle.arrowBothEnds;
-  if (bundle ==
-          DiagramBundleEnum.microNegativeProductionExternalityPigouvianTax ||
-      bundle ==
-          DiagramBundleEnum.microNegativeProductionExternalityRegulations) {
+  if (bundle == DiagramEnum.microNegativeProductionExternalityPigouvianTax ||
+      bundle == DiagramEnum.microNegativeProductionExternalityRegulations) {
     lineEndStyle = LineEndStyle.arrow;
 
     paintLineSegment(c, canvas, origin: Offset(0.38, 1.09), angle: -pi);
-    if (bundle ==
-        DiagramBundleEnum.microNegativeProductionExternalityPigouvianTax) {
+    if (bundle == DiagramEnum.microNegativeProductionExternalityPigouvianTax) {
       paintText2(
         c,
         canvas,
@@ -107,13 +109,12 @@ void _paintNegativeProduction(
         hideXLine: true,
       );
     }
-    if (bundle ==
-        DiagramBundleEnum.microNegativeProductionExternalityRegulations) {
+    if (bundle == DiagramEnum.microNegativeProductionExternalityRegulations) {
       supplyLabel = DiagramLabel.msc.label;
       arrowLabel = DiagramLabel.governmentRegulations.label;
     }
   }
-  if (bundle == DiagramBundleEnum.microCommonPoolResources) {
+  if (bundle == DiagramEnum.microCommonPoolResources) {
     arrowLabel = DiagramLabel.externalCostOfOverFishing.label;
   }
   paintLineSegment(
@@ -174,9 +175,9 @@ void _paintNegativeProduction(
     label2Align: LabelAlign.centerRight,
   );
 
-  if (bundle == DiagramBundleEnum.microNegativeProductionExternalityWelfare ||
-      bundle == DiagramBundleEnum.microNegativeProductionExternality ||
-      bundle == DiagramBundleEnum.microCommonPoolResources) {
+  if (bundle == DiagramEnum.microNegativeProductionExternalityWelfare ||
+      bundle == DiagramEnum.microNegativeProductionExternality ||
+      bundle == DiagramEnum.microCommonPoolResources) {
     /// Welfare Loss
     paintShading(canvas, size, ShadeType.welfareLoss, [
       Offset(0.31, 0.465),
@@ -191,7 +192,7 @@ void _paintNegativeProduction(
       pointerLine: Offset(0.38, 0.45),
     );
   }
-  if (bundle == DiagramBundleEnum.microNegativeProductionExternalityWelfare) {
+  if (bundle == DiagramEnum.microNegativeProductionExternalityWelfare) {
     paintText2(c, canvas, DiagramLabel.a.label, Offset(0.10, 0.40));
     paintText2(c, canvas, DiagramLabel.b.label, Offset(0.10, 0.53));
     paintText2(c, canvas, DiagramLabel.c.label, Offset(0.28, 0.53));
@@ -339,10 +340,10 @@ void _paintNegativeConsumption(
   DiagramPainterConfig c,
   Canvas canvas,
   Size size,
-  DiagramBundleEnum bundle,
+  DiagramEnum bundle,
 ) {
-  if (bundle == DiagramBundleEnum.microNegativeConsumptionExternality ||
-      bundle == DiagramBundleEnum.microNegativeConsumptionExternalityWelfare) {
+  if (bundle == DiagramEnum.microNegativeConsumptionExternality ||
+      bundle == DiagramEnum.microNegativeConsumptionExternalityWelfare) {
     paintDiagramDashedLines(
       c,
       canvas,
@@ -381,13 +382,12 @@ void _paintNegativeConsumption(
     );
   }
 
-  if (bundle != DiagramBundleEnum.microNegativeConsumptionExternality &&
-      bundle != DiagramBundleEnum.microNegativeConsumptionExternalityWelfare) {
+  if (bundle != DiagramEnum.microNegativeConsumptionExternality &&
+      bundle != DiagramEnum.microNegativeConsumptionExternalityWelfare) {
     paintLineSegment(c, canvas, origin: Offset(0.41, 1.09), angle: -pi);
   }
 
-  if (bundle ==
-      DiagramBundleEnum.microNegativeConsumptionExternalityPigouvianTax) {
+  if (bundle == DiagramEnum.microNegativeConsumptionExternalityPigouvianTax) {
     paintLineSegment(
       c,
       canvas,
@@ -441,7 +441,7 @@ void _paintNegativeConsumption(
       yLabel: DiagramLabel.pc.label,
     );
   }
-  if (bundle == DiagramBundleEnum.microNegativeConsumptionExternalityWelfare) {
+  if (bundle == DiagramEnum.microNegativeConsumptionExternalityWelfare) {
     paintText2(c, canvas, DiagramLabel.a.label, Offset(0.15, 0.40));
     paintText2(c, canvas, DiagramLabel.b.label, Offset(0.03, 0.46));
     paintText2(c, canvas, DiagramLabel.c.label, Offset(0.15, 0.56));
@@ -498,17 +498,16 @@ void _paintNegativeConsumption(
     label2Align: LabelAlign.centerRight,
   );
   if (bundle ==
-          DiagramBundleEnum
-              .microNegativeConsumptionExternalityPublicAwareness ||
+          DiagramEnum.microNegativeConsumptionExternalityPublicAwareness ||
       bundle ==
-          DiagramBundleEnum
+          DiagramEnum
               .microNegativeConsumptionExternalityGovernmentRegulations) {
     String costLabel =
         'Rules & Regulations to\n'
         'Reduce Consumption\n'
         '= External Cost';
     if (bundle ==
-        DiagramBundleEnum.microNegativeConsumptionExternalityPublicAwareness) {
+        DiagramEnum.microNegativeConsumptionExternalityPublicAwareness) {
       costLabel = 'Public Awareness\nCampaign On Social\nCosts of Consumption';
     }
     paintLineSegment(c, canvas, origin: Offset(-0.125, 0.55), angle: pi / 2);
@@ -528,7 +527,7 @@ void _paintNegativeConsumption(
       pointerLine: Offset(0.65, 0.70),
     );
     if (bundle ==
-        DiagramBundleEnum.microNegativeConsumptionExternalityPublicAwareness) {
+        DiagramEnum.microNegativeConsumptionExternalityPublicAwareness) {
       paintLineSegment(
         c,
         canvas,
@@ -544,11 +543,11 @@ void _paintPositiveProduction(
   DiagramPainterConfig c,
   Canvas canvas,
   Size size,
-  DiagramBundleEnum bundle,
+  DiagramEnum bundle,
 ) {
   String mSCLabel = DiagramLabel.msc.label;
-  if (bundle == DiagramBundleEnum.microPositiveProductionExternalityWelfare ||
-      bundle == DiagramBundleEnum.microPositiveProductionExternality) {
+  if (bundle == DiagramEnum.microPositiveProductionExternalityWelfare ||
+      bundle == DiagramEnum.microPositiveProductionExternality) {
     paintLineSegment(
       c,
       canvas,
@@ -570,7 +569,7 @@ void _paintPositiveProduction(
       pointerLine: Offset(0.46, 0.50),
     );
 
-    if (bundle == DiagramBundleEnum.microPositiveProductionExternalityWelfare) {
+    if (bundle == DiagramEnum.microPositiveProductionExternalityWelfare) {
       paintLegendTable(
         canvas,
         c,
@@ -603,9 +602,8 @@ void _paintPositiveProduction(
   }
 
   String arrowLabel = DiagramLabel.externalBenefits.label;
-  if (bundle == DiagramBundleEnum.microPositiveProductionExternalitySubsidy ||
-      bundle ==
-          DiagramBundleEnum.microPositiveProductionExternalityDirectProvision) {
+  if (bundle == DiagramEnum.microPositiveProductionExternalitySubsidy ||
+      bundle == DiagramEnum.microPositiveProductionExternalityDirectProvision) {
     paintLineSegment(
       c,
       canvas,
@@ -632,12 +630,12 @@ void _paintPositiveProduction(
       endStyle: LineEndStyle.arrow,
     );
 
-    if (bundle == DiagramBundleEnum.microPositiveProductionExternalitySubsidy) {
+    if (bundle == DiagramEnum.microPositiveProductionExternalitySubsidy) {
       mSCLabel = DiagramLabel.mscEqualsMPCPlusSubsidy.label;
       arrowLabel = DiagramLabel.subsidyEqualExternalBenefits.label;
     }
     if (bundle ==
-        DiagramBundleEnum.microPositiveProductionExternalityDirectProvision) {
+        DiagramEnum.microPositiveProductionExternalityDirectProvision) {
       mSCLabel = DiagramLabel.mscEqualsMPCPlusGovernmentProvision.label;
       arrowLabel = DiagramLabel.governmentDirectProvision.label;
     }
@@ -717,10 +715,10 @@ void _paintPositiveConsumption(
   DiagramPainterConfig c,
   Canvas canvas,
   Size size,
-  DiagramBundleEnum bundle,
+  DiagramEnum bundle,
 ) {
-  if (bundle == DiagramBundleEnum.microPositiveConsumptionExternality ||
-      bundle == DiagramBundleEnum.microPositiveConsumptionExternalityWelfare) {
+  if (bundle == DiagramEnum.microPositiveConsumptionExternality ||
+      bundle == DiagramEnum.microPositiveConsumptionExternalityWelfare) {
     paintDiagramDashedLines(
       c,
       canvas,
@@ -773,8 +771,7 @@ void _paintPositiveConsumption(
       Offset(0.40, 0.32),
       pointerLine: Offset(0.35, 0.48),
     );
-    if (bundle ==
-        DiagramBundleEnum.microPositiveConsumptionExternalityWelfare) {
+    if (bundle == DiagramEnum.microPositiveConsumptionExternalityWelfare) {
       paintText2(c, canvas, DiagramLabel.a.label, Offset(0.10, 0.35));
       paintText2(c, canvas, DiagramLabel.b.label, Offset(0.04, 0.46));
       paintText2(c, canvas, DiagramLabel.c.label, Offset(0.33, 0.45));
@@ -830,12 +827,10 @@ void _paintPositiveConsumption(
     label2: DiagramLabel.sEqualsMPCMSC.label,
     label2Align: LabelAlign.centerRight,
   );
-  if (bundle == DiagramBundleEnum.microPositiveConsumptionExternalitySubsidy ||
+  if (bundle == DiagramEnum.microPositiveConsumptionExternalitySubsidy ||
       bundle ==
-          DiagramBundleEnum
-              .microPositiveConsumptionExternalityDirectProvision ||
-      bundle ==
-          DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising) {
+          DiagramEnum.microPositiveConsumptionExternalityDirectProvision ||
+      bundle == DiagramEnum.microPositiveConsumptionExternalityAdvertising) {
     paintDiagramDashedLines(
       c,
       canvas,
@@ -843,10 +838,10 @@ void _paintPositiveConsumption(
       xAxisEndPos: 0.285,
       yLabel: DiagramLabel.pm.label,
       xLabel: DiagramLabel.qm.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
   }
-  if (bundle == DiagramBundleEnum.microPositiveConsumptionExternalitySubsidy) {
+  if (bundle == DiagramEnum.microPositiveConsumptionExternalitySubsidy) {
     paintLineSegment(c, canvas, origin: Offset(0.365, 1.08), length: 0.16);
 
     paintText2(
@@ -878,7 +873,7 @@ void _paintPositiveConsumption(
       xAxisEndPos: 0.45,
       yLabel: DiagramLabel.pc.label,
       hideXLine: true,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -889,22 +884,21 @@ void _paintPositiveConsumption(
       xLabel: DiagramLabel.qOpt.label,
     );
   }
-  if (bundle ==
-      DiagramBundleEnum.microPositiveConsumptionExternalityAdvertising) {
+  if (bundle == DiagramEnum.microPositiveConsumptionExternalityAdvertising) {
     paintLineSegment(c, canvas, origin: Offset(0.60, 0.70), length: 0.18);
     paintDiagramDashedLines(
       c,
       canvas,
       yAxisStartPos: 0.495,
       xAxisEndPos: 0.455,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
       yLabel: DiagramLabel.pOpt.label,
       xLabel: DiagramLabel.qOpt.label,
     );
   }
 
   if (bundle ==
-      DiagramBundleEnum.microPositiveConsumptionExternalityDirectProvision) {
+      DiagramEnum.microPositiveConsumptionExternalityDirectProvision) {
     paintDiagramLines(
       c,
       canvas,
@@ -928,7 +922,7 @@ void _paintPositiveConsumption(
       xAxisEndPos: 0.46,
       hideXLine: true,
       yLabel: DiagramLabel.pc.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
   }
 }

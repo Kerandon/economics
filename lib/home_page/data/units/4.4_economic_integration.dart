@@ -6,7 +6,7 @@ import '../../models/slide_content.dart';
 List<Slide> get economicIntegrationSlides => [
   /// 'Definition & Types of Protection',
   Slide(
-    section: Subunit.economicIntegration,
+    subunit: Subunit.economicIntegration,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

@@ -5,7 +5,7 @@ import '../../models/slide_content.dart';
 
 List<Slide> get inabilityAchieveEquitySlides => [
   Slide(
-    section: Subunit.marketEquity,
+    subunit: Subunit.marketEquity,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

@@ -9,7 +9,7 @@ import '../../models/term.dart';
 
 List<Slide> get competitiveMarketEquilibrium => [
   Slide(
-    section: Subunit.competitiveMarket,
+    subunit: Subunit.competitiveMarket,
     title: kKeyTerms,
     contents: [
       SlideContent.term(
@@ -74,25 +74,25 @@ List<Slide> get competitiveMarketEquilibrium => [
     ],
   ),
   Slide(
-    section: Subunit.competitiveMarket,
+    subunit: Subunit.competitiveMarket,
     title: 'Market equilibrium',
     contents: [
       SlideContent.text(
         'Market equilibrium is the market price where the quantity demanded (Qd) is equal to quantity supplied (Qs)',
       ),
-      SlideContent.diagram(DiagramBundleEnum.microMarketEquilibrium),
+      SlideContent.diagram(DiagramEnum.microMarketEquilibrium),
       SlideContent.text(
         'Market disequilibrium is either when <strong>Qd > Qs (shortage) (L)</strong> '
         'or when <strong>Qs > Qd (R)</strong>  at the current market price.',
       ),
       SlideContent.diagrams([
-        DiagramBundleEnum.microShortage,
-        DiagramBundleEnum.microSurplus,
+        DiagramEnum.microShortage,
+        DiagramEnum.microSurplus,
       ]),
     ],
   ),
   Slide(
-    section: Subunit.competitiveMarket,
+    subunit: Subunit.competitiveMarket,
     title: 'Resource Allocation - Price Mechanism',
     contents: [
       SlideContent.text(
@@ -116,8 +116,8 @@ List<Slide> get competitiveMarketEquilibrium => [
       ),
 
       SlideContent.diagrams([
-        DiagramBundleEnum.microDemandIncreasePriceMechanism,
-        DiagramBundleEnum.microDemandDecreasePriceMechanism,
+        DiagramEnum.microDemandIncreasePriceMechanism,
+        DiagramEnum.microDemandDecreasePriceMechanism,
       ]),
 
       SlideContent.text(
@@ -126,12 +126,12 @@ List<Slide> get competitiveMarketEquilibrium => [
         ' (thereby \'rationing\' the good).',
       ),
 
-      SlideContent.diagram(DiagramBundleEnum.microPriceRationing),
+      SlideContent.diagram(DiagramEnum.microPriceRationing),
     ],
   ),
   Slide(
     title: 'The Law of Diminishing Marginal Utility',
-    section: Subunit.competitiveMarket,
+    subunit: Subunit.competitiveMarket,
     contents: [
       SlideContent.text(
         'As consumption increases the additional utility (satisfaction) falls. '
@@ -159,7 +159,7 @@ List<Slide> get competitiveMarketEquilibrium => [
   ),
   Slide(
     title: 'Marginal Benefit and Marginal Cost',
-    section: Subunit.competitiveMarket,
+    subunit: Subunit.competitiveMarket,
     contents: [
       SlideContent.text(
         'Marginal Benefit (MB) represents the maximum a consumer is willing to pay for one more unit of a good'
@@ -167,8 +167,8 @@ List<Slide> get competitiveMarketEquilibrium => [
         'MB is the demand curve.',
       ),
       SlideContent.diagrams([
-        DiagramBundleEnum.microMarginalBenefit,
-        DiagramBundleEnum.microMarginalCostSteps,
+        DiagramEnum.microMarginalBenefit,
+        DiagramEnum.microMarginalCostSteps,
       ]),
       SlideContent.text(
         'Marginal Cost (MC) represents the additional cost for a firm to supply one more unit of a good'
@@ -179,21 +179,21 @@ List<Slide> get competitiveMarketEquilibrium => [
   ),
   Slide(
     title: 'Consumer, Producer and Social Surplus',
-    section: Subunit.competitiveMarket,
+    subunit: Subunit.competitiveMarket,
     contents: [
       SlideContent.text(
         'Consumer Surplus is calculated the area below the marginal benefit curve (demand) and above the market price.',
       ),
       SlideContent.diagrams([
-        DiagramBundleEnum.microConsumerSurplus,
-        DiagramBundleEnum.microProducerSurplus,
+        DiagramEnum.microConsumerSurplus,
+        DiagramEnum.microProducerSurplus,
       ]),
       SlideContent.text(
         'Allocative Efficiency is achieved when <strong>MB = MC</strong>. At this quantity any surpluses or shortages are cleared from the market, and'
         ' the <strong>sum</strong> of consumer surplus and producer surplus is maximized.'
         ' This represents the most efficient allocation of resources from society\'s point of view.',
       ),
-      SlideContent.diagrams([DiagramBundleEnum.microAllocativeEfficiency]),
+      SlideContent.diagrams([DiagramEnum.microAllocativeEfficiency]),
     ],
   ),
 ];

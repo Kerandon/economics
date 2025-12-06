@@ -24,16 +24,16 @@ class PriceControls extends BaseDiagramPainter2 {
     final c = config.copyWith(painterSize: size);
 
     switch (bundle) {
-      case DiagramBundleEnum.microPriceCeiling:
+      case DiagramEnum.microPriceCeiling:
         _paintPriceCeiling(c, canvas, size);
-      case DiagramBundleEnum.microPriceFloor:
+      case DiagramEnum.microPriceFloor:
         _paintPriceFloor(c, canvas, size);
-      case DiagramBundleEnum.microNationalMinimumWage ||
-          DiagramBundleEnum.microNationalMinimumWageWelfare:
+      case DiagramEnum.microNationalMinimumWage ||
+          DiagramEnum.microNationalMinimumWageWelfare:
         _paintNMW(c, canvas, size, bundle);
-      case DiagramBundleEnum.microNationalMinimumWageInelasticDemandAndSupply:
+      case DiagramEnum.microNationalMinimumWageInelasticDemandAndSupply:
         _paintNMWInelasticDemand(c, canvas, size);
-      case DiagramBundleEnum.microAgriculturalPriceFloor:
+      case DiagramEnum.microAgriculturalPriceFloor:
         _paintAgriculturalPriceFloor(c, canvas, size);
       default:
     }
@@ -128,7 +128,7 @@ void _paintPriceCeiling(DiagramPainterConfig c, Canvas canvas, Size size) {
     xLabel: DiagramLabel.qSStar.label,
 
     hideYLine: true,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -136,7 +136,7 @@ void _paintPriceCeiling(DiagramPainterConfig c, Canvas canvas, Size size) {
     yAxisStartPos: 0.75,
     xAxisEndPos: 0.75,
     xLabel: DiagramLabel.qD.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
     hideYLine: true,
   );
   paintDiagramDashedLines(
@@ -144,8 +144,8 @@ void _paintPriceCeiling(DiagramPainterConfig c, Canvas canvas, Size size) {
     canvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: DiagramLabel.qe.label,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
   );
 }
 
@@ -228,7 +228,7 @@ void _paintPriceFloor(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.25,
     xLabel: DiagramLabel.qDStar.label,
     hideYLine: true,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -236,7 +236,7 @@ void _paintPriceFloor(DiagramPainterConfig c, Canvas canvas, Size size) {
     yAxisStartPos: 0.25,
     xAxisEndPos: 0.75,
     xLabel: DiagramLabel.qS.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
     hideYLine: true,
   );
   paintDiagramDashedLines(
@@ -244,8 +244,8 @@ void _paintPriceFloor(DiagramPainterConfig c, Canvas canvas, Size size) {
     canvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: DiagramLabel.qe.label,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
   );
 }
 
@@ -253,9 +253,9 @@ void _paintNMW(
   DiagramPainterConfig c,
   Canvas canvas,
   Size size,
-  DiagramBundleEnum bundle,
+  DiagramEnum bundle,
 ) {
-  if (bundle == DiagramBundleEnum.microNationalMinimumWageWelfare) {
+  if (bundle == DiagramEnum.microNationalMinimumWageWelfare) {
     paintText2(
       c,
       canvas,
@@ -291,7 +291,7 @@ void _paintNMW(
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
     yLabel: DiagramLabel.we.label,
-    xLabel: DiagramLabel.qe.label,
+    xLabel: DiagramLabel.qE.label,
   );
   paintDiagramLines(
     c,
@@ -351,7 +351,7 @@ void _paintNMW(
     xAxisEndPos: 0.30,
     hideYLine: true,
     xLabel: DiagramLabel.qDStar.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -360,7 +360,7 @@ void _paintNMW(
     xAxisEndPos: 0.70,
     hideYLine: true,
     xLabel: DiagramLabel.qS.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
 }
 
@@ -388,7 +388,7 @@ void _paintNMWInelasticDemand(
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
     yLabel: DiagramLabel.we.label,
-    xLabel: DiagramLabel.qe.label,
+    xLabel: DiagramLabel.qE.label,
   );
   paintDiagramLines(
     c,
@@ -452,7 +452,7 @@ void _paintNMWInelasticDemand(
     xAxisEndPos: 0.44,
     hideYLine: true,
     xLabel: '${DiagramLabel.qDStar.label}       ',
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -461,7 +461,7 @@ void _paintNMWInelasticDemand(
     xAxisEndPos: 0.58,
     hideYLine: true,
     xLabel: DiagramLabel.qS.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
 }
 
@@ -549,8 +549,8 @@ void _paintAgriculturalPriceFloor(
     canvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: DiagramLabel.qe.label,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
   );
   paintAxis(
     c,
@@ -588,7 +588,7 @@ void _paintAgriculturalPriceFloor(
     xAxisEndPos: 0.30,
     hideYLine: true,
     xLabel: DiagramLabel.qD.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -597,6 +597,6 @@ void _paintAgriculturalPriceFloor(
     xAxisEndPos: 0.70,
     hideYLine: true,
     xLabel: DiagramLabel.qSStar.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
 }

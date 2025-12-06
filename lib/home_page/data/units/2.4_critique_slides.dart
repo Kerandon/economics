@@ -8,7 +8,7 @@ import '../../models/term.dart';
 
 List<Slide> get critiqueSlides => [
   Slide(
-    section: Subunit.critiqueBehaviour,
+    subunit: Subunit.critiqueBehaviour,
     title: kKeyTerms,
     contents: [
       SlideContent.term(
@@ -130,7 +130,7 @@ List<Slide> get critiqueSlides => [
   ),
   Slide(
     title: 'Consumer rationality',
-    section: Subunit.critiqueBehaviour,
+    subunit: Subunit.critiqueBehaviour,
     contents: [
       SlideContent.text('''
     Rational consumer choice assumes consumers are motivated by rational self-interest, have access to perfect information, and aim to maximize their utility based on their budget constraints.
@@ -150,7 +150,7 @@ List<Slide> get critiqueSlides => [
     ],
   ),
   Slide(
-    section: Subunit.critiqueBehaviour,
+    subunit: Subunit.critiqueBehaviour,
     title: 'Limitations of the assumptions of rational consumer choice (A03)',
     contents: [
       SlideContent.text('''
@@ -177,7 +177,7 @@ List<Slide> get critiqueSlides => [
   ),
   Slide(
     title: 'Behavioural economics in action (A03)',
-    section: Subunit.critiqueBehaviour,
+    subunit: Subunit.critiqueBehaviour,
     contents: [
       SlideContent.text('''
   
@@ -204,7 +204,7 @@ List<Slide> get critiqueSlides => [
   ),
   Slide(
     title: 'Business objectives (A03)',
-    section: Subunit.critiqueBehaviour,
+    subunit: Subunit.critiqueBehaviour,
     contents: [
       SlideContent.text('''
 <p><strong>Alternative Business Objectives</strong></p>

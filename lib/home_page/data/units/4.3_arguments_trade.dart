@@ -4,5 +4,5 @@ import '../../models/slide.dart';
 
 List<Slide> get argumentsForTradeSlides => [
   /// 'Definition & Types of Protection',
-  Slide(section: Subunit.tradeArguments, title: kKeyTerms, contents: []),
+  Slide(subunit: Subunit.tradeArguments, title: kKeyTerms, contents: []),
 ];

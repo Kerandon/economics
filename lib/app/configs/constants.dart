@@ -1,5 +1,6 @@
 const kAppName = 'IB Econ Toolkit';
 const kLevel = 'level';
+const kHL = 'HL';
 
 const kMultipleChoiceQuestions = 'Multiple Choice Questions';
 

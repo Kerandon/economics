@@ -5,7 +5,7 @@ import '../../models/slide_content.dart' show SlideContent;
 
 List<Slide> get roleOfGovernmentSlides => [
   Slide(
-    section: Subunit.roleOfGovernment,
+    subunit: Subunit.roleOfGovernment,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

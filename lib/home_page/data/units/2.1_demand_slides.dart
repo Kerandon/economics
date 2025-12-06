@@ -1,3 +1,5 @@
+import 'package:economics_app/home_page/custom_widgets/simple_table.dart';
+
 import '../../../app/configs/constants.dart';
 import '../../../diagrams/enums/diagram_bundle_enum.dart';
 import '../../../diagrams/enums/unit_type.dart';
@@ -8,9 +10,11 @@ import '../../models/term.dart';
 List<Slide> get demandSlides => [
   /// Demand
   Slide(
-    section: Subunit.demand,
+    subunit: Subunit.demand,
     title: kKeyTerms,
     contents: [
+      SlideContent.diagrams([DiagramEnum.microDemandApples]),
+
       SlideContent.term(
         'Change in Quantity Demanded',
         'A movement along the demand curve. A fall in price causes an <strong>extension</strong>, a rise in price causes a <strong>contraction</strong>.',
@@ -80,7 +84,7 @@ List<Slide> get demandSlides => [
       ),
       SlideContent.term(
         'The Law of Diminishing Marginal Utility',
-        'States that the additional satisfaction (marginal utility) from consuming extra units of a good eventually decreases, ceteris paribus.',
+        'The additional benefit (utility) from consuming extra units of a good eventually decreases, ceteris paribus.',
         tag: Tag.hl,
       ),
 
@@ -103,52 +107,41 @@ List<Slide> get demandSlides => [
     ],
   ),
   Slide(
-    title: 'Changes In Demand',
-    section: Subunit.demand,
+    syllabusPoint: SyllabusPoint.lawOfDemand,
     contents: [
-      SlideContent.text(
-        'An <strong>extension in demand (L)</strong> or <strong>contraction in demand (R)</strong> is '
-        'a movement along the demand curve caused by a change in the <strong>price</strong> of a good (or a shift'
-        ' of the supply curve).',
-      ),
-      SlideContent(
-        diagramBundleEnums: [
-          DiagramBundleEnum.microDemandExtension,
-          DiagramBundleEnum.microDemandContraction,
-        ],
-      ),
-      SlideContent.text(
-        'An <strong>increase (L)</strong> or <strong>decrease in demand (R)</strong> is caused by <strong>non-price determinants</strong>',
-      ),
-      SlideContent.key('Non-Price Determinants of Demand', '''
-<ul>
-<li>Consumer Income</li>
-<li>Tastes and preferences</li>
-<li>Future price expectations</li>
-<li>Price of related goods (substitutes and complements)</li>
-<li>Number of consumers</li>
-</ul>
+      SlideContent.text('''
+        There is a negative relationship between the price of a good and the quantity that consumers demand. 
+        This is known as
+        <strong>The Law of Demand</strong>.
 '''),
-      SlideContent(
-        diagramBundleEnums: [
-          DiagramBundleEnum.microDemandIncrease,
-          DiagramBundleEnum.microDemandDecrease,
-        ],
+      SlideContent.customWidget(
+        SimpleTable(
+          title: 'Quantity of Apples',
+          headers: ['Price (\$)', 'Quantity Demanded'],
+          data: [
+            ['0', '10'],
+            ['1', '8'],
+            ['2', '6'],
+            ['3', '4'],
+            ['4', '2'],
+            ['5', '0'],
+          ],
+        ),
       ),
     ],
   ),
   Slide(
-    section: Subunit.demand,
-    title: 'Reasons For Downward Sloping Demand',
-    hl: true,
+    syllabusPoint: SyllabusPoint.demandCurve,
     contents: [
-      SlideContent.key('Reasons For Downward Sloping Demand Curve', '''
-<ul>
-<li>Income effect</li>
-<li>Substitution effect</li>
-<li>The Law of Diminishing Marginal Utility</li>
-</ul>
-''', tag: Tag.hl), // 🔧 placeholder for now
+      SlideContent.diagrams([DiagramEnum.microDemandApples]),
+      SlideContent.text('Demand curve'),
     ],
+  ),
+  Slide(syllabusPoint: SyllabusPoint.individualVsMarketDemand, contents: []),
+  Slide(syllabusPoint: SyllabusPoint.nonPriceDeterminants, contents: []),
+  Slide(syllabusPoint: SyllabusPoint.movementsAndShiftsOfDemand, contents: []),
+  Slide(
+    syllabusPoint: SyllabusPoint.assumptionsLawOfDemand,
+    contents: [SlideContent.text('')],
   ),
 ];

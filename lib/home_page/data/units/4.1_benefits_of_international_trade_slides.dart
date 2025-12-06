@@ -5,7 +5,7 @@ import '../../models/slide_content.dart';
 
 List<Slide> get benefitsOfInternationalTradeSlides => [
   Slide(
-    section: Subunit.benefitsTrade,
+    subunit: Subunit.benefitsTrade,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

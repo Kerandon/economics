@@ -1,5 +1,6 @@
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/label_align.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
@@ -29,9 +30,9 @@ class Elasticities extends BaseDiagramPainter2 {
 
     String yLabel = DiagramLabel.price.label;
 
-    if (bundle == DiagramBundleEnum.microDemandEngelCurve) {
+    if (bundle == DiagramEnum.microDemandEngelCurve) {
       yLabel = DiagramLabel.income.label;
-    } else if (bundle == DiagramBundleEnum.microDemandElasticityRevenueChange) {
+    } else if (bundle == DiagramEnum.microDemandElasticityRevenueChange) {
       yLabel = DiagramLabel.revenue.label;
     }
 
@@ -43,47 +44,47 @@ class Elasticities extends BaseDiagramPainter2 {
     );
 
     switch (bundle) {
-      case DiagramBundleEnum.microDemandElastic ||
-          DiagramBundleEnum.microDemandElasticRevenue:
+      case DiagramEnum.microDemandElastic ||
+          DiagramEnum.microDemandElasticRevenue:
         _paintElasticDemand(c, canvas, size);
         break;
-      case DiagramBundleEnum.microDemandInelastic ||
-          DiagramBundleEnum.microDemandInelasticRevenue:
+      case DiagramEnum.microDemandInelastic ||
+          DiagramEnum.microDemandInelasticRevenue:
         _paintInelasticDemand(c, canvas, size);
         break;
-      case DiagramBundleEnum.microDemandUnitElastic:
+      case DiagramEnum.microDemandUnitElastic:
         _paintUnitElastic(c, canvas);
         break;
-      case DiagramBundleEnum.microDemandPerfectlyElastic:
+      case DiagramEnum.microDemandPerfectlyElastic:
         _paintDemandPerfectlyElastic(c, canvas);
         break;
-      case DiagramBundleEnum.microDemandPerfectlyInelastic:
+      case DiagramEnum.microDemandPerfectlyInelastic:
         _paintDemandPerfectlyInelastic(c, canvas);
         break;
-      case DiagramBundleEnum.microDemandEngelCurve:
+      case DiagramEnum.microDemandEngelCurve:
         _paintDemandEngelCurve(c, canvas);
         break;
-      case DiagramBundleEnum.microDemandElasticityChange:
+      case DiagramEnum.microDemandElasticityChange:
         _paintMicroDemandElasticityChange(c, canvas);
         break;
-      case DiagramBundleEnum.microDemandElasticityRevenueChange:
+      case DiagramEnum.microDemandElasticityRevenueChange:
         _paintMicroDemandRevenueChange(c, canvas);
-      case DiagramBundleEnum.microSupplyElastic:
+      case DiagramEnum.microSupplyElastic:
         _paintSupplyElastic(c, canvas);
         break;
-      case DiagramBundleEnum.microSupplyInelastic:
+      case DiagramEnum.microSupplyInelastic:
         _paintSupplyInelastic(c, canvas);
         break;
-      case DiagramBundleEnum.microSupplyUnitElastic:
+      case DiagramEnum.microSupplyUnitElastic:
         _paintSupplyUnitElastic(c, canvas);
         break;
-      case DiagramBundleEnum.microSupplyPerfectlyElastic:
+      case DiagramEnum.microSupplyPerfectlyElastic:
         _paintSupplyPerfectlyElastic(c, canvas);
         break;
-      case DiagramBundleEnum.microSupplyPerfectlyInelastic:
+      case DiagramEnum.microSupplyPerfectlyInelastic:
         _paintSupplyPerfectlyInelastic(c, canvas);
         break;
-      case DiagramBundleEnum.microSupplyPrimaryCommodities:
+      case DiagramEnum.microSupplyPrimaryCommodities:
         _paintMicroSupplyPrimaryCommodities(c, canvas, size);
 
       default:
@@ -106,7 +107,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.36,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -116,7 +117,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.74,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintLineSegment(
@@ -132,7 +133,7 @@ class Elasticities extends BaseDiagramPainter2 {
       origin: const Offset(-0.1, 0.51),
       angle: math.pi / 2,
     );
-    if (bundle == DiagramBundleEnum.microDemandInelasticRevenue) {
+    if (bundle == DiagramEnum.microDemandInelasticRevenue) {
       paintShading(canvas, size, ShadeType.lostRevenue, [
         Offset(0.00, 0.45),
         Offset(0.36, 0.45),
@@ -182,7 +183,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.475,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -192,7 +193,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.54,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintLineSegment(
@@ -208,7 +209,7 @@ class Elasticities extends BaseDiagramPainter2 {
       origin: const Offset(-0.1, 0.52),
       angle: math.pi / 2,
     );
-    if (bundle == DiagramBundleEnum.microDemandElasticRevenue) {
+    if (bundle == DiagramEnum.microDemandElasticRevenue) {
       paintShading(canvas, size, ShadeType.lostRevenue, [
         Offset(0.00, 0.45),
         Offset(0.475, 0.45),
@@ -261,7 +262,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.16,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -271,7 +272,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.35,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintLineSegment(
@@ -331,7 +332,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.50,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -340,7 +341,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.50,
       yLabel: DiagramLabel.p1.label,
       hideXLine: true,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
   }
 
@@ -360,7 +361,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.25,
       hideYLine: true,
       xLabel: DiagramLabel.q1.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -369,7 +370,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.50,
       yLabel: DiagramLabel.rMax.label,
       xLabel: DiagramLabel.qStar.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -378,7 +379,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.75,
       hideYLine: true,
       xLabel: DiagramLabel.q2.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintText2(c, canvas, DiagramLabel.pedBigger1.label, Offset(0.20, 0.25));
@@ -403,7 +404,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.25,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -412,7 +413,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.50,
       yLabel: DiagramLabel.pStar.label,
       xLabel: DiagramLabel.qStar.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -421,7 +422,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.75,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
     paintLineSegment(
       c,
@@ -548,7 +549,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.36,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -558,7 +559,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.74,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintLineSegment(
@@ -592,7 +593,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.48,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -602,7 +603,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.56,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintLineSegment(
@@ -691,7 +692,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.50,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintDiagramDashedLines(
@@ -701,7 +702,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.50,
       yLabel: DiagramLabel.p2.label,
       hideXLine: true,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
   }
 
@@ -808,7 +809,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.45,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -817,7 +818,7 @@ class Elasticities extends BaseDiagramPainter2 {
       xAxisEndPos: 0.55,
       yLabel: DiagramLabel.p1.label,
       xLabel: DiagramLabel.q1.label,
-      addDotAtIntersection: true,
+      showDotAtIntersection: true,
     );
 
     paintLegend(canvas, size, [

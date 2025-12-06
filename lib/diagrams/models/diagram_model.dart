@@ -3,9 +3,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import '../enums/diagram_subtype.dart';
 
+/// Mark Redundant
 class DiagramModel extends Equatable {
   final DiagramSubtype? subtype;
-  final DiagramBundleEnum? diagramBundleEnum;
+  final DiagramEnum? diagramBundleEnum;
   final CustomPainter? painter;
 
   const DiagramModel({this.subtype, this.painter, this.diagramBundleEnum});
@@ -14,7 +15,7 @@ class DiagramModel extends Equatable {
   DiagramModel copyWith({
     DiagramSubtype? subtype,
     CustomPainter? painter,
-    DiagramBundleEnum? diagramBundleEnum,
+    DiagramEnum? diagramBundleEnum,
   }) {
     return DiagramModel(
       subtype: subtype ?? this.subtype,

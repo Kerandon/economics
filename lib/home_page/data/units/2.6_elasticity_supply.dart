@@ -5,7 +5,7 @@ import '../../models/slide_content.dart';
 
 List<Slide> get elasticitySupplySlides => [
   Slide(
-    section: Subunit.elasticitySupply,
+    subunit: Subunit.elasticitySupply,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

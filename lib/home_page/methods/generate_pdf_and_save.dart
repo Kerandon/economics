@@ -70,7 +70,7 @@ Future<void> generatePdfAndSave(
         alignment: pw.Alignment.center,
         padding: const pw.EdgeInsets.only(bottom: 2),
         child: pw.Text(
-          'VSPH IB Economics Key Terms Micro 2.1 to 2.8',
+          'VSPH IB Economics Key Terms Externalities, Public Goods, Asymmetric Information',
           style: headerStyle,
         ),
       ),

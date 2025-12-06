@@ -1,3 +1,5 @@
+import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+
 import '../../../app/configs/constants.dart';
 import '../../../diagrams/enums/unit_type.dart';
 import '../../models/slide.dart';
@@ -5,7 +7,7 @@ import '../../models/slide_content.dart';
 
 List<Slide> get marketPowerSlides => [
   Slide(
-    section: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailurePower,
     title: kKeyTerms,
     contents: [
       SlideContent.term(
@@ -226,6 +228,39 @@ List<Slide> get marketPowerSlides => [
         'Predatory pricing',
         'Firm temporarily lowers prices to drive competitors out of the market.',
       ),
+    ],
+  ),
+  Slide(
+    syllabusPoint: SyllabusPoint.perfectCompetitionCharacteristics,
+    contents: [
+      SlideContent.text('''
+     <ul>
+  <li>Many firms and consumers</li>
+  <li>Homogeneous (identical) products</li>
+  <li>Firms are price takers (perfectly elastic demand for each firm)</li>
+  <li>Perfect information (buyers & sellers know prices and technology)</li>
+  <li>Free entry and exit of firms</li>
+  <li>Firms profit-maximise where P = MC</li>
+  <li>Normal profit in the long run (zero economic profit)</li>
+  <li>Allocative efficiency (P = MC) in long run</li>
+  <li>Productive efficiency (firms produce at minimum ATC) in long run</li>
+  <li>No non-price competition (advertising is unnecessary)</li>
+</ul>
+        
+        
+        '''),
+      SlideContent.text('''
+In the long-run firms in perfect competition only make normal profit (TR=TC).
+Firms are allocatively efficient P=MC, meaning resources are allocatively most efficiently,
+but there is no product differentiation for choice for consumers. Also firms have no abnormal profits
+to invest in product research.
+        
+        '''),
+      SlideContent.diagrams([
+        DiagramEnum.microPerfectCompetitionLongRunIndustry,
+        DiagramEnum.microPerfectCompetitionLongRunFirm,
+      ]),
+      SlideContent.diagrams([DiagramEnum.microPerfectCompetitionLongRunFirm]),
     ],
   ),
 ];

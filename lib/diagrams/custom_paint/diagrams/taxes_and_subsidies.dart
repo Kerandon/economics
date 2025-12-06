@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_arrow_helper.dart';
@@ -31,21 +32,25 @@ class TaxesAndSubsidies extends BaseDiagramPainter2 {
       xAxisLabel: DiagramLabel.quantity.label,
     );
     switch (bundle) {
-      case DiagramBundleEnum.microIndirectTax:
+      case DiagramEnum.microIndirectTax:
         _paintIndirectTax(c, canvas, size);
-      case DiagramBundleEnum.microIndirectTaxInelasticPED:
+      case DiagramEnum.microIndirectTaxInelasticPED:
         _paintIndirectTaxInelasticDemand(c, canvas, size);
-      case DiagramBundleEnum.microIndirectTaxElasticPED:
+      case DiagramEnum.microIndirectTaxElasticPED:
         _paintIndirectTaxElasticDemand(c, canvas, size);
-      case DiagramBundleEnum.microSubsidy:
+      case DiagramEnum.microSubsidy:
         _paintSubsidy(c, canvas, size);
-      case DiagramBundleEnum.microSubsidyInelasticPED:
+      case DiagramEnum.microSubsidyInelasticPED:
         _paintSubsidyInelasticDemand(c, canvas, size);
-      case DiagramBundleEnum.microSubsidyElasticPED:
+      case DiagramEnum.microSubsidyElasticPED:
         _paintSubsidyElasticDemand(c, canvas, size);
       default:
     }
   }
+
+  @override
+  // TODO: implement legendDisplay
+  LegendDisplay get legendDisplay => throw UnimplementedError();
 }
 
 _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
@@ -122,8 +127,8 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     canvas,
     yAxisStartPos: 0.55,
     xAxisEndPos: 0.55,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: DiagramLabel.qe.label,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
   );
   paintDiagramDashedLines(
     c,
@@ -132,7 +137,7 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.425,
     yLabel: DiagramLabel.pc.label,
     xLabel: DiagramLabel.qTax.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -141,7 +146,7 @@ _paintIndirectTax(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.425,
     yLabel: DiagramLabel.pp.label,
     hideXLine: true,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
 }
 
@@ -180,8 +185,8 @@ _paintIndirectTaxInelasticDemand(
     canvas,
     yAxisStartPos: 0.58,
     xAxisEndPos: 0.525,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: DiagramLabel.qe.label,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
   );
 
   paintAxis(
@@ -223,7 +228,7 @@ _paintIndirectTaxInelasticDemand(
     xAxisEndPos: 0.46,
     yLabel: DiagramLabel.pc.label,
     xLabel: '${DiagramLabel.qTax.label}     ',
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -232,7 +237,7 @@ _paintIndirectTaxInelasticDemand(
     xAxisEndPos: 0.46,
     yLabel: DiagramLabel.pp.label,
     hideXLine: true,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintLineSegment(
     c,
@@ -302,9 +307,9 @@ _paintIndirectTaxElasticDemand(
     canvas,
     yAxisStartPos: 0.53,
     xAxisEndPos: 0.58,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: DiagramLabel.qe.label,
-    addDotAtIntersection: true,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -313,7 +318,7 @@ _paintIndirectTaxElasticDemand(
     xAxisEndPos: 0.39,
     yLabel: DiagramLabel.pc.label,
     xLabel: DiagramLabel.qTax.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -322,7 +327,7 @@ _paintIndirectTaxElasticDemand(
     xAxisEndPos: 0.39,
     yLabel: DiagramLabel.pp.label,
     hideXLine: true,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintLineSegment(
     c,
@@ -407,15 +412,15 @@ void _paintSubsidy(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.55,
     yLabel: DiagramLabel.pc.label,
     hideXLine: true,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.425,
     xAxisEndPos: 0.425,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: DiagramLabel.qe.label,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
   );
   paintDiagramDashedLines(
     c,
@@ -424,7 +429,7 @@ void _paintSubsidy(DiagramPainterConfig c, Canvas canvas, Size size) {
     xAxisEndPos: 0.55,
     yLabel: DiagramLabel.pp.label,
     xLabel: DiagramLabel.qSub.label,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
 }
 
@@ -487,15 +492,15 @@ void _paintSubsidyInelasticDemand(
     xAxisEndPos: 0.52,
     yLabel: DiagramLabel.pc.label,
     hideXLine: true,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.38,
     xAxisEndPos: 0.465,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: '${DiagramLabel.qe.label}   ',
+    yLabel: DiagramLabel.pE.label,
+    xLabel: '${DiagramLabel.qE.label}   ',
     hideYLine: true,
     hideXLine: true,
   );
@@ -522,7 +527,7 @@ void _paintSubsidyInelasticDemand(
     xAxisEndPos: 0.52,
     yLabel: DiagramLabel.pp.label,
     xLabel: '      ${DiagramLabel.qSub.label}',
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintLegend(canvas, size, [
     LegendEntry.fromShade(ShadeType.consumerIncidence),
@@ -589,7 +594,7 @@ void _paintSubsidyElasticDemand(
     xAxisEndPos: 0.58,
     yLabel: DiagramLabel.pc.label,
     hideXLine: true,
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
     c,
@@ -604,8 +609,8 @@ void _paintSubsidyElasticDemand(
     canvas,
     yAxisStartPos: 0.465,
     xAxisEndPos: 0.385,
-    yLabel: DiagramLabel.pe.label,
-    xLabel: DiagramLabel.qe.label,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
     hideYLine: true,
   );
 
@@ -623,7 +628,7 @@ void _paintSubsidyElasticDemand(
     xAxisEndPos: 0.58,
     yLabel: DiagramLabel.pp.label,
     xLabel: '      ${DiagramLabel.qSub.label}',
-    addDotAtIntersection: true,
+    showDotAtIntersection: true,
   );
   paintLegend(canvas, size, [
     LegendEntry.fromShade(ShadeType.consumerIncidence),

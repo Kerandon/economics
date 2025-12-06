@@ -1,8 +1,14 @@
 import '../enums/diagram_bundle_enum.dart';
 import 'base_painter_painter.dart';
 
+class DiagramWidget {
+  final BaseDiagramPainter3 basePainterDiagram;
+  DiagramWidget(this.basePainterDiagram);
+}
+
+/// Make redundant
 class DiagramBundle {
-  final DiagramBundleEnum? diagramBundleEnum;
+  final DiagramEnum? diagramBundleEnum;
   final String? title;
   final List<BaseDiagramPainter2> basePainterDiagrams;
   final String? description;
@@ -16,7 +22,7 @@ class DiagramBundle {
   });
 
   DiagramBundle copyWith({
-    DiagramBundleEnum? diagramBundleEnum,
+    DiagramEnum? diagramBundleEnum,
     String? title,
     List<BaseDiagramPainter2>? basePainterDiagrams,
     String? description,

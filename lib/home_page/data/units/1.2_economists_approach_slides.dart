@@ -7,7 +7,7 @@ import '../../models/term.dart';
 
 List<Slide> get economistsApproach => [
   Slide(
-    section: Subunit.economistsApproach,
+    subunit: Subunit.economistsApproach,
     title: kKeyTerms,
     contents: [
       SlideContent.term(

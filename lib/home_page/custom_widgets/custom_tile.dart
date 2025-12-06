@@ -19,7 +19,7 @@ class CustomTile extends StatelessWidget {
 
   final String text;
   final String? imageURL;
-  final DiagramBundleEnum? diagramBundleEnum;
+  final DiagramEnum? diagramBundleEnum;
   final VoidCallback onTap;
 
   @override
@@ -32,7 +32,7 @@ class CustomTile extends StatelessWidget {
       diagram = AllDiagrams(
         size: size,
         colorScheme: colorScheme,
-      ).getDiagramBundle2(DiagramBundleEnum.microDemandIncrease);
+      ).getDiagramBundle2(DiagramEnum.microDemandIncrease);
     }
 
     return Container(
