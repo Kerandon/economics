@@ -9,7 +9,7 @@ List<Slide> get typesOfTradeProtectionSlides => [
   /// 'Definition & Types of Protection',
   Slide(
     subunit: Subunit.typesTradeProtection,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Trade Protectionism',

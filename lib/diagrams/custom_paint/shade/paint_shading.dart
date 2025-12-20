@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'shade_type.dart';
 import '../../models/custom_bezier.dart';
 import '../painter_constants.dart';
+
 void paintShading(
-    Canvas canvas,
-    Size size,
-    ShadeType shade,
-    List<dynamic> pointsAndBeziers, {
-      bool striped = true,
-      double stripeSpacing = 20.0,
-      double strokeWidth = 16,
-      int alpha = 100,
-      bool invertStripes = false,
-    }) {
+  Canvas canvas,
+  Size size,
+  ShadeType shade,
+  List<dynamic> pointsAndBeziers, {
+  bool striped = true,
+  double stripeSpacing = 20.0,
+  double strokeWidth = 16,
+  int alpha = 100,
+  bool invertStripes = false,
+}) {
   if (pointsAndBeziers.isEmpty) return;
 
   final double width = size.width;
@@ -49,7 +50,12 @@ void paintShading(
         path.moveTo(endPoint.dx, endPoint.dy);
         pathStarted = true;
       } else {
-        path.quadraticBezierTo(control.dx, control.dy, endPoint.dx, endPoint.dy);
+        path.quadraticBezierTo(
+          control.dx,
+          control.dy,
+          endPoint.dx,
+          endPoint.dy,
+        );
       }
     }
   }
@@ -82,17 +88,17 @@ void paintShading(
     if (invertStripes) {
       for (double i = -maxDim; i < maxDim; i += stripeSpacing) {
         canvas.drawLine(
-            Offset(0, i + size.width),
-            Offset(size.width, i),
-            stripePaint
+          Offset(0, i + size.width),
+          Offset(size.width, i),
+          stripePaint,
         );
       }
     } else {
       for (double i = -maxDim; i < maxDim; i += stripeSpacing) {
         canvas.drawLine(
-            Offset(0, i),
-            Offset(size.width, i + size.width),
-            stripePaint
+          Offset(0, i),
+          Offset(size.width, i + size.width),
+          stripePaint,
         );
       }
     }

@@ -10,7 +10,7 @@ import '../../models/term.dart';
 List<Slide> get competitiveMarketEquilibrium => [
   Slide(
     subunit: Subunit.competitiveMarket,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Allocative Efficiency',
@@ -80,7 +80,7 @@ List<Slide> get competitiveMarketEquilibrium => [
       SlideContent.text(
         'Market equilibrium is the market price where the quantity demanded (Qd) is equal to quantity supplied (Qs)',
       ),
-      SlideContent.diagram(DiagramEnum.microMarketEquilibrium),
+      SlideContent.diagrams([DiagramEnum.microMarketEquilibrium]),
       SlideContent.text(
         'Market disequilibrium is either when <strong>Qd > Qs (shortage) (L)</strong> '
         'or when <strong>Qs > Qd (R)</strong>  at the current market price.',
@@ -126,7 +126,7 @@ List<Slide> get competitiveMarketEquilibrium => [
         ' (thereby \'rationing\' the good).',
       ),
 
-      SlideContent.diagram(DiagramEnum.microPriceRationing),
+      SlideContent.diagrams([DiagramEnum.microPriceRationing]),
     ],
   ),
   Slide(

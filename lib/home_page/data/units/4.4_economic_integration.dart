@@ -7,7 +7,7 @@ List<Slide> get economicIntegrationSlides => [
   /// 'Definition & Types of Protection',
   Slide(
     subunit: Subunit.economicIntegration,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Infant (Sunrise) Industry',

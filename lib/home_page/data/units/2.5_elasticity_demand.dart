@@ -9,7 +9,7 @@ import '../../models/term.dart';
 List<Slide> get elasticityDemandSlides => [
   Slide(
     subunit: Subunit.elasticityDemand,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Engel Curve',

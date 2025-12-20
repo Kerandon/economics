@@ -9,6 +9,9 @@ class DiagramWidget {
 /// Make redundant
 class DiagramBundle {
   final DiagramEnum? diagramBundleEnum;
+  final String? label; // Short title (e.g., "The Market")
+  final String? caption; // Longer description (e.g., "P = AR = MR")
+  /// redundant
   final String? title;
   final List<BaseDiagramPainter2> basePainterDiagrams;
   final String? description;
@@ -17,19 +20,32 @@ class DiagramBundle {
   DiagramBundle(
     this.diagramBundleEnum,
     this.basePainterDiagrams, {
+    this.label,
+    this.caption,
+
+    ///redundant
     this.title,
     this.description,
   });
 
   DiagramBundle copyWith({
     DiagramEnum? diagramBundleEnum,
+    String? label,
+    String? caption,
+
+    ///redundant remove
     String? title,
     List<BaseDiagramPainter2>? basePainterDiagrams,
+
     String? description,
   }) {
     return DiagramBundle(
       diagramBundleEnum ?? this.diagramBundleEnum,
       basePainterDiagrams ?? this.basePainterDiagrams,
+      label: label ?? this.label,
+      caption: caption ?? this.caption,
+
+      ///redundant
       title: title ?? this.title ?? this.diagramBundleEnum?.name,
       description: description ?? this.description,
     );

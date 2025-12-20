@@ -4,5 +4,5 @@ import '../../models/slide.dart';
 
 List<Slide> get barriersToGrowthSlides => [
   /// 'Definition & Types of Protection',
-  Slide(subunit: Subunit.barriersGrowth, title: kKeyTerms, contents: []),
+  Slide(subunit: Subunit.barriersGrowth, title: kTermsGlossary, contents: []),
 ];

@@ -6,7 +6,7 @@ import '../../models/slide_content.dart' show SlideContent;
 List<Slide> get roleOfGovernmentSlides => [
   Slide(
     subunit: Subunit.roleOfGovernment,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Ad Valorem Tax',

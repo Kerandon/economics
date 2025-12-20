@@ -6,7 +6,7 @@ List<Slide> get sustainableDevelopmentSlides => [
   /// 'Definition & Types of Protection',
   Slide(
     subunit: Subunit.sustainableDevelopment,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [],
   ),
 ];

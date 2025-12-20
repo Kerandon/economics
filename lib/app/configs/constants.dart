@@ -5,7 +5,7 @@ const kHL = 'HL';
 const kMultipleChoiceQuestions = 'Multiple Choice Questions';
 
 const kIndex = 'index';
-const kKeyTerms = 'Key Terms';
+const kTermsGlossary = 'Terms Glossary';
 const kDiagrams = 'Diagrams';
 const kErrorMessage =
     'Something went wrong - check your internet connection & try again';

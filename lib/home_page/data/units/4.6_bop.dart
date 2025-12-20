@@ -7,7 +7,7 @@ List<Slide> get bopSlides => [
   /// 'Definition & Types of Protection',
   Slide(
     subunit: Subunit.balanceOfPayments,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Balance of Payments (BOP)',

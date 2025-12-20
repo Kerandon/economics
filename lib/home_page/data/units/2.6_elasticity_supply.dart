@@ -6,7 +6,7 @@ import '../../models/slide_content.dart';
 List<Slide> get elasticitySupplySlides => [
   Slide(
     subunit: Subunit.elasticitySupply,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Perfectly price elastic supply (PES = infinity)',

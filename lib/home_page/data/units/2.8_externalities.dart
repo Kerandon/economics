@@ -7,7 +7,7 @@ import '../../models/term.dart';
 List<Slide> get externalitiesSlides => [
   Slide(
     subunit: Subunit.marketFailureExternalities,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Carbon tax',

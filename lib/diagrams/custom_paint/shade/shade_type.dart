@@ -91,7 +91,7 @@ extension Shade on ShadeType {
       case ShadeType.producerGain:
         return producerIncidenceColor;
       case ShadeType.costs:
-  return Colors.red;
+        return Colors.red;
     }
   }
 
@@ -149,7 +149,7 @@ extension Shade on ShadeType {
       case ShadeType.producerGain:
         return 'Producer Gain';
       case ShadeType.costs:
- return 'Costs';
+        return 'Costs';
     }
   }
 }

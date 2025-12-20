@@ -7,7 +7,7 @@ List<Slide> get exchangeRateSlides => [
   /// 'Definition & Types of Protection',
   Slide(
     subunit: Subunit.exchangeRates,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Currency',

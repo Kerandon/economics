@@ -1,4 +1,6 @@
 // Flutter imports
+import 'package:economics_app/home_page/custom_widgets/diagram_gallery.dart';
+import 'package:economics_app/home_page/custom_widgets/simple_table.dart';
 import 'package:economics_app/home_page/pages/tag_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -150,22 +152,26 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                                       type: TextBoxType.content,
                                     ),
 
+                                  if (c.widget != null) ...[c.widget!],
                                   if (c.diagramWidgets?.isNotEmpty ??
                                       false) ...[
-                                    Row(
-                                      children: [
-                                        if (c.diagramWidgets?.isNotEmpty ??
-                                            false) ...[
-                                          ...c.diagramWidgets!.map((d) {
-                                            final dim = size.width * 0.40;
-                                            return CustomPaint(
-                                              painter: d.basePainterDiagram,
-                                              size: Size.square(dim),
-                                            );
-                                          }),
-                                        ],
-                                      ],
+                                    DiagramGallery(
+                                      diagrams: [...c.diagramWidgets!],
                                     ),
+                                    // Row(
+                                    //   children: [
+                                    //     if (c.diagramWidgets?.isNotEmpty ??
+                                    //         false) ...[
+                                    //       ...c.diagramWidgets!.map((d) {
+                                    //         final dim = size.width * 0.40;
+                                    //         return CustomPaint(
+                                    //           painter: d.basePainterDiagram,
+                                    //           size: Size.square(dim),
+                                    //         );
+                                    //       }),
+                                    //     ],
+                                    //   ],
+                                    // ),
                                   ],
                                 ],
                               );
@@ -177,7 +183,7 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

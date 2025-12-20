@@ -278,6 +278,14 @@ void _perfectCompFirm(
       showDotAtIntersection: true,
       xAxisEndPos: 0.565,
     );
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.565, 0.36),
+      polylineOffsets: [Offset(0.565, 0.465)],
+      color: Colors.red,
+      strokeWidth: kCurveWidth,
+    );
   }
   paintDiagramLines(
     c,
@@ -290,6 +298,9 @@ void _perfectCompFirm(
     label2Align: LabelAlign.centerTop,
   );
   paintMarginalCost(c, canvas);
+  if (diagram == DiagramEnum.microPerfectCompetitionFirmLongRun) {
+    paintTitle(c, canvas, DiagramLabel.firm.label);
+  }
   if (diagram == DiagramEnum.microPerfectCompetitionFirmLongRun ||
       diagram ==
           DiagramEnum
@@ -369,6 +380,7 @@ void _perfectCompFirm(
       yAxisStartPos: 0.5,
       xAxisEndPos: 0.475,
       hideYLine: true,
+
       showDotAtIntersection: true,
       yLabel: DiagramLabel.p2.label,
       xLabel: DiagramLabel.q2.label,
@@ -400,6 +412,14 @@ void _perfectCompFirm(
       DiagramLabel.abnormalProfit.label,
       Offset(0.35, 0.25),
       pointerLine: Offset(0.35, 0.43),
+    );
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.565, 0.36),
+      polylineOffsets: [Offset(0.565, 0.465)],
+      color: Colors.red,
+      strokeWidth: kCurveWidth * 2,
     );
   }
   if (diagram == DiagramEnum.microPerfectCompetitionFirmLoss) {
@@ -529,21 +549,30 @@ void _perfectCompFirm(
   }
   if (diagram == DiagramEnum.microPerfectCompetitionShutdownLossCalculation) {
     paintTitle(c, canvas, 'π when P<AVC');
-    paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.47, xAxisEndPos: 0.35,
-    showDotAtIntersection: true,
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.47,
+      xAxisEndPos: 0.35,
+      showDotAtIntersection: true,
       hideYLine: true,
     );
 
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.35, 0.47),
+      polylineOffsets: [(Offset(0.35, 0.70))],
 
-paintDiagramLines(c, canvas, startPos: Offset(0.35,0.47),polylineOffsets: [(Offset(0.35,0.70))],
+      color: Colors.red,
+    );
 
-
-
-color: Colors.blueAccent, strokeWidth: kCurveWidth * 2);
-
-    paintText2(c, canvas, 'AFC=ATC-AVC', Offset(0.40,0.35),
-        pointerLine:
-        Offset(0.35,0.50)
+    paintText2(
+      c,
+      canvas,
+      'AFC=ATC-AVC',
+      Offset(0.40, 0.35),
+      pointerLine: Offset(0.35, 0.50),
     );
 
     paintDiagramLines(
@@ -573,15 +602,19 @@ color: Colors.blueAccent, strokeWidth: kCurveWidth * 2);
       showDotAtIntersection: true,
       hideXLine: true,
       yLabel: '\$9',
-      xLabel: '100'
+      xLabel: '100',
     );
-    paintDiagramLines(c, canvas, startPos: Offset(0.0,0.80),polylineOffsets: [Offset(0.50,0.80)
-    ],
-    curveStyle: CurveStyle.dashed, color: Colors.red,
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.0, 0.80),
+      polylineOffsets: [Offset(0.50, 0.80)],
+      curveStyle: CurveStyle.dashed,
+      color: Colors.red,
       label1: DiagramLabel.p.label,
       label1Align: LabelAlign.centerLeft,
-        label2: 'P<AVCmin (firm has shut-down)',
-      label2Align: LabelAlign.centerRight
+      label2: 'P<AVCmin (firm has shut-down)',
+      label2Align: LabelAlign.centerRight,
     );
   }
 }

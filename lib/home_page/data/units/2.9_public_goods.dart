@@ -9,7 +9,7 @@ import '../../models/slide_content.dart';
 List<Slide> get publicGoodsSlides => [
   Slide(
     subunit: Subunit.marketFailurePublicGoods,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Public goods',
@@ -115,7 +115,9 @@ List<Slide> get publicGoodsSlides => [
   Slide(
     subunit: Subunit.marketFailurePublicGoods,
     title: 'Public Goods Diagram (Supplement)',
-    contents: [SlideContent.diagram(DiagramEnum.microPublicGoods)],
+    contents: [
+      SlideContent.diagrams([DiagramEnum.microPublicGoods]),
+    ],
   ),
 ];
 

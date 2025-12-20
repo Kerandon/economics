@@ -30,131 +30,103 @@ void paintText2(
   final height = config.painterSize.height;
   fontSize *= config.averageRatio;
 
-  final defaultStyle = TextStyle(
-    color: config.colorScheme.onSurface,
-    fontSize: fontSize,
-  );
+  // Use crisp black/white logic: if background is dark, text should be white, and vice versa.
+  // Bypass config.colorScheme.surface if you want "Perfect White".
+  final bool isDarkTheme = config.colorScheme.brightness == Brightness.dark;
+  final Color perfectSurface = isDarkTheme ? Colors.black : Colors.white;
+  final Color perfectOnSurface = isDarkTheme ? Colors.white : Colors.black87;
 
   style =
       style?.copyWith(
-        color: style.color ?? config.colorScheme.onSurface,
+        color: style.color ?? perfectOnSurface,
         fontSize: (style.fontSize ?? kFontMedium) * config.averageRatio,
       ) ??
-      defaultStyle;
+      TextStyle(color: perfectOnSurface, fontSize: fontSize);
 
   final textSpan = TextSpan(text: label, style: style);
   final textPainter = TextPainter(
     text: textSpan,
     textDirection: TextDirection.ltr,
-  );
-  textPainter.layout(minWidth: 0, maxWidth: width);
+  )..layout(minWidth: 0, maxWidth: width);
 
-  // Horizontal alignment offset
+  // --- Calculate Alignment Offsets ---
   double alignmentX = 0;
-  switch (horizontalPivot) {
-    case LabelPivot.left:
-      alignmentX = 0;
-      break;
-    case LabelPivot.center:
-      alignmentX = textPainter.width / 2;
-      break;
-    case LabelPivot.right:
-      alignmentX = textPainter.width;
-      break;
-    default:
-      alignmentX = textPainter.width / 2;
-  }
+  if (horizontalPivot == LabelPivot.center) alignmentX = textPainter.width / 2;
+  if (horizontalPivot == LabelPivot.right) alignmentX = textPainter.width;
 
-  // Vertical alignment offset
   double alignmentY = 0;
-  switch (verticalPivot) {
-    case LabelPivot.top:
-      alignmentY = 0;
-      break;
-    case LabelPivot.middle:
-      alignmentY = textPainter.height / 2;
-      break;
-    case LabelPivot.bottom:
-      alignmentY = textPainter.height;
-      break;
-    default:
-      alignmentY = textPainter.height / 2;
-  }
+  if (verticalPivot == LabelPivot.middle) alignmentY = textPainter.height / 2;
+  if (verticalPivot == LabelPivot.bottom) alignmentY = textPainter.height;
 
-  // --- Compute text offset (already correct) ---
-  final leftMarginRatio = 1.5;
-  final rightMarginRatio = 0.5;
-  final topMarginRatio = 0.5;
-  final bottomMarginRatio = 1.5;
+  // --- Compute text offset ---
+  const leftMarginRatio = 1.5;
+  const rightMarginRatio = 0.5;
+  const topMarginRatio = 0.5;
+  const bottomMarginRatio = 1.5;
 
-  // Normalized width/height of the drawable chart area
   final normalizedWidthRatio =
-      1.0 - leftMarginRatio * kAxisIndent - rightMarginRatio * kAxisIndent;
+      1.0 - (leftMarginRatio + rightMarginRatio) * kAxisIndent;
   final normalizedHeightRatio =
-      1.0 - topMarginRatio * kAxisIndent - bottomMarginRatio * kAxisIndent;
+      1.0 - (topMarginRatio + bottomMarginRatio) * kAxisIndent;
 
-  // X calculation for text
   double w = normalize
       ? (width * normalizedWidthRatio) * position.dx +
-            leftMarginRatio * kAxisIndent * width
+            (leftMarginRatio * kAxisIndent * width)
       : width * position.dx;
 
-  // H calculation for text (slightly complex due to vertical alignment logic)
-  // Let's rely on the original logic for H for now, as you stated it's correct.
   double h = normalize
       ? (height - 2 * kAxisIndent * height - textPainter.height) * position.dy +
             (kAxisIndent / 2 * height) +
-            textPainter.height / 2
+            (textPainter.height / 2)
       : height * position.dy;
 
   final offset = Offset(w - alignmentX, h - alignmentY);
-  // ---------------------------------------------
 
-  // Draw pointer line if provided
+  // --- 1. Draw Pointer Line ---
   if (pointerLine != null) {
-    // --- START: CORRECTED POINTER LINE LOGIC ---
-    // The normalized chart area starts at 1.5*kAxisIndent (left) and 0.5*kAxisIndent (top)
-    // and has a total normalized width/height matching the text's area.
-
-    final normalizedChartWidth = width * normalizedWidthRatio;
-    final normalizedChartHeight = height * normalizedHeightRatio;
     final xStartOffset = leftMarginRatio * kAxisIndent * width;
     final yStartOffset = topMarginRatio * kAxisIndent * height;
 
     final lineEndX = normalize
-        ? normalizedChartWidth * pointerLine.dx + xStartOffset
+        ? (width * normalizedWidthRatio) * pointerLine.dx + xStartOffset
         : width * pointerLine.dx;
     final lineEndY = normalize
-        ? normalizedChartHeight * pointerLine.dy + yStartOffset
+        ? (height * normalizedHeightRatio) * pointerLine.dy + yStartOffset
         : height * pointerLine.dy;
 
-    // --- END: CORRECTED POINTER LINE LOGIC ---
-
     final linePaint = Paint()
-      ..color = config.colorScheme.onSurface
-      ..strokeWidth = kCurveWidth / 5;
+      ..color = style.color ?? perfectOnSurface
+      ..strokeWidth = kCurveWidth / 6
+      ..isAntiAlias = true;
 
     final startPos = offset + Offset(alignmentX, alignmentY);
     canvas.drawLine(startPos, Offset(lineEndX, lineEndY), linePaint);
-    canvas.drawCircle(Offset(lineEndX, lineEndY), 3, linePaint);
+    canvas.drawCircle(Offset(lineEndX, lineEndY), 2.5, linePaint);
   }
 
-  // Draw background box aligned perfectly with text
-  final textBoxPadding = 2;
+  // --- 2. Draw Background Box (Perfect White/Black) ---
+  // Increased padding slightly for a "magazine" feel
+  const double paddingX = 6.0;
+  const double paddingY = 2.0;
+
   final boxPaintFill = Paint()
     ..style = PaintingStyle.fill
-    ..color = config.colorScheme.surface;
+    ..color = perfectSurface;
 
   final boxRect = Rect.fromLTWH(
-    offset.dx - textBoxPadding / 2,
-    offset.dy - textBoxPadding / 2,
-    textPainter.width + textBoxPadding,
-    textPainter.height + textBoxPadding,
+    offset.dx - paddingX / 2,
+    offset.dy - paddingY / 2,
+    textPainter.width + paddingX,
+    textPainter.height + paddingY,
   );
 
-  canvas.drawRect(boxRect, boxPaintFill);
+  // Draw as RRect (Rounded Rectangle) for a modern look
+  canvas.drawRRect(
+    RRect.fromRectAndRadius(boxRect, const Radius.circular(4)),
+    boxPaintFill,
+  );
 
-  // Draw rotated text
+  // --- 3. Draw Text (with Rotation support) ---
   canvas.save();
   final pivotPoint = offset + Offset(alignmentX, alignmentY);
   canvas.translate(pivotPoint.dx, pivotPoint.dy);

@@ -290,13 +290,17 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.microPerfectCompetitionFirmLoss => Subunit.marketFailurePower,
 
     DiagramEnum.microPerfectCompetitionMarketLoss => Subunit.marketFailurePower,
-    DiagramEnum.microPerfectCompetitionShutdownPoint => Subunit.marketFailurePower,
-    DiagramEnum.microPerfectCompetitionNormalProfitRevenueCostsCalculation => Subunit.marketFailurePower,
-    DiagramEnum.microPerfectCompetitionShutdownLossCalculation => Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionShutdownPoint =>
+      Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionNormalProfitRevenueCostsCalculation =>
+      Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionShutdownLossCalculation =>
+      Subunit.marketFailurePower,
     DiagramEnum.microMonopolyAbnormalProfit => Subunit.marketFailurePower,
     DiagramEnum.microMonopolyLoss => Subunit.marketFailurePower,
     DiagramEnum.microMonopolyNatural => Subunit.marketFailurePower,
-    DiagramEnum.microPerfectCompetitionAbnormalProfitRevenueCostsCalculation => Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionAbnormalProfitRevenueCostsCalculation =>
+      Subunit.marketFailurePower,
     DiagramEnum.microMonopolyNaturalAverageCostPricing =>
       Subunit.marketFailurePower,
     DiagramEnum.microMonopolyNaturalMarginalCostPricing =>
@@ -343,6 +347,5 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalProductionSubsidyWelfareLoss =>
       Subunit.typesTradeProtection,
     DiagramEnum.globalProductionSubsidyWelfare => Subunit.typesTradeProtection,
-
   };
 }

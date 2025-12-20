@@ -8,7 +8,7 @@ import '../../models/slide_content.dart';
 List<Slide> get asymmetricInfoSlides => [
   Slide(
     subunit: Subunit.marketFailureAsymmetric,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Adverse selection',

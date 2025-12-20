@@ -4,73 +4,89 @@ import '../../app/configs/constants.dart';
 import '../enums/text_box_type.dart';
 
 class CustomTextBox extends StatelessWidget {
+  final String? term;
+  final String text;
+  final TextBoxType type;
+  final bool isHL;
+
   const CustomTextBox({
     this.term,
     required this.text,
     required this.type,
-    this.isHL = false, // flag for HL terms
+    this.isHL = false,
     super.key,
   });
-
-  final String? term; // nullable term
-  final String text; // explanation or content
-  final TextBoxType type;
-  final bool isHL; // true if HL term
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // Term color based on type
-    Color termColor;
+
+    // Professional color palette
+    Color accentColor;
     switch (type) {
       case TextBoxType.term:
-        termColor = Colors.deepOrange;
+        accentColor = Colors.indigo.shade400;
         break;
       case TextBoxType.alert:
-        termColor = Colors.redAccent;
+        accentColor = Colors.redAccent;
         break;
       case TextBoxType.tip:
-        termColor = Colors.teal;
+        accentColor = Colors.teal;
         break;
-      case TextBoxType.content:
-        termColor = theme.colorScheme.onSurface;
-        break;
-      case TextBoxType.keyContent:
-        termColor = Colors.deepOrange;
-        break;
+      default:
+        accentColor = Colors.grey;
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Bullet
-          Text("• ", style: TextStyle(color: termColor, fontSize: 16)),
-          // Term + text
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (term != null)
-                  Text(
-                    isHL ? '$term (HL)' : term!,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: termColor,
-                    ),
-                  ),
-                HtmlWidget(
-                  text,
-                  textStyle: TextStyle(
-                    color: theme.colorScheme.onSurface,
-                    height: 1.3,
-                  ),
-                ),
-              ],
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        color: theme.cardColor,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
           ),
         ],
+      ),
+      clipBehavior: Clip.antiAlias, // Ensures the bar doesn't overlap corners
+      child: IntrinsicHeight(
+        // Ensures the accent bar matches the text height
+        child: Row(
+          children: [
+            Container(
+              width: 5,
+              color: accentColor,
+            ), // The professional accent bar
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (term != null)
+                      Text(
+                        isHL
+                            ? '${term!.toUpperCase()} (HL)'
+                            : term!.toUpperCase(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 11,
+                          letterSpacing: 0.8,
+                          color: accentColor,
+                        ),
+                      ),
+                    const SizedBox(height: 4),
+                    HtmlWidget(
+                      text,
+                      textStyle: const TextStyle(fontSize: 14, height: 1.3),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -581,7 +581,6 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.totalRevenue => 'Total Revenue',
       DiagramLabel.totalCost => 'Total Cost',
       DiagramLabel.qProfitMax => 'Qπmax',
-
     };
   }
 }

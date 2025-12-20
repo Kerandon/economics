@@ -11,7 +11,7 @@ List<Slide> get supplySlides => [
   /// Terms
   Slide(
     subunit: Subunit.supply,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Change in Quantity Supplied',

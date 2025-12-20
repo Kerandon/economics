@@ -11,7 +11,7 @@ List<Slide> get demandSlides => [
   /// Demand
   Slide(
     subunit: Subunit.demand,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.diagrams([DiagramEnum.microDemandApples]),
 

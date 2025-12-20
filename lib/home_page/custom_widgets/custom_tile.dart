@@ -26,14 +26,6 @@ class CustomTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final colorScheme = Theme.of(context).colorScheme;
-    DiagramBundle? diagram;
-
-    if (diagramBundleEnum != null) {
-      diagram = AllDiagrams(
-        size: size,
-        colorScheme: colorScheme,
-      ).getDiagramBundle2(DiagramEnum.microDemandIncrease);
-    }
 
     return Container(
       decoration: BoxDecoration(
@@ -66,10 +58,7 @@ class CustomTile extends StatelessWidget {
                             width: double.infinity,
                             child: Container(), // required
                           )
-                        : CustomPaint(
-                            painter: diagram?.basePainterDiagrams.first,
-                            size: Size.infinite,
-                          ),
+                        : SizedBox(),
                   ),
                 ),
               ),

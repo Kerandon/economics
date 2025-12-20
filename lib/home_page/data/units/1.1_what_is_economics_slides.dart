@@ -9,7 +9,7 @@ import '../../models/term.dart';
 List<Slide> get whatIsEconomicsSlides => [
   Slide(
     subunit: Subunit.whatIsEconomics,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Change',
@@ -119,7 +119,7 @@ List<Slide> get whatIsEconomicsSlides => [
   ),
   Slide(
     subunit: Subunit.whatIsEconomics,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent(
         diagramEnums: [DiagramEnum.globalAbsoluteAdvantageBothGoods],

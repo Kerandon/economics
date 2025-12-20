@@ -36,10 +36,6 @@ List<DiagramWidget> getDiagramWidgetList(DiagramPainterConfig config) {
   ];
 }
 
-
-
-
-
 /// Make redundant
 List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   /// 1.1 PPC

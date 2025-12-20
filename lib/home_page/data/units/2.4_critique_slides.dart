@@ -9,7 +9,7 @@ import '../../models/term.dart';
 List<Slide> get critiqueSlides => [
   Slide(
     subunit: Subunit.critiqueBehaviour,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         tag: Tag.hl,

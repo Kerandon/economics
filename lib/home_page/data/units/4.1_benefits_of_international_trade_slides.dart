@@ -6,7 +6,7 @@ import '../../models/slide_content.dart';
 List<Slide> get benefitsOfInternationalTradeSlides => [
   Slide(
     subunit: Subunit.benefitsTrade,
-    title: kKeyTerms,
+    title: kTermsGlossary,
     contents: [
       SlideContent.term(
         'Autarky',
