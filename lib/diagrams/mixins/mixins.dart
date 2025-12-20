@@ -1,4 +1,4 @@
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 
 import '../models/diagram_model.dart';
 

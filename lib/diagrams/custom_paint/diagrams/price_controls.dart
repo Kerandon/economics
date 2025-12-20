@@ -6,7 +6,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';

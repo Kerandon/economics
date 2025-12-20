@@ -1,4 +1,4 @@
-import '../enums/diagram_bundle_enum.dart';
+import '../enums/diagram_enum.dart';
 import 'base_painter_painter.dart';
 
 class DiagramWidget {

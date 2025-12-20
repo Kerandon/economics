@@ -5,7 +5,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legen
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../painter_methods/axis/label_align.dart';

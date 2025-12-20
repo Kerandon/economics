@@ -1,10 +1,10 @@
 import 'package:economics_app/diagrams/data/all_diagrams.dart';
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/home_page/state_management/home_page_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../diagrams/enums/unit_type.dart';
-import '../../../diagrams/models/diagram_bundle.dart';
+import '../../../diagrams/models/diagram_widget.dart';
 
 class DiagramsSidebar extends ConsumerWidget {
   final Map<UnitType, Map<Subunit, List<DiagramBundle>>> bundlesByUnit;

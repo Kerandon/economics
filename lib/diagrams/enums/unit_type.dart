@@ -190,15 +190,10 @@ enum SyllabusPoint {
   ),
 
   // Monopoly
-  monopolyCharacteristics(
+  monopoly(
     Subunit.marketFailurePower,
     'Monopoly: single or dominant firm, high barriers to entry, no close substitutes',
     [Skill.a02],
-  ),
-  naturalMonopoly(
-    Subunit.marketFailurePower,
-    'Natural monopoly and economies of scale',
-    [Skill.a03, Skill.a04],
   ),
   // Imperfect competition general
   imperfectCompetitionOverview(

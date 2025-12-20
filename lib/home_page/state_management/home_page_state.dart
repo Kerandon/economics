@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../diagrams/enums/unit_type.dart';
-import '../../diagrams/models/diagram_bundle.dart';
+import '../../diagrams/models/diagram_widget.dart';
 
 class HomePageState {
   final UnitType? selectedUnit;

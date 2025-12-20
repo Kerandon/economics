@@ -1,4 +1,4 @@
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import '../enums/diagram_subtype.dart';

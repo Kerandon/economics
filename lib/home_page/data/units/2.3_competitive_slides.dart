@@ -1,4 +1,4 @@
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/home_page/custom_widgets/simple_table.dart';
 
 import '../../../app/configs/constants.dart';

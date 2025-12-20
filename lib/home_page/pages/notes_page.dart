@@ -156,15 +156,13 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                                       children: [
                                         if (c.diagramWidgets?.isNotEmpty ??
                                             false) ...[
-                                          ...c.diagramWidgets!.map(
-                                            (d) => CustomPaint(
+                                          ...c.diagramWidgets!.map((d) {
+                                            final dim = size.width * 0.40;
+                                            return CustomPaint(
                                               painter: d.basePainterDiagram,
-                                              size: Size(
-                                                size.width * 0.40,
-                                                size.width * 0.40,
-                                              ),
-                                            ),
-                                          ),
+                                              size: Size.square(dim),
+                                            );
+                                          }),
                                         ],
                                       ],
                                     ),

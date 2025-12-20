@@ -1,6 +1,6 @@
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:flutter/material.dart';
-import '../../../diagrams/models/diagram_bundle.dart';
+import '../../../diagrams/models/diagram_widget.dart';
 
 class DiagramBundleWidgetWeb extends StatelessWidget {
   final DiagramBundle bundle;

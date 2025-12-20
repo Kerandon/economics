@@ -7,23 +7,40 @@ import 'package:economics_app/diagrams/custom_paint/diagrams/taxes_and_subsidies
 import '../custom_paint/diagrams/demand.dart';
 import '../custom_paint/diagrams/price_controls.dart';
 import '../custom_paint/diagrams/supply.dart';
-import '../enums/diagram_bundle_enum.dart';
-import '../models/diagram_bundle.dart';
+import '../enums/diagram_enum.dart';
+import '../models/diagram_widget.dart';
 import '../models/diagram_painter_config.dart';
 
-List<DiagramWidget> getDiagramWidgetsList(DiagramPainterConfig config) => [
-  /// 2.1 Demand
-  DiagramWidget(Demand(config, DiagramEnum.microDemandApples)),
+List<DiagramWidget> getDiagramWidgetList(DiagramPainterConfig config) {
+  DiagramWidget d(DiagramEnum e) => DiagramWidget(MarketPower(config, e));
 
-  /// 2.11 Market Power
-  DiagramWidget(
-    MarketPower(config, DiagramEnum.microPerfectCompetitionLongRunIndustry),
-  ),
-  DiagramWidget(
-    MarketPower(config, DiagramEnum.microPerfectCompetitionLongRunFirm),
-  ),
-];
+  return [
+    /// 2.1 Demand
+    DiagramWidget(Demand(config, DiagramEnum.microDemandApples)),
 
+    /// 2.11 Market Power
+    d(DiagramEnum.microPerfectCompetitionMarketLongRun),
+    d(DiagramEnum.microPerfectCompetitionFirmLongRun),
+    d(DiagramEnum.microPerfectCompetitionMarketAbnormalProfit),
+    d(DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment),
+    d(DiagramEnum.microPerfectCompetitionMarketLoss),
+    d(DiagramEnum.microPerfectCompetitionFirmLoss),
+    d(DiagramEnum.microPerfectCompetitionShutdownPoint),
+    d(DiagramEnum.microPerfectCompetitionNormalProfitRevenueCostsCalculation),
+    d(DiagramEnum.microPerfectCompetitionAbnormalProfitRevenueCostsCalculation),
+    d(DiagramEnum.microPerfectCompetitionShutdownLossCalculation),
+    d(DiagramEnum.microMonopolyAbnormalProfit),
+
+    d(DiagramEnum.microMonopolyLoss),
+    d(DiagramEnum.microMonopolyNatural),
+  ];
+}
+
+
+
+
+
+/// Make redundant
 List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
   /// 1.1 PPC
 

@@ -2,8 +2,8 @@ import 'package:economics_app/home_page/models/key_content.dart';
 import 'package:economics_app/home_page/models/term.dart';
 import 'package:economics_app/home_page/models/tip.dart';
 import 'package:flutter/material.dart';
-import '../../diagrams/enums/diagram_bundle_enum.dart';
-import '../../diagrams/models/diagram_bundle.dart';
+import '../../diagrams/enums/diagram_enum.dart';
+import '../../diagrams/models/diagram_widget.dart';
 import 'alert.dart';
 import 'content.dart';
 
@@ -14,7 +14,6 @@ class SlideContent {
   final Alert? alert;
   final Tip? tip;
   final List<DiagramEnum>? diagramEnums;
-  final List<DiagramBundle>? diagramBundles;
   final List<DiagramWidget>? diagramWidgets;
 
   SlideContent({
@@ -24,7 +23,6 @@ class SlideContent {
     this.alert,
     this.tip,
     this.diagramEnums,
-    this.diagramBundles,
     this.diagramWidgets, // 🔹 NEW: Add to the constructor.
   });
 
@@ -47,8 +45,7 @@ class SlideContent {
       diagramWidgets: diagramWidgets ?? this.diagramWidgets,
       diagramEnums: diagramEnums ?? this.diagramEnums,
 
-      /// make redundant
-      diagramBundles: diagramBundles ?? this.diagramBundles,
+
     );
   }
 

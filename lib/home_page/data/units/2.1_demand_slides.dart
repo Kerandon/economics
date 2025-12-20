@@ -1,7 +1,7 @@
 import 'package:economics_app/home_page/custom_widgets/simple_table.dart';
 
 import '../../../app/configs/constants.dart';
-import '../../../diagrams/enums/diagram_bundle_enum.dart';
+import '../../../diagrams/enums/diagram_enum.dart';
 import '../../../diagrams/enums/unit_type.dart';
 import '../../models/slide.dart';
 import '../../models/slide_content.dart';

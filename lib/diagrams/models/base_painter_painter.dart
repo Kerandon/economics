@@ -1,4 +1,4 @@
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:flutter/material.dart';
 
 import '../custom_paint/painter_methods/legend/legend_display.dart';

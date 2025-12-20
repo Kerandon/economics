@@ -13,7 +13,7 @@ import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:flutter/material.dart';
-import '../../enums/diagram_bundle_enum.dart';
+import '../../enums/diagram_enum.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 

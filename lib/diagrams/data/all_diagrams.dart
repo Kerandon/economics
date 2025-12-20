@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../enums/diagram_bundle_enum.dart';
-import '../models/diagram_bundle.dart';
+import '../enums/diagram_enum.dart';
+import '../models/diagram_widget.dart';
 import '../models/diagram_painter_config.dart';
-import 'get_bundle_list.dart';
+import 'get_diagram_widget_list.dart';
 
 class AllDiagrams2 {
   final Size size;
@@ -19,7 +19,7 @@ class AllDiagrams2 {
     );
 
     // Generate all diagram widgets
-    final all = getDiagramWidgetsList(config).toList();
+    final all = getDiagramWidgetList(config).toList();
 
     // If filtering by enum
     if (diagramEnums?.isNotEmpty ?? false) {

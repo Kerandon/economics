@@ -21,6 +21,7 @@ enum ShadeType {
   governmentRevenue,
   gainedRevenue,
   lostRevenue,
+  costs,
   revenueUnchanged, // same color as governmentRevenue
   welfareLoss,
   abnormalProfit,
@@ -89,6 +90,8 @@ extension Shade on ShadeType {
         return consumerIncidenceColor;
       case ShadeType.producerGain:
         return producerIncidenceColor;
+      case ShadeType.costs:
+  return Colors.red;
     }
   }
 
@@ -145,6 +148,8 @@ extension Shade on ShadeType {
         return 'Consumer Gain';
       case ShadeType.producerGain:
         return 'Producer Gain';
+      case ShadeType.costs:
+ return 'Costs';
     }
   }
 }

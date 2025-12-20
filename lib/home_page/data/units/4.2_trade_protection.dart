@@ -1,5 +1,5 @@
 import 'package:economics_app/app/configs/constants.dart';
-import 'package:economics_app/diagrams/enums/diagram_bundle_enum.dart';
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 
 import '../../../diagrams/enums/unit_type.dart';
 import '../../models/slide.dart';

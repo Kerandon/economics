@@ -1,4 +1,4 @@
-import '../../../enums/diagram_bundle_enum.dart';
+import '../../../enums/diagram_enum.dart';
 
 enum LegendDisplay { shading, letters }
 

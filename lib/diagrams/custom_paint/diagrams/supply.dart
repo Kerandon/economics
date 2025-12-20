@@ -7,7 +7,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.da
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
-import '../../enums/diagram_bundle_enum.dart';
+import '../../enums/diagram_enum.dart';
 import '../../enums/diagram_labels.dart';
 import '../painter_methods/axis/label_align.dart';
 import '../../models/base_painter_painter.dart';

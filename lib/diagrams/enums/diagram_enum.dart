@@ -1,7 +1,5 @@
 import 'package:economics_app/diagrams/enums/unit_type.dart';
 
-import '../custom_paint/painter_methods/legend/legend_display.dart';
-
 enum DiagramEnum {
   microPPCConstantOppCost,
   microPPCIncreaseOppCost,
@@ -79,12 +77,21 @@ enum DiagramEnum {
   microPositiveProductionExternalitySubsidy,
   microPositiveProductionExternalityDirectProvision,
   microPublicGoods,
-  microPerfectCompetitionLongRunFirm,
-  microPerfectCompetitionLongRunIndustry,
-  microPerfectCompetitionAbnormalProfitFirm,
-  microPerfectCompetitionAbnormalProfitIndustry,
-  microPerfectCompetitionLoss,
-  microPerfectCompetitionLossIndustry,
+  microPerfectCompetitionFirmLongRun,
+  microPerfectCompetitionMarketLongRun,
+  microPerfectCompetitionFirmAbnormalProfitAdjustment,
+  microPerfectCompetitionMarketAbnormalProfit,
+  microPerfectCompetitionFirmLoss,
+  microPerfectCompetitionMarketLoss,
+  microPerfectCompetitionShutdownPoint,
+  microPerfectCompetitionNormalProfitRevenueCostsCalculation,
+  microPerfectCompetitionAbnormalProfitRevenueCostsCalculation,
+  microPerfectCompetitionShutdownLossCalculation,
+  microMonopolyAbnormalProfit,
+  microMonopolyLoss,
+  microMonopolyNatural,
+  microMonopolyNaturalAverageCostPricing,
+  microMonopolyNaturalMarginalCostPricing,
   globalWorldPrice,
   globalWorldPriceStandAlone,
   globalNetExporter,
@@ -266,7 +273,34 @@ extension DiagramBundleEnumUnit on DiagramEnum {
       Subunit.marketFailureExternalities,
     DiagramEnum.microPositiveProductionExternalityDirectProvision =>
       Subunit.marketFailureExternalities,
+    DiagramEnum.microPublicGoods => Subunit.marketFailurePublicGoods,
 
+    DiagramEnum.microPerfectCompetitionFirmLongRun =>
+      Subunit.marketFailurePower,
+
+    DiagramEnum.microPerfectCompetitionMarketLongRun =>
+      Subunit.marketFailurePower,
+
+    DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment =>
+      Subunit.marketFailurePower,
+
+    DiagramEnum.microPerfectCompetitionMarketAbnormalProfit =>
+      Subunit.marketFailurePower,
+
+    DiagramEnum.microPerfectCompetitionFirmLoss => Subunit.marketFailurePower,
+
+    DiagramEnum.microPerfectCompetitionMarketLoss => Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionShutdownPoint => Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionNormalProfitRevenueCostsCalculation => Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionShutdownLossCalculation => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyAbnormalProfit => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyLoss => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyNatural => Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionAbnormalProfitRevenueCostsCalculation => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyNaturalAverageCostPricing =>
+      Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyNaturalMarginalCostPricing =>
+      Subunit.marketFailurePower,
     DiagramEnum.globalWorldPrice => Subunit.benefitsTrade,
     DiagramEnum.globalWorldPriceStandAlone => Subunit.benefitsTrade,
     DiagramEnum.globalNetExporter => Subunit.benefitsTrade,
@@ -309,23 +343,6 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalProductionSubsidyWelfareLoss =>
       Subunit.typesTradeProtection,
     DiagramEnum.globalProductionSubsidyWelfare => Subunit.typesTradeProtection,
-    DiagramEnum.microPublicGoods => Subunit.marketFailurePublicGoods,
 
-    DiagramEnum.microPerfectCompetitionLongRunFirm =>
-      Subunit.marketFailurePower,
-
-    DiagramEnum.microPerfectCompetitionLongRunIndustry =>
-      Subunit.marketFailurePower,
-
-    DiagramEnum.microPerfectCompetitionAbnormalProfitFirm =>
-      Subunit.marketFailurePower,
-
-    DiagramEnum.microPerfectCompetitionAbnormalProfitIndustry =>
-      Subunit.marketFailurePower,
-
-    DiagramEnum.microPerfectCompetitionLoss => Subunit.marketFailurePower,
-
-    DiagramEnum.microPerfectCompetitionLossIndustry =>
-      Subunit.marketFailurePower,
   };
 }
