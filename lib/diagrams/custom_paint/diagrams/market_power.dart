@@ -30,7 +30,7 @@ class MarketPower extends BaseDiagramPainter3 {
       case DiagramEnum.microPerfectCompetitionMarketLongRun ||
           DiagramEnum.microPerfectCompetitionMarketAbnormalProfit ||
           DiagramEnum.microPerfectCompetitionMarketLoss:
-        return _perfectCompMarket(c, canvas, size, diagram);
+        return _paintPerfectCompMarket(c, canvas, size, diagram);
       case DiagramEnum.microPerfectCompetitionFirmLongRun ||
           DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment ||
           DiagramEnum.microPerfectCompetitionFirmLoss ||
@@ -41,12 +41,28 @@ class MarketPower extends BaseDiagramPainter3 {
               .microPerfectCompetitionAbnormalProfitRevenueCostsCalculation ||
           DiagramEnum.microPerfectCompetitionShutdownLossCalculation:
         return _perfectCompFirm(c, canvas, size, diagram);
+      case DiagramEnum.microMonopolyAbnormalProfit || DiagramEnum.microMonopolyAbnormalProfitAndCosts
+      || DiagramEnum.microMonopolyWelfare || DiagramEnum.microMonopolyWelfareAllocativelyEfficient:
+        return _paintStandardMonopoly(c, canvas, size, diagram);
+      case DiagramEnum.microMonopolyNatural ||
+      DiagramEnum.microMonopolyNaturalUnregulatedWelfare ||
+          DiagramEnum.microMonopolyNaturalPricingComparisons ||
+          DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare ||
+          DiagramEnum.microMonopolyNaturalMarginalCostPricing ||
+          DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare:
+        return _paintNaturalMonopoly(c, canvas, size, diagram);
+      case DiagramEnum.microOligopolyKinkedDemandCurve:
+        return _paintKinkedDemand(c, canvas, size, diagram);
+      case DiagramEnum.microMonopolisticCompetitionLongRun ||
+        DiagramEnum.microMonopolisticCompetitionAbnormalProfit ||
+        DiagramEnum.microMonopolisticCompetitionLoss:
+        return _paintMonopolisticCompetition(c, canvas, size, diagram);
       default:
     }
   }
 }
 
-void _perfectCompMarket(
+void _paintPerfectCompMarket(
   DiagramPainterConfig c,
   Canvas canvas,
   Size size,
@@ -617,4 +633,439 @@ void _perfectCompFirm(
       label2Align: LabelAlign.centerRight,
     );
   }
+}
+
+void _paintStandardMonopoly(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+  DiagramEnum diagram,
+) {
+
+  paintAxis(
+    c,
+    canvas,
+    yAxisLabel: DiagramLabel.priceCostsRevenue.label,
+    xAxisLabel: DiagramLabel.quantity.label,
+  );
+
+
+  if(diagram == DiagramEnum.microMonopolyWelfare || diagram == DiagramEnum.microMonopolyWelfareAllocativelyEfficient){
+    if(diagram == DiagramEnum.microMonopolyWelfare) {
+      paintText2(
+          c, canvas, DiagramLabel.consumerSurplus.label, Offset(0.20, 0.05),
+          pointerLine: Offset(0.15, 0.30));
+      paintText2(c, canvas, DiagramLabel.welfareLoss.label, Offset(0.40, 0.25),
+          pointerLine: Offset(0.40, 0.50));
+      paintText2(
+          c, canvas, DiagramLabel.producerSurplus.label, Offset(0.55, 0.85),
+          pointerLine: Offset(0.20, 0.70));
+      paintShading(canvas, size, ShadeType.consumerSurplus, [
+        Offset(0, 0.08),
+        Offset(0.33, 0.38),
+        Offset(0, 0.38),
+      ]);
+      paintShading(canvas, size, ShadeType.producerSurplus, [
+        Offset(0, 0.38),
+        Offset(0.33, 0.38),
+        Offset(0.33, 0.75),
+        CustomBezier(
+            control: Offset(0.03, 1.17),
+            endPoint: Offset(0, 0.60))
+
+      ]);
+      paintShading(canvas, size, ShadeType.welfareLoss, [
+        Offset(0.325, 0.38),
+        Offset(0.47, 0.51),
+        Offset(0.325, 0.75),
+      ]);
+    }
+    if(diagram == DiagramEnum.microMonopolyWelfareAllocativelyEfficient){
+      paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.51, xAxisEndPos: 0.47,
+      yLabel: DiagramLabel.pMC.label,
+        xLabel: DiagramLabel.qMC.label
+      );
+      paintText2(c, canvas, 'Consumer Surplus\nCaptured by\nMonopolist ', Offset(0.42,0.20),
+      pointerLine: Offset(0.25,0.45)
+      );
+      paintText2(c, canvas, 'Lost Consumer\nSurplus', Offset(0.70,0.50),
+          pointerLine: Offset(0.35,0.45)
+      );
+      paintText2(
+          c, canvas, DiagramLabel.consumerSurplus.label, Offset(0.20, 0.05),
+          pointerLine: Offset(0.15, 0.30));
+      paintShading(canvas, size, ShadeType.consumerSurplus, [
+        Offset(0, 0.08),
+        Offset(0.33, 0.38),
+        Offset(0, 0.38),
+      ]);
+      paintShading(canvas, size, ShadeType.lostConsumerSurplus, [
+        Offset(0.0, 0.38),
+        Offset(0.325, 0.38),
+        Offset(0.325, 0.51),
+        Offset(0.0, 0.51),]);
+      paintShading(canvas, size, ShadeType.loss, [
+        Offset(0.325, 0.38),
+        Offset(0.48, 0.51),
+        Offset(0.325, 0.51),]);
+    }
+  }else{
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.05, 0.20),
+      bezierPoints: [
+        CustomBezier(control: Offset(0.38, 0.885), endPoint: Offset(0.90, 0.20)),
+      ],
+      label2: DiagramLabel.atc.label,
+      label2Align: LabelAlign.centerTop,
+    );
+  }
+  if(diagram == DiagramEnum.microMonopolyAbnormalProfit || diagram == DiagramEnum.microMonopolyAbnormalProfitAndCosts) {
+    if(diagram == DiagramEnum.microMonopolyAbnormalProfitAndCosts) {
+      paintText2(
+        c,
+        canvas,
+        DiagramLabel.costs.label,
+        Offset(0.50, 0.80),
+        pointerLine: Offset(0.20, 0.80),
+      );
+      paintShading(canvas, size, ShadeType.costs, [
+        Offset(0.0, 0.52),
+        Offset(0.325, 0.52),
+        Offset(0.325, 1.0),
+        Offset(0.0, 1.0),
+      ]);
+    }
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.52,
+      xAxisEndPos: 0.325,
+      showDotAtIntersection: true,
+      yLabel: DiagramLabel.c.label,
+      hideXLine: true,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.abnormalProfit.label,
+      Offset(0.38, 0.22),
+      pointerLine: Offset(0.25, 0.42),
+    );
+    paintShading(canvas, size, ShadeType.abnormalProfit, [
+      Offset(0.0, 0.38),
+      Offset(0.325, 0.38),
+      Offset(0.325, 0.52),
+      Offset(0.0, 0.52),
+    ]);
+
+  }
+
+
+
+  paintMarginalCost(c, canvas);
+
+  String demandLabel = DiagramLabel.dEqualsAR.label;
+  if(diagram == DiagramEnum.microMonopolyWelfare){
+    demandLabel = DiagramLabel.dEqualsARMB.label;
+  }
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.02, 0.10),
+    polylineOffsets: [Offset(0.90, 0.90)],
+    label2: demandLabel,
+  );
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.02, 0.10),
+    polylineOffsets: [Offset(0.50, 1.1)],
+    label2: DiagramLabel.mr.label,
+  );
+
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.38,
+    xAxisEndPos: 0.325,
+    showDotAtIntersection: true,
+    yLabel: DiagramLabel.p.label,
+    xLabel: DiagramLabel.qProfitMax.label,
+  );
+
+  paintDot(c, canvas, pos: Offset(0.325, 0.74));
+
+  paintDot(c, canvas, pos: Offset(0.47, 0.51));
+}
+
+void _paintNaturalMonopoly(
+  DiagramPainterConfig c,
+  Canvas canvas,
+  Size size,
+  DiagramEnum diagram,
+) {
+  paintAxis(
+    c,
+    canvas,
+    yAxisLabel: DiagramLabel.priceCostsRevenue.label,
+    xAxisLabel: DiagramLabel.quantity.label,
+  );
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.03, 0.25),
+    bezierPoints: [
+      CustomBezier(control: Offset(0.20, 0.80), endPoint: Offset(0.90, 0.80)),
+    ],
+    label2: DiagramLabel.lrac.label,
+    label2Align: LabelAlign.centerRight,
+  );
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.03, 0.15),
+    polylineOffsets: [Offset(0.75, 0.92)],
+    label2: DiagramLabel.dEqualsAR.label,
+    label2Align: LabelAlign.centerRight
+  );
+if(diagram == DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare){
+  paintText2(c, canvas, DiagramLabel.consumerSurplus.label, Offset(0.60,0.50),
+  pointerLine: Offset(0.30,0.50)
+  );
+  paintText2(c, canvas, DiagramLabel.welfareLoss.label, Offset(0.70,0.70),
+      pointerLine: Offset(0.65,0.85)
+  );
+  paintShading(canvas, size, ShadeType.consumerSurplus, [
+    Offset(0, 0.12),
+    Offset(0.61, 0.77),
+    Offset(0, 0.77),
+  ]);
+  paintShading(canvas, size, ShadeType.welfareLoss, [
+    Offset(0.61, 0.77),
+    Offset(0.72, 0.89),
+    Offset(0.61, 0.89),
+  ]);
+}
+if(diagram == DiagramEnum.microMonopolyNaturalUnregulatedWelfare){
+  paintText2(c, canvas, DiagramLabel.consumerSurplus.label, Offset(0.50,0.40),
+  pointerLine: Offset(0.20,0.40)
+  );
+  paintText2(c, canvas, DiagramLabel.abnormalProfit.label, Offset(0.55,0.50),
+      pointerLine: Offset(0.35,0.65)
+  );
+  paintText2(c, canvas, DiagramLabel.welfareLoss.label, Offset(0.65,0.60),
+      pointerLine: Offset(0.50,0.70)
+  );
+  paintShading(canvas, size, ShadeType.consumerSurplus, [
+    Offset(0, 0.12),
+    Offset(0.43, 0.58),
+    Offset(0, 0.58),
+  ]);
+  paintShading(canvas, size, ShadeType.abnormalProfit, [
+    Offset(0.0, 0.58),
+    Offset(0.43, 0.58),
+    Offset(0.43, 0.71),
+    Offset(0.0, 0.71),
+  ]);
+  paintShading(canvas, size, ShadeType.welfareLoss, [
+    Offset(0.43, 0.58),
+    Offset(0.72, 0.89),
+    Offset(0.43, 0.89),
+  ]);
+paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.58, xAxisEndPos: 0.43,
+yLabel: DiagramLabel.pProfitMax.label, xLabel: DiagramLabel.qProfitMax.label,
+  showDotAtIntersection: true
+);
+  paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.71, xAxisEndPos: 0.43,
+    yLabel: DiagramLabel.costs.label, hideXLine: true, showDotAtIntersection: true,
+  );
+}
+  if (diagram == DiagramEnum.microMonopolyNaturalMarginalCostPricing
+
+  ) {
+
+    if(diagram == DiagramEnum.microMonopolyNaturalMarginalCostPricing) {
+      paintText2(
+        c,
+        canvas,
+        DiagramLabel.subsidy.label,
+        Offset(0.65, 0.65),
+        pointerLine: Offset(0.60, 0.84),
+      );
+      paintShading(canvas, size, ShadeType.loss, [
+        Offset(0, 0.79),
+        Offset(0.72, 0.79),
+        Offset(0.72, 0.89),
+        Offset(0, 0.89),
+      ]);
+
+
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.79,
+        xAxisEndPos: 0.72,
+        yLabel: DiagramLabel.costs.label,
+        showDotAtIntersection: true,
+      );
+    }
+
+  }
+  if(diagram == DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare){
+    paintText2(c, canvas, DiagramLabel.consumerSurplus.label, Offset(0.50,0.40),
+    pointerLine: Offset(0.35,0.60)
+    );
+    paintShading(canvas, size, ShadeType.consumerSurplus, [
+      Offset(0, 0.12),
+      Offset(0.72, 0.89),
+      Offset(0, 0.89),
+    ]);
+    paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.89, xAxisEndPos: 0.72,
+    yLabel: DiagramLabel.pMC.label, xLabel: DiagramLabel.qMC.label,
+      showDotAtIntersection: true,
+    );
+  }
+  if (diagram == DiagramEnum.microMonopolyNaturalPricingComparisons ||
+      diagram == DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare
+) {
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.77,
+      xAxisEndPos: 0.61,
+      yLabel: DiagramLabel.pACP.label,
+      xLabel: DiagramLabel.qACP.label,
+      showDotAtIntersection: true,
+    );
+  }
+  if (diagram == DiagramEnum.microMonopolyNaturalPricingComparisons ||
+      diagram == DiagramEnum.microMonopolyNaturalUnregulatedWelfare ||
+      diagram == DiagramEnum.microMonopolyNaturalMarginalCostPricing ||
+      diagram == DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare
+  || diagram == DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare
+
+  ) {
+
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.03, 0.15),
+      polylineOffsets: [Offset(0.75, 0.92)],
+    );
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.03, 0.70),
+      bezierPoints: [
+        CustomBezier(control: Offset(0.15, 0.93), endPoint: Offset(0.90, 0.88)),
+      ],
+      label2: DiagramLabel.lrmc.label,
+      label2Align: LabelAlign.centerRight,
+    );
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.03, 0.15),
+      polylineOffsets: [Offset(0.55, 1.1)],
+      label2: DiagramLabel.mr.label,
+    );
+  }
+  if(diagram == DiagramEnum.microMonopolyNaturalPricingComparisons){
+
+    paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.58, xAxisEndPos: 0.43,
+    yLabel: DiagramLabel.pProfitMax.label, xLabel: DiagramLabel.qProfitMax.label,
+      showDotAtIntersection: true,
+    );
+    paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.89, xAxisEndPos: 0.72,
+      yLabel: DiagramLabel.pMC.label, xLabel: DiagramLabel.qMC.label,
+      showDotAtIntersection: true,
+    );
+  }
+}
+
+void _paintKinkedDemand(
+    DiagramPainterConfig c,
+    Canvas canvas,
+    Size size,
+    DiagramEnum diagram,
+    ) {
+  paintAxis(c, canvas, yAxisLabel: DiagramLabel.price.label, xAxisLabel: DiagramLabel.quantity.label);
+
+    paintText2(c, canvas, 'Kink', Offset(0.70,0.30), pointerLine: Offset(0.55,0.30));
+    paintText2(c, canvas, 'Elastic', Offset(0.40,0.15), );
+    paintText2(c, canvas, 'Inelastic', Offset(0.80,0.60),);
+    paintDiagramLines(c, canvas, startPos: Offset(0.10, 0.15),
+        polylineOffsets: [Offset(0.55, 0.30),
+          Offset(0.75, 0.90),
+        ]);
+    paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.20, xAxisEndPos: 0.25, showDotAtIntersection: true,
+      yLabel: DiagramLabel.p1.label, xLabel: DiagramLabel.q1.label,
+    );
+    paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.30, xAxisEndPos: 0.55, showDotAtIntersection: true,
+      yLabel: DiagramLabel.pE.label, xLabel: DiagramLabel.qE.label,
+    );
+    paintDiagramDashedLines(c, canvas, yAxisStartPos: 0.60, xAxisEndPos: 0.65, showDotAtIntersection: true,
+      yLabel: DiagramLabel.p2.label, xLabel: DiagramLabel.q2.label,);
+
+}
+
+void _paintMonopolisticCompetition(
+    DiagramPainterConfig c,
+    Canvas canvas,
+    Size size,
+    DiagramEnum diagram,
+    ) {
+
+  paintAxis(
+    c,
+    canvas,
+    yAxisLabel: DiagramLabel.priceCostsRevenue.label,
+    xAxisLabel: DiagramLabel.quantity.label,
+  );
+
+
+  paintMarginalCost(c, canvas);
+
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.02, 0.40),
+    polylineOffsets: [Offset(0.90, 0.80)],
+    label2: DiagramLabel.dEqualsAR.label,
+  );
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.02, 0.40),
+    polylineOffsets: [Offset(0.65, 1.1)],
+    label2: DiagramLabel.mr.label,
+  );
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.05, 0.20),
+    bezierPoints: [
+      CustomBezier(control: Offset(0.38, 0.92), endPoint: Offset(0.90, 0.20)),
+    ],
+    label2: DiagramLabel.atc.label,
+    label2Align: LabelAlign.centerTop,
+  );
+
+
+
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.54,
+    xAxisEndPos: 0.325,
+    showDotAtIntersection: true,
+    yLabel: DiagramLabel.p.label,
+    xLabel: DiagramLabel.qProfitMax.label,
+  );
+
+  paintDot(c, canvas, pos: Offset(0.325, 0.74));
+
+  paintDot(c, canvas, pos: Offset(0.425, 0.585));
 }

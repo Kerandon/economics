@@ -88,10 +88,19 @@ enum DiagramEnum {
   microPerfectCompetitionAbnormalProfitRevenueCostsCalculation,
   microPerfectCompetitionShutdownLossCalculation,
   microMonopolyAbnormalProfit,
-  microMonopolyLoss,
+  microMonopolyAbnormalProfitAndCosts,
+  microMonopolyWelfare,
+  microMonopolyWelfareAllocativelyEfficient,
   microMonopolyNatural,
-  microMonopolyNaturalAverageCostPricing,
+  microMonopolyNaturalUnregulatedWelfare,
+  microMonopolyNaturalPricingComparisons,
+  microMonopolyNaturalAverageCostPricingWelfare,
   microMonopolyNaturalMarginalCostPricing,
+  microMonopolyNaturalMarginalCostPricingWelfare,
+  microOligopolyKinkedDemandCurve,
+  microMonopolisticCompetitionAbnormalProfit,
+  microMonopolisticCompetitionLoss,
+  microMonopolisticCompetitionLongRun,
   globalWorldPrice,
   globalWorldPriceStandAlone,
   globalNetExporter,
@@ -297,14 +306,24 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.microPerfectCompetitionShutdownLossCalculation =>
       Subunit.marketFailurePower,
     DiagramEnum.microMonopolyAbnormalProfit => Subunit.marketFailurePower,
-    DiagramEnum.microMonopolyLoss => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyWelfareAllocativelyEfficient => Subunit.marketFailurePower,
     DiagramEnum.microMonopolyNatural => Subunit.marketFailurePower,
     DiagramEnum.microPerfectCompetitionAbnormalProfitRevenueCostsCalculation =>
       Subunit.marketFailurePower,
-    DiagramEnum.microMonopolyNaturalAverageCostPricing =>
+    DiagramEnum.microMonopolyNaturalPricingComparisons =>
       Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyNaturalUnregulatedWelfare =>      Subunit.marketFailurePower,
     DiagramEnum.microMonopolyNaturalMarginalCostPricing =>
       Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyWelfare => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolyAbnormalProfitAndCosts => Subunit.marketFailurePower,
+    DiagramEnum.microOligopolyKinkedDemandCurve => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolisticCompetitionAbnormalProfit => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolisticCompetitionLoss => Subunit.marketFailurePower,
+    DiagramEnum.microMonopolisticCompetitionLongRun => Subunit.marketFailurePower,
+
     DiagramEnum.globalWorldPrice => Subunit.benefitsTrade,
     DiagramEnum.globalWorldPriceStandAlone => Subunit.benefitsTrade,
     DiagramEnum.globalNetExporter => Subunit.benefitsTrade,
@@ -347,5 +366,6 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalProductionSubsidyWelfareLoss =>
       Subunit.typesTradeProtection,
     DiagramEnum.globalProductionSubsidyWelfare => Subunit.typesTradeProtection,
+
   };
 }

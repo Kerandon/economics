@@ -12,7 +12,7 @@ class SlideContent {
   final KeyContent? keyContent;
   final Term? term;
   final Alert? alert;
-  final Tip? tip;
+  final Example? examples;
   final List<DiagramEnum>? diagramEnums;
   final List<DiagramWidget>? diagramWidgets;
   final Widget? widget;
@@ -22,7 +22,7 @@ class SlideContent {
     this.keyContent,
     this.term,
     this.alert,
-    this.tip,
+    this.examples,
     this.diagramEnums,
     this.diagramWidgets,
     this.widget,
@@ -33,7 +33,7 @@ class SlideContent {
     KeyContent? keyContent,
     Term? term,
     Alert? alert,
-    Tip? tip,
+    Example? examples,
     List<DiagramEnum>? diagramEnums,
     List<DiagramWidget>? diagramWidgets,
     Widget? widget,
@@ -43,7 +43,7 @@ class SlideContent {
       keyContent: keyContent ?? this.keyContent,
       term: term ?? this.term,
       alert: alert ?? this.alert,
-      tip: tip ?? this.tip,
+      examples: examples ?? this.examples,
       diagramWidgets: diagramWidgets ?? this.diagramWidgets,
       diagramEnums: diagramEnums ?? this.diagramEnums,
       widget: widget ?? this.widget,
@@ -69,7 +69,7 @@ class SlideContent {
 
   factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
 
-  factory SlideContent.tip(String text) => SlideContent(tip: Tip(text));
+  factory SlideContent.examples(String text) => SlideContent(examples: Example(text));
 
   factory SlideContent.customWidget(Widget widget) =>
       SlideContent(widget: widget);

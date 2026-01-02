@@ -44,6 +44,7 @@ dependencies:
   printing: ^5.14.2
   html: ^0.15.6
   responsive_framework: ^1.5.1
+  data_table_2: ^2.7.2
 
 dev_dependencies:
   flutter_test:

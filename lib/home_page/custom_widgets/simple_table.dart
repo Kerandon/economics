@@ -1,34 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-/// A reusable Flutter widget to build a styled table with an optional title and caption.
 class SimpleTable extends StatelessWidget {
-  /// A list of strings for the table headers.
   final List<String> headers;
-
-  /// A list of lists of strings for the table data.
-  /// Each inner list represents a row.
   final List<List<String>> data;
-
-  /// An optional title for the table, aligned top-center.
   final String? title;
-
-  /// An optional figure caption for the table, aligned bottom-left.
   final String? figCaption;
-
-  /// Optional list of text styles for each header cell.
-  /// If null or shorter than headers, defaults will be used.
   final List<TextStyle?>? headerStyles;
-
-  /// Optional matrix of text styles for each data cell.
-  /// Each row should match the data row in length.
-  final List<List<TextStyle?>>? cellStyles;
-
-  /// Default style for headers if headerStyles is not provided.
   final TextStyle defaultHeaderStyle;
-
-  /// Default style for data cells if cellStyles is not provided.
   final TextStyle defaultCellStyle;
+
+  final String? topLabel;
+  final String? bottomLabel;
+  final String? leftLabel;
+  final String? rightLabel;
+  final double cellPadding;
+
+  final Color labelBackgroundColor;
+  final Color labelTextColor;
 
   const SimpleTable({
     super.key,
@@ -37,80 +26,160 @@ class SimpleTable extends StatelessWidget {
     this.title,
     this.figCaption,
     this.headerStyles,
-    this.cellStyles,
-    this.defaultHeaderStyle = const TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    ),
+    this.topLabel,
+    this.bottomLabel,
+    this.leftLabel,
+    this.rightLabel,
+    this.cellPadding = 18.0,
+    this.labelBackgroundColor = Colors.transparent,
+    this.labelTextColor = Colors.black,
+    this.defaultHeaderStyle = const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
     this.defaultCellStyle = const TextStyle(fontSize: 14),
   });
 
+  Widget _buildOuterLabel(String text, {bool isGhost = false}) {
+    return Visibility(
+      visible: !isGhost,
+      maintainSize: true,
+      maintainAnimation: true,
+      maintainState: true,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: labelBackgroundColor,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: HtmlWidget(
+          '<div style="text-align: center; color: #${labelTextColor.value.toRadixString(16).substring(2).padLeft(6, '0')};">'
+              '<strong>${text.toUpperCase()}</strong></div>',
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Header Row
     final headerRow = TableRow(
       decoration: const BoxDecoration(color: Color(0xFFF2F2F2)),
-      children: List.generate(headers.length, (i) {
-        final style = (headerStyles != null && i < headerStyles!.length)
-            ? (headerStyles![i] ?? defaultHeaderStyle)
-            : defaultHeaderStyle;
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: HtmlWidget(headers[i], textStyle: style),
-        );
-      }),
+      children: headers.map((h) => Padding(
+        padding: EdgeInsets.all(cellPadding),
+        child: Center(child: HtmlWidget(h, textStyle: defaultHeaderStyle)),
+      )).toList(),
     );
 
-    // Data Rows
-    final dataRows = List<TableRow>.generate(data.length, (rowIndex) {
-      return TableRow(
-        children: List.generate(data[rowIndex].length, (colIndex) {
-          final style =
-              (cellStyles != null &&
-                  rowIndex < cellStyles!.length &&
-                  colIndex < cellStyles![rowIndex].length)
-              ? (cellStyles![rowIndex][colIndex] ?? defaultCellStyle)
-              : defaultCellStyle;
-
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              data[rowIndex][colIndex],
-              textAlign: TextAlign.center,
-              style: style,
-            ),
-          );
-        }),
-      );
-    });
+    final dataRows = data.map((row) => TableRow(
+      children: row.map((cell) => Padding(
+        padding: EdgeInsets.all(cellPadding),
+        child: Center(child: HtmlWidget(cell, textStyle: defaultCellStyle)),
+      )).toList(),
+    )).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (title != null)
-          Text(
-            title!,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-          ),
-        const SizedBox(height: 10),
-        Center(
-          child: Table(
-            defaultColumnWidth: const IntrinsicColumnWidth(),
-            border: TableBorder.all(color: Colors.black, width: 2.0),
-            children: [headerRow, ...dataRows],
-          ),
-        ),
-        const SizedBox(height: 5),
-        if (figCaption != null)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: HtmlWidget(figCaption ?? ''),
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              title!,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
             ),
           ),
+
+        Center(
+          child: IntrinsicWidth(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+
+                // TOP LABEL
+                if (topLabel != null)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (leftLabel != null)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          // FIX: Use "I" instead of leftLabel! to prevent vertical height blowout
+                          child: RotatedBox(quarterTurns: 3, child: _buildOuterLabel("I", isGhost: true)),
+                        ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: _buildOuterLabel(topLabel!),
+                        ),
+                      ),
+                      if (rightLabel != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          // FIX: Use "I" here as well
+                          child: RotatedBox(quarterTurns: 1, child: _buildOuterLabel("I", isGhost: true)),
+                        ),
+                    ],
+                  ),
+
+                IntrinsicHeight(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (leftLabel != null)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: Center(child: RotatedBox(quarterTurns: 3, child: _buildOuterLabel(leftLabel!))),
+                        ),
+
+                      Table(
+                        defaultColumnWidth: const IntrinsicColumnWidth(),
+                        border: TableBorder.all(color: Colors.black, width: 2.0),
+                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                        children: [headerRow, ...dataRows],
+                      ),
+
+                      if (rightLabel != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Center(child: RotatedBox(quarterTurns: 1, child: _buildOuterLabel(rightLabel!))),
+                        ),
+                    ],
+                  ),
+                ),
+
+                // BOTTOM LABEL
+                if (bottomLabel != null)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (leftLabel != null)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          // FIX: Use "I" for ghost
+                          child: RotatedBox(quarterTurns: 3, child: _buildOuterLabel("I", isGhost: true)),
+                        ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: _buildOuterLabel(bottomLabel!),
+                        ),
+                      ),
+                      if (rightLabel != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          // FIX: Use "I" for ghost
+                          child: RotatedBox(quarterTurns: 1, child: _buildOuterLabel("I", isGhost: true)),
+                        ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+        ),
+
+        if (figCaption != null)
+          Padding(padding: const EdgeInsets.only(top: 15, left: 8), child: HtmlWidget(figCaption!)),
       ],
     );
   }

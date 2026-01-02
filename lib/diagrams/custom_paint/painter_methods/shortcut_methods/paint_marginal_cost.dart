@@ -10,9 +10,9 @@ paintMarginalCost(DiagramPainterConfig c, Canvas canvas) {
   paintDiagramLines(
     c,
     canvas,
-    startPos: Offset(0.05, 0.80),
+    startPos: Offset(0.03, 0.80),
     bezierPoints: [
-      CustomBezier(control: Offset(0.10, 1.25), endPoint: Offset(0.70, 0.10)),
+      CustomBezier(control: Offset(0.12, 1.26), endPoint: Offset(0.68, 0.10)),
     ],
     label2: DiagramLabel.mc.label,
     label2Align: LabelAlign.centerTop,

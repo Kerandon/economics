@@ -1,6 +1,6 @@
-class Tip {
+class Example {
   final String text;
   final bool? hl;
 
-  Tip(this.text, {this.hl = false});
+  Example(this.text, {this.hl = false});
 }

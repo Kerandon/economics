@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../../app/configs/constants.dart';
 import '../enums/text_box_type.dart';
-
 class CustomTextBox extends StatelessWidget {
   final String? term;
   final String text;
@@ -21,7 +20,6 @@ class CustomTextBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Professional color palette
     Color accentColor;
     switch (type) {
       case TextBoxType.term:
@@ -33,14 +31,21 @@ class CustomTextBox extends StatelessWidget {
       case TextBoxType.tip:
         accentColor = Colors.teal;
         break;
-      default:
+      default: // content or keyContent
         accentColor = Colors.grey;
     }
 
     return Container(
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(8),
+        border: Border(
+          left: BorderSide(
+            color: accentColor,
+            width: 5,
+          ),
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
@@ -49,40 +54,29 @@ class CustomTextBox extends StatelessWidget {
           ),
         ],
       ),
-      clipBehavior: Clip.antiAlias, // Ensures the bar doesn't overlap corners
-      child: IntrinsicHeight(
-        // Ensures the accent bar matches the text height
-        child: Row(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 5,
-              color: accentColor,
-            ), // The professional accent bar
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (term != null)
-                      Text(
-                        isHL
-                            ? '${term!.toUpperCase()} (HL)'
-                            : term!.toUpperCase(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11,
-                          letterSpacing: 0.8,
-                          color: accentColor,
-                        ),
-                      ),
-                    const SizedBox(height: 4),
-                    HtmlWidget(
-                      text,
-                      textStyle: const TextStyle(fontSize: 14, height: 1.3),
-                    ),
-                  ],
+            if (term != null)
+              Text(
+                isHL
+                    ? '${term!.toUpperCase()} (HL)'
+                    : term!.toUpperCase(),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  letterSpacing: 0.8,
+                  color: accentColor,
                 ),
+              ),
+            if (term != null) const SizedBox(height: 4),
+            HtmlWidget(
+              text,
+              textStyle: const TextStyle(
+                fontSize: 14,
+                height: 1.3,
               ),
             ),
           ],

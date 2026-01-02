@@ -45,7 +45,6 @@ class _NotesPageState extends ConsumerState<NotesPage> {
       _sectionKeys.putIfAbsent(i, () => GlobalKey());
     }
 
-    for (var s in slides) {}
 
     return Scaffold(
       appBar: AppBar(
@@ -132,9 +131,9 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                                       type: TextBoxType.alert,
                                     ),
 
-                                  if (c.tip != null)
+                                  if (c.examples != null)
                                     CustomTextBox(
-                                      text: c.tip?.text ?? '',
+                                      text: c.examples?.text ?? '',
                                       type: TextBoxType.tip,
                                     ),
 

@@ -30,9 +30,19 @@ List<DiagramWidget> getDiagramWidgetList(DiagramPainterConfig config) {
     d(DiagramEnum.microPerfectCompetitionAbnormalProfitRevenueCostsCalculation),
     d(DiagramEnum.microPerfectCompetitionShutdownLossCalculation),
     d(DiagramEnum.microMonopolyAbnormalProfit),
-
-    d(DiagramEnum.microMonopolyLoss),
+    d(DiagramEnum.microMonopolyAbnormalProfitAndCosts),
+    d(DiagramEnum.microMonopolyWelfare),
+    d(DiagramEnum.microMonopolyWelfareAllocativelyEfficient),
     d(DiagramEnum.microMonopolyNatural),
+    d(DiagramEnum.microMonopolyNaturalUnregulatedWelfare),
+    d(DiagramEnum.microMonopolyNaturalPricingComparisons),
+    d(DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
+    d(DiagramEnum.microMonopolyNaturalMarginalCostPricing),
+    d(DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare),
+    d(DiagramEnum.microOligopolyKinkedDemandCurve),
+    d(DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
+    d(DiagramEnum.microMonopolisticCompetitionLoss),
+    d(DiagramEnum.microMonopolisticCompetitionLongRun),
   ];
 }
 
