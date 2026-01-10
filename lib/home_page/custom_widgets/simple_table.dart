@@ -30,10 +30,13 @@ class SimpleTable extends StatelessWidget {
     this.bottomLabel,
     this.leftLabel,
     this.rightLabel,
-    this.cellPadding = 18.0,
+    this.cellPadding = 5.0,
     this.labelBackgroundColor = Colors.transparent,
     this.labelTextColor = Colors.black,
-    this.defaultHeaderStyle = const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+    this.defaultHeaderStyle = const TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    ),
     this.defaultCellStyle = const TextStyle(fontSize: 14),
   });
 
@@ -51,7 +54,7 @@ class SimpleTable extends StatelessWidget {
         ),
         child: HtmlWidget(
           '<div style="text-align: center; color: #${labelTextColor.value.toRadixString(16).substring(2).padLeft(6, '0')};">'
-              '<strong>${text.toUpperCase()}</strong></div>',
+          '<strong>${text.toUpperCase()}</strong></div>',
         ),
       ),
     );
@@ -61,18 +64,34 @@ class SimpleTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final headerRow = TableRow(
       decoration: const BoxDecoration(color: Color(0xFFF2F2F2)),
-      children: headers.map((h) => Padding(
-        padding: EdgeInsets.all(cellPadding),
-        child: Center(child: HtmlWidget(h, textStyle: defaultHeaderStyle)),
-      )).toList(),
+      children: headers
+          .map(
+            (h) => Padding(
+              padding: EdgeInsets.all(cellPadding),
+              child: Center(
+                child: HtmlWidget(h, textStyle: defaultHeaderStyle),
+              ),
+            ),
+          )
+          .toList(),
     );
 
-    final dataRows = data.map((row) => TableRow(
-      children: row.map((cell) => Padding(
-        padding: EdgeInsets.all(cellPadding),
-        child: Center(child: HtmlWidget(cell, textStyle: defaultCellStyle)),
-      )).toList(),
-    )).toList();
+    final dataRows = data
+        .map(
+          (row) => TableRow(
+            children: row
+                .map(
+                  (cell) => Padding(
+                    padding: EdgeInsets.all(cellPadding),
+                    child: Center(
+                      child: HtmlWidget(cell, textStyle: defaultCellStyle),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        )
+        .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -83,10 +102,7 @@ class SimpleTable extends StatelessWidget {
             child: Text(
               title!,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ),
 
@@ -95,7 +111,6 @@ class SimpleTable extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-
                 // TOP LABEL
                 if (topLabel != null)
                   Row(
@@ -105,7 +120,10 @@ class SimpleTable extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           // FIX: Use "I" instead of leftLabel! to prevent vertical height blowout
-                          child: RotatedBox(quarterTurns: 3, child: _buildOuterLabel("I", isGhost: true)),
+                          child: RotatedBox(
+                            quarterTurns: 3,
+                            child: _buildOuterLabel("I", isGhost: true),
+                          ),
                         ),
                       Expanded(
                         child: Padding(
@@ -117,7 +135,10 @@ class SimpleTable extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           // FIX: Use "I" here as well
-                          child: RotatedBox(quarterTurns: 1, child: _buildOuterLabel("I", isGhost: true)),
+                          child: RotatedBox(
+                            quarterTurns: 1,
+                            child: _buildOuterLabel("I", isGhost: true),
+                          ),
                         ),
                     ],
                   ),
@@ -129,20 +150,34 @@ class SimpleTable extends StatelessWidget {
                       if (leftLabel != null)
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
-                          child: Center(child: RotatedBox(quarterTurns: 3, child: _buildOuterLabel(leftLabel!))),
+                          child: Center(
+                            child: RotatedBox(
+                              quarterTurns: 3,
+                              child: _buildOuterLabel(leftLabel!),
+                            ),
+                          ),
                         ),
 
                       Table(
                         defaultColumnWidth: const IntrinsicColumnWidth(),
-                        border: TableBorder.all(color: Colors.black, width: 2.0),
-                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                        border: TableBorder.all(
+                          color: Colors.black,
+                          width: 2.0,
+                        ),
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
                         children: [headerRow, ...dataRows],
                       ),
 
                       if (rightLabel != null)
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
-                          child: Center(child: RotatedBox(quarterTurns: 1, child: _buildOuterLabel(rightLabel!))),
+                          child: Center(
+                            child: RotatedBox(
+                              quarterTurns: 1,
+                              child: _buildOuterLabel(rightLabel!),
+                            ),
+                          ),
                         ),
                     ],
                   ),
@@ -157,7 +192,10 @@ class SimpleTable extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           // FIX: Use "I" for ghost
-                          child: RotatedBox(quarterTurns: 3, child: _buildOuterLabel("I", isGhost: true)),
+                          child: RotatedBox(
+                            quarterTurns: 3,
+                            child: _buildOuterLabel("I", isGhost: true),
+                          ),
                         ),
                       Expanded(
                         child: Padding(
@@ -169,7 +207,10 @@ class SimpleTable extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
                           // FIX: Use "I" for ghost
-                          child: RotatedBox(quarterTurns: 1, child: _buildOuterLabel("I", isGhost: true)),
+                          child: RotatedBox(
+                            quarterTurns: 1,
+                            child: _buildOuterLabel("I", isGhost: true),
+                          ),
                         ),
                     ],
                   ),
@@ -179,7 +220,10 @@ class SimpleTable extends StatelessWidget {
         ),
 
         if (figCaption != null)
-          Padding(padding: const EdgeInsets.only(top: 15, left: 8), child: HtmlWidget(figCaption!)),
+          Padding(
+            padding: const EdgeInsets.only(top: 15, left: 8),
+            child: HtmlWidget(figCaption!),
+          ),
       ],
     );
   }

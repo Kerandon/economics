@@ -9,61 +9,43 @@ class DiagramGallery extends StatelessWidget {
   const DiagramGallery({
     super.key,
     required this.diagrams,
-    this.spacing = 24.0, // Increased spacing
+    this.spacing = 8.0, // ⬇️ Tight spacing for more compact look
   });
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final double availableWidth = constraints.maxWidth;
+        // 📏 Calculate the standard half-width
+        final double halfWidth = (constraints.maxWidth - spacing) / 2;
 
-        // We define the size based on a 2-column layout even if there is only 1 diagram.
-        // This ensures the "one diagram" view isn't giant.
-        final double chartSize = (availableWidth - spacing) / 2;
+        // 📉 Apply the 25% reduction to the box width
+        final double itemWidth = halfWidth * 0.65;
 
         return Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 24.0,
-          ), // Extra breathing room
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center, // Centers the diagrams
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Wrap(
+            // 🔄 Use Wrap instead of GridView to allow custom sizing
+            alignment: WrapAlignment.center, // Centers the smaller boxes
+            spacing: spacing,
+            runSpacing: spacing,
             children: diagrams.map((d) {
               return Container(
-                width: chartSize,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 2.0,
-                ), // Extra padding
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(
-                          16,
-                        ), // Softer corners
-                        border: Border.all(
-                          color: Colors.grey.shade200,
-                          width: 1.5,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 15,
-                            offset: const Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                      // Added padding inside the card so the painter doesn't touch the edges
-                      padding: const EdgeInsets.all(16.0),
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: CustomPaint(painter: d.basePainterDiagram),
-                      ),
-                    ),
-                  ],
+                width: itemWidth, // ⬅️ The new smaller width
+                height: itemWidth, // ⬅️ Keep it square
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade200),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                padding: const EdgeInsets.all(4.0),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: SizedBox(
+                    width: 500,
+                    height: 500,
+                    child: CustomPaint(painter: d.basePainterDiagram),
+                  ),
                 ),
               );
             }).toList(),

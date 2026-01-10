@@ -5,59 +5,68 @@ import '../models/slide_content.dart';
 import '../models/term.dart';
 import 'custom_text_box.dart';
 
-class GroupedDefinitionGrid extends StatelessWidget {
+class GroupedDefinitionGridRedundant extends StatelessWidget {
   final Map<String, List<SlideContent>> groupedItems;
 
-  const GroupedDefinitionGrid({super.key, required this.groupedItems});
+  const GroupedDefinitionGridRedundant({super.key, required this.groupedItems});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: groupedItems.entries.map((entry) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Category Header
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Row(
-                children: [
-                  Text(
-                    entry.key.toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.5,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Expanded(child: Divider()),
-                ],
-              ),
+    // Flatten the map since we only want one alphabetical list
+    final allItems = groupedItems.values.expand((e) => e).toList();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Wrap(
+        spacing: 16,
+        runSpacing: 16,
+        children: allItems.map((item) {
+          return SizedBox(
+            // On mobile/small screens this allows 2 columns,
+            // but is flexible enough for the PDF capture.
+            width: (MediaQuery.of(context).size.width / 2) - 32,
+            child: CustomTextBox(
+              term: item.term?.term,
+              text: item.term?.explanation ?? '',
+              type: item.term?.tag == Tag.hl
+                  ? TextBoxType.keyContent
+                  : TextBoxType.term,
+              isHL: item.term?.tag == Tag.hl,
             ),
-            // The Grid for this category
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: entry.value.map((item) {
-                return SizedBox(
-                  width: (MediaQuery.of(context).size.width / 2) - 24,
-                  child: CustomTextBox(
-                    term: item.term?.term,
-                    text: item.term?.explanation ?? '',
-                    type: item.term?.tag == Tag.hl
-                        ? TextBoxType.keyContent
-                        : TextBoxType.term,
-                    isHL: item.term?.tag == Tag.hl,
-                  ),
-                );
-              }).toList(),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+class DefinitionList extends StatelessWidget {
+  final List<SlideContent> items;
+
+  const DefinitionList({super.key, required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      // Tight vertical padding for a compact list
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment:
+            CrossAxisAlignment.stretch, // Forces children to full width
+        children: items.map((item) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8.0), // Spacing between rows
+            child: CustomTextBox(
+              term: item.term?.term,
+              text: item.term?.explanation ?? '',
+              type: item.term?.tag == Tag.hl
+                  ? TextBoxType.keyContent
+                  : TextBoxType.term,
+              isHL: item.term?.tag == Tag.hl,
             ),
-          ],
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 }

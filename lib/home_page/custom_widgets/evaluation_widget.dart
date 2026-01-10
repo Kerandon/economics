@@ -2,23 +2,30 @@ import 'package:flutter/material.dart';
 
 class EvaluationWidget extends StatelessWidget {
   final String title;
-  final List<String> advantages;
-  final List<String> limitations;
+
+  // Column titles (fully customizable)
+  final String leftTitle;
+  final String rightTitle;
+
+  // Column content
+  final List<String> leftItems;
+  final List<String> rightItems;
+
+  // Optional center badge text
+  final String centerLabel;
 
   const EvaluationWidget({
     super.key,
     required this.title,
-    required this.advantages,
-    required this.limitations,
+    required this.leftTitle,
+    required this.rightTitle,
+    required this.leftItems,
+    required this.rightItems,
+    this.centerLabel = 'VS',
   });
 
   @override
   Widget build(BuildContext context) {
-    // Find the max length to ensure even distribution
-    int itemCount = advantages.length > limitations.length
-        ? advantages.length
-        : limitations.length;
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -27,29 +34,26 @@ class EvaluationWidget extends StatelessWidget {
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 20),
-        // We use a Stack so we can layer the "VS" circle on top of the Row
         Stack(
-          alignment: Alignment.center, // This centers the badge perfectly
+          alignment: Alignment.center,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Advantages Column
                 Expanded(
                   child: _buildColumn(
-                    title: 'Advantages',
-                    items: advantages,
+                    title: leftTitle,
+                    items: leftItems,
                     color: Colors.green.shade50,
                     accentColor: Colors.green.shade700,
                     icon: Icons.check_circle_outline,
                   ),
                 ),
-                const SizedBox(width: 12), // This gap is where the badge sits
-                // Limitations Column
+                const SizedBox(width: 12),
                 Expanded(
                   child: _buildColumn(
-                    title: 'Limitations',
-                    items: limitations,
+                    title: rightTitle,
+                    items: rightItems,
                     color: Colors.red.shade50,
                     accentColor: Colors.red.shade700,
                     icon: Icons.highlight_off,
@@ -58,7 +62,7 @@ class EvaluationWidget extends StatelessWidget {
               ],
             ),
 
-            // --- THE VS BADGE ---
+            // Center badge
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -74,7 +78,7 @@ class EvaluationWidget extends StatelessWidget {
                 ],
               ),
               child: Text(
-                'VS',
+                centerLabel,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey.shade700,
@@ -130,33 +134,36 @@ class EvaluationWidget extends StatelessWidget {
               ),
             ),
           ),
-          // List Items
+
+          // Items
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
-              children: items.map((item) {
-                if (item.isEmpty) return const SizedBox.shrink();
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(icon, color: accentColor, size: 20),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          item,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey.shade800,
-                            height: 1.3,
+              children: items
+                  .where((item) => item.trim().isNotEmpty)
+                  .map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(icon, color: accentColor, size: 20),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              item,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey.shade800,
+                                height: 1.3,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              }).toList(),
+                    ),
+                  )
+                  .toList(),
             ),
           ),
         ],

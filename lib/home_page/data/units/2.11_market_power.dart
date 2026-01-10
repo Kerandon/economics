@@ -3,6 +3,7 @@ import 'package:economics_app/home_page/custom_widgets/simple_table.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../app/configs/constants.dart';
+import '../../../diagrams/custom_paint/painter_constants.dart';
 import '../../../diagrams/enums/unit_type.dart';
 import '../../custom_widgets/definitions_grid.dart';
 import '../../custom_widgets/evaluation_widget.dart';
@@ -13,116 +14,131 @@ List<Slide> get marketPowerSlides => [
   Slide(
     syllabusPoint: SyllabusPoint.perfectCompetitionCharacteristics,
     contents: [
+      /// *********************************************************************************************************************
+      /// Perfect Competition
+      SlideContent.spiderMap(
+        center: "Perfect\nCompetition",
+        points: [
+          "Many Small Firms",
+          "Price Taker\nAR = MR",
+          "Homogeneous Product",
+          "Free Entry and Exit",
+          "Perfect Information",
+          "Perfect Factor Mobility",
+          "MR = MC\nProfit Maximisation",
+          "P = MC\nAllocative Efficiency",
+          "P = ATCmin\nProductively Efficiency\n(Long Run)",
+          "P = AC\nNormal Profit (Long Run)",
+        ],
+      ),
+
       SlideContent.text('''
-      <h3>Characteristics</h3>
-     <ul>
-  <li>Many small independent firms and many buyers</li>
-  <li>Homogeneous (identical) good</li>
-  <li>Firms are price takers (no market power to influence the price)</li>
-    <li>No barriers to entry and exit (free entry and exit)</li>
-  <li>Perfect information for sellers and buyers (on prices, costs and technology)</li>
-  <li>Perfect factor mobility (labor and capital and freely and costlessly move to where most valued)</li>
+<h3>Characteristics</h3>
+<ul style="list-style: none; padding-left: 5px;">
+  <li><strong>Many small firms</strong> — each firm is too small to influence market price</li>
+  <li><strong>Homogeneous product</strong> — no product differentiation</li>
+  <li><strong>Price takers</strong> — firms accept the market-determined price</li>
+  <li><strong>Free entry and exit</strong> — no barriers to entry or exit</li>
+  <li><strong>Perfect information</strong> — buyers and sellers know prices, costs, and technology</li>
+  <li><strong>Perfect factor mobility</strong> — labour and capital can move freely</li>
+  <li><strong>Profit maximisation</strong> — firms produce where MR = MC</li>
+</ul>
 
-  <li>Firms are profit-maximizers (produce at MC=MR)</li>
-  </ul>
-        <h3>Outcomes</h3>  
-  <ul>
-
-  <li>Normal profit only in the long run (minimum to keep in the industry)</li>
+<h3>Outcomes</h3>
+<ul>
+  <li>Normal profit only in the long run</li>
   <li>Allocative efficiency (P = MC)</li>
-  <li>Productive efficiency (P=ATCmin) in long run</li>
-    <li>Not dynamically efficient (no investment in product development)</li>
-  <li>No non-price competition (no advertising)</li>
+  <li>Productive efficiency in the long run (P = ATC<sub>min</sub>)</li>
+  <li>Little or no non-price competition (e.g. no advertising)</li>
+  <li>Limited dynamic efficiency due to lack of abnormal profits</li>
 </ul>
-        
-        
-        '''),
+'''),
+
       SlideContent.text('''
-<h3>Long-Run Equilibrium</h3>
-<p>There are two diagrams: The whole market (market supply and market demand); and the individual firm.</p>
-<p>The firm is a <strong>price taker</strong>: it is insignificant compared to the whole market and therefore has no market power to influence the price.</p>
-In the long-run the firm can only make normal profit only (TR=TC). This means total revenue is just sufficient to meet all explicit costs (monetary payments for 
-resources outside the firm such as payments for labor and capital); plus <strong>implicit costs</strong>, which is payment for 
-using resources the firm already owns (e.g., payment for entrepreneurship).
-</li>
+<h2>Long-Run Equilibrium</h2>
+<p>Firms are <strong>price takers</strong> because each firm is insignificant relative to the market.</p>
+
+<p>In the long run, firms earn <strong>normal economic profit</strong> only, where:</p>
+<ul>
+  <li><strong>P = ATC</strong></li>
+  <li><strong>TR = TC</strong></li>
 </ul>
-        
-        '''),
+
+<p>Normal profit includes both:</p>
+<ul>
+  <li><strong>Explicit costs</strong> (wages, rent, interest)</li>
+  <li><strong>Implicit costs</strong> (entrepreneurship and owned resources)</li>
+</ul>
+'''),
+
       SlideContent.diagrams([
         DiagramEnum.microPerfectCompetitionMarketLongRun,
         DiagramEnum.microPerfectCompetitionFirmLongRun,
       ]),
-      SlideContent.text('''
-            <h3>Why abnormal profits cannot persist in the long-run</h3>
-<ul>
-  <li>In the short run, a firm in a perfectly competitive market can make <strong>abnormal profit</strong>.</li>
-  <li>There is perfect information on all market conditions. Abnormal profits will attract new firms to enter the market.</li>
-  <li>The absence of barriers to entry and perfect factor mobility allows <strong>new firms to enter</strong> the market over time.</li>
-  <li>Entry of new firms <strong>increases industry supply</strong>, shifting the supply curve to the right and reducing the market price.</li>
-  <li>Entry continues until <strong>price equals the minimum point of the firm's ATC</strong>.</li>
-  <li>In the long-run the market reaches equilibrium, <strong>P = ATC</strong> and firms earn only <strong>normal economic profit</strong>.</li>
-</ul>
 
-        '''),
+      SlideContent.text('''
+<h3>Why abnormal profits do not persist in the long run</h3>
+<ul>
+  <li>Firms may earn abnormal profit in the short run.</li>
+  <li>Perfect information makes abnormal profits visible.</li>
+  <li>Free entry allows new firms to enter the market.</li>
+  <li>Market supply increases, causing price to fall.</li>
+  <li>Entry continues until <strong>P = ATC<sub>min</sub></strong>.</li>
+  <li>In the long run, firms earn only <strong>normal economic profit</strong>.</li>
+</ul>
+'''),
+
       SlideContent.diagrams([
         DiagramEnum.microPerfectCompetitionMarketAbnormalProfit,
         DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment,
       ]),
-      SlideContent.text('''
-      <h3>Why economic losses do not persist in the long-run</h3>
-<ul>
-  <li>In the short run, a firm in a perfectly competitive market <strong>can</strong> make <strong>economic losses</strong>.</li>
-  <li>This is because firms cannot exit the market immediately due to fixed factors of production (e.g., fixed contracts for rent and capital)</li>
-  <li>Over-time loss-making firms will exit the market when they move into the long-run - when all factors of production are variable.</li>
-  <li>As firms exit, the market supply curve shifts left, increasing the market price.</li>
-  <li>In the long-run the market reaches equilibrium, <strong>P = ATC</strong> and the remaining firms in the market earn <strong>normal economic profit</strong>.</li>
-</ul>
 
-        '''),
+      SlideContent.text('''
+<h3>Why economic losses do not persist in the long run</h3>
+<ul>
+  <li>Firms may make losses in the short run.</li>
+  <li>Fixed factors prevent immediate exit.</li>
+  <li>In the long run, all factors become variable.</li>
+  <li>Loss-making firms exit the market.</li>
+  <li>Market supply falls, causing price to rise.</li>
+  <li>Long-run equilibrium is restored at <strong>P = ATC</strong>.</li>
+</ul>
+'''),
 
       SlideContent.diagrams([
         DiagramEnum.microPerfectCompetitionMarketLoss,
         DiagramEnum.microPerfectCompetitionFirmLoss,
       ]),
+
       SlideContent.text('''
-      <h3>Break-even and Shut-down Point</h3>
-      <ul> <li><strong>Break-even Point P = ATC</strong>. When the firm earns normal economic profit. 
-      This is the level of profit that will keep the firm in the long-run, ceteris paribus
-      </li>
-      <li>
-      <strong>AFC=ATC-AVC</strong>. At any price below P1 and above P2, the firm will continue to trade in the short-run (but still exit the market in the long-run). That is because 
-      TR covers all of its VC - and at least some of its FC (helping to reduce its total losses before it can exit the market).
-      </li>
-            <li>
-      <strong>Shut-down Point P = AVC</strong>The firm will shut-down immediately when price is at or below AVC. In the short-run if the firm's revenue does not cover even its 
-     variable costs it will immediately stop trading and shut-down.
-      </li>
-      </ul>
-      '''),
+<h3>Break-even and Shut-down Points</h3>
+<ul>
+  <li><strong>Break-even point: P = ATC</strong> — firm earns normal profit.</li>
+  <li><strong>Shut-down point: P = AVC</strong> — firm stops production in the short run.</li>
+  <li>If <strong>AVC &lt; P &lt; ATC</strong>, the firm operates in the short run to minimise losses.</li>
+</ul>
+'''),
+
       SlideContent.diagrams([DiagramEnum.microPerfectCompetitionShutdownPoint]),
 
       SlideContent.text('''
-      <h3>Calculating Profit</h3>
-      <h3> Calculating Profit (P-ATC) X Q</h3>
-      <ol>      <li>Find output (Q) where MR=MC</li>
-  <li>At that output calculate profit by: <strong>π = (P-ATC) X Q</strong></li>
- 
-  
-  </ol>
- <p>As per diagram: First find the output at MR=MC (50,000 units). Then (P-ATC)XQ: (\$11 - \$10) X 50,000 = \$50,000 profit</p>
- <h3> Calculating Profit by TR and TC</h3>
- <p>
-   TR = AR X Q (\$11 X 50,000 = \$550,000)</p>
-  <p>TC = AC X Q (\$10 X 50,000 = \$500,000) </p> 
- <p> π = TR - TC = \$550,000 - 
-  \$500,000 = \$50,000</p>
- <h3>Profit when price falls below AVC</h3>
-<p>
-P = AVC is the <strong>shut-down point</strong>. TR is therefore 0, and the firm's loss would be equal to its fixed cost only.</p>
-<p>To calculate: choose <italic>any</italic> quantity on the horizontal axis and calculate AFC by ATC-AVC X Q (TFC = AFC X Q).</p>
-<p>For example at a quantity of 100: AFC is \$9 - \$5 = \$4, therefore  π = -\$4000.</p>
+<h3>Calculating Profit</h3>
 
-      '''),
+<h4>Method 1: Using (P − ATC) × Q</h4>
+<ol>
+  <li>Find output where <strong>MR = MC</strong>.</li>
+  <li>Calculate profit: <strong>π = (P − ATC) × Q</strong>.</li>
+</ol>
+
+<h4>Method 2: Using TR and TC</h4>
+<p><strong>TR = AR × Q</strong></p>
+<p><strong>TC = ATC × Q</strong></p>
+<p><strong>π = TR − TC</strong></p>
+
+<h4>Losses at the Shut-down Point</h4>
+<p>When <strong>P = AVC</strong>, the firm shuts down and losses equal <strong>fixed costs only</strong>.</p>
+'''),
+
       SlideContent.diagrams([
         DiagramEnum
             .microPerfectCompetitionAbnormalProfitRevenueCostsCalculation,
@@ -130,151 +146,207 @@ P = AVC is the <strong>shut-down point</strong>. TR is therefore 0, and the firm
       ]),
 
       SlideContent.customWidget(
-        const EvaluationWidget(
-          title: 'Perfect Competition Evaluation',
-          advantages: [
-            'Allocatively efficient P=MC',
-            'Productively Efficient P=ATCmin (long-run)',
-            'Responsive to changing consumer tastes',
+        EvaluationWidget(
+          title: 'Perfect Competition: Evaluation',
+          leftTitle: kAdvantages,
+          rightTitle: kLimitations,
+          leftItems: [
+            'Allocative efficiency (P = MC)',
+            'Productive efficiency in the long run',
+            'Highly responsive to changes in consumer demand',
           ],
-          limitations: [
-            'Not dynamically efficient',
-            'No product differentiation for consumer choice',
-            'No economies of scale',
-            'Ignores externalities',
-            'Unrealistic model for most markets',
+          rightItems: [
+            'Limited dynamic efficiency',
+            'No product differentiation',
+            'Few economies of scale',
+            'Externalities ignored',
+            'Rare in the real world',
           ],
         ),
       ),
     ],
   ),
+
+  /// *********************************************************************************************************************
+  /// Monopoly
   Slide(
     syllabusPoint: SyllabusPoint.monopoly,
     contents: [
+      SlideContent.spiderMap(
+        center: "Monopoly",
+        points: [
+          "Single Firm\nIndustry Supply",
+          "High Barriers to Entry",
+          "Price Maker\nSignificant Market Power",
+          "MR = MC\nProfit Maximisation",
+          "P > MC\nAllocative Inefficiency",
+          "Productive Inefficiency",
+          "Natural Monopoly\nLarge Economies of Scale",
+        ],
+      ),
+
       SlideContent.text('''
-        <h3>Characteristics</h3>
-     <ul>
-  <li>Single supplier of a good or service</li>
-  <li>Very high barriers of entry</li>
-  <li>Significant market power (sets P > MC)</li>
-  </ul>
-  
-    '''),
+<h3>Characteristics</h3>
+<ul>
+  <li>Single firm supplying the entire market</li>
+  <li>High barriers to entry prevent competition</li>
+  <li>Price maker with significant market power</li>
+  <li>Profit maximisation where <strong>MR = MC</strong></li>
+</ul>
+'''),
+
       SlideContent.text('''
-   <h3>Barriers to entry</h3>
-   <ul>
-   <li>Economies of scale</li>
-   <li>Natural monopoly</li>
-   <li>Brand loyalty</li>
-   <li>Patents, copyrights, legal contracts</li>
-   <li>Control of natural resources</li>
-   <li>Network effect</li>
-   <li>Anti-competitive behavior</li>
-   </ul>
-    '''),
+<h3>Barriers to Entry</h3>
+<ul>
+  <li>Economies of scale</li>
+  <li>Natural monopoly (falling LRATC)</li>
+  <li>Legal barriers (patents, copyrights, licences)</li>
+  <li>Brand loyalty</li>
+  <li>Control of key resources</li>
+  <li>Network effects</li>
+  <li>Anti-competitive behaviour</li>
+</ul>
+'''),
+
       SlideContent.diagrams([
         DiagramEnum.microMonopolyAbnormalProfit,
         DiagramEnum.microMonopolyAbnormalProfitAndCosts,
       ]),
+
       SlideContent.text('''
-      <h3>
-      Monopoly Welfare Analysis
-      </h3>
-      <p>If a monopoly was allocatively efficient it would charge P = MC.
-      However, a profit-maximizing monopoly will use its market power to set P > MC (producing where MC=MR).
-      Market output falls from Qmc to Qπmax - representing an underallocation of resources compared to socially optimum quantity of P=MC (where MB=MC).
-      </p><p>A welfare loss to society includes both consumer and producer surplus. However, the monopolist gains overall
-       as it captures consumer surplus due to the ability to charge a higher price.
-     Consumers are worse off because they pay a higher price and consume a lower quantity.
-      </p>
-      '''),
+<h3>Monopoly Welfare Analysis</h3>
+<p>A profit-maximising monopoly produces where <strong>MR = MC</strong> and charges a price on the demand (AR) curve.</p>
+
+<p>This results in <strong>P &gt; MC</strong>, meaning the monopoly is allocatively inefficient.</p>
+
+<p>Compared with the socially optimal outcome (P = MC), output is lower and price is higher, creating a
+<strong>deadweight welfare loss</strong>.</p>
+
+<p>Consumer surplus falls, producer surplus rises, but total social welfare decreases.</p>
+'''),
+
       SlideContent.diagrams([
         DiagramEnum.microMonopolyWelfare,
         DiagramEnum.microMonopolyWelfareAllocativelyEfficient,
       ]),
+
       SlideContent.text('''
-      <h2>Natural Monopoly</h2>
-     <p>A natural monopoly is when one firm can supply a good or service
-     at a lower long-run average total cost (LRAC) than two or more firms.
-     A regulated natural monopoly is unique type of monopoly in that it is socially desirable 
-     due to its massive economies of scale. Natural monopolies exist for
-     industries with very high sunk costs which provide an essential good or service to the public
-     such as railway, supply of utilities (water, electricity, gas)
-  and telecommunications.</p>
-  <p>The diagram for a monopoly must show the AR=D curve cutting the LRATC while it is still falling.</p>
-<p>If a monopoly is unregulated, it produces at the profit-maximizing output where <strong>MC = MR</strong>.
+<h2>Natural Monopoly</h2>
+<p>A natural monopoly exists when one firm can supply the entire market at a lower
+<strong>long-run average total cost (LRATC)</strong> than two or more firms.</p>
+
+<p>This occurs due to very large economies of scale and high sunk costs.</p>
+
+<p>Examples include utilities such as water, electricity, railways, and telecommunications.</p>
+
+<p>In a natural monopoly diagram, the demand (AR) curve intersects LRATC while it is still falling.</p>
+
+<p>If unregulated, the monopoly produces where <strong>MR = MC</strong>, resulting in high prices and welfare loss.</p>
 '''),
+
       SlideContent.diagrams([
         DiagramEnum.microMonopolyNatural,
         DiagramEnum.microMonopolyNaturalUnregulatedWelfare,
       ]),
+
       SlideContent.text('''
-      Since a natural monopoly provides an essential service, government regulation is necessary. Common types of regulation include:</p>
-
+<h3>Regulation of Natural Monopolies</h3>
 <ul>
-  <li><strong>Average-Cost Pricing (Fair-Return Pricing)</strong>: Output and price are set where <strong>P = ATC</strong>.</li>
-  <li><strong>Marginal-Cost Pricing (Socially-Optimal Pricing)</strong>: Output and price are set where <strong>P = MC</strong>.</li>
-  <li><strong>Price Cap (Maximum Price)</strong>: Often uses <em>CPI - X</em> regulation to control price increases.</li>
-  <li><strong>Nationalization</strong>: Government ownership and control, referred to as a <em>State-Owned Enterprise (SOE)</em>.</li>
+  <li><strong>Average Cost Pricing (Fair-Return Pricing)</strong>: P = ATC</li>
+  <li><strong>Marginal Cost Pricing (Socially Optimal Pricing)</strong>: P = MC</li>
+  <li><strong>Price Cap Regulation</strong>: CPI − X</li>
+  <li><strong>Nationalisation</strong>: Government ownership (SOE)</li>
 </ul>
-
 '''),
+
       SlideContent.diagrams([
         DiagramEnum.microMonopolyNaturalPricingComparisons,
       ]),
 
       SlideContent.text('''
-        <p><strong>Average Cost Pricing</strong> is known as \fair-return pricing'\ as the price (AR) covers
-        all explicit costs plus a fair return (implicit costs).
-        The regulator sets Price = Average Cost (P=AC).
-        '''),
+<p><strong>Average Cost Pricing</strong> (fair-return pricing) sets <strong>P = ATC</strong>.</p>
+
+<p>The firm earns normal profit, covers all economic costs, and avoids exit.</p>
+
+<p>Allocative efficiency improves compared to an unregulated monopoly, but
+<strong>P &gt; MC</strong> means some welfare loss remains.</p>
+'''),
+
       SlideContent.diagrams([
         DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare,
       ]),
+
       SlideContent.customWidget(
         const EvaluationWidget(
-          title: 'Average-Cost Pricing (Fair Return Pricing) P = LRATC',
-          advantages: [
-            'Monopoly is not loss-making - covers all economic costs so avoids market-exit'
-                'No need for government subsidy',
-            'Improves allocatively efficiency by lower price and higher output',
+          title: 'Average-Cost Pricing (Fair-Return Pricing)',
+          leftTitle: kAdvantages,
+          rightTitle: kLimitations,
+          leftItems: [
+            'Covers all economic costs (normal profit)',
+            'No need for government subsidy',
+            'Lower prices and higher output than unregulated monopoly',
           ],
-          limitations: [
-            'Some social welfare-loss remains',
-            'Incentive for cost-padding (increase costs) to increase X-Inefficiency',
-            'Information asymmetry for regulator on costs',
+          rightItems: [
+            'Allocative inefficiency remains',
+            'X-inefficiency and cost-padding risk',
+            'Information asymmetry for regulators',
             'Risk of regulatory capture',
           ],
         ),
       ),
+
       SlideContent.text('''
-        <p><strong>Average Cost Pricing</strong> is known as \fair-return pricing'\ as the price (AR) covers
-        all explicit costs plus a fair return (implicit costs).
-        The regulator sets P = LRATC. Although the market is allocatively efficient, LRATC > AR so the monopoly is loss-making.  
-        '''),
+<p><strong>Marginal Cost Pricing</strong> sets <strong>P = MC</strong>, achieving allocative efficiency.</p>
+
+<p>However, because <strong>LRATC &gt; MC</strong>, the monopoly makes losses and requires a government subsidy.</p>
+'''),
+
       SlideContent.diagrams([
         DiagramEnum.microMonopolyNaturalMarginalCostPricing,
         DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare,
       ]),
+
       SlideContent.customWidget(
         const EvaluationWidget(
-          title: 'Marginal Cost Pricing (Socially Optimum Pricing) P = MC',
-          advantages: [
-            'The market is allocatively efficient with no welfare-loss',
-            'Consumers surplus is maximized by low prices and high output',
-            'Improves equity. Low income groups can access essential services',
+          title: 'Marginal Cost Pricing (Socially Optimal Pricing)',
+          leftTitle: kAdvantages,
+          rightTitle: kLimitations,
+          leftItems: [
+            'Allocatively efficient (P = MC)',
+            'Maximises consumer surplus',
+            'Improves equity for essential services',
           ],
-          limitations: [
-            'Cost to government budget for subsidy to cover losses.',
-            'Lack of abnormal profits to improve dynamic efficiency',
+          rightItems: [
+            'Requires government subsidy',
+            'Budgetary cost to taxpayers',
+            'Weak incentives for cost reduction and innovation',
           ],
         ),
       ),
     ],
   ),
+
+  /// *********************************************************************************************************************
+  /// Oligopoly
   Slide(
     syllabusPoint: SyllabusPoint.oligopoly,
     contents: [
+      SlideContent.spiderMap(
+        center: "Oligopoly",
+        points: [
+          "Few Large Firms",
+          "Interdependence",
+          "High Barriers",
+          "Sticky Prices",
+          "Conflicting Incentives\n"
+              "Compete Vs. Collude",
+          "MR = MC\nProfit Maximisation",
+          "P > MC\nAllocative Inefficiency",
+          "P ≠ ATCmin\nProductively Inefficiency",
+          "Collusive,\nNon-Collusive",
+          "Non-price competition and innovation",
+        ],
+      ),
       SlideContent.text('''
 <h3>Characteristics</h3>
 <ul>
@@ -372,8 +444,7 @@ P = AVC is the <strong>shut-down point</strong>. TR is therefore 0, and the firm
 </ul>
 <p>All members of a cartel act together as a monopoly. The abnormal profit must be split between all members.</p>
 '''),
-      SlideContent.diagrams(
-          [DiagramEnum.microMonopolyAbnormalProfit]),
+      SlideContent.diagrams([DiagramEnum.microMonopolyAbnormalProfit]),
       SlideContent.text('''
       <h3>Informal Collusion</h3>
       <p>Forming a cartel and engaging in price-fixing is illegal. However firms in oligopolistic markets still
@@ -386,8 +457,6 @@ P = AVC is the <strong>shut-down point</strong>. TR is therefore 0, and the firm
        <p>Information collusion is usually illegal but it because there is no explicit communication it
         is difficult for regulators to identity and prove.</p>
       '''),
-
-
 
       SlideContent.text('''
   <h2>Game Theory & The Prisoner's Dilemma</h2>
@@ -403,7 +472,6 @@ P = AVC is the <strong>shut-down point</strong>. TR is therefore 0, and the firm
           leftLabel: 'Firm B',
           headers: ['', 'High Price', 'Low Price'],
           data: [
-
             [
               '<strong>High Price</strong>',
               // COLLUSION: Light Blue (Rounded Box - circles around double values look messy)
@@ -425,8 +493,6 @@ P = AVC is the <strong>shut-down point</strong>. TR is therefore 0, and the firm
                   '</span>',
             ],
           ],
-
-
         ),
       ),
       SlideContent.text('''
@@ -440,8 +506,6 @@ P = AVC is the <strong>shut-down point</strong>. TR is therefore 0, and the firm
   firm to follow. Understanding its mutually beneficial, the other firm(s) might 'tacitly' collude and raise prices too. </li>
 </ul>
 '''),
-
-
 
       SlideContent.text('''
        <h2>Concentration-Ratio</h2>
@@ -489,11 +553,25 @@ P = AVC is the <strong>shut-down point</strong>. TR is therefore 0, and the firm
        '''),
     ],
   ),
-Slide(
-  syllabusPoint: SyllabusPoint.monopolisticCompetition,
-  contents: [
-    SlideContent.text(
-      '''
+
+  /// *********************************************************************************************************************
+  /// Monopolistic Competition
+  Slide(
+    syllabusPoint: SyllabusPoint.monopolisticCompetition,
+    contents: [
+      SlideContent.spiderMap(
+        center: "Monopolistic Competition",
+        points: [
+          "Many relatively small firms",
+          "Limited market power",
+          'Low Barriers',
+          "High Product Differentiation",
+          "MR = MC\nProfit Maximisation",
+          "P > MC\nAllocative Inefficiency",
+          "P ≠ ATCmin\nProductively Inefficiency",
+        ],
+      ),
+      SlideContent.text('''
       <h3>Characteristics</h3>
 <ul>
   <li>Many relatively small firms</li>
@@ -508,18 +586,110 @@ and bundled services to make their goods appear differentiated in a highly compe
 <p>However, due to the availability of many close substitutes for consumers, a firm in monopolistic competition has limited market power. </p>
 <p>Limited market power is shown by a relatively price elastic demand curve compared to a monopoly.</p>
 <h3>Long-run equilibrium</h3>
-<p>A firm in monopolistic competition can only earn <strong>normal profit</strong> in the long-run <strong>P=AC (AR=AC)</strong></p>
-<p>The firm is however not allocatively efficient charging P > MC at the profit-maximizing (MC=MR) level of output, thereby leading to <strong>under-allocation of resources.</strong>.</p>
-<p>Also not productively efficient as it operates with excess capacity <strong>P≠ATCmin</strong></p>
+<p>Like a firm in perfect competition, a firm in monopolistic competition can only earn <strong>normal profit</strong> in the long-run <strong>P=AC (TR = Explicit + Implicit Costs)</strong></p>
+<p>Unlike a firm in perfect competition, a firm in monopolistic competition is not allocatively efficient charging P > MC at the profit-maximizing (MC=MR) level of output, thereby leading to <strong>under-allocation of resources.</strong>.</p>
+<p>Also not productively efficient (excess capacity) as it operates with excess capacity (e.g., a cafe prefers to focus on production differentiation such as the quality of the coffee and creating a relaxing environment, rather than just sell coffees at the lowest possible cost). <strong>P≠ATCmin</strong></p>
       
-      ''',
+      '''),
+      SlideContent.diagrams([DiagramEnum.microMonopolisticCompetitionLongRun]),
+      SlideContent.text('''
+      <h2>Abnormal Profit (L) to Long-Run Equilibrium (R)</h2>
+      <ul><li>In the short-run a firm can make abnormal profits.</li>
+      <li>Other firms will enter the market due to low barriers to entry</li>
+      <li>Some market share of existing firms will be lost to new entrants (increased substitutes).</li>
+      <li>Demand (AR) will shift <strong>left</strong> until it is at a tangent to ATC (P=AC) (Demand will also become relatively more price elastic due to higher competition).</li>
+      </ul>
+      '''),
+      SlideContent.diagrams([
+        DiagramEnum.microMonopolisticCompetitionAbnormalProfit,
+        DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift,
+      ]),
+      SlideContent.text('''
+            <h2>Loss (L) to Long-Run Equilibrium (R)</h2>
+      <ul><li>In the short-run a firm can make economic losses.</li>
+      <li>Other firms will exit the market as they move into the long-run (all inputs are variable).</li>
+      <li>Market share of existing firms will be increase (decreased substitutes).</li>
+      <li>Demand (AR) will shift <strong>right</strong> until it is at a tangent to ATC (P=AC) (Demand will also become relatively more price inelastic due to less competition).</li>
+      </ul>
+      '''),
+      SlideContent.diagrams([
+        DiagramEnum.microMonopolisticCompetitionLoss,
+        DiagramEnum.microMonopolisticCompetitionLossShift,
+      ]),
+      SlideContent.text('''
+        <h3>Efficiency Vs. Product Variety</h3>
+        <p>Monopolistic competition are in industries exemplified by variety and a range of choice for consumers. 
+        For example, restaurants focus on making their restaurant appear unique to increase market-power (Cantonese, Italian, Upscale Dining, Fusion, etc.).
+        Therefore, it can be argued that a trade-off for economic efficiency
+         found in perfect competition, is greater product variety which consumers also place value-on.
+         </p>
+        '''),
+      SlideContent.customWidget(
+        const EvaluationWidget(
+          title: 'Perfect Competition Vs. Monopolistic Competition',
+          leftTitle: 'Similar to Perfect Competition',
+          rightTitle: 'Different from Perfect Competition',
+          leftItems: [
+            'Normal Profit (Long-Run) P=AC',
+            'Many Small Firms',
+            'Low Barriers to Entry',
+            'Profit-Maximizers',
+          ],
+          rightItems: [
+            'Some market power P > MC',
+            'Allocatively inefficient',
+            'High Product Variety',
+            'Productively Inefficient (excess capacity)',
+          ],
+        ),
+      ),
+    ],
+  ),
 
-    ),SlideContent.diagrams([DiagramEnum.microMonopolisticCompetitionLongRun,
-    ]),
-    SlideContent.diagrams([DiagramEnum.microMonopolisticCompetitionAbnormalProfit, DiagramEnum.microMonopolisticCompetitionLoss]),
+  /// *********************************************************************************************************************
+  /// Advantages and Risks of Market Power
+  Slide(
+    syllabusPoint: SyllabusPoint.advantagesAndRisksOfMarketPower,
+    contents: [
+      SlideContent.customWidget(
+        const EvaluationWidget(
+          title: 'Evaluation of Market Power',
+          leftTitle: kAdvantages,
+          rightTitle: kLimitations,
+          leftItems: [
+            'Economies of Scale - MNCs are more competitive internationally',
+            'Abnormal Profits - invested in innovation (dynamic efficiency)',
+            'Natural Monopoly - lower LRAC passed on to consumers (when regulated)',
+          ],
+          rightItems: [
+            'Allocative inefficiency P > MC (Welfare Loss)',
+            'Higher Prices and Lower Output',
+            'Worsen Income Distribution (Regressive Effect)',
+            'Excess Capacity (Productive Inefficiency)',
+            'Internal inefficiency (X-inefficient)',
+            'Anti-Competitive Practices (Collusion, Informal Collusion, Predatory Pricing, Exclusive Dealing, Tying Arrangements, etc.)',
+          ],
+        ),
+      ),
+    ],
+  ),
+  Slide(
+    syllabusPoint:
+        SyllabusPoint.governmentInterventionInResponseToAbuseOfMarketPower,
+    contents: [
+      SlideContent.spiderMap(
+        center: 'Government Intervention',
+        points: [
+          'Nationalization\n(State Owned Enterprise)',
+          'Marginal-Cost Pricing\nAverage-Cost Pricing',
+          'Fines (Windfall Tax)',
+        ],
+      ),
+    ],
+  ),
 
-  ],
-),
+  /// *********************************************************************************************************************
+  /// Government Intervention to Market Power
   ...marketPowerTerms,
 ];
 
@@ -529,7 +699,7 @@ List<Slide> get marketPowerTerms => [
     title: kTermsGlossary,
     contents: [
       SlideContent.customWidget(
-        GroupedDefinitionGrid(
+        GroupedDefinitionGridRedundant(
           groupedItems: {
             'Market Fundamentals': [
               SlideContent.term(

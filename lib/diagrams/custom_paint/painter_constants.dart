@@ -13,9 +13,13 @@ const kExtendBy20 = 0.20;
 
 /// Axis & Labels
 
-const kAxisIndent = 0.15;
+const kAxisIndent = 0.12;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 5.0;
+const kAdvantages = 'Advantages';
+const kLimitations = 'Limitations';
+const kSimilarities = 'Similarities';
+const kDifferences = 'Differences';
 
 /// Text
 const kFontSmallest = 14.0;

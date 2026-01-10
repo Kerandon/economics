@@ -4,6 +4,7 @@ import 'package:economics_app/home_page/models/tip.dart';
 import 'package:flutter/material.dart';
 import '../../diagrams/enums/diagram_enum.dart';
 import '../../diagrams/models/diagram_widget.dart';
+import '../custom_widgets/spider_map/spider_map.dart';
 import 'alert.dart';
 import 'content.dart';
 
@@ -69,8 +70,18 @@ class SlideContent {
 
   factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
 
-  factory SlideContent.examples(String text) => SlideContent(examples: Example(text));
+  factory SlideContent.examples(String text) =>
+      SlideContent(examples: Example(text));
 
   factory SlideContent.customWidget(Widget widget) =>
       SlideContent(widget: widget);
+  factory SlideContent.spiderMap({
+    required String center,
+    required List<String> points,
+    double spacing = 110.0,
+  }) {
+    return SlideContent(
+      widget: SpiderMap(centerText: center, points: points),
+    );
+  }
 }

@@ -45,6 +45,7 @@ dependencies:
   html: ^0.15.6
   responsive_framework: ^1.5.1
   data_table_2: ^2.7.2
+  screenshot: ^3.0.0
 
 dev_dependencies:
   flutter_test:

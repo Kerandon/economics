@@ -203,9 +203,19 @@ enum SyllabusPoint {
     [Skill.a03, Skill.a04],
   ),
   monopolisticCompetition(
-  Subunit.marketFailurePower,
-  'Monopolistic Competition: many relatively small firms with high production differentiation, limited market power and low barriers to entry',
-  [Skill.a03, Skill.a04],
+    Subunit.marketFailurePower,
+    'Monopolistic Competition: many relatively small firms with high production differentiation, limited market power and low barriers to entry',
+    [Skill.a03, Skill.a04],
+  ),
+  advantagesAndRisksOfMarketPower(
+    Subunit.marketFailurePower,
+    'Economies of scale, dynamic efficiency, natural monopoly vs. P > MC, under-allocation, higher prices, welfare loss, anti-competitive behavior',
+    [Skill.a03],
+  ),
+  governmentInterventionInResponseToAbuseOfMarketPower(
+    Subunit.marketFailurePower,
+    'Legislation, regulations, government ownership and fines',
+    [Skill.a03],
   );
 
   final Subunit subunit;
