@@ -1,18 +1,15 @@
 import 'dart:math';
 
+import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/grid_line_style.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../models/diagram_painter_config.dart';
-import '../painter_methods/axis/label_align.dart';
 import '../../models/base_painter_painter.dart';
 import '../painter_methods/axis/paint_axis.dart';
-import '../painter_methods/paint_arrow_helper.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
@@ -54,6 +51,7 @@ void _paintDemandApples(
     gridLineStyle: GridLineStyle.dashes,
     xDivisions: 6,
     xMaxValue: 6,
+    labelPad: 0.11,
   );
   paintDiagramLines(
     c,

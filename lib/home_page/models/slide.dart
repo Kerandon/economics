@@ -1,5 +1,6 @@
 import 'package:economics_app/diagrams/enums/unit_type.dart';
 import 'package:economics_app/home_page/models/slide_content.dart';
+import 'package:economics_app/home_page/models/term.dart';
 
 import '../enums/skill.dart';
 
@@ -9,7 +10,9 @@ class Slide {
   // --- Overrides (private) ---
   final Subunit? _subunitOverride;
   final String? _titleOverride;
+  /// make _hlOverride redundant
   final bool? _hlOverride;
+  final Tag? _tagOverride;
   final List<Skill>? _skillsOverride;
 
   // --- Contents is NOT resolved: stored directly ---
@@ -21,10 +24,12 @@ class Slide {
     String? title,
     this.contents, // direct store
     bool? hl,
+    Tag? tag,
     List<Skill>? skills,
   }) : _subunitOverride = subunit,
        _titleOverride = title,
        _hlOverride = hl,
+  _tagOverride = tag,
        _skillsOverride = skills;
 
   // -------------------------
@@ -39,6 +44,8 @@ class Slide {
   List<Skill> get skills =>
       _skillsOverride ?? syllabusPoint?.skills ?? const [];
 
+  Tag get tag => _tagOverride ?? Tag.none;
+
   bool get hl => _hlOverride ?? syllabusPoint?.hlOnly ?? false;
 
   // -------------------------
@@ -50,6 +57,7 @@ class Slide {
     Subunit? subunit,
     String? title,
     List<SlideContent>? contents,
+    Tag? tag,
     bool? hl,
     List<Skill>? skills,
   }) {
@@ -58,6 +66,7 @@ class Slide {
       subunit: subunit ?? _subunitOverride,
       title: title ?? _titleOverride,
       contents: contents ?? this.contents,
+      tag: tag ?? _tagOverride,
       hl: hl ?? _hlOverride,
       skills: skills ?? _skillsOverride,
     );

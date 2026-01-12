@@ -49,27 +49,27 @@ List<Slide> get publicGoodsSlides => [
     subunit: Subunit.marketFailurePublicGoods,
     title: 'Public Goods (A02)',
     contents: [
-      SlideContent.customWidget(
-        SimpleTable(
-          headers: ['Merit Good', 'Public Good'],
-          data: [
-            ['Excludable & rival', 'Non-excludable & non-rival'],
-            ['Rejectable', 'Generally non-rejectable'],
-            [
-              'Underconsumed due to information failure, too costly or unavailable',
-              'Complete market failure due to free-rider problem',
-            ],
-            [
-              'Provided by private sector for a price. Subsidies, some provision, education',
-              'Funded by taxpayers via direct provision or contracting out',
-            ],
-            [
-              'Healthcare, education, vaccinations',
-              'Fire service, flood protection, national defence',
-            ],
-          ],
-        ),
-      ),
+      // SlideContent.customWidget(
+      //   SimpleTable(
+      //     headers: ['Merit Good', 'Public Good'],
+      //     data: [
+      //       ['Excludable & rival', 'Non-excludable & non-rival'],
+      //       ['Rejectable', 'Generally non-rejectable'],
+      //       [
+      //         'Underconsumed due to information failure, too costly or unavailable',
+      //         'Complete market failure due to free-rider problem',
+      //       ],
+      //       [
+      //         'Provided by private sector for a price. Subsidies, some provision, education',
+      //         'Funded by taxpayers via direct provision or contracting out',
+      //       ],
+      //       [
+      //         'Healthcare, education, vaccinations',
+      //         'Fire service, flood protection, national defence',
+      //       ],
+      //     ],
+      //   ),
+      // ),
     ],
   ),
   Slide(
@@ -96,20 +96,20 @@ List<Slide> get publicGoodsSlides => [
     <li>Contracting out to the private sector</li>
   </ul>
   '''),
-      SlideContent.customWidget(
-        SimpleTable(
-          title: 'Contracting Out Evaluation',
-          headers: ['Advantages', 'Limitations'],
-          data: [
-            ['Competitive tendering', 'Requires monitoring'],
-            [
-              'Use specialize knowledge & skills of private sector',
-              'Overcharge',
-            ],
-            ['More innovative & efficient', 'Cozy-relationships & corruption'],
-          ],
-        ),
-      ),
+      // SlideContent.customWidget(
+      //   SimpleTable(
+      //     title: 'Contracting Out Evaluation',
+      //     headers: ['Advantages', 'Limitations'],
+      //     data: [
+      //       ['Competitive tendering', 'Requires monitoring'],
+      //       [
+      //         'Use specialize knowledge & skills of private sector',
+      //         'Overcharge',
+      //       ],
+      //       ['More innovative & efficient', 'Cozy-relationships & corruption'],
+      //     ],
+      //   ),
+      // ),
     ],
   ),
   Slide(

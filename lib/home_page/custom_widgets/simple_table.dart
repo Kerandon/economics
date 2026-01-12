@@ -7,8 +7,8 @@ class SimpleTable extends StatelessWidget {
   final String? title;
   final String? figCaption;
   final List<TextStyle?>? headerStyles;
-  final TextStyle defaultHeaderStyle;
-  final TextStyle defaultCellStyle;
+  final TextStyle? defaultHeaderStyle;
+  final TextStyle? defaultCellStyle;
 
   final String? topLabel;
   final String? bottomLabel;
@@ -33,35 +33,19 @@ class SimpleTable extends StatelessWidget {
     this.cellPadding = 5.0,
     this.labelBackgroundColor = Colors.transparent,
     this.labelTextColor = Colors.black,
-    this.defaultHeaderStyle = const TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    ),
-    this.defaultCellStyle = const TextStyle(fontSize: 14),
+    this.defaultHeaderStyle,
+    this.defaultCellStyle,
   });
 
-  Widget _buildOuterLabel(String text, {bool isGhost = false}) {
-    return Visibility(
-      visible: !isGhost,
-      maintainSize: true,
-      maintainAnimation: true,
-      maintainState: true,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: labelBackgroundColor,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: HtmlWidget(
-          '<div style="text-align: center; color: #${labelTextColor.value.toRadixString(16).substring(2).padLeft(6, '0')};">'
-          '<strong>${text.toUpperCase()}</strong></div>',
-        ),
-      ),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+    defaultCellStyle ?? theme.textTheme.displaySmall;
+    defaultHeaderStyle ?? theme.textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold);
+
     final headerRow = TableRow(
       decoration: const BoxDecoration(color: Color(0xFFF2F2F2)),
       children: headers
@@ -102,7 +86,9 @@ class SimpleTable extends StatelessWidget {
             child: Text(
               title!,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ),
 
@@ -225,6 +211,25 @@ class SimpleTable extends StatelessWidget {
             child: HtmlWidget(figCaption!),
           ),
       ],
+    );
+  }
+  Widget _buildOuterLabel(String text, {bool isGhost = false}) {
+    return Visibility(
+      visible: !isGhost,
+      maintainSize: true,
+      maintainAnimation: true,
+      maintainState: true,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: labelBackgroundColor,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: HtmlWidget(
+          '<div style="text-align: center; color: #${labelTextColor.value.toRadixString(16).substring(2).padLeft(6, '0')};">'
+              '<strong>${text.toUpperCase()}</strong></div>',
+        ),
+      ),
     );
   }
 }

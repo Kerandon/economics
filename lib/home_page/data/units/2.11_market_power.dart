@@ -16,21 +16,6 @@ List<Slide> get marketPowerSlides => [
     contents: [
       /// *********************************************************************************************************************
       /// Perfect Competition
-      SlideContent.spiderMap(
-        center: "Perfect\nCompetition",
-        points: [
-          "Many Small Firms",
-          "Price Taker\nAR = MR",
-          "Homogeneous Product",
-          "Free Entry and Exit",
-          "Perfect Information",
-          "Perfect Factor Mobility",
-          "MR = MC\nProfit Maximisation",
-          "P = MC\nAllocative Efficiency",
-          "P = ATCmin\nProductively Efficiency\n(Long Run)",
-          "P = AC\nNormal Profit (Long Run)",
-        ],
-      ),
 
       SlideContent.text('''
 <h3>Characteristics</h3>
@@ -172,18 +157,7 @@ List<Slide> get marketPowerSlides => [
   Slide(
     syllabusPoint: SyllabusPoint.monopoly,
     contents: [
-      SlideContent.spiderMap(
-        center: "Monopoly",
-        points: [
-          "Single Firm\nIndustry Supply",
-          "High Barriers to Entry",
-          "Price Maker\nSignificant Market Power",
-          "MR = MC\nProfit Maximisation",
-          "P > MC\nAllocative Inefficiency",
-          "Productive Inefficiency",
-          "Natural Monopoly\nLarge Economies of Scale",
-        ],
-      ),
+
 
       SlideContent.text('''
 <h3>Characteristics</h3>
@@ -331,22 +305,7 @@ List<Slide> get marketPowerSlides => [
   Slide(
     syllabusPoint: SyllabusPoint.oligopoly,
     contents: [
-      SlideContent.spiderMap(
-        center: "Oligopoly",
-        points: [
-          "Few Large Firms",
-          "Interdependence",
-          "High Barriers",
-          "Sticky Prices",
-          "Conflicting Incentives\n"
-              "Compete Vs. Collude",
-          "MR = MC\nProfit Maximisation",
-          "P > MC\nAllocative Inefficiency",
-          "P ≠ ATCmin\nProductively Inefficiency",
-          "Collusive,\nNon-Collusive",
-          "Non-price competition and innovation",
-        ],
-      ),
+
       SlideContent.text('''
 <h3>Characteristics</h3>
 <ul>
@@ -373,19 +332,19 @@ List<Slide> get marketPowerSlides => [
         <p>Non-collusive oligopoly do not engaged in price-fixing however they are still interdependent so pricing and output decisions are still strategic</p>
 
         <p>Prices in oligopolistic industry tend to be rigid. This can be explained with a simplified Kinked Demand curve (Supplement Diagram)</p>
-        <p>Suppose a firm produces at Pe/Qe and wants to increase total revenue (TR)</p> 
+        <p>Suppose a firm produces at Pe/Qe and wants to increase total revenue (TR)</p>
         <ul><li><strong>Raises price</strong> due to availability of substitutes consumers will switch to rivals, therefore the firm faces a relatively price-elastic demand (TR falls as the quantity effect > price effect)
         </li>
         <li><strong>Cuts price</strong>
         in the short-term the firm might gain some market-share, but rivals will quickly match, therefore the firm faces price inelastic demand (TR falls as price effect > quantity effect).
-       
+
         </li>
         </ul>
               <p3>Price-Wars</p3>
-             <p>This risks a <strong>price-war</strong> as firms seek to gain profits by competing on price, 
+             <p>This risks a <strong>price-war</strong> as firms seek to gain profits by competing on price,
              however, this can result in all firms being worse-off (race to the bottom).
              Instead firms seek to avoid price-wars and compete on <strong>Non price competition</strong></p>
-             
+
         '''),
       SlideContent.diagrams([DiagramEnum.microOligopolyKinkedDemandCurve]),
       SlideContent.text('''
@@ -408,7 +367,7 @@ List<Slide> get marketPowerSlides => [
     </li>
     <li>Packaging</li>
     <li>Product features</li>
- 
+
     </ul>
     <h3>High R&D and product innovation</h3>
     <p>Oligopolistic industry use abnormal profits to invest in product research and development (R&D) to gain a competitive advantage.
@@ -416,16 +375,16 @@ List<Slide> get marketPowerSlides => [
     <h3>Homogeneous products</h3>
     <p>Some oligopolistic industries sell homogeneous goods with usually deal with the primary sector e.g., oil, steel, chemicals</p>
     '''),
-      SlideContent.customWidget(
-        SimpleTable(
-          headers: ['Product Differentiation', 'Homogeneous Products'],
-          data: [
-            ['Supermarkets', 'Oil'],
-            ['Electric Vehicles', 'Steel'],
-            ['Streaming Services', 'Chemicals'],
-          ],
-        ),
-      ),
+      // SlideContent.customWidget(
+      //   SimpleTable(
+      //     headers: ['Product Differentiation', 'Homogeneous Products'],
+      //     data: [
+      //       ['Supermarkets', 'Oil'],
+      //       ['Electric Vehicles', 'Steel'],
+      //       ['Streaming Services', 'Chemicals'],
+      //     ],
+      //   ),
+      // ),
 
       SlideContent.text('''
 <h2>Collusive Oligopoly</h2>
@@ -448,8 +407,8 @@ List<Slide> get marketPowerSlides => [
       SlideContent.text('''
       <h3>Informal Collusion</h3>
       <p>Forming a cartel and engaging in price-fixing is illegal. However firms in oligopolistic markets still
-      have an incentive to tacitly collude by avoiding price-competition. 
-      For example, banks might tacitly collude to keep interest rates higher, or supermarkets keep the prices of groceries higher 
+      have an incentive to tacitly collude by avoiding price-competition.
+      For example, banks might tacitly collude to keep interest rates higher, or supermarkets keep the prices of groceries higher
       and instead compete on non-price factors such as advertising and loyalty-programs.
       </p>.
       <p>The most common firm is <strong>price leadership</strong> where one dominant firm effectively sets
@@ -498,22 +457,22 @@ List<Slide> get marketPowerSlides => [
       SlideContent.text('''
 <ul>
   <li><strong>Do the firms have an incentive to collude?</strong> Yes. If they form a cartel they can earn joint profits of (\$240m) by acting as a monopoly, earning \$120m each.</li>
-  <li><strong>Does either form have an incentive to cheat on each other if they collude?</strong> Yes. Either firm can increase individual profit from \$120m to \$150m by undercutting the cartel price. 
+  <li><strong>Does either form have an incentive to cheat on each other if they collude?</strong> Yes. Either firm can increase individual profit from \$120m to \$150m by undercutting the cartel price.
   If a firm did cheat, the other would likely follow and they would end-up mutually worse both earning \$50m each.</li>
   <li><strong>If both firms do not collude, do they have a dominant strategy?</strong> Yes. Either firm would rationally price low - regardless of the actions by the other.</li>
   <li><strong>Is there a Nash Equilibrium?</strong> Yes, both firms earn \$50m each with no incentive for either to unilaterally break from this agreement.</li>
-  <li><strong>Is there an incentive for informal collusion?</strong> Yes. In the real-world a dominant firm might try to break from a price-war by raising its price - 'signalling' to the other 
+  <li><strong>Is there an incentive for informal collusion?</strong> Yes. In the real-world a dominant firm might try to break from a price-war by raising its price - 'signalling' to the other
   firm to follow. Understanding its mutually beneficial, the other firm(s) might 'tacitly' collude and raise prices too. </li>
 </ul>
 '''),
 
       SlideContent.text('''
        <h2>Concentration-Ratio</h2>
-       <p>Concentration ratio measures the market share held by the largest firms in an industry, 
-       typically the top four (CR4) or five (CR5), indicating a market dominated by a few players; 
+       <p>Concentration ratio measures the market share held by the largest firms in an industry,
+       typically the top four (CR4) or five (CR5), indicating a market dominated by a few players;
        ratios over 50%-60% signify an oligopoly, showing significant market power and reduced competition. </p>
        <p><strong>(Sales of top XX firms / industry sales) X 100</strong></p>
-       <p>CR4: [(220 + 200 + 130 + 120) / (220 + 200 + 130 + 120 + 110 + 80 + 120)] X 100 = 68.37%. 
+       <p>CR4: [(220 + 200 + 130 + 120) / (220 + 200 + 130 + 120 + 110 + 80 + 120)] X 100 = 68.37%.
        This indicates an oligopolistic market, where competition is relatively limited.</p>
        '''),
       SlideContent.customWidget(
@@ -559,18 +518,7 @@ List<Slide> get marketPowerSlides => [
   Slide(
     syllabusPoint: SyllabusPoint.monopolisticCompetition,
     contents: [
-      SlideContent.spiderMap(
-        center: "Monopolistic Competition",
-        points: [
-          "Many relatively small firms",
-          "Limited market power",
-          'Low Barriers',
-          "High Product Differentiation",
-          "MR = MC\nProfit Maximisation",
-          "P > MC\nAllocative Inefficiency",
-          "P ≠ ATCmin\nProductively Inefficiency",
-        ],
-      ),
+
       SlideContent.text('''
       <h3>Characteristics</h3>
 <ul>
@@ -581,7 +529,7 @@ List<Slide> get marketPowerSlides => [
 </ul>
 <h3>Highly Differentiated Products and Limited market power</h3>
 <p>Examples of monopolistic competition include many consumer products in supermarkets (e.g., snacks, toiletries, laundry detergent) and restaurants.</p>
-<p>Firms aim to make their products more price elastic by focussing on strong branding, packaging 
+<p>Firms aim to make their products more price elastic by focussing on strong branding, packaging
 and bundled services to make their goods appear differentiated in a highly competitive market. </p>
 <p>However, due to the availability of many close substitutes for consumers, a firm in monopolistic competition has limited market power. </p>
 <p>Limited market power is shown by a relatively price elastic demand curve compared to a monopoly.</p>
@@ -589,7 +537,7 @@ and bundled services to make their goods appear differentiated in a highly compe
 <p>Like a firm in perfect competition, a firm in monopolistic competition can only earn <strong>normal profit</strong> in the long-run <strong>P=AC (TR = Explicit + Implicit Costs)</strong></p>
 <p>Unlike a firm in perfect competition, a firm in monopolistic competition is not allocatively efficient charging P > MC at the profit-maximizing (MC=MR) level of output, thereby leading to <strong>under-allocation of resources.</strong>.</p>
 <p>Also not productively efficient (excess capacity) as it operates with excess capacity (e.g., a cafe prefers to focus on production differentiation such as the quality of the coffee and creating a relaxing environment, rather than just sell coffees at the lowest possible cost). <strong>P≠ATCmin</strong></p>
-      
+
       '''),
       SlideContent.diagrams([DiagramEnum.microMonopolisticCompetitionLongRun]),
       SlideContent.text('''
@@ -618,31 +566,31 @@ and bundled services to make their goods appear differentiated in a highly compe
       ]),
       SlideContent.text('''
         <h3>Efficiency Vs. Product Variety</h3>
-        <p>Monopolistic competition are in industries exemplified by variety and a range of choice for consumers. 
+        <p>Monopolistic competition are in industries exemplified by variety and a range of choice for consumers.
         For example, restaurants focus on making their restaurant appear unique to increase market-power (Cantonese, Italian, Upscale Dining, Fusion, etc.).
         Therefore, it can be argued that a trade-off for economic efficiency
          found in perfect competition, is greater product variety which consumers also place value-on.
          </p>
         '''),
-      SlideContent.customWidget(
-        const EvaluationWidget(
-          title: 'Perfect Competition Vs. Monopolistic Competition',
-          leftTitle: 'Similar to Perfect Competition',
-          rightTitle: 'Different from Perfect Competition',
-          leftItems: [
-            'Normal Profit (Long-Run) P=AC',
-            'Many Small Firms',
-            'Low Barriers to Entry',
-            'Profit-Maximizers',
-          ],
-          rightItems: [
-            'Some market power P > MC',
-            'Allocatively inefficient',
-            'High Product Variety',
-            'Productively Inefficient (excess capacity)',
-          ],
-        ),
-      ),
+      // SlideContent.customWidget(
+      //   const EvaluationWidget(
+      //     title: 'Perfect Competition Vs. Monopolistic Competition',
+      //     leftTitle: 'Similar to Perfect Competition',
+      //     rightTitle: 'Different from Perfect Competition',
+      //     leftItems: [
+      //       'Normal Profit (Long-Run) P=AC',
+      //       'Many Small Firms',
+      //       'Low Barriers to Entry',
+      //       'Profit-Maximizers',
+      //     ],
+      //     rightItems: [
+      //       'Some market power P > MC',
+      //       'Allocatively inefficient',
+      //       'High Product Variety',
+      //       'Productively Inefficient (excess capacity)',
+      //     ],
+      //   ),
+      // ),
     ],
   ),
 
@@ -677,14 +625,6 @@ and bundled services to make their goods appear differentiated in a highly compe
     syllabusPoint:
         SyllabusPoint.governmentInterventionInResponseToAbuseOfMarketPower,
     contents: [
-      SlideContent.spiderMap(
-        center: 'Government Intervention',
-        points: [
-          'Nationalization\n(State Owned Enterprise)',
-          'Marginal-Cost Pricing\nAverage-Cost Pricing',
-          'Fines (Windfall Tax)',
-        ],
-      ),
     ],
   ),
 
@@ -698,127 +638,127 @@ List<Slide> get marketPowerTerms => [
     subunit: Subunit.marketFailurePower,
     title: kTermsGlossary,
     contents: [
-      SlideContent.customWidget(
-        GroupedDefinitionGridRedundant(
-          groupedItems: {
-            'Market Fundamentals': [
-              SlideContent.term(
-                'Market power',
-                'Ability of a firm to set price above marginal cost (P > MC).',
-              ),
-              SlideContent.term(
-                'Industry',
-                'Group of firms selling similar goods or services.',
-              ),
-              SlideContent.term(
-                'Barriers to entry',
-                'Factors making it difficult for new firms to enter.',
-              ),
-              SlideContent.term(
-                'Concentration ratio',
-                'Measures total market share held by largest firms.',
-              ),
-            ],
-            'Revenue & Costs': [
-              SlideContent.term(
-                'Total Revenue (TR)',
-                'Total income earned: TR = P x Q.',
-              ),
-              SlideContent.term('Average Revenue (AR)', 'TR / Q or AR = P.'),
-              SlideContent.term(
-                'Marginal Revenue (MR)',
-                'Additional revenue from selling one more unit: ΔTR / ΔQ.',
-              ),
-              SlideContent.term(
-                'Fixed Cost (FC)',
-                'Costs that do not change with output.',
-              ),
-              SlideContent.term(
-                'Variable Cost (VC)',
-                'Costs that change with output.',
-              ),
-              SlideContent.term(
-                'Total Cost (TC)',
-                'Sum of fixed and variable costs: TC = FC + VC.',
-              ),
-              SlideContent.term(
-                'Sunk cost',
-                'A cost that cannot be recovered.',
-              ),
-            ],
-            'Efficiency Types': [
-              SlideContent.term(
-                'Productive efficiency',
-                'Producing at lowest possible cost (MC = ATC).',
-              ),
-              SlideContent.term(
-                'Allocative efficiency',
-                'P = MC; resources follow consumer preference.',
-              ),
-              SlideContent.term(
-                'Dynamic efficiency',
-                'Innovation and investment over time to reduce costs.',
-              ),
-              SlideContent.term(
-                'X-efficiency',
-                'Effective resource management to minimize costs.',
-              ),
-            ],
-            'Profit & Pricing': [
-              SlideContent.term(
-                'Profit-maximizing point',
-                'Output where MC = MR.',
-              ),
-              SlideContent.term(
-                'Normal Profit',
-                'Minimum profit required to stay in industry (TR = TC).',
-              ),
-              SlideContent.term(
-                'Abnormal Profit',
-                'Profit exceeding normal level (TR > TC).',
-              ),
-              SlideContent.term('Break-even price', 'Price where AR = AC.'),
-              SlideContent.term('Shut-down price', 'Price where AR = AVC.'),
-            ],
-            'Market Structures': [
-              SlideContent.term(
-                'Perfect Competition',
-                'Many firms, homogeneous products, no barriers.',
-              ),
-              SlideContent.term(
-                'Monopoly',
-                'Single firm, high barriers, P > MC.',
-              ),
-              SlideContent.term(
-                'Oligopoly',
-                'Few interdependent dominant firms.',
-              ),
-              SlideContent.term(
-                'Monopolistic competition',
-                'Many firms, differentiated products, low barriers.',
-              ),
-            ],
-            'Game Theory & Strategy': [
-              SlideContent.term(
-                'Game theory',
-                'Study of strategic decision-making.',
-              ),
-              SlideContent.term(
-                'Nash equilibrium',
-                'No player gains by changing strategy alone.',
-              ),
-              SlideContent.term(
-                'Prisoner’s Dilemma',
-                'Self-interest leads to worse mutual outcome.',
-              ),
-              SlideContent.term(
-                'Collusive Oligopoly',
-                'Firms agree to fix prices (Cartel).',
-              ),
-            ],
-          },
-        ),
-      ),
+      // SlideContent.customWidget(
+      //   GroupedDefinitionGridRedundant(
+      //     groupedItems: {
+      //       'Market Fundamentals': [
+      //         SlideContent.term(
+      //           'Market power',
+      //           'Ability of a firm to set price above marginal cost (P > MC).',
+      //         ),
+      //         SlideContent.term(
+      //           'Industry',
+      //           'Group of firms selling similar goods or services.',
+      //         ),
+      //         SlideContent.term(
+      //           'Barriers to entry',
+      //           'Factors making it difficult for new firms to enter.',
+      //         ),
+      //         SlideContent.term(
+      //           'Concentration ratio',
+      //           'Measures total market share held by largest firms.',
+      //         ),
+      //       ],
+      //       'Revenue & Costs': [
+      //         SlideContent.term(
+      //           'Total Revenue (TR)',
+      //           'Total income earned: TR = P x Q.',
+      //         ),
+      //         SlideContent.term('Average Revenue (AR)', 'TR / Q or AR = P.'),
+      //         SlideContent.term(
+      //           'Marginal Revenue (MR)',
+      //           'Additional revenue from selling one more unit: ΔTR / ΔQ.',
+      //         ),
+      //         SlideContent.term(
+      //           'Fixed Cost (FC)',
+      //           'Costs that do not change with output.',
+      //         ),
+      //         SlideContent.term(
+      //           'Variable Cost (VC)',
+      //           'Costs that change with output.',
+      //         ),
+      //         SlideContent.term(
+      //           'Total Cost (TC)',
+      //           'Sum of fixed and variable costs: TC = FC + VC.',
+      //         ),
+      //         SlideContent.term(
+      //           'Sunk cost',
+      //           'A cost that cannot be recovered.',
+      //         ),
+      //       ],
+      //       'Efficiency Types': [
+      //         SlideContent.term(
+      //           'Productive efficiency',
+      //           'Producing at lowest possible cost (MC = ATC).',
+      //         ),
+      //         SlideContent.term(
+      //           'Allocative efficiency',
+      //           'P = MC; resources follow consumer preference.',
+      //         ),
+      //         SlideContent.term(
+      //           'Dynamic efficiency',
+      //           'Innovation and investment over time to reduce costs.',
+      //         ),
+      //         SlideContent.term(
+      //           'X-efficiency',
+      //           'Effective resource management to minimize costs.',
+      //         ),
+      //       ],
+      //       'Profit & Pricing': [
+      //         SlideContent.term(
+      //           'Profit-maximizing point',
+      //           'Output where MC = MR.',
+      //         ),
+      //         SlideContent.term(
+      //           'Normal Profit',
+      //           'Minimum profit required to stay in industry (TR = TC).',
+      //         ),
+      //         SlideContent.term(
+      //           'Abnormal Profit',
+      //           'Profit exceeding normal level (TR > TC).',
+      //         ),
+      //         SlideContent.term('Break-even price', 'Price where AR = AC.'),
+      //         SlideContent.term('Shut-down price', 'Price where AR = AVC.'),
+      //       ],
+      //       'Market Structures': [
+      //         SlideContent.term(
+      //           'Perfect Competition',
+      //           'Many firms, homogeneous products, no barriers.',
+      //         ),
+      //         SlideContent.term(
+      //           'Monopoly',
+      //           'Single firm, high barriers, P > MC.',
+      //         ),
+      //         SlideContent.term(
+      //           'Oligopoly',
+      //           'Few interdependent dominant firms.',
+      //         ),
+      //         SlideContent.term(
+      //           'Monopolistic competition',
+      //           'Many firms, differentiated products, low barriers.',
+      //         ),
+      //       ],
+      //       'Game Theory & Strategy': [
+      //         SlideContent.term(
+      //           'Game theory',
+      //           'Study of strategic decision-making.',
+      //         ),
+      //         SlideContent.term(
+      //           'Nash equilibrium',
+      //           'No player gains by changing strategy alone.',
+      //         ),
+      //         SlideContent.term(
+      //           'Prisoner’s Dilemma',
+      //           'Self-interest leads to worse mutual outcome.',
+      //         ),
+      //         SlideContent.term(
+      //           'Collusive Oligopoly',
+      //           'Firms agree to fix prices (Cartel).',
+      //         ),
+      //       ],
+      //     },
+      //   ),
+      // ),
     ],
   ),
 ];

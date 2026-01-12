@@ -1,22 +1,74 @@
+
+import 'dart:typed_data';
 import 'package:economics_app/home_page/models/key_content.dart';
 import 'package:economics_app/home_page/models/term.dart';
 import 'package:economics_app/home_page/models/tip.dart';
 import 'package:flutter/material.dart';
 import '../../diagrams/enums/diagram_enum.dart';
 import '../../diagrams/models/diagram_widget.dart';
-import '../custom_widgets/spider_map/spider_map.dart';
+import '../custom_widgets/definitions_grid.dart';
+import '../custom_widgets/simple_table.dart';
 import 'alert.dart';
 import 'content.dart';
 
+import '../custom_widgets/evaluation_widget.dart'; // Ensure this is imported
+
+/// Helper class to hold raw table data for PDF export
+class TableData {
+  final List<String> headers;
+  final List<List<String>> data;
+  final String? title;
+  final String? figCaption;
+
+  TableData({
+    required this.headers,
+    required this.data,
+    this.title,
+    this.figCaption,
+  });
+}
+
+/// 🆕 Helper class to hold evaluation data for PDF export
+class EvaluationData {
+  final String title;
+  final String leftTitle;
+  final String rightTitle;
+  final List<String> leftItems;
+  final List<String> rightItems;
+  final String centerLabel;
+
+  EvaluationData({
+    required this.title,
+    required this.leftTitle,
+    required this.rightTitle,
+    required this.leftItems,
+    required this.rightItems,
+    this.centerLabel = 'VS',
+  });
+}
+
 class SlideContent {
+  // Basic Text Types
   final Content? content;
   final KeyContent? keyContent;
   final Term? term;
   final Alert? alert;
   final Example? examples;
+
+  // Visuals
   final List<DiagramEnum>? diagramEnums;
   final List<DiagramWidget>? diagramWidgets;
+
+  // 🆕 This field stores the "captured" screenshots for the PDF
+  final List<Uint8List>? diagramImages;
+
+  // Custom Widgets (For UI rendering)
   final Widget? widget;
+
+  // Data fields specifically for PDF Export
+  final List<SlideContent>? glossaryItems;
+  final TableData? tableData;
+  final EvaluationData? evaluationData;
 
   SlideContent({
     this.content,
@@ -26,7 +78,11 @@ class SlideContent {
     this.examples,
     this.diagramEnums,
     this.diagramWidgets,
+    this.diagramImages, // 🆕 Added
     this.widget,
+    this.glossaryItems,
+    this.tableData,
+    this.evaluationData,
   });
 
   SlideContent copyWith({
@@ -37,7 +93,11 @@ class SlideContent {
     Example? examples,
     List<DiagramEnum>? diagramEnums,
     List<DiagramWidget>? diagramWidgets,
+    List<Uint8List>? diagramImages, // 🆕 Added
     Widget? widget,
+    List<SlideContent>? glossaryItems,
+    TableData? tableData,
+    EvaluationData? evaluationData,
   }) {
     return SlideContent(
       content: content ?? this.content,
@@ -47,41 +107,83 @@ class SlideContent {
       examples: examples ?? this.examples,
       diagramWidgets: diagramWidgets ?? this.diagramWidgets,
       diagramEnums: diagramEnums ?? this.diagramEnums,
+      diagramImages: diagramImages ?? this.diagramImages, // 🆕 Added
       widget: widget ?? this.widget,
+      glossaryItems: glossaryItems ?? this.glossaryItems,
+      tableData: tableData ?? this.tableData,
+      evaluationData: evaluationData ?? this.evaluationData,
     );
   }
 
-  // ========== SIMPLE CONTENT HELPERS ==========
+  // ========== FACTORIES ==========
+
   factory SlideContent.text(String content, {Tag? tag}) =>
       SlideContent(content: Content(content, tag: tag));
 
   factory SlideContent.key(String title, String content, {Tag? tag}) =>
-      SlideContent(
-        keyContent: KeyContent(title: title, content: content, tag: tag),
-      );
+      SlideContent(keyContent: KeyContent(title: title, content: content, tag: tag));
 
   factory SlideContent.term(String term, String explanation, {Tag? tag}) =>
-      SlideContent(
-        term: Term(term: term, explanation: explanation, tag: tag),
-      );
+      SlideContent(term: Term(term: term, explanation: explanation, tag: tag));
+
+  factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
+
+  factory SlideContent.examples(String text) => SlideContent(examples: Example(text));
 
   factory SlideContent.diagrams(List<DiagramEnum> diagrams) =>
       SlideContent(diagramEnums: diagrams);
 
-  factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
+  factory SlideContent.customWidget(Widget widget) => SlideContent(widget: widget);
 
-  factory SlideContent.examples(String text) =>
-      SlideContent(examples: Example(text));
-
-  factory SlideContent.customWidget(Widget widget) =>
-      SlideContent(widget: widget);
-  factory SlideContent.spiderMap({
-    required String center,
-    required List<String> points,
-    double spacing = 110.0,
-  }) {
+  // 8. GLOSSARY LIST (Fixed for App + PDF)
+  factory SlideContent.glossary(List<SlideContent> items) {
     return SlideContent(
-      widget: SpiderMap(centerText: center, points: points),
+      glossaryItems: items,
+      widget: DefinitionList(items: items),
+    );
+  }
+
+  // 9. SIMPLE TABLE
+  factory SlideContent.simpleTable({
+    required List<String> headers,
+    required List<List<String>> data,
+    String? title,
+    String? figCaption,
+  }) {
+    final table = TableData(headers: headers, data: data, title: title, figCaption: figCaption);
+    return SlideContent(
+      tableData: table,
+      widget: SimpleTable(headers: headers, data: data, title: title, figCaption: figCaption),
+    );
+  }
+
+  // 10. EVALUATION FACTORY
+  factory SlideContent.evaluation({
+    required String title,
+    required String leftTitle,
+    required String rightTitle,
+    required List<String> leftItems,
+    required List<String> rightItems,
+    String centerLabel = 'VS',
+  }) {
+    final eval = EvaluationData(
+      title: title,
+      leftTitle: leftTitle,
+      rightTitle: rightTitle,
+      leftItems: leftItems,
+      rightItems: rightItems,
+      centerLabel: centerLabel,
+    );
+    return SlideContent(
+      evaluationData: eval,
+      widget: EvaluationWidget(
+        title: title,
+        leftTitle: leftTitle,
+        rightTitle: rightTitle,
+        leftItems: leftItems,
+        rightItems: rightItems,
+        centerLabel: centerLabel,
+      ),
     );
   }
 }

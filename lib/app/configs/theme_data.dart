@@ -31,7 +31,7 @@ class CustomAppTheme {
         surfaceDim: isDark ? Colors.grey.shade600 : Colors.grey.shade900,
         surface: isDark
             ? AppColors.surfaceDarkTheme
-            : AppColors.surfaceLightTheme,
+            : Colors.white.withAlpha(245),
         surfaceContainerHighest: isDark
             ? AppColors.surfaceDarkTheme
             : AppColors.surfaceLightTheme,
@@ -142,25 +142,25 @@ class CustomAppTheme {
               color: displayColor,
               fontSize:
                   defaultTextTheme.titleLarge?.fontSize ??
-                  20 * state.fontSize.multiplier,
+                  24 * state.fontSize.multiplier,
             ),
             bodySmall: defaultTextTheme.bodySmall?.copyWith(
               color: displayColor,
               fontSize:
                   defaultTextTheme.bodySmall?.fontSize ??
-                  12 * state.fontSize.multiplier,
+                  16 * state.fontSize.multiplier,
             ),
             bodyMedium: defaultTextTheme.bodyMedium?.copyWith(
               color: displayColor,
               fontSize:
                   defaultTextTheme.bodyMedium?.fontSize ??
-                  14 * state.fontSize.multiplier,
+                  18 * state.fontSize.multiplier,
             ),
             bodyLarge: defaultTextTheme.bodyLarge?.copyWith(
               color: displayColor,
               fontSize:
                   defaultTextTheme.bodyLarge?.fontSize ??
-                  16 * state.fontSize.multiplier,
+                  22 * state.fontSize.multiplier,
             ),
           ),
 

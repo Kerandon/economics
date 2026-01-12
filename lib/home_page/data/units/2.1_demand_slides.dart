@@ -17,19 +17,20 @@ List<Slide> get demandSlides => [
        <p><strong>The Law of Demand</strong> states that there is a negative (inverse) relationship between the price of a good and the quantity that consumers demand. </p> 
 <p>As the demand schedule below shows, as price increases, <strong>quantity demanded</strong> falls.</p>
 '''),
-      SlideContent.customWidget(
-        SimpleTable(
-          title: 'Individual Demand for Apples',
-          headers: ['Price (\$)', 'Quantity Demanded by Sarah'],
-          data: [
-            ['0', '10'],
-            ['1', '8'],
-            ['2', '6'],
-            ['3', '4'],
-            ['4', '2'],
-            ['5', '0'],
-          ],
-        ),
+
+      SlideContent.evaluation(title: 'Demand Evaluation',
+          leftTitle: 'leftTitle', rightTitle: 'rightTitle', leftItems: ['leftItems', 'left items2'], rightItems: ['A','B']),
+      SlideContent.simpleTable(
+        title: 'Individual Demand for Apples',
+        headers: ['Price (\$)', 'Quantity Demanded by Sarah'],
+        data: [
+          ['0', '10'],
+          ['1', '8'],
+          ['2', '6'],
+          ['3', '4'],
+          ['4', '2'],
+          ['5', '0'],
+        ],
       ),
     ],
   ),
@@ -49,8 +50,7 @@ List<Slide> get demandSlides => [
       SlideContent.text('''
   <p><strong>Market demand</strong> is the sum of quantity demanded by individual consumers at different prices</p>
   '''),
-      SlideContent.customWidget(
-        SimpleTable(
+      SlideContent.simpleTable(
           title: 'Market Demand For Apples',
           headers: ['Price (\$)', 'Sarah', 'Mike', 'Market Demand'],
           data: [
@@ -62,14 +62,12 @@ List<Slide> get demandSlides => [
             ['5', '0', '3', '3'],
           ],
         ),
-      ),
     ],
   ),
   Slide(
     syllabusPoint: SyllabusPoint.nonPriceDeterminants,
     contents: [
       SlideContent.text('''
-      <h3>Non-price determinants of demand</h3>
       <p>The following factors shift the entire demand curve left or right.</p>
       <ul>
       <li>Income</li>
@@ -112,12 +110,10 @@ List<Slide> get demandSlides => [
       ]),
     ],
   ),
-
   Slide(
     syllabusPoint: SyllabusPoint.assumptionsLawOfDemand,
     contents: [
       SlideContent.text('''
-    <h3>Assumptions which explain the downward sloping demand curve</h3>
     <ul>
     <li>
     The law of diminishing marginal utility
@@ -138,9 +134,9 @@ List<Slide> get demandTerms => [
     subunit: Subunit.demand,
     title: kTermsGlossary,
     contents: [
-      SlideContent.customWidget(
-        DefinitionList(
-          items: [
+      SlideContent.glossary(
+
+        [
             SlideContent.term(
               'Change in Quantity Demanded',
               'A movement along the demand curve. A fall in price causes an <strong>extension</strong>, a rise in price causes a <strong>contraction</strong>.',
@@ -228,7 +224,6 @@ List<Slide> get demandTerms => [
             ),
           ],
         ),
-      ),
     ],
   ),
 ];

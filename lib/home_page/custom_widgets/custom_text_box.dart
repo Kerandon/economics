@@ -1,69 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import '../../app/configs/app_colors.dart';
 import '../../app/configs/constants.dart';
 import '../enums/text_box_type.dart';
+import '../models/term.dart';
 
 class CustomTextBox extends StatelessWidget {
   final String? term;
   final String text;
   final TextBoxType type;
-  final bool isHL;
+  final Tag? tag;
 
   const CustomTextBox({
     this.term,
     required this.text,
     required this.type,
-    this.isHL = false,
+    this.tag,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Color accentColor = _getAccentColor(type);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    String tagLabel = '';
+    final isHL = tag == Tag.hl;
+    final isSupplement = tag == Tag.supplement;
+    Color tagColor = colorScheme.primary;
+    if(isHL){
+      tagLabel = kHLBrackets;
+      tagColor = AppColors.hLColor;
+    }
+    if(isSupplement){
+      tagLabel = kSupplementBrackets;
+      tagColor = AppColors.supplementColor;
+    }
+
 
     return Container(
       width: double.infinity,
       // ⬇️ Minimized vertical margin for tight stacking
       margin: const EdgeInsets.symmetric(vertical: 1),
-      decoration: const BoxDecoration(
-        color: Colors.white, // ⚪ Pure white background
+      decoration:  BoxDecoration(
+        color: colorScheme.surface, // ⚪ Pure white background
       ),
       child: IntrinsicHeight(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // 📏 Subtle vertical accent line
-            Container(width: 3, color: accentColor),
+            Container(width: 3, color: colorScheme.primary),
             Expanded(
               child: Padding(
                 // ⬇️ Ultra-tight padding
-                padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+                padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (term != null && term!.isNotEmpty) ...[
                       Text(
-                        isHL
-                            ? '${term!.toUpperCase()} [HL]'
-                            : term!.toUpperCase(),
-                        style: TextStyle(
+                        '${term!.toUpperCase()} $tagLabel',
+                        style: theme.textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
-                          fontSize: 10,
-                          color: accentColor,
-                          height: 1.1, // ⬇️ Tighter line height for the label
-                        ),
+                          color: tagColor,
+                        )
                       ),
                       // ⬇️ Smallest possible gap
                       const SizedBox(height: 1),
                     ],
                     HtmlWidget(
                       text,
-                      textStyle: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black,
-                        height: 1.2,
-                      ),
+                      textStyle: theme.textTheme.bodyLarge
                     ),
                   ],
                 ),
@@ -75,16 +83,4 @@ class CustomTextBox extends StatelessWidget {
     );
   }
 
-  Color _getAccentColor(TextBoxType type) {
-    switch (type) {
-      case TextBoxType.term:
-        return Colors.indigo.shade700;
-      case TextBoxType.alert:
-        return Colors.red.shade800;
-      case TextBoxType.tip:
-        return Colors.teal.shade700;
-      default:
-        return Colors.blueGrey.shade700;
-    }
-  }
 }

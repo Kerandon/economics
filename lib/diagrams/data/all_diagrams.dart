@@ -32,45 +32,45 @@ class AllDiagrams2 {
     return all;
   }
 }
-
-/// Mark Redundant
-class AllDiagrams {
-  final Size size;
-  final ColorScheme colorScheme;
-
-  AllDiagrams({required this.size, required this.colorScheme});
-
-  DiagramBundle? getDiagramBundle2(DiagramEnum diagramBundleEnum) {
-    final bundles = getDiagramBundles(diagramBundleEnums: [diagramBundleEnum]);
-    return bundles.isNotEmpty ? bundles.first : null;
-  }
-
-  List<DiagramBundle> getDiagramBundles({
-    List<DiagramEnum>? diagramBundleEnums, // optional filtering
-    bool getAll = false, // new param, default false
-  }) {
-    final config = DiagramPainterConfig(
-      painterSize: size,
-      appSize: Size(size.width, size.height),
-      colorScheme: colorScheme,
-    );
-
-    // Create bundles
-    final allBundles = getBundleList(config).toList();
-
-    if (getAll) {
-      // Return all bundles
-      return List.of(allBundles);
-    } else if (diagramBundleEnums?.isNotEmpty ?? false) {
-      // Filter by provided enums
-      return allBundles
-          .where(
-            (bundle) => diagramBundleEnums!.contains(bundle.diagramBundleEnum),
-          )
-          .toList();
-    } else {
-      // Default: no bundles returned
-      return [];
-    }
-  }
-}
+//
+// /// Mark Redundant
+// class AllDiagrams {
+//   final Size size;
+//   final ColorScheme colorScheme;
+//
+//   AllDiagrams({required this.size, required this.colorScheme});
+//
+//   DiagramBundle? getDiagramBundle2(DiagramEnum diagramBundleEnum) {
+//     final bundles = getDiagramBundles(diagramBundleEnums: [diagramBundleEnum]);
+//     return bundles.isNotEmpty ? bundles.first : null;
+//   }
+//
+//   List<DiagramBundle> getDiagramBundles({
+//     List<DiagramEnum>? diagramBundleEnums, // optional filtering
+//     bool getAll = false, // new param, default false
+//   }) {
+//     final config = DiagramPainterConfig(
+//       painterSize: size,
+//       appSize: Size(size.width, size.height),
+//       colorScheme: colorScheme,
+//     );
+//
+//     // Create bundles
+//     final allBundles = getBundleList(config).toList();
+//
+//     if (getAll) {
+//       // Return all bundles
+//       return List.of(allBundles);
+//     } else if (diagramBundleEnums?.isNotEmpty ?? false) {
+//       // Filter by provided enums
+//       return allBundles
+//           .where(
+//             (bundle) => diagramBundleEnums!.contains(bundle.diagramBundleEnum),
+//           )
+//           .toList();
+//     } else {
+//       // Default: no bundles returned
+//       return [];
+//     }
+//   }
+// }

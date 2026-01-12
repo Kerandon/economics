@@ -1,3 +1,4 @@
+import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis_labels.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_zero.dart';
@@ -20,6 +21,7 @@ void paintAxis(
       false, // Option to draw full grid lines or just tick marks
   int decimalPlaces = 0,
   GridLineStyle gridLineStyle = GridLineStyle.full, //
+      double labelPad = kLabelPadding,
 }) {
   paintAxisLines(
     config,
@@ -32,11 +34,7 @@ void paintAxis(
     gridLineStyle: gridLineStyle,
   );
 
-  if (yAxisLabel != null) {
-    paintAxisLabels(config, canvas, axis: CustomAxis.y, label: yAxisLabel);
-  }
-  if (xAxisLabel != null) {
-    paintAxisLabels(config, canvas, axis: CustomAxis.x, label: xAxisLabel);
-  }
+  paintAxisLabels(config, canvas, axis: CustomAxis.y, label: yAxisLabel, labelPadding: labelPad);
+  paintAxisLabels(config, canvas, axis: CustomAxis.x, label: xAxisLabel);
   paintZero(config, canvas);
 }

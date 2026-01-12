@@ -138,18 +138,18 @@ List<Slide> get competitiveMarketEquilibrium => [
         'This is because consumers become more and more satiated with a good the more they consume. '
         'This is known as <strong>The Law of Diminishing Marginal Utility</strong>.',
       ),
-      SlideContent.customWidget(
-        SimpleTable(
-          headers: ['Slices of Pizza', 'Total Utility', 'Marginal Utility'],
-          data: [
-            ['1', '10', '10'],
-            ['2', '18', '8'],
-            ['3', '23', '5'],
-            ['4', '23', '0'],
-            ['5', '19', '-4'],
-          ],
-        ),
-      ),
+      // SlideContent.customWidget(
+      //   SimpleTable(
+      //     headers: ['Slices of Pizza', 'Total Utility', 'Marginal Utility'],
+      //     data: [
+      //       ['1', '10', '10'],
+      //       ['2', '18', '8'],
+      //       ['3', '23', '5'],
+      //       ['4', '23', '0'],
+      //       ['5', '19', '-4'],
+      //     ],
+      //   ),
+      // ),
       SlideContent.text(
         'Marginal Utility = ΔTotal Utility / ΔQuantity <strong>(MU = ΔTU / ΔQ)</strong>. '
         'The additional utility of the second slice of pizza is (18 − 10) / (2 − 1) = 8 MU. '

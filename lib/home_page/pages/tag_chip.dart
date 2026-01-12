@@ -12,7 +12,7 @@ class TagChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color ?? theme.colorScheme.secondary,
+        color: color ?? theme.colorScheme.primary,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

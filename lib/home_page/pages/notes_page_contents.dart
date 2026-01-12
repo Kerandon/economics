@@ -1,16 +1,18 @@
+
+
 import 'package:economics_app/diagrams/enums/unit_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../state_management/home_page_state.dart';
 import 'notes_page.dart';
-import 'dart:math';
-import 'package:flutter/material.dart';
 
 class NotesPageContents extends ConsumerWidget {
   const NotesPageContents({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     final homePageState = ref.watch(homePageProvider);
     final homePageNotifier = ref.read(homePageProvider.notifier);
 
@@ -26,6 +28,7 @@ class NotesPageContents extends ConsumerWidget {
               ((e) => ListTile(
                 leading: Text(e.id),
                 title: Text(e.title),
+                titleTextStyle: theme.textTheme.displayMedium,
                 trailing: Icon(Icons.arrow_forward_ios_outlined),
                 onTap: () {
                   homePageNotifier.setSubunit(e);

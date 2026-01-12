@@ -60,29 +60,29 @@ List<Slide> get asymmetricInfoSlides => [
     <li><strong>Moral hazard</strong></li>
   </ul>
   '''),
-      SlideContent.customWidget(
-        SimpleTable(
-          headers: ['Adverse Selection', 'Moral Hazard'],
-          data: [
-            [
-              'One party (buyer or seller) has better information than the other before a transaction.',
-              'One party takes greater risks because they do not bear the full consequences.',
-            ],
-            [
-              'Information failure occurs <strong>before</strong> the transaction.',
-              'Information failure occurs <strong>after</strong> the transaction.',
-            ],
-            [
-              'Seller of a used car hides faults or defects from the buyer.',
-              'Banks take excessive risks because they expect government bailouts.',
-            ],
-            [
-              'Buyer of health insurance hides a pre-existing illness.',
-              'Drivers behave less safely once they have car insurance.',
-            ],
-          ],
-        ),
-      ),
+      // SlideContent.customWidget(
+      //   SimpleTable(
+      //     headers: ['Adverse Selection', 'Moral Hazard'],
+      //     data: [
+      //       [
+      //         'One party (buyer or seller) has better information than the other before a transaction.',
+      //         'One party takes greater risks because they do not bear the full consequences.',
+      //       ],
+      //       [
+      //         'Information failure occurs <strong>before</strong> the transaction.',
+      //         'Information failure occurs <strong>after</strong> the transaction.',
+      //       ],
+      //       [
+      //         'Seller of a used car hides faults or defects from the buyer.',
+      //         'Banks take excessive risks because they expect government bailouts.',
+      //       ],
+      //       [
+      //         'Buyer of health insurance hides a pre-existing illness.',
+      //         'Drivers behave less safely once they have car insurance.',
+      //       ],
+      //     ],
+      //   ),
+      // ),
     ],
   ),
   Slide(

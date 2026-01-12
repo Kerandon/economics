@@ -105,22 +105,22 @@ List<Slide> get supplySlides => [
       SlideContent.text(
         'An <strong>increase in supply (L)</strong> or a <strong>decrease in supply (R) </strong> is caused by <strong>non-price</strong> determinants.',
       ),
-      SlideContent.key('Non-Price Determinants of Supply', '''
-        <ul>
-          <li>Changes in costs of factors of production (e.g., wages, raw materials, capital, energy, transport)</li>
-          <li>Prices of related goods (joint and competitive supply)</li>
-          <li>Indirect taxes and subsidies</li>
-          <li>Future price expectations</li>
-          <li>Changes in technology</li>
-          <li>Number of firms</li>
-        </ul>
-        '''),
-      SlideContent(
-        diagramEnums: [
-          DiagramEnum.microSupplyIncrease,
-          DiagramEnum.microSupplyDecrease,
-        ],
-      ),
+      // SlideContent.key('Non-Price Determinants of Supply', '''
+      //   <ul>
+      //     <li>Changes in costs of factors of production (e.g., wages, raw materials, capital, energy, transport)</li>
+      //     <li>Prices of related goods (joint and competitive supply)</li>
+      //     <li>Indirect taxes and subsidies</li>
+      //     <li>Future price expectations</li>
+      //     <li>Changes in technology</li>
+      //     <li>Number of firms</li>
+      //   </ul>
+      //   '''),
+      // SlideContent(
+      //   diagramEnums: [
+      //     DiagramEnum.microSupplyIncrease,
+      //     DiagramEnum.microSupplyDecrease,
+      //   ],
+      // ),
     ],
   ),
   Slide(
@@ -136,19 +136,19 @@ List<Slide> get supplySlides => [
         'When labor increases from 2 to 3, output rises from 7 to 10. '
         'MP = 10 - 7 = 3 units.',
       ),
-      SlideContent.customWidget(
-        SimpleTable(
-          headers: ['Labor', 'Output', 'Marginal Product (MP)'],
-          data: [
-            ['1', '3', '3'], // 3 - 0 = 3
-            ['2', '7', '4'], // 7 - 3 = 4
-            ['3', '10', '3'], // 10 - 7 = 3
-            ['4', '12', '2'], // 12 - 10 = 2
-            ['5', '13', '1'], // 13 - 12 = 1
-            ['6', '12', '-1'], // 12 - 13 = -1
-          ],
-        ),
-      ),
+      // SlideContent.customWidget(
+      //   SimpleTable(
+      //     headers: ['Labor', 'Output', 'Marginal Product (MP)'],
+      //     data: [
+      //       ['1', '3', '3'], // 3 - 0 = 3
+      //       ['2', '7', '4'], // 7 - 3 = 4
+      //       ['3', '10', '3'], // 10 - 7 = 3
+      //       ['4', '12', '2'], // 12 - 10 = 2
+      //       ['5', '13', '1'], // 13 - 12 = 1
+      //       ['6', '12', '-1'], // 12 - 13 = -1
+      //     ],
+      //   ),
+      // ),
 
       SlideContent.text(
         '<strong>The Law of Diminishing Marginal Returns</strong> '
@@ -157,29 +157,29 @@ List<Slide> get supplySlides => [
         'Diminishing returns is due to factors such as overcrowding, and full use of fixed resources (thus in the short-run only).',
       ),
 
-      SlideContent(
-        diagramEnums: [
-          DiagramEnum.microMarginalProduct,
-          DiagramEnum.microTotalAndMarginalProduct,
-        ],
-      ),
+      // SlideContent(
+      //   diagramEnums: [
+      //     DiagramEnum.microMarginalProduct,
+      //     DiagramEnum.microTotalAndMarginalProduct,
+      //   ],
+      // ),
       SlideContent.text(
         'Marginal Cost is inversely related to Marginal Product.',
       ),
-      SlideContent(
-        diagramEnums: [
-          DiagramEnum.microMarginalProduct,
-          DiagramEnum.microMarginalCost,
-        ],
-      ),
-      SlideContent.key('Reasons for the upwards sloping supply curve', '''
-        <ul>
-          <li>Firms are motivated to increase quantity supplied as prices rise to maximize profit
- </li>
-          <li>Increasing marginal costs (The Law of Diminishing Marginal Returns)</li>
-          <li>Rising opportunity costs of using resources which were used in other production</li>
-        </ul>
-        '''),
+      // SlideContent(
+      //   diagramEnums: [
+      //     DiagramEnum.microMarginalProduct,
+      //     DiagramEnum.microMarginalCost,
+      //   ],
+      // ),
+ //      SlideContent.key('Reasons for the upwards sloping supply curve', '''
+ //        <ul>
+ //          <li>Firms are motivated to increase quantity supplied as prices rise to maximize profit
+ // </li>
+ //          <li>Increasing marginal costs (The Law of Diminishing Marginal Returns)</li>
+ //          <li>Rising opportunity costs of using resources which were used in other production</li>
+ //        </ul>
+ //        '''),
     ],
   ),
 ];

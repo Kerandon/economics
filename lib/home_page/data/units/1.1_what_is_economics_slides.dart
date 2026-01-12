@@ -121,9 +121,9 @@ List<Slide> get whatIsEconomicsSlides => [
     subunit: Subunit.whatIsEconomics,
     title: kTermsGlossary,
     contents: [
-      SlideContent(
-        diagramEnums: [DiagramEnum.globalAbsoluteAdvantageBothGoods],
-      ),
+      // SlideContent(
+      //   diagramEnums: [DiagramEnum.globalAbsoluteAdvantageBothGoods],
+      // ),
     ],
   ),
 ];

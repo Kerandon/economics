@@ -38,7 +38,7 @@ extension ResourceExtension on Resource {
   Widget get page {
     switch (this) {
       case Resource.diagrams:
-        return AllDiagramsPageWeb();
+        //return AllDiagramsPageWeb();
       case Resource.terms:
         return TermsPage();
     }

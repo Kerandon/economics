@@ -9,7 +9,7 @@ void paintAxisLabels(
   Canvas canvas, {
   required CustomAxis axis,
   required String label,
-  extendYLabelPadding = false,
+  double labelPadding = kLabelPadding,
 }) {
   final widthAndHeight = config.painterSize.width;
   final fontSize = kFontMedium * config.averageRatio;
@@ -28,20 +28,19 @@ void paintAxisLabels(
     textDirection: TextDirection.ltr,
   );
   textPainter.layout(minWidth: 0, maxWidth: widthAndHeight);
-  var labelPadding = widthAndHeight * 0.05;
+  var labelPad = widthAndHeight * labelPadding;
   switch (axis) {
     case CustomAxis.x:
       pos = Offset(
         widthAndHeight - (indent * 0.50) - textPainter.width,
-        widthAndHeight - (1.5 * indent) + labelPadding,
+        widthAndHeight - (1.5 * indent) + labelPad,
       );
 
     case CustomAxis.y:
       pos = Offset(
         indent * 1.5 -
             textPainter.width -
-            labelPadding -
-            (extendYLabelPadding ? (labelPadding * 0.30) : 0),
+            labelPad,
         indent * 0.50,
       );
   }

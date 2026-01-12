@@ -79,12 +79,12 @@ class _HomePageWebState extends ConsumerState<HomePageWeb>
 
           // -------- Review Tools Tab --------
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(18.0),
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
               ),
               itemCount: Resource.values.length,
               itemBuilder: (context, index) {
