@@ -1,17 +1,20 @@
 import 'dart:math';
 
-import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/grid_line_style.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
-import 'package:economics_app/diagrams/enums/diagram_enum.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:flutter/material.dart';
+
+import '../../enums/diagram_enum.dart';
 import '../../enums/diagram_labels.dart';
-import '../../models/diagram_painter_config.dart';
 import '../../models/base_painter_painter.dart';
+import '../../models/diagram_painter_config.dart';
+import '../i_diagram_canvas.dart';
+import '../painter_constants.dart';
+
 import '../painter_methods/axis/paint_axis.dart';
-import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
+import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_line_segment.dart';
+
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 
 class DemandDiagram extends BaseDiagramPainter3 {
@@ -19,31 +22,55 @@ class DemandDiagram extends BaseDiagramPainter3 {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // Redirects standard Flutter painting to our bridged method
+    drawDiagram(canvas, size);
+  }
+
+  @override
+  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
     final c = config.copyWith(painterSize: size);
     switch (diagram) {
-      case DiagramEnum.microDemandApples:
-        _paintDemandApples(c, canvas, size, diagram);
+      case DiagramEnum.microDemand:
+        _paintDemand(c, canvas, size, diagram, iCanvas: iCanvas);
+        break;
       case DiagramEnum.microDemandIncrease || DiagramEnum.microDemandDecrease:
-        _paintIncreaseDecreaseDemand(c, canvas, size, diagram);
+        _paintIncreaseDecreaseDemand(
+          c,
+          canvas,
+          size,
+          diagram,
+          iCanvas: iCanvas,
+        );
+        break;
       case DiagramEnum.microDemandExtension ||
           DiagramEnum.microDemandContraction ||
           DiagramEnum.microDemandQuantityChangeDueToSupply:
-        _paintExtensionContractionDemand(c, canvas, size, diagram);
+        _paintExtensionContractionDemand(
+          c,
+          canvas,
+          size,
+          diagram,
+          iCanvas: iCanvas,
+        );
+        break;
       default:
     }
   }
 }
 
-void _paintDemandApples(
+// --- UPDATED PRIVATE METHODS ---
+
+void _paintDemand(
   DiagramPainterConfig c,
-  Canvas canvas,
+  Canvas? canvas,
   Size size,
-  DiagramEnum diagram,
-) {
-  paintTitle(c, canvas, 'Sarah\'s Demand for Apples');
+  DiagramEnum diagram, {
+  IDiagramCanvas? iCanvas,
+}) {
   paintAxis(
     c,
     canvas,
+    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.price$.label,
     xAxisLabel: DiagramLabel.quantity.label,
     yDivisions: 11,
@@ -51,140 +78,112 @@ void _paintDemandApples(
     gridLineStyle: GridLineStyle.dashes,
     xDivisions: 6,
     xMaxValue: 6,
-    labelPad: 0.11,
+    labelPad: 0.08,
   );
   paintDiagramLines(
     c,
     canvas,
-    startPos: Offset(0, 0.09),
-    polylineOffsets: [Offset(0.84, 1)],
+    iCanvas: iCanvas,
+    startPos: const Offset(0, 0.09),
+    polylineOffsets: [const Offset(0.84, 1)],
   );
 }
 
-_paintIncreaseDecreaseDemand(c, canvas, size, diagram) {
+void _paintIncreaseDecreaseDemand(
+  DiagramPainterConfig c,
+  Canvas? canvas,
+  Size size,
+  DiagramEnum diagram, {
+  IDiagramCanvas? iCanvas,
+}) {
   paintAxis(
     c,
     canvas,
+    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.p.label,
     xAxisLabel: DiagramLabel.q.label,
   );
-  String title = 'Increase in Demand';
-  String demand1Label = DiagramLabel.d1.label;
-  String demand2Label = DiagramLabel.d2.label;
-  String qLabel1 = DiagramLabel.q1.label;
-  String qLabel2 = DiagramLabel.q2.label;
-  double arrowAngle = 0;
 
-  if (diagram == DiagramEnum.microDemandDecrease) {
-    title = 'Decrease in Demand';
-    demand1Label = DiagramLabel.d2.label;
-    demand2Label = DiagramLabel.d1.label;
-    qLabel1 = DiagramLabel.q2.label;
-    qLabel2 = DiagramLabel.q1.label;
-    arrowAngle = pi;
-  }
+  bool isDecrease = diagram == DiagramEnum.microDemandDecrease;
+
+  double arrowAngle = isDecrease ? pi : 0;
+
   paintLineSegment(
     c,
     canvas,
-    origin: Offset(0.40, 0.40),
+    iCanvas: iCanvas,
+    origin: const Offset(0.40, 0.40),
     angle: arrowAngle,
     length: 0.18,
   );
+
   paintMarketCurve(
     c,
     canvas,
+    iCanvas: iCanvas,
     type: MarketCurveType.demand,
     horizontalShift: -0.15,
     lengthAdjustment: -0.10,
-    label: demand1Label,
+    label: isDecrease ? DiagramLabel.d2.label : DiagramLabel.d1.label,
   );
+
   paintMarketCurve(
     c,
     canvas,
+    iCanvas: iCanvas,
     type: MarketCurveType.demand,
     horizontalShift: 0.15,
     lengthAdjustment: -0.10,
-    label: demand2Label,
+    label: isDecrease ? DiagramLabel.d1.label : DiagramLabel.d2.label,
   );
+
   paintDiagramDashedLines(
     c,
     canvas,
+    iCanvas: iCanvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.65,
     showDotAtIntersection: true,
     yLabel: DiagramLabel.p.label,
-    xLabel: qLabel2,
+    xLabel: isDecrease ? DiagramLabel.q1.label : DiagramLabel.q2.label,
   );
+
   paintDiagramDashedLines(
     c,
     canvas,
+    iCanvas: iCanvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.35,
     showDotAtIntersection: true,
     hideYLine: true,
-    xLabel: qLabel1,
+    xLabel: isDecrease ? DiagramLabel.q2.label : DiagramLabel.q1.label,
   );
-  paintTitle(c, canvas, title);
 }
 
-_paintExtensionContractionDemand(c, canvas, size, diagram) {
+void _paintExtensionContractionDemand(
+  DiagramPainterConfig c,
+  Canvas? canvas,
+  Size size,
+  DiagramEnum diagram, {
+  IDiagramCanvas? iCanvas,
+}) {
   paintAxis(
     c,
     canvas,
+    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.p.label,
     xAxisLabel: DiagramLabel.q.label,
   );
-  String title = 'Extension in Demand';
-  String p1Label = DiagramLabel.p1.label;
-  String p2Label = DiagramLabel.p2.label;
-  String q1Label = DiagramLabel.q1.label;
-  String q2Label = DiagramLabel.q2.label;
-  double angle = pi / 4.1;
 
-  paintMarketCurve(c, canvas, type: MarketCurveType.demand);
-  if (diagram == DiagramEnum.microDemandContraction) {
-    title = 'Contraction in Demand';
-    angle = pi / -1.33;
-    paintLineSegment(
-      c,
-      canvas,
-      origin: Offset(0.52, 0.45),
-      angle: angle,
-      length: 0.25,
-    );
-  } else {
-    paintLineSegment(
-      c,
-      canvas,
-      origin: Offset(0.50, 0.43),
-      angle: angle,
-      length: 0.25,
-    );
-  }
+  bool isContraction = diagram == DiagramEnum.microDemandContraction;
 
-  paintDiagramDashedLines(
-    c,
-    canvas,
-    yAxisStartPos: 0.35,
-    xAxisEndPos: 0.35,
-    yLabel: p1Label,
-    xLabel: q1Label,
-    showDotAtIntersection: true,
-  );
-  paintDiagramDashedLines(
-    c,
-    canvas,
-    yAxisStartPos: 0.60,
-    xAxisEndPos: 0.60,
-    yLabel: p2Label,
-    xLabel: q2Label,
-    showDotAtIntersection: true,
-  );
+  double angle = isContraction ? pi / -1.33 : pi / 4.1;
+
   if (diagram == DiagramEnum.microDemandQuantityChangeDueToSupply) {
-    title = 'Extension in Demand Due to Increase in Supply';
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.supply,
       lengthAdjustment: -0.15,
       label: DiagramLabel.s1.label,
@@ -194,6 +193,7 @@ _paintExtensionContractionDemand(c, canvas, size, diagram) {
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.supply,
       lengthAdjustment: -0.15,
       label: DiagramLabel.s2.label,
@@ -201,5 +201,35 @@ _paintExtensionContractionDemand(c, canvas, size, diagram) {
       verticalShift: 0.10,
     );
   }
-  paintTitle(c, canvas, title);
+  paintMarketCurve(c, canvas, iCanvas: iCanvas, type: MarketCurveType.demand);
+  paintLineSegment(
+    c,
+    canvas,
+    iCanvas: iCanvas,
+    origin: Offset(isContraction ? 0.52 : 0.50, isContraction ? 0.45 : 0.43),
+    angle: angle,
+    length: 0.25,
+  );
+
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    iCanvas: iCanvas,
+    yAxisStartPos: 0.35,
+    xAxisEndPos: 0.35,
+    yLabel: DiagramLabel.p1.label,
+    xLabel: DiagramLabel.q1.label,
+    showDotAtIntersection: true,
+  );
+
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    iCanvas: iCanvas,
+    yAxisStartPos: 0.60,
+    xAxisEndPos: 0.60,
+    yLabel: DiagramLabel.p2.label,
+    xLabel: DiagramLabel.q2.label,
+    showDotAtIntersection: true,
+  );
 }

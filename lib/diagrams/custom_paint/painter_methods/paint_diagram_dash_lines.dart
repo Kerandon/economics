@@ -3,11 +3,14 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.da
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_solid_line.dart';
 import 'package:flutter/material.dart';
 import '../../models/diagram_painter_config.dart';
+import '../diagrams/demand_diagram.dart';
+import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
 
 void paintDiagramDashedLines(
   DiagramPainterConfig config,
-  Canvas canvas, {
+  Canvas? canvas, {
+  IDiagramCanvas? iCanvas,
   required double yAxisStartPos,
   required double xAxisEndPos,
   String? yLabel,
@@ -17,34 +20,56 @@ void paintDiagramDashedLines(
   bool makeDashed = true,
   Color? color,
   Color? backgroundColor,
-  bool showDotAtIntersection = false, // 👈 NEW property
-  double dotRadius = kDotRadius, // optional radius
-  Color? dotColor, // optional color override
+  bool showDotAtIntersection = false,
+  double dotRadius = kDotRadius,
+  Color? dotColor,
 }) {
   final c = color ?? config.colorScheme.onSurface;
+  final width = config.painterSize.width;
 
-  // Axis box (normalized)
-  final top = kAxisIndent * 0.50;
-  final bottom = 1 - (kAxisIndent * 1.5);
-  final left = kAxisIndent * 1.5;
-  final spanY = bottom - top; // == 1 - 2*kAxisIndent
+  // Normalized math (multiplying by width at the end to get absolute pixels)
+  final top = kAxisIndent * kTopAxisIndent;
+  final bottom = 1 - (kAxisIndent * kBottomAxisIndent);
+  final left = kAxisIndent;
+  final spanY = bottom - top;
 
-  // Normalized positions
-  final yPos = top + yAxisStartPos * spanY;
-  final xEndPos = left + xAxisEndPos * spanY;
+  final yPos = (top + yAxisStartPos * spanY) * width;
+  final xEndPos = (left + xAxisEndPos * spanY) * width;
+  final axisLeft = left * width;
+  final axisBottom = bottom * width;
 
-  // Draw horizontal (Y) line
+  final strokeWidth = 1.5 * config.averageRatio;
+
+  // 1. Draw horizontal (Y) line
   if (!hideYLine) {
-    final p1 = Offset(left, yPos);
+    final p1 = Offset(axisLeft, yPos);
     final p2 = Offset(xEndPos, yPos);
-    if (makeDashed) {
-      paintDashedLine(config, canvas, p1: p1, p2: p2, color: c);
-    } else {
-      paintSolidLine(config, canvas, p1: p1, p2: p2, color: c);
+
+    if (iCanvas != null) {
+      makeDashed
+          ? iCanvas.drawDashedLine(p1, p2, c, strokeWidth)
+          : iCanvas.drawLine(p1, p2, c, strokeWidth);
+    } else if (canvas != null) {
+      makeDashed
+          ? paintDashedLine(config, canvas, p1: p1, p2: p2, color: c)
+          : paintSolidLine(config, canvas, p1: p1, p2: p2, color: c);
     }
   }
 
-  // Y label
+  // 2. Draw vertical (X) line
+  if (!hideXLine) {
+    final p1 = Offset(xEndPos, yPos);
+    final p2 = Offset(xEndPos, axisBottom);
+
+    if (iCanvas != null) {
+      // Typically vertical dashed lines are always dashed in these diagrams
+      iCanvas.drawDashedLine(p1, p2, c, strokeWidth);
+    } else if (canvas != null) {
+      paintDashedLine(config, canvas, p1: p1, p2: p2, color: c);
+    }
+  }
+
+  // 3. Labels
   if (yLabel != null) {
     _paintTextForDashedLines(
       config,
@@ -52,106 +77,105 @@ void paintDiagramDashedLines(
       yLabel,
       yAxisStartPos,
       CustomAxis.y,
+      iCanvas: iCanvas,
     );
   }
-
-  // Draw vertical (X) line
-  if (!hideXLine) {
-    paintDashedLine(
-      config,
-      canvas,
-      p1: Offset(xEndPos, yPos),
-      p2: Offset(xEndPos, bottom),
-      color: c,
-    );
-  }
-
-  // X label
   if (xLabel != null) {
-    _paintTextForDashedLines(config, canvas, xLabel, xAxisEndPos, CustomAxis.x);
-  }
-
-  // 👇 Draw dot at intersection if requested
-  if (showDotAtIntersection) {
-    paintDotAbsolute(
+    _paintTextForDashedLines(
       config,
       canvas,
-      pos: Offset(
-        xEndPos * config.painterSize.width,
-        yPos * config.painterSize.width,
-      ), // direct coordinates of intersection
-      radius: dotRadius,
-      color: dotColor ?? c,
+      xLabel,
+      xAxisEndPos,
+      CustomAxis.x,
+      iCanvas: iCanvas,
     );
+  }
+
+  // 4. Draw dot at intersection
+  if (showDotAtIntersection) {
+    final r = dotRadius * config.averageRatio * 0.60;
+    final dColor = dotColor ?? c;
+    final intersection = Offset(xEndPos, yPos);
+
+    if (iCanvas != null) {
+      iCanvas.drawDot(intersection, dColor, radius: r);
+    } else if (canvas != null) {
+      canvas.drawCircle(
+        intersection,
+        r,
+        Paint()
+          ..color = dColor
+          ..style = PaintingStyle.fill,
+      );
+    }
   }
 }
 
 void _paintTextForDashedLines(
   DiagramPainterConfig config,
-  Canvas canvas,
+  Canvas? canvas,
   String label,
-  double pos, // normalized 0..1 in both axes
+  double pos,
   CustomAxis axis, {
+  IDiagramCanvas? iCanvas,
   double fontSize = kFontMedium,
 }) {
   fontSize *= config.averageRatio;
+  final width = config.painterSize.width;
+  final normalizedArea = (width - (width * (kAxisIndent * 2)));
+  final indent = width * kAxisIndent;
+  const padding = 6.0;
 
-  final widthAndHeight = config.painterSize.width;
-  final normalizedWidthAndHeight =
-      (widthAndHeight - (widthAndHeight * (kAxisIndent * 2)));
-  final indent = widthAndHeight * kAxisIndent;
+  if (iCanvas != null) {
+    // For the Bridge, we calculate the anchor point and use TextAlign
+    late Offset offset;
+    late TextAlign align;
 
-  final textPainter = TextPainter(
-    text: TextSpan(
-      text: label,
-      style: TextStyle(color: config.colorScheme.onSurface, fontSize: fontSize),
-    ),
-    textDirection: TextDirection.ltr,
-  )..layout(minWidth: 0, maxWidth: widthAndHeight);
-
-  late final Offset offset;
-
-  final padding = 6;
-  switch (axis) {
-    case CustomAxis.x:
-      // Center the label at (dx, dy) in normalized coordinates
+    if (axis == CustomAxis.x) {
       offset = Offset(
-        pos * normalizedWidthAndHeight +
-            (indent * 1.50) -
-            textPainter.width / 2,
-        widthAndHeight - indent * 1.5 + 6,
+        pos * normalizedArea + (indent),
+        width - indent + padding,
       );
-      break;
-
-    case CustomAxis.y:
-      // Keep it left of the Y-axis indent, vertically centered at dy.
+      align = TextAlign.center;
+    } else {
       offset = Offset(
-        indent * 1.5 - textPainter.width - padding,
-        pos * normalizedWidthAndHeight +
-            (indent * 0.50) -
-            (textPainter.height / 2),
+        indent - padding,
+        pos * normalizedArea + (indent * kTopAxisIndent),
       );
-      break;
+      align = TextAlign.right;
+    }
+    iCanvas.drawText(
+      label,
+      offset,
+      fontSize,
+      config.colorScheme.onSurface,
+      align: align,
+    );
+  } else if (canvas != null) {
+    // Standard Flutter TextPainter logic
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: label,
+        style: TextStyle(
+          color: config.colorScheme.onSurface,
+          fontSize: fontSize,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    late Offset offset;
+    if (axis == CustomAxis.x) {
+      offset = Offset(
+        pos * normalizedArea + (indent) - (textPainter.width / 2),
+        width - indent * kBottomAxisIndent + padding,
+      );
+    } else {
+      offset = Offset(
+        indent - textPainter.width - padding,
+        pos * normalizedArea + (indent * kTopAxisIndent) - (textPainter.height / 2),
+      );
+    }
+    textPainter.paint(canvas, offset);
   }
-
-  canvas.save();
-  textPainter.paint(canvas, offset);
-  canvas.restore();
-}
-
-enum CustomAxis { x, y }
-
-void paintDotAbsolute(
-  DiagramPainterConfig config,
-  Canvas canvas, {
-  required Offset pos,
-  double radius = kDotRadius,
-  Color? color,
-}) {
-  final r = radius * config.averageRatio * 0.60;
-  final paint = Paint()
-    ..color = color ?? config.colorScheme.onSurfaceVariant
-    ..style = PaintingStyle.fill;
-
-  canvas.drawCircle(pos, r, paint);
 }

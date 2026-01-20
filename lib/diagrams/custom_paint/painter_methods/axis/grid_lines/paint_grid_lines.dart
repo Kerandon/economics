@@ -1,13 +1,15 @@
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/draw_dashed_line_for_grid.dart';
 import 'package:flutter/material.dart';
 
-import 'grid_line_style.dart';
+import '../../../i_diagram_canvas.dart';
+
 import '../../../../models/diagram_painter_config.dart';
 import '../../../painter_constants.dart';
 
 void paintGridLines(
   DiagramPainterConfig config,
-  Canvas canvas, {
+  Canvas? canvas, { // 👈 Changed to Canvas?
+  IDiagramCanvas? iCanvas,
   double? xMaxValue,
   double? yMaxValue,
   int? xDivisions,
@@ -21,16 +23,15 @@ void paintGridLines(
   final indent = widthAndHeight * kAxisIndent;
   var labelIndent = widthAndHeight * 0.025;
   var kIndentLength = widthAndHeight * 0.015;
-  final gridPaint = Paint()
-    ..color = color ?? config.colorScheme.onSurface
-    ..strokeWidth = strokeWidth * config.averageRatio;
 
-  final textPainter = TextPainter(textDirection: TextDirection.ltr);
+  final effectiveColor = color ?? config.colorScheme.onSurface;
+  final effectiveWidth = strokeWidth * config.averageRatio;
+  final fontSize = kFontVerySmall * config.averageRatio;
 
-  final indentXLeft = indent * 1.5;
-  final indentYBottom = widthAndHeight - (indent * 1.5);
-  final indentXRight = widthAndHeight * (1 - (kAxisIndent * 0.50));
-  final indentYTop = indent * 0.50;
+  final indentXLeft = indent;
+  final indentYBottom = widthAndHeight - (indent * kBottomAxisIndent);
+  final indentXRight = widthAndHeight * (1 - (kAxisIndent));
+  final indentYTop = indent * kTopAxisIndent;
 
   if (xMaxValue == null ||
       yMaxValue == null ||
@@ -41,94 +42,123 @@ void paintGridLines(
 
   final yStepValue = yMaxValue / yDivisions;
   final yStepSize = (indentYBottom - indentYTop) / yDivisions;
-
   final xStepValue = xMaxValue / xDivisions;
   final xStepSize = (indentXRight - indentXLeft) / xDivisions;
 
-  // ✅ Y-axis gridlines or ticks
+  // ✅ Y-axis gridlines/ticks and labels
   for (int i = 1; i <= yDivisions; i++) {
     final y = indentYBottom - (i * yStepSize);
+    final yLabel = (i * yStepValue).toStringAsFixed(decimalPlaces);
+    final pStart = Offset(indentXLeft, y);
+    final pEnd = Offset(indentXRight, y);
 
-    if (gridLineStyle == GridLineStyle.full) {
-      canvas.drawLine(
-        Offset(indentXLeft, y),
-        Offset(indentXRight, y),
-        gridPaint,
+    if (iCanvas != null) {
+      if (gridLineStyle == GridLineStyle.full) {
+        iCanvas.drawLine(pStart, pEnd, effectiveColor, effectiveWidth);
+      } else if (gridLineStyle == GridLineStyle.dashes) {
+        iCanvas.drawDashedLine(pStart, pEnd, effectiveColor, effectiveWidth);
+      } else if (gridLineStyle == GridLineStyle.indents) {
+        iCanvas.drawLine(
+          pStart,
+          Offset(indentXLeft - kIndentLength, y),
+          effectiveColor,
+          effectiveWidth,
+        );
+      }
+      iCanvas.drawText(
+        yLabel,
+        Offset(indentXLeft - labelIndent, y),
+        fontSize,
+        effectiveColor,
+        align: TextAlign.right,
       );
-    } else if (gridLineStyle == GridLineStyle.dashes) {
-      drawDashedLineForGrid(
+    } else if (canvas != null) {
+      // 👈 Added null check
+      final gridPaint = Paint()
+        ..color = effectiveColor
+        ..strokeWidth = effectiveWidth;
+      if (gridLineStyle == GridLineStyle.full) {
+        canvas.drawLine(pStart, pEnd, gridPaint);
+      } else if (gridLineStyle == GridLineStyle.dashes) {
+        drawDashedLineForGrid(canvas, pStart, pEnd, gridPaint);
+      } else if (gridLineStyle == GridLineStyle.indents) {
+        canvas.drawLine(
+          pStart,
+          Offset(indentXLeft - kIndentLength, y),
+          gridPaint,
+        );
+      }
+
+      final textPainter = TextPainter(textDirection: TextDirection.ltr);
+      textPainter.text = TextSpan(
+        text: yLabel,
+        style: TextStyle(color: effectiveColor, fontSize: fontSize),
+      );
+      textPainter.layout();
+      textPainter.paint(
         canvas,
-        Offset(indentXLeft, y),
-        Offset(indentXRight, y),
-        gridPaint,
-      );
-    } else if (gridLineStyle == GridLineStyle.indents) {
-      // Draw short tick mark (little indent) on the Y-axis
-      canvas.drawLine(
-        Offset(indentXLeft, y),
-        Offset(indentXLeft - kIndentLength, y),
-        gridPaint,
+        Offset(
+          indentXLeft - textPainter.width - labelIndent,
+          y - textPainter.height / 2,
+        ),
       );
     }
-
-    // ✅ Draw label
-    final yLabel = (i * yStepValue).toStringAsFixed(decimalPlaces);
-    textPainter.text = TextSpan(
-      text: yLabel,
-      style: TextStyle(
-        color: config.colorScheme.onSurface,
-        fontSize: kFontMedium * config.averageRatio,
-      ),
-    );
-    textPainter.layout();
-    textPainter.paint(
-      canvas,
-      Offset(
-        indentXLeft - textPainter.width - labelIndent,
-        y - textPainter.height / 2,
-      ),
-    );
   }
 
-  // ✅ X-axis gridlines or ticks
+  // ✅ X-axis gridlines/ticks and labels
   for (int i = 1; i <= xDivisions; i++) {
     final x = indentXLeft + (i * xStepSize);
+    final xLabel = (i * xStepValue).toStringAsFixed(decimalPlaces);
+    final pStart = Offset(x, indentYBottom);
+    final pEnd = Offset(x, indentYTop);
 
-    if (gridLineStyle == GridLineStyle.full) {
-      canvas.drawLine(
-        Offset(x, indentYBottom),
-        Offset(x, indentYTop),
-        gridPaint,
+    if (iCanvas != null) {
+      if (gridLineStyle == GridLineStyle.full) {
+        iCanvas.drawLine(pStart, pEnd, effectiveColor, effectiveWidth);
+      } else if (gridLineStyle == GridLineStyle.dashes) {
+        iCanvas.drawDashedLine(pStart, pEnd, effectiveColor, effectiveWidth);
+      } else if (gridLineStyle == GridLineStyle.indents) {
+        iCanvas.drawLine(
+          pStart,
+          Offset(x, indentYBottom + kIndentLength),
+          effectiveColor,
+          effectiveWidth,
+        );
+      }
+      iCanvas.drawText(
+        xLabel,
+        Offset(x, indentYBottom + labelIndent),
+        fontSize,
+        effectiveColor,
+        align: TextAlign.center,
       );
-    } else if (gridLineStyle == GridLineStyle.dashes) {
-      drawDashedLineForGrid(
+    } else if (canvas != null) {
+      // 👈 Added null check
+      final gridPaint = Paint()
+        ..color = effectiveColor
+        ..strokeWidth = effectiveWidth;
+      if (gridLineStyle == GridLineStyle.full) {
+        canvas.drawLine(pStart, pEnd, gridPaint);
+      } else if (gridLineStyle == GridLineStyle.dashes) {
+        drawDashedLineForGrid(canvas, pStart, pEnd, gridPaint);
+      } else if (gridLineStyle == GridLineStyle.indents) {
+        canvas.drawLine(
+          pStart,
+          Offset(x, indentYBottom + kIndentLength),
+          gridPaint,
+        );
+      }
+
+      final textPainter = TextPainter(textDirection: TextDirection.ltr);
+      textPainter.text = TextSpan(
+        text: xLabel,
+        style: TextStyle(color: effectiveColor, fontSize: fontSize),
+      );
+      textPainter.layout();
+      textPainter.paint(
         canvas,
-        Offset(x, indentYBottom),
-        Offset(x, indentYTop),
-        gridPaint,
-      );
-    } else if (gridLineStyle == GridLineStyle.indents) {
-      // Draw short tick mark on the X-axis
-      canvas.drawLine(
-        Offset(x, indentYBottom),
-        Offset(x, indentYBottom + kIndentLength),
-        gridPaint,
+        Offset(x - textPainter.width / 2, indentYBottom + labelIndent),
       );
     }
-
-    // ✅ Draw label
-    final xLabel = (i * xStepValue).toStringAsFixed(decimalPlaces);
-    textPainter.text = TextSpan(
-      text: xLabel,
-      style: TextStyle(
-        color: config.colorScheme.onSurface,
-        fontSize: kFontMedium * config.averageRatio,
-      ),
-    );
-    textPainter.layout();
-    textPainter.paint(
-      canvas,
-      Offset(x - textPainter.width / 2, indentYBottom + labelIndent),
-    );
   }
 }

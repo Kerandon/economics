@@ -1,4 +1,3 @@
-
 import 'dart:typed_data';
 import 'package:economics_app/home_page/models/key_content.dart';
 import 'package:economics_app/home_page/models/term.dart';
@@ -121,19 +120,25 @@ class SlideContent {
       SlideContent(content: Content(content, tag: tag));
 
   factory SlideContent.key(String title, String content, {Tag? tag}) =>
-      SlideContent(keyContent: KeyContent(title: title, content: content, tag: tag));
+      SlideContent(
+        keyContent: KeyContent(title: title, content: content, tag: tag),
+      );
 
   factory SlideContent.term(String term, String explanation, {Tag? tag}) =>
-      SlideContent(term: Term(term: term, explanation: explanation, tag: tag));
+      SlideContent(
+        term: Term(term: term, explanation: explanation, tag: tag),
+      );
 
   factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
 
-  factory SlideContent.examples(String text) => SlideContent(examples: Example(text));
+  factory SlideContent.examples(String text) =>
+      SlideContent(examples: Example(text));
 
   factory SlideContent.diagrams(List<DiagramEnum> diagrams) =>
       SlideContent(diagramEnums: diagrams);
 
-  factory SlideContent.customWidget(Widget widget) => SlideContent(widget: widget);
+  factory SlideContent.customWidget(Widget widget) =>
+      SlideContent(widget: widget);
 
   // 8. GLOSSARY LIST (Fixed for App + PDF)
   factory SlideContent.glossary(List<SlideContent> items) {
@@ -150,10 +155,20 @@ class SlideContent {
     String? title,
     String? figCaption,
   }) {
-    final table = TableData(headers: headers, data: data, title: title, figCaption: figCaption);
+    final table = TableData(
+      headers: headers,
+      data: data,
+      title: title,
+      figCaption: figCaption,
+    );
     return SlideContent(
       tableData: table,
-      widget: SimpleTable(headers: headers, data: data, title: title, figCaption: figCaption),
+      widget: SimpleTable(
+        headers: headers,
+        data: data,
+        title: title,
+        figCaption: figCaption,
+      ),
     );
   }
 

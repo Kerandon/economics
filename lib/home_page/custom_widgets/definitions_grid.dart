@@ -39,22 +39,20 @@ Color? _sectionColorForTag(Tag? tag) {
 class DefinitionList extends StatelessWidget {
   final List<SlideContent> items;
 
-  const DefinitionList({
-    super.key,
-    required this.items,
-  });
+  const DefinitionList({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
     final sortedItems = [...items]
       ..sort((a, b) {
-        final tagCompare = _tagPriority(a.term?.tag)
-            .compareTo(_tagPriority(b.term?.tag));
+        final tagCompare = _tagPriority(
+          a.term?.tag,
+        ).compareTo(_tagPriority(b.term?.tag));
         if (tagCompare != 0) return tagCompare;
 
-        return (a.term?.term ?? '')
-            .toLowerCase()
-            .compareTo((b.term?.term ?? '').toLowerCase());
+        return (a.term?.term ?? '').toLowerCase().compareTo(
+          (b.term?.term ?? '').toLowerCase(),
+        );
       });
 
     Tag? previousTag;
@@ -89,39 +87,36 @@ class DefinitionList extends StatelessWidget {
 
       final themedChild = currentSectionColor == null
           ? CustomTextBox(
-        term: item.term?.term,
-        text: item.term?.explanation ?? '',
-        type: currentTag == Tag.hl
-            ? TextBoxType.keyContent
-            : TextBoxType.term,
-        tag: null,
-      )
+              term: item.term?.term,
+              text: item.term?.explanation ?? '',
+              type: currentTag == Tag.hl
+                  ? TextBoxType.keyContent
+                  : TextBoxType.term,
+              tag: null,
+            )
           : Theme(
-        data: Theme.of(context).copyWith(
-          colorScheme: Theme.of(context).colorScheme.copyWith(
-            primary: currentSectionColor!,
-            onSurface: currentSectionColor!,
-          ),
-          textTheme: Theme.of(context).textTheme.apply(
-            bodyColor: currentSectionColor!,
-            displayColor: currentSectionColor!,
-          ),
-        ),
-        child: CustomTextBox(
-          term: item.term?.term,
-          text: item.term?.explanation ?? '',
-          type: currentTag == Tag.hl
-              ? TextBoxType.keyContent
-              : TextBoxType.term,
-          tag: null,
-        ),
-      );
+              data: Theme.of(context).copyWith(
+                colorScheme: Theme.of(context).colorScheme.copyWith(
+                  primary: currentSectionColor!,
+                  onSurface: currentSectionColor!,
+                ),
+                textTheme: Theme.of(context).textTheme.apply(
+                  bodyColor: currentSectionColor!,
+                  displayColor: currentSectionColor!,
+                ),
+              ),
+              child: CustomTextBox(
+                term: item.term?.term,
+                text: item.term?.explanation ?? '',
+                type: currentTag == Tag.hl
+                    ? TextBoxType.keyContent
+                    : TextBoxType.term,
+                tag: null,
+              ),
+            );
 
       children.add(
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: themedChild,
-        ),
+        Padding(padding: const EdgeInsets.only(bottom: 8), child: themedChild),
       );
     }
 

@@ -1,706 +1,634 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/label_align.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
-import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
-import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
-import 'package:economics_app/diagrams/models/custom_bezier.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
 import '../../enums/diagram_enum.dart';
 import '../../enums/diagram_labels.dart';
 import '../../models/base_painter_painter.dart';
+import '../../models/custom_bezier.dart';
 import '../../models/diagram_painter_config.dart';
+import '../i_diagram_canvas.dart';
+import '../painter_constants.dart';
 import '../painter_methods/axis/paint_axis.dart';
+import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
+import '../painter_methods/legend/legend_entry.dart';
+import '../painter_methods/legend/paint_legend.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
+import '../painter_methods/paint_dot.dart';
+import '../painter_methods/paint_text_2.dart' show paintText2;
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
-import 'dart:math' as math;
+import '../shade/paint_shading.dart';
+import '../shade/shade_type.dart';
 
-const marketCurveLengthAdjustment = -0.10;
+const double marketCurveLengthAdjustment = -0.10;
 
-class Elasticities extends BaseDiagramPainter2 {
-  Elasticities(super.config, super.bundle);
+class Elasticities extends BaseDiagramPainter3 {
+  Elasticities(super.config, super.diagram);
 
   @override
   void paint(Canvas canvas, Size size) {
+    drawDiagram(canvas, size);
+  }
+
+  @override
+  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
     final c = config.copyWith(painterSize: size);
 
-    String yLabel = DiagramLabel.price.label;
-
-    if (bundle == DiagramEnum.microDemandEngelCurve) {
+    String yLabel = DiagramLabel.p.label;
+    if (diagram == DiagramEnum.microDemandEngelCurve) {
       yLabel = DiagramLabel.income.label;
-    } else if (bundle == DiagramEnum.microDemandElasticityRevenueChange) {
+    } else if (diagram == DiagramEnum.microDemandElasticityRevenueChange) {
       yLabel = DiagramLabel.revenue.label;
     }
 
     paintAxis(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisLabel: yLabel,
-      xAxisLabel: DiagramLabel.quantity.label,
+      xAxisLabel: DiagramLabel.q.label,
     );
 
-    switch (bundle) {
-      case DiagramEnum.microDemandElastic ||
+    switch (diagram) {
+      case DiagramEnum.microDemandElastic: case
           DiagramEnum.microDemandElasticRevenue:
-        _paintElasticDemand(c, canvas, size);
-        break;
-      case DiagramEnum.microDemandInelastic ||
+        _paintElasticDemand(c, canvas, size, iCanvas: iCanvas);
+      case DiagramEnum.microDemandInelastic: case
           DiagramEnum.microDemandInelasticRevenue:
-        _paintInelasticDemand(c, canvas, size);
-        break;
+        _paintInelasticDemand(c, canvas, size, iCanvas: iCanvas);
       case DiagramEnum.microDemandUnitElastic:
-        _paintUnitElastic(c, canvas);
-        break;
+        _paintUnitElastic(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microDemandPerfectlyElastic:
-        _paintDemandPerfectlyElastic(c, canvas);
-        break;
+        _paintDemandPerfectlyElastic(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microDemandPerfectlyInelastic:
-        _paintDemandPerfectlyInelastic(c, canvas);
-        break;
+        _paintDemandPerfectlyInelastic(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microDemandEngelCurve:
-        _paintDemandEngelCurve(c, canvas);
-        break;
+        _paintDemandEngelCurve(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microDemandElasticityChange:
-        _paintMicroDemandElasticityChange(c, canvas);
-        break;
+        _paintMicroDemandElasticityChange(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microDemandElasticityRevenueChange:
-        _paintMicroDemandRevenueChange(c, canvas);
+        _paintMicroDemandRevenueChange(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microSupplyElastic:
-        _paintSupplyElastic(c, canvas);
-        break;
+        _paintSupplyElastic(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microSupplyInelastic:
-        _paintSupplyInelastic(c, canvas);
-        break;
+        _paintSupplyInelastic(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microSupplyUnitElastic:
-        _paintSupplyUnitElastic(c, canvas);
-        break;
+        _paintSupplyUnitElastic(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microSupplyPerfectlyElastic:
-        _paintSupplyPerfectlyElastic(c, canvas);
-        break;
+        _paintSupplyPerfectlyElastic(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microSupplyPerfectlyInelastic:
-        _paintSupplyPerfectlyInelastic(c, canvas);
-        break;
+        _paintSupplyPerfectlyInelastic(c, canvas, iCanvas: iCanvas);
       case DiagramEnum.microSupplyPrimaryCommodities:
-        _paintMicroSupplyPrimaryCommodities(c, canvas, size);
-
+        _paintMicroSupplyPrimaryCommodities(c, canvas, size, iCanvas: iCanvas);
       default:
     }
   }
 
-  void _paintInelasticDemand(DiagramPainterConfig c, Canvas canvas, Size size) {
+  // --- DEMAND METHODS ---
+
+  void _paintInelasticDemand(
+    DiagramPainterConfig c,
+    Canvas? canvas,
+    Size size, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.demand,
       angle: -0.40,
       lengthAdjustment: marketCurveLengthAdjustment,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.45,
       xAxisEndPos: 0.36,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: 'P1',
+      xLabel: 'Q1',
       showDotAtIntersection: true,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.60,
       xAxisEndPos: 0.74,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: 'P2',
+      xLabel: 'Q2',
       showDotAtIntersection: true,
     );
 
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(0.54, 1.10),
-      angle: math.pi * 2,
-      length: 0.30,
-    );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(-0.1, 0.51),
-      angle: math.pi / 2,
-    );
-    if (bundle == DiagramEnum.microDemandInelasticRevenue) {
-      paintShading(canvas, size, ShadeType.lostRevenue, [
-        Offset(0.00, 0.45),
-        Offset(0.36, 0.45),
-        Offset(0.36, 0.60),
-        Offset(0.00, 0.60),
-      ]);
-      paintShading(canvas, size, ShadeType.gainedRevenue, [
-        Offset(0.36, 0.60),
-        Offset(0.74, 0.60),
-        Offset(0.74, 1.0),
-        Offset(0.36, 1.0),
-      ]);
-      paintShading(canvas, size, ShadeType.revenueUnchanged, [
-        Offset(0.0, 0.60),
-        Offset(0.36, 0.60),
-        Offset(0.36, 1.00),
-        Offset(0.0, 1.0),
-      ]);
-
-      paintLegend(canvas, size, [
-        LegendEntry.fromShade(ShadeType.lostRevenue, customLabel: ' A Loss'),
-        LegendEntry.fromShade(
-          ShadeType.revenueUnchanged,
-          customLabel: ' B Unchanged',
-        ),
-        LegendEntry.fromShade(ShadeType.gainedRevenue, customLabel: ' C Gain'),
-      ]);
-      paintText2(c, canvas, DiagramLabel.b.label, Offset(0.15, 0.80));
-      paintText2(c, canvas, DiagramLabel.a.label, Offset(0.15, 0.52));
-      paintText2(c, canvas, DiagramLabel.c.label, Offset(0.55, 0.80));
+    if (diagram == DiagramEnum.microDemandInelasticRevenue) {
+      _paintRevenueShading(
+        c,
+        canvas,
+        size,
+        iCanvas: iCanvas,
+        q1: 0.36,
+        q2: 0.74,
+        p1: 0.45,
+        p2: 0.60,
+      );
     }
   }
 
-  void _paintElasticDemand(DiagramPainterConfig c, Canvas canvas, Size size) {
+  void _paintElasticDemand(
+    DiagramPainterConfig c,
+    Canvas? canvas,
+    Size size, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.demand,
       angle: 0.40,
-      lengthAdjustment: marketCurveLengthAdjustment, // steeper (inelastic)
+      lengthAdjustment: marketCurveLengthAdjustment,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.45,
       xAxisEndPos: 0.475,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: 'P1',
+      xLabel: 'Q1',
       showDotAtIntersection: true,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.60,
       xAxisEndPos: 0.54,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: 'P2',
+      xLabel: 'Q2',
       showDotAtIntersection: true,
     );
 
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(0.50, 1.10),
-      angle: 0,
-      length: 0.050,
-    );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(-0.1, 0.52),
-      angle: math.pi / 2,
-    );
-    if (bundle == DiagramEnum.microDemandElasticRevenue) {
-      paintShading(canvas, size, ShadeType.lostRevenue, [
-        Offset(0.00, 0.45),
-        Offset(0.475, 0.45),
-        Offset(0.475, 0.60),
-        Offset(0.00, 0.60),
-      ]);
-      paintShading(canvas, size, ShadeType.gainedRevenue, [
-        Offset(0.475, 0.60),
-        Offset(0.54, 0.60),
-        Offset(0.54, 1.0),
-        Offset(0.475, 1.0),
-      ]);
-      paintShading(canvas, size, ShadeType.revenueUnchanged, [
-        Offset(0.0, 0.60),
-        Offset(0.475, 0.60),
-        Offset(0.475, 1.00),
-        Offset(0.0, 1.0),
-      ]);
-
-      paintLegend(canvas, size, [
-        LegendEntry.fromShade(ShadeType.lostRevenue, customLabel: ' A Loss'),
-        LegendEntry.fromShade(
-          ShadeType.revenueUnchanged,
-          customLabel: ' B Unchanged',
-        ),
-        LegendEntry.fromShade(ShadeType.gainedRevenue, customLabel: ' C Gain'),
-      ]);
-      paintText2(c, canvas, DiagramLabel.b.label, Offset(0.25, 0.80));
-      paintText2(c, canvas, DiagramLabel.a.label, Offset(0.25, 0.52));
-      paintText2(c, canvas, DiagramLabel.c.label, Offset(0.51, 0.80));
+    if (diagram == DiagramEnum.microDemandElasticRevenue) {
+      _paintRevenueShading(
+        c,
+        canvas,
+        size,
+        iCanvas: iCanvas,
+        q1: 0.475,
+        q2: 0.54,
+        p1: 0.45,
+        p2: 0.60,
+      );
     }
   }
 
-  void _paintUnitElastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintUnitElastic(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0.10, 0.10),
+      iCanvas: iCanvas,
+      startPos: const Offset(0.10, 0.10),
       bezierPoints: [
-        CustomBezier(endPoint: Offset(0.90, 0.90), control: Offset(0.09, 0.90)),
+        CustomBezier(
+          endPoint: const Offset(0.90, 0.90),
+          control: const Offset(0.09, 0.90),
+        ),
       ],
-      label2: DiagramLabel.d.label,
+      label2: 'D',
       label2Align: LabelAlign.centerRight,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.16,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: 'P1',
+      xLabel: 'Q1',
       showDotAtIntersection: true,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.75,
       xAxisEndPos: 0.35,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: 'P2',
+      xLabel: 'Q2',
       showDotAtIntersection: true,
-    );
-
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(0.25, 1.10),
-      angle: math.pi * 2,
-      length: 0.15,
-    );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(-0.1, 0.62),
-      angle: math.pi / 2,
-      length: 0.15,
     );
   }
 
-  void _paintDemandPerfectlyElastic(DiagramPainterConfig c, Canvas canvas) {
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.50,
-      xAxisEndPos: 0.0,
-      yLabel: DiagramLabel.p.label,
-    );
+  void _paintDemandPerfectlyElastic(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0.0, 0.50),
-      polylineOffsets: [Offset(0.90, 0.50)],
-      label2: DiagramLabel.d.label,
+      iCanvas: iCanvas,
+      startPos: const Offset(0.0, 0.50),
+      polylineOffsets: [const Offset(0.90, 0.50)],
+      label2: 'D',
       label2Align: LabelAlign.centerRight,
     );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.50,
+      xAxisEndPos: 0.0,
+      yLabel: 'P',
+    );
   }
 
-  void _paintDemandPerfectlyInelastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintDemandPerfectlyInelastic(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0.50, 1.0),
-      polylineOffsets: [Offset(0.50, 0.10)],
-      label2: DiagramLabel.d.label,
+      iCanvas: iCanvas,
+      startPos: const Offset(0.50, 1.0),
+      polylineOffsets: [const Offset(0.50, 0.10)],
+      label2: 'D',
       label2Align: LabelAlign.centerTop,
-    );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(-0.1, 0.51),
-      angle: -math.pi / 2,
-      length: 0.15,
     );
     paintDiagramDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.40,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.60,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q.label,
+      yLabel: 'P1',
+      xLabel: 'Q',
       showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.60,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.40,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.p1.label,
+      yLabel: 'P2',
       hideXLine: true,
       showDotAtIntersection: true,
     );
   }
 
-  void _paintMicroDemandRevenueChange(DiagramPainterConfig c, Canvas canvas) {
+  void _paintMicroDemandRevenueChange(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0, 1),
+      iCanvas: iCanvas,
+      startPos: const Offset(0, 1),
       bezierPoints: [
-        CustomBezier(control: Offset(0.50, -0.70), endPoint: Offset(1, 1)),
+        CustomBezier(
+          control: const Offset(0.50, -0.70),
+          endPoint: const Offset(1, 1),
+        ),
       ],
     );
     paintDiagramDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.36,
-      xAxisEndPos: 0.25,
-      hideYLine: true,
-      xLabel: DiagramLabel.q1.label,
-      showDotAtIntersection: true,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.15,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.rMax.label,
-      xLabel: DiagramLabel.qStar.label,
+      yLabel: 'R Max',
+      xLabel: 'Q*',
       showDotAtIntersection: true,
     );
-    paintDiagramDashedLines(
+    paintText2(
       c,
       canvas,
-      yAxisStartPos: 0.36,
-      xAxisEndPos: 0.75,
-      hideYLine: true,
-      xLabel: DiagramLabel.q2.label,
-      showDotAtIntersection: true,
+      'PED > 1',
+      const Offset(0.20, 0.25),
+      iCanvas: iCanvas,
     );
-
-    paintText2(c, canvas, DiagramLabel.pedBigger1.label, Offset(0.20, 0.25));
-    paintText2(c, canvas, DiagramLabel.pedEqual1.label, Offset(0.50, 0.08));
-    paintText2(c, canvas, DiagramLabel.pedSmaller1.label, Offset(0.80, 0.25));
+    paintText2(
+      c,
+      canvas,
+      'PED = 1',
+      const Offset(0.50, 0.08),
+      iCanvas: iCanvas,
+    );
+    paintText2(
+      c,
+      canvas,
+      'PED < 1',
+      const Offset(0.80, 0.25),
+      iCanvas: iCanvas,
+    );
   }
 
   void _paintMicroDemandElasticityChange(
     DiagramPainterConfig c,
-    Canvas canvas,
-  ) {
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.demand,
       lengthAdjustment: 0.15,
     );
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.25,
       xAxisEndPos: 0.25,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: 'P1',
+      xLabel: 'Q1',
       showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.pStar.label,
-      xLabel: DiagramLabel.qStar.label,
+      yLabel: 'P*',
+      xLabel: 'Q*',
       showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.75,
       xAxisEndPos: 0.75,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: 'P2',
+      xLabel: 'Q2',
       showDotAtIntersection: true,
     );
-    paintLineSegment(
+    paintText2(
       c,
       canvas,
-      origin: Offset(0.35, 0.25),
-      angle: math.pi * -0.75,
-      length: 0.40,
-    );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: Offset(0.75, 0.65),
-      angle: math.pi * 0.25,
-      length: 0.40,
+      'PED > 1',
+      const Offset(0.30, 0.15),
+      iCanvas: iCanvas,
     );
     paintText2(
       c,
       canvas,
-      DiagramLabel.pedBigger1.label,
-      Offset(0.30, 0.15),
-      horizontalPivot: LabelPivot.left,
+      'PED = 1',
+      const Offset(0.60, 0.40),
+      iCanvas: iCanvas,
+      pointerLine: const Offset(0.50, 0.50),
     );
     paintText2(
       c,
       canvas,
-      DiagramLabel.pedSmaller1.label,
-      Offset(0.80, 0.65),
-      horizontalPivot: LabelPivot.left,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.pedSmaller1.label,
-      Offset(0.60, 0.40),
-      horizontalPivot: LabelPivot.left,
-      pointerLine: Offset(0.50, 0.50),
+      'PED < 1',
+      const Offset(0.80, 0.65),
+      iCanvas: iCanvas,
     );
   }
 
-  void _paintDemandEngelCurve(DiagramPainterConfig c, Canvas canvas) {
-    final dashedColor = c.colorScheme.onSurface.withAlpha(120);
+  void _paintDemandEngelCurve(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
+    final dashedColor = Colors.grey;
+    // Luxuries
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0.15, 0.80),
-      polylineOffsets: [Offset(0.50, 0.70)],
+      iCanvas: iCanvas,
+      startPos: const Offset(0.15, 0.80),
+      polylineOffsets: [const Offset(0.50, 0.70)],
     );
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0.0, 0.845),
-      polylineOffsets: [Offset(0.15, 0.80)],
-      curveStyle: CurveStyle.dashed,
+      iCanvas: iCanvas,
+      startPos: const Offset(0.0, 0.845),
+      polylineOffsets: [const Offset(0.15, 0.80)],
+      curveStyle: CurveStyle.dotted,
       color: dashedColor,
     );
+    // Necessities
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0.50, 0.70),
-      polylineOffsets: [Offset(0.70, 0.40)],
+      iCanvas: iCanvas,
+      startPos: const Offset(0.50, 0.70),
+      polylineOffsets: [const Offset(0.70, 0.40)],
+    );
+    // Inferior
+    paintDiagramLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      startPos: const Offset(0.70, 0.40),
+      polylineOffsets: [const Offset(0.30, 0.25)],
     );
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0.50, 0.70),
-      polylineOffsets: [Offset(0.29, 1.0)],
+      iCanvas: iCanvas,
+      startPos: const Offset(0.30, 0.25),
+      polylineOffsets: [const Offset(0, 0.14)],
       curveStyle: CurveStyle.dashed,
       color: dashedColor,
     );
 
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0.70, 0.40),
-      polylineOffsets: [Offset(0.30, 0.25)],
-    );
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0.30, 0.25),
-      polylineOffsets: [Offset(0, 0.14)],
-      curveStyle: CurveStyle.dashed,
-      color: dashedColor,
-    );
     paintText2(
       c,
       canvas,
-      DiagramLabel.normalGoodLuxury.label,
-      Offset(0.25, 0.65),
-      pointerLine: Offset(0.25, 0.77),
+      DiagramLabel.inferiorGood.label,
+      const Offset(0.25, 0.65),
+      pointerLine: const Offset(0.25, 0.77),
+      iCanvas: iCanvas,
     );
     paintText2(
       c,
       canvas,
       DiagramLabel.normalGoodNecessity.label,
-      Offset(0.75, 0.70),
-      pointerLine: Offset(0.57, 0.60),
+      const Offset(0.75, 0.70),
+      pointerLine: const Offset(0.57, 0.60),
+      iCanvas: iCanvas,
     );
     paintText2(
       c,
       canvas,
-      DiagramLabel.inferiorGood.label,
-      Offset(0.50, 0.20),
-      pointerLine: Offset(0.50, 0.32),
+      DiagramLabel.normalGoodLuxury.label,
+      const Offset(0.50, 0.15),
+      pointerLine: const Offset(0.50, 0.32),
+      iCanvas: iCanvas,
     );
-    paintDot(c, canvas, pos: Offset(0.29, 1.0));
-    paintDot(c, canvas, pos: Offset(0.0, 0.840));
-    paintDot(c, canvas, pos: Offset(0.0, 0.14));
+    paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.0, 0.845));
+    paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.0, 0.14));
   }
 
-  void _paintSupplyElastic(DiagramPainterConfig c, Canvas canvas) {
+  // --- SUPPLY METHODS ---
+
+  void _paintSupplyElastic(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.supply,
       angle: 0.40,
       lengthAdjustment: marketCurveLengthAdjustment,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.56,
       xAxisEndPos: 0.36,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: 'P1',
+      xLabel: 'Q1',
       showDotAtIntersection: true,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.405,
       xAxisEndPos: 0.74,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: 'P2',
+      xLabel: 'Q2',
       showDotAtIntersection: true,
-    );
-
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(0.54, 1.10),
-      angle: math.pi * 2,
-      length: 0.35,
-    );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(-0.1, 0.48),
-      angle: -math.pi / 2,
     );
   }
 
-  void _paintSupplyInelastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintSupplyInelastic(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.supply,
       angle: -0.40,
       lengthAdjustment: marketCurveLengthAdjustment,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.55,
       xAxisEndPos: 0.48,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: 'P1',
+      xLabel: 'Q1',
       showDotAtIntersection: true,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.35,
       xAxisEndPos: 0.56,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: 'P2',
+      xLabel: 'Q2',
       showDotAtIntersection: true,
     );
-
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(0.52, 1.10),
-      angle: math.pi * 2,
-      length: 0.06,
-    );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(-0.1, 0.46),
-      angle: -math.pi / 2,
-      length: 0.18,
-    );
   }
 
-  void _paintSupplyUnitElastic(DiagramPainterConfig c, Canvas canvas) {
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0, 1.0),
-      polylineOffsets: [Offset(0.80, 0.20)],
-      label2: DiagramLabel.s2.label,
-      label2Align: LabelAlign.centerRight,
-    );
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0, 1.0),
-      polylineOffsets: [Offset(0.35, 0.10)],
-      label2: DiagramLabel.s1.label,
-      label2Align: LabelAlign.centerRight,
-    );
-
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0, 1.0),
-      polylineOffsets: [Offset(0.90, 0.65)],
-      label2: DiagramLabel.s3.label,
-      label2Align: LabelAlign.centerRight,
-    );
-    paintDot(c, canvas, pos: Offset(0.005, 0.995));
+  void _paintSupplyUnitElastic(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
+    final supplyCurves = [
+      const Offset(0.35, 0.10),
+      const Offset(0.80, 0.20),
+      const Offset(0.90, 0.65),
+    ];
+    for (int i = 0; i < supplyCurves.length; i++) {
+      paintDiagramLines(
+        c,
+        canvas,
+        iCanvas: iCanvas,
+        startPos: const Offset(0, 1.0),
+        polylineOffsets: [supplyCurves[i]],
+        label2: 'S${i + 1}',
+        label2Align: LabelAlign.centerRight,
+      );
+    }
+    paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.005, 0.995));
   }
 
-  void _paintSupplyPerfectlyElastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintSupplyPerfectlyElastic(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintDiagramLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       startPos: const Offset(0.0, 0.50),
       polylineOffsets: [const Offset(0.90, 0.50)],
-      label2: DiagramLabel.s.label,
+      label2: 'S',
       label2Align: LabelAlign.centerRight,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.0,
-      yLabel: DiagramLabel.p.label,
+      yLabel: 'P',
     );
   }
 
-  void _paintSupplyPerfectlyInelastic(DiagramPainterConfig c, Canvas canvas) {
+  void _paintSupplyPerfectlyInelastic(
+    DiagramPainterConfig c,
+    Canvas? canvas, {
+    IDiagramCanvas? iCanvas,
+  }) {
     paintDiagramLines(
       c,
       canvas,
-      startPos: const Offset(0.50, 0.10),
-      polylineOffsets: [const Offset(0.50, 1.00)],
-      label1: DiagramLabel.s.label,
+      iCanvas: iCanvas,
+      startPos: const Offset(0.50, 1.0),
+      polylineOffsets: [const Offset(0.50, 0.10)],
+      label1: 'S',
       label1Align: LabelAlign.centerTop,
     );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: const Offset(-0.1, 0.51),
-      angle: -math.pi / 2,
-    );
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.60,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q.label,
+      yLabel: 'P1',
+      xLabel: 'Q',
       showDotAtIntersection: true,
     );
-
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.40,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.p2.label,
+      yLabel: 'P2',
       hideXLine: true,
       showDotAtIntersection: true,
     );
@@ -708,130 +636,109 @@ class Elasticities extends BaseDiagramPainter2 {
 
   void _paintMicroSupplyPrimaryCommodities(
     DiagramPainterConfig c,
-    Canvas canvas,
-    Size size,
-  ) {
-    paintShading(canvas, size, ShadeType.gainedRevenue, [
-      Offset(0.00, 0.35),
-      Offset(0.45, 0.35),
-      Offset(0.45, 0.65),
-      Offset(0.0, 0.65),
-    ]);
-    paintShading(canvas, size, ShadeType.revenueUnchanged, [
-      Offset(0.00, 0.65),
-      Offset(0.45, 0.65),
-      Offset(0.45, 1.0),
-      Offset(0.0, 1.0),
-    ]);
-    paintShading(canvas, size, ShadeType.lostRevenue, [
-      Offset(0.45, 0.65),
-      Offset(0.55, 0.65),
-      Offset(0.55, 1.0),
-      Offset(0.45, 1.0),
-    ]);
-
-    ///      paintShading(canvas, size, ShadeType.lostRevenue, [
-    //         Offset(0.00, 0.45),
-    //         Offset(0.475, 0.45),
-    //         Offset(0.475, 0.60),
-    //         Offset(0.00, 0.60),
-    //       ]);
-    //       paintShading(canvas, size, ShadeType.gainedRevenue, [
-    //         Offset(0.475, 0.60),
-    //         Offset(0.54, 0.60),
-    //         Offset(0.54, 1.0),
-    //         Offset(0.475, 1.0),
-    //       ]);
-    //       paintShading(canvas, size, ShadeType.revenueUnchanged, [
-    //         Offset(0.0, 0.60),
-    //         Offset(0.475, 0.60),
-    //         Offset(0.475, 1.00),
-    //         Offset(0.0, 1.0),
-    //       ]);
-    //
-
-    //       paintText2(c, canvas, DiagramLabel.b.label, Offset(0.25, 0.80));
-    //       paintText2(c, canvas, DiagramLabel.a.label, Offset(0.25, 0.52));
-    //       paintText2(c, canvas, DiagramLabel.c.label, Offset(0.51, 0.80));
-    //
-    //     }
-
-    paintLineSegment(
+    Canvas? canvas,
+    Size size, {
+    IDiagramCanvas? iCanvas,
+  }) {
+    // Show Revenue change due to volatile supply
+    _paintRevenueShading(
       c,
       canvas,
-      origin: Offset(0.58, 0.30),
-      angle: math.pi,
-      length: 0.12,
-    );
-    paintLineSegment(
-      length: 0.22,
-      c,
-      canvas,
-      origin: Offset(-0.08, 0.505),
-      angle: math.pi * 1.5,
-    );
-    paintLineSegment(
-      c,
-      canvas,
-      origin: Offset(0.52, 1.09),
-      angle: math.pi * 1,
-      length: 0.05,
+      size,
+      iCanvas: iCanvas,
+      q1: 0.45,
+      q2: 0.55,
+      p1: 0.35,
+      p2: 0.65,
     );
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.demand,
-      angle: math.pi * 0.15,
-      lengthAdjustment: -0.10,
+      angle: pi * 0.15,
+        lengthAdjustment: -0.10
     );
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.supply,
-      angle: math.pi * -0.15,
       horizontalShift: -0.10,
-      label: DiagramLabel.s2.label,
-      lengthAdjustment: -0.10,
+      label: 'S2',
+      angle: pi * -0.15,
+        lengthAdjustment: -0.10
     );
     paintMarketCurve(
       c,
       canvas,
+      iCanvas: iCanvas,
       type: MarketCurveType.supply,
-      angle: math.pi * -0.15,
       horizontalShift: 0.10,
-      label: DiagramLabel.s1.label,
-      lengthAdjustment: -0.10,
+      label: 'S1',
+      angle: pi * -0.15,
+      lengthAdjustment: -0.10
     );
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.35,
       xAxisEndPos: 0.45,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: 'P2',
+      xLabel: 'Q2',
       showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.65,
       xAxisEndPos: 0.55,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: 'P1',
+      xLabel: 'Q1',
       showDotAtIntersection: true,
     );
+  }
 
-    paintLegend(canvas, size, [
-      LegendEntry.fromShade(ShadeType.gainedRevenue, customLabel: ' A Gain'),
+  // --- REVENUE UTILITY ---
+
+  void _paintRevenueShading(
+    DiagramPainterConfig c,
+    Canvas? canvas,
+    Size size, {
+    IDiagramCanvas? iCanvas,
+    required double q1,
+    required double q2,
+    required double p1,
+    required double p2,
+  }) {
+    paintShading(canvas, size, ShadeType.lostRevenue, [
+      Offset(0, p1),
+      Offset(q1, p1),
+      Offset(q1, p2),
+      Offset(0, p2),
+    ], iCanvas: iCanvas);
+    paintShading(canvas, size, ShadeType.revenueUnchanged, [
+      Offset(0, p2),
+      Offset(q1, p2),
+      Offset(q1, 1.0),
+      Offset(0, 1.0),
+    ], iCanvas: iCanvas);
+    paintShading(canvas, size, ShadeType.gainedRevenue, [
+      Offset(q1, p2),
+      Offset(q2, p2),
+      Offset(q2, 1.0),
+      Offset(q1, 1.0),
+    ], iCanvas: iCanvas);
+
+    paintLegend(canvas, size, config: c, iCanvas: iCanvas, [
+      LegendEntry.fromShade(ShadeType.lostRevenue, customLabel: 'Loss'),
       LegendEntry.fromShade(
         ShadeType.revenueUnchanged,
-        customLabel: 'B Unchanged',
+        customLabel: 'Unchanged',
       ),
-      LegendEntry.fromShade(ShadeType.lostRevenue, customLabel: 'C Loss'),
+      LegendEntry.fromShade(ShadeType.gainedRevenue, customLabel: 'Gain'),
     ]);
-    paintText2(c, canvas, DiagramLabel.a.label, Offset(0.20, 0.50));
-    paintText2(c, canvas, DiagramLabel.b.label, Offset(0.20, 0.80));
-
-    paintText2(c, canvas, DiagramLabel.c.label, Offset(0.51, 0.93));
   }
 }

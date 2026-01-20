@@ -27,21 +27,20 @@ class CustomTextBox extends StatelessWidget {
     final isHL = tag == Tag.hl;
     final isSupplement = tag == Tag.supplement;
     Color tagColor = colorScheme.primary;
-    if(isHL){
+    if (isHL) {
       tagLabel = kHLBrackets;
       tagColor = AppColors.hLColor;
     }
-    if(isSupplement){
+    if (isSupplement) {
       tagLabel = kSupplementBrackets;
       tagColor = AppColors.supplementColor;
     }
-
 
     return Container(
       width: double.infinity,
       // ⬇️ Minimized vertical margin for tight stacking
       margin: const EdgeInsets.symmetric(vertical: 1),
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         color: colorScheme.surface, // ⚪ Pure white background
       ),
       child: IntrinsicHeight(
@@ -64,15 +63,12 @@ class CustomTextBox extends StatelessWidget {
                         style: theme.textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: tagColor,
-                        )
+                        ),
                       ),
                       // ⬇️ Smallest possible gap
                       const SizedBox(height: 1),
                     ],
-                    HtmlWidget(
-                      text,
-                      textStyle: theme.textTheme.bodyLarge
-                    ),
+                    HtmlWidget(text, textStyle: theme.textTheme.bodyLarge),
                   ],
                 ),
               ),
@@ -82,5 +78,4 @@ class CustomTextBox extends StatelessWidget {
       ),
     );
   }
-
 }

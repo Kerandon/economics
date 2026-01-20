@@ -2,30 +2,31 @@ import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis_labels.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_zero.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/grid_line_style.dart';
-import 'package:economics_app/diagrams/enums/diagram_labels.dart';
+
 import 'package:flutter/material.dart';
 import '../../../models/diagram_painter_config.dart';
+import '../../i_diagram_canvas.dart';
 
 void paintAxis(
   DiagramPainterConfig config,
-  Canvas canvas, {
+  Canvas? canvas, {
+  IDiagramCanvas? iCanvas,
   String yAxisLabel = 'Price',
   String xAxisLabel = 'Quantity',
-  double? xMaxValue, // Custom max value for the X-axis
-  double? yMaxValue, // Custom max value for the Y-axis
-  int? xDivisions, // Custom number of divisions for the X-axis
-  int? yDivisions, // Custom number of divisions for the Y-axis
-  bool drawGridlines =
-      false, // Option to draw full grid lines or just tick marks
+  double? xMaxValue,
+  double? yMaxValue,
+  int? xDivisions,
+  int? yDivisions,
+  bool drawGridlines = false,
   int decimalPlaces = 0,
-  GridLineStyle gridLineStyle = GridLineStyle.full, //
-      double labelPad = kLabelPadding,
+  GridLineStyle gridLineStyle = GridLineStyle.full,
+  double labelPad = kLabelPadding,
 }) {
+  // 1. Draw the Lines and Grid
   paintAxisLines(
     config,
     canvas,
+    iCanvas: iCanvas,
     yMaxValue: yMaxValue,
     yDivisions: yDivisions,
     xMaxValue: xMaxValue,
@@ -34,7 +35,22 @@ void paintAxis(
     gridLineStyle: gridLineStyle,
   );
 
-  paintAxisLabels(config, canvas, axis: CustomAxis.y, label: yAxisLabel, labelPadding: labelPad);
-  paintAxisLabels(config, canvas, axis: CustomAxis.x, label: xAxisLabel);
-  paintZero(config, canvas);
+  // 2. Draw the Labels (Price/Quantity) and the Zero origin
+  // Uncommenting these ensures they show up on the PDF bridge
+  paintAxisLabels(
+    config,
+    canvas,
+    iCanvas: iCanvas,
+    axis: CustomAxis.y,
+    label: yAxisLabel,
+    labelPadding: labelPad,
+  );
+  paintAxisLabels(
+    config,
+    canvas,
+    iCanvas: iCanvas,
+    axis: CustomAxis.x,
+    label: xAxisLabel,
+  );
+  paintZero(config, canvas, iCanvas: iCanvas);
 }

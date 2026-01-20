@@ -1,17 +1,23 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/diagram_painter_config.dart';
+import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
 
-void paintTitle(DiagramPainterConfig config, Canvas canvas, String label) {
-  paintText(
+void paintTitle(
+  DiagramPainterConfig config,
+  Canvas? canvas, // Made nullable
+  String label, {
+  IDiagramCanvas? iCanvas, // Added bridge
+}) {
+  paintText2(
     config,
     canvas,
     label,
-    Offset(0.5, 0.0),
-    alignment: TextAlignment.center,
-    fontSize: kFontMedium * 1.1,
+    const Offset(0.5, 0), // Typically centered top
+    iCanvas: iCanvas, // 👈 PASS THE BRIDGE DOWN
+    fontSize: kFontMedium,
     style: TextStyle(
       fontStyle: FontStyle.italic,
       color: config.colorScheme.secondary,

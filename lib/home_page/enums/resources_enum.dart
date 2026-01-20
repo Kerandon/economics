@@ -1,8 +1,8 @@
-import 'package:economics_app/home_page/pages/diagrams_display_web/all_diagrams_page_web.dart';
 import 'package:economics_app/home_page/pages/terms_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../diagrams/enums/diagram_enum.dart';
+import '../pages/diagrams_page.dart';
 
 enum Resource { diagrams, terms }
 
@@ -38,7 +38,7 @@ extension ResourceExtension on Resource {
   Widget get page {
     switch (this) {
       case Resource.diagrams:
-        //return AllDiagramsPageWeb();
+        return DiagramsPage();
       case Resource.terms:
         return TermsPage();
     }

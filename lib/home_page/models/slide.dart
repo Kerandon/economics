@@ -10,6 +10,7 @@ class Slide {
   // --- Overrides (private) ---
   final Subunit? _subunitOverride;
   final String? _titleOverride;
+
   /// make _hlOverride redundant
   final bool? _hlOverride;
   final Tag? _tagOverride;
@@ -29,7 +30,7 @@ class Slide {
   }) : _subunitOverride = subunit,
        _titleOverride = title,
        _hlOverride = hl,
-  _tagOverride = tag,
+       _tagOverride = tag,
        _skillsOverride = skills;
 
   // -------------------------

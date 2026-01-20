@@ -136,6 +136,7 @@ List<Slide> get supplySlides => [
         'When labor increases from 2 to 3, output rises from 7 to 10. '
         'MP = 10 - 7 = 3 units.',
       ),
+
       // SlideContent.customWidget(
       //   SimpleTable(
       //     headers: ['Labor', 'Output', 'Marginal Product (MP)'],
@@ -149,7 +150,6 @@ List<Slide> get supplySlides => [
       //     ],
       //   ),
       // ),
-
       SlideContent.text(
         '<strong>The Law of Diminishing Marginal Returns</strong> '
         'states that the extra output must eventually fall. '
@@ -172,14 +172,14 @@ List<Slide> get supplySlides => [
       //     DiagramEnum.microMarginalCost,
       //   ],
       // ),
- //      SlideContent.key('Reasons for the upwards sloping supply curve', '''
- //        <ul>
- //          <li>Firms are motivated to increase quantity supplied as prices rise to maximize profit
- // </li>
- //          <li>Increasing marginal costs (The Law of Diminishing Marginal Returns)</li>
- //          <li>Rising opportunity costs of using resources which were used in other production</li>
- //        </ul>
- //        '''),
+      //      SlideContent.key('Reasons for the upwards sloping supply curve', '''
+      //        <ul>
+      //          <li>Firms are motivated to increase quantity supplied as prices rise to maximize profit
+      // </li>
+      //          <li>Increasing marginal costs (The Law of Diminishing Marginal Returns)</li>
+      //          <li>Rising opportunity costs of using resources which were used in other production</li>
+      //        </ul>
+      //        '''),
     ],
   ),
 ];

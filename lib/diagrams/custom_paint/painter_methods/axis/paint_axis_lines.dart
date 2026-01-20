@@ -2,70 +2,77 @@ import 'dart:math';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/paint_grid_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
 import 'package:flutter/material.dart';
-import 'grid_lines/grid_line_style.dart';
+import '../../i_diagram_canvas.dart';
+
 import '../../../models/diagram_painter_config.dart';
 import '../../painter_constants.dart';
 
 void paintAxisLines(
   DiagramPainterConfig config,
-  Canvas canvas, {
+  Canvas? canvas, {
+  IDiagramCanvas? iCanvas, // The PDF/Universal bridge
   Color? color,
   double strokeWidth = kAxisWidth,
   double? xMaxValue,
   double? yMaxValue,
   int? xDivisions,
   int? yDivisions,
-  GridLineStyle gridLineStyle = GridLineStyle.full, // New enum property
+  GridLineStyle gridLineStyle = GridLineStyle.full,
   int decimalPlaces = 0,
 }) {
-  // Assertions for consistent axis configs
-  assert(
-    (xMaxValue == null && xDivisions == null) ||
-        (xMaxValue != null && xDivisions != null),
-    'If xMaxValue is provided, xDivisions must also be provided (and vice versa).',
-  );
-  assert(
-    (yMaxValue == null && yDivisions == null) ||
-        (yMaxValue != null && yDivisions != null),
-    'If yMaxValue is provided, yDivisions must also be provided (and vice versa).',
-  );
-
+  // 1. Math remains the same for both
   final widthAndHeight = config.painterSize.width;
   final indent = widthAndHeight * kAxisIndent;
-
-  final axisPaint = Paint()
-    ..color = config.colorScheme.onSurface
-    ..strokeWidth = kCurveWidth * config.averageRatio;
-
-  final indentXLeft = indent * 1.5;
-  final indentYTop = indent * 0.50;
-  final indentYBottom = widthAndHeight - (indent * 1.5);
-  final indentXRight = widthAndHeight * (1 - (kAxisIndent * 0.50));
+  final indentXLeft = indent;
+  final indentYTop = indent * kTopAxisIndent;
+  final indentYBottom = widthAndHeight - (indent * kBottomAxisIndent);
+  final indentXRight = widthAndHeight * (1 - (kAxisIndent));
 
   final startYOffset = Offset(indentXLeft, indentYTop);
   final endYOffset = Offset(indentXLeft, indentYBottom);
   final startXOffset = Offset(indentXLeft, indentYBottom);
   final endXOffset = Offset(indentXRight, indentYBottom);
 
-  // Draw the main X and Y axes
-  canvas
-    ..drawLine(startYOffset, endYOffset, axisPaint)
-    ..drawLine(startXOffset, endXOffset, axisPaint);
+  // 2. Conditional Painting
+  if (iCanvas != null) {
+    // PDF Path: Use the vector interface
+    final axisColor = color ?? config.colorScheme.onSurface;
+    final axisWidth = kCurveWidth * config.averageRatio;
 
-  // Draw arrow-heads
-  paintArrowHead(config, canvas, positionOfArrow: startYOffset);
+    iCanvas.drawLine(startYOffset, endYOffset, axisColor, axisWidth);
+    iCanvas.drawLine(startXOffset, endXOffset, axisColor, axisWidth);
+  } else if (canvas != null) {
+    // 👈 Change 'else' to 'else if (canvas != null)'
+    // Standard Flutter Path: Use the old logic
+    final axisPaint = Paint()
+      ..color = config.colorScheme.onSurface
+      ..strokeWidth = kCurveWidth * config.averageRatio;
+
+    // Use a single dot after the null check or keep it safe:
+    canvas.drawLine(startYOffset, endYOffset, axisPaint);
+    canvas.drawLine(startXOffset, endXOffset, axisPaint);
+  }
+
+  // 3. Pass iCanvas down to sub-methods (They will need the same iCanvas param)
   paintArrowHead(
     config,
     canvas,
+    iCanvas: iCanvas,
+    positionOfArrow: startYOffset,
+  );
+  paintArrowHead(
+    config,
+    canvas,
+    iCanvas: iCanvas,
     positionOfArrow: endXOffset,
     rotationAngle: pi / 2,
   );
 
-  // Draw gridlines only if style is not none
   if (gridLineStyle != GridLineStyle.none) {
     paintGridLines(
       config,
       canvas,
+      iCanvas: iCanvas,
       xMaxValue: xMaxValue,
       yMaxValue: yMaxValue,
       xDivisions: xDivisions,

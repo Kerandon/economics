@@ -37,14 +37,12 @@ class SimpleTable extends StatelessWidget {
     this.defaultCellStyle,
   });
 
-
-
   @override
   Widget build(BuildContext context) {
-
     final theme = Theme.of(context);
     defaultCellStyle ?? theme.textTheme.displaySmall;
-    defaultHeaderStyle ?? theme.textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold);
+    defaultHeaderStyle ??
+        theme.textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold);
 
     final headerRow = TableRow(
       decoration: const BoxDecoration(color: Color(0xFFF2F2F2)),
@@ -213,6 +211,7 @@ class SimpleTable extends StatelessWidget {
       ],
     );
   }
+
   Widget _buildOuterLabel(String text, {bool isGhost = false}) {
     return Visibility(
       visible: !isGhost,
@@ -227,7 +226,7 @@ class SimpleTable extends StatelessWidget {
         ),
         child: HtmlWidget(
           '<div style="text-align: center; color: #${labelTextColor.value.toRadixString(16).substring(2).padLeft(6, '0')};">'
-              '<strong>${text.toUpperCase()}</strong></div>',
+          '<strong>${text.toUpperCase()}</strong></div>',
         ),
       ),
     );

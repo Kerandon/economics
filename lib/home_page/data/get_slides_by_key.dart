@@ -17,21 +17,10 @@ List<Slide> getSlides({
       // Map over contents and add diagramBundles where needed
       final updatedContents = slide.contents!.map((content) {
         if (content.diagramEnums?.isNotEmpty ?? false) {
-          // final diagramBundles = AllDiagrams(
-          //   size: size,
-          //   colorScheme: theme.colorScheme,
-          // ).getDiagramBundles(diagramBundleEnums: content.diagramEnums);
-          // return content.copyWith(diagramBundles: diagramBundles.toList());
-
-          final diagramWidgets = AllDiagrams2(
+          final diagramWidgets = AllDiagrams(
             size: size,
             colorScheme: theme.colorScheme,
-          ).getDiagramWidgets(content.diagramEnums);
-
-          // for(var d in diagramWidgets){
-          //   print('d is ${d.basePainterDiagram.diagram.name}');
-          // }
-
+          ).getDiagramWidgets(diagrams: content.diagramEnums);
           return content.copyWith(diagramWidgets: diagramWidgets.toList());
         }
 
@@ -40,7 +29,6 @@ List<Slide> getSlides({
 
       allSlidesPopulated.add(slide.copyWith(contents: updatedContents));
     } else {
-      // If slide has no contents, just add as-is
       allSlidesPopulated.add(slide);
     }
   }

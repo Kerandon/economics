@@ -3,27 +3,26 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_arrow_
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_label_text.dart';
 import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
-import '../axis/label_align.dart';
+import '../../i_diagram_canvas.dart';
+
 import '../../../models/custom_bezier.dart';
 import '../../../models/diagram_painter_config.dart';
 import '../../../models/size_adjuster.dart';
 import '../../painter_constants.dart';
+
 // Note: This file assumes the existence of helper functions/classes
 // like DiagramPainterConfig, CustomBezier, LabelAlign, kCurveWidth,
 // kAxisIndent, SizeAdjustor, dashPath, CircularIntervalList,
 // paintLabelText, paintArrowHead, and atan2.
-
-enum CurveStyle { standard, dashed, dotted, bold }
-
 void paintDiagramLines(
   DiagramPainterConfig config,
-  Canvas canvas, {
+  Canvas? canvas, {
+  IDiagramCanvas? iCanvas,
   required Offset startPos,
   List<CustomBezier>? bezierPoints,
   List<Offset>? polylineOffsets,
   Color? color,
   double strokeWidth = kCurveWidth,
-  SizeAdjustor sizeAdjustor = const SizeAdjustor(),
   String? label1,
   String? label2,
   LabelAlign label1Align = LabelAlign.centerTop,
@@ -46,18 +45,17 @@ void paintDiagramLines(
     'Exactly one of bezierPoints or polylineOffsets must be provided.',
   );
 
-  final widthAndHeight = config.painterSize.width;
-  final normalize = normalizeToDiagramArea ? 1 - (kAxisIndent * 2) : 1.0;
-  final widthAndHeightNormalized = widthAndHeight * normalize;
-  final indent = widthAndHeight * kAxisIndent;
-
-  final mainColor = color ?? config.colorScheme.primary;
+  final double widthAndHeight = config.painterSize.width;
+  final double normalize = normalizeToDiagramArea ? 1 - (kAxisIndent * 2) : 1.0;
+  final double widthAndHeightNormalized = widthAndHeight * normalize;
+  final double indent = widthAndHeight * kAxisIndent;
+  final Color mainColor = color ?? config.colorScheme.primary;
 
   Offset computeOffset(Offset pos) {
     final dx = pos.dx * widthAndHeightNormalized;
     final dy = pos.dy * widthAndHeightNormalized;
     if (normalizeToDiagramArea) {
-      return Offset(dx + indent * 1.5, dy + indent * 0.50);
+      return Offset(dx + indent, dy + indent * kTopAxisIndent);
     } else {
       return Offset(dx, dy);
     }
@@ -67,149 +65,140 @@ void paintDiagramLines(
     var dx = pos.dx * normalize;
     var dy = pos.dy * normalize;
     if (normalizeToDiagramArea) {
-      dx += kAxisIndent * 1.5;
-      dy += kAxisIndent * 0.50;
+      dx += kAxisIndent;
+      dy += kAxisIndent * kTopAxisIndent;
     }
     return Offset(dx, dy);
   }
 
-  // Configure paint based on curve style
-  final paint = Paint()
-    ..style = PaintingStyle.stroke
-    ..color = mainColor
-    ..strokeWidth =
-        (curveStyle == CurveStyle.bold ? strokeWidth * 2 : strokeWidth) *
-        config.averageRatio;
+  final double effectiveWidth =
+      (curveStyle == CurveStyle.bold ? strokeWidth * 2 : strokeWidth) *
+      config.averageRatio;
 
-  final path = Path();
-
-  // --- Start point
   final Offset start = computeOffset(startPos);
-  path.moveTo(start.dx, start.dy);
 
-  // Function to apply dash or dot style
-  Path applyCurveStyle(Path inputPath) {
-    switch (curveStyle) {
-      case CurveStyle.dashed:
-        return dashPath(
-          inputPath,
+  // --- 1. PDF Bridge Logic (Flattened Beziers) ---
+  if (iCanvas != null) {
+    final List<Offset> points = [start];
+
+    if (polylineOffsets != null) {
+      for (var p in polylineOffsets) {
+        points.add(computeOffset(p));
+      }
+    } else if (bezierPoints != null) {
+      Offset lastPoint = start;
+      for (var b in bezierPoints) {
+        final control = computeOffset(b.control);
+        final endPoint = computeOffset(b.endPoint);
+
+        for (double t = 0.1; t <= 1.0; t += 0.1) {
+          final x =
+              (1 - t) * (1 - t) * lastPoint.dx +
+              2 * (1 - t) * t * control.dx +
+              t * t * endPoint.dx;
+          final y =
+              (1 - t) * (1 - t) * lastPoint.dy +
+              2 * (1 - t) * t * control.dy +
+              t * t * endPoint.dy;
+          points.add(Offset(x, y));
+        }
+        lastPoint = endPoint;
+      }
+    }
+
+    if (curveStyle == CurveStyle.dashed || curveStyle == CurveStyle.dotted) {
+      for (int i = 0; i < points.length - 1; i++) {
+        iCanvas.drawDashedLine(
+          points[i],
+          points[i + 1],
+          mainColor,
+          effectiveWidth,
+        );
+      }
+    } else {
+      iCanvas.drawPath(points, mainColor, fill: false);
+    }
+  }
+
+  // --- 2. Flutter Canvas Logic ---
+  if (canvas != null) {
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = mainColor
+      ..strokeWidth = effectiveWidth
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    final path = Path();
+    path.moveTo(start.dx, start.dy);
+
+    if (polylineOffsets != null) {
+      for (final point in polylineOffsets) {
+        final next = computeOffset(point);
+        path.lineTo(next.dx, next.dy);
+      }
+    } else if (bezierPoints != null) {
+      for (final point in bezierPoints) {
+        final control = computeOffset(point.control);
+        final endPoint = computeOffset(point.endPoint);
+        path.quadraticBezierTo(
+          control.dx,
+          control.dy,
+          endPoint.dx,
+          endPoint.dy,
+        );
+      }
+    }
+
+    if (curveStyle == CurveStyle.dashed) {
+      canvas.drawPath(
+        dashPath(
+          path,
           dashArray: CircularIntervalList<double>(<double>[8.0, 5.0]),
-        );
-      case CurveStyle.dotted:
-        return dashPath(
-          inputPath,
+        ),
+        paint,
+      );
+    } else if (curveStyle == CurveStyle.dotted) {
+      canvas.drawPath(
+        dashPath(
+          path,
           dashArray: CircularIntervalList<double>(<double>[2.0, 4.0]),
-        );
-      case CurveStyle.bold:
-      case CurveStyle.standard:
-        return inputPath;
+        ),
+        paint,
+      );
+    } else {
+      canvas.drawPath(path, paint);
     }
   }
 
-  // --- Polyline path (Existing correct logic)
-  if (polylineOffsets != null && polylineOffsets.isNotEmpty) {
-    for (final point in polylineOffsets) {
-      final next = computeOffset(point);
-      path.lineTo(next.dx, next.dy);
-    }
-
-    final styledPath = applyCurveStyle(path);
-    canvas.drawPath(styledPath, paint);
-
-    // Label 1: Start position
-    if (label1 != null) {
-      final labelOffset = computeTextOffset(startPos);
-      paintLabelText(
-        canvas,
-        config,
-        label1,
-        labelOffset,
-        labelAlign: label1Align,
-      );
-    }
-
-    // Label 2: Last polyline point
-    if (label2 != null) {
-      final last = polylineOffsets.last;
-      final labelOffset = computeTextOffset(last);
-      paintLabelText(
-        canvas,
-        config,
-        label2,
-        labelOffset,
-        labelAlign: label2Align,
-      );
-    }
-
-    if (arrowOnStart) {
-      paintArrowHead(
-        config,
-        canvas,
-        color: mainColor,
-        positionOfArrow: start,
-        rotationAngle: arrowOnStartAngle,
-      );
-    }
-
-    if (arrowOnEnd) {
-      final end = computeOffset(polylineOffsets.last);
-      final autoEndAngle = atan2(end.dy - start.dy, end.dx - start.dx);
-      paintArrowHead(
-        config,
-        canvas,
-        color: mainColor,
-        positionOfArrow: end,
-        rotationAngle: arrowOnEndAngle != 0 ? arrowOnEndAngle : autoEndAngle,
-      );
-    }
-
-    final r = circleRadius * config.averageRatio;
-    if (circleAtStart) {
-      canvas.drawCircle(start, r, paint..style = PaintingStyle.fill);
-    }
-    if (circleAtEnd) {
-      final end = computeOffset(polylineOffsets.last);
-      canvas.drawCircle(end, r, paint..style = PaintingStyle.fill);
-    }
-
-    return;
-  }
-
-  // --- Bezier path (Fix applied here)
-
-  final end = computeOffset(bezierPoints!.last.endPoint);
-
-  for (final point in bezierPoints) {
-    final control = computeOffset(point.control);
-    final endPoint = computeOffset(point.endPoint);
-    path.quadraticBezierTo(control.dx, control.dy, endPoint.dx, endPoint.dy);
-  }
-
-  final styledPath = applyCurveStyle(path);
-  canvas.drawPath(styledPath, paint);
-
-  // --- ADDED: Label 1 (Start position) for Bezier
+  // --- 3. Labels, Arrows, and Dots ---
   if (label1 != null) {
-    final labelOffset = computeTextOffset(startPos);
     paintLabelText(
       canvas,
       config,
       label1,
-      labelOffset,
+      computeTextOffset(startPos),
+      iCanvas: iCanvas,
       labelAlign: label1Align,
     );
   }
 
-  // --- ADDED: Label 2 (End position) for Bezier
+  final Offset end = computeOffset(
+    polylineOffsets != null
+        ? polylineOffsets.last
+        : bezierPoints!.last.endPoint,
+  );
+
   if (label2 != null) {
-    // We use the raw endPoint from the last Bezier segment to compute the text offset
-    final lastRawPoint = bezierPoints!.last.endPoint;
-    final labelOffset = computeTextOffset(lastRawPoint);
+    final lastLogicalPos = polylineOffsets != null
+        ? polylineOffsets.last
+        : bezierPoints!.last.endPoint;
     paintLabelText(
       canvas,
       config,
       label2,
-      labelOffset,
+      computeTextOffset(lastLogicalPos),
+      iCanvas: iCanvas,
       labelAlign: label2Align,
     );
   }
@@ -218,6 +207,7 @@ void paintDiagramLines(
     paintArrowHead(
       config,
       canvas,
+      iCanvas: iCanvas,
       color: mainColor,
       positionOfArrow: start,
       rotationAngle: arrowOnStartAngle,
@@ -225,21 +215,48 @@ void paintDiagramLines(
   }
 
   if (arrowOnEnd) {
-    final autoEndAngle = atan2(end.dy - start.dy, end.dx - start.dx);
+    double finalAngle = arrowOnEndAngle;
+    if (finalAngle == 0) {
+      final Offset reference = (bezierPoints != null)
+          ? computeOffset(bezierPoints.last.control)
+          : start;
+      finalAngle = atan2(end.dy - reference.dy, end.dx - reference.dx);
+    }
     paintArrowHead(
       config,
       canvas,
+      iCanvas: iCanvas,
       color: mainColor,
       positionOfArrow: end,
-      rotationAngle: arrowOnEndAngle != 0 ? arrowOnEndAngle : autoEndAngle,
+      rotationAngle: finalAngle,
     );
   }
 
   final r = circleRadius * config.averageRatio;
   if (circleAtStart) {
-    canvas.drawCircle(start, r, paint..style = PaintingStyle.fill);
+    if (iCanvas != null) {
+      iCanvas.drawDot(start, mainColor, radius: r);
+    } else {
+      canvas!.drawCircle(
+        start,
+        r,
+        Paint()
+          ..color = mainColor
+          ..style = PaintingStyle.fill,
+      );
+    }
   }
   if (circleAtEnd) {
-    canvas.drawCircle(end, r, paint..style = PaintingStyle.fill);
+    if (iCanvas != null) {
+      iCanvas.drawDot(end, mainColor, radius: r);
+    } else {
+      canvas!.drawCircle(
+        end,
+        r,
+        Paint()
+          ..color = mainColor
+          ..style = PaintingStyle.fill,
+      );
+    }
   }
 }

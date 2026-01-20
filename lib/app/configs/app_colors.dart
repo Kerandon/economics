@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-
   static const hLColor = Colors.orange;
   static const supplementColor = Colors.red;
 
@@ -10,7 +9,8 @@ class AppColors {
   static const defaultAppColorDarkest = Color(0xff00322B);
 
   static const surfaceLightTheme = Color(
-    0xFFEDEDED,
+    //0xFFEDEDED,
+    0xFFFFFFFF,
   ); // Slightly darker than 0xFFF5F5F5
   static const surfaceDarkTheme = Color(
     0xFF0E0E0E,

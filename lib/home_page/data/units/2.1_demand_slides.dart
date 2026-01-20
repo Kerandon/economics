@@ -18,8 +18,13 @@ List<Slide> get demandSlides => [
 <p>As the demand schedule below shows, as price increases, <strong>quantity demanded</strong> falls.</p>
 '''),
 
-      SlideContent.evaluation(title: 'Demand Evaluation',
-          leftTitle: 'leftTitle', rightTitle: 'rightTitle', leftItems: ['leftItems', 'left items2'], rightItems: ['A','B']),
+      SlideContent.evaluation(
+        title: 'Demand Evaluation',
+        leftTitle: 'leftTitle',
+        rightTitle: 'rightTitle',
+        leftItems: ['leftItems', 'left items2'],
+        rightItems: ['A', 'B'],
+      ),
       SlideContent.simpleTable(
         title: 'Individual Demand for Apples',
         headers: ['Price (\$)', 'Quantity Demanded by Sarah'],
@@ -40,7 +45,7 @@ List<Slide> get demandSlides => [
       SlideContent.text('''
       The demand schedule for a good can be plotted - showing a downward sloping <strong>demand curve</strong>
       '''),
-      SlideContent.diagrams([DiagramEnum.microDemandApples]),
+      SlideContent.diagrams([DiagramEnum.microDemand]),
     ],
   ),
 
@@ -51,17 +56,17 @@ List<Slide> get demandSlides => [
   <p><strong>Market demand</strong> is the sum of quantity demanded by individual consumers at different prices</p>
   '''),
       SlideContent.simpleTable(
-          title: 'Market Demand For Apples',
-          headers: ['Price (\$)', 'Sarah', 'Mike', 'Market Demand'],
-          data: [
-            ['0', '10', '13', '23'],
-            ['1', '8', '12', '20'],
-            ['2', '6', '10', '16'],
-            ['3', '4', '9', '14'],
-            ['4', '2', '7', '9'],
-            ['5', '0', '3', '3'],
-          ],
-        ),
+        title: 'Market Demand For Apples',
+        headers: ['Price (\$)', 'Sarah', 'Mike', 'Market Demand'],
+        data: [
+          ['0', '10', '13', '23'],
+          ['1', '8', '12', '20'],
+          ['2', '6', '10', '16'],
+          ['3', '4', '9', '14'],
+          ['4', '2', '7', '9'],
+          ['5', '0', '3', '3'],
+        ],
+      ),
     ],
   ),
   Slide(
@@ -134,96 +139,93 @@ List<Slide> get demandTerms => [
     subunit: Subunit.demand,
     title: kTermsGlossary,
     contents: [
-      SlideContent.glossary(
-
-        [
-            SlideContent.term(
-              'Change in Quantity Demanded',
-              'A movement along the demand curve. A fall in price causes an <strong>extension</strong>, a rise in price causes a <strong>contraction</strong>.',
-            ),
-            SlideContent.term(
-              'Complement Good',
-              'A good consumed with another. When the price of one increases, demand for the other decreases (e.g., cars and petrol).',
-            ),
-            SlideContent.term(
-              'Conspicuous Consumption',
-              'Consumption of luxury goods to display their wealth or status rather than for their practical utility.',
-              tag: Tag.supplement,
-            ),
-            SlideContent.term(
-              'Demand',
-              'The quantities of a good or service a consumer is willing and able to buy at different prices, ceteris paribus.',
-            ),
-            SlideContent.term(
-              'Demand Curve',
-              'Plots the relationship between the price of a good and the quantity demanded, showing a negative (inverse) relationship, ceteris paribus.',
-            ),
-            SlideContent.term(
-              'Derived Demand',
-              'Demand for a good, service, or resource that comes from the demand for a related good or resource.',
-            ),
-            SlideContent.term(
-              'Giffen Good',
-              'A staple good that make up a large proportion of consumers’ expenditure. When its price rises, consumers buy more of the good.',
-              tag: Tag.supplement,
-            ),
-            SlideContent.term(
-              'Income Effect',
-              'A fall in the price of a good increases consumers’ purchasing power, allowing them to buy more of the good.',
-            ),
-            SlideContent.term(
-              'Increase or Decrease in Demand',
-              'A change in a non-price factor shifts the entire demand curve, changing demand at all prices.',
-            ),
-            SlideContent.term(
-              'Inferior Good',
-              'Demand rises when consumers’ income falls (e.g., public transport).',
-            ),
-            SlideContent.term(
-              'Marginal Utility',
-              'The extra utility (benefit) when one more unit of a good is consumed (MU = ∆TU ÷ ∆Q).',
-              tag: Tag.hl,
-            ),
-            SlideContent.term(
-              'Market',
-              'Where buyers and sellers meet to exchange goods, services, or resources.',
-            ),
-            SlideContent.term(
-              'Market Demand',
-              'The total quantity demanded by all consumers in a market.',
-            ),
-            SlideContent.term(
-              'Normal Good',
-              'Demand rises when consumers’ income increases.',
-            ),
-            SlideContent.term(
-              'Substitute Good',
-              'An alternative good satisfying a similar need. When the price of one increases, demand for the substitute increases.',
-            ),
-            SlideContent.term(
-              'Substitution Effect',
-              'A fall in the price of a good makes it relatively cheaper compared to substitutes.',
-            ),
-            SlideContent.term(
-              'The Law of Demand',
-              'There is a negative relationship between price and quantity demanded, ceteris paribus.',
-            ),
-            SlideContent.term(
-              'The Law of Diminishing Marginal Utility',
-              'The additional benefit from consuming extra units of a good eventually decreases.',
-              tag: Tag.hl,
-            ),
-            SlideContent.term(
-              'Utility',
-              'The benefit or satisfaction derived from consuming a good.',
-            ),
-            SlideContent.term(
-              'Veblen Good',
-              'A type of luxury good used to show wealth. Quantity demanded increases when price rises.',
-              tag: Tag.supplement,
-            ),
-          ],
+      SlideContent.glossary([
+        SlideContent.term(
+          'Change in Quantity Demanded',
+          'A movement along the demand curve. A fall in price causes an <strong>extension</strong>, a rise in price causes a <strong>contraction</strong>.',
         ),
+        SlideContent.term(
+          'Complement Good',
+          'A good consumed with another. When the price of one increases, demand for the other decreases (e.g., cars and petrol).',
+        ),
+        SlideContent.term(
+          'Conspicuous Consumption',
+          'Consumption of luxury goods to display their wealth or status rather than for their practical utility.',
+          tag: Tag.supplement,
+        ),
+        SlideContent.term(
+          'Demand',
+          'The quantities of a good or service a consumer is willing and able to buy at different prices, ceteris paribus.',
+        ),
+        SlideContent.term(
+          'Demand Curve',
+          'Plots the relationship between the price of a good and the quantity demanded, showing a negative (inverse) relationship, ceteris paribus.',
+        ),
+        SlideContent.term(
+          'Derived Demand',
+          'Demand for a good, service, or resource that comes from the demand for a related good or resource.',
+        ),
+        SlideContent.term(
+          'Giffen Good',
+          'A staple good that make up a large proportion of consumers’ expenditure. When its price rises, consumers buy more of the good.',
+          tag: Tag.supplement,
+        ),
+        SlideContent.term(
+          'Income Effect',
+          'A fall in the price of a good increases consumers’ purchasing power, allowing them to buy more of the good.',
+        ),
+        SlideContent.term(
+          'Increase or Decrease in Demand',
+          'A change in a non-price factor shifts the entire demand curve, changing demand at all prices.',
+        ),
+        SlideContent.term(
+          'Inferior Good',
+          'Demand rises when consumers’ income falls (e.g., public transport).',
+        ),
+        SlideContent.term(
+          'Marginal Utility',
+          'The extra utility (benefit) when one more unit of a good is consumed (MU = ∆TU ÷ ∆Q).',
+          tag: Tag.hl,
+        ),
+        SlideContent.term(
+          'Market',
+          'Where buyers and sellers meet to exchange goods, services, or resources.',
+        ),
+        SlideContent.term(
+          'Market Demand',
+          'The total quantity demanded by all consumers in a market.',
+        ),
+        SlideContent.term(
+          'Normal Good',
+          'Demand rises when consumers’ income increases.',
+        ),
+        SlideContent.term(
+          'Substitute Good',
+          'An alternative good satisfying a similar need. When the price of one increases, demand for the substitute increases.',
+        ),
+        SlideContent.term(
+          'Substitution Effect',
+          'A fall in the price of a good makes it relatively cheaper compared to substitutes.',
+        ),
+        SlideContent.term(
+          'The Law of Demand',
+          'There is a negative relationship between price and quantity demanded, ceteris paribus.',
+        ),
+        SlideContent.term(
+          'The Law of Diminishing Marginal Utility',
+          'The additional benefit from consuming extra units of a good eventually decreases.',
+          tag: Tag.hl,
+        ),
+        SlideContent.term(
+          'Utility',
+          'The benefit or satisfaction derived from consuming a good.',
+        ),
+        SlideContent.term(
+          'Veblen Good',
+          'A type of luxury good used to show wealth. Quantity demanded increases when price rises.',
+          tag: Tag.supplement,
+        ),
+      ]),
     ],
   ),
 ];

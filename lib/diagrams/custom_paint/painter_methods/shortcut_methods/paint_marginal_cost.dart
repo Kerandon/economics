@@ -3,16 +3,26 @@ import 'dart:ui';
 import '../../../enums/diagram_labels.dart';
 import '../../../models/custom_bezier.dart';
 import '../../../models/diagram_painter_config.dart';
-import '../axis/label_align.dart';
+import '../../i_diagram_canvas.dart';
+import '../../painter_constants.dart';
+
 import '../diagram_lines/paint_diagram_lines.dart';
 
-paintMarginalCost(DiagramPainterConfig c, Canvas canvas) {
+void paintMarginalCost(
+  DiagramPainterConfig c,
+  Canvas? canvas, {
+  IDiagramCanvas? iCanvas, // 👈 Added Bridge
+}) {
   paintDiagramLines(
     c,
     canvas,
-    startPos: Offset(0.03, 0.80),
+    iCanvas: iCanvas, // 👈 Pass the bridge through
+    startPos: const Offset(0.03, 0.80),
     bezierPoints: [
-      CustomBezier(control: Offset(0.12, 1.26), endPoint: Offset(0.68, 0.10)),
+      CustomBezier(
+        control: const Offset(0.12, 1.26),
+        endPoint: const Offset(0.68, 0.10),
+      ),
     ],
     label2: DiagramLabel.mc.label,
     label2Align: LabelAlign.centerTop,

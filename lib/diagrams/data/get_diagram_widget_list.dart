@@ -1,20 +1,165 @@
 import 'package:economics_app/diagrams/custom_paint/diagrams/competitive_market.dart';
-import 'package:economics_app/diagrams/custom_paint/diagrams/elasticities.dart';
-import 'package:economics_app/diagrams/custom_paint/diagrams/externalities.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/market_power.dart';
-import 'package:economics_app/diagrams/custom_paint/diagrams/public_goods.dart';
-import 'package:economics_app/diagrams/custom_paint/diagrams/taxes_and_subsidies.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/price_controls.dart';
 import '../custom_paint/diagrams/demand_diagram.dart';
-import '../custom_paint/diagrams/price_controls.dart';
+import '../custom_paint/diagrams/elasticities.dart';
+import '../custom_paint/diagrams/externalities.dart';
+import '../custom_paint/diagrams/public_goods.dart';
 import '../custom_paint/diagrams/supply.dart';
+import '../custom_paint/diagrams/taxes_subsidies.dart';
 import '../enums/diagram_enum.dart';
+import '../models/base_painter_painter.dart';
 import '../models/diagram_widget.dart';
 import '../models/diagram_painter_config.dart';
+
+List<DiagramWidgetNEW> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
+  return [
+    /// Demand
+    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemand)]),
+    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemandExtension)]),
+    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemandContraction)]),
+    DiagramWidgetNEW([
+      DemandDiagram(c, DiagramEnum.microDemandQuantityChangeDueToSupply),
+    ]),
+    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemandIncrease)]),
+    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemandDecrease)]),
+
+    /// Supply
+    DiagramWidgetNEW([Supply(c, DiagramEnum.microSupplyExtension)]),
+    DiagramWidgetNEW([Supply(c, DiagramEnum.microSupplyContraction)]),
+    DiagramWidgetNEW([Supply(c, DiagramEnum.microSupplyIncrease)]),
+    DiagramWidgetNEW([Supply(c, DiagramEnum.microSupplyDecrease)]),
+
+    /// Equilibrium & Surplus
+    DiagramWidgetNEW([
+      CompetitiveMarket(c, DiagramEnum.microMarketEquilibrium),
+    ]),
+    DiagramWidgetNEW([CompetitiveMarket(c, DiagramEnum.microShortage)]),
+    DiagramWidgetNEW([CompetitiveMarket(c, DiagramEnum.microSurplus)]),
+    DiagramWidgetNEW([
+      CompetitiveMarket(c, DiagramEnum.microDemandIncreasePriceMechanism),
+    ]),
+    DiagramWidgetNEW([
+      CompetitiveMarket(c, DiagramEnum.microDemandDecreasePriceMechanism),
+    ]),
+    DiagramWidgetNEW([
+      CompetitiveMarket(c, DiagramEnum.microAllocativeEfficiency),
+    ]),
+    DiagramWidgetNEW([Supply(c, DiagramEnum.microMarginalProduct)]),
+    DiagramWidgetNEW([Supply(c, DiagramEnum.microTotalAndMarginalProduct)]),
+    DiagramWidgetNEW([Supply(c, DiagramEnum.microMarginalCost)]),
+
+    /// Elasticity
+    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microDemandElastic)]),
+    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microDemandInelastic)]),
+    DiagramWidgetNEW([
+      Elasticities(c, DiagramEnum.microDemandPerfectlyElastic),
+    ]),
+    DiagramWidgetNEW([
+      Elasticities(c, DiagramEnum.microDemandPerfectlyInelastic),
+    ]),
+    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microDemandEngelCurve)]),
+    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microSupplyElastic)]),
+    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microSupplyInelastic)]),
+    DiagramWidgetNEW([
+      Elasticities(c, DiagramEnum.microSupplyPrimaryCommodities),
+    ]),
+
+    /// Price Controls
+    DiagramWidgetNEW([PriceControls(c, DiagramEnum.microPriceCeiling)]),
+    DiagramWidgetNEW([PriceControls(c, DiagramEnum.microPriceFloor)]),
+    DiagramWidgetNEW([PriceControls(c, DiagramEnum.microNationalMinimumWage)]),
+    DiagramWidgetNEW([
+      PriceControls(c, DiagramEnum.microAgriculturalPriceFloor),
+    ]),
+
+    /// Intervention
+    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microIndirectTax)]),
+    DiagramWidgetNEW([
+      TaxesSubsidies(c, DiagramEnum.microIndirectTaxInelasticPED),
+    ]),
+    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticPED)]),
+    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microSubsidy)]),
+    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticPED)]),
+    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microSubsidyInelasticPED)]),
+
+    /// Externalities
+    DiagramWidgetNEW([
+      Externalities(c, DiagramEnum.microNegativeProductionExternality),
+    ]),
+    DiagramWidgetNEW([
+      Externalities(c, DiagramEnum.microNegativeProductionExternalityWelfare),
+    ]),
+    DiagramWidgetNEW([
+      Externalities(c, DiagramEnum.microNegativeConsumptionExternality),
+    ]),
+    DiagramWidgetNEW([
+      Externalities(c, DiagramEnum.microPositiveProductionExternality),
+    ]),
+    DiagramWidgetNEW([
+      Externalities(c, DiagramEnum.microPositiveConsumptionExternality),
+    ]),
+    DiagramWidgetNEW([Externalities(c, DiagramEnum.microCarbonTax)]),
+    DiagramWidgetNEW([
+      Externalities(c, DiagramEnum.microTradablePollutionPermits),
+    ]),
+
+    /// Public Goods
+    DiagramWidgetNEW([PublicGoods(c, DiagramEnum.microPublicGoods)]),
+
+    /// ============================================================
+    /// PERFECT COMPETITION PAIRINGS (Displayed Together)
+    /// ============================================================
+    DiagramWidgetNEW([
+      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
+      MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
+    ]),
+    DiagramWidgetNEW([
+      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketAbnormalProfit),
+      MarketPower(
+        c,
+        DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment,
+      ),
+    ]),
+    DiagramWidgetNEW([
+      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLoss),
+      MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLoss),
+    ]),
+
+    /// ============================================================
+    /// MONOPOLY & OTHERS (Back to individual elements)
+    /// ============================================================
+    DiagramWidgetNEW([MarketPower(c, DiagramEnum.microMonopolyAbnormalProfit)]),
+    DiagramWidgetNEW([MarketPower(c, DiagramEnum.microMonopolyWelfare)]),
+    DiagramWidgetNEW([MarketPower(c, DiagramEnum.microMonopolyNatural)]),
+    DiagramWidgetNEW([
+      MarketPower(c, DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
+    ]),
+    DiagramWidgetNEW([
+      MarketPower(c, DiagramEnum.microMonopolyNaturalMarginalCostPricing),
+    ]),
+    DiagramWidgetNEW([
+      MarketPower(
+        c,
+        DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare,
+      ),
+    ]),
+    DiagramWidgetNEW([
+      MarketPower(c, DiagramEnum.microOligopolyKinkedDemandCurve),
+    ]),
+    DiagramWidgetNEW([
+      MarketPower(c, DiagramEnum.microMonopolisticCompetitionLongRun),
+    ]),
+    DiagramWidgetNEW([
+      MarketPower(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
+    ]),
+  ];
+}
 
 List<DiagramWidget> getDiagramWidgetList(DiagramPainterConfig c) {
   return [
     /// Demand
-    DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandApples)),
+    DiagramWidget(DemandDiagram(c, DiagramEnum.microDemand)),
     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandExtension)),
     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandContraction)),
     DiagramWidget(
@@ -111,403 +256,3 @@ List<DiagramWidget> getDiagramWidgetList(DiagramPainterConfig c) {
     ),
   ];
 }
-//
-// /// Make redundant
-// List<DiagramBundle> getBundleList(DiagramPainterConfig config) => [
-//   /// 1.1 PPC
-//
-//   /// 2.1 Demand
-//
-//   /// 2.2 Supply
-//   DiagramBundle(DiagramEnum.microSupplyExtension, [
-//     Supply(config, DiagramEnum.microSupplyExtension),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSupplyContraction, [
-//     Supply(config, DiagramEnum.microSupplyContraction),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSupplyIncrease, [
-//     Supply(config, DiagramEnum.microSupplyIncrease),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSupplyDecrease, [
-//     Supply(config, DiagramEnum.microSupplyDecrease),
-//   ]),
-//   DiagramBundle(DiagramEnum.microMarginalProduct, [
-//     Supply(config, DiagramEnum.microMarginalProduct),
-//   ]),
-//   DiagramBundle(DiagramEnum.microTotalAndMarginalProduct, [
-//     Supply(config, DiagramEnum.microTotalAndMarginalProduct),
-//   ]),
-//   DiagramBundle(DiagramEnum.microMarginalCost, [
-//     Supply(config, DiagramEnum.microMarginalCost),
-//   ]),
-//
-//   /// 2.3 Competitive Market Equilibrium
-//   DiagramBundle(DiagramEnum.microMarketEquilibrium, [
-//     CompetitiveMarket(config, DiagramEnum.microMarketEquilibrium),
-//   ]),
-//   DiagramBundle(DiagramEnum.microShortage, [
-//     CompetitiveMarket(config, DiagramEnum.microShortage),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSurplus, [
-//     CompetitiveMarket(config, DiagramEnum.microSurplus),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandIncreasePriceMechanism, [
-//     CompetitiveMarket(config, DiagramEnum.microDemandIncreasePriceMechanism),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandDecreasePriceMechanism, [
-//     CompetitiveMarket(config, DiagramEnum.microDemandDecreasePriceMechanism),
-//   ]),
-//   DiagramBundle(DiagramEnum.microPriceRationing, [
-//     CompetitiveMarket(config, DiagramEnum.microPriceRationing),
-//   ]),
-//   DiagramBundle(DiagramEnum.microMarginalBenefit, [
-//     CompetitiveMarket(config, DiagramEnum.microMarginalBenefit),
-//   ]),
-//   DiagramBundle(DiagramEnum.microConsumerSurplus, [
-//     CompetitiveMarket(config, DiagramEnum.microConsumerSurplus),
-//   ]),
-//   DiagramBundle(DiagramEnum.microProducerSurplus, [
-//     CompetitiveMarket(config, DiagramEnum.microProducerSurplus),
-//   ]),
-//   DiagramBundle(DiagramEnum.microAllocativeEfficiency, [
-//     CompetitiveMarket(config, DiagramEnum.microAllocativeEfficiency),
-//   ]),
-//   DiagramBundle(DiagramEnum.microMarginalCostSteps, [
-//     CompetitiveMarket(config, DiagramEnum.microMarginalCostSteps),
-//   ]),
-//
-//   /// 2.4 Critique of the maximizing behaviour of consumers and producers (HL only)
-//   /// 2.5 Elasticity of demand (includes HL only sub-topics)
-//   DiagramBundle(DiagramEnum.microDemandElastic, [
-//     Elasticities(config, DiagramEnum.microDemandElastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandInelastic, [
-//     Elasticities(config, DiagramEnum.microDemandInelastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandUnitElastic, [
-//     Elasticities(config, DiagramEnum.microDemandUnitElastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandPerfectlyElastic, [
-//     Elasticities(config, DiagramEnum.microDemandPerfectlyElastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandPerfectlyInelastic, [
-//     Elasticities(config, DiagramEnum.microDemandPerfectlyInelastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandElasticRevenue, [
-//     Elasticities(config, DiagramEnum.microDemandElasticRevenue),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandInelasticRevenue, [
-//     Elasticities(config, DiagramEnum.microDemandInelasticRevenue),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandElasticityRevenueChange, [
-//     Elasticities(config, DiagramEnum.microDemandElasticityChange),
-//     Elasticities(config, DiagramEnum.microDemandElasticityRevenueChange),
-//   ]),
-//   DiagramBundle(DiagramEnum.microDemandEngelCurve, [
-//     Elasticities(config, DiagramEnum.microDemandEngelCurve),
-//   ]),
-//
-//   /// 2.6 Elasticity of supply (includes HL only sub-topics)
-//   DiagramBundle(DiagramEnum.microSupplyElastic, [
-//     Elasticities(config, DiagramEnum.microSupplyElastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSupplyInelastic, [
-//     Elasticities(config, DiagramEnum.microSupplyInelastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSupplyUnitElastic, [
-//     Elasticities(config, DiagramEnum.microSupplyUnitElastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSupplyPerfectlyInelastic, [
-//     Elasticities(config, DiagramEnum.microSupplyPerfectlyInelastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSupplyPerfectlyElastic, [
-//     Elasticities(config, DiagramEnum.microSupplyPerfectlyElastic),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSupplyPrimaryCommodities, [
-//     Elasticities(config, DiagramEnum.microSupplyPrimaryCommodities),
-//   ]),
-//
-//   /// 2.7 Role of Government
-//   DiagramBundle(DiagramEnum.microPriceCeiling, [
-//     PriceControls(config, DiagramEnum.microPriceCeiling),
-//   ]),
-//   DiagramBundle(DiagramEnum.microNationalMinimumWage, [
-//     PriceControls(config, DiagramEnum.microNationalMinimumWage),
-//   ]),
-//   DiagramBundle(DiagramEnum.microNationalMinimumWageWelfare, [
-//     PriceControls(config, DiagramEnum.microNationalMinimumWageWelfare),
-//   ]),
-//   DiagramBundle(DiagramEnum.microNationalMinimumWageInelasticDemandAndSupply, [
-//     PriceControls(
-//       config,
-//       DiagramEnum.microNationalMinimumWageInelasticDemandAndSupply,
-//     ),
-//   ]),
-//   DiagramBundle(DiagramEnum.microAgriculturalPriceFloor, [
-//     PriceControls(config, DiagramEnum.microAgriculturalPriceFloor),
-//   ]),
-//   DiagramBundle(DiagramEnum.microIndirectTax, [
-//     TaxesAndSubsidies(config, DiagramEnum.microIndirectTax),
-//   ]),
-//   DiagramBundle(DiagramEnum.microIndirectTaxInelasticPED, [
-//     TaxesAndSubsidies(config, DiagramEnum.microIndirectTaxInelasticPED),
-//   ]),
-//   DiagramBundle(DiagramEnum.microIndirectTaxElasticPED, [
-//     TaxesAndSubsidies(config, DiagramEnum.microIndirectTaxElasticPED),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSubsidy, [
-//     TaxesAndSubsidies(config, DiagramEnum.microSubsidy),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSubsidyInelasticPED, [
-//     TaxesAndSubsidies(config, DiagramEnum.microSubsidyInelasticPED),
-//   ]),
-//   DiagramBundle(DiagramEnum.microSubsidyElasticPED, [
-//     TaxesAndSubsidies(config, DiagramEnum.microSubsidyElasticPED),
-//   ]),
-//
-//   /// 2.8 Market failure—externalities and common pool or common access resources
-//   /// Negative Production Externality
-//   DiagramBundle(DiagramEnum.microNegativeProductionExternality, [
-//     Externalities(config, DiagramEnum.microNegativeProductionExternality),
-//   ]),
-//   DiagramBundle(DiagramEnum.microNegativeProductionExternalityWelfare, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microNegativeProductionExternalityWelfare,
-//     ),
-//   ]),
-//   DiagramBundle(DiagramEnum.microNegativeProductionExternalityPigouvianTax, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microNegativeProductionExternalityPigouvianTax,
-//     ),
-//   ]),
-//   DiagramBundle(DiagramEnum.microNegativeProductionExternalityRegulations, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microNegativeProductionExternalityRegulations,
-//     ),
-//   ]),
-//
-//   DiagramBundle(DiagramEnum.microCommonPoolResources, [
-//     Externalities(config, DiagramEnum.microCommonPoolResources),
-//   ]),
-//   DiagramBundle(DiagramEnum.microCarbonTax, [
-//     Externalities(config, DiagramEnum.microCarbonTax),
-//   ]),
-//   DiagramBundle(DiagramEnum.microTradablePollutionPermits, [
-//     Externalities(config, DiagramEnum.microTradablePollutionPermits),
-//   ]),
-//
-//   /// Negative Consumption
-//   DiagramBundle(DiagramEnum.microNegativeConsumptionExternality, [
-//     Externalities(config, DiagramEnum.microNegativeConsumptionExternality),
-//   ]),
-//   DiagramBundle(DiagramEnum.microNegativeConsumptionExternalityWelfare, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microNegativeConsumptionExternalityWelfare,
-//     ),
-//   ]),
-//   DiagramBundle(DiagramEnum.microNegativeConsumptionExternalityPigouvianTax, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microNegativeConsumptionExternalityPigouvianTax,
-//     ),
-//   ]),
-//   DiagramBundle(
-//     DiagramEnum.microNegativeConsumptionExternalityPublicAwareness,
-//     [
-//       Externalities(
-//         config,
-//         DiagramEnum.microNegativeConsumptionExternalityPublicAwareness,
-//       ),
-//     ],
-//   ),
-//
-//   /// Positive Production Externality
-//   DiagramBundle(DiagramEnum.microPositiveProductionExternality, [
-//     Externalities(config, DiagramEnum.microPositiveProductionExternality),
-//   ]),
-//
-//   DiagramBundle(DiagramEnum.microPositiveProductionExternalityWelfare, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microPositiveProductionExternalityWelfare,
-//     ),
-//   ]),
-//
-//   DiagramBundle(DiagramEnum.microPositiveProductionExternalitySubsidy, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microPositiveProductionExternalitySubsidy,
-//     ),
-//   ]),
-//   DiagramBundle(DiagramEnum.microPositiveProductionExternalityDirectProvision, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microPositiveProductionExternalityDirectProvision,
-//     ),
-//   ]),
-//
-//   /// Positive Consumption Externality
-//   DiagramBundle(DiagramEnum.microPositiveConsumptionExternality, [
-//     Externalities(config, DiagramEnum.microPositiveConsumptionExternality),
-//   ]),
-//   DiagramBundle(DiagramEnum.microPositiveConsumptionExternalityWelfare, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microPositiveConsumptionExternalityWelfare,
-//     ),
-//   ]),
-//   DiagramBundle(DiagramEnum.microPositiveConsumptionExternalitySubsidy, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microPositiveConsumptionExternalitySubsidy,
-//     ),
-//   ]),
-//   DiagramBundle(DiagramEnum.microPositiveConsumptionExternalityAdvertising, [
-//     Externalities(
-//       config,
-//       DiagramEnum.microPositiveConsumptionExternalityAdvertising,
-//     ),
-//   ]),
-//   DiagramBundle(
-//     DiagramEnum.microPositiveConsumptionExternalityDirectProvision,
-//     [
-//       Externalities(
-//         config,
-//         DiagramEnum.microPositiveConsumptionExternalityDirectProvision,
-//       ),
-//     ],
-//   ),
-//
-//   // /// 2.9 Market failure—public goods
-//   // DiagramBundle(DiagramEnum.microPublicGoods, [
-//   //   PublicGoods(config, DiagramEnum.microPublicGoods),
-//   // ]),
-//
-//   /// 2.11 Market Power
-//
-//   // /// 4.1 Benefits of International Trade
-//   // DiagramBundle(DiagramEnum.globalWorldPriceStandAlone, [
-//   //   InternationalTrade(config, DiagramEnum.globalWorldPriceStandAlone),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalNetImporter, [
-//   //   InternationalTrade(config, DiagramEnum.globalWorldPrice),
-//   //   InternationalTrade(config, DiagramEnum.globalNetImporter),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalNetExporter, [
-//   //   InternationalTrade(config, DiagramEnum.globalWorldPrice),
-//   //   InternationalTrade(config, DiagramEnum.globalNetExporter),
-//   // ]),
-//   //
-//   // /// Comparative Advantage
-//   // DiagramBundle(DiagramEnum.globalAbsoluteAdvantageDifferentGoods, [
-//   //   ComparativeAdvantage(
-//   //     config,
-//   //     DiagramEnum.globalAbsoluteAdvantageDifferentGoods,
-//   //   ),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalAbsoluteAdvantageBothGoods, [
-//   //   ComparativeAdvantage(
-//   //     config,
-//   //     DiagramEnum.globalAbsoluteAdvantageBothGoods,
-//   //   ),
-//   // ]),
-//   // DiagramBundle(
-//   //   DiagramEnum.globalComparativeAdvantageTradeAndConsumption,
-//   //   [
-//   //     ComparativeAdvantage(
-//   //       config,
-//   //       DiagramEnum.globalComparativeAdvantageTradeAndConsumption,
-//   //     ),
-//   //   ],
-//   // ),
-//   // DiagramBundle(
-//   //   DiagramEnum.globalComparativeAdvantageTradeAndConsumptionMixed,
-//   //   [
-//   //     ComparativeAdvantage(
-//   //       config,
-//   //       DiagramEnum.globalComparativeAdvantageTradeAndConsumptionMixed,
-//   //     ),
-//   //   ],
-//   // ),
-//   //
-//   // /// 4.2 Types of Trade Protection
-//   // DiagramBundle(DiagramEnum.globalTariff, [
-//   //   Tariff(config, DiagramEnum.globalTariff),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalTariffWelfare, [
-//   //   Tariff(config, DiagramEnum.globalTariffWelfare),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalTariffConsumerSurplusChange, [
-//   //   Tariff(config, DiagramEnum.globalTariffConsumerSurplusChange),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalTariffProducerSurplusChange, [
-//   //   Tariff(config, DiagramEnum.globalTariffProducerSurplusChange),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalTariffGovernmentRevenue, [
-//   //   Tariff(config, DiagramEnum.globalTariffGovernmentRevenue),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalTariffWelfareLoss, [
-//   //   Tariff(config, DiagramEnum.globalTariffWelfareLoss),
-//   // ]),
-//   //
-//   // /// Import Quota
-//   // DiagramBundle(DiagramEnum.globalImportQuota, [
-//   //   ImportQuota(config, DiagramEnum.globalImportQuota),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalImportQuotaWelfare, [
-//   //   ImportQuota(config, DiagramEnum.globalImportQuotaWelfare),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalImportQuotaConsumerSurplusChange, [
-//   //   ImportQuota(
-//   //     config,
-//   //     DiagramEnum.globalImportQuotaConsumerSurplusChange,
-//   //   ),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalImportQuotaProducerSurplusChange, [
-//   //   ImportQuota(
-//   //     config,
-//   //     DiagramEnum.globalImportQuotaProducerSurplusChange,
-//   //   ),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalImportQuotaWelfareLoss, [
-//   //   ImportQuota(config, DiagramEnum.globalImportQuotaWelfareLoss),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalProductionSubsidy, [
-//   //   ProductionSubsidy(config, DiagramEnum.globalProductionSubsidy),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalProductionSubsidyWelfare, [
-//   //   ProductionSubsidy(config, DiagramEnum.globalProductionSubsidyWelfare),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalProductionSubsidyConsumerSurplus, [
-//   //   ProductionSubsidy(
-//   //     config,
-//   //     DiagramEnum.globalProductionSubsidyConsumerSurplus,
-//   //   ),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalProductionSubsidyProducerSurplus, [
-//   //   ProductionSubsidy(
-//   //     config,
-//   //     DiagramEnum.globalProductionSubsidyProducerSurplus,
-//   //   ),
-//   // ]),
-//   // DiagramBundle(DiagramEnum.globalProductionSubsidyWelfareLoss, [
-//   //   ProductionSubsidy(
-//   //     config,
-//   //     DiagramEnum.globalProductionSubsidyWelfareLoss,
-//   //   ),
-//   // ]),
-//   // DiagramBundle(
-//   //   DiagramEnum.globalProductionSubsidyProducerSurplusChange,
-//   //   [
-//   //     ProductionSubsidy(
-//   //       config,
-//   //       DiagramEnum.globalProductionSubsidyProducerSurplusChange,
-//   //       legendDisplay: LegendDisplay.letters,
-//   //     ),
-//   //   ],
-//   // ),
-// ];

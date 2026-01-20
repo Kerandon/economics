@@ -3,7 +3,7 @@ import 'package:economics_app/diagrams/enums/unit_type.dart';
 enum DiagramEnum {
   microPPCConstantOppCost,
   microPPCIncreaseOppCost,
-  microDemandApples,
+  microDemand,
   microDemandExtension,
   microDemandContraction,
   microDemandQuantityChangeDueToSupply,
@@ -181,7 +181,7 @@ extension DiagramBundleEnumUnit on DiagramEnum {
   }
 
   Subunit get subunit => switch (this) {
-    DiagramEnum.microDemandApples => Subunit.demand,
+    DiagramEnum.microDemand => Subunit.demand,
     DiagramEnum.microPPCConstantOppCost => Subunit.whatIsEconomics,
     DiagramEnum.microPPCIncreaseOppCost => Subunit.whatIsEconomics,
 

@@ -1,5 +1,3 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/grid_line_style.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/label_align.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
@@ -8,16 +6,27 @@ import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/base_painter_painter.dart';
+import '../i_diagram_canvas.dart';
+import '../painter_constants.dart';
+import '../painter_methods/legend/legend_display.dart';
 
-class PublicGoods extends BaseDiagramPainter2 {
-  PublicGoods(super.config, super.bundle);
+class PublicGoods extends BaseDiagramPainter3 {
+  PublicGoods(super.config, super.diagram);
 
   @override
   void paint(Canvas canvas, Size size) {
+    drawDiagram(canvas, size);
+  }
+
+  @override
+  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
     final c = config.copyWith(painterSize: size);
+
+    // 1. Setup specialized Axis for Public Goods (Vertical Summation)
     paintAxis(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisLabel: DiagramLabel.priceCostsBenefits.label,
       xAxisLabel: DiagramLabel.quantity.label,
       drawGridlines: true,
@@ -28,58 +37,79 @@ class PublicGoods extends BaseDiagramPainter2 {
       gridLineStyle: GridLineStyle.indents,
     );
 
+    // 2. Individual Marginal Benefit Curves (MB1 and MB2)
+    // MB1 (Bottom Curve)
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0, 0.80),
-      polylineOffsets: [Offset(0.70, 1.0)],
+      iCanvas: iCanvas,
+      startPos: const Offset(0, 0.80),
+      polylineOffsets: [const Offset(0.70, 1.0)],
     );
+
+    // MB2 (Middle Curve)
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0, 0.60),
-      polylineOffsets: [Offset(0.70, 1.0)],
+      iCanvas: iCanvas,
+      startPos: const Offset(0, 0.60),
+      polylineOffsets: [const Offset(0.70, 1.0)],
     );
+
+    // 3. MSB (Vertical Summation: MSB = MB1 + MB2)
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0, 0.40),
-      polylineOffsets: [Offset(0.70, 1.0)],
+      iCanvas: iCanvas,
+      startPos: const Offset(0, 0.40),
+      polylineOffsets: [const Offset(0.70, 1.0)],
       color: Colors.red,
     );
+
+    // 4. Marginal Social Cost (MSC) - Horizontal Supply in this context
     paintDiagramLines(
       c,
       canvas,
-      startPos: Offset(0.0, 0.70),
-      polylineOffsets: [Offset(0.80, 0.70)],
+      iCanvas: iCanvas,
+      startPos: const Offset(0.0, 0.70),
+      polylineOffsets: [const Offset(0.80, 0.70)],
       label2: DiagramLabel.msc.label,
       label2Align: LabelAlign.centerTop,
       color: Colors.red,
     );
+
+    // 5. Annotations and Labels
     paintText2(
       c,
       canvas,
       'Individual MB1',
-      Offset(0.80, 0.95),
-      pointerLine: Offset(0.52, 0.95),
+      const Offset(0.80, 0.95),
+      pointerLine: const Offset(0.52, 0.95),
+      iCanvas: iCanvas,
     );
     paintText2(
       c,
       canvas,
       'Individual MB2',
-      Offset(0.80, 0.85),
-      pointerLine: Offset(0.44, 0.85),
+      const Offset(0.80, 0.85),
+      pointerLine: const Offset(0.44, 0.85),
+      iCanvas: iCanvas,
     );
     paintText2(
       c,
       canvas,
       'MSB = MB1 + MB2',
-      Offset(0.30, 0.45),
-      pointerLine: Offset(0.30, 0.655),
+      const Offset(0.30, 0.45),
+      pointerLine: const Offset(0.30, 0.655),
+      iCanvas: iCanvas,
     );
+
+    // 6. Optimal Quantity Projections (Where MSC = MSB)
+    // Q_opt intersection
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.70,
       xAxisEndPos: 0.35,
       showDotAtIntersection: true,
@@ -87,9 +117,12 @@ class PublicGoods extends BaseDiagramPainter2 {
       xLabel: 'Qopt',
       hideYLine: true,
     );
+
+    // Projections down to individual MBs at Q_opt
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.80,
       xAxisEndPos: 0.35,
       showDotAtIntersection: true,
@@ -98,10 +131,13 @@ class PublicGoods extends BaseDiagramPainter2 {
     paintDiagramDashedLines(
       c,
       canvas,
+      iCanvas: iCanvas,
       yAxisStartPos: 0.90,
       xAxisEndPos: 0.35,
       showDotAtIntersection: true,
       hideXLine: true,
     );
   }
+
+  LegendDisplay get legendDisplay => LegendDisplay.shading;
 }

@@ -16,7 +16,6 @@ List<Slide> get marketPowerSlides => [
     contents: [
       /// *********************************************************************************************************************
       /// Perfect Competition
-
       SlideContent.text('''
 <h3>Characteristics</h3>
 <ul style="list-style: none; padding-left: 5px;">
@@ -157,8 +156,6 @@ List<Slide> get marketPowerSlides => [
   Slide(
     syllabusPoint: SyllabusPoint.monopoly,
     contents: [
-
-
       SlideContent.text('''
 <h3>Characteristics</h3>
 <ul>
@@ -305,7 +302,6 @@ List<Slide> get marketPowerSlides => [
   Slide(
     syllabusPoint: SyllabusPoint.oligopoly,
     contents: [
-
       SlideContent.text('''
 <h3>Characteristics</h3>
 <ul>
@@ -375,6 +371,7 @@ List<Slide> get marketPowerSlides => [
     <h3>Homogeneous products</h3>
     <p>Some oligopolistic industries sell homogeneous goods with usually deal with the primary sector e.g., oil, steel, chemicals</p>
     '''),
+
       // SlideContent.customWidget(
       //   SimpleTable(
       //     headers: ['Product Differentiation', 'Homogeneous Products'],
@@ -385,7 +382,6 @@ List<Slide> get marketPowerSlides => [
       //     ],
       //   ),
       // ),
-
       SlideContent.text('''
 <h2>Collusive Oligopoly</h2>
 <p>In oligopolistic markets there is a strong incentive for firms to <strong>collude</strong> and engage in <strong>price fixing</strong></p>
@@ -518,7 +514,6 @@ List<Slide> get marketPowerSlides => [
   Slide(
     syllabusPoint: SyllabusPoint.monopolisticCompetition,
     contents: [
-
       SlideContent.text('''
       <h3>Characteristics</h3>
 <ul>
@@ -624,8 +619,7 @@ and bundled services to make their goods appear differentiated in a highly compe
   Slide(
     syllabusPoint:
         SyllabusPoint.governmentInterventionInResponseToAbuseOfMarketPower,
-    contents: [
-    ],
+    contents: [],
   ),
 
   /// *********************************************************************************************************************
