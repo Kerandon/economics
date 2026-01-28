@@ -33,11 +33,11 @@ extension Shade on ShadeType {
   Color setShadeColor() {
     const consumerSurplusColor = Colors.green;
     const producerSurplusColor = Colors.blue;
-    const gainedColor = Colors.indigo;
-    const lostColor = Colors.blueGrey;
+    const gainedColor = Colors.blue;
+    const lostColor = Colors.red;
     const noChangeColor = Colors.grey;
-    const consumerIncidenceColor = Colors.lightGreenAccent;
-    const producerIncidenceColor = Colors.orangeAccent; // light grey
+    const consumerIncidenceColor = Colors.greenAccent;
+    const producerIncidenceColor = Colors.blueAccent; // light grey
 
     switch (this) {
       case ShadeType.consumerSurplus:
@@ -57,7 +57,7 @@ extension Shade on ShadeType {
       case ShadeType.governmentRevenue:
         return Colors.deepOrange;
       case ShadeType.gainedRevenue:
-        return consumerSurplusColor;
+        return gainedColor;
       case ShadeType.welfareLoss:
         return Colors.red;
       case ShadeType.abnormalProfit:
@@ -136,9 +136,9 @@ extension Shade on ShadeType {
       case ShadeType.noChange: // 🆕 Label
         return 'No Change';
       case ShadeType.lostRevenue:
-        return 'Revenue Loss';
+        return 'Lost Revenue';
       case ShadeType.revenueUnchanged:
-        return 'Revenue';
+        return 'Revenue Unchanged';
       case ShadeType.consumerBurden:
         return 'Consumer Burden';
       case ShadeType.producerBurden:

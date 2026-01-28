@@ -68,7 +68,7 @@ void paintMarketCurve(
 
   // Default label
   final defaultLabel = switch (type) {
-    MarketCurveType.demand => DiagramLabel.d.label,
+    MarketCurveType.demand => DiagramLabel.d.label.toUpperCase(),
     MarketCurveType.supply => DiagramLabel.s.label,
   };
 

@@ -98,7 +98,7 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
   void drawDot(
     Offset center,
     Color color, {
-    double radius = 5.0,
+    double radius = kDotRadius,
     bool fill = true,
   }) {
     final paint = Paint()

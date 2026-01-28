@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
@@ -34,8 +33,8 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       c,
       canvas,
       iCanvas: iCanvas,
-      yAxisLabel: DiagramLabel.price.label,
-      xAxisLabel: DiagramLabel.quantity.label,
+      yAxisLabel: DiagramLabel.p.label,
+      xAxisLabel: DiagramLabel.q.label,
     );
 
     switch (diagram) {
@@ -63,12 +62,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     Size size, {
     IDiagramCanvas? iCanvas,
   }) {
-    // Shading for Deadweight Loss
-    paintShading(canvas, size, ShadeType.welfareLoss, [
-      const Offset(0.425, 0.43),
-      const Offset(0.55, 0.55),
-      const Offset(0.425, 0.68),
-    ], iCanvas: iCanvas);
+
 
     // Tax Vertical Bracket
     paintLineSegment(
@@ -131,14 +125,6 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       verticalShift: 0.10,
     );
 
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.welfareLoss.label,
-      const Offset(0.75, 0.55),
-      pointerLine: const Offset(0.50, 0.55),
-      iCanvas: iCanvas,
-    );
 
     // Equilibrium Intersections
     paintDiagramDashedLines(
@@ -149,6 +135,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       xAxisEndPos: 0.55,
       yLabel: DiagramLabel.pE.label,
       xLabel: DiagramLabel.qE.label,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -169,6 +156,18 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       yLabel: DiagramLabel.pp.label,
       hideXLine: true,
       showDotAtIntersection: true,
+    );
+    paintLegendTable(
+      canvas,
+      c,
+      iCanvas: iCanvas,
+      headers: ['', 'No Tax', 'Tax'],
+      data: [
+        ['Consumer', '+(a,b,c,d)', '+a'],
+        ['Producer', '+(e,f,g,h,i)', '+h'],
+        ['Government', '-', '+(b,c,e,f)'],
+        ['Welfare loss', '-', '-(d,g)'],
+      ],
     );
   }
 
@@ -205,11 +204,6 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       iCanvas: iCanvas,
     );
 
-    paintLegend(canvas, size, config: c, iCanvas: iCanvas, [
-      LegendEntry.fromShade(ShadeType.consumerBurden),
-      LegendEntry.fromShade(ShadeType.producerBurden),
-    ]);
-
     paintMarketCurve(
       c,
       canvas,
@@ -243,9 +237,10 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       canvas,
       iCanvas: iCanvas,
       yAxisStartPos: 0.58,
-      xAxisEndPos: 0.525,
+      xAxisEndPos: 0.53,
       yLabel: DiagramLabel.pE.label,
       xLabel: DiagramLabel.qE.label,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -267,6 +262,20 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       hideXLine: true,
       showDotAtIntersection: true,
     );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.consumerBurden.label,
+      Offset(0.20, 0.30),
+      pointerLine: Offset(0.20, 0.50),
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.producerBurden.label,
+      Offset(0.80, 0.60),
+      pointerLine: Offset(0.40, 0.60),
+    );
   }
 
   // --- SUBSIDY METHODS ---
@@ -277,11 +286,6 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     Size size, {
     IDiagramCanvas? iCanvas,
   }) {
-    paintShading(canvas, size, ShadeType.welfareLoss, [
-      const Offset(0.55, 0.3),
-      const Offset(0.55, 0.55),
-      const Offset(0.42, 0.43),
-    ], iCanvas: iCanvas);
 
     // Labels A-H
     paintText2(
@@ -294,11 +298,52 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintText2(
       c,
       canvas,
+      DiagramLabel.b.label,
+      const Offset(0.10, 0.36),
+      iCanvas: iCanvas,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.c.label,
+      const Offset(0.42, 0.36),
+      iCanvas: iCanvas,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.d.label.toLowerCase(),
+      const Offset(0.10, 0.49),
+      iCanvas: iCanvas,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.e.label,
+      const Offset(0.39, 0.51),
+      iCanvas: iCanvas,
+    );
+    paintText2(
+      c,
+      canvas,
       DiagramLabel.f.label,
+      const Offset(0.46, 0.51),
+      iCanvas: iCanvas,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.g.label,
       const Offset(0.50, 0.42),
       iCanvas: iCanvas,
     );
-
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.h.label,
+      const Offset(0.10, 0.62),
+      iCanvas: iCanvas,
+    );
     paintLineSegment(
       c,
       canvas,
@@ -320,7 +365,6 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       canvas,
       iCanvas: iCanvas,
       type: MarketCurveType.demand,
-      label: DiagramLabel.dEqualsMB.label,
     );
     paintMarketCurve(
       c,
@@ -337,7 +381,6 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       canvas,
       iCanvas: iCanvas,
       type: MarketCurveType.supply,
-      label: DiagramLabel.sEqualsMC.label,
       horizontalShift: -kExtendBy5,
       verticalShift: -kExtendBy10,
     );
@@ -370,6 +413,18 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       yLabel: DiagramLabel.pp.label,
       xLabel: DiagramLabel.qSub.label,
       showDotAtIntersection: true,
+    );
+    paintLegendTable(
+      canvas,
+      c,
+      iCanvas: iCanvas,
+      headers: ['', 'No Subsidy', 'Subsidy'],
+      data: [
+        ['Consumer', '+(a,b)', '+(a,b,d,e,f)'],
+        ['Producer', '+(d,h)', '+(b,c,d,h)'],
+        ['Government', '-', '-(b,c,e,f,g)'],
+        ['Welfare loss', '-', '-g'],
+      ],
     );
   }
 
@@ -424,6 +479,14 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       color: Colors.red,
       label: DiagramLabel.sSub.label,
     );
+    paintMarketCurve(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      type: MarketCurveType.supply,
+      horizontalShift: -0.05,
+      verticalShift: -0.10,
+    );
 
     paintDiagramDashedLines(
       c,
@@ -445,11 +508,51 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       xLabel: ' ${DiagramLabel.qSub.label}',
       showDotAtIntersection: true,
     );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.38,
+      xAxisEndPos: 0.52,
+      hideYLine: true,
+      hideXLine: true,
+    );
 
-    paintLegend(canvas, size, config: c, iCanvas: iCanvas, [
-      LegendEntry.fromShade(ShadeType.consumerIncidence),
-      LegendEntry.fromShade(ShadeType.producerIncidence),
-    ]);
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.38,
+      xAxisEndPos: 0.465,
+      hideXLine: true,
+      hideYLine: true,
+      showDotAtIntersection: true,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.consumerGain.label,
+      Offset(0.20, 0.20),
+      iCanvas: iCanvas,
+      pointerLine: Offset(0.20, 0.35),
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.producerGain.label,
+      Offset(0.75, 0.60),
+      iCanvas: iCanvas,
+      pointerLine: Offset(0.40, 0.50),
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.38,
+      xAxisEndPos: 0.52,
+      hideXLine: true,
+      yLabel: DiagramLabel.pE.label,
+    );
   }
 
   // ✅ ADDED: Elastic Tax Variant
@@ -630,19 +733,40 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       xLabel: ' ${DiagramLabel.qSub.label}',
       showDotAtIntersection: true,
     );
-
-    paintLegend(canvas, size, config: c, iCanvas: iCanvas, [
-      LegendEntry.fromShade(ShadeType.consumerIncidence),
-      LegendEntry.fromShade(ShadeType.producerIncidence),
-    ]);
-  }
-
-  LegendDisplay get legendDisplay {
-    // Logic to determine display mode based on specific diagram
-    if (diagram == DiagramEnum.microIndirectTax ||
-        diagram == DiagramEnum.microSubsidy) {
-      return LegendDisplay.letters;
-    }
-    return LegendDisplay.shading;
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.46,
+      xAxisEndPos: 0.58,
+      yLabel: DiagramLabel.pE.label,
+      hideXLine: true,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.465,
+      xAxisEndPos: 0.385,
+      hideXLine: true,
+      hideYLine: true,
+      showDotAtIntersection: true,
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.consumerGain.label,
+      Offset(0.30, 0.20),
+      iCanvas: iCanvas,
+      pointerLine: Offset(0.30, 0.30),
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.producerGain.label,
+      Offset(0.60, 0.70),
+      iCanvas: iCanvas,
+      pointerLine: Offset(0.40, 0.50),
+    );
   }
 }

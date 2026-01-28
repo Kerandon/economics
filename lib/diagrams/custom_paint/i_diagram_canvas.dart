@@ -17,7 +17,7 @@ abstract class IDiagramCanvas {
   void drawDot(
     Offset center,
     Color color, {
-    double radius = 5.0,
+    double radius = 3.0,
     bool fill = true,
   });
 }

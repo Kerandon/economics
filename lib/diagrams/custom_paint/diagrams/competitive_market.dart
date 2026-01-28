@@ -39,6 +39,22 @@ class CompetitiveMarket extends BaseDiagramPainter3 {
     if (diagram == DiagramEnum.microShortage ||
         diagram == DiagramEnum.microSurplus ||
         diagram == DiagramEnum.microMarketEquilibrium) {
+      if(diagram == DiagramEnum.microShortage) {
+        paintLineSegment(c, canvas, origin: Offset(0.5, 1.12),
+            length: 0.40,
+            endStyle: LineEndStyle.arrowRightAngles,
+            label: DiagramLabel.shortage.label,
+            labelAlign: LabelAlign.centerBottom
+        );
+      }
+      if(diagram == DiagramEnum.microSurplus) {
+        paintLineSegment(c, canvas, origin: Offset(0.5, 1.12),
+            length: 0.40,
+            endStyle: LineEndStyle.arrowRightAngles,
+            label: DiagramLabel.surplus.label,
+            labelAlign: LabelAlign.centerBottom
+        );
+      }
       paintMarketCurve(
         c,
         canvas,
@@ -254,7 +270,7 @@ void _paintIncreaseOrDecreaseInDemand(
       c,
       canvas,
       iCanvas: iCanvas,
-      origin: const Offset(0.30, 0.50),
+      origin: const Offset(0.31, 0.50),
       angle: pi * 0.25,
     ); //
     paintLineSegment(

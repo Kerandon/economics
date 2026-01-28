@@ -143,9 +143,9 @@ void paintLineSegment(
   if (label != null) {
     final Offset midNormalized = Offset(
       (startPos.dx + endPos.dx) / 2,
-      (startPos.dy + endPos.dy) / 1.98,
+      (startPos.dy + endPos.dy) / 2,
     );
-    final double labelOffsetPx = config.painterSize.width * 0.06;
+    final double labelOffsetPx = config.painterSize.width * 0.04;
     final Offset perpUnit = Offset(-sin(angle), cos(angle));
 
     Offset deltaNormalized = (labelAlign == LabelAlign.centerTop)

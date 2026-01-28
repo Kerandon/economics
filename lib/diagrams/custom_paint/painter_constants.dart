@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 /// Curves
-const kCurveWidth = 8.0;
+const kCurveWidth = 6.0;
 const kCurveWidthSlim = 2.0;
 const kArrowSize = 16.0;
 const kExtendBy5 = 0.05;
@@ -12,8 +12,8 @@ const kExtendBy15 = 0.18;
 const kExtendBy20 = 0.20;
 
 /// Axis & Labels
-const kTopAxisIndent = 0.75;
-const kBottomAxisIndent = 1.25;
+const kTopAxisIndent = 0.50;
+const kBottomAxisIndent = 1.50;
 const kLabelPadding = 0.06;
 const kAxisIndent = 0.20;
 const kAxisWidth = 0.30;
@@ -24,7 +24,8 @@ const kSimilarities = 'Similarities';
 const kDifferences = 'Differences';
 
 /// Text
-const kFontVerySmall = 16.0;
+const kFontTiny = 11.0;
+const kFontVerySmall = 14.0;
 const kFontSmall = 18.0;
 const kFontMedium = 26.0;
 const kLabelTextStyle = TextStyle(
@@ -33,7 +34,7 @@ const kLabelTextStyle = TextStyle(
 );
 
 /// Dot
-const kDotRadius = 22.0;
+const kDotRadius = 4.0;
 
 enum CurveStyle { standard, dashed, dotted, bold }
 

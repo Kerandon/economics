@@ -102,7 +102,7 @@ void paintDiagramDashedLines(
     } else if (canvas != null) {
       canvas.drawCircle(
         intersection,
-        r,
+          kDotRadius,
         Paint()
           ..color = dColor
           ..style = PaintingStyle.fill,

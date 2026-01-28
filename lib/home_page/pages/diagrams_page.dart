@@ -128,12 +128,7 @@ class DiagramsPage extends ConsumerWidget {
                                           ],
                                         )
                                       else
-                                        Container(
-                                          color: Colors.grey,
-                                          width: 400,
-                                          height: 400,
-                                          child: diagram.widget.first,
-                                        ),
+                                        diagram.widget.first,
                                     ],
                                   );
                                 }).toList(),
@@ -169,7 +164,7 @@ Future<void> _exportDiagramsToPdf(
           return pw.GridView(
             crossAxisCount: 2,
             childAspectRatio: 0.85,
-            crossAxisSpacing: 20,
+            crossAxisSpacing: 5,
             mainAxisSpacing: 30,
             children: group.map((d) {
               final painter = d.basePainterDiagrams.first;
@@ -180,7 +175,7 @@ Future<void> _exportDiagramsToPdf(
                   pw.Padding(
                     padding: const pw.EdgeInsets.only(bottom: 4),
                     child: pw.Text(
-                      painter.diagram.name,
+                      painter.diagram.toText,
                       style: pw.TextStyle(
                         fontSize: 10,
                         fontWeight: pw.FontWeight.bold,
@@ -333,7 +328,7 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   void drawDot(
     Offset center,
     Color color, {
-    double radius = 5.0,
+    double radius = kDotRadius,
     bool fill = true,
   }) {
     graphics

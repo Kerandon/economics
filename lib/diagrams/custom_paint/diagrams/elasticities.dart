@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/diagram_enum.dart';
@@ -11,8 +12,6 @@ import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
-import '../painter_methods/legend/legend_entry.dart';
-import '../painter_methods/legend/paint_legend.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_dot.dart';
 import '../painter_methods/paint_text_2.dart' show paintText2;
@@ -36,7 +35,7 @@ class Elasticities extends BaseDiagramPainter3 {
 
     String yLabel = DiagramLabel.p.label;
     if (diagram == DiagramEnum.microDemandEngelCurve) {
-      yLabel = DiagramLabel.income.label;
+      yLabel = DiagramLabel.y.label;
     } else if (diagram == DiagramEnum.microDemandElasticityRevenueChange) {
       yLabel = DiagramLabel.revenue.label;
     }
@@ -412,70 +411,53 @@ class Elasticities extends BaseDiagramPainter3 {
       c,
       canvas,
       iCanvas: iCanvas,
-      startPos: const Offset(0.15, 0.80),
-      polylineOffsets: [const Offset(0.50, 0.70)],
+      startPos: const Offset(0.10, 0.80),
+      polylineOffsets: [const Offset(0.60, 0.65)],
     );
-    paintDiagramLines(
+    paintText2(
       c,
       canvas,
+      DiagramLabel.normalGoodLuxury.label,
+      const Offset(0.25, 0.60),
+      pointerLine: const Offset(0.25, 0.76),
       iCanvas: iCanvas,
-      startPos: const Offset(0.0, 0.845),
-      polylineOffsets: [const Offset(0.15, 0.80)],
-      curveStyle: CurveStyle.dotted,
-      color: dashedColor,
     );
+
     // Necessities
     paintDiagramLines(
       c,
       canvas,
       iCanvas: iCanvas,
-      startPos: const Offset(0.50, 0.70),
-      polylineOffsets: [const Offset(0.70, 0.40)],
+      startPos: const Offset(0.60, 0.90),
+      polylineOffsets: [const Offset(0.80, 0.30)],
+    );
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.normalGoodNecessity.label,
+      const Offset(0.90, 0.70),
+      pointerLine: const Offset(0.66, 0.70),
+      iCanvas: iCanvas,
     );
     // Inferior
     paintDiagramLines(
       c,
       canvas,
       iCanvas: iCanvas,
-      startPos: const Offset(0.70, 0.40),
-      polylineOffsets: [const Offset(0.30, 0.25)],
-    );
-    paintDiagramLines(
-      c,
-      canvas,
-      iCanvas: iCanvas,
-      startPos: const Offset(0.30, 0.25),
-      polylineOffsets: [const Offset(0, 0.14)],
-      curveStyle: CurveStyle.dashed,
-      color: dashedColor,
+      startPos: const Offset(0.10, 0.20),
+      polylineOffsets: [const Offset(0.60, 0.50)],
     );
 
     paintText2(
       c,
       canvas,
       DiagramLabel.inferiorGood.label,
-      const Offset(0.25, 0.65),
-      pointerLine: const Offset(0.25, 0.77),
+      const Offset(0.25, 0.15),
+      pointerLine: const Offset(0.25, 0.29),
       iCanvas: iCanvas,
     );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.normalGoodNecessity.label,
-      const Offset(0.75, 0.70),
-      pointerLine: const Offset(0.57, 0.60),
-      iCanvas: iCanvas,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.normalGoodLuxury.label,
-      const Offset(0.50, 0.15),
-      pointerLine: const Offset(0.50, 0.32),
-      iCanvas: iCanvas,
-    );
-    paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.0, 0.845));
-    paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.0, 0.14));
+
+
   }
 
   // --- SUPPLY METHODS ---
@@ -640,7 +622,19 @@ class Elasticities extends BaseDiagramPainter3 {
     Size size, {
     IDiagramCanvas? iCanvas,
   }) {
-    // Show Revenue change due to volatile supply
+    paintLineSegment(c, canvas, origin: Offset(0.61,0.20),
+    angle: pi,
+    );
+    paintText2(c, canvas, DiagramLabel.gainedRevenue.label,
+    Offset(0.20,0.20),
+    pointerLine: Offset(0.20,0.50)
+
+    );
+    paintText2(c, canvas, DiagramLabel.lostRevenue.label,
+        Offset(0.80,0.80),
+        pointerLine: Offset(0.52,0.80)
+
+    );
     _paintRevenueShading(
       c,
       canvas,
@@ -713,32 +707,18 @@ class Elasticities extends BaseDiagramPainter3 {
     required double p1,
     required double p2,
   }) {
-    paintShading(canvas, size, ShadeType.lostRevenue, [
+    paintShading(canvas, size, ShadeType.gainedRevenue, [
       Offset(0, p1),
       Offset(q1, p1),
       Offset(q1, p2),
       Offset(0, p2),
     ], iCanvas: iCanvas);
-    paintShading(canvas, size, ShadeType.revenueUnchanged, [
-      Offset(0, p2),
-      Offset(q1, p2),
-      Offset(q1, 1.0),
-      Offset(0, 1.0),
-    ], iCanvas: iCanvas);
-    paintShading(canvas, size, ShadeType.gainedRevenue, [
+    paintShading(canvas, size, ShadeType.lostRevenue, [
       Offset(q1, p2),
       Offset(q2, p2),
       Offset(q2, 1.0),
       Offset(q1, 1.0),
     ], iCanvas: iCanvas);
 
-    paintLegend(canvas, size, config: c, iCanvas: iCanvas, [
-      LegendEntry.fromShade(ShadeType.lostRevenue, customLabel: 'Loss'),
-      LegendEntry.fromShade(
-        ShadeType.revenueUnchanged,
-        customLabel: 'Unchanged',
-      ),
-      LegendEntry.fromShade(ShadeType.gainedRevenue, customLabel: 'Gain'),
-    ]);
   }
 }

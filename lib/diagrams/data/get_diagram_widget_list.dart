@@ -67,8 +67,7 @@ List<DiagramWidgetNEW> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
 
     /// Price Controls
     DiagramWidgetNEW([PriceControls(c, DiagramEnum.microPriceCeiling)]),
-    DiagramWidgetNEW([PriceControls(c, DiagramEnum.microPriceFloor)]),
-    DiagramWidgetNEW([PriceControls(c, DiagramEnum.microNationalMinimumWage)]),
+    DiagramWidgetNEW([PriceControls(c, DiagramEnum.microMinimumWage)]),
     DiagramWidgetNEW([
       PriceControls(c, DiagramEnum.microAgriculturalPriceFloor),
     ]),

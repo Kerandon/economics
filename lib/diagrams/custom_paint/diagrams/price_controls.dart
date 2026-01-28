@@ -8,7 +8,6 @@ import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
-import 'package:economics_app/diagrams/models/custom_bezier.dart';
 import 'package:flutter/material.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
@@ -35,9 +34,9 @@ class PriceControls extends BaseDiagramPainter3 {
         _paintPriceCeiling(c, canvas, size, iCanvas: iCanvas);
       case DiagramEnum.microPriceFloor:
         _paintPriceFloor(c, canvas, size, iCanvas: iCanvas);
-      case DiagramEnum.microNationalMinimumWage ||
-          DiagramEnum.microNationalMinimumWageWelfare:
-        _paintNMW(c, canvas, size, diagram, iCanvas: iCanvas);
+      case DiagramEnum.microMinimumWage:
+      case DiagramEnum.microMinimumWageWelfare:
+        _paintMinWage(c, canvas, size, diagram, iCanvas: iCanvas);
       case DiagramEnum.microNationalMinimumWageInelasticDemandAndSupply:
         _paintNMWInelasticDemand(c, canvas, size, iCanvas: iCanvas);
       case DiagramEnum.microAgriculturalPriceFloor:
@@ -50,7 +49,7 @@ class PriceControls extends BaseDiagramPainter3 {
     // These diagrams use the A, B, C letters in a table
     if (diagram == DiagramEnum.microPriceCeiling ||
         diagram == DiagramEnum.microPriceFloor ||
-        diagram == DiagramEnum.microNationalMinimumWageWelfare ||
+        diagram == DiagramEnum.microMinimumWageWelfare ||
         diagram == DiagramEnum.microAgriculturalPriceFloor) {
       return LegendDisplay.letters;
     }
@@ -67,6 +66,18 @@ void _paintPriceCeiling(
   Size size, {
   IDiagramCanvas? iCanvas,
 }) {
+  paintLegendTable(
+    canvas,
+    iCanvas: iCanvas,
+    c,
+    headers: ['', 'Before', 'After'],
+    data: [
+      ['CS', '+(A,B)', '+(A,C)'],
+      ['PS', '+(C,D)', '+E'],
+      ['Welfare', '+(A,B,C,D,E)', '+(A,C,E)'],
+      ['DWL', '-', '-(B,D)'],
+    ],
+  );
   paintLineSegment(
     c,
     canvas,
@@ -75,7 +86,7 @@ void _paintPriceCeiling(
     angle: 0,
     labelAlign: LabelAlign.centerBottom,
     length: 0.5,
-    label: DiagramLabel.shortageQdMinusQs.label,
+    label: DiagramLabel.shortage.label,
     endStyle: LineEndStyle.arrowRightAngles,
   );
 
@@ -84,13 +95,12 @@ void _paintPriceCeiling(
     const Offset(0.25, 0.25),
     const Offset(0.5, 0.50),
   ], iCanvas: iCanvas);
-
   final labels = {
-    DiagramLabel.a: const Offset(0.12, 0.40),
-    DiagramLabel.b: const Offset(0.33, 0.40),
-    DiagramLabel.c: const Offset(0.12, 0.60),
-    DiagramLabel.d: const Offset(0.33, 0.60),
-    DiagramLabel.e: const Offset(0.12, 0.82),
+    DiagramLabel.a: const Offset(0.11, 0.41),
+    DiagramLabel.b: const Offset(0.31, 0.41),
+    DiagramLabel.c: const Offset(0.11, 0.59),
+    DiagramLabel.d: const Offset(0.31, 0.59),
+    DiagramLabel.e: const Offset(0.11, 0.80),
   };
   labels.forEach(
     (label, offset) =>
@@ -110,6 +120,7 @@ void _paintPriceCeiling(
     iCanvas: iCanvas,
     type: MarketCurveType.demand,
     label: DiagramLabel.dEqualsMB.label,
+    lengthAdjustment: 0.15,
   );
   paintMarketCurve(
     c,
@@ -117,6 +128,7 @@ void _paintPriceCeiling(
     iCanvas: iCanvas,
     type: MarketCurveType.supply,
     label: DiagramLabel.sEqualsMC.label,
+    lengthAdjustment: 0.15,
   );
 
   paintDiagramLines(
@@ -135,7 +147,7 @@ void _paintPriceCeiling(
     canvas,
     DiagramLabel.welfareLoss.label,
     const Offset(0.75, 0.50),
-    pointerLine: const Offset(0.40, 0.50),
+    pointerLine: const Offset(0.45, 0.50),
     iCanvas: iCanvas,
   );
 
@@ -198,7 +210,7 @@ void _paintPriceFloor(
     angle: 0,
     labelAlign: LabelAlign.centerTop,
     length: 0.5,
-    label: DiagramLabel.surplusQsMinusQd.label,
+    label: DiagramLabel.surplus.label,
     endStyle: LineEndStyle.arrowRightAngles,
   );
 
@@ -287,14 +299,14 @@ void _paintPriceFloor(
   );
 }
 
-void _paintNMW(
+void _paintMinWage(
   DiagramPainterConfig c,
   Canvas? canvas,
   Size size,
   DiagramEnum bundle, {
   IDiagramCanvas? iCanvas,
 }) {
-  if (bundle == DiagramEnum.microNationalMinimumWageWelfare) {
+  if (bundle == DiagramEnum.microMinimumWageWelfare) {
     paintText2(
       c,
       canvas,
@@ -337,7 +349,7 @@ void _paintNMW(
     iCanvas: iCanvas,
     origin: const Offset(0.50, 0.25),
     endStyle: LineEndStyle.arrowRightAngles,
-    label: DiagramLabel.surplusLaborUnemployment.label,
+    label: DiagramLabel.surplusLabor.label,
     labelAlign: LabelAlign.centerTop,
     length: 0.40,
   );
@@ -370,7 +382,7 @@ void _paintNMW(
     iCanvas: iCanvas,
     startPos: const Offset(0, 0.30),
     polylineOffsets: [const Offset(1.0, 0.30)],
-    label1: DiagramLabel.nmw.label,
+    label1: DiagramLabel.Wmin.label,
     label1Align: LabelAlign.centerLeft,
     color: Colors.red,
   );
@@ -468,7 +480,7 @@ void _paintNMWInelasticDemand(
     iCanvas: iCanvas,
     startPos: const Offset(0, 0.30),
     polylineOffsets: [const Offset(1.0, 0.30)],
-    label1: DiagramLabel.nmw.label,
+    label1: DiagramLabel.Wmin.label,
     label1Align: LabelAlign.centerLeft,
     color: Colors.red,
   );
@@ -523,7 +535,7 @@ void _paintAgriculturalPriceFloor(
     origin: const Offset(0.50, 0.24),
     endStyle: LineEndStyle.arrowRightAngles,
     length: 0.40,
-    label: DiagramLabel.governmentBoughtSurplusQsMinusQd.label,
+    label: DiagramLabel.governmentBoughtSurplus.label,
     labelAlign: LabelAlign.centerTop,
   );
   paintLineSegment(
@@ -563,21 +575,13 @@ void _paintAgriculturalPriceFloor(
         paintText2(c, canvas, label.label, offset, iCanvas: iCanvas),
   );
 
-  paintDiagramDashedLines(
-    c,
-    canvas,
-    iCanvas: iCanvas,
-    yAxisStartPos: 0.50,
-    xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.pE.label,
-    xLabel: DiagramLabel.qE.label,
-  );
+
   paintAxis(
     c,
     canvas,
     iCanvas: iCanvas,
-    yAxisLabel: DiagramLabel.price$.label,
-    xAxisLabel: DiagramLabel.quantity.label,
+    yAxisLabel: DiagramLabel.p.label,
+    xAxisLabel: DiagramLabel.q.label,
   );
   paintMarketCurve(
     c,
@@ -585,6 +589,7 @@ void _paintAgriculturalPriceFloor(
     iCanvas: iCanvas,
     type: MarketCurveType.demand,
     label: DiagramLabel.dEqualsMB.label,
+    lengthAdjustment: 0.20,
   );
   paintMarketCurve(
     c,
@@ -592,6 +597,7 @@ void _paintAgriculturalPriceFloor(
     iCanvas: iCanvas,
     type: MarketCurveType.supply,
     label: DiagramLabel.sEqualsMC.label,
+    lengthAdjustment: 0.20,
   );
 
   paintDiagramLines(
@@ -623,5 +629,15 @@ void _paintAgriculturalPriceFloor(
     hideYLine: true,
     xLabel: DiagramLabel.qSStar.label,
     showDotAtIntersection: true,
+  );
+  paintDiagramDashedLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.50,
+      xAxisEndPos: 0.50,
+      yLabel: DiagramLabel.pE.label,
+      xLabel: DiagramLabel.qE.label,
+      showDotAtIntersection: true
   );
 }

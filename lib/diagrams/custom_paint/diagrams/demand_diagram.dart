@@ -33,7 +33,8 @@ class DemandDiagram extends BaseDiagramPainter3 {
       case DiagramEnum.microDemand:
         _paintDemand(c, canvas, size, diagram, iCanvas: iCanvas);
         break;
-      case DiagramEnum.microDemandIncrease || DiagramEnum.microDemandDecrease:
+      case DiagramEnum.microDemandIncrease:
+      case DiagramEnum.microDemandDecrease:
         _paintIncreaseDecreaseDemand(
           c,
           canvas,
@@ -42,9 +43,9 @@ class DemandDiagram extends BaseDiagramPainter3 {
           iCanvas: iCanvas,
         );
         break;
-      case DiagramEnum.microDemandExtension ||
-          DiagramEnum.microDemandContraction ||
-          DiagramEnum.microDemandQuantityChangeDueToSupply:
+      case DiagramEnum.microDemandExtension:
+      case DiagramEnum.microDemandContraction:
+      case DiagramEnum.microDemandQuantityChangeDueToSupply:
         _paintExtensionContractionDemand(
           c,
           canvas,
@@ -106,16 +107,26 @@ void _paintIncreaseDecreaseDemand(
 
   bool isDecrease = diagram == DiagramEnum.microDemandDecrease;
 
-  double arrowAngle = isDecrease ? pi : 0;
 
-  paintLineSegment(
-    c,
-    canvas,
-    iCanvas: iCanvas,
-    origin: const Offset(0.40, 0.40),
-    angle: arrowAngle,
-    length: 0.18,
-  );
+  if(isDecrease) {
+    paintLineSegment(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      origin: const Offset(0.42, 0.40),
+      angle: pi,
+      length: 0.15,
+    );
+  }else{
+    paintLineSegment(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      origin: const Offset(0.38, 0.40),
+      angle: 0,
+      length: 0.15,
+    );
+  }
 
   paintMarketCurve(
     c,
@@ -123,7 +134,7 @@ void _paintIncreaseDecreaseDemand(
     iCanvas: iCanvas,
     type: MarketCurveType.demand,
     horizontalShift: -0.15,
-    lengthAdjustment: -0.10,
+    lengthAdjustment: -0.15,
     label: isDecrease ? DiagramLabel.d2.label : DiagramLabel.d1.label,
   );
 
@@ -133,7 +144,7 @@ void _paintIncreaseDecreaseDemand(
     iCanvas: iCanvas,
     type: MarketCurveType.demand,
     horizontalShift: 0.15,
-    lengthAdjustment: -0.10,
+    lengthAdjustment: -0.15,
     label: isDecrease ? DiagramLabel.d1.label : DiagramLabel.d2.label,
   );
 

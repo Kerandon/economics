@@ -246,7 +246,7 @@ class Supply extends BaseDiagramPainter3 {
     ]);
 
     final fontSize = kFontSmall;
-    const yPos = 0.15;
+    const yPos = 0.10;
     paintText2(
       c,
       canvas,
@@ -302,7 +302,7 @@ class Supply extends BaseDiagramPainter3 {
       ],
     );
 
-    paintText2(c, canvas, DiagramLabel.diminishingReturnsSetIn.label,Offset(0.45, 0.10),
+    paintText2(c, canvas, DiagramLabel.diminishingReturnsSetIn.label,Offset(0.45, 0.05),
     pointerLine: Offset(0.45, 0.125)
     );
   }
