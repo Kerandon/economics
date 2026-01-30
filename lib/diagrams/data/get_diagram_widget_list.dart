@@ -87,9 +87,6 @@ List<DiagramWidgetNEW> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       Externalities(c, DiagramEnum.microNegativeProductionExternality),
     ]),
     DiagramWidgetNEW([
-      Externalities(c, DiagramEnum.microNegativeProductionExternalityWelfare),
-    ]),
-    DiagramWidgetNEW([
       Externalities(c, DiagramEnum.microNegativeConsumptionExternality),
     ]),
     DiagramWidgetNEW([

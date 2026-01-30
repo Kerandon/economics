@@ -4,16 +4,10 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_line
 import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
 import '../../i_diagram_canvas.dart';
-
 import '../../../models/custom_bezier.dart';
 import '../../../models/diagram_painter_config.dart';
-import '../../../models/size_adjuster.dart';
 import '../../painter_constants.dart';
 
-// Note: This file assumes the existence of helper functions/classes
-// like DiagramPainterConfig, CustomBezier, LabelAlign, kCurveWidth,
-// kAxisIndent, SizeAdjustor, dashPath, CircularIntervalList,
-// paintLabelText, paintArrowHead, and atan2.
 void paintDiagramLines(
   DiagramPainterConfig config,
   Canvas? canvas, {

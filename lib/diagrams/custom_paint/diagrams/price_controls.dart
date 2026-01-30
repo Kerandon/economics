@@ -90,11 +90,11 @@ void _paintPriceCeiling(
     endStyle: LineEndStyle.arrowRightAngles,
   );
 
-  paintShading(canvas, size, ShadeType.welfareLoss, [
-    const Offset(0.25, 0.75),
-    const Offset(0.25, 0.25),
-    const Offset(0.5, 0.50),
-  ], iCanvas: iCanvas);
+  // paintShading(canvas, size, ShadeType.welfareLoss, [
+  //   const Offset(0.25, 0.75),
+  //   const Offset(0.25, 0.25),
+  //   const Offset(0.5, 0.50),
+  // ], iCanvas: iCanvas);
   final labels = {
     DiagramLabel.a: const Offset(0.11, 0.41),
     DiagramLabel.b: const Offset(0.31, 0.41),
@@ -142,14 +142,14 @@ void _paintPriceCeiling(
     polylineOffsets: [const Offset(1.0, 0.75)],
   );
 
-  paintText2(
-    c,
-    canvas,
-    DiagramLabel.welfareLoss.label,
-    const Offset(0.75, 0.50),
-    pointerLine: const Offset(0.45, 0.50),
-    iCanvas: iCanvas,
-  );
+  // paintText2(
+  //   c,
+  //   canvas,
+  //   DiagramLabel.welfareLoss.label,
+  //   const Offset(0.75, 0.50),
+  //   pointerLine: const Offset(0.45, 0.50),
+  //   iCanvas: iCanvas,
+  // );
 
   paintDiagramDashedLines(
     c,
@@ -512,21 +512,21 @@ void _paintAgriculturalPriceFloor(
   Size size, {
   IDiagramCanvas? iCanvas,
 }) {
-  paintText2(
-    c,
-    canvas,
-    DiagramLabel.welfareLoss.label,
-    const Offset(0.90, 0.50),
-    pointerLine: const Offset(0.65, 0.50),
-    iCanvas: iCanvas,
-  );
-  paintShading(canvas, size, ShadeType.welfareLoss, [
-    const Offset(0.30, 0.30),
-    const Offset(0.30, 1.0),
-    const Offset(0.70, 1.0),
-    const Offset(0.70, 0.30),
-    const Offset(0.50, 0.50),
-  ], iCanvas: iCanvas);
+  // paintText2(
+  //   c,
+  //   canvas,
+  //   DiagramLabel.welfareLoss.label,
+  //   const Offset(0.90, 0.50),
+  //   pointerLine: const Offset(0.65, 0.50),
+  //   iCanvas: iCanvas,
+  // );
+  // paintShading(canvas, size, ShadeType.welfareLoss, [
+  //   const Offset(0.30, 0.30),
+  //   const Offset(0.30, 1.0),
+  //   const Offset(0.70, 1.0),
+  //   const Offset(0.70, 0.30),
+  //   const Offset(0.50, 0.50),
+  // ], iCanvas: iCanvas);
 
   paintLineSegment(
     c,

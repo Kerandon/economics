@@ -34,13 +34,12 @@ class Externalities extends BaseDiagramPainter3 {
       c,
       canvas,
       iCanvas: iCanvas,
-      yAxisLabel: DiagramLabel.price.label,
-      xAxisLabel: DiagramLabel.quantity.label,
+      yAxisLabel: DiagramLabel.p.label,
+      xAxisLabel: DiagramLabel.q.label,
     );
 
     switch (diagram) {
       case DiagramEnum.microNegativeProductionExternality ||
-          DiagramEnum.microNegativeProductionExternalityWelfare ||
           DiagramEnum.microCommonPoolResources ||
           DiagramEnum.microNegativeProductionExternalityPigouvianTax ||
           DiagramEnum.microNegativeProductionExternalityRegulations:
@@ -92,10 +91,35 @@ class Externalities extends BaseDiagramPainter3 {
     IDiagramCanvas? iCanvas,
   }) {
     String supplyLabel = DiagramLabel.msc.label;
-    String arrowLabel = (bundle == DiagramEnum.microCommonPoolResources)
-        ? DiagramLabel.externalCostOfOverFishing.label
-        : DiagramLabel.externalCost.label;
 
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.externalCost.label,
+      Offset(0.80, 0.50),
+      pointerLine: Offset(0.60, 0.35),
+    );
+    paintLineSegment(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      origin: Offset(0.60, 0.35),
+      angle: pi / 2,
+      endStyle: LineEndStyle.arrowBothEnds,
+    );
+
+    paintShading(canvas, size, ShadeType.welfareLoss, [
+      Offset(0.30, 0.46),
+      Offset(0.44, 0.59),
+      Offset(0.44, 0.36),
+    ]);
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.welfareLoss.label,
+      Offset(0.35, 0.30),
+      pointerLine: Offset(0.40, 0.45),
+    );
     if (bundle == DiagramEnum.microNegativeProductionExternalityPigouvianTax) {
       paintShading(
         canvas,
@@ -128,6 +152,7 @@ class Externalities extends BaseDiagramPainter3 {
       startPos: const Offset(0, 0.9),
       polylineOffsets: [const Offset(0.8, 0.3)],
       label2: DiagramLabel.mpc.label,
+      label2Align: LabelAlign.centerRight,
     );
     paintDiagramLines(
       c,
@@ -136,25 +161,28 @@ class Externalities extends BaseDiagramPainter3 {
       startPos: const Offset(0, 0.68),
       polylineOffsets: [const Offset(0.8, 0.11)],
       label2: supplyLabel,
+      label2Align: LabelAlign.centerRight,
     );
 
     paintDiagramDashedLines(
       c,
       canvas,
       iCanvas: iCanvas,
-      yAxisStartPos: 0.47,
-      xAxisEndPos: 0.31,
+      yAxisStartPos: 0.465,
+      xAxisEndPos: 0.305,
       yLabel: DiagramLabel.pOpt.label,
       xLabel: DiagramLabel.qOpt.label,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
       canvas,
       iCanvas: iCanvas,
-      yAxisStartPos: 0.575,
+      yAxisStartPos: 0.58,
       xAxisEndPos: 0.43,
       yLabel: DiagramLabel.pm.label,
       xLabel: DiagramLabel.qm.label,
+      showDotAtIntersection: true,
     );
   }
 
@@ -247,6 +275,35 @@ class Externalities extends BaseDiagramPainter3 {
     DiagramEnum bundle, {
     IDiagramCanvas? iCanvas,
   }) {
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.externalCost.label,
+      Offset(0.85, 0.60),
+      pointerLine: Offset(0.65, 0.75),
+    );
+    paintLineSegment(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      origin: Offset(0.65, 0.73),
+      angle: pi / 2,
+      endStyle: LineEndStyle.arrowBothEnds,
+      length: 0.12,
+    );
+
+    paintShading(canvas, size, ShadeType.welfareLoss, [
+      Offset(0.32, 0.615),
+      Offset(0.465, 0.72),
+      Offset(0.465, 0.50),
+    ]);
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.welfareLoss.label,
+      Offset(0.45, 0.35),
+      pointerLine: Offset(0.42, 0.60),
+    );
     paintDiagramLines(
       c,
       canvas,
@@ -254,6 +311,7 @@ class Externalities extends BaseDiagramPainter3 {
       startPos: const Offset(0, 0.2),
       polylineOffsets: [const Offset(0.85, 0.75)],
       label2: DiagramLabel.dEqualsMPB.label,
+      label2Align: LabelAlign.centerRight,
     );
     paintDiagramLines(
       c,
@@ -262,6 +320,7 @@ class Externalities extends BaseDiagramPainter3 {
       startPos: const Offset(0, 0.4),
       polylineOffsets: [const Offset(0.75, 0.9)],
       label2: DiagramLabel.msb.label,
+      label2Align: LabelAlign.centerRight,
     );
     paintDiagramLines(
       c,
@@ -270,6 +329,7 @@ class Externalities extends BaseDiagramPainter3 {
       startPos: const Offset(0, 0.85),
       polylineOffsets: [const Offset(0.8, 0.25)],
       label2: DiagramLabel.sEqualsMPCMSC.label,
+      label2Align: LabelAlign.centerRight,
     );
 
     paintDiagramDashedLines(
@@ -280,6 +340,7 @@ class Externalities extends BaseDiagramPainter3 {
       xAxisEndPos: 0.465,
       yLabel: DiagramLabel.pm.label,
       xLabel: DiagramLabel.qm.label,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -289,6 +350,7 @@ class Externalities extends BaseDiagramPainter3 {
       xAxisEndPos: 0.325,
       yLabel: DiagramLabel.pOpt.label,
       xLabel: DiagramLabel.qOpt.label,
+      showDotAtIntersection: true,
     );
   }
 
@@ -299,6 +361,35 @@ class Externalities extends BaseDiagramPainter3 {
     DiagramEnum bundle, {
     IDiagramCanvas? iCanvas,
   }) {
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.externalBenefit.label,
+      Offset(0.80, 0.50),
+      pointerLine: Offset(0.60, 0.35),
+    );
+    paintLineSegment(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      origin: Offset(0.60, 0.36),
+      angle: pi / 2,
+      endStyle: LineEndStyle.arrowBothEnds,
+      length: 0.14,
+    );
+
+    paintShading(canvas, size, ShadeType.welfareLoss, [
+      Offset(0.33, 0.46),
+      Offset(0.33, 0.70),
+      Offset(0.46, 0.60),
+    ]);
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.welfareLoss.label,
+      Offset(0.35, 0.30),
+      pointerLine: Offset(0.35, 0.55),
+    );
     String mSCLabel =
         (bundle == DiagramEnum.microPositiveProductionExternalitySubsidy)
         ? DiagramLabel.mscEqualsMPCPlusSubsidy.label
@@ -310,7 +401,7 @@ class Externalities extends BaseDiagramPainter3 {
       iCanvas: iCanvas,
       type: MarketCurveType.demand,
       label: DiagramLabel.dEqualsMPBMSB.label,
-      horizontalShift: -0.06,
+      horizontalShift: -0.14,
     );
     paintMarketCurve(
       c,
@@ -318,8 +409,9 @@ class Externalities extends BaseDiagramPainter3 {
       iCanvas: iCanvas,
       type: MarketCurveType.supply,
       label: DiagramLabel.sEqualsMPC.label,
-      horizontalShift: -0.1,
+      horizontalShift: -0.11,
       verticalShift: -0.08,
+      angle: 0.10,
     );
     paintMarketCurve(
       c,
@@ -327,18 +419,30 @@ class Externalities extends BaseDiagramPainter3 {
       iCanvas: iCanvas,
       type: MarketCurveType.supply,
       label: mSCLabel,
-      horizontalShift: -0.05,
-      verticalShift: 0.1,
+      horizontalShift: -0.11,
+      verticalShift: 0.15,
+      angle: 0.10,
     );
 
     paintDiagramDashedLines(
       c,
       canvas,
       iCanvas: iCanvas,
-      yAxisStartPos: 0.53,
-      xAxisEndPos: 0.535,
+      yAxisStartPos: 0.595,
+      xAxisEndPos: 0.46,
       yLabel: DiagramLabel.pOpt.label,
       xLabel: DiagramLabel.qOpt.label,
+      showDotAtIntersection: true,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      yAxisStartPos: 0.47,
+      xAxisEndPos: 0.33,
+      yLabel: DiagramLabel.pm.label,
+      xLabel: DiagramLabel.qm.label,
+      showDotAtIntersection: true,
     );
   }
 
@@ -349,6 +453,36 @@ class Externalities extends BaseDiagramPainter3 {
     DiagramEnum bundle, {
     IDiagramCanvas? iCanvas,
   }) {
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.externalBenefit.label,
+      Offset(0.85, 0.60),
+      pointerLine: Offset(0.60, 0.70),
+    );
+    paintLineSegment(
+      c,
+      canvas,
+      iCanvas: iCanvas,
+      origin: Offset(0.60, 0.69),
+      angle: pi / 2,
+      endStyle: LineEndStyle.arrowBothEnds,
+      length: 0.12,
+    );
+
+    paintShading(canvas, size, ShadeType.welfareLoss, [
+      Offset(0.285, 0.39),
+      Offset(0.285, 0.59),
+      Offset(0.45, 0.49),
+    ]);
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.welfareLoss.label,
+      Offset(0.35, 0.30),
+      pointerLine: Offset(0.35, 0.48),
+    );
+
     paintDiagramLines(
       c,
       canvas,
@@ -356,6 +490,7 @@ class Externalities extends BaseDiagramPainter3 {
       startPos: const Offset(0, 0.2),
       polylineOffsets: [const Offset(0.85, 0.75)],
       label2: DiagramLabel.msb.label,
+      label2Align: LabelAlign.centerRight,
     );
     paintDiagramLines(
       c,
@@ -364,6 +499,7 @@ class Externalities extends BaseDiagramPainter3 {
       startPos: const Offset(0, 0.4),
       polylineOffsets: [const Offset(0.75, 0.9)],
       label2: DiagramLabel.dEqualsMPB.label,
+      label2Align: LabelAlign.centerRight,
     );
     paintDiagramLines(
       c,
@@ -372,6 +508,7 @@ class Externalities extends BaseDiagramPainter3 {
       startPos: const Offset(0, 0.75),
       polylineOffsets: [const Offset(0.8, 0.3)],
       label2: DiagramLabel.sEqualsMPCMSC.label,
+      label2Align: LabelAlign.centerRight,
     );
 
     paintDiagramDashedLines(
@@ -382,6 +519,7 @@ class Externalities extends BaseDiagramPainter3 {
       xAxisEndPos: 0.285,
       yLabel: DiagramLabel.pm.label,
       xLabel: DiagramLabel.qm.label,
+      showDotAtIntersection: true,
     );
     paintDiagramDashedLines(
       c,
@@ -391,6 +529,7 @@ class Externalities extends BaseDiagramPainter3 {
       xAxisEndPos: 0.45,
       yLabel: DiagramLabel.pOpt.label,
       xLabel: DiagramLabel.qOpt.label,
+      showDotAtIntersection: true,
     );
   }
 }
