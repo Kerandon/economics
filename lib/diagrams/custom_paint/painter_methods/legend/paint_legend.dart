@@ -10,43 +10,40 @@ import 'legend_item.dart';
 import 'legend_shape.dart';
 
 void paintLegend(
-  Canvas? canvas,
-  Size size,
+  IDiagramCanvas iCanvas, // 👈 Unified interface
   List<LegendEntry> legendItems, {
-  required DiagramPainterConfig config, // 👈 Required for Option 1
-  IDiagramCanvas? iCanvas,
+  required DiagramPainterConfig config,
   double legendBoxSize = 12.0,
   double spacing = 8.0,
   double textSpacing = 4.0,
   double yAdjustment = kAxisIndent * 0.50,
-  Brightness brightness = Brightness.light,
   LegendAlignment alignment = LegendAlignment.right,
 }) {
-  final textColor = brightness == Brightness.dark ? Colors.white : Colors.black;
+  // Extract dimensions from config to ensure parity between Flutter and PDF
+  final size = config.painterSize;
+  final width = size.width;
+  final height = size.height;
+
+  final textColor = config.colorScheme.onSurface;
   final fontSize = kFontSmall * config.averageRatio;
 
-  final textPainter = TextPainter(textDirection: TextDirection.ltr);
-  final double margin = size.width * 0.05;
-  final double maxWidth = size.width - margin * 2;
+  final double margin = width * 0.05;
+  final double maxWidth = width - margin * 2;
 
   List<List<LegendItem>> rows = [[]];
   double currentRowWidth = 0;
 
   // 1. Compute Rows & Layout
   for (final entry in legendItems) {
-    double textWidth;
-    if (iCanvas != null) {
-      // PDF Width Estimation (Standard for Helvetica)
-      textWidth = entry.label.length * fontSize * 0.50;
-    } else {
-      textPainter.text = TextSpan(
+    final textPainter = TextPainter(
+      text: TextSpan(
         text: entry.label,
-        style: TextStyle(color: textColor, fontSize: fontSize),
-      );
-      textPainter.layout();
-      textWidth = textPainter.width;
-    }
+        style: TextStyle(fontSize: fontSize),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
 
+    final double textWidth = textPainter.width;
     final double itemWidth = legendBoxSize + textSpacing + textWidth;
 
     if (currentRowWidth + itemWidth + (rows.last.isEmpty ? 0 : spacing) >
@@ -59,8 +56,8 @@ void paintLegend(
     currentRowWidth += itemWidth + (rows.last.length > 1 ? spacing : 0);
   }
 
-  // 2. Initial Y Position (Bottom-up stacking)
-  double currentY = size.height - legendBoxSize - (size.height * yAdjustment);
+  // 2. Initial Y Position (Bottom-up stacking based on painter height)
+  double currentY = height - legendBoxSize - (height * yAdjustment);
 
   // 3. Draw Legend Rows
   for (final row in rows.reversed) {
@@ -77,10 +74,10 @@ void paintLegend(
         startX = margin;
         break;
       case LegendAlignment.center:
-        startX = (size.width - rowTotalWidth) / 2;
+        startX = (width - rowTotalWidth) / 2;
         break;
       case LegendAlignment.right:
-        startX = size.width - rowTotalWidth - margin;
+        startX = width - rowTotalWidth - margin;
         break;
     }
 
@@ -92,54 +89,32 @@ void paintLegend(
         legendBoxSize,
       );
 
-      if (iCanvas != null) {
-        // PDF Bridge Logic
-        _drawLegendShapeBridged(
-          iCanvas,
-          item.entry.shape,
-          rect,
-          item.entry.color,
-        );
-        iCanvas.drawText(
-          item.entry.label,
-          Offset(
-            startX + legendBoxSize + textSpacing,
-            currentY + (legendBoxSize / 2),
-          ),
-          fontSize,
-          textColor,
-        );
-      } else if (canvas != null) {
-        // Flutter Canvas Logic
-        _drawLegendShapeFlutter(
-          config,
-          canvas,
-          item.entry.shape,
-          rect,
-          item.entry.color,
-        );
+      // A. Draw the Shape via Bridge
+      _drawLegendShapeBridged(
+        iCanvas,
+        item.entry.shape,
+        rect,
+        item.entry.color,
+      );
 
-        textPainter.text = TextSpan(
-          text: item.entry.label,
-          style: TextStyle(color: textColor, fontSize: fontSize),
-        );
-        textPainter.layout();
-        textPainter.paint(
-          canvas,
-          Offset(
-            startX + legendBoxSize + textSpacing,
-            currentY + (legendBoxSize - textPainter.height) / 2,
-          ),
-        );
-      }
+      // B. Draw the Text via Bridge
+      // We use the same vertical centering logic: (box height / 2) - (font size / 2)
+      iCanvas.drawText(
+        item.entry.label,
+        Offset(
+          startX + legendBoxSize + textSpacing,
+          currentY + (legendBoxSize / 2) - (fontSize / 2),
+        ),
+        fontSize,
+        textColor,
+      );
 
       startX += legendBoxSize + textSpacing + item.textWidth + spacing;
     }
+    // Move up for the next row
     currentY -= (legendBoxSize + spacing);
   }
 }
-
-// --- HELPERS ---
 
 void _drawLegendShapeBridged(
   IDiagramCanvas iCanvas,
@@ -150,9 +125,13 @@ void _drawLegendShapeBridged(
   switch (shape) {
     case LegendShape.square:
       iCanvas.drawRect(rect, color, fill: true);
+      break;
     case LegendShape.circle:
+      // Using the center of the legend rect and half the width as radius
       iCanvas.drawDot(rect.center, color, radius: rect.width / 2);
+      break;
     case LegendShape.diamond:
+      // Constructing a diamond path from the rect boundaries
       final p = [
         Offset(rect.center.dx, rect.top),
         Offset(rect.right, rect.center.dy),
@@ -160,64 +139,24 @@ void _drawLegendShapeBridged(
         Offset(rect.left, rect.center.dy),
       ];
       iCanvas.drawPath(p, color, fill: true);
+      break;
     case LegendShape.line:
+      // Horizontal line through the middle of the rect
       iCanvas.drawLine(
         Offset(rect.left, rect.center.dy),
         Offset(rect.right, rect.center.dy),
         color,
         2.0,
       );
+      break;
     case LegendShape.dashedLine:
+      // Dashed horizontal line through the middle of the rect
       iCanvas.drawDashedLine(
         Offset(rect.left, rect.center.dy),
         Offset(rect.right, rect.center.dy),
         color,
         2.0,
       );
-  }
-}
-
-void _drawLegendShapeFlutter(
-  DiagramPainterConfig config,
-  Canvas canvas,
-  LegendShape shape,
-  Rect rect,
-  Color color,
-) {
-  final paint = Paint()
-    ..color = color
-    ..style = PaintingStyle.fill;
-
-  switch (shape) {
-    case LegendShape.square:
-      canvas.drawRect(rect, paint);
-    case LegendShape.circle:
-      canvas.drawCircle(rect.center, rect.width / 2, paint);
-    case LegendShape.diamond:
-      final path = Path()
-        ..moveTo(rect.center.dx, rect.top)
-        ..lineTo(rect.right, rect.center.dy)
-        ..lineTo(rect.center.dx, rect.bottom)
-        ..lineTo(rect.left, rect.center.dy)
-        ..close();
-      canvas.drawPath(path, paint);
-    case LegendShape.line:
-      paintSolidLine(
-        config,
-        canvas,
-        p1: Offset(rect.left, rect.center.dy),
-        p2: Offset(rect.right, rect.center.dy),
-        color: color,
-        strokeWidth: 2.0,
-      );
-    case LegendShape.dashedLine:
-      paintDashedLine(
-        config,
-        canvas,
-        p1: Offset(rect.left, rect.center.dy),
-        p2: Offset(rect.right, rect.center.dy),
-        color: color,
-        strokeWidth: 2.0,
-      );
+      break;
   }
 }

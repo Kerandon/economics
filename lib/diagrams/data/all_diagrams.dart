@@ -10,7 +10,7 @@ class AllDiagrams {
 
   AllDiagrams({required this.size, required this.colorScheme});
 
-  List<DiagramWidget> getDiagramWidgets({List<DiagramEnum>? diagrams}) {
+  List<DiagramWidgetNEW> getDiagramWidgets({List<DiagramEnum>? diagrams}) {
     // Create config (same as AllDiagrams)
     final config = DiagramPainterConfig(
       painterSize: size,
@@ -19,13 +19,14 @@ class AllDiagrams {
     );
 
     // Generate all diagram widgets
-    final all = getDiagramWidgetList(config).toList();
+    final all = getDiagramWidgetsListNEW(config).toList();
 
     // If filtering by enum
     if (diagrams?.isNotEmpty ?? false) {
-      return all
-          .where((w) => diagrams!.contains(w.basePainterDiagram.diagram))
-          .toList();
+      // return all.where((w) => diagrams)
+      // return all
+      //     .where((w) => diagrams!.contains(w.basePainterDiagram.diagram))
+      //     .toList();
     }
 
     // Otherwise return all

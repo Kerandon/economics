@@ -4,39 +4,42 @@ import 'package:flutter/material.dart';
 import '../../models/diagram_painter_config.dart';
 import '../flutter_diagram_canvas.dart';
 import '../painter_constants.dart';
+
 Future<void> paintLegendTable(
-    Canvas? canvas,
-    DiagramPainterConfig config, {
-      Offset normalizedTopLeft = const Offset(kAxisIndent, 1 - (kAxisIndent * 0.95)),
-      required List<String> headers,
-      required List<List<String>> data,
-      double rowHeight = 14.0, // Unified height for header and cells
-      Color? borderColor,
-      double cellPadding = 25.0, // Reduced padding for compactness
-      IDiagramCanvas? iCanvas,
-    }) async {
-  iCanvas ??= canvas != null ? FlutterDiagramCanvas(canvas) : null;
-  if (iCanvas == null) return;
-
+  IDiagramCanvas iCanvas, // 👈 Required interface
+  DiagramPainterConfig config, {
+  Offset normalizedTopLeft = const Offset(
+    kAxisIndent,
+    1 - (kAxisIndent * 0.95),
+  ),
+  required List<String> headers,
+  required List<List<String>> data,
+  double rowHeight = 14.0,
+  Color? borderColor,
+  double cellPadding = 6.0, // Adjusted for typical table padding
+}) async {
   final primaryColor = config.colorScheme.onSurface;
-  final double startX = normalizedTopLeft.dx * config.painterSize.width;
-  double currentY = normalizedTopLeft.dy * config.painterSize.height;
+  final size = config.painterSize;
+  final double startX = normalizedTopLeft.dx * size.width;
+  double currentY = normalizedTopLeft.dy * size.height;
 
-  // 1. Unified Compact Style
-  final baseStyle = TextStyle(
-    fontSize: kFontTiny, // Using your smallest constant
-    color: primaryColor,
-  );
+  // 1. Unified Style
+  final double fontSize = kFontTiny * config.averageRatio;
 
-  // 2. Measure Column Widths (Unified for both headers and data)
+  // 2. Measure Column Widths
+  // We use TextPainter locally for measurement as it's the most reliable cross-platform tool
   final int numCols = headers.length;
   List<double> colWidths = List.filled(numCols, 0.0);
 
   double measure(String text) {
-    return (TextPainter(
-      text: TextSpan(text: text, style: baseStyle),
+    final tp = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: TextStyle(fontSize: fontSize),
+      ),
       textDirection: TextDirection.ltr,
-    )..layout()).width + (cellPadding * 2);
+    )..layout();
+    return tp.width + (cellPadding * 2);
   }
 
   for (int i = 0; i < numCols; i++) {
@@ -51,26 +54,42 @@ Future<void> paintLegendTable(
 
   final double totalWidth = colWidths.reduce((a, b) => a + b);
 
-  // 3. Helper to draw a full row (Header or Data)
+  // 3. Helper to draw a full row
   void drawRow(List<String> rowData, bool isHeader) {
     double x = startX;
+
     if (isHeader) {
-      iCanvas!.drawRect(Rect.fromLTWH(x, currentY, totalWidth, rowHeight),
-          primaryColor.withOpacity(0.1), fill: true);
+      // Light background for header
+      iCanvas.drawRect(
+        Rect.fromLTWH(x, currentY, totalWidth, rowHeight),
+        primaryColor.withOpacity(0.1),
+        fill: true,
+      );
     }
 
     for (int i = 0; i < numCols; i++) {
       final rect = Rect.fromLTWH(x, currentY, colWidths[i], rowHeight);
-      iCanvas!.drawRect(rect, borderColor ?? primaryColor, fill: false);
+
+      // Cell Border
+      iCanvas.drawRect(rect, borderColor ?? primaryColor, fill: false);
 
       if (i < rowData.length) {
-        iCanvas.drawText(
-          rowData[i],
-          rect.center,
-          baseStyle.fontSize!,
-          baseStyle.color!,
-          align: TextAlign.center,
+        // Center text horizontally, and slightly adjust vertically for the baseline
+        // Note: position needs to be Top-Left for your bridge logic
+        final tp = TextPainter(
+          text: TextSpan(
+            text: rowData[i],
+            style: TextStyle(fontSize: fontSize),
+          ),
+          textDirection: TextDirection.ltr,
+        )..layout();
+
+        final textOffset = Offset(
+          rect.left + (rect.width - tp.width) / 2,
+          rect.top + (rowHeight - fontSize) / 2,
         );
+
+        iCanvas.drawText(rowData[i], textOffset, fontSize, primaryColor);
       }
       x += colWidths[i];
     }
@@ -78,8 +97,8 @@ Future<void> paintLegendTable(
   }
 
   // 4. Execute Drawing
-  drawRow(headers, true); // Draw Header
+  drawRow(headers, true);
   for (var row in data) {
-    drawRow(row, false); // Draw Data Rows
+    drawRow(row, false);
   }
 }

@@ -21,7 +21,7 @@ List<Slide> getSlides({
             size: size,
             colorScheme: theme.colorScheme,
           ).getDiagramWidgets(diagrams: content.diagramEnums);
-          return content.copyWith(diagramWidgets: diagramWidgets.toList());
+          //  return content.copyWith(diagramWidgets: diagramWidgets.toList());
         }
 
         return content;

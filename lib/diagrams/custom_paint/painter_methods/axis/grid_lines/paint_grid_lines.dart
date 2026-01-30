@@ -5,11 +5,11 @@ import '../../../i_diagram_canvas.dart';
 
 import '../../../../models/diagram_painter_config.dart';
 import '../../../painter_constants.dart';
+import '../../paint_text_2.dart';
 
 void paintGridLines(
   DiagramPainterConfig config,
-  Canvas? canvas, { // 👈 Changed to Canvas?
-  IDiagramCanvas? iCanvas,
+  IDiagramCanvas canvas, { // Unified interface
   double? xMaxValue,
   double? yMaxValue,
   int? xDivisions,
@@ -19,10 +19,17 @@ void paintGridLines(
   GridLineStyle gridLineStyle = GridLineStyle.full,
   int decimalPlaces = 1,
 }) {
+  if (xMaxValue == null ||
+      yMaxValue == null ||
+      xDivisions == null ||
+      yDivisions == null) {
+    return;
+  }
+
   final widthAndHeight = config.painterSize.width;
   final indent = widthAndHeight * kAxisIndent;
-  var labelIndent = widthAndHeight * 0.025;
-  var kIndentLength = widthAndHeight * 0.015;
+  final labelIndent = widthAndHeight * 0.025;
+  final kIndentLength = widthAndHeight * 0.015;
 
   final effectiveColor = color ?? config.colorScheme.onSurface;
   final effectiveWidth = strokeWidth * config.averageRatio;
@@ -30,15 +37,8 @@ void paintGridLines(
 
   final indentXLeft = indent;
   final indentYBottom = widthAndHeight - (indent * kBottomAxisIndent);
-  final indentXRight = widthAndHeight * (1 - (kAxisIndent));
+  final indentXRight = widthAndHeight * (1 - kAxisIndent);
   final indentYTop = indent * kTopAxisIndent;
-
-  if (xMaxValue == null ||
-      yMaxValue == null ||
-      xDivisions == null ||
-      yDivisions == null) {
-    return;
-  }
 
   final yStepValue = yMaxValue / yDivisions;
   final yStepSize = (indentYBottom - indentYTop) / yDivisions;
@@ -52,57 +52,32 @@ void paintGridLines(
     final pStart = Offset(indentXLeft, y);
     final pEnd = Offset(indentXRight, y);
 
-    if (iCanvas != null) {
-      if (gridLineStyle == GridLineStyle.full) {
-        iCanvas.drawLine(pStart, pEnd, effectiveColor, effectiveWidth);
-      } else if (gridLineStyle == GridLineStyle.dashes) {
-        iCanvas.drawDashedLine(pStart, pEnd, effectiveColor, effectiveWidth);
-      } else if (gridLineStyle == GridLineStyle.indents) {
-        iCanvas.drawLine(
-          pStart,
-          Offset(indentXLeft - kIndentLength, y),
-          effectiveColor,
-          effectiveWidth,
-        );
-      }
-      iCanvas.drawText(
-        yLabel,
-        Offset(indentXLeft - labelIndent, y),
-        fontSize,
-        effectiveColor,
-        align: TextAlign.right,
-      );
-    } else if (canvas != null) {
-      // 👈 Added null check
-      final gridPaint = Paint()
-        ..color = effectiveColor
-        ..strokeWidth = effectiveWidth;
-      if (gridLineStyle == GridLineStyle.full) {
-        canvas.drawLine(pStart, pEnd, gridPaint);
-      } else if (gridLineStyle == GridLineStyle.dashes) {
-        drawDashedLineForGrid(canvas, pStart, pEnd, gridPaint);
-      } else if (gridLineStyle == GridLineStyle.indents) {
-        canvas.drawLine(
-          pStart,
-          Offset(indentXLeft - kIndentLength, y),
-          gridPaint,
-        );
-      }
+    // Draw Lines based on style
+    _drawGridLineByStyle(
+      canvas,
+      gridLineStyle,
+      pStart,
+      pEnd,
+      Offset(indentXLeft - kIndentLength, y),
+      effectiveColor,
+      effectiveWidth,
+    );
 
-      final textPainter = TextPainter(textDirection: TextDirection.ltr);
-      textPainter.text = TextSpan(
-        text: yLabel,
-        style: TextStyle(color: effectiveColor, fontSize: fontSize),
-      );
-      textPainter.layout();
-      textPainter.paint(
-        canvas,
-        Offset(
-          indentXLeft - textPainter.width - labelIndent,
-          y - textPainter.height / 2,
-        ),
-      );
-    }
+    // Draw Labels
+    // We use the new logic: position is the anchor, we just need to specify alignment
+    // NOTE: If your drawText interface doesn't support 'align' yet,
+    // you'll use the paintText2 helper here.
+    paintText2(
+      config,
+      canvas,
+      yLabel,
+      Offset(indentXLeft - labelIndent, y),
+      fontSize: fontSize,
+      horizontalPivot: LabelPivot.right, // Aligns text to the left of the axis
+      verticalPivot: LabelPivot.middle, // Centers text vertically on the tick
+      normalize: false, // Grid math uses absolute coordinates
+      style: TextStyle(color: effectiveColor),
+    );
   }
 
   // ✅ X-axis gridlines/ticks and labels
@@ -112,53 +87,54 @@ void paintGridLines(
     final pStart = Offset(x, indentYBottom);
     final pEnd = Offset(x, indentYTop);
 
-    if (iCanvas != null) {
-      if (gridLineStyle == GridLineStyle.full) {
-        iCanvas.drawLine(pStart, pEnd, effectiveColor, effectiveWidth);
-      } else if (gridLineStyle == GridLineStyle.dashes) {
-        iCanvas.drawDashedLine(pStart, pEnd, effectiveColor, effectiveWidth);
-      } else if (gridLineStyle == GridLineStyle.indents) {
-        iCanvas.drawLine(
-          pStart,
-          Offset(x, indentYBottom + kIndentLength),
-          effectiveColor,
-          effectiveWidth,
-        );
-      }
-      iCanvas.drawText(
-        xLabel,
-        Offset(x, indentYBottom + labelIndent),
-        fontSize,
-        effectiveColor,
-        align: TextAlign.center,
-      );
-    } else if (canvas != null) {
-      // 👈 Added null check
-      final gridPaint = Paint()
-        ..color = effectiveColor
-        ..strokeWidth = effectiveWidth;
-      if (gridLineStyle == GridLineStyle.full) {
-        canvas.drawLine(pStart, pEnd, gridPaint);
-      } else if (gridLineStyle == GridLineStyle.dashes) {
-        drawDashedLineForGrid(canvas, pStart, pEnd, gridPaint);
-      } else if (gridLineStyle == GridLineStyle.indents) {
-        canvas.drawLine(
-          pStart,
-          Offset(x, indentYBottom + kIndentLength),
-          gridPaint,
-        );
-      }
+    // Draw Lines based on style
+    _drawGridLineByStyle(
+      canvas,
+      gridLineStyle,
+      pStart,
+      pEnd,
+      Offset(x, indentYBottom + kIndentLength),
+      effectiveColor,
+      effectiveWidth,
+    );
 
-      final textPainter = TextPainter(textDirection: TextDirection.ltr);
-      textPainter.text = TextSpan(
-        text: xLabel,
-        style: TextStyle(color: effectiveColor, fontSize: fontSize),
-      );
-      textPainter.layout();
-      textPainter.paint(
-        canvas,
-        Offset(x - textPainter.width / 2, indentYBottom + labelIndent),
-      );
-    }
+    // Draw Labels
+    paintText2(
+      config,
+      canvas,
+      xLabel,
+      Offset(x, indentYBottom + labelIndent),
+      fontSize: fontSize,
+      horizontalPivot:
+          LabelPivot.center, // Centers text horizontally under the tick
+      verticalPivot: LabelPivot.top, // Aligns top of text to the padding
+      normalize: false, // Grid math uses absolute coordinates
+      style: TextStyle(color: effectiveColor),
+    );
+  }
+}
+
+/// Private helper to clean up the switch logic for grid line styles
+void _drawGridLineByStyle(
+  IDiagramCanvas canvas,
+  GridLineStyle style,
+  Offset start,
+  Offset end,
+  Offset indentEnd,
+  Color color,
+  double width,
+) {
+  switch (style) {
+    case GridLineStyle.full:
+      canvas.drawLine(start, end, color, width);
+      break;
+    case GridLineStyle.dashes:
+      canvas.drawDashedLine(start, end, color, width);
+      break;
+    case GridLineStyle.indents:
+      canvas.drawLine(start, indentEnd, color, width);
+      break;
+    case GridLineStyle.none:
+      break;
   }
 }

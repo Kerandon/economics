@@ -9,8 +9,7 @@ import '../rotate_around.dart';
 
 void paintMarketCurve(
   DiagramPainterConfig config,
-  Canvas? canvas, { // 1. Nullable
-  IDiagramCanvas? iCanvas, // 2. Bridge
+  IDiagramCanvas canvas, { // 1. Nullable/ 2. Bridge
   required MarketCurveType type,
   String? label,
   double lengthAdjustment = 0.0,
@@ -76,7 +75,6 @@ void paintMarketCurve(
   paintDiagramLines(
     config,
     canvas,
-    iCanvas: iCanvas, // 👈 THE FIX
     startPos: start,
     polylineOffsets: [end],
     label2: label ?? defaultLabel,

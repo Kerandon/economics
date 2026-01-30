@@ -21,35 +21,30 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
   TaxesSubsidies(super.config, super.diagram);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    drawDiagram(canvas, size);
-  }
-
-  @override
-  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
+  void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
     paintAxis(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisLabel: DiagramLabel.p.label,
       xAxisLabel: DiagramLabel.q.label,
     );
 
     switch (diagram) {
       case DiagramEnum.microIndirectTax:
-        _paintIndirectTax(c, canvas, size, iCanvas: iCanvas);
+        _paintIndirectTax(c, canvas, size);
       case DiagramEnum.microIndirectTaxInelasticPED:
-        _paintIndirectTaxInelasticDemand(c, canvas, size, iCanvas: iCanvas);
+        _paintIndirectTaxInelasticDemand(c, canvas);
       case DiagramEnum.microIndirectTaxElasticPED:
-        _paintIndirectTaxElasticDemand(c, canvas, size, iCanvas: iCanvas);
+        _paintIndirectTaxElasticDemand(c, canvas);
       case DiagramEnum.microSubsidy:
-        _paintSubsidy(c, canvas, size, iCanvas: iCanvas);
+        _paintSubsidy(c, canvas);
       case DiagramEnum.microSubsidyInelasticPED:
-        _paintSubsidyInelasticDemand(c, canvas, size, iCanvas: iCanvas);
+        _paintSubsidyInelasticDemand(c, canvas);
       case DiagramEnum.microSubsidyElasticPED:
-        _paintSubsidyElasticDemand(c, canvas, size, iCanvas: iCanvas);
+        _paintSubsidyElasticDemand(c, canvas);
       default:
     }
   }
@@ -58,28 +53,19 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
 
   void _paintIndirectTax(
     DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
-
-
+    IDiagramCanvas canvas,
+    Size size,
+  ) {
     // Tax Vertical Bracket
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: const Offset(0.60, 0.39),
       angle: -pi / 2,
       length: 0.18,
     );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.tax.label,
-      const Offset(0.66, 0.32),
-      iCanvas: iCanvas,
-    );
+    paintText2(c, canvas, DiagramLabel.tax.label, const Offset(0.66, 0.32));
 
     // Surplus Area Labels
     final labels = {
@@ -94,22 +80,21 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       DiagramLabel.i: const Offset(0.25, 0.74),
     };
     labels.forEach(
-      (label, offset) =>
-          paintText2(c, canvas, label.label, offset, iCanvas: iCanvas),
+      (label, offset) => paintText2(c, canvas, label.label, offset),
     );
 
     // Curves
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.demand,
       label: DiagramLabel.dEqualsMB.label,
     );
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       horizontalShift: -kExtendBy10,
       verticalShift: -kExtendBy5,
@@ -119,18 +104,17 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       label: DiagramLabel.sEqualsMC.label,
       verticalShift: 0.10,
     );
 
-
     // Equilibrium Intersections
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.55,
       xAxisEndPos: 0.55,
       yLabel: DiagramLabel.pE.label,
@@ -140,7 +124,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.425,
       xAxisEndPos: 0.425,
       yLabel: DiagramLabel.pc.label,
@@ -150,7 +134,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.675,
       xAxisEndPos: 0.425,
       yLabel: DiagramLabel.pp.label,
@@ -160,7 +144,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintLegendTable(
       canvas,
       c,
-      iCanvas: iCanvas,
+
       headers: ['', 'No Tax', 'Tax'],
       data: [
         ['Consumer', '+(a,b,c,d)', '+a'],
@@ -173,41 +157,25 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
 
   void _paintIndirectTaxInelasticDemand(
     DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
-    paintShading(
-      canvas,
-      size,
-      ShadeType.consumerIncidence,
-      [
-        const Offset(0, 0.40),
-        const Offset(0.46, 0.40),
-        const Offset(0.46, 0.58),
-        const Offset(0.0, 0.58),
-      ],
-      striped: true,
-      iCanvas: iCanvas,
-    );
-    paintShading(
-      canvas,
-      size,
-      ShadeType.producerIncidence,
-      [
-        const Offset(0, 0.58),
-        const Offset(0.46, 0.58),
-        const Offset(0.46, 0.64),
-        const Offset(0.0, 0.64),
-      ],
-      striped: true,
-      iCanvas: iCanvas,
-    );
+    IDiagramCanvas canvas,
+  ) {
+    paintShading(c, canvas, ShadeType.consumerIncidence, [
+      const Offset(0, 0.40),
+      const Offset(0.46, 0.40),
+      const Offset(0.46, 0.58),
+      const Offset(0.0, 0.58),
+    ], striped: true);
+    paintShading(c, canvas, ShadeType.producerIncidence, [
+      const Offset(0, 0.58),
+      const Offset(0.46, 0.58),
+      const Offset(0.46, 0.64),
+      const Offset(0.0, 0.64),
+    ], striped: true);
 
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.demand,
       lengthAdjustment: -kExtendBy10,
       angle: 0.40,
@@ -215,7 +183,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       horizontalShift: -kExtendBy10,
       verticalShift: -kExtendBy5,
@@ -226,7 +194,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       verticalShift: 0.10,
       angle: 0.10,
@@ -235,7 +203,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.58,
       xAxisEndPos: 0.53,
       yLabel: DiagramLabel.pE.label,
@@ -245,7 +213,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.40,
       xAxisEndPos: 0.46,
       yLabel: DiagramLabel.pc.label,
@@ -255,7 +223,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.64,
       xAxisEndPos: 0.46,
       yLabel: DiagramLabel.pp.label,
@@ -280,74 +248,25 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
 
   // --- SUBSIDY METHODS ---
 
-  void _paintSubsidy(
-    DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
-
+  void _paintSubsidy(DiagramPainterConfig c, IDiagramCanvas canvas) {
     // Labels A-H
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.a.label,
-      const Offset(0.10, 0.22),
-      iCanvas: iCanvas,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.b.label,
-      const Offset(0.10, 0.36),
-      iCanvas: iCanvas,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.c.label,
-      const Offset(0.42, 0.36),
-      iCanvas: iCanvas,
-    );
+    paintText2(c, canvas, DiagramLabel.a.label, const Offset(0.10, 0.22));
+    paintText2(c, canvas, DiagramLabel.b.label, const Offset(0.10, 0.36));
+    paintText2(c, canvas, DiagramLabel.c.label, const Offset(0.42, 0.36));
     paintText2(
       c,
       canvas,
       DiagramLabel.d.label.toLowerCase(),
       const Offset(0.10, 0.49),
-      iCanvas: iCanvas,
     );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.e.label,
-      const Offset(0.39, 0.51),
-      iCanvas: iCanvas,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.f.label,
-      const Offset(0.46, 0.51),
-      iCanvas: iCanvas,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.g.label,
-      const Offset(0.50, 0.42),
-      iCanvas: iCanvas,
-    );
-    paintText2(
-      c,
-      canvas,
-      DiagramLabel.h.label,
-      const Offset(0.10, 0.62),
-      iCanvas: iCanvas,
-    );
+    paintText2(c, canvas, DiagramLabel.e.label, const Offset(0.39, 0.51));
+    paintText2(c, canvas, DiagramLabel.f.label, const Offset(0.46, 0.51));
+    paintText2(c, canvas, DiagramLabel.g.label, const Offset(0.50, 0.42));
+    paintText2(c, canvas, DiagramLabel.h.label, const Offset(0.10, 0.62));
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: const Offset(0.70, 0.26),
       angle: pi / 2,
       length: 0.18,
@@ -357,19 +276,13 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       canvas,
       DiagramLabel.subsidy.label,
       const Offset(0.795, 0.165),
-      iCanvas: iCanvas,
     );
 
+    paintMarketCurve(c, canvas, type: MarketCurveType.demand);
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
-      type: MarketCurveType.demand,
-    );
-    paintMarketCurve(
-      c,
-      canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       horizontalShift: kExtendBy5,
       verticalShift: kExtendBy5,
@@ -379,7 +292,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       horizontalShift: -kExtendBy5,
       verticalShift: -kExtendBy10,
@@ -388,7 +301,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.55,
       xAxisEndPos: 0.55,
       yLabel: DiagramLabel.pc.label,
@@ -398,7 +311,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.425,
       xAxisEndPos: 0.425,
       yLabel: DiagramLabel.pE.label,
@@ -407,7 +320,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.30,
       xAxisEndPos: 0.55,
       yLabel: DiagramLabel.pp.label,
@@ -417,7 +330,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintLegendTable(
       canvas,
       c,
-      iCanvas: iCanvas,
+
       headers: ['', 'No Subsidy', 'Subsidy'],
       data: [
         ['Consumer', '+(a,b)', '+(a,b,d,e,f)'],
@@ -430,41 +343,25 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
 
   void _paintSubsidyInelasticDemand(
     DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
-    paintShading(
-      canvas,
-      size,
-      ShadeType.producerGain,
-      [
-        const Offset(0, 0.325),
-        const Offset(0.52, 0.325),
-        const Offset(0.52, 0.38),
-        const Offset(0.0, 0.38),
-      ],
-      striped: true,
-      iCanvas: iCanvas,
-    );
-    paintShading(
-      canvas,
-      size,
-      ShadeType.consumerGain,
-      [
-        const Offset(0, 0.38),
-        const Offset(0.52, 0.38),
-        const Offset(0.52, 0.575),
-        const Offset(0.0, 0.575),
-      ],
-      striped: true,
-      iCanvas: iCanvas,
-    );
+    IDiagramCanvas canvas,
+  ) {
+    paintShading(c, canvas, ShadeType.producerGain, [
+      const Offset(0, 0.325),
+      const Offset(0.52, 0.325),
+      const Offset(0.52, 0.38),
+      const Offset(0.0, 0.38),
+    ], striped: true);
+    paintShading(c, canvas, ShadeType.consumerGain, [
+      const Offset(0, 0.38),
+      const Offset(0.52, 0.38),
+      const Offset(0.52, 0.575),
+      const Offset(0.0, 0.575),
+    ], striped: true);
 
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.demand,
       angle: 0.50,
       lengthAdjustment: -kExtendBy20,
@@ -472,7 +369,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       horizontalShift: kExtendBy5,
       verticalShift: kExtendBy5,
@@ -482,7 +379,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       horizontalShift: -0.05,
       verticalShift: -0.10,
@@ -491,7 +388,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.575,
       xAxisEndPos: 0.52,
       yLabel: DiagramLabel.pc.label,
@@ -501,7 +398,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.325,
       xAxisEndPos: 0.52,
       yLabel: DiagramLabel.pp.label,
@@ -511,7 +408,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.38,
       xAxisEndPos: 0.52,
       hideYLine: true,
@@ -521,7 +418,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.38,
       xAxisEndPos: 0.465,
       hideXLine: true,
@@ -533,7 +430,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       canvas,
       DiagramLabel.consumerGain.label,
       Offset(0.20, 0.20),
-      iCanvas: iCanvas,
+
       pointerLine: Offset(0.20, 0.35),
     );
     paintText2(
@@ -541,13 +438,13 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       canvas,
       DiagramLabel.producerGain.label,
       Offset(0.75, 0.60),
-      iCanvas: iCanvas,
+
       pointerLine: Offset(0.40, 0.50),
     );
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.38,
       xAxisEndPos: 0.52,
       hideXLine: true,
@@ -558,38 +455,22 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
   // ✅ ADDED: Elastic Tax Variant
   void _paintIndirectTaxElasticDemand(
     DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
-    paintShading(
-      canvas,
-      size,
-      ShadeType.consumerIncidence,
-      [
-        const Offset(0, 0.47),
-        const Offset(0.39, 0.47),
-        const Offset(0.39, 0.53),
-        const Offset(0.0, 0.53),
-      ],
-      striped: true,
-      iCanvas: iCanvas,
-    );
-    paintShading(
-      canvas,
-      size,
-      ShadeType.producerIncidence,
-      [
-        const Offset(0, 0.53),
-        const Offset(0.39, 0.53),
-        const Offset(0.39, 0.71),
-        const Offset(0.0, 0.71),
-      ],
-      striped: true,
-      iCanvas: iCanvas,
-    );
+    IDiagramCanvas canvas,
+  ) {
+    paintShading(c, canvas, ShadeType.consumerIncidence, [
+      const Offset(0, 0.47),
+      const Offset(0.39, 0.47),
+      const Offset(0.39, 0.53),
+      const Offset(0.0, 0.53),
+    ], striped: true);
+    paintShading(c, canvas, ShadeType.producerIncidence, [
+      const Offset(0, 0.53),
+      const Offset(0.39, 0.53),
+      const Offset(0.39, 0.71),
+      const Offset(0.0, 0.71),
+    ], striped: true);
 
-    paintLegend(canvas, size, config: c, iCanvas: iCanvas, [
+    paintLegend(canvas, config: c, [
       LegendEntry.fromShade(ShadeType.consumerBurden),
       LegendEntry.fromShade(ShadeType.producerBurden),
     ]);
@@ -597,7 +478,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.demand,
       lengthAdjustment: -kExtendBy15,
       angle: -0.50,
@@ -605,7 +486,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       horizontalShift: -kExtendBy10,
       verticalShift: -kExtendBy5,
@@ -615,7 +496,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       verticalShift: 0.10,
     );
@@ -623,7 +504,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.53,
       xAxisEndPos: 0.58,
       yLabel: DiagramLabel.pE.label,
@@ -632,7 +513,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.47,
       xAxisEndPos: 0.39,
       yLabel: DiagramLabel.pc.label,
@@ -642,7 +523,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.71,
       xAxisEndPos: 0.39,
       yLabel: DiagramLabel.pp.label,
@@ -654,41 +535,25 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
   // ✅ ADDED: Elastic Subsidy Variant
   void _paintSubsidyElasticDemand(
     DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
-    paintShading(
-      canvas,
-      size,
-      ShadeType.producerGain,
-      [
-        const Offset(0, 0.27),
-        const Offset(0.58, 0.27),
-        const Offset(0.58, 0.465),
-        const Offset(0.0, 0.465),
-      ],
-      striped: true,
-      iCanvas: iCanvas,
-    );
-    paintShading(
-      canvas,
-      size,
-      ShadeType.consumerGain,
-      [
-        const Offset(0, 0.465),
-        const Offset(0.58, 0.465),
-        const Offset(0.58, 0.52),
-        const Offset(0.0, 0.52),
-      ],
-      striped: true,
-      iCanvas: iCanvas,
-    );
+    IDiagramCanvas canvas,
+  ) {
+    paintShading(c, canvas, ShadeType.producerGain, [
+      const Offset(0, 0.27),
+      const Offset(0.58, 0.27),
+      const Offset(0.58, 0.465),
+      const Offset(0.0, 0.465),
+    ], striped: true);
+    paintShading(c, canvas, ShadeType.consumerGain, [
+      const Offset(0, 0.465),
+      const Offset(0.58, 0.465),
+      const Offset(0.58, 0.52),
+      const Offset(0.0, 0.52),
+    ], striped: true);
 
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.demand,
       angle: -0.50,
       lengthAdjustment: -kExtendBy20,
@@ -696,7 +561,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       horizontalShift: kExtendBy5,
       verticalShift: kExtendBy5,
@@ -706,7 +571,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       label: DiagramLabel.s.label,
       horizontalShift: -kExtendBy5,
@@ -716,7 +581,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.52,
       xAxisEndPos: 0.58,
       yLabel: DiagramLabel.pc.label,
@@ -726,7 +591,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.27,
       xAxisEndPos: 0.58,
       yLabel: DiagramLabel.pp.label,
@@ -736,7 +601,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.46,
       xAxisEndPos: 0.58,
       yLabel: DiagramLabel.pE.label,
@@ -745,7 +610,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.465,
       xAxisEndPos: 0.385,
       hideXLine: true,
@@ -757,7 +622,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       canvas,
       DiagramLabel.consumerGain.label,
       Offset(0.30, 0.20),
-      iCanvas: iCanvas,
+
       pointerLine: Offset(0.30, 0.30),
     );
     paintText2(
@@ -765,7 +630,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       canvas,
       DiagramLabel.producerGain.label,
       Offset(0.60, 0.70),
-      iCanvas: iCanvas,
+
       pointerLine: Offset(0.40, 0.50),
     );
   }

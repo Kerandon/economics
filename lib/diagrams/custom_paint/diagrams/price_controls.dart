@@ -21,26 +21,21 @@ class PriceControls extends BaseDiagramPainter3 {
   PriceControls(super.config, super.diagram);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    drawDiagram(canvas, size);
-  }
-
-  @override
-  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
+  void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
     switch (diagram) {
       case DiagramEnum.microPriceCeiling:
-        _paintPriceCeiling(c, canvas, size, iCanvas: iCanvas);
+        _paintPriceCeiling(c, canvas, size);
       case DiagramEnum.microPriceFloor:
-        _paintPriceFloor(c, canvas, size, iCanvas: iCanvas);
+        _paintPriceFloor(c, canvas, size);
       case DiagramEnum.microMinimumWage:
       case DiagramEnum.microMinimumWageWelfare:
-        _paintMinWage(c, canvas, size, diagram, iCanvas: iCanvas);
+        _paintMinWage(c, canvas, size, diagram);
       case DiagramEnum.microNationalMinimumWageInelasticDemandAndSupply:
-        _paintNMWInelasticDemand(c, canvas, size, iCanvas: iCanvas);
+        _paintNMWInelasticDemand(c, canvas, size);
       case DiagramEnum.microAgriculturalPriceFloor:
-        _paintAgriculturalPriceFloor(c, canvas, size, iCanvas: iCanvas);
+        _paintAgriculturalPriceFloor(c, canvas, size);
       default:
     }
   }
@@ -62,13 +57,11 @@ class PriceControls extends BaseDiagramPainter3 {
 
 void _paintPriceCeiling(
   DiagramPainterConfig c,
-  Canvas? canvas,
-  Size size, {
-  IDiagramCanvas? iCanvas,
-}) {
+  IDiagramCanvas canvas,
+  Size size,
+) {
   paintLegendTable(
     canvas,
-    iCanvas: iCanvas,
     c,
     headers: ['', 'Before', 'After'],
     data: [
@@ -81,7 +74,7 @@ void _paintPriceCeiling(
   paintLineSegment(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     origin: const Offset(0.50, 1.1),
     angle: 0,
     labelAlign: LabelAlign.centerBottom,
@@ -94,7 +87,7 @@ void _paintPriceCeiling(
   //   const Offset(0.25, 0.75),
   //   const Offset(0.25, 0.25),
   //   const Offset(0.5, 0.50),
-  // ], iCanvas: iCanvas);
+  // ], );
   final labels = {
     DiagramLabel.a: const Offset(0.11, 0.41),
     DiagramLabel.b: const Offset(0.31, 0.41),
@@ -102,22 +95,19 @@ void _paintPriceCeiling(
     DiagramLabel.d: const Offset(0.31, 0.59),
     DiagramLabel.e: const Offset(0.11, 0.80),
   };
-  labels.forEach(
-    (label, offset) =>
-        paintText2(c, canvas, label.label, offset, iCanvas: iCanvas),
-  );
+  labels.forEach((label, offset) => paintText2(c, canvas, label.label, offset));
 
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisLabel: DiagramLabel.price.label,
     xAxisLabel: DiagramLabel.quantity.label,
   );
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.demand,
     label: DiagramLabel.dEqualsMB.label,
     lengthAdjustment: 0.15,
@@ -125,7 +115,7 @@ void _paintPriceCeiling(
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.supply,
     label: DiagramLabel.sEqualsMC.label,
     lengthAdjustment: 0.15,
@@ -134,7 +124,7 @@ void _paintPriceCeiling(
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     color: Colors.red,
     label1: DiagramLabel.pc.label,
     label1Align: LabelAlign.centerLeft,
@@ -148,13 +138,13 @@ void _paintPriceCeiling(
   //   DiagramLabel.welfareLoss.label,
   //   const Offset(0.75, 0.50),
   //   pointerLine: const Offset(0.45, 0.50),
-  //   iCanvas: iCanvas,
+  //   ,
   // );
 
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.25,
     xAxisEndPos: 0.25,
     hideYLine: true,
@@ -162,7 +152,7 @@ void _paintPriceCeiling(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.75,
     xAxisEndPos: 0.25,
     xLabel: DiagramLabel.qSStar.label,
@@ -172,7 +162,7 @@ void _paintPriceCeiling(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.75,
     xAxisEndPos: 0.75,
     xLabel: DiagramLabel.qD.label,
@@ -182,7 +172,7 @@ void _paintPriceCeiling(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
     yLabel: DiagramLabel.pE.label,
@@ -192,20 +182,19 @@ void _paintPriceCeiling(
 
 void _paintPriceFloor(
   DiagramPainterConfig c,
-  Canvas? canvas,
-  Size size, {
-  IDiagramCanvas? iCanvas,
-}) {
-  paintShading(canvas, size, ShadeType.welfareLoss, [
+  IDiagramCanvas canvas,
+  Size size,
+) {
+  paintShading(c, canvas, ShadeType.welfareLoss, [
     const Offset(0.25, 0.75),
     const Offset(0.25, 0.25),
     const Offset(0.5, 0.50),
-  ], iCanvas: iCanvas);
+  ]);
 
   paintLineSegment(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     origin: const Offset(0.50, 0.20),
     angle: 0,
     labelAlign: LabelAlign.centerTop,
@@ -221,29 +210,26 @@ void _paintPriceFloor(
     DiagramLabel.d: const Offset(0.12, 0.62),
     DiagramLabel.e: const Offset(0.32, 0.60),
   };
-  labels.forEach(
-    (label, offset) =>
-        paintText2(c, canvas, label.label, offset, iCanvas: iCanvas),
-  );
+  labels.forEach((label, offset) => paintText2(c, canvas, label.label, offset));
 
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisLabel: DiagramLabel.price.label,
     xAxisLabel: DiagramLabel.quantity.label,
   );
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.demand,
     label: DiagramLabel.dEqualsMB.label,
   );
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.supply,
     label: DiagramLabel.sEqualsMC.label,
   );
@@ -251,7 +237,6 @@ void _paintPriceFloor(
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     color: Colors.red,
     label1: DiagramLabel.pf.label,
     label1Align: LabelAlign.centerLeft,
@@ -265,13 +250,12 @@ void _paintPriceFloor(
     DiagramLabel.welfareLoss.label,
     const Offset(0.70, 0.50),
     pointerLine: const Offset(0.40, 0.50),
-    iCanvas: iCanvas,
   );
 
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.25,
     xAxisEndPos: 0.25,
     xLabel: DiagramLabel.qDStar.label,
@@ -281,7 +265,6 @@ void _paintPriceFloor(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.25,
     xAxisEndPos: 0.75,
     xLabel: DiagramLabel.qS.label,
@@ -291,7 +274,6 @@ void _paintPriceFloor(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
     yLabel: DiagramLabel.pE.label,
@@ -301,11 +283,10 @@ void _paintPriceFloor(
 
 void _paintMinWage(
   DiagramPainterConfig c,
-  Canvas? canvas,
+  IDiagramCanvas canvas,
   Size size,
-  DiagramEnum bundle, {
-  IDiagramCanvas? iCanvas,
-}) {
+  DiagramEnum bundle,
+) {
   if (bundle == DiagramEnum.microMinimumWageWelfare) {
     paintText2(
       c,
@@ -313,13 +294,12 @@ void _paintMinWage(
       DiagramLabel.welfareLoss.label,
       const Offset(0.85, 0.50),
       pointerLine: const Offset(0.40, 0.50),
-      iCanvas: iCanvas,
     );
-    paintShading(canvas, size, ShadeType.welfareLoss, [
+    paintShading(c, canvas, ShadeType.welfareLoss, [
       const Offset(0.30, 0.70),
       const Offset(0.30, 0.30),
       const Offset(0.5, 0.50),
-    ], iCanvas: iCanvas);
+    ]);
 
     final labels = {
       DiagramLabel.a: const Offset(0.12, 0.18),
@@ -329,15 +309,14 @@ void _paintMinWage(
       DiagramLabel.e: const Offset(0.35, 0.57),
     };
     labels.forEach(
-      (label, offset) =>
-          paintText2(c, canvas, label.label, offset, iCanvas: iCanvas),
+      (label, offset) => paintText2(c, canvas, label.label, offset),
     );
   }
 
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
     yLabel: DiagramLabel.we.label,
@@ -346,7 +325,6 @@ void _paintMinWage(
   paintLineSegment(
     c,
     canvas,
-    iCanvas: iCanvas,
     origin: const Offset(0.50, 0.25),
     endStyle: LineEndStyle.arrowRightAngles,
     label: DiagramLabel.surplusLabor.label,
@@ -357,21 +335,19 @@ void _paintMinWage(
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.wageRate.label,
     xAxisLabel: DiagramLabel.quantityOfLabor.label,
   );
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.demand,
     label: DiagramLabel.dL.label,
   );
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
     type: MarketCurveType.supply,
     label: DiagramLabel.sL.label,
   );
@@ -379,7 +355,6 @@ void _paintMinWage(
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     startPos: const Offset(0, 0.30),
     polylineOffsets: [const Offset(1.0, 0.30)],
     label1: DiagramLabel.Wmin.label,
@@ -389,7 +364,6 @@ void _paintMinWage(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.30,
     xAxisEndPos: 0.30,
     hideYLine: true,
@@ -399,7 +373,6 @@ void _paintMinWage(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.30,
     xAxisEndPos: 0.70,
     hideYLine: true,
@@ -410,28 +383,25 @@ void _paintMinWage(
 
 void _paintNMWInelasticDemand(
   DiagramPainterConfig c,
-  Canvas? canvas,
-  Size size, {
-  IDiagramCanvas? iCanvas,
-}) {
+  IDiagramCanvas canvas,
+  Size size,
+) {
   paintText2(
     c,
     canvas,
     DiagramLabel.welfareLoss.label,
     const Offset(0.85, 0.50),
     pointerLine: const Offset(0.46, 0.50),
-    iCanvas: iCanvas,
   );
-  paintShading(canvas, size, ShadeType.welfareLoss, [
+  paintShading(c, canvas, ShadeType.welfareLoss, [
     const Offset(0.44, 0.65),
     const Offset(0.44, 0.30),
     const Offset(0.5, 0.50),
-  ], iCanvas: iCanvas);
+  ]);
 
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
     yLabel: DiagramLabel.we.label,
@@ -440,7 +410,6 @@ void _paintNMWInelasticDemand(
   paintLineSegment(
     c,
     canvas,
-    iCanvas: iCanvas,
     origin: const Offset(0.515, 0.22),
     endStyle: LineEndStyle.arrowRightAngles,
     label: 'Surplus Labor',
@@ -451,14 +420,12 @@ void _paintNMWInelasticDemand(
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.wageRate.label,
     xAxisLabel: DiagramLabel.quantityOfLabor.label,
   );
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
     type: MarketCurveType.demand,
     label: DiagramLabel.dL.label,
     angle: 0.50,
@@ -467,7 +434,6 @@ void _paintNMWInelasticDemand(
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
     type: MarketCurveType.supply,
     label: DiagramLabel.sL.label,
     angle: -0.40,
@@ -477,7 +443,6 @@ void _paintNMWInelasticDemand(
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     startPos: const Offset(0, 0.30),
     polylineOffsets: [const Offset(1.0, 0.30)],
     label1: DiagramLabel.Wmin.label,
@@ -487,7 +452,6 @@ void _paintNMWInelasticDemand(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.30,
     xAxisEndPos: 0.44,
     hideYLine: true,
@@ -497,7 +461,6 @@ void _paintNMWInelasticDemand(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.30,
     xAxisEndPos: 0.58,
     hideYLine: true,
@@ -508,17 +471,16 @@ void _paintNMWInelasticDemand(
 
 void _paintAgriculturalPriceFloor(
   DiagramPainterConfig c,
-  Canvas? canvas,
-  Size size, {
-  IDiagramCanvas? iCanvas,
-}) {
+  IDiagramCanvas canvas,
+  Size size,
+) {
   // paintText2(
   //   c,
   //   canvas,
   //   DiagramLabel.welfareLoss.label,
   //   const Offset(0.90, 0.50),
   //   pointerLine: const Offset(0.65, 0.50),
-  //   iCanvas: iCanvas,
+  //   ,
   // );
   // paintShading(canvas, size, ShadeType.welfareLoss, [
   //   const Offset(0.30, 0.30),
@@ -526,12 +488,11 @@ void _paintAgriculturalPriceFloor(
   //   const Offset(0.70, 1.0),
   //   const Offset(0.70, 0.30),
   //   const Offset(0.50, 0.50),
-  // ], iCanvas: iCanvas);
+  // ], );
 
   paintLineSegment(
     c,
     canvas,
-    iCanvas: iCanvas,
     origin: const Offset(0.50, 0.24),
     endStyle: LineEndStyle.arrowRightAngles,
     length: 0.40,
@@ -541,7 +502,7 @@ void _paintAgriculturalPriceFloor(
   paintLineSegment(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     origin: const Offset(0.15, 1.10),
     endStyle: LineEndStyle.arrowRightAngles,
     length: 0.28,
@@ -551,7 +512,6 @@ void _paintAgriculturalPriceFloor(
   paintLineSegment(
     c,
     canvas,
-    iCanvas: iCanvas,
     origin: const Offset(0.50, 1.10),
     endStyle: LineEndStyle.arrowRightAngles,
     length: 0.40,
@@ -570,23 +530,17 @@ void _paintAgriculturalPriceFloor(
     DiagramLabel.h: const Offset(0.60, 0.80),
     DiagramLabel.i: const Offset(0.60, 0.50),
   };
-  labels.forEach(
-    (label, offset) =>
-        paintText2(c, canvas, label.label, offset, iCanvas: iCanvas),
-  );
-
+  labels.forEach((label, offset) => paintText2(c, canvas, label.label, offset));
 
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.p.label,
     xAxisLabel: DiagramLabel.q.label,
   );
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
     type: MarketCurveType.demand,
     label: DiagramLabel.dEqualsMB.label,
     lengthAdjustment: 0.20,
@@ -594,7 +548,6 @@ void _paintAgriculturalPriceFloor(
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
     type: MarketCurveType.supply,
     label: DiagramLabel.sEqualsMC.label,
     lengthAdjustment: 0.20,
@@ -603,7 +556,6 @@ void _paintAgriculturalPriceFloor(
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     startPos: const Offset(0, 0.30),
     polylineOffsets: [const Offset(1.0, 0.30)],
     label1: DiagramLabel.pf.label,
@@ -613,7 +565,6 @@ void _paintAgriculturalPriceFloor(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.30,
     xAxisEndPos: 0.30,
     hideYLine: true,
@@ -623,7 +574,6 @@ void _paintAgriculturalPriceFloor(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.30,
     xAxisEndPos: 0.70,
     hideYLine: true,
@@ -631,13 +581,12 @@ void _paintAgriculturalPriceFloor(
     showDotAtIntersection: true,
   );
   paintDiagramDashedLines(
-      c,
-      canvas,
-      iCanvas: iCanvas,
-      yAxisStartPos: 0.50,
-      xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.pE.label,
-      xLabel: DiagramLabel.qE.label,
-      showDotAtIntersection: true
+    c,
+    canvas,
+    yAxisStartPos: 0.50,
+    xAxisEndPos: 0.50,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
+    showDotAtIntersection: true,
   );
 }

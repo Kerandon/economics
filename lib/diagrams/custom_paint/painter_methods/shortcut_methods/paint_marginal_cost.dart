@@ -8,15 +8,10 @@ import '../../painter_constants.dart';
 
 import '../diagram_lines/paint_diagram_lines.dart';
 
-void paintMarginalCost(
-  DiagramPainterConfig c,
-  Canvas? canvas, {
-  IDiagramCanvas? iCanvas, // 👈 Added Bridge
-}) {
+void paintMarginalCost(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintDiagramLines(
     c,
-    canvas,
-    iCanvas: iCanvas, // 👈 Pass the bridge through
+    canvas, // 👈 Pass the bridge through
     startPos: const Offset(0.03, 0.80),
     bezierPoints: [
       CustomBezier(

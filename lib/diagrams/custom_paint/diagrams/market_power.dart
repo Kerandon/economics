@@ -24,14 +24,14 @@ class MarketPower extends BaseDiagramPainter3 {
   MarketPower(super.config, super.diagram);
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
     switch (diagram) {
       case DiagramEnum.microPerfectCompetitionMarketLongRun:
       case DiagramEnum.microPerfectCompetitionMarketAbnormalProfit:
       case DiagramEnum.microPerfectCompetitionMarketLoss:
-        return _paintPerfectCompMarket(c, canvas, size, diagram);
+        return _paintPerfectCompMarket(c, canvas, diagram);
       case DiagramEnum.microPerfectCompetitionFirmLongRun:
       case DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment:
       case DiagramEnum.microPerfectCompetitionFirmLoss:
@@ -41,85 +41,73 @@ class MarketPower extends BaseDiagramPainter3 {
       case DiagramEnum
           .microPerfectCompetitionAbnormalProfitRevenueCostsCalculation:
       case DiagramEnum.microPerfectCompetitionShutdownLossCalculation:
-        return _perfectCompFirm(c, canvas, size, diagram);
+        return _perfectCompFirm(c, canvas, diagram);
       case DiagramEnum.microMonopolyAbnormalProfit:
       case DiagramEnum.microMonopolyAbnormalProfitAndCosts:
       case DiagramEnum.microMonopolyWelfare:
       case DiagramEnum.microMonopolyWelfareAllocativelyEfficient:
-        return _paintStandardMonopoly(c, canvas, size, diagram);
+        return _paintStandardMonopoly(c, canvas, diagram);
       case DiagramEnum.microMonopolyNatural:
       case DiagramEnum.microMonopolyNaturalUnregulatedWelfare:
       case DiagramEnum.microMonopolyNaturalPricingComparisons:
       case DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare:
       case DiagramEnum.microMonopolyNaturalMarginalCostPricing:
       case DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare:
-        return _paintNaturalMonopoly(c, canvas, size, diagram);
+        return _paintNaturalMonopoly(c, canvas, diagram);
       case DiagramEnum.microOligopolyKinkedDemandCurve:
-        return _paintKinkedDemand(c, canvas, size, diagram);
+        return _paintKinkedDemand(c, canvas, diagram);
       case DiagramEnum.microMonopolisticCompetitionLongRun:
       case DiagramEnum.microMonopolisticCompetitionAbnormalProfit:
       case DiagramEnum.microMonopolisticCompetitionLoss:
       case DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift:
       case DiagramEnum.microMonopolisticCompetitionLossShift:
-        return _paintMonopolisticCompetition(c, canvas, size, diagram);
+        return _paintMonopolisticCompetition(c, canvas, diagram);
       default:
     }
   }
 
   void _paintPerfectCompMarket(
     DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size,
-    DiagramEnum diagram, {
-    IDiagramCanvas? iCanvas,
-  }) {
-    paintTitle(c, canvas, DiagramLabel.market.label, iCanvas: iCanvas);
+    IDiagramCanvas canvas,
+
+    DiagramEnum diagram,
+  ) {
+    paintTitle(c, canvas, DiagramLabel.market.label);
 
     paintAxis(
       c,
       canvas,
-      iCanvas: iCanvas,
       yAxisLabel: DiagramLabel.priceCostsRevenue.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
 
     if (diagram == DiagramEnum.microPerfectCompetitionMarketLongRun) {
-      paintMarketCurve(
-        c,
-        canvas,
-        iCanvas: iCanvas,
-        type: MarketCurveType.demand,
-      );
-      paintMarketCurve(
-        c,
-        canvas,
-        iCanvas: iCanvas,
-        type: MarketCurveType.supply,
-      );
+      paintMarketCurve(c, canvas, type: MarketCurveType.demand);
+      paintMarketCurve(c, canvas, type: MarketCurveType.supply);
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.50,
         xAxisEndPos: 1.1,
         yLabel: DiagramLabel.pm.label,
         hideXLine: true,
       );
-      paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.50, 0.50));
+      paintDot(c, canvas, const Offset(0.50, 0.50));
     }
 
     if (diagram == DiagramEnum.microPerfectCompetitionMarketAbnormalProfit) {
       paintMarketCurve(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         type: MarketCurveType.demand,
         verticalShift: -0.10,
       );
       paintMarketCurve(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         type: MarketCurveType.supply,
         label: DiagramLabel.s1.label,
         verticalShift: -0.10,
@@ -128,7 +116,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintMarketCurve(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         type: MarketCurveType.supply,
         label: DiagramLabel.s2.label,
         verticalShift: -0.05,
@@ -137,7 +125,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.35,
         xAxisEndPos: 1.3,
         yLabel: DiagramLabel.pm1.label,
@@ -146,7 +134,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.50,
         xAxisEndPos: 1.3,
         yLabel: DiagramLabel.pm2.label,
@@ -155,7 +143,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintLineSegment(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         origin: const Offset(-0.12, 0.41),
         angle: pi / 2,
         length: 0.10,
@@ -163,25 +151,20 @@ class MarketPower extends BaseDiagramPainter3 {
       paintLineSegment(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         origin: const Offset(0.68, 0.25),
         length: 0.18,
       );
-      paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.45, 0.35));
-      paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.60, 0.50));
+      paintDot(c, canvas, const Offset(0.45, 0.35));
+      paintDot(c, canvas, const Offset(0.60, 0.50));
     }
 
     if (diagram == DiagramEnum.microPerfectCompetitionMarketLoss) {
+      paintMarketCurve(c, canvas, type: MarketCurveType.demand);
       paintMarketCurve(
         c,
         canvas,
-        iCanvas: iCanvas,
-        type: MarketCurveType.demand,
-      );
-      paintMarketCurve(
-        c,
-        canvas,
-        iCanvas: iCanvas,
+
         type: MarketCurveType.supply,
         label: DiagramLabel.s2.label,
         lengthAdjustment: -0.10,
@@ -189,7 +172,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintMarketCurve(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         type: MarketCurveType.supply,
         label: DiagramLabel.s1.label,
         verticalShift: 0.10,
@@ -199,7 +182,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.50,
         xAxisEndPos: 1.3,
         yLabel: DiagramLabel.pm2.label,
@@ -208,7 +191,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.65,
         xAxisEndPos: 1.3,
         yLabel: DiagramLabel.pm1.label,
@@ -217,7 +200,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintLineSegment(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         origin: const Offset(-0.12, 0.58),
         angle: -pi / 2,
         length: 0.10,
@@ -225,23 +208,21 @@ class MarketPower extends BaseDiagramPainter3 {
       paintLineSegment(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         origin: const Offset(0.809, 0.35),
         length: 0.18,
         angle: pi,
       );
-      paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.50, 0.50));
-      paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.65, 0.65));
+      paintDot(c, canvas, const Offset(0.50, 0.50));
+      paintDot(c, canvas, const Offset(0.65, 0.65));
     }
   }
 
   void _perfectCompFirm(
     DiagramPainterConfig c,
-    Canvas canvas,
-    Size size,
-    DiagramEnum diagram, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
     String pLabel = DiagramLabel.priceCostsRevenue.label;
     String qLabel = DiagramLabel.quantity.label;
     if (diagram ==
@@ -250,49 +231,42 @@ class MarketPower extends BaseDiagramPainter3 {
       pLabel = DiagramLabel.priceCostsRevenueDollar.label;
       qLabel = DiagramLabel.quantityThousands.label;
     }
-    paintAxis(
-      c,
-      canvas,
-      iCanvas: iCanvas,
-      yAxisLabel: pLabel,
-      xAxisLabel: qLabel,
-    );
+    paintAxis(c, canvas, yAxisLabel: pLabel, xAxisLabel: qLabel);
 
     if (diagram ==
         DiagramEnum
             .microPerfectCompetitionNormalProfitRevenueCostsCalculation) {
-      paintTitle(c, canvas, 'Normal Profit', iCanvas: iCanvas);
-      paintShading(canvas, size, ShadeType.revenueUnchanged, [
+      paintTitle(c, canvas, 'Normal Profit');
+      paintShading(c, canvas, ShadeType.revenueUnchanged, [
         Offset(0, 0.50),
         Offset(0.48, 0.50),
         Offset(0.48, 1),
         Offset(0, 1),
-      ], iCanvas: iCanvas);
+      ]);
       paintText2(
         c,
         canvas,
         'TR=TC (zero profit)',
         Offset(0.70, 0.80),
         pointerLine: Offset(0.40, 0.80),
-        iCanvas: iCanvas,
       );
     }
     if (diagram ==
         DiagramEnum
             .microPerfectCompetitionAbnormalProfitRevenueCostsCalculation) {
-      paintTitle(c, canvas, 'Abnormal Profit', iCanvas: iCanvas);
-      paintShading(canvas, size, ShadeType.costs, [
+      paintTitle(c, canvas, 'Abnormal Profit');
+      paintShading(c, canvas, ShadeType.costs, [
         Offset(0, 0.47),
         Offset(0.565, 0.47),
         Offset(0.565, 1),
         Offset(0, 1),
-      ], iCanvas: iCanvas);
-      paintShading(canvas, size, ShadeType.abnormalProfit, [
+      ]);
+      paintShading(c, canvas, ShadeType.abnormalProfit, [
         CustomBezier(endPoint: Offset(0.0, 0.35)),
         CustomBezier(endPoint: Offset(0.565, 0.35)),
         CustomBezier(endPoint: Offset(0.565, 0.475)),
         CustomBezier(endPoint: Offset(0.0, 0.475)),
-      ], iCanvas: iCanvas);
+      ]);
       paintDiagramLines(
         c,
         canvas,
@@ -300,7 +274,6 @@ class MarketPower extends BaseDiagramPainter3 {
         polylineOffsets: [Offset(0.80, 0.35)],
         label2: DiagramLabel.dEqualsARMR.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
 
       paintText2(
@@ -309,7 +282,6 @@ class MarketPower extends BaseDiagramPainter3 {
         DiagramLabel.abnormalProfit.label,
         Offset(0.35, 0.20),
         pointerLine: Offset(0.35, 0.40),
-        iCanvas: iCanvas,
       );
       paintText2(
         c,
@@ -317,7 +289,6 @@ class MarketPower extends BaseDiagramPainter3 {
         'Total Cost',
         Offset(0.70, 0.80),
         pointerLine: Offset(0.40, 0.80),
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -328,7 +299,6 @@ class MarketPower extends BaseDiagramPainter3 {
         yLabel: '\$11',
         hideYLine: true,
         xLabel: '50',
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -338,7 +308,6 @@ class MarketPower extends BaseDiagramPainter3 {
         yLabel: '\$10',
         showDotAtIntersection: true,
         xAxisEndPos: 0.565,
-        iCanvas: iCanvas,
       );
       paintDiagramLines(
         c,
@@ -347,7 +316,6 @@ class MarketPower extends BaseDiagramPainter3 {
         polylineOffsets: [Offset(0.565, 0.465)],
         color: Colors.red,
         strokeWidth: kCurveWidth,
-        iCanvas: iCanvas,
       );
     }
     paintDiagramLines(
@@ -359,11 +327,10 @@ class MarketPower extends BaseDiagramPainter3 {
       ],
       label2: DiagramLabel.atc.label,
       label2Align: LabelAlign.centerTop,
-      iCanvas: iCanvas,
     );
-    paintMarginalCost(c, canvas, iCanvas: iCanvas);
+    paintMarginalCost(c, canvas);
     if (diagram == DiagramEnum.microPerfectCompetitionFirmLongRun) {
-      paintTitle(c, canvas, DiagramLabel.firm.label, iCanvas: iCanvas);
+      paintTitle(c, canvas, DiagramLabel.firm.label);
     }
     if (diagram == DiagramEnum.microPerfectCompetitionFirmLongRun ||
         diagram ==
@@ -374,7 +341,6 @@ class MarketPower extends BaseDiagramPainter3 {
         canvas,
         startPos: Offset(0.0, 0.50),
         polylineOffsets: [Offset(0.90, 0.50)],
-        iCanvas: iCanvas,
       );
       paintDiagramLines(
         c,
@@ -383,7 +349,6 @@ class MarketPower extends BaseDiagramPainter3 {
         polylineOffsets: [Offset(0.90, 0.50)],
         label2: DiagramLabel.dEqualsARMR.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -394,19 +359,18 @@ class MarketPower extends BaseDiagramPainter3 {
         yLabel: DiagramLabel.pE.label,
         xLabel: DiagramLabel.qE.label,
         showDotAtIntersection: true,
-        iCanvas: iCanvas,
       );
     }
     if (diagram ==
         DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment) {
-      paintTitle(c, canvas, DiagramLabel.firm.label, iCanvas: iCanvas);
+      paintTitle(c, canvas, DiagramLabel.firm.label);
 
-      paintShading(canvas, size, ShadeType.abnormalProfit, [
+      paintShading(c, canvas, ShadeType.abnormalProfit, [
         CustomBezier(endPoint: Offset(0.0, 0.35)),
         CustomBezier(endPoint: Offset(0.565, 0.35)),
         CustomBezier(endPoint: Offset(0.565, 0.475)),
         CustomBezier(endPoint: Offset(0.0, 0.475)),
-      ], iCanvas: iCanvas);
+      ]);
       paintDiagramLines(
         c,
         canvas,
@@ -414,7 +378,6 @@ class MarketPower extends BaseDiagramPainter3 {
         polylineOffsets: [Offset(0.90, 0.35)],
         label2: DiagramLabel.dARMR1.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramLines(
         c,
@@ -423,7 +386,6 @@ class MarketPower extends BaseDiagramPainter3 {
         polylineOffsets: [Offset(0.90, 0.50)],
         label2: DiagramLabel.dARMR2.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -433,7 +395,6 @@ class MarketPower extends BaseDiagramPainter3 {
         hideYLine: true,
         yLabel: DiagramLabel.p1.label,
         showDotAtIntersection: true,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -443,7 +404,6 @@ class MarketPower extends BaseDiagramPainter3 {
         hideXLine: true,
         showDotAtIntersection: true,
         xLabel: DiagramLabel.q1.label,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -454,7 +414,6 @@ class MarketPower extends BaseDiagramPainter3 {
         showDotAtIntersection: true,
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
-        iCanvas: iCanvas,
       );
       paintLineSegment(
         c,
@@ -462,7 +421,6 @@ class MarketPower extends BaseDiagramPainter3 {
         origin: Offset(0.53, 1.08),
         angle: pi,
         length: 0.07,
-        iCanvas: iCanvas,
       );
       paintLineSegment(
         c,
@@ -470,7 +428,6 @@ class MarketPower extends BaseDiagramPainter3 {
         origin: Offset(-0.08, 0.415),
         angle: pi / 2,
         length: 0.10,
-        iCanvas: iCanvas,
       );
       paintLineSegment(
         c,
@@ -478,7 +435,6 @@ class MarketPower extends BaseDiagramPainter3 {
         origin: Offset(0.80, 0.415),
         angle: pi / 2,
         length: 0.10,
-        iCanvas: iCanvas,
       );
       paintText2(
         c,
@@ -486,7 +442,6 @@ class MarketPower extends BaseDiagramPainter3 {
         DiagramLabel.abnormalProfit.label,
         Offset(0.35, 0.25),
         pointerLine: Offset(0.35, 0.43),
-        iCanvas: iCanvas,
       );
       paintDiagramLines(
         c,
@@ -495,17 +450,16 @@ class MarketPower extends BaseDiagramPainter3 {
         polylineOffsets: [Offset(0.565, 0.465)],
         color: Colors.red,
         strokeWidth: kCurveWidth * 2,
-        iCanvas: iCanvas,
       );
     }
     if (diagram == DiagramEnum.microPerfectCompetitionFirmLoss) {
-      paintTitle(c, canvas, DiagramLabel.firm.label, iCanvas: iCanvas);
-      paintShading(canvas, size, ShadeType.loss, [
+      paintTitle(c, canvas, DiagramLabel.firm.label);
+      paintShading(c, canvas, ShadeType.loss, [
         Offset(0.0, 0.485),
         CustomBezier(endPoint: Offset(0.38, 0.485)),
         CustomBezier(endPoint: Offset(0.38, 0.65)),
         CustomBezier(endPoint: Offset(0.0, 0.65)),
-      ], iCanvas: iCanvas);
+      ]);
       paintDiagramLines(
         c,
         canvas,
@@ -513,7 +467,6 @@ class MarketPower extends BaseDiagramPainter3 {
         polylineOffsets: [Offset(0.90, 0.65)],
         label2: DiagramLabel.dARMR1.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramLines(
         c,
@@ -522,7 +475,6 @@ class MarketPower extends BaseDiagramPainter3 {
         polylineOffsets: [Offset(0.90, 0.50)],
         label2: DiagramLabel.dARMR2.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -532,7 +484,6 @@ class MarketPower extends BaseDiagramPainter3 {
         showDotAtIntersection: true,
         yLabel: DiagramLabel.p2.label,
         xLabel: DiagramLabel.q2.label,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -543,7 +494,6 @@ class MarketPower extends BaseDiagramPainter3 {
         yLabel: DiagramLabel.p1.label,
         hideXLine: true,
         hideYLine: true,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -552,22 +502,14 @@ class MarketPower extends BaseDiagramPainter3 {
         xAxisEndPos: 0.38,
         showDotAtIntersection: true,
         xLabel: DiagramLabel.q1.label,
-        iCanvas: iCanvas,
       );
-      paintLineSegment(
-        c,
-        canvas,
-        origin: Offset(0.42, 1.08),
-        length: 0.07,
-        iCanvas: iCanvas,
-      );
+      paintLineSegment(c, canvas, origin: Offset(0.42, 1.08), length: 0.07);
       paintLineSegment(
         c,
         canvas,
         origin: Offset(-0.08, 0.58),
         angle: -pi / 2,
         length: 0.10,
-        iCanvas: iCanvas,
       );
       paintLineSegment(
         c,
@@ -575,7 +517,6 @@ class MarketPower extends BaseDiagramPainter3 {
         origin: Offset(0.80, 0.58),
         angle: -pi / 2,
         length: 0.10,
-        iCanvas: iCanvas,
       );
       paintText2(
         c,
@@ -583,11 +524,10 @@ class MarketPower extends BaseDiagramPainter3 {
         DiagramLabel.loss.label,
         Offset(0.30, 0.30),
         pointerLine: Offset(0.30, 0.55),
-        iCanvas: iCanvas,
       );
     }
     if (diagram == DiagramEnum.microPerfectCompetitionShutdownPoint) {
-      paintTitle(c, canvas, DiagramLabel.firm.label, iCanvas: iCanvas);
+      paintTitle(c, canvas, DiagramLabel.firm.label);
       paintDiagramLines(
         c,
         canvas,
@@ -600,7 +540,6 @@ class MarketPower extends BaseDiagramPainter3 {
         ],
         label2: DiagramLabel.avc.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramLines(
         c,
@@ -610,7 +549,6 @@ class MarketPower extends BaseDiagramPainter3 {
         color: Colors.blueAccent,
         label2: DiagramLabel.breakEvenPoint.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramLines(
         c,
@@ -620,7 +558,6 @@ class MarketPower extends BaseDiagramPainter3 {
         color: Colors.red,
         label2: DiagramLabel.shutdownPoint.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -631,7 +568,6 @@ class MarketPower extends BaseDiagramPainter3 {
         yLabel: DiagramLabel.p1.label,
         hideXLine: true,
         hideYLine: true,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -642,11 +578,10 @@ class MarketPower extends BaseDiagramPainter3 {
         yLabel: DiagramLabel.p2.label,
         hideXLine: true,
         hideYLine: true,
-        iCanvas: iCanvas,
       );
     }
     if (diagram == DiagramEnum.microPerfectCompetitionShutdownLossCalculation) {
-      paintTitle(c, canvas, 'π when P<AVC', iCanvas: iCanvas);
+      paintTitle(c, canvas, 'π when P<AVC');
       paintDiagramDashedLines(
         c,
         canvas,
@@ -654,7 +589,6 @@ class MarketPower extends BaseDiagramPainter3 {
         xAxisEndPos: 0.35,
         showDotAtIntersection: true,
         hideYLine: true,
-        iCanvas: iCanvas,
       );
 
       paintDiagramLines(
@@ -663,7 +597,6 @@ class MarketPower extends BaseDiagramPainter3 {
         startPos: Offset(0.35, 0.47),
         polylineOffsets: [(Offset(0.35, 0.70))],
         color: Colors.red,
-        iCanvas: iCanvas,
       );
 
       paintText2(
@@ -672,7 +605,6 @@ class MarketPower extends BaseDiagramPainter3 {
         'AFC=ATC-AVC',
         Offset(0.40, 0.35),
         pointerLine: Offset(0.35, 0.50),
-        iCanvas: iCanvas,
       );
 
       paintDiagramLines(
@@ -687,7 +619,6 @@ class MarketPower extends BaseDiagramPainter3 {
         ],
         label2: DiagramLabel.avc.label,
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -697,7 +628,6 @@ class MarketPower extends BaseDiagramPainter3 {
         showDotAtIntersection: true,
         hideXLine: true,
         yLabel: '\$5',
-        iCanvas: iCanvas,
       );
       paintDiagramDashedLines(
         c,
@@ -708,7 +638,6 @@ class MarketPower extends BaseDiagramPainter3 {
         hideXLine: true,
         yLabel: '\$9',
         xLabel: '100',
-        iCanvas: iCanvas,
       );
       paintDiagramLines(
         c,
@@ -721,22 +650,20 @@ class MarketPower extends BaseDiagramPainter3 {
         label1Align: LabelAlign.centerLeft,
         label2: 'P<AVCmin (firm has shut-down)',
         label2Align: LabelAlign.centerRight,
-        iCanvas: iCanvas,
       );
     }
   }
 
   void _paintStandardMonopoly(
     DiagramPainterConfig c,
-    Canvas canvas,
-    Size size,
-    DiagramEnum diagram, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    IDiagramCanvas canvas,
+
+    DiagramEnum diagram,
+  ) {
     paintAxis(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisLabel: DiagramLabel.priceCostsRevenue.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
@@ -747,7 +674,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           DiagramLabel.consumerSurplus.label,
           Offset(0.20, 0.05),
           pointerLine: Offset(0.15, 0.30),
@@ -755,7 +682,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           DiagramLabel.welfareLoss.label,
           Offset(0.40, 0.25),
           pointerLine: Offset(0.40, 0.50),
@@ -763,34 +690,23 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           DiagramLabel.producerSurplus.label,
           Offset(0.55, 0.85),
           pointerLine: Offset(0.20, 0.70),
         );
-        paintShading(
-          canvas,
-          iCanvas: iCanvas,
-          size,
-          ShadeType.consumerSurplus,
-          [Offset(0, 0.08), Offset(0.33, 0.38), Offset(0, 0.38)],
-        );
-        paintShading(
-          canvas,
-          iCanvas: iCanvas,
-          size,
-          ShadeType.producerSurplus,
-          [
-            Offset(0, 0.38),
-            Offset(0.33, 0.38),
-            Offset(0.33, 0.75),
-            CustomBezier(
-              control: Offset(0.03, 1.17),
-              endPoint: Offset(0, 0.60),
-            ),
-          ],
-        );
-        paintShading(canvas, iCanvas: iCanvas, size, ShadeType.welfareLoss, [
+        paintShading(c, canvas, ShadeType.consumerSurplus, [
+          Offset(0, 0.08),
+          Offset(0.33, 0.38),
+          Offset(0, 0.38),
+        ]);
+        paintShading(c, canvas, ShadeType.producerSurplus, [
+          Offset(0, 0.38),
+          Offset(0.33, 0.38),
+          Offset(0.33, 0.75),
+          CustomBezier(control: Offset(0.03, 1.17), endPoint: Offset(0, 0.60)),
+        ]);
+        paintShading(c, canvas, ShadeType.welfareLoss, [
           Offset(0.325, 0.38),
           Offset(0.47, 0.51),
           Offset(0.325, 0.75),
@@ -800,7 +716,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintDiagramDashedLines(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           yAxisStartPos: 0.51,
           xAxisEndPos: 0.47,
           yLabel: DiagramLabel.pMC.label,
@@ -809,7 +725,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           'Consumer Surplus\nCaptured by\nMonopolist ',
           Offset(0.42, 0.20),
           pointerLine: Offset(0.25, 0.45),
@@ -817,7 +733,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           'Lost Consumer\nSurplus',
           Offset(0.70, 0.50),
           pointerLine: Offset(0.35, 0.45),
@@ -825,31 +741,23 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           DiagramLabel.consumerSurplus.label,
           Offset(0.20, 0.05),
           pointerLine: Offset(0.15, 0.30),
         );
-        paintShading(
-          canvas,
-          iCanvas: iCanvas,
-          size,
-          ShadeType.consumerSurplus,
-          [Offset(0, 0.08), Offset(0.33, 0.38), Offset(0, 0.38)],
-        );
-        paintShading(
-          canvas,
-          iCanvas: iCanvas,
-          size,
-          ShadeType.lostConsumerSurplus,
-          [
-            Offset(0.0, 0.38),
-            Offset(0.325, 0.38),
-            Offset(0.325, 0.51),
-            Offset(0.0, 0.51),
-          ],
-        );
-        paintShading(canvas, iCanvas: iCanvas, size, ShadeType.loss, [
+        paintShading(c, canvas, ShadeType.consumerSurplus, [
+          Offset(0, 0.08),
+          Offset(0.33, 0.38),
+          Offset(0, 0.38),
+        ]);
+        paintShading(c, canvas, ShadeType.lostConsumerSurplus, [
+          Offset(0.0, 0.38),
+          Offset(0.325, 0.38),
+          Offset(0.325, 0.51),
+          Offset(0.0, 0.51),
+        ]);
+        paintShading(c, canvas, ShadeType.loss, [
           Offset(0.325, 0.38),
           Offset(0.48, 0.51),
           Offset(0.325, 0.51),
@@ -859,7 +767,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.05, 0.20),
         bezierPoints: [
           CustomBezier(
@@ -877,12 +785,12 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           DiagramLabel.costs.label,
           Offset(0.50, 0.80),
           pointerLine: Offset(0.20, 0.80),
         );
-        paintShading(canvas, iCanvas: iCanvas, size, ShadeType.costs, [
+        paintShading(c, canvas, ShadeType.costs, [
           Offset(0.0, 0.52),
           Offset(0.325, 0.52),
           Offset(0.325, 1.0),
@@ -892,7 +800,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.52,
         xAxisEndPos: 0.325,
         showDotAtIntersection: true,
@@ -902,12 +810,12 @@ class MarketPower extends BaseDiagramPainter3 {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.abnormalProfit.label,
         Offset(0.38, 0.22),
         pointerLine: Offset(0.25, 0.42),
       );
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.abnormalProfit, [
+      paintShading(c, canvas, ShadeType.abnormalProfit, [
         Offset(0.0, 0.38),
         Offset(0.325, 0.38),
         Offset(0.325, 0.52),
@@ -915,7 +823,7 @@ class MarketPower extends BaseDiagramPainter3 {
       ]);
     }
 
-    paintMarginalCost(c, canvas, iCanvas: iCanvas);
+    paintMarginalCost(c, canvas);
 
     String demandLabel = DiagramLabel.dEqualsAR.label;
     if (diagram == DiagramEnum.microMonopolyWelfare) {
@@ -924,7 +832,7 @@ class MarketPower extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: Offset(0.02, 0.10),
       polylineOffsets: [Offset(0.90, 0.90)],
       label2: demandLabel,
@@ -932,7 +840,7 @@ class MarketPower extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: Offset(0.02, 0.10),
       polylineOffsets: [Offset(0.50, 1.1)],
       label2: DiagramLabel.mr.label,
@@ -941,7 +849,7 @@ class MarketPower extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.38,
       xAxisEndPos: 0.325,
       showDotAtIntersection: true,
@@ -949,29 +857,27 @@ class MarketPower extends BaseDiagramPainter3 {
       xLabel: DiagramLabel.qProfitMax.label,
     );
 
-    paintDot(c, canvas, iCanvas: iCanvas, pos: Offset(0.325, 0.74));
+    paintDot(c, canvas, Offset(0.325, 0.74));
 
-    paintDot(c, canvas, iCanvas: iCanvas, pos: Offset(0.47, 0.51));
+    paintDot(c, canvas, Offset(0.47, 0.51));
   }
 
   void _paintNaturalMonopoly(
     DiagramPainterConfig c,
-    Canvas canvas,
-    Size size,
-    DiagramEnum diagram, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
     paintAxis(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisLabel: DiagramLabel.priceCostsRevenue.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: Offset(0.03, 0.25),
       bezierPoints: [
         CustomBezier(control: Offset(0.20, 0.80), endPoint: Offset(0.90, 0.80)),
@@ -982,7 +888,7 @@ class MarketPower extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: Offset(0.03, 0.15),
       polylineOffsets: [Offset(0.75, 0.92)],
       label2: DiagramLabel.dEqualsAR.label,
@@ -992,7 +898,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.consumerSurplus.label,
         Offset(0.60, 0.50),
         pointerLine: Offset(0.30, 0.50),
@@ -1000,17 +906,17 @@ class MarketPower extends BaseDiagramPainter3 {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.welfareLoss.label,
         Offset(0.70, 0.70),
         pointerLine: Offset(0.65, 0.85),
       );
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.consumerSurplus, [
+      paintShading(c, canvas, ShadeType.consumerSurplus, [
         Offset(0, 0.12),
         Offset(0.61, 0.77),
         Offset(0, 0.77),
       ]);
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.welfareLoss, [
+      paintShading(c, canvas, ShadeType.welfareLoss, [
         Offset(0.61, 0.77),
         Offset(0.72, 0.89),
         Offset(0.61, 0.89),
@@ -1020,7 +926,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.consumerSurplus.label,
         Offset(0.50, 0.40),
         pointerLine: Offset(0.20, 0.40),
@@ -1028,7 +934,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.abnormalProfit.label,
         Offset(0.55, 0.50),
         pointerLine: Offset(0.35, 0.65),
@@ -1036,23 +942,23 @@ class MarketPower extends BaseDiagramPainter3 {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.welfareLoss.label,
         Offset(0.65, 0.60),
         pointerLine: Offset(0.50, 0.70),
       );
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.consumerSurplus, [
+      paintShading(c, canvas, ShadeType.consumerSurplus, [
         Offset(0, 0.12),
         Offset(0.43, 0.58),
         Offset(0, 0.58),
       ]);
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.abnormalProfit, [
+      paintShading(c, canvas, ShadeType.abnormalProfit, [
         Offset(0.0, 0.58),
         Offset(0.43, 0.58),
         Offset(0.43, 0.71),
         Offset(0.0, 0.71),
       ]);
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.welfareLoss, [
+      paintShading(c, canvas, ShadeType.welfareLoss, [
         Offset(0.43, 0.58),
         Offset(0.72, 0.89),
         Offset(0.43, 0.89),
@@ -1060,7 +966,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.58,
         xAxisEndPos: 0.43,
         yLabel: DiagramLabel.pProfitMax.label,
@@ -1070,7 +976,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.71,
         xAxisEndPos: 0.43,
         yLabel: DiagramLabel.costs.label,
@@ -1083,12 +989,12 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           DiagramLabel.subsidy.label,
           Offset(0.65, 0.65),
           pointerLine: Offset(0.60, 0.84),
         );
-        paintShading(canvas, iCanvas: iCanvas, size, ShadeType.loss, [
+        paintShading(c, canvas, ShadeType.loss, [
           Offset(0, 0.79),
           Offset(0.72, 0.79),
           Offset(0.72, 0.89),
@@ -1098,7 +1004,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintDiagramDashedLines(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           yAxisStartPos: 0.79,
           xAxisEndPos: 0.72,
           yLabel: DiagramLabel.costs.label,
@@ -1110,12 +1016,12 @@ class MarketPower extends BaseDiagramPainter3 {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.consumerSurplus.label,
         Offset(0.50, 0.40),
         pointerLine: Offset(0.35, 0.60),
       );
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.consumerSurplus, [
+      paintShading(c, canvas, ShadeType.consumerSurplus, [
         Offset(0, 0.12),
         Offset(0.72, 0.89),
         Offset(0, 0.89),
@@ -1123,7 +1029,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.89,
         xAxisEndPos: 0.72,
         yLabel: DiagramLabel.pMC.label,
@@ -1136,7 +1042,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.77,
         xAxisEndPos: 0.61,
         yLabel: DiagramLabel.pACP.label,
@@ -1152,14 +1058,14 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.03, 0.15),
         polylineOffsets: [Offset(0.75, 0.92)],
       );
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.03, 0.70),
         bezierPoints: [
           CustomBezier(
@@ -1173,7 +1079,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.03, 0.15),
         polylineOffsets: [Offset(0.55, 1.1)],
         label2: DiagramLabel.mr.label,
@@ -1183,7 +1089,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.58,
         xAxisEndPos: 0.43,
         yLabel: DiagramLabel.pProfitMax.label,
@@ -1193,7 +1099,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.89,
         xAxisEndPos: 0.72,
         yLabel: DiagramLabel.pMC.label,
@@ -1205,15 +1111,13 @@ class MarketPower extends BaseDiagramPainter3 {
 
   void _paintKinkedDemand(
     DiagramPainterConfig c,
-    Canvas canvas,
-    Size size,
-    DiagramEnum diagram, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
     paintAxis(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisLabel: DiagramLabel.price.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
@@ -1221,24 +1125,24 @@ class MarketPower extends BaseDiagramPainter3 {
     paintText2(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       'Kink',
       Offset(0.70, 0.30),
       pointerLine: Offset(0.55, 0.30),
     );
-    paintText2(c, canvas, iCanvas: iCanvas, 'Elastic', Offset(0.40, 0.15));
-    paintText2(c, canvas, iCanvas: iCanvas, 'Inelastic', Offset(0.80, 0.60));
+    paintText2(c, canvas, 'Elastic', Offset(0.40, 0.15));
+    paintText2(c, canvas, 'Inelastic', Offset(0.80, 0.60));
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: Offset(0.10, 0.15),
       polylineOffsets: [Offset(0.55, 0.30), Offset(0.75, 0.90)],
     );
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.20,
       xAxisEndPos: 0.25,
       showDotAtIntersection: true,
@@ -1248,7 +1152,7 @@ class MarketPower extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.30,
       xAxisEndPos: 0.55,
       showDotAtIntersection: true,
@@ -1258,7 +1162,7 @@ class MarketPower extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.60,
       xAxisEndPos: 0.65,
       showDotAtIntersection: true,
@@ -1269,25 +1173,23 @@ class MarketPower extends BaseDiagramPainter3 {
 
   void _paintMonopolisticCompetition(
     DiagramPainterConfig c,
-    Canvas canvas,
-    Size size,
-    DiagramEnum diagram, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
     paintAxis(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisLabel: DiagramLabel.priceCostsRevenue.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
 
-    paintMarginalCost(c, canvas, iCanvas: iCanvas);
+    paintMarginalCost(c, canvas);
 
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: Offset(0.05, 0.20),
       bezierPoints: [
         CustomBezier(control: Offset(0.38, 0.92), endPoint: Offset(0.90, 0.20)),
@@ -1305,7 +1207,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           'D/AR & MR shift left\n(also more elastic)\n'
           'until P=ATC',
           Offset(0.85, 0.60),
@@ -1313,7 +1215,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintLineSegment(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           origin: Offset(0.95, 0.75),
           strokeWidth: kCurveWidth * 2,
           angle: pi,
@@ -1322,7 +1224,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintLineSegment(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           origin: Offset(0.50, 0.75),
           strokeWidth: kCurveWidth * 2,
           angle: pi,
@@ -1334,14 +1236,14 @@ class MarketPower extends BaseDiagramPainter3 {
         paintText2(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           'D/AR & MR shift right\n(also more inelastic)\nuntil P=ATC',
           Offset(0.85, 0.60),
         );
         paintLineSegment(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           origin: Offset(0.60, 0.75),
           strokeWidth: kCurveWidth * 2,
           color: Colors.red,
@@ -1349,7 +1251,7 @@ class MarketPower extends BaseDiagramPainter3 {
         paintLineSegment(
           c,
           canvas,
-          iCanvas: iCanvas,
+
           origin: Offset(0.20, 0.75),
           strokeWidth: kCurveWidth * 2,
           color: Colors.red,
@@ -1359,7 +1261,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.02, 0.40),
         polylineOffsets: [Offset(0.90, 0.80)],
         label2: DiagramLabel.dEqualsAR.label,
@@ -1367,18 +1269,18 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.02, 0.40),
         polylineOffsets: [Offset(0.65, 1.1)],
         label2: DiagramLabel.mr.label,
       );
-      paintDot(c, canvas, iCanvas: iCanvas, pos: Offset(0.325, 0.74));
+      paintDot(c, canvas, Offset(0.325, 0.74));
 
-      paintDot(c, canvas, iCanvas: iCanvas, pos: Offset(0.425, 0.585));
+      paintDot(c, canvas, Offset(0.425, 0.585));
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.54,
         xAxisEndPos: 0.325,
         showDotAtIntersection: true,
@@ -1390,12 +1292,12 @@ class MarketPower extends BaseDiagramPainter3 {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.abnormalProfit.label,
         Offset(0.30, 0.25),
         pointerLine: Offset(0.30, 0.51),
       );
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.abnormalProfit, [
+      paintShading(c, canvas, ShadeType.abnormalProfit, [
         Offset(0, 0.49),
         Offset(0.375, 0.49),
         Offset(0.375, 0.555),
@@ -1404,7 +1306,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.02, 0.25),
         polylineOffsets: [Offset(0.90, 0.85)],
         label2: DiagramLabel.dEqualsAR.label,
@@ -1412,7 +1314,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.02, 0.25),
         polylineOffsets: [Offset(0.75, 1.1)],
         label2: DiagramLabel.mr.label,
@@ -1420,7 +1322,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.49,
         xAxisEndPos: 0.375,
         showDotAtIntersection: true,
@@ -1430,25 +1332,25 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.555,
         xAxisEndPos: 0.375,
         showDotAtIntersection: true,
         yLabel: DiagramLabel.c.label,
         xLabel: DiagramLabel.qProfitMax.label,
       );
-      paintDot(c, canvas, iCanvas: iCanvas, pos: Offset(0.375, 0.665));
+      paintDot(c, canvas, Offset(0.375, 0.665));
     }
     if (diagram == DiagramEnum.microMonopolisticCompetitionLoss) {
       paintText2(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         DiagramLabel.loss.label,
         Offset(0.30, 0.40),
         pointerLine: Offset(0.25, 0.55),
       );
-      paintShading(canvas, iCanvas: iCanvas, size, ShadeType.loss, [
+      paintShading(c, canvas, ShadeType.loss, [
         Offset(0, 0.515),
         Offset(0.285, 0.515),
         Offset(0.285, 0.59),
@@ -1457,7 +1359,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.02, 0.50),
         polylineOffsets: [Offset(0.90, 0.80)],
         label2: DiagramLabel.dEqualsAR.label,
@@ -1465,7 +1367,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         startPos: Offset(0.02, 0.50),
         polylineOffsets: [Offset(0.55, 1.1)],
         label2: DiagramLabel.mr.label,
@@ -1473,7 +1375,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.59,
         xAxisEndPos: 0.285,
         showDotAtIntersection: true,
@@ -1483,14 +1385,14 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.515,
         xAxisEndPos: 0.285,
         showDotAtIntersection: true,
         yLabel: DiagramLabel.c.label,
         xLabel: DiagramLabel.qProfitMax.label,
       );
-      paintDot(c, canvas, iCanvas: iCanvas, pos: Offset(0.285, 0.80));
+      paintDot(c, canvas, Offset(0.285, 0.80));
     }
   }
 }

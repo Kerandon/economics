@@ -8,8 +8,7 @@ import '../painter_constants.dart';
 
 void paintArrowHead(
   DiagramPainterConfig config,
-  Canvas? canvas, { // 👈 Changed to nullable Canvas?
-  IDiagramCanvas? iCanvas,
+  IDiagramCanvas canvas, {
   required Offset positionOfArrow,
   Color? color,
   double size = kArrowSize,
@@ -19,39 +18,27 @@ void paintArrowHead(
   final arrowHeight = size * config.averageRatio;
   final effectiveColor = color ?? config.colorScheme.onSurface;
 
-  if (iCanvas != null) {
-    // 1. PDF/Universal Path Logic (Calculated coordinates)
-    Offset p1 = Offset(0, -arrowHeight);
-    Offset p2 = Offset(arrowWidth, 0);
-    Offset p3 = Offset(-arrowWidth, 0);
+  // We use the unified interface's transformation methods
+  canvas.save();
 
-    Offset rotate(Offset p) {
-      double x = p.dx * cos(rotationAngle) - p.dy * sin(rotationAngle);
-      double y = p.dx * sin(rotationAngle) + p.dy * cos(rotationAngle);
-      return Offset(x + positionOfArrow.dx, y + positionOfArrow.dy);
-    }
+  // 1. Move to the tip of the axis
+  canvas.translate(positionOfArrow.dx, positionOfArrow.dy);
 
-    iCanvas.drawPath(
-      [rotate(p1), rotate(p2), rotate(p3)],
-      effectiveColor,
-      fill: true,
-    );
-  } else if (canvas != null) {
-    // 2. Legacy Flutter Path Logic (Canvas Transformations)
-    final path = Path();
-    final paint = Paint()..color = effectiveColor;
-
-    canvas.save();
-    canvas.translate(positionOfArrow.dx, positionOfArrow.dy);
+  // 2. Rotate to face the correct direction
+  if (rotationAngle != 0) {
     canvas.rotate(rotationAngle);
-
-    path
-      ..moveTo(0, -arrowHeight)
-      ..lineTo(arrowWidth, 0)
-      ..lineTo(-arrowWidth, 0)
-      ..close();
-
-    canvas.drawPath(path, paint);
-    canvas.restore();
   }
+
+  // 3. Define the triangle relative to (0,0)
+  // These points form a triangle pointing "up" (negative Y in Flutter)
+  final points = [
+    const Offset(0, 0), // The tip
+    Offset(arrowWidth / 2, arrowHeight), // Bottom right
+    Offset(-arrowWidth / 2, arrowHeight), // Bottom left
+  ];
+
+  // 4. Draw the filled shape
+  canvas.drawPath(points, effectiveColor, fill: true);
+
+  canvas.restore();
 }

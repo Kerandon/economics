@@ -9,8 +9,7 @@ import '../../i_diagram_canvas.dart';
 
 void paintAxis(
   DiagramPainterConfig config,
-  Canvas? canvas, {
-  IDiagramCanvas? iCanvas,
+  IDiagramCanvas canvas, { // Unified interface
   String yAxisLabel = 'Price',
   String xAxisLabel = 'Quantity',
   double? xMaxValue,
@@ -23,10 +22,10 @@ void paintAxis(
   double labelPad = kLabelPadding,
 }) {
   // 1. Draw the Lines and Grid
+  // Ensure paintAxisLines is updated to: void paintAxisLines(config, IDiagramCanvas canvas, ...)
   paintAxisLines(
     config,
     canvas,
-    iCanvas: iCanvas,
     yMaxValue: yMaxValue,
     yDivisions: yDivisions,
     xMaxValue: xMaxValue,
@@ -35,22 +34,11 @@ void paintAxis(
     gridLineStyle: gridLineStyle,
   );
 
-  // 2. Draw the Labels (Price/Quantity) and the Zero origin
-  // Uncommenting these ensures they show up on the PDF bridge
-  paintAxisLabels(
-    config,
-    canvas,
-    iCanvas: iCanvas,
-    axis: CustomAxis.y,
-    label: yAxisLabel,
-    labelPadding: labelPad,
-  );
-  paintAxisLabels(
-    config,
-    canvas,
-    iCanvas: iCanvas,
-    axis: CustomAxis.x,
-    label: xAxisLabel,
-  );
-  paintZero(config, canvas, iCanvas: iCanvas);
+  // 2. Draw the Labels (Price/Quantity)
+  paintAxisLabels(config, canvas, axis: CustomAxis.y, label: yAxisLabel);
+
+  paintAxisLabels(config, canvas, axis: CustomAxis.x, label: xAxisLabel);
+
+  // 3. Draw the Zero origin
+  paintZero(config, canvas);
 }

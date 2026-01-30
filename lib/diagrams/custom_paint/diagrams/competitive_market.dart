@@ -21,58 +21,62 @@ class CompetitiveMarket extends BaseDiagramPainter3 {
   CompetitiveMarket(super.config, super.diagram);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    // Standard Flutter paint redirects to the bridged drawDiagram
-    drawDiagram(canvas, size);
-  }
-
-  @override
-  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
+  void drawDiagram(
+    IDiagramCanvas canvas,
+    Size size, {
+    IDiagramCanvas? iCanvas,
+  }) {
     final c = config.copyWith(painterSize: size);
 
     // 1. Initial Axis logic
     if (diagram != DiagramEnum.microMarginalBenefit) {
-      paintAxis(c, canvas, iCanvas: iCanvas);
+      paintAxis(c, canvas);
     }
 
     // 2. Base Equilibrium (Shared across several diagrams)
     if (diagram == DiagramEnum.microShortage ||
         diagram == DiagramEnum.microSurplus ||
         diagram == DiagramEnum.microMarketEquilibrium) {
-      if(diagram == DiagramEnum.microShortage) {
-        paintLineSegment(c, canvas, origin: Offset(0.5, 1.12),
-            length: 0.40,
-            endStyle: LineEndStyle.arrowRightAngles,
-            label: DiagramLabel.shortage.label,
-            labelAlign: LabelAlign.centerBottom
+      if (diagram == DiagramEnum.microShortage) {
+        paintLineSegment(
+          c,
+          canvas,
+          origin: Offset(0.5, 1.12),
+          length: 0.40,
+          endStyle: LineEndStyle.arrowRightAngles,
+          label: DiagramLabel.shortage.label,
+          labelAlign: LabelAlign.centerBottom,
         );
       }
-      if(diagram == DiagramEnum.microSurplus) {
-        paintLineSegment(c, canvas, origin: Offset(0.5, 1.12),
-            length: 0.40,
-            endStyle: LineEndStyle.arrowRightAngles,
-            label: DiagramLabel.surplus.label,
-            labelAlign: LabelAlign.centerBottom
+      if (diagram == DiagramEnum.microSurplus) {
+        paintLineSegment(
+          c,
+          canvas,
+          origin: Offset(0.5, 1.12),
+          length: 0.40,
+          endStyle: LineEndStyle.arrowRightAngles,
+          label: DiagramLabel.surplus.label,
+          labelAlign: LabelAlign.centerBottom,
         );
       }
       paintMarketCurve(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         type: MarketCurveType.demand,
         lengthAdjustment: 0.20,
       );
       paintMarketCurve(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         type: MarketCurveType.supply,
         lengthAdjustment: 0.20,
       );
       paintDiagramDashedLines(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         yAxisStartPos: 0.50,
         xAxisEndPos: 0.50,
         yLabel: DiagramLabel.pE.label,
@@ -84,26 +88,14 @@ class CompetitiveMarket extends BaseDiagramPainter3 {
     // 3. Diagram Specific Logic
     switch (diagram) {
       case DiagramEnum.microShortage || DiagramEnum.microSurplus:
-        _paintShortageOrSurplus(c, canvas, size, diagram, iCanvas: iCanvas);
+        _paintShortageOrSurplus(c, canvas, size, diagram);
       case DiagramEnum.microDemandIncreasePriceMechanism ||
           DiagramEnum.microDemandDecreasePriceMechanism ||
           DiagramEnum.microPriceRationing:
-        _paintIncreaseOrDecreaseInDemand(
-          c,
-          canvas,
-          size,
-          diagram,
-          iCanvas: iCanvas,
-        );
+        _paintIncreaseOrDecreaseInDemand(c, canvas, size, diagram);
       case DiagramEnum.microMarginalBenefit ||
           DiagramEnum.microMarginalCostSteps:
-        _paintMarginalBenefitAndMarginalCostSteps(
-          c,
-          canvas,
-          size,
-          diagram,
-          iCanvas: iCanvas,
-        );
+        _paintMarginalBenefitAndMarginalCostSteps(c, canvas, size, diagram);
       case DiagramEnum.microConsumerSurplus ||
           DiagramEnum.microProducerSurplus ||
           DiagramEnum.microAllocativeEfficiency:
@@ -112,7 +104,6 @@ class CompetitiveMarket extends BaseDiagramPainter3 {
           canvas,
           size,
           diagram,
-          iCanvas: iCanvas,
         );
       default:
     }
@@ -121,11 +112,10 @@ class CompetitiveMarket extends BaseDiagramPainter3 {
 
 void _paintShortageOrSurplus(
   DiagramPainterConfig c,
-  Canvas? canvas,
+  IDiagramCanvas canvas,
   Size size,
-  DiagramEnum bundle, {
-  IDiagramCanvas? iCanvas,
-}) {
+  DiagramEnum bundle,
+) {
   bool isShortage = bundle == DiagramEnum.microShortage;
 
   double yPos = isShortage ? 0.70 : 0.30;
@@ -133,7 +123,6 @@ void _paintShortageOrSurplus(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: yPos,
     xAxisEndPos: 0.70,
     yLabel: DiagramLabel.pm.label,
@@ -143,7 +132,7 @@ void _paintShortageOrSurplus(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: yPos,
     xAxisEndPos: 0.30,
     xLabel: isShortage ? DiagramLabel.qS.label : DiagramLabel.qD.label,
@@ -153,18 +142,16 @@ void _paintShortageOrSurplus(
 
 void _paintIncreaseOrDecreaseInDemand(
   DiagramPainterConfig c,
-  Canvas? canvas,
+  IDiagramCanvas canvas,
   Size size,
-  DiagramEnum bundle, {
-  IDiagramCanvas? iCanvas,
-}) {
+  DiagramEnum bundle,
+) {
   final increaseInDemand =
       bundle == DiagramEnum.microDemandIncreasePriceMechanism;
 
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
     type: MarketCurveType.supply,
     lengthAdjustment: -0.15,
   );
@@ -173,7 +160,7 @@ void _paintIncreaseOrDecreaseInDemand(
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.demand,
     horizontalShift: 0.15,
     lengthAdjustment: -0.15,
@@ -184,7 +171,7 @@ void _paintIncreaseOrDecreaseInDemand(
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.demand,
     horizontalShift: -0.15,
     lengthAdjustment: -0.15,
@@ -193,21 +180,27 @@ void _paintIncreaseOrDecreaseInDemand(
 
   if (bundle == DiagramEnum.microDemandIncreasePriceMechanism ||
       bundle == DiagramEnum.microPriceRationing) {
-    paintDiagramLines(c, canvas, startPos: Offset(0.45,0.58),
-        polylineOffsets: [Offset(0.70,0.58)],
-        color: Colors.red
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.45, 0.58),
+      polylineOffsets: [Offset(0.70, 0.58)],
+      color: Colors.red,
     );
-    paintLineSegment(c, canvas, origin: Offset(0.575,1.12),
-        length: 0.30,
-        endStyle: LineEndStyle.arrowRightAngles,
-        label: DiagramLabel.shortage.label,
-        labelAlign: LabelAlign.centerBottom
+    paintLineSegment(
+      c,
+      canvas,
+      origin: Offset(0.575, 1.12),
+      length: 0.30,
+      endStyle: LineEndStyle.arrowRightAngles,
+      label: DiagramLabel.shortage.label,
+      labelAlign: LabelAlign.centerBottom,
     );
     // Tracing points for Increase
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.575,
       xAxisEndPos: 0.425,
       hideYLine: true,
@@ -217,7 +210,7 @@ void _paintIncreaseOrDecreaseInDemand(
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.575,
       xAxisEndPos: 0.725,
       yLabel: DiagramLabel.p1.label,
@@ -227,7 +220,7 @@ void _paintIncreaseOrDecreaseInDemand(
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.425,
       xAxisEndPos: 0.575,
       yLabel: DiagramLabel.p2.label,
@@ -238,7 +231,7 @@ void _paintIncreaseOrDecreaseInDemand(
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: const Offset(0.69, 0.48),
       angle: -pi / 1.33,
     ); // Extension arrow
@@ -247,36 +240,41 @@ void _paintIncreaseOrDecreaseInDemand(
       paintLineSegment(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         origin: const Offset(0.45, 0.50),
         angle: -pi / 4,
       ); // Contraction arrow
     }
-
   }
 
   if (bundle == DiagramEnum.microDemandDecreasePriceMechanism) {
-    paintDiagramLines(c, canvas, startPos: Offset(0.30,0.425),
-        polylineOffsets: [Offset(0.56,0.425)],
-        color: Colors.red
-    );
-    paintLineSegment(c, canvas, origin: Offset(0.42,1.12),
-        length: 0.30,
-        endStyle: LineEndStyle.arrowRightAngles,
-        label: DiagramLabel.surplus.label,
-        labelAlign: LabelAlign.centerBottom
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.30, 0.425),
+      polylineOffsets: [Offset(0.56, 0.425)],
+      color: Colors.red,
     );
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+      origin: Offset(0.42, 1.12),
+      length: 0.30,
+      endStyle: LineEndStyle.arrowRightAngles,
+      label: DiagramLabel.surplus.label,
+      labelAlign: LabelAlign.centerBottom,
+    );
+    paintLineSegment(
+      c,
+      canvas,
+
       origin: const Offset(0.31, 0.50),
       angle: pi * 0.25,
     ); //
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: const Offset(0.54, 0.51),
       angle: pi * 0.75,
     ); //
@@ -284,7 +282,7 @@ void _paintIncreaseOrDecreaseInDemand(
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.575,
       xAxisEndPos: 0.425,
       yLabel: DiagramLabel.p2.label,
@@ -294,7 +292,7 @@ void _paintIncreaseOrDecreaseInDemand(
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.425,
       xAxisEndPos: 0.575,
       yLabel: DiagramLabel.p1.label,
@@ -304,28 +302,25 @@ void _paintIncreaseOrDecreaseInDemand(
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.425,
       xAxisEndPos: 0.275,
       hideYLine: true,
       xLabel: DiagramLabel.q1.label,
       showDotAtIntersection: true,
     );
-
   }
 }
 
 void _paintMarginalBenefitAndMarginalCostSteps(
   DiagramPainterConfig c,
-  Canvas? canvas,
+  IDiagramCanvas canvas,
   Size size,
-  DiagramEnum bundle, {
-  IDiagramCanvas? iCanvas,
-}) {
+  DiagramEnum bundle,
+) {
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
     drawGridlines: true,
     gridLineStyle: GridLineStyle.indents,
     yMaxValue: 100,
@@ -345,7 +340,6 @@ void _paintMarginalBenefitAndMarginalCostSteps(
       canvas,
       val.toInt().toString(),
       Offset(pos, isBenefit ? pos : (1.0 - pos)),
-      iCanvas: iCanvas,
     );
   }
 
@@ -366,7 +360,7 @@ void _paintMarginalBenefitAndMarginalCostSteps(
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     color: isBenefit ? c.colorScheme.primary : Colors.deepOrange,
     startPos: isBenefit ? const Offset(0, 0.10) : const Offset(0, 1.0),
     polylineOffsets: steps,
@@ -379,22 +373,20 @@ void _paintMarginalBenefitAndMarginalCostSteps(
         ? 'The Law Of Diminishing\nMarginal Utility\nleads to falling MB'
         : 'The Law Of Diminishing\nMarginal Returns\nleads to rising MC',
     Offset(isBenefit ? 0.72 : 0.36, 0.20),
-    iCanvas: iCanvas,
   );
 }
 
 void _paintConsumerProducerSurplusAllocativeEfficiency(
   DiagramPainterConfig c,
-  Canvas? canvas,
+  IDiagramCanvas canvas,
+
   Size size,
-  DiagramEnum bundle, {
-  IDiagramCanvas? iCanvas,
-}) {
+  DiagramEnum bundle,
+) {
   // Demand (MB)
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     startPos: const Offset(0.0, 0.10),
     polylineOffsets: [const Offset(0.90, 0.90)],
     label2: DiagramLabel.dEqualsMB.label,
@@ -405,7 +397,7 @@ void _paintConsumerProducerSurplusAllocativeEfficiency(
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     startPos: const Offset(0.0, 0.90),
     polylineOffsets: [const Offset(0.90, 0.10)],
     label2: DiagramLabel.sEqualsMC.label,
@@ -414,46 +406,43 @@ void _paintConsumerProducerSurplusAllocativeEfficiency(
 
   if (bundle == DiagramEnum.microConsumerSurplus ||
       bundle == DiagramEnum.microAllocativeEfficiency) {
-    paintShading(canvas, size, ShadeType.consumerSurplus, [
+    paintShading(c, canvas, ShadeType.consumerSurplus, [
       const Offset(0, 0.10),
       const Offset(0.45, 0.50),
       const Offset(0, 0.50),
-    ], iCanvas: iCanvas);
+    ]);
     paintText2(
       c,
       canvas,
       DiagramLabel.consumerSurplus.label,
       const Offset(0.30, 0.15),
       pointerLine: const Offset(0.20, 0.40),
-      iCanvas: iCanvas,
     );
   }
 
   if (bundle == DiagramEnum.microProducerSurplus ||
       bundle == DiagramEnum.microAllocativeEfficiency) {
-    paintShading(canvas, size, ShadeType.producerSurplus, [
+    paintShading(c, canvas, ShadeType.producerSurplus, [
       const Offset(0, 0.50),
       const Offset(0.45, 0.50),
       const Offset(0, 0.90),
-    ], iCanvas: iCanvas);
+    ]);
     paintText2(
       c,
       canvas,
       DiagramLabel.producerSurplus.label,
       const Offset(0.25, 0.90),
       pointerLine: const Offset(0.20, 0.60),
-      iCanvas: iCanvas,
     );
   }
 
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.45,
     yLabel: DiagramLabel.pE.label,
     xLabel: DiagramLabel.qE.label,
   );
-
 }

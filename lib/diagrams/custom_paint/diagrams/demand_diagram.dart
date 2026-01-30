@@ -21,38 +21,20 @@ class DemandDiagram extends BaseDiagramPainter3 {
   DemandDiagram(super.config, super.diagram);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    // Redirects standard Flutter painting to our bridged method
-    drawDiagram(canvas, size);
-  }
-
-  @override
-  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
+  void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
     switch (diagram) {
       case DiagramEnum.microDemand:
-        _paintDemand(c, canvas, size, diagram, iCanvas: iCanvas);
+        _paintDemand(c, canvas, size, diagram);
         break;
       case DiagramEnum.microDemandIncrease:
       case DiagramEnum.microDemandDecrease:
-        _paintIncreaseDecreaseDemand(
-          c,
-          canvas,
-          size,
-          diagram,
-          iCanvas: iCanvas,
-        );
+        _paintIncreaseDecreaseDemand(c, canvas, size, diagram);
         break;
       case DiagramEnum.microDemandExtension:
       case DiagramEnum.microDemandContraction:
       case DiagramEnum.microDemandQuantityChangeDueToSupply:
-        _paintExtensionContractionDemand(
-          c,
-          canvas,
-          size,
-          diagram,
-          iCanvas: iCanvas,
-        );
+        _paintExtensionContractionDemand(c, canvas, size, diagram);
         break;
       default:
     }
@@ -63,7 +45,7 @@ class DemandDiagram extends BaseDiagramPainter3 {
 
 void _paintDemand(
   DiagramPainterConfig c,
-  Canvas? canvas,
+  IDiagramCanvas canvas,
   Size size,
   DiagramEnum diagram, {
   IDiagramCanvas? iCanvas,
@@ -71,7 +53,6 @@ void _paintDemand(
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.price$.label,
     xAxisLabel: DiagramLabel.quantity.label,
     yDivisions: 11,
@@ -84,7 +65,7 @@ void _paintDemand(
   paintDiagramLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     startPos: const Offset(0, 0.09),
     polylineOffsets: [const Offset(0.84, 1)],
   );
@@ -92,7 +73,7 @@ void _paintDemand(
 
 void _paintIncreaseDecreaseDemand(
   DiagramPainterConfig c,
-  Canvas? canvas,
+  IDiagramCanvas canvas,
   Size size,
   DiagramEnum diagram, {
   IDiagramCanvas? iCanvas,
@@ -100,28 +81,26 @@ void _paintIncreaseDecreaseDemand(
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.p.label,
     xAxisLabel: DiagramLabel.q.label,
   );
 
   bool isDecrease = diagram == DiagramEnum.microDemandDecrease;
 
-
-  if(isDecrease) {
+  if (isDecrease) {
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: const Offset(0.42, 0.40),
       angle: pi,
       length: 0.15,
     );
-  }else{
+  } else {
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: const Offset(0.38, 0.40),
       angle: 0,
       length: 0.15,
@@ -131,7 +110,7 @@ void _paintIncreaseDecreaseDemand(
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.demand,
     horizontalShift: -0.15,
     lengthAdjustment: -0.15,
@@ -141,7 +120,7 @@ void _paintIncreaseDecreaseDemand(
   paintMarketCurve(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     type: MarketCurveType.demand,
     horizontalShift: 0.15,
     lengthAdjustment: -0.15,
@@ -151,7 +130,7 @@ void _paintIncreaseDecreaseDemand(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.65,
     showDotAtIntersection: true,
@@ -162,7 +141,6 @@ void _paintIncreaseDecreaseDemand(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.35,
     showDotAtIntersection: true,
@@ -173,7 +151,7 @@ void _paintIncreaseDecreaseDemand(
 
 void _paintExtensionContractionDemand(
   DiagramPainterConfig c,
-  Canvas? canvas,
+  IDiagramCanvas canvas,
   Size size,
   DiagramEnum diagram, {
   IDiagramCanvas? iCanvas,
@@ -181,7 +159,6 @@ void _paintExtensionContractionDemand(
   paintAxis(
     c,
     canvas,
-    iCanvas: iCanvas,
     yAxisLabel: DiagramLabel.p.label,
     xAxisLabel: DiagramLabel.q.label,
   );
@@ -194,7 +171,7 @@ void _paintExtensionContractionDemand(
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       lengthAdjustment: -0.15,
       label: DiagramLabel.s1.label,
@@ -204,7 +181,7 @@ void _paintExtensionContractionDemand(
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       lengthAdjustment: -0.15,
       label: DiagramLabel.s2.label,
@@ -212,11 +189,11 @@ void _paintExtensionContractionDemand(
       verticalShift: 0.10,
     );
   }
-  paintMarketCurve(c, canvas, iCanvas: iCanvas, type: MarketCurveType.demand);
+  paintMarketCurve(c, canvas, type: MarketCurveType.demand);
   paintLineSegment(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     origin: Offset(isContraction ? 0.52 : 0.50, isContraction ? 0.45 : 0.43),
     angle: angle,
     length: 0.25,
@@ -225,7 +202,7 @@ void _paintExtensionContractionDemand(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.35,
     xAxisEndPos: 0.35,
     yLabel: DiagramLabel.p1.label,
@@ -236,7 +213,7 @@ void _paintExtensionContractionDemand(
   paintDiagramDashedLines(
     c,
     canvas,
-    iCanvas: iCanvas,
+
     yAxisStartPos: 0.60,
     xAxisEndPos: 0.60,
     yLabel: DiagramLabel.p2.label,

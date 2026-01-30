@@ -17,23 +17,21 @@ import '../../enums/diagram_enum.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
+import '../painter_methods/axis/paint_axis_labels.dart';
 
 class Externalities extends BaseDiagramPainter3 {
   Externalities(super.config, super.diagram);
 
-  @override
-  void paint(Canvas canvas, Size size) {
-    drawDiagram(canvas, size);
-  }
+  // Note: No need to override 'paint' anymore, the base class handles it!
 
   @override
-  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
+  void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
+    // paintAxis now only needs the unified canvas
     paintAxis(
       c,
       canvas,
-      iCanvas: iCanvas,
       yAxisLabel: DiagramLabel.p.label,
       xAxisLabel: DiagramLabel.q.label,
     );
@@ -43,32 +41,31 @@ class Externalities extends BaseDiagramPainter3 {
           DiagramEnum.microCommonPoolResources ||
           DiagramEnum.microNegativeProductionExternalityPigouvianTax ||
           DiagramEnum.microNegativeProductionExternalityRegulations:
-        _paintNegativeProduction(c, canvas, size, diagram, iCanvas: iCanvas);
+        _paintNegativeProduction(c, canvas, size, diagram);
       case DiagramEnum.microCarbonTax:
-        _paintCarbonTax(c, canvas, size, iCanvas: iCanvas);
+        _paintCarbonTax(c, canvas, size);
       case DiagramEnum.microTradablePollutionPermits:
-        _paintTradablePermits(c, canvas, size, iCanvas: iCanvas);
+        _paintTradablePermits(c, canvas, size);
       case DiagramEnum.microNegativeConsumptionExternality ||
           DiagramEnum.microNegativeConsumptionExternalityWelfare ||
           DiagramEnum.microNegativeConsumptionExternalityPigouvianTax ||
           DiagramEnum.microNegativeConsumptionExternalityPublicAwareness:
-        _paintNegativeConsumption(c, canvas, size, diagram, iCanvas: iCanvas);
+        _paintNegativeConsumption(c, canvas, size, diagram);
       case DiagramEnum.microPositiveProductionExternality ||
           DiagramEnum.microPositiveProductionExternalityWelfare ||
           DiagramEnum.microPositiveProductionExternalitySubsidy ||
           DiagramEnum.microPositiveProductionExternalityDirectProvision:
-        _paintPositiveProduction(c, canvas, size, diagram, iCanvas: iCanvas);
+        _paintPositiveProduction(c, canvas, size, diagram);
       case DiagramEnum.microPositiveConsumptionExternality ||
           DiagramEnum.microPositiveConsumptionExternalityWelfare ||
           DiagramEnum.microPositiveConsumptionExternalitySubsidy ||
           DiagramEnum.microPositiveConsumptionExternalityAdvertising ||
           DiagramEnum.microPositiveConsumptionExternalityDirectProvision:
-        _paintPositiveConsumption(c, canvas, size, diagram, iCanvas: iCanvas);
+        _paintPositiveConsumption(c, canvas, size, diagram);
       default:
     }
   }
 
-  @override
   LegendDisplay get legendDisplay {
     final welfareDiagrams = [
       DiagramEnum.microNegativeProductionExternalityWelfare,
@@ -85,11 +82,10 @@ class Externalities extends BaseDiagramPainter3 {
 
   void _paintNegativeProduction(
     DiagramPainterConfig c,
-    Canvas? canvas,
+    IDiagramCanvas canvas,
     Size size,
-    DiagramEnum bundle, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    DiagramEnum bundle,
+  ) {
     String supplyLabel = DiagramLabel.msc.label;
 
     paintText2(
@@ -102,13 +98,12 @@ class Externalities extends BaseDiagramPainter3 {
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
       origin: Offset(0.60, 0.35),
       angle: pi / 2,
       endStyle: LineEndStyle.arrowBothEnds,
     );
 
-    paintShading(canvas, size, ShadeType.welfareLoss, [
+    paintShading(c, canvas, ShadeType.welfareLoss, [
       Offset(0.30, 0.46),
       Offset(0.44, 0.59),
       Offset(0.44, 0.36),
@@ -121,26 +116,18 @@ class Externalities extends BaseDiagramPainter3 {
       pointerLine: Offset(0.40, 0.45),
     );
     if (bundle == DiagramEnum.microNegativeProductionExternalityPigouvianTax) {
-      paintShading(
-        canvas,
-        size,
-        ShadeType.governmentRevenue,
-        [
-          const Offset(0, 0.47),
-          const Offset(0.31, 0.47),
-          const Offset(0.31, 0.675),
-          const Offset(0, 0.675),
-        ],
-        striped: true,
-        iCanvas: iCanvas,
-      );
+      paintShading(c, canvas, ShadeType.governmentRevenue, [
+        const Offset(0, 0.47),
+        const Offset(0.31, 0.47),
+        const Offset(0.31, 0.675),
+        const Offset(0, 0.675),
+      ], striped: true);
       supplyLabel = DiagramLabel.mscEqualsMPCPlusTax.label;
     }
 
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
       startPos: const Offset(0, 0.2),
       polylineOffsets: [const Offset(0.8, 0.9)],
       label2: DiagramLabel.dEqualsMPBMSB.label,
@@ -148,7 +135,6 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
       startPos: const Offset(0, 0.9),
       polylineOffsets: [const Offset(0.8, 0.3)],
       label2: DiagramLabel.mpc.label,
@@ -157,7 +143,6 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
       startPos: const Offset(0, 0.68),
       polylineOffsets: [const Offset(0.8, 0.11)],
       label2: supplyLabel,
@@ -167,7 +152,6 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
       yAxisStartPos: 0.465,
       xAxisEndPos: 0.305,
       yLabel: DiagramLabel.pOpt.label,
@@ -177,7 +161,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.58,
       xAxisEndPos: 0.43,
       yLabel: DiagramLabel.pm.label,
@@ -188,14 +172,12 @@ class Externalities extends BaseDiagramPainter3 {
 
   void _paintCarbonTax(
     DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    IDiagramCanvas canvas,
+    Size size,
+  ) {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
       startPos: const Offset(0, 0.2),
       polylineOffsets: [const Offset(0.8, 0.9)],
       label2: DiagramLabel.dEqualsMPBMSB.label,
@@ -203,7 +185,6 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
       startPos: const Offset(0, 0.95),
       polylineOffsets: [const Offset(0.8, 0.35)],
       label2: DiagramLabel.mpc.label,
@@ -211,7 +192,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.65),
       polylineOffsets: [const Offset(0.8, 0.05)],
       label2: 'MSC1',
@@ -220,7 +201,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.605,
       xAxisEndPos: 0.465,
       yLabel: DiagramLabel.pm.label,
@@ -232,20 +213,19 @@ class Externalities extends BaseDiagramPainter3 {
       'Initial Carbon Tax',
       const Offset(0.35, 0.2),
       pointerLine: const Offset(0.55, 0.4),
-      iCanvas: iCanvas,
     );
   }
 
   void _paintTradablePermits(
     DiagramPainterConfig c,
-    Canvas? canvas,
+    IDiagramCanvas canvas,
     Size size, {
     IDiagramCanvas? iCanvas,
   }) {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.5,
       xAxisEndPos: 0.5,
       yLabel: DiagramLabel.p.label,
@@ -254,7 +234,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0.5, 1.0),
       polylineOffsets: [const Offset(0.5, 0.15)],
       label2: DiagramLabel.supplyOfPermits.label,
@@ -262,7 +242,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.demand,
       label: DiagramLabel.demandForPermits.label,
     );
@@ -270,7 +250,7 @@ class Externalities extends BaseDiagramPainter3 {
 
   void _paintNegativeConsumption(
     DiagramPainterConfig c,
-    Canvas? canvas,
+    IDiagramCanvas canvas,
     Size size,
     DiagramEnum bundle, {
     IDiagramCanvas? iCanvas,
@@ -285,14 +265,14 @@ class Externalities extends BaseDiagramPainter3 {
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: Offset(0.65, 0.73),
       angle: pi / 2,
       endStyle: LineEndStyle.arrowBothEnds,
       length: 0.12,
     );
 
-    paintShading(canvas, size, ShadeType.welfareLoss, [
+    paintShading(c, canvas, ShadeType.welfareLoss, [
       Offset(0.32, 0.615),
       Offset(0.465, 0.72),
       Offset(0.465, 0.50),
@@ -307,7 +287,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.2),
       polylineOffsets: [const Offset(0.85, 0.75)],
       label2: DiagramLabel.dEqualsMPB.label,
@@ -316,7 +296,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.4),
       polylineOffsets: [const Offset(0.75, 0.9)],
       label2: DiagramLabel.msb.label,
@@ -325,7 +305,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.85),
       polylineOffsets: [const Offset(0.8, 0.25)],
       label2: DiagramLabel.sEqualsMPCMSC.label,
@@ -335,7 +315,6 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
       yAxisStartPos: 0.5,
       xAxisEndPos: 0.465,
       yLabel: DiagramLabel.pm.label,
@@ -345,7 +324,6 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
       yAxisStartPos: 0.61,
       xAxisEndPos: 0.325,
       yLabel: DiagramLabel.pOpt.label,
@@ -356,7 +334,7 @@ class Externalities extends BaseDiagramPainter3 {
 
   void _paintPositiveProduction(
     DiagramPainterConfig c,
-    Canvas? canvas,
+    IDiagramCanvas canvas,
     Size size,
     DiagramEnum bundle, {
     IDiagramCanvas? iCanvas,
@@ -371,14 +349,13 @@ class Externalities extends BaseDiagramPainter3 {
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
       origin: Offset(0.60, 0.36),
       angle: pi / 2,
       endStyle: LineEndStyle.arrowBothEnds,
       length: 0.14,
     );
 
-    paintShading(canvas, size, ShadeType.welfareLoss, [
+    paintShading(c, canvas, ShadeType.welfareLoss, [
       Offset(0.33, 0.46),
       Offset(0.33, 0.70),
       Offset(0.46, 0.60),
@@ -398,7 +375,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.demand,
       label: DiagramLabel.dEqualsMPBMSB.label,
       horizontalShift: -0.14,
@@ -406,7 +383,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       label: DiagramLabel.sEqualsMPC.label,
       horizontalShift: -0.11,
@@ -416,7 +393,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       label: mSCLabel,
       horizontalShift: -0.11,
@@ -427,7 +404,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.595,
       xAxisEndPos: 0.46,
       yLabel: DiagramLabel.pOpt.label,
@@ -437,7 +414,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.47,
       xAxisEndPos: 0.33,
       yLabel: DiagramLabel.pm.label,
@@ -448,7 +425,7 @@ class Externalities extends BaseDiagramPainter3 {
 
   void _paintPositiveConsumption(
     DiagramPainterConfig c,
-    Canvas? canvas,
+    IDiagramCanvas canvas,
     Size size,
     DiagramEnum bundle, {
     IDiagramCanvas? iCanvas,
@@ -463,18 +440,19 @@ class Externalities extends BaseDiagramPainter3 {
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: Offset(0.60, 0.69),
       angle: pi / 2,
       endStyle: LineEndStyle.arrowBothEnds,
       length: 0.12,
     );
 
-    paintShading(canvas, size, ShadeType.welfareLoss, [
+    paintShading(c, canvas, ShadeType.welfareLoss, [
       Offset(0.285, 0.39),
       Offset(0.285, 0.59),
       Offset(0.45, 0.49),
     ]);
+
     paintText2(
       c,
       canvas,
@@ -486,7 +464,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.2),
       polylineOffsets: [const Offset(0.85, 0.75)],
       label2: DiagramLabel.msb.label,
@@ -495,7 +473,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.4),
       polylineOffsets: [const Offset(0.75, 0.9)],
       label2: DiagramLabel.dEqualsMPB.label,
@@ -504,7 +482,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.75),
       polylineOffsets: [const Offset(0.8, 0.3)],
       label2: DiagramLabel.sEqualsMPCMSC.label,
@@ -514,7 +492,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.59,
       xAxisEndPos: 0.285,
       yLabel: DiagramLabel.pm.label,
@@ -524,7 +502,7 @@ class Externalities extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.495,
       xAxisEndPos: 0.45,
       yLabel: DiagramLabel.pOpt.label,

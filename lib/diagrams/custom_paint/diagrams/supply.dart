@@ -24,17 +24,16 @@ class Supply extends BaseDiagramPainter3 {
   Supply(super.config, super.diagram);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    drawDiagram(canvas, size);
-  }
-
-  @override
-  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
+  void drawDiagram(
+    IDiagramCanvas canvas,
+    Size size, {
+    IDiagramCanvas? iCanvas,
+  }) {
     final c = config.copyWith(painterSize: size);
 
     // 1. Determine Axis Labels
-    String yLabel = DiagramLabel.price.label;
-    String xLabel = DiagramLabel.quantity.label;
+    String yLabel = DiagramLabel.p.label;
+    String xLabel = DiagramLabel.q.label;
 
     if (diagram == DiagramEnum.microMarginalProduct ||
         diagram == DiagramEnum.microTotalAndMarginalProduct) {
@@ -45,44 +44,35 @@ class Supply extends BaseDiagramPainter3 {
       yLabel = DiagramLabel.costs.label;
     }
 
-    paintAxis(
-      c,
-      canvas,
-      iCanvas: iCanvas,
-      yAxisLabel: yLabel,
-      xAxisLabel: xLabel,
-    );
+    paintAxis(c, canvas, yAxisLabel: yLabel, xAxisLabel: xLabel);
 
     // 2. Route Drawing Logic
     switch (diagram) {
-      case DiagramEnum.microSupplyExtension: case
-          DiagramEnum.microSupplyContraction:
-        _paintSupplyMovement(c, canvas, iCanvas: iCanvas);
-      case DiagramEnum.microSupplyIncrease: case DiagramEnum.microSupplyDecrease:
-        _paintSupplyShift(c, canvas, iCanvas: iCanvas);
+      case DiagramEnum.microSupplyExtension:
+      case DiagramEnum.microSupplyContraction:
+        _paintSupplyMovement(c, canvas);
+      case DiagramEnum.microSupplyIncrease:
+      case DiagramEnum.microSupplyDecrease:
+        _paintSupplyShift(c, canvas);
       case DiagramEnum.microTotalAndMarginalProduct:
-        _paintTotalMarginalProduct(c, canvas, size, iCanvas: iCanvas);
+        _paintTotalMarginalProduct(c, canvas);
       case DiagramEnum.microMarginalProduct:
-        _paintMarginalProduct(c, canvas, size, iCanvas: iCanvas);
+        _paintMarginalProduct(c, canvas);
       case DiagramEnum.microMarginalCost:
-        _paintMarginalCost(c, canvas, iCanvas: iCanvas);
+        _paintMarginalCost(c, canvas);
       default:
     }
   }
 
   // --- SUB-PAINTERS ---
 
-  void _paintSupplyMovement(
-    DiagramPainterConfig c,
-    Canvas? canvas, {
-    IDiagramCanvas? iCanvas,
-  }) {
-    paintMarketCurve(c, canvas, iCanvas: iCanvas, type: MarketCurveType.supply);
+  void _paintSupplyMovement(DiagramPainterConfig c, IDiagramCanvas canvas) {
+    paintMarketCurve(c, canvas, type: MarketCurveType.supply);
 
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.40,
       xAxisEndPos: 0.60,
       yLabel: DiagramLabel.p2.label,
@@ -92,7 +82,7 @@ class Supply extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.60,
       xAxisEndPos: 0.40,
       yLabel: DiagramLabel.p1.label,
@@ -104,7 +94,7 @@ class Supply extends BaseDiagramPainter3 {
       paintLineSegment(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         origin: const Offset(0.42, 0.51),
         angle: -pi / 4,
         length: 0.15,
@@ -113,7 +103,7 @@ class Supply extends BaseDiagramPainter3 {
       paintLineSegment(
         c,
         canvas,
-        iCanvas: iCanvas,
+
         origin: const Offset(0.44, 0.48),
         angle: pi / 1.35,
         length: 0.15,
@@ -121,37 +111,33 @@ class Supply extends BaseDiagramPainter3 {
     }
   }
 
-  void _paintSupplyShift(
-    DiagramPainterConfig c,
-    Canvas? canvas, {
-    IDiagramCanvas? iCanvas,
-  }) {
+  void _paintSupplyShift(DiagramPainterConfig c, IDiagramCanvas canvas) {
     final bool isIncrease = diagram == DiagramEnum.microSupplyIncrease;
     final double shift = isIncrease ? 0.15 : -0.15;
 
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       label: DiagramLabel.s1.label,
       horizontalShift: -shift,
-        lengthAdjustment: -0.15
+      lengthAdjustment: -0.15,
     );
     paintMarketCurve(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       type: MarketCurveType.supply,
       label: DiagramLabel.s2.label,
       horizontalShift: shift,
-      lengthAdjustment: -0.15
+      lengthAdjustment: -0.15,
     );
 
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.35,
       yLabel: DiagramLabel.p.label,
@@ -162,7 +148,7 @@ class Supply extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.65,
       yLabel: DiagramLabel.p.label,
@@ -173,7 +159,7 @@ class Supply extends BaseDiagramPainter3 {
     paintLineSegment(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       origin: Offset(isIncrease ? 0.58 : 0.61, 0.40),
       angle: isIncrease ? 0 : pi,
     );
@@ -181,15 +167,14 @@ class Supply extends BaseDiagramPainter3 {
 
   void _paintTotalMarginalProduct(
     DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
+
+    IDiagramCanvas canvas,
+  ) {
     // Total Product (TP)
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 1.0),
       bezierPoints: [
         CustomBezier(
@@ -206,7 +191,7 @@ class Supply extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0.02, 0.98),
       color: Colors.deepOrange,
       bezierPoints: [
@@ -220,7 +205,7 @@ class Supply extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0,
       xAxisEndPos: 0.32,
       hideYLine: true,
@@ -228,13 +213,13 @@ class Supply extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0,
       xAxisEndPos: 0.76,
       hideYLine: true,
     );
 
-    paintLegend(canvas, size, config: c, iCanvas: iCanvas, [
+    paintLegend(canvas, config: c, [
       LegendEntry(
         label: DiagramLabel.marginalProduct.label,
         color: Colors.deepOrange,
@@ -253,7 +238,6 @@ class Supply extends BaseDiagramPainter3 {
       fontSize: fontSize,
       'Increasing\nReturns',
       const Offset(0.15, yPos),
-      iCanvas: iCanvas,
     );
     paintText2(
       c,
@@ -261,7 +245,6 @@ class Supply extends BaseDiagramPainter3 {
       fontSize: fontSize,
       'Diminishing\nReturns',
       const Offset(0.52, yPos),
-      iCanvas: iCanvas,
     );
     paintText2(
       c,
@@ -269,7 +252,6 @@ class Supply extends BaseDiagramPainter3 {
       fontSize: fontSize,
       'Negative\nReturns',
       const Offset(0.90, yPos),
-      iCanvas: iCanvas,
     );
 
     for (var p in [
@@ -278,20 +260,15 @@ class Supply extends BaseDiagramPainter3 {
       const Offset(0.76, 0.195),
       const Offset(0.76, 1.0),
     ]) {
-      paintDot(c, canvas, iCanvas: iCanvas, pos: p);
+      paintDot(c, canvas, p);
     }
   }
 
-  void _paintMarginalProduct(
-    DiagramPainterConfig c,
-    Canvas? canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
+  void _paintMarginalProduct(DiagramPainterConfig c, IDiagramCanvas canvas) {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0.05, 0.95),
       label2: DiagramLabel.marginalProduct.label,
       bezierPoints: [
@@ -302,20 +279,20 @@ class Supply extends BaseDiagramPainter3 {
       ],
     );
 
-    paintText2(c, canvas, DiagramLabel.diminishingReturnsSetIn.label,Offset(0.45, 0.05),
-    pointerLine: Offset(0.45, 0.125)
+    paintText2(
+      c,
+      canvas,
+      DiagramLabel.diminishingReturnsSetIn.label,
+      Offset(0.45, 0.05),
+      pointerLine: Offset(0.45, 0.125),
     );
   }
 
-  void _paintMarginalCost(
-    DiagramPainterConfig c,
-    Canvas? canvas, {
-    IDiagramCanvas? iCanvas,
-  }) {
+  void _paintMarginalCost(DiagramPainterConfig c, IDiagramCanvas canvas) {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0.05, 0.60),
       label2: DiagramLabel.marginalCost.label,
       label2Align: LabelAlign.centerTop,
@@ -329,13 +306,13 @@ class Supply extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.90,
       xAxisEndPos: 0.385,
       hideYLine: true,
       xLabel: 'Diminishing\nReturns\nSets In',
     );
-    paintDot(c, canvas, iCanvas: iCanvas, pos: const Offset(0.385, 0.855));
+    paintDot(c, canvas, const Offset(0.385, 0.855));
   }
 
   LegendDisplay get legendDisplay => LegendDisplay.shading;

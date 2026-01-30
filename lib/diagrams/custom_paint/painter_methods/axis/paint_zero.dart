@@ -6,31 +6,27 @@ import '../../i_diagram_canvas.dart';
 import '../../painter_constants.dart';
 import '../paint_text_2.dart';
 
-void paintZero(
-  DiagramPainterConfig config,
-  Canvas? canvas, {
-  IDiagramCanvas? iCanvas,
-}) {
+void paintZero(DiagramPainterConfig config, IDiagramCanvas canvas) {
   final widthAndHeight = config.painterSize.width;
   final indent = widthAndHeight * kAxisIndent;
-  final fontSize = kFontMedium * config.averageRatio;
+  final fontSize =
+      kFontTiny * config.averageRatio; // Standard origin label size
 
-  // Adjusted offset for the '0' at the origin
-  final pos = Offset(indent * 0.90, widthAndHeight - indent * kBottomAxisIndent);
+  // The exact mathematical origin point (intersection of axes)
+  final origin = Offset(indent, widthAndHeight - (indent * kBottomAxisIndent));
 
-  if (iCanvas != null) {
-    iCanvas.drawText('0', pos, fontSize, config.colorScheme.onSurface);
-  } else if (canvas != null) {
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: '0',
-        style: TextStyle(
-          color: config.colorScheme.onSurface,
-          fontSize: fontSize,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    textPainter.paint(canvas, pos);
-  }
+  // We nudge the '0' slightly so it doesn't overlap the axis lines
+  final nudge = widthAndHeight * 0.01;
+
+  paintText2(
+    config,
+    canvas,
+    '0',
+    Offset(origin.dx - nudge, origin.dy + nudge),
+    fontSize: fontSize,
+    horizontalPivot: LabelPivot.right, // Grows to the left of the anchor
+    verticalPivot: LabelPivot.top, // Grows downward from the anchor
+    normalize: false, // Uses raw pixel coordinates
+    style: TextStyle(color: config.colorScheme.onSurface),
+  );
 }

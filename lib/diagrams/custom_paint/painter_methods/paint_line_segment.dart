@@ -13,8 +13,7 @@ import 'diagram_lines/paint_diagram_lines.dart';
 
 void paintLineSegment(
   DiagramPainterConfig config,
-  Canvas? canvas, {
-  IDiagramCanvas? iCanvas, // 👈 Bridge added
+  IDiagramCanvas canvas, { // Unified interface
   required Offset origin,
   double angle = 0,
   double length = 0.10,
@@ -35,7 +34,6 @@ void paintLineSegment(
   final normalize = normalizeToDiagramArea ? 1 - (kAxisIndent * 2) : 1.0;
   final widthAndHeightNormalized = widthAndHeight * normalize;
   final indent = widthAndHeight * kAxisIndent;
-  const pi = 3.14159265359;
 
   Offset computeOffset(Offset pos) {
     final dx = pos.dx * widthAndHeightNormalized;
@@ -45,6 +43,7 @@ void paintLineSegment(
         : Offset(dx, dy);
   }
 
+  // Calculate Start and End points of the segment
   final halfLen = length / 2;
   final startPos = Offset(
     origin.dx - halfLen * cos(angle),
@@ -63,35 +62,24 @@ void paintLineSegment(
   final startOffset = computeOffset(startPos);
   final endOffset = computeOffset(endPos);
 
-  // --- 1. Draw Line ---
-  if (iCanvas != null) {
-    if (style == CurveStyle.dashed || style == CurveStyle.dotted) {
-      iCanvas.drawDashedLine(
-        startOffset,
-        endOffset,
-        mainColor,
-        effectiveStrokeWidth,
-      );
-    } else {
-      iCanvas.drawLine(startOffset, endOffset, mainColor, effectiveStrokeWidth);
-    }
-  } else if (canvas != null) {
-    final paint = Paint()
-      ..color = mainColor
-      ..strokeWidth = effectiveStrokeWidth
-      ..style = PaintingStyle.stroke;
-
-    // Simplified for brevity, standard path drawing
-    canvas.drawLine(startOffset, endOffset, paint);
+  // --- 1. Draw the Main Line ---
+  if (style == CurveStyle.dashed || style == CurveStyle.dotted) {
+    canvas.drawDashedLine(
+      startOffset,
+      endOffset,
+      mainColor,
+      effectiveStrokeWidth,
+    );
+  } else {
+    canvas.drawLine(startOffset, endOffset, mainColor, effectiveStrokeWidth);
   }
 
-  // --- 2. Draw End Marks ---
+  // --- 2. Draw End Marks (Arrows or Ticks) ---
   switch (endStyle) {
     case LineEndStyle.arrow:
       paintArrowHead(
         config,
         canvas,
-        iCanvas: iCanvas,
         color: mainColor,
         positionOfArrow: endOffset,
         rotationAngle: angle + (pi / 2),
@@ -101,7 +89,6 @@ void paintLineSegment(
       paintArrowHead(
         config,
         canvas,
-        iCanvas: iCanvas,
         color: mainColor,
         positionOfArrow: endOffset,
         rotationAngle: angle + (pi / 2),
@@ -109,7 +96,6 @@ void paintLineSegment(
       paintArrowHead(
         config,
         canvas,
-        iCanvas: iCanvas,
         color: mainColor,
         positionOfArrow: startOffset,
         rotationAngle: angle - (pi / 2),
@@ -119,7 +105,6 @@ void paintLineSegment(
       _paintRightAngleMarker(
         config,
         canvas,
-        iCanvas: iCanvas,
         color: mainColor,
         position: endOffset,
         lineAngle: angle,
@@ -128,7 +113,6 @@ void paintLineSegment(
       _paintRightAngleMarker(
         config,
         canvas,
-        iCanvas: iCanvas,
         color: mainColor,
         position: startOffset,
         lineAngle: angle,
@@ -139,19 +123,20 @@ void paintLineSegment(
       break;
   }
 
-  // --- 3. Label ---
+  // --- 3. Primary Label ---
   if (label != null) {
     final Offset midNormalized = Offset(
       (startPos.dx + endPos.dx) / 2,
       (startPos.dy + endPos.dy) / 2,
     );
-    final double labelOffsetPx = config.painterSize.width * 0.04;
+    final double labelOffsetPx = widthAndHeight * 0.04;
     final Offset perpUnit = Offset(-sin(angle), cos(angle));
 
+    // Calculate displacement for the label so it doesn't overlap the line
     Offset deltaNormalized = (labelAlign == LabelAlign.centerTop)
-        ? perpUnit * -labelOffsetPx / config.painterSize.width
+        ? perpUnit * -labelOffsetPx / widthAndHeight
         : (labelAlign == LabelAlign.centerBottom)
-        ? perpUnit * labelOffsetPx / config.painterSize.width
+        ? perpUnit * labelOffsetPx / widthAndHeight
         : Offset.zero;
 
     paintText2(
@@ -159,11 +144,11 @@ void paintLineSegment(
       canvas,
       label,
       midNormalized + deltaNormalized,
-      iCanvas: iCanvas,
       fontSize: kFontSmall,
       horizontalPivot: LabelPivot.center,
       verticalPivot: LabelPivot.middle,
-      normalize: true,
+      normalize: normalizeToDiagramArea,
+      style: TextStyle(color: mainColor),
     );
   }
 
@@ -174,18 +159,19 @@ void paintLineSegment(
       canvas,
       secondaryLabel,
       secondaryLabelPos,
-      iCanvas: iCanvas,
       angle: secondaryLabelAngle,
       horizontalPivot: horizontalPivot,
       verticalPivot: verticalPivot,
+      normalize: normalizeToDiagramArea,
+      style: TextStyle(color: mainColor),
     );
   }
 }
 
+/// Updated Right Angle Marker Helper
 void _paintRightAngleMarker(
   DiagramPainterConfig config,
-  Canvas? canvas, {
-  IDiagramCanvas? iCanvas, // 👈 Added bridge
+  IDiagramCanvas canvas, {
   required Color color,
   required Offset position,
   required double lineAngle,
@@ -194,8 +180,6 @@ void _paintRightAngleMarker(
   const double markerLengthNormalized = 0.020;
   final double halfMarkerLen =
       markerLengthNormalized / 2 * config.painterSize.width;
-  const pi = 3.14159265359;
-
   final double markerAngle = lineAngle + (pi / 2);
 
   final markerStart = Offset(
@@ -207,13 +191,5 @@ void _paintRightAngleMarker(
     position.dy + halfMarkerLen * sin(markerAngle),
   );
 
-  if (iCanvas != null) {
-    iCanvas.drawLine(markerStart, markerEnd, color, strokeWidth);
-  } else if (canvas != null) {
-    final markerPaint = Paint()
-      ..color = color
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke;
-    canvas.drawLine(markerStart, markerEnd, markerPaint);
-  }
+  canvas.drawLine(markerStart, markerEnd, color, strokeWidth);
 }

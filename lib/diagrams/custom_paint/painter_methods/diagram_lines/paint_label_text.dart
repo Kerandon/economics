@@ -96,7 +96,6 @@ void paintLabelText(
       baseOffset, // Use calculated baseOffset
       fontSize,
       textColor,
-      align: pdfAlign,
     );
   } else if (canvas != null) {
     textPainter.paint(canvas, baseOffset);

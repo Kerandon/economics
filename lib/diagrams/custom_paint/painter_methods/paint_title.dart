@@ -7,16 +7,14 @@ import '../painter_constants.dart';
 
 void paintTitle(
   DiagramPainterConfig config,
-  Canvas? canvas, // Made nullable
-  String label, {
-  IDiagramCanvas? iCanvas, // Added bridge
-}) {
+  IDiagramCanvas canvas, // Made nullable
+  String label,
+) {
   paintText2(
     config,
     canvas,
     label,
     const Offset(0.5, 0), // Typically centered top
-    iCanvas: iCanvas, // 👈 PASS THE BRIDGE DOWN
     fontSize: kFontMedium,
     style: TextStyle(
       fontStyle: FontStyle.italic,

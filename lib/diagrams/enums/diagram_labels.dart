@@ -544,8 +544,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.we => 'We',
       DiagramLabel.qSStar => 'Qs*',
       DiagramLabel.qDStar => 'Qd*',
-      DiagramLabel.governmentBoughtSurplus =>
-        'Government-Bought Surplus',
+      DiagramLabel.governmentBoughtSurplus => 'Government-Bought Surplus',
       DiagramLabel.governmentPurchases => 'Government Purchases',
       DiagramLabel.freeMarket => 'Free Market',
       DiagramLabel.priceFloorAgri => 'Agri. Price Floor',

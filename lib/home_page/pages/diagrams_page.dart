@@ -159,58 +159,54 @@ Future<void> _exportDiagramsToPdf(
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.all(32),
+        margin: const pw.EdgeInsets.all(20),
         build: (pw.Context context) {
           return pw.GridView(
             crossAxisCount: 2,
-            childAspectRatio: 0.85,
+            childAspectRatio: 2, // Slightly taller to prevent title overlap
             crossAxisSpacing: 5,
-            mainAxisSpacing: 30,
+            mainAxisSpacing: 20,
             children: group.map((d) {
               final painter = d.basePainterDiagrams.first;
 
               return pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                crossAxisAlignment: pw.CrossAxisAlignment.center,
                 children: [
-                  pw.Padding(
-                    padding: const pw.EdgeInsets.only(bottom: 4),
+                  pw.Container(
+                    height: 30, // Fixed height for title area
+                    alignment: pw.Alignment.center,
                     child: pw.Text(
                       painter.diagram.toText,
+                      textAlign: pw.TextAlign.center,
                       style: pw.TextStyle(
-                        fontSize: 10,
+                        fontSize: 9,
                         fontWeight: pw.FontWeight.bold,
                       ),
                     ),
                   ),
                   pw.Expanded(
-                    child: pw.Container(
-                      decoration: pw.BoxDecoration(
-                        border: pw.Border.all(
-                          color: PdfColors.grey300,
-                          width: 0.5,
-                        ),
-                      ),
-                      // FittedBox automatically scales your 400x400 drawing
-                      // to fit whatever size the GridView cell is.
-                      child: pw.FittedBox(
-                        fit: pw.BoxFit.contain,
-                        child: pw.CustomPaint(
-                          size: const PdfPoint(400, 400),
-                          painter: (PdfGraphics graphics, PdfPoint size) {
-                            // Since we are inside a 400x400 CustomPaint,
-                            // 'size.y' here will be exactly 400.
-                            final bridge = PdfDiagramCanvas(
-                              graphics,
-                              context.document,
-                              size.y,
-                            );
-
-                            painter.drawDiagram(
-                              null,
-                              const Size(400, 400),
-                              iCanvas: bridge,
-                            );
-                          },
+                    child: pw.Center(
+                      child: pw.AspectRatio(
+                        aspectRatio: 1,
+                        child: pw.Container(
+                          // Optional: decoration: pw.BoxDecoration(border: pw.Border.all(width: 0.5))
+                          child: pw.FittedBox(
+                            fit: pw.BoxFit.contain,
+                            child: pw.CustomPaint(
+                              size: const PdfPoint(400, 400),
+                              painter: (PdfGraphics graphics, PdfPoint size) {
+                                final bridge = PdfDiagramCanvas(
+                                  graphics,
+                                  context.document,
+                                  size.y,
+                                );
+                                painter.drawDiagram(
+                                  bridge,
+                                  const Size(400, 400),
+                                );
+                              },
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -232,15 +228,19 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   final PdfDocument document;
   final double pageHeight;
 
+  static const double pdfScale = 1.5;
+
   PdfDiagramCanvas(this.graphics, this.document, this.pageHeight);
+
+  double _transY(double y) => pageHeight - y;
 
   @override
   void drawLine(Offset p1, Offset p2, Color color, double width) {
     graphics
       ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setLineWidth(width)
-      ..moveTo(p1.dx, pageHeight - p1.dy)
-      ..lineTo(p2.dx, pageHeight - p2.dy)
+      ..setLineWidth(width * pdfScale)
+      ..moveTo(p1.dx, _transY(p1.dy))
+      ..lineTo(p2.dx, _transY(p2.dy))
       ..strokePath();
   }
 
@@ -248,61 +248,77 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   void drawDashedLine(Offset p1, Offset p2, Color color, double width) {
     graphics
       ..saveContext()
-      ..setLineDashPattern([
-        2,
-        2,
-      ]) // 👈 Restored dash pattern for equilibrium lines
+      ..setLineDashPattern([3, 3])
       ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setLineWidth(width)
-      ..moveTo(p1.dx, pageHeight - p1.dy)
-      ..lineTo(p2.dx, pageHeight - p2.dy)
+      ..setLineWidth(width * pdfScale)
+      ..moveTo(p1.dx, _transY(p1.dy))
+      ..lineTo(p2.dx, _transY(p2.dy))
       ..strokePath()
       ..restoreContext();
   }
 
   @override
-  void drawText(
-    String text,
-    Offset position,
-    double fontSize,
-    Color color, {
-    TextAlign align = TextAlign.left,
-  }) {
-    final PdfFont font = PdfFont.helvetica(document);
+  void drawRect(Rect rect, Color color, {bool fill = false}) {
+    graphics
+      ..setStrokeColor(PdfColor.fromInt(color.value))
+      ..setFillColor(PdfColor.fromInt(color.value))
+      ..drawRect(rect.left, _transY(rect.bottom), rect.width, rect.height);
 
+    if (fill) {
+      graphics.fillPath();
+    } else {
+      graphics.strokePath();
+    }
+  }
+
+  @override
+  void drawDot(
+    Offset center,
+    Color color, {
+    double radius = 4.0,
+    bool fill = true,
+  }) {
+    final r = radius * pdfScale;
+    graphics
+      ..setStrokeColor(PdfColor.fromInt(color.value))
+      ..setFillColor(PdfColor.fromInt(color.value))
+      ..drawEllipse(center.dx, _transY(center.dy), r, r);
+
+    if (fill) {
+      graphics.fillPath();
+    } else {
+      graphics.strokePath();
+    }
+  }
+
+  @override
+  void drawText(String text, Offset position, double fontSize, Color color) {
+    final font = PdfFont.helvetica(document);
     graphics
       ..saveContext()
       ..setFillColor(PdfColor.fromInt(color.value));
 
-    double x = position.dx;
-    // For vector-perfect alignment, we measure the text accurately
-    final PdfFontMetrics metrics = font.stringMetrics(text);
-    final double textWidth = metrics.advanceWidth * fontSize;
+    // When translate/rotate is active, 'position' is often Offset(-alignmentX, -alignmentY)
+    // We still flip the Y for the text baseline, but keep the X as is.
+    double pdfY = _transY(position.dy) - fontSize;
 
-    if (align == TextAlign.right) {
-      x -= textWidth;
-    } else if (align == TextAlign.center) {
-      x -= textWidth / 2;
-    }
+    graphics.drawString(font, fontSize, text, position.dx, pdfY);
 
-    graphics
-      ..drawString(font, fontSize, text, x, pageHeight - position.dy)
-      ..restoreContext();
+    graphics.restoreContext();
   }
 
   @override
-  void drawPath(List<Offset> points, Color color, {bool fill = true}) {
+  void drawPath(List<Offset> points, Color color, {bool fill = false}) {
     if (points.isEmpty) return;
-
     graphics
       ..saveContext()
       ..setStrokeColor(PdfColor.fromInt(color.value))
       ..setFillColor(PdfColor.fromInt(color.value))
-      ..setLineWidth(kCurveWidth)
-      ..moveTo(points.first.dx, pageHeight - points.first.dy);
+      ..setLineWidth(2.0 * pdfScale) // Using a standard line weight for paths
+      ..moveTo(points.first.dx, _transY(points.first.dy));
 
     for (var i = 1; i < points.length; i++) {
-      graphics.lineTo(points[i].dx, pageHeight - points[i].dy);
+      graphics.lineTo(points[i].dx, _transY(points[i].dy));
     }
 
     if (fill) {
@@ -314,30 +330,32 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   }
 
   @override
-  void drawRect(Rect rect, Color color, {bool fill = false}) {
-    graphics
-      ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setFillColor(PdfColor.fromInt(color.value))
-      // Note: y-coord is bottom-left in PDF
-      ..drawRect(rect.left, pageHeight - rect.bottom, rect.width, rect.height);
+  void save() => graphics.saveContext();
 
-    fill ? graphics.fillPath() : graphics.strokePath();
+  @override
+  void restore() => graphics.restoreContext();
+
+  @override
+  void translate(double dx, double dy) {
+    // PDF Y-axis is inverted, so we move 'dy' downwards (negative)
+    // In PdfGraphics, setTransform effectively modifies the current transformation matrix
+    graphics.setTransform(Matrix4.translationValues(dx, -dy, 0));
   }
 
   @override
-  void drawDot(
-    Offset center,
-    Color color, {
-    double radius = kDotRadius,
-    bool fill = true,
-  }) {
-    graphics
-      ..saveContext()
-      ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setFillColor(PdfColor.fromInt(color.value))
-      ..drawEllipse(center.dx, pageHeight - center.dy, radius, radius);
+  void rotate(double radians) {
+    // PDF rotation direction is opposite to Flutter's coordinate flip
+    graphics.setTransform(Matrix4.rotationZ(-radians));
+  }
 
-    fill ? graphics.fillPath() : graphics.strokePath();
-    graphics.restoreContext();
+  @override
+  void clipPath(List<Offset> points) {
+    if (points.isEmpty) return;
+    graphics.moveTo(points.first.dx, _transY(points.first.dy));
+    for (var i = 1; i < points.length; i++) {
+      graphics.lineTo(points[i].dx, _transY(points[i].dy));
+    }
+    graphics.closePath();
+    graphics.clipPath();
   }
 }

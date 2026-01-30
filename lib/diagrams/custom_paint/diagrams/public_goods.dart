@@ -14,19 +14,13 @@ class PublicGoods extends BaseDiagramPainter3 {
   PublicGoods(super.config, super.diagram);
 
   @override
-  void paint(Canvas canvas, Size size) {
-    drawDiagram(canvas, size);
-  }
-
-  @override
-  void drawDiagram(Canvas? canvas, Size size, {IDiagramCanvas? iCanvas}) {
+  void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
     // 1. Setup specialized Axis for Public Goods (Vertical Summation)
     paintAxis(
       c,
       canvas,
-      iCanvas: iCanvas,
       yAxisLabel: DiagramLabel.priceCostsBenefits.label,
       xAxisLabel: DiagramLabel.quantity.label,
       drawGridlines: true,
@@ -42,7 +36,7 @@ class PublicGoods extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.80),
       polylineOffsets: [const Offset(0.70, 1.0)],
     );
@@ -51,7 +45,7 @@ class PublicGoods extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.60),
       polylineOffsets: [const Offset(0.70, 1.0)],
     );
@@ -60,7 +54,7 @@ class PublicGoods extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0, 0.40),
       polylineOffsets: [const Offset(0.70, 1.0)],
       color: Colors.red,
@@ -70,7 +64,7 @@ class PublicGoods extends BaseDiagramPainter3 {
     paintDiagramLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       startPos: const Offset(0.0, 0.70),
       polylineOffsets: [const Offset(0.80, 0.70)],
       label2: DiagramLabel.msc.label,
@@ -85,7 +79,6 @@ class PublicGoods extends BaseDiagramPainter3 {
       'Individual MB1',
       const Offset(0.80, 0.95),
       pointerLine: const Offset(0.52, 0.95),
-      iCanvas: iCanvas,
     );
     paintText2(
       c,
@@ -93,7 +86,6 @@ class PublicGoods extends BaseDiagramPainter3 {
       'Individual MB2',
       const Offset(0.80, 0.85),
       pointerLine: const Offset(0.44, 0.85),
-      iCanvas: iCanvas,
     );
     paintText2(
       c,
@@ -101,7 +93,6 @@ class PublicGoods extends BaseDiagramPainter3 {
       'MSB = MB1 + MB2',
       const Offset(0.30, 0.45),
       pointerLine: const Offset(0.30, 0.655),
-      iCanvas: iCanvas,
     );
 
     // 6. Optimal Quantity Projections (Where MSC = MSB)
@@ -109,7 +100,7 @@ class PublicGoods extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.70,
       xAxisEndPos: 0.35,
       showDotAtIntersection: true,
@@ -122,7 +113,7 @@ class PublicGoods extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.80,
       xAxisEndPos: 0.35,
       showDotAtIntersection: true,
@@ -131,7 +122,7 @@ class PublicGoods extends BaseDiagramPainter3 {
     paintDiagramDashedLines(
       c,
       canvas,
-      iCanvas: iCanvas,
+
       yAxisStartPos: 0.90,
       xAxisEndPos: 0.35,
       showDotAtIntersection: true,
