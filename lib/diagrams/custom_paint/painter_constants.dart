@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 /// Curves
-const kCurveWidth = 2.0;
+const kCurveWidth = 3.0;
 const kCurveWidthSlim = 2.0;
 const kArrowSize = 16.0;
 const kExtendBy5 = 0.05;
@@ -15,7 +15,7 @@ const kExtendBy20 = 0.20;
 const kTopAxisIndent = 0.50;
 const kBottomAxisIndent = 1.50;
 const kLabelPadding = 0.06;
-const kAxisIndent = 0.15;
+const kAxisIndent = 0.20;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 5.0;
 const kAdvantages = 'Advantages';
@@ -34,11 +34,11 @@ const kLabelTextStyle = TextStyle(
 );
 
 /// Dot
-const kDotRadius = 8.0;
+const kDotRadius = 12.0;
 
 enum CurveStyle { standard, dashed, dotted, bold }
 
-enum MarketCurveType { demand, supply }
+enum MarketCurveType { demand, supply, ad, sras, lras, keynesianAS }
 
 enum LabelAlign { center, centerLeft, centerRight, centerTop, centerBottom }
 

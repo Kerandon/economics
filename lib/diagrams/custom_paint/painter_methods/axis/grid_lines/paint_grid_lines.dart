@@ -63,10 +63,6 @@ void paintGridLines(
       effectiveWidth,
     );
 
-    // Draw Labels
-    // We use the new logic: position is the anchor, we just need to specify alignment
-    // NOTE: If your drawText interface doesn't support 'align' yet,
-    // you'll use the paintText2 helper here.
     paintText2(
       config,
       canvas,

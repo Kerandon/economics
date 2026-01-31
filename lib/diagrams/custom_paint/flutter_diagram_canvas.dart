@@ -65,7 +65,9 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
     final paint = Paint()
       ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth = kCurveWidth * scale
+      ..strokeWidth =
+          (fill ? 1.0 : kCurveWidth) *
+          scale // Thinner stroke if filling
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
@@ -73,8 +75,14 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
     for (int i = 1; i < points.length; i++) {
       path.lineTo(points[i].dx, points[i].dy);
     }
-    if (fill) path.close();
-    canvas.drawPath(path, paint);
+
+    // For arrowheads and shapes, we must close the path if filling
+    if (fill) {
+      path.close();
+      canvas.drawPath(path, paint);
+    } else {
+      canvas.drawPath(path, paint);
+    }
   }
 
   @override

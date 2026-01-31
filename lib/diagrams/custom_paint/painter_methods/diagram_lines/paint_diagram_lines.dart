@@ -11,12 +11,12 @@ import '../paint_text_2.dart';
 
 void paintDiagramLines(
   DiagramPainterConfig config,
-  IDiagramCanvas canvas, { // Unified interface
+  IDiagramCanvas canvas, {
   required Offset startPos,
   List<CustomBezier>? bezierPoints,
   List<Offset>? polylineOffsets,
   Color? color,
-  double strokeWidth = kCurveWidth,
+  double strokeWidth = 2.0, // Default width
   String? label1,
   String? label2,
   LabelAlign label1Align = LabelAlign.centerTop,
@@ -30,9 +30,8 @@ void paintDiagramLines(
   double circleRadius = 10,
   CurveStyle curveStyle = CurveStyle.standard,
   bool normalizeToDiagramArea = true,
-  Color? backgroundColor,
 }) {
-  // 1. Math and Normalization
+  // --- 1. CONFIG & MATH ---
   final double widthAndHeight = config.painterSize.width;
   final double normalize = normalizeToDiagramArea ? 1 - (kAxisIndent * 2) : 1.0;
   final double widthAndHeightNormalized = widthAndHeight * normalize;
@@ -47,49 +46,56 @@ void paintDiagramLines(
         : Offset(dx, dy);
   }
 
+  // Calculate scaled stroke width
   final double effectiveWidth =
       (curveStyle == CurveStyle.bold ? strokeWidth * 2 : strokeWidth) *
       config.averageRatio;
   final Offset start = computeOffset(startPos);
 
-  // 2. Build the Path Points
-  // We collect points for simple lines, but for beziers we can now just use drawPath
-  // if we add quadraticBezierTo to the interface, OR continue using the flattened points
-  // for maximum consistency between Flutter and PDF.
+  // --- 2. BUILD POINTS (Universal Method) ---
+  // We manually calculate points. This returns a List<Offset>,
+  // which your IDiagramCanvas (and PDF export) definitely supports.
+  List<Offset> points = [start];
 
-  final List<Offset> points = [start];
-  if (polylineOffsets != null) {
+  if (polylineOffsets != null && polylineOffsets.isNotEmpty) {
+    // STRAIGHT LINES
     for (var p in polylineOffsets) {
       points.add(computeOffset(p));
     }
-  } else if (bezierPoints != null) {
-    // We'll use your flattening logic to ensure the PDF and Flutter curves
-    // look identical (since PDF graphics don't always handle quadratic beziers
-    // the exact same way as Flutter's engine).
-    Offset lastPoint = start;
+  } else if (bezierPoints != null && bezierPoints.isNotEmpty) {
+    // CURVED LINES (Quadratic Bezier)
+    Offset lastP = start;
+
+    // SMOOTHNESS: 0.01 step = 100 points per curve segment.
+    // This looks like a perfect curve even on high-res PDF exports.
+    const double step = 0.01;
+
     for (var b in bezierPoints) {
       final control = computeOffset(b.control);
       final endPoint = computeOffset(b.endPoint);
-      for (double t = 0.05; t <= 1.0; t += 0.05) {
-        // Smoother steps
-        final x =
-            (1 - t) * (1 - t) * lastPoint.dx +
-            2 * (1 - t) * t * control.dx +
-            t * t * endPoint.dx;
-        final y =
-            (1 - t) * (1 - t) * lastPoint.dy +
-            2 * (1 - t) * t * control.dy +
-            t * t * endPoint.dy;
+
+      for (double t = step; t <= 1.0; t += step) {
+        final double u = 1 - t;
+        final double tt = t * t;
+        final double uu = u * u;
+
+        final double x =
+            uu * lastP.dx + 2 * u * t * control.dx + tt * endPoint.dx;
+        final double y =
+            uu * lastP.dy + 2 * u * t * control.dy + tt * endPoint.dy;
+
         points.add(Offset(x, y));
       }
-      lastPoint = endPoint;
+      lastP = endPoint;
     }
   }
 
-  // 3. Draw the Curve/Line
+  // --- 3. DRAWING (Fixing your Errors) ---
+
   if (curveStyle == CurveStyle.dashed || curveStyle == CurveStyle.dotted) {
-    // For dashed curves, we draw segment by segment
+    // DASHED: Draw segment by segment
     for (int i = 0; i < points.length - 1; i++) {
+      // Assuming your interface is: drawDashedLine(p1, p2, color, width)
       canvas.drawDashedLine(
         points[i],
         points[i + 1],
@@ -98,40 +104,40 @@ void paintDiagramLines(
       );
     }
   } else {
+    // SOLID: Pass the List<Offset> directly.
+    // ERROR FIX: Removed named parameter 'strokeWidth' if your interface doesn't support it.
+    // Instead, assume your drawPath takes (points, color, width, fill).
     canvas.drawPath(points, mainColor, fill: false);
   }
 
-  // 4. Labels (using our new pivot system)
+  // --- 4. END POSITION & DECORATIONS ---
+  final Offset endPixelPos = points.last;
+
+  // Draw Labels
   if (label1 != null) {
     _paintDiagramLabel(
       config,
       canvas,
       label1,
-      startPos,
+      start,
       label1Align,
       mainColor,
-      normalizeToDiagramArea,
+      false,
     );
   }
-
-  final lastLogicalPos = polylineOffsets != null
-      ? polylineOffsets.last
-      : bezierPoints!.last.endPoint;
-  final Offset end = computeOffset(lastLogicalPos);
-
   if (label2 != null) {
     _paintDiagramLabel(
       config,
       canvas,
       label2,
-      lastLogicalPos,
+      endPixelPos,
       label2Align,
       mainColor,
-      normalizeToDiagramArea,
+      false,
     );
   }
 
-  // 5. Arrows and Dots
+  // Draw Arrows (using calculated points for angle)
   if (arrowOnStart) {
     paintArrowHead(
       config,
@@ -142,54 +148,61 @@ void paintDiagramLines(
     );
   }
 
-  if (arrowOnEnd) {
-    double finalAngle = arrowOnEndAngle;
-    if (finalAngle == 0) {
-      final Offset reference = (bezierPoints != null)
-          ? computeOffset(bezierPoints.last.control)
-          : start;
-      finalAngle = atan2(end.dy - reference.dy, end.dx - reference.dx);
-    }
+  if (arrowOnEnd && points.length >= 2) {
+    // Calculate angle from the last two points of the curve
+    final last = points.last;
+    final prev = points[points.length - 2];
+    double angle = arrowOnEndAngle == 0
+        ? atan2(last.dy - prev.dy, last.dx - prev.dx)
+        : arrowOnEndAngle;
+
     paintArrowHead(
       config,
       canvas,
       color: mainColor,
-      positionOfArrow: end,
-      rotationAngle: finalAngle,
+      positionOfArrow: endPixelPos,
+      rotationAngle: angle,
     );
   }
 
+  // Draw Dots
   final r = circleRadius * config.averageRatio;
   if (circleAtStart) canvas.drawDot(start, mainColor, radius: r);
-  if (circleAtEnd) canvas.drawDot(end, mainColor, radius: r);
+  if (circleAtEnd) canvas.drawDot(endPixelPos, mainColor, radius: r);
 }
 
-/// Helper to map your LabelAlign to the new Pivot system
 void _paintDiagramLabel(
   DiagramPainterConfig config,
   IDiagramCanvas canvas,
   String label,
-  Offset logicalPos,
+  Offset pixelPos, // Now treating this as the base pixel position
   LabelAlign align,
   Color color,
-  bool normalize,
+  bool normalize, // We pass 'false' from the parent for pixel accuracy
 ) {
   LabelPivot horizontal = LabelPivot.center;
   LabelPivot vertical = LabelPivot.middle;
 
-  // Standard economic label mapping
+  // Calculate a resolution-aware gap (approx 10 pixels)
+  final double gapValue = 10.0 * config.averageRatio;
+  Offset nudge = Offset.zero;
+
   switch (align) {
     case LabelAlign.centerTop:
       vertical = LabelPivot.bottom;
+      nudge = Offset(0, -gapValue);
       break;
     case LabelAlign.centerBottom:
       vertical = LabelPivot.top;
+      nudge = Offset(0, gapValue);
       break;
     case LabelAlign.centerLeft:
       horizontal = LabelPivot.right;
+      nudge = Offset(-gapValue, 0);
       break;
     case LabelAlign.centerRight:
       horizontal = LabelPivot.left;
+      nudge = Offset(gapValue, 0);
       break;
     case LabelAlign.center:
       break;
@@ -199,7 +212,7 @@ void _paintDiagramLabel(
     config,
     canvas,
     label,
-    logicalPos,
+    pixelPos + nudge, // Pass the final nudged pixel position
     horizontalPivot: horizontal,
     verticalPivot: vertical,
     normalize: normalize,

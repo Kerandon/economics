@@ -9,36 +9,33 @@ import '../painter_constants.dart';
 void paintArrowHead(
   DiagramPainterConfig config,
   IDiagramCanvas canvas, {
+  required Color color,
   required Offset positionOfArrow,
-  Color? color,
-  double size = kArrowSize,
-  double rotationAngle = 0.0,
+  required double rotationAngle,
+  double arrowSize = 10.0,
+  bool isCentered = true, // Set to true to rotate around the middle
 }) {
-  final arrowWidth = size * config.averageRatio;
-  final arrowHeight = size * config.averageRatio;
-  final effectiveColor = color ?? config.colorScheme.onSurface;
+  final double size = arrowSize * config.averageRatio;
+  final double height = size * 2.0;
 
-  // We use the unified interface's transformation methods
-  canvas.save();
+  // Calculate vertical offsets relative to the pivot (positionOfArrow)
+  // If centered: tip is at -height/2, base is at +height/2
+  // If at end of line: tip is at 0, base is at +height
+  final double tipOffset = isCentered ? -(height / 2) : 0.0;
+  final double baseOffset = isCentered ? (height / 2) : height;
 
-  // 1. Move to the tip of the axis
-  canvas.translate(positionOfArrow.dx, positionOfArrow.dy);
-
-  // 2. Rotate to face the correct direction
-  if (rotationAngle != 0) {
-    canvas.rotate(rotationAngle);
+  Offset rotate(double x, double y) {
+    return Offset(
+      positionOfArrow.dx + (x * cos(rotationAngle) - y * sin(rotationAngle)),
+      positionOfArrow.dy + (x * sin(rotationAngle) + y * cos(rotationAngle)),
+    );
   }
 
-  // 3. Define the triangle relative to (0,0)
-  // These points form a triangle pointing "up" (negative Y in Flutter)
-  final points = [
-    const Offset(0, 0), // The tip
-    Offset(arrowWidth / 2, arrowHeight), // Bottom right
-    Offset(-arrowWidth / 2, arrowHeight), // Bottom left
+  final List<Offset> arrowPath = [
+    rotate(0, tipOffset), // The sharp tip
+    rotate(-size, baseOffset), // Bottom Left
+    rotate(size, baseOffset), // Bottom Right
   ];
 
-  // 4. Draw the filled shape
-  canvas.drawPath(points, effectiveColor, fill: true);
-
-  canvas.restore();
+  canvas.drawPath(arrowPath, color, fill: true);
 }

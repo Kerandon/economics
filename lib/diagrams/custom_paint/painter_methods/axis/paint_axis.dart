@@ -10,8 +10,8 @@ import '../../i_diagram_canvas.dart';
 void paintAxis(
   DiagramPainterConfig config,
   IDiagramCanvas canvas, { // Unified interface
-  String yAxisLabel = 'Price',
-  String xAxisLabel = 'Quantity',
+  String yAxisLabel = 'P',
+  String xAxisLabel = 'Q',
   double? xMaxValue,
   double? yMaxValue,
   int? xDivisions,

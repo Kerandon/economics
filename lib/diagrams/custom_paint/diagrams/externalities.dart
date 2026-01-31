@@ -41,27 +41,27 @@ class Externalities extends BaseDiagramPainter3 {
           DiagramEnum.microCommonPoolResources ||
           DiagramEnum.microNegativeProductionExternalityPigouvianTax ||
           DiagramEnum.microNegativeProductionExternalityRegulations:
-        _paintNegativeProduction(c, canvas, size, diagram);
+        _paintNegativeProduction(c, canvas, diagram);
       case DiagramEnum.microCarbonTax:
-        _paintCarbonTax(c, canvas, size);
+        _paintCarbonTax(c, canvas);
       case DiagramEnum.microTradablePollutionPermits:
-        _paintTradablePermits(c, canvas, size);
+        _paintTradablePermits(c, canvas);
       case DiagramEnum.microNegativeConsumptionExternality ||
           DiagramEnum.microNegativeConsumptionExternalityWelfare ||
           DiagramEnum.microNegativeConsumptionExternalityPigouvianTax ||
           DiagramEnum.microNegativeConsumptionExternalityPublicAwareness:
-        _paintNegativeConsumption(c, canvas, size, diagram);
+        _paintNegativeConsumption(c, canvas, diagram);
       case DiagramEnum.microPositiveProductionExternality ||
           DiagramEnum.microPositiveProductionExternalityWelfare ||
           DiagramEnum.microPositiveProductionExternalitySubsidy ||
           DiagramEnum.microPositiveProductionExternalityDirectProvision:
-        _paintPositiveProduction(c, canvas, size, diagram);
+        _paintPositiveProduction(c, canvas, diagram);
       case DiagramEnum.microPositiveConsumptionExternality ||
           DiagramEnum.microPositiveConsumptionExternalityWelfare ||
           DiagramEnum.microPositiveConsumptionExternalitySubsidy ||
           DiagramEnum.microPositiveConsumptionExternalityAdvertising ||
           DiagramEnum.microPositiveConsumptionExternalityDirectProvision:
-        _paintPositiveConsumption(c, canvas, size, diagram);
+        _paintPositiveConsumption(c, canvas, diagram);
       default:
     }
   }
@@ -83,7 +83,6 @@ class Externalities extends BaseDiagramPainter3 {
   void _paintNegativeProduction(
     DiagramPainterConfig c,
     IDiagramCanvas canvas,
-    Size size,
     DiagramEnum bundle,
   ) {
     String supplyLabel = DiagramLabel.msc.label;
@@ -170,11 +169,7 @@ class Externalities extends BaseDiagramPainter3 {
     );
   }
 
-  void _paintCarbonTax(
-    DiagramPainterConfig c,
-    IDiagramCanvas canvas,
-    Size size,
-  ) {
+  void _paintCarbonTax(DiagramPainterConfig c, IDiagramCanvas canvas) {
     paintDiagramLines(
       c,
       canvas,
@@ -216,12 +211,7 @@ class Externalities extends BaseDiagramPainter3 {
     );
   }
 
-  void _paintTradablePermits(
-    DiagramPainterConfig c,
-    IDiagramCanvas canvas,
-    Size size, {
-    IDiagramCanvas? iCanvas,
-  }) {
+  void _paintTradablePermits(DiagramPainterConfig c, IDiagramCanvas canvas) {
     paintDiagramDashedLines(
       c,
       canvas,
@@ -251,10 +241,8 @@ class Externalities extends BaseDiagramPainter3 {
   void _paintNegativeConsumption(
     DiagramPainterConfig c,
     IDiagramCanvas canvas,
-    Size size,
-    DiagramEnum bundle, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    DiagramEnum bundle,
+  ) {
     paintText2(
       c,
       canvas,
@@ -335,10 +323,8 @@ class Externalities extends BaseDiagramPainter3 {
   void _paintPositiveProduction(
     DiagramPainterConfig c,
     IDiagramCanvas canvas,
-    Size size,
-    DiagramEnum bundle, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    DiagramEnum bundle,
+  ) {
     paintText2(
       c,
       canvas,
@@ -426,10 +412,8 @@ class Externalities extends BaseDiagramPainter3 {
   void _paintPositiveConsumption(
     DiagramPainterConfig c,
     IDiagramCanvas canvas,
-    Size size,
-    DiagramEnum bundle, {
-    IDiagramCanvas? iCanvas,
-  }) {
+    DiagramEnum bundle,
+  ) {
     paintText2(
       c,
       canvas,

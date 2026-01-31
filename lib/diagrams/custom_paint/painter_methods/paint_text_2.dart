@@ -30,120 +30,106 @@ void paintText2(
   final width = config.painterSize.width;
   final height = config.painterSize.height;
 
-  // --- 1. Variable Setup & Normalization Logic ---
-  const leftMarginRatio = 1.0;
-  const rightMarginRatio = 1.0;
-  const topMarginRatio = kTopAxisIndent;
-  const bottomMarginRatio = kBottomAxisIndent;
-
+  // 1. Setup Scaling & Colors
+  final double scaledFontSize =
+      (style?.fontSize ?? fontSize) * config.averageRatio;
   final bool isDarkTheme = config.colorScheme.brightness == Brightness.dark;
   final Color surfaceColor = isDarkTheme ? Colors.black : Colors.white;
   final Color onSurfaceColor = isDarkTheme ? Colors.white : Colors.black87;
 
-  final effectiveStyle =
-      (style ?? TextStyle(color: onSurfaceColor, fontSize: fontSize)).copyWith(
-        fontSize: (style?.fontSize ?? fontSize) * config.averageRatio,
-        color: style?.color ?? onSurfaceColor,
-      );
+  final effectiveStyle = (style ?? TextStyle(color: onSurfaceColor)).copyWith(
+    fontSize: scaledFontSize,
+  );
 
-  final normalizedWidthRatio =
-      1.0 - (leftMarginRatio + rightMarginRatio) * kAxisIndent;
-  final normalizedHeightRatio =
-      1.0 - (topMarginRatio + bottomMarginRatio) * kAxisIndent;
+  // 2. Normalization Logic
+  Offset toPixels(Offset pos) {
+    if (!normalize) return pos; // Use raw pixels if already calculated
+    const leftMarginRatio = 1.0;
+    const topMarginRatio = kTopAxisIndent;
+    final normalizedWidthRatio = 1.0 - (2.0 * kAxisIndent);
+    final normalizedHeightRatio =
+        1.0 - ((kTopAxisIndent + kBottomAxisIndent) * kAxisIndent);
 
-  // Calculate the Anchor Point (w, h)
-  double w = normalize
-      ? (width * normalizedWidthRatio) * position.dx +
-            (leftMarginRatio * kAxisIndent * width)
-      : width * position.dx;
+    double px =
+        (width * normalizedWidthRatio) * pos.dx +
+        (leftMarginRatio * kAxisIndent * width);
+    double py =
+        (height * normalizedHeightRatio) * pos.dy +
+        (topMarginRatio * kAxisIndent * height);
+    return Offset(px, py);
+  }
 
-  double h = normalize
-      ? (height * normalizedHeightRatio) * position.dy +
-            (topMarginRatio * kAxisIndent * height)
-      : height * position.dy;
+  final drawPos = toPixels(position);
 
-  final drawPos = Offset(w, h);
-
-  // --- 2. Measure Text ---
+  // 3. Measure Text
   final textPainter = TextPainter(
     text: TextSpan(text: label, style: effectiveStyle),
     textDirection: TextDirection.ltr,
   )..layout();
 
-  // --- 3. Calculate Pivot/Alignment Offsets ---
-  double alignmentX = 0;
-  if (horizontalPivot == LabelPivot.center) alignmentX = textPainter.width / 2;
-  if (horizontalPivot == LabelPivot.right) alignmentX = textPainter.width;
+  // 4. Calculate Pivot Shifts
+  // These shifts determine how the text block sits relative to drawPos
+  double shiftX = 0;
+  if (horizontalPivot == LabelPivot.center) shiftX = textPainter.width / 2;
+  if (horizontalPivot == LabelPivot.right) shiftX = textPainter.width;
 
-  double alignmentY = 0;
-  if (verticalPivot == LabelPivot.middle) alignmentY = textPainter.height / 2;
-  if (verticalPivot == LabelPivot.bottom) alignmentY = textPainter.height;
+  double shiftY = 0;
+  if (verticalPivot == LabelPivot.middle) shiftY = textPainter.height / 2;
+  if (verticalPivot == LabelPivot.bottom) shiftY = textPainter.height;
 
-  // --- 4. Draw Pointer Line ---
+  // 5. Pointer Line (unchanged)
   if (pointerLine != null) {
-    final lineEndX = normalize
-        ? (width * normalizedWidthRatio) * pointerLine.dx +
-              (leftMarginRatio * kAxisIndent * width)
-        : width * pointerLine.dx;
-    final lineEndY = normalize
-        ? (height * normalizedHeightRatio) * pointerLine.dy +
-              (topMarginRatio * kAxisIndent * height)
-        : height * pointerLine.dy;
-
-    final endPos = Offset(lineEndX, lineEndY);
+    final endPos = toPixels(pointerLine);
     final lineColor = effectiveStyle.color ?? onSurfaceColor;
-    final lineWidth = kCurveWidth / 5;
-
+    final lineWidth = (kCurveWidth / 5) * config.averageRatio;
     canvas.drawLine(drawPos, endPos, lineColor, lineWidth);
-    canvas.drawDot(endPos, lineColor, radius: 2.0, fill: true);
+    canvas.drawDot(
+      endPos,
+      lineColor,
+      radius: kDotRadius * config.averageRatio,
+      fill: true,
+    );
   }
 
-  // --- 5. Draw Background Box & Text ---
-  const double paddingX = 6.0;
-  const double paddingY = 2.0;
+  // 6. Draw Text & Background Box
+  // REDUCED PADDING: High-res PDFs look better with tighter boxes
+  final double padX = 2.0 * config.averageRatio;
+  final double padY = 1.0 * config.averageRatio;
 
   if (angle == 0) {
-    // OPTIMIZATION: Use absolute coordinates for non-rotated text.
-    // This fixes coordinate drift issues on PDF exports.
-    final absoluteTopLeft = Offset(
-      drawPos.dx - alignmentX,
-      drawPos.dy - alignmentY,
-    );
+    // textTopLeft is where the actual ink starts
+    final textTopLeft = Offset(drawPos.dx - shiftX, drawPos.dy - shiftY);
 
+    // CRITICAL FIX: The background box should be flush with the pivot logic.
+    // We only apply padding IF we want a margin around the text.
+    // If text looks too far away, we ensure the box doesn't push the anchor.
     final boxRect = Rect.fromLTWH(
-      absoluteTopLeft.dx - paddingX / 2,
-      absoluteTopLeft.dy - paddingY / 2,
-      textPainter.width + paddingX,
-      textPainter.height + paddingY,
+      textTopLeft.dx - (padX / 2),
+      textTopLeft.dy - (padY / 2),
+      textPainter.width + padX,
+      textPainter.height + padY,
     );
 
     canvas.drawRect(boxRect, surfaceColor, fill: true);
-    canvas.drawText(
-      label,
-      absoluteTopLeft,
-      effectiveStyle.fontSize!,
-      effectiveStyle.color!,
-    );
+    canvas.drawText(label, textTopLeft, scaledFontSize, effectiveStyle.color!);
   } else {
-    // Use transformation matrix for rotated text.
     canvas.save();
     canvas.translate(drawPos.dx, drawPos.dy);
     canvas.rotate(angle);
 
-    final relativeTopLeft = Offset(-alignmentX, -alignmentY);
-
+    final relativeTopLeft = Offset(-shiftX, -shiftY);
     final boxRect = Rect.fromLTWH(
-      relativeTopLeft.dx - paddingX / 2,
-      relativeTopLeft.dy - paddingY / 2,
-      textPainter.width + paddingX,
-      textPainter.height + paddingY,
+      relativeTopLeft.dx - (padX / 2),
+      relativeTopLeft.dy - (padY / 2),
+      textPainter.width + padX,
+      textPainter.height + padY,
     );
 
     canvas.drawRect(boxRect, surfaceColor, fill: true);
     canvas.drawText(
       label,
       relativeTopLeft,
-      effectiveStyle.fontSize!,
+      scaledFontSize,
       effectiveStyle.color!,
     );
     canvas.restore();

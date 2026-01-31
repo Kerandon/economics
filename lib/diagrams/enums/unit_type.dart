@@ -69,7 +69,7 @@ enum Subunit {
     'Measuring economic activity and illustrating its variations',
     UnitType.macro,
   ),
-  variationsActivity(
+  variationsActivityADAS(
     '3.2',
     'Variations in economic activity—aggregate demand and aggregate supply',
     UnitType.macro,

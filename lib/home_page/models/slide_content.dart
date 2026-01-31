@@ -56,7 +56,7 @@ class SlideContent {
 
   // Visuals
   final List<DiagramEnum>? diagramEnums;
-  final List<DiagramWidget>? diagramWidgets;
+  // final List<DiagramWidget>? diagramWidgets;
 
   // 🆕 This field stores the "captured" screenshots for the PDF
   final List<Uint8List>? diagramImages;
@@ -76,7 +76,7 @@ class SlideContent {
     this.alert,
     this.examples,
     this.diagramEnums,
-    this.diagramWidgets,
+    // this.diagramWidgets,
     this.diagramImages, // 🆕 Added
     this.widget,
     this.glossaryItems,
@@ -91,7 +91,7 @@ class SlideContent {
     Alert? alert,
     Example? examples,
     List<DiagramEnum>? diagramEnums,
-    List<DiagramWidget>? diagramWidgets,
+    // List<DiagramWidget>? diagramWidgets,
     List<Uint8List>? diagramImages, // 🆕 Added
     Widget? widget,
     List<SlideContent>? glossaryItems,
@@ -104,7 +104,7 @@ class SlideContent {
       term: term ?? this.term,
       alert: alert ?? this.alert,
       examples: examples ?? this.examples,
-      diagramWidgets: diagramWidgets ?? this.diagramWidgets,
+      // diagramWidgets: diagramWidgets ?? this.diagramWidgets,
       diagramEnums: diagramEnums ?? this.diagramEnums,
       diagramImages: diagramImages ?? this.diagramImages, // 🆕 Added
       widget: widget ?? this.widget,

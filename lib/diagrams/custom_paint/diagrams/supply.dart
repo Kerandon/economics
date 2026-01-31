@@ -271,6 +271,7 @@ class Supply extends BaseDiagramPainter3 {
 
       startPos: const Offset(0.05, 0.95),
       label2: DiagramLabel.marginalProduct.label,
+      label2Align: LabelAlign.center,
       bezierPoints: [
         CustomBezier(
           endPoint: const Offset(0.75, 0.50),
@@ -295,7 +296,7 @@ class Supply extends BaseDiagramPainter3 {
 
       startPos: const Offset(0.05, 0.60),
       label2: DiagramLabel.marginalCost.label,
-      label2Align: LabelAlign.centerTop,
+      label2Align: LabelAlign.center,
       bezierPoints: [
         CustomBezier(
           endPoint: const Offset(0.90, 0.10),

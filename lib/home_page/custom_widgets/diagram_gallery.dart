@@ -6,7 +6,7 @@ import '../models/slide_content.dart';
 import 'package:flutter/material.dart';
 
 class DiagramGallery extends StatelessWidget {
-  final List<DiagramWidget> diagrams;
+  final List<DiagramWidgetNEW> diagrams;
   final double spacing;
 
   const DiagramGallery({super.key, required this.diagrams, this.spacing = 1.0});
@@ -28,7 +28,6 @@ class DiagramGallery extends StatelessWidget {
               height: itemSize,
 
               // ✅ IMPORTANT: reuse the SAME widget instance
-              child: FittedBox(fit: BoxFit.contain, child: d.widget),
             );
           }).toList(),
         );

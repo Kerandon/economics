@@ -2,7 +2,7 @@ import 'package:economics_app/home_page/pages/terms_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../diagrams/enums/diagram_enum.dart';
-import '../pages/diagrams_page.dart';
+import '../pages/diagrams_page/diagrams_page.dart';
 
 enum Resource { diagrams, terms }
 

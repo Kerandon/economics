@@ -248,7 +248,11 @@ enum DiagramLabel {
   longRunAggregateSupply,
   lRAS,
   pL,
+  pLe,
+  pL1,
+  pL2,
   yF,
+  yP,
   yE,
   yInf,
   yDef,
@@ -602,6 +606,10 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.lostRevenue => 'Lost\nRevenue',
       DiagramLabel.consumerGain => 'Consumer Gain',
       DiagramLabel.producerGain => 'Producer Gain',
+      DiagramLabel.yP => 'Yp',
+      DiagramLabel.pLe => 'PLe',
+      DiagramLabel.pL1 => 'PL1',
+      DiagramLabel.pL2 => 'PL2',
     };
   }
 }

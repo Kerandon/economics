@@ -19,30 +19,6 @@ class _NotesPageState extends ConsumerState<NotesPage> {
   final Map<int, List<Uint8List>> _diagramImages = {};
   bool _exporting = false;
 
-  Future<void> _captureDiagrams(List<dynamic> slides) async {
-    _diagramImages.clear();
-    await WidgetsBinding.instance.endOfFrame;
-
-    for (final slide in slides) {
-      for (final content in slide.contents ?? []) {
-        final widgets = content.diagramWidgets;
-        if (widgets == null || widgets.isEmpty) continue;
-
-        final images = <Uint8List>[];
-        for (final dw in widgets) {
-          final bytes = await DiagramCaptureService.captureFromKey(
-            dw.repaintKey,
-          );
-          if (bytes.isNotEmpty) images.add(bytes);
-        }
-
-        if (images.isNotEmpty) {
-          _diagramImages[content.hashCode] = images;
-        }
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final homeState = ref.watch(homePageProvider);
@@ -64,8 +40,6 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                 ? null
                 : () async {
                     setState(() => _exporting = true);
-
-                    await _captureDiagrams(slides);
 
                     await HybridPdfService.exportToPdf(
                       fileName: 'Notes_${homeState.selectedSubunit?.title}.pdf',
@@ -103,9 +77,9 @@ class _NotesPageState extends ConsumerState<NotesPage> {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (c.widget != null) c.widget!,
-                              if (c.diagramWidgets?.isNotEmpty ?? false)
-                                DiagramGallery(diagrams: c.diagramWidgets!),
+                              // if (c.widget != null) c.widget!,
+                              // if (c.diagramWidgets?.isNotEmpty ?? false)
+                              //   DiagramGallery(diagrams: c.diagramWidgets!),
                             ],
                           );
                         }).toList() ??

@@ -1,3 +1,4 @@
+import 'package:economics_app/diagrams/custom_paint/diagrams/ad_as_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/competitive_market.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/market_power.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/price_controls.dart';
@@ -149,106 +150,130 @@ List<DiagramWidgetNEW> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidgetNEW([
       MarketPower(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
     ]),
+
+    /// AD-AS
+    DiagramWidgetNEW([
+      ADASDiagram(c, DiagramEnum.macroADASClassicalFullEmployment),
+    ]),
+    DiagramWidgetNEW([
+      ADASDiagram(c, DiagramEnum.macroADASClassicalDeflationaryGap),
+    ]),
+    DiagramWidgetNEW([
+      ADASDiagram(c, DiagramEnum.macroADASClassicalInflationaryGap),
+    ]),
+    DiagramWidgetNEW([
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianFullEmployment),
+    ]),
+    DiagramWidgetNEW([
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianDeflationaryGap),
+    ]),
+    DiagramWidgetNEW([
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianFullEmployment),
+    ]),
+    DiagramWidgetNEW([
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianInflationaryGap),
+    ]),
   ];
 }
 
-List<DiagramWidget> getDiagramWidgetList(DiagramPainterConfig c) {
-  return [
-    /// Demand
-    DiagramWidget(DemandDiagram(c, DiagramEnum.microDemand)),
-    DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandExtension)),
-    DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandContraction)),
-    DiagramWidget(
-      DemandDiagram(c, DiagramEnum.microDemandQuantityChangeDueToSupply),
-    ),
-    DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandIncrease)),
-    DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandDecrease)),
-
-    /// Market Power
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
-    ),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
-    ),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketAbnormalProfit),
-    ),
-    DiagramWidget(
-      MarketPower(
-        c,
-        DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment,
-      ),
-    ),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLoss),
-    ),
-    DiagramWidget(MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLoss)),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microPerfectCompetitionShutdownPoint),
-    ),
-    DiagramWidget(
-      MarketPower(
-        c,
-        DiagramEnum.microPerfectCompetitionNormalProfitRevenueCostsCalculation,
-      ),
-    ),
-    DiagramWidget(
-      MarketPower(
-        c,
-        DiagramEnum
-            .microPerfectCompetitionAbnormalProfitRevenueCostsCalculation,
-      ),
-    ),
-    DiagramWidget(
-      MarketPower(
-        c,
-        DiagramEnum.microPerfectCompetitionShutdownLossCalculation,
-      ),
-    ),
-    DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyAbnormalProfit)),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolyAbnormalProfitAndCosts),
-    ),
-    DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyWelfare)),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolyWelfareAllocativelyEfficient),
-    ),
-    DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyNatural)),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolyNaturalUnregulatedWelfare),
-    ),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolyNaturalPricingComparisons),
-    ),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
-    ),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolyNaturalMarginalCostPricing),
-    ),
-    DiagramWidget(
-      MarketPower(
-        c,
-        DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare,
-      ),
-    ),
-    DiagramWidget(MarketPower(c, DiagramEnum.microOligopolyKinkedDemandCurve)),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
-    ),
-    DiagramWidget(MarketPower(c, DiagramEnum.microMonopolisticCompetitionLoss)),
-    DiagramWidget(
-      MarketPower(
-        c,
-        DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift,
-      ),
-    ),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolisticCompetitionLossShift),
-    ),
-    DiagramWidget(
-      MarketPower(c, DiagramEnum.microMonopolisticCompetitionLongRun),
-    ),
-  ];
-}
+//
+// List<DiagramWidget> getDiagramWidgetList(DiagramPainterConfig c) {
+//   return [
+//     /// Demand
+//     DiagramWidgetNEW(DemandDiagram(c, DiagramEnum.microDemand)),
+//     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandExtension)),
+//     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandContraction)),
+//     DiagramWidget(
+//       DemandDiagram(c, DiagramEnum.microDemandQuantityChangeDueToSupply),
+//     ),
+//     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandIncrease)),
+//     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandDecrease)),
+//
+//     /// Market Power
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
+//     ),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
+//     ),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketAbnormalProfit),
+//     ),
+//     DiagramWidget(
+//       MarketPower(
+//         c,
+//         DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment,
+//       ),
+//     ),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLoss),
+//     ),
+//     DiagramWidget(MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLoss)),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microPerfectCompetitionShutdownPoint),
+//     ),
+//     DiagramWidget(
+//       MarketPower(
+//         c,
+//         DiagramEnum.microPerfectCompetitionNormalProfitRevenueCostsCalculation,
+//       ),
+//     ),
+//     DiagramWidget(
+//       MarketPower(
+//         c,
+//         DiagramEnum
+//             .microPerfectCompetitionAbnormalProfitRevenueCostsCalculation,
+//       ),
+//     ),
+//     DiagramWidget(
+//       MarketPower(
+//         c,
+//         DiagramEnum.microPerfectCompetitionShutdownLossCalculation,
+//       ),
+//     ),
+//     DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyAbnormalProfit)),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolyAbnormalProfitAndCosts),
+//     ),
+//     DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyWelfare)),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolyWelfareAllocativelyEfficient),
+//     ),
+//     DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyNatural)),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolyNaturalUnregulatedWelfare),
+//     ),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolyNaturalPricingComparisons),
+//     ),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
+//     ),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolyNaturalMarginalCostPricing),
+//     ),
+//     DiagramWidget(
+//       MarketPower(
+//         c,
+//         DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare,
+//       ),
+//     ),
+//     DiagramWidget(MarketPower(c, DiagramEnum.microOligopolyKinkedDemandCurve)),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
+//     ),
+//     DiagramWidget(MarketPower(c, DiagramEnum.microMonopolisticCompetitionLoss)),
+//     DiagramWidget(
+//       MarketPower(
+//         c,
+//         DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift,
+//       ),
+//     ),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolisticCompetitionLossShift),
+//     ),
+//     DiagramWidget(
+//       MarketPower(c, DiagramEnum.microMonopolisticCompetitionLongRun),
+//     ),
+//   ];
+// }

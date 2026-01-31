@@ -42,15 +42,20 @@ void paintAxisLines(
   // Horizontal X-Axis
   canvas.drawLine(startXOffset, endXOffset, axisColor, axisWidth);
 
-  // 3. Sub-method calls
-  // These must also be updated to accept IDiagramCanvas
-  paintArrowHead(config, canvas, positionOfArrow: startYOffset);
-
+  paintArrowHead(
+    config,
+    canvas,
+    positionOfArrow: startYOffset,
+    rotationAngle: 0,
+    color: color ?? config.colorScheme.onSurface,
+    //isCentered: false
+  );
   paintArrowHead(
     config,
     canvas,
     positionOfArrow: endXOffset,
     rotationAngle: pi / 2,
+    color: color ?? config.colorScheme.onSurface,
   );
 
   if (gridLineStyle != GridLineStyle.none) {

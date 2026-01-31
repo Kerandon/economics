@@ -47,19 +47,18 @@ void _paintDemand(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,
   Size size,
-  DiagramEnum diagram, {
-  IDiagramCanvas? iCanvas,
-}) {
+  DiagramEnum diagram,
+) {
   paintAxis(
     c,
     canvas,
     yAxisLabel: DiagramLabel.price$.label,
     xAxisLabel: DiagramLabel.quantity.label,
-    yDivisions: 11,
-    yMaxValue: 11,
+    yDivisions: 10,
+    yMaxValue: 10,
     gridLineStyle: GridLineStyle.dashes,
-    xDivisions: 6,
-    xMaxValue: 6,
+    xDivisions: 10,
+    xMaxValue: 10,
     labelPad: 0.08,
   );
   paintDiagramLines(

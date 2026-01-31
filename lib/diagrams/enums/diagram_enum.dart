@@ -105,6 +105,15 @@ enum DiagramEnum {
   microMonopolisticCompetitionLossShift,
   microMonopolisticCompetitionLongRun,
 
+  /// Macro
+  macroADASClassicalFullEmployment,
+  macroADASClassicalDeflationaryGap,
+  macroADASClassicalInflationaryGap,
+  macroADASKeynesianFullEmployment,
+  macroADASKeynesianDeflationaryGap,
+  macroADASKeynesianInflationaryGap,
+
+  ///Global
   globalWorldPrice,
   globalWorldPriceStandAlone,
   globalNetExporter,
@@ -381,5 +390,23 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalProductionSubsidyWelfareLoss =>
       Subunit.typesTradeProtection,
     DiagramEnum.globalProductionSubsidyWelfare => Subunit.typesTradeProtection,
+
+    DiagramEnum.macroADASClassicalFullEmployment =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASClassicalDeflationaryGap =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASClassicalInflationaryGap =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASKeynesianFullEmployment =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASKeynesianDeflationaryGap =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASKeynesianInflationaryGap =>
+      Subunit.variationsActivityADAS,
   };
 }
