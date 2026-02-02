@@ -3,7 +3,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
@@ -12,12 +12,12 @@ import 'package:flutter/material.dart';
 import '../../enums/diagram_labels.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
-import '../painter_methods/paint_text_2.dart';
+import '../painter_methods/paint_text.dart';
 import '../../models/base_painter_painter.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 
-class TaxesSubsidies extends BaseDiagramPainter3 {
+class TaxesSubsidies extends BaseDiagramPainter {
   TaxesSubsidies(super.config, super.diagram);
 
   @override
@@ -65,7 +65,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       angle: -pi / 2,
       length: 0.18,
     );
-    paintText2(c, canvas, DiagramLabel.tax.label, const Offset(0.66, 0.32));
+    paintText(c, canvas, DiagramLabel.tax.label, const Offset(0.66, 0.32));
 
     // Surplus Area Labels
     final labels = {
@@ -80,7 +80,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       DiagramLabel.i: const Offset(0.25, 0.74),
     };
     labels.forEach(
-      (label, offset) => paintText2(c, canvas, label.label, offset),
+      (label, offset) => paintText(c, canvas, label.label, offset),
     );
 
     // Curves
@@ -230,14 +230,14 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       hideXLine: true,
       showDotAtIntersection: true,
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.consumerBurden.label,
       Offset(0.20, 0.30),
       pointerLine: Offset(0.20, 0.50),
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.producerBurden.label,
@@ -250,19 +250,19 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
 
   void _paintSubsidy(DiagramPainterConfig c, IDiagramCanvas canvas) {
     // Labels A-H
-    paintText2(c, canvas, DiagramLabel.a.label, const Offset(0.10, 0.22));
-    paintText2(c, canvas, DiagramLabel.b.label, const Offset(0.10, 0.36));
-    paintText2(c, canvas, DiagramLabel.c.label, const Offset(0.42, 0.36));
-    paintText2(
+    paintText(c, canvas, DiagramLabel.a.label, const Offset(0.10, 0.22));
+    paintText(c, canvas, DiagramLabel.b.label, const Offset(0.10, 0.36));
+    paintText(c, canvas, DiagramLabel.c.label, const Offset(0.42, 0.36));
+    paintText(
       c,
       canvas,
       DiagramLabel.d.label.toLowerCase(),
       const Offset(0.10, 0.49),
     );
-    paintText2(c, canvas, DiagramLabel.e.label, const Offset(0.39, 0.51));
-    paintText2(c, canvas, DiagramLabel.f.label, const Offset(0.46, 0.51));
-    paintText2(c, canvas, DiagramLabel.g.label, const Offset(0.50, 0.42));
-    paintText2(c, canvas, DiagramLabel.h.label, const Offset(0.10, 0.62));
+    paintText(c, canvas, DiagramLabel.e.label, const Offset(0.39, 0.51));
+    paintText(c, canvas, DiagramLabel.f.label, const Offset(0.46, 0.51));
+    paintText(c, canvas, DiagramLabel.g.label, const Offset(0.50, 0.42));
+    paintText(c, canvas, DiagramLabel.h.label, const Offset(0.10, 0.62));
     paintLineSegment(
       c,
       canvas,
@@ -271,7 +271,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       angle: pi / 2,
       length: 0.18,
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.subsidy.label,
@@ -425,7 +425,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       hideYLine: true,
       showDotAtIntersection: true,
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.consumerGain.label,
@@ -433,7 +433,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
 
       pointerLine: Offset(0.20, 0.35),
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.producerGain.label,
@@ -617,7 +617,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
       hideYLine: true,
       showDotAtIntersection: true,
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.consumerGain.label,
@@ -625,7 +625,7 @@ class TaxesSubsidies extends BaseDiagramPainter3 {
 
       pointerLine: Offset(0.30, 0.30),
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.producerGain.label,

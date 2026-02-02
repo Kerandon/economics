@@ -2,12 +2,14 @@ import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/diagrams/data/get_diagram_widget_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../diagrams/enums/unit_type.dart';
+
+// FIX 1: Use 'package:' import here to match the other imports.
+// Mixing relative (../../) and package imports causes Type Mismatches in Maps.
+import 'package:economics_app/diagrams/enums/unit_type.dart';
+
 import '../../../diagrams/models/diagram_painter_config.dart';
 import '../../../diagrams/models/diagram_widget.dart';
 import '../../../diagrams/helper_methods/export_diagrams_to_pdf.dart';
-
-// Ensure your imports for Subunit, UnitType, etc. are correct.
 
 class DiagramsPage extends ConsumerStatefulWidget {
   const DiagramsPage({super.key});
@@ -40,41 +42,41 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
 
   void _scrollToSubunit(Subunit subunit) {
     final key = _subunitKeys[subunit];
+    // With SliverToBoxAdapter (below), the context is much more likely to be available
     if (key?.currentContext != null) {
       Scrollable.ensureVisible(
         key!.currentContext!,
         duration: const Duration(milliseconds: 600),
         curve: Curves.easeInOutCubic,
-        alignment: 0.05,
+        alignment: 0.05, // Aligns to top with slight padding
+      );
+    } else {
+      debugPrint(
+        "Context not found for ${subunit.name} - widget might not be built.",
       );
     }
   }
 
-  // --- UPDATED: Full Screen Logic ---
   void _openFullScreen(
     BuildContext context,
     Widget diagramWidget,
     String title,
     String heroTag,
   ) {
-    final theme = Theme.of(context); // Get current theme data
-
+    final theme = Theme.of(context);
     Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (ctx) => Scaffold(
-          // 1. Use Default Theme Colors
           backgroundColor: theme.scaffoldBackgroundColor,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            iconTheme: IconThemeData(
-              color: theme.colorScheme.onSurface,
-            ), // Auto-dark/light icons
+            iconTheme: IconThemeData(color: theme.colorScheme.onSurface),
             title: Text(
               title,
               style: theme.textTheme.titleLarge?.copyWith(
-                color: theme.colorScheme.onSurface, // Auto-dark/light text
+                color: theme.colorScheme.onSurface,
               ),
             ),
           ),
@@ -86,7 +88,6 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
             child: Center(
               child: Hero(
                 tag: heroTag,
-                // 2. FITTED BOX: Forces the diagram to scale up to screen width
                 child: FittedBox(fit: BoxFit.contain, child: diagramWidget),
               ),
             ),
@@ -116,7 +117,7 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
     }).toList();
 
     // Grouping Logic
-    final Map<Subunit, List<DiagramWidgetNEW>> diagramsBySubunit = {};
+    final Map<Subunit, List<DiagramWidget>> diagramsBySubunit = {};
     for (var d in filteredDiagrams) {
       final subunit =
           d.basePainterDiagrams.first.subunit ?? Subunit.whatIsEconomics;
@@ -240,28 +241,36 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                     ),
                     SliverPadding(
                       padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
-                      sliver: SliverList(
-                        delegate: SliverChildListDelegate([
-                          if (filteredDiagrams.isEmpty)
-                            Container(
-                              height: 300,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "No diagrams match your search.",
-                                style: theme.textTheme.bodyLarge,
-                              ),
-                            ),
 
-                          for (var unit in UnitType.values)
-                            if (activeUnits.containsKey(unit))
-                              _buildUnitSection(
-                                context,
-                                theme,
-                                unit,
-                                activeUnits[unit]!,
-                                diagramsBySubunit,
+                      // FIX 2: Switched from SliverList to SliverToBoxAdapter + Column.
+                      // SliverList lazily renders items (widgets off-screen don't exist).
+                      // This meant GlobalKeys for Macro diagrams (at the bottom) were null, breaking scroll.
+                      // Column renders all children, ensuring scroll targets always exist.
+                      sliver: SliverToBoxAdapter(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (filteredDiagrams.isEmpty)
+                              Container(
+                                height: 300,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "No diagrams match your search.",
+                                  style: theme.textTheme.bodyLarge,
+                                ),
                               ),
-                        ]),
+
+                            for (var unit in UnitType.values)
+                              if (activeUnits.containsKey(unit))
+                                _buildUnitSection(
+                                  context,
+                                  theme,
+                                  unit,
+                                  activeUnits[unit]!,
+                                  diagramsBySubunit,
+                                ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -279,7 +288,7 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
     ThemeData theme,
     UnitType unit,
     List<Subunit> subunits,
-    Map<Subunit, List<DiagramWidgetNEW>> diagramsBySubunit,
+    Map<Subunit, List<DiagramWidget>> diagramsBySubunit,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,7 +312,7 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
         ),
         for (var subunit in subunits)
           Card(
-            key: _subunitKeys[subunit],
+            key: _subunitKeys[subunit], // The key is now always mounted
             margin: const EdgeInsets.only(bottom: 32),
             elevation: 0,
             shape: RoundedRectangleBorder(
@@ -330,8 +339,6 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                   ) {
                     final index = entry.key;
                     final diagram = entry.value;
-
-                    // Unique tag for Hero animation
                     final uniqueTag =
                         "${unit.name}_${subunit.id}_${index}_${diagram.basePainterDiagrams.first.diagram.toText}";
 
@@ -352,7 +359,7 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
 
   Widget _buildDiagramCard(
     BuildContext context,
-    DiagramWidgetNEW diagram,
+    DiagramWidget diagram,
     ThemeData theme,
     String heroTag,
   ) {
@@ -397,7 +404,6 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
           ),
         ),
         const SizedBox(height: 16),
-
         Stack(
           alignment: Alignment.bottomRight,
           children: [

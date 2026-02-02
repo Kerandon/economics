@@ -6,31 +6,28 @@ class DiagramPainterConfig {
   final Size painterSize;
   final ColorScheme colorScheme;
 
-  const DiagramPainterConfig({
+  // Cached values calculated once at initialization
+  final Size sizeRatio;
+  final double averageRatio;
+
+  DiagramPainterConfig({
     required this.appSize,
     required this.painterSize,
     required this.colorScheme,
-  });
-
-  /// A getter that calculates the ratio of `painterSize` to `appSize`
-  Size get sizeRatio {
-    return Size(
-      appSize.width == 0 ? 0 : painterSize.width / appSize.width,
-      appSize.height == 0 ? 0 : painterSize.height / appSize.height,
-    );
-  }
-
-  /// A getter that calculates the average ratio (normalized value)
-  double get averageRatio {
-    final ratio = sizeRatio;
-    return (ratio.width + ratio.height) / 2;
-  }
+  }) : sizeRatio = Size(
+         appSize.width == 0 ? 0 : painterSize.width / appSize.width,
+         appSize.height == 0 ? 0 : painterSize.height / appSize.height,
+       ),
+       averageRatio = (appSize.width == 0 || appSize.height == 0)
+           ? 0
+           : ((painterSize.width / appSize.width) +
+                     (painterSize.height / appSize.height)) /
+                 2;
 
   DiagramPainterConfig copyWith({
     Size? appSize,
     Size? painterSize,
     ColorScheme? colorScheme,
-    SizeAdjustor? adjustedSize,
   }) {
     return DiagramPainterConfig(
       appSize: appSize ?? this.appSize,

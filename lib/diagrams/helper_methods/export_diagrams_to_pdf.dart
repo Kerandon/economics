@@ -9,7 +9,7 @@ import '../models/diagram_painter_config.dart';
 import '../models/diagram_widget.dart';
 
 Future<void> exportDiagramsToPdf(
-  List<DiagramWidgetNEW> diagrams,
+  List<DiagramWidget> diagrams,
   DiagramPainterConfig config,
   BuildContext context,
 ) async {

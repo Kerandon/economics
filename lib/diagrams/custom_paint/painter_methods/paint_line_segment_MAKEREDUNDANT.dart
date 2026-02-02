@@ -1,16 +1,14 @@
 import 'dart:math' show sin, cos, pi;
 
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_arrow_head.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
-import 'package:path_drawing/path_drawing.dart';
 
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
 
-import 'diagram_lines/paint_diagram_lines.dart';
-
+/// MAKE REDUNDANT REPLACE WITH PAINTDIAGRAMLINES
 void paintLineSegment(
   DiagramPainterConfig config,
   IDiagramCanvas canvas, { // Unified interface
@@ -139,7 +137,7 @@ void paintLineSegment(
         ? perpUnit * labelOffsetPx / widthAndHeight
         : Offset.zero;
 
-    paintText2(
+    paintText(
       config,
       canvas,
       label,
@@ -154,7 +152,7 @@ void paintLineSegment(
 
   // --- 4. Secondary Label ---
   if (secondaryLabel != null && secondaryLabelPos != null) {
-    paintText2(
+    paintText(
       config,
       canvas,
       secondaryLabel,

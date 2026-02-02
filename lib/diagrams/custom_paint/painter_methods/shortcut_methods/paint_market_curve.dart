@@ -21,6 +21,7 @@ void paintMarketCurve(
   CurveStyle curveStyle = CurveStyle.standard,
   Color? color,
   double lrasX = 0.5,
+  double keynesianAS = 0.80,
 }) {
   // 1. DEFINE BASE COORDINATES
   Offset baseStart;
@@ -47,15 +48,15 @@ void paintMarketCurve(
       break;
 
     case MarketCurveType.keynesianAS:
-      baseStart = const Offset(0.10, 0.80);
-      baseEnd = const Offset(0.80, 0.10);
+      baseStart = Offset(0.10, 0.80);
+      baseEnd = Offset(keynesianAS, 0.10);
       beziers = [
-        CustomBezier(endPoint: const Offset(0.50, 0.80)),
+        CustomBezier(endPoint: Offset(keynesianAS - 0.30, 0.80)),
         CustomBezier(
-          control: Offset(0.80, 0.80),
-          endPoint: const Offset(0.80, 0.60),
+          control: Offset(keynesianAS, 0.80),
+          endPoint: Offset(keynesianAS, 0.60),
         ),
-        CustomBezier(endPoint: const Offset(0.80, 0.10)),
+        CustomBezier(endPoint: Offset(keynesianAS, 0.10)),
       ];
       break;
   }

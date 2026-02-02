@@ -5,7 +5,7 @@ import '../../../i_diagram_canvas.dart';
 
 import '../../../../models/diagram_painter_config.dart';
 import '../../../painter_constants.dart';
-import '../../paint_text_2.dart';
+import '../../paint_text.dart';
 
 void paintGridLines(
   DiagramPainterConfig config,
@@ -63,7 +63,7 @@ void paintGridLines(
       effectiveWidth,
     );
 
-    paintText2(
+    paintText(
       config,
       canvas,
       yLabel,
@@ -95,7 +95,7 @@ void paintGridLines(
     );
 
     // Draw Labels
-    paintText2(
+    paintText(
       config,
       canvas,
       xLabel,

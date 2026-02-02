@@ -64,7 +64,7 @@ enum Subunit {
   ),
 
   // Macro
-  measuringActivity(
+  measuringEconomicActivity(
     '3.1',
     'Measuring economic activity and illustrating its variations',
     UnitType.macro,

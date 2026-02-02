@@ -10,7 +10,6 @@ import 'i_diagram_canvas.dart';
 
 class FlutterDiagramCanvas implements IDiagramCanvas {
   final Canvas canvas;
-  // Optional: scale factor if you want to scale drawings up/down
   final double scale;
 
   FlutterDiagramCanvas(this.canvas, {this.scale = 1.0});
@@ -27,12 +26,10 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
 
   @override
   void drawDashedLine(Offset p1, Offset p2, Color color, double width) {
-    // Call your existing helper, ensuring it uses the paint with scaled width
     final paint = Paint()
       ..color = color
       ..strokeWidth = width * scale
       ..style = PaintingStyle.stroke;
-    // Assuming drawDashedLineForGrid handles the drawing
     drawDashedLineForGrid(canvas, p1, p2, paint);
   }
 
@@ -41,8 +38,23 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
     final paint = Paint()
       ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke;
+    // If not filling, you might want a stroke width here, e.g. ..strokeWidth = 1.0
     canvas.drawRect(rect, paint);
   }
+
+  // --- NEW IMPLEMENTATION ---
+  @override
+  void drawRRect(Rect rect, Radius radius, Color color, {bool fill = true}) {
+    final paint = Paint()
+      ..color = color
+      ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke;
+
+    // Create the Rounded Rectangle from the Rect and Radius
+    final rrect = RRect.fromRectAndRadius(rect, radius);
+
+    canvas.drawRRect(rrect, paint);
+  }
+  // --------------------------
 
   @override
   void drawDot(
@@ -51,7 +63,6 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
     double radius = 4.0,
     bool fill = true,
   }) {
-    // FIX: Default radius reduced to 4.0 for Flutter (8.0 diameter)
     final paint = Paint()
       ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
@@ -65,9 +76,7 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
     final paint = Paint()
       ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth =
-          (fill ? 1.0 : kCurveWidth) *
-          scale // Thinner stroke if filling
+      ..strokeWidth = (fill ? 1.0 : kCurveWidth) * scale
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
@@ -76,7 +85,6 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
       path.lineTo(points[i].dx, points[i].dy);
     }
 
-    // For arrowheads and shapes, we must close the path if filling
     if (fill) {
       path.close();
       canvas.drawPath(path, paint);
@@ -87,7 +95,6 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
 
   @override
   void drawText(String text, Offset position, double fontSize, Color color) {
-    // We treat 'position' as the Top-Left corner to standardize with PDF
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,

@@ -1,4 +1,6 @@
 import 'package:economics_app/diagrams/custom_paint/diagrams/ad_as_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/biz_cycle_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/circular_flow_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/competitive_market.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/market_power.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/price_controls.dart';
@@ -13,112 +15,102 @@ import '../models/base_painter_painter.dart';
 import '../models/diagram_widget.dart';
 import '../models/diagram_painter_config.dart';
 
-List<DiagramWidgetNEW> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
+List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
   return [
     /// Demand
-    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemand)]),
-    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemandExtension)]),
-    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemandContraction)]),
-    DiagramWidgetNEW([
+    DiagramWidget([DemandDiagram(c, DiagramEnum.microDemand)]),
+    DiagramWidget([DemandDiagram(c, DiagramEnum.microDemandExtension)]),
+    DiagramWidget([DemandDiagram(c, DiagramEnum.microDemandContraction)]),
+    DiagramWidget([
       DemandDiagram(c, DiagramEnum.microDemandQuantityChangeDueToSupply),
     ]),
-    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemandIncrease)]),
-    DiagramWidgetNEW([DemandDiagram(c, DiagramEnum.microDemandDecrease)]),
+    DiagramWidget([DemandDiagram(c, DiagramEnum.microDemandIncrease)]),
+    DiagramWidget([DemandDiagram(c, DiagramEnum.microDemandDecrease)]),
 
     /// Supply
-    DiagramWidgetNEW([Supply(c, DiagramEnum.microSupplyExtension)]),
-    DiagramWidgetNEW([Supply(c, DiagramEnum.microSupplyContraction)]),
-    DiagramWidgetNEW([Supply(c, DiagramEnum.microSupplyIncrease)]),
-    DiagramWidgetNEW([Supply(c, DiagramEnum.microSupplyDecrease)]),
+    DiagramWidget([Supply(c, DiagramEnum.microSupplyExtension)]),
+    DiagramWidget([Supply(c, DiagramEnum.microSupplyContraction)]),
+    DiagramWidget([Supply(c, DiagramEnum.microSupplyIncrease)]),
+    DiagramWidget([Supply(c, DiagramEnum.microSupplyDecrease)]),
 
     /// Equilibrium & Surplus
-    DiagramWidgetNEW([
-      CompetitiveMarket(c, DiagramEnum.microMarketEquilibrium),
-    ]),
-    DiagramWidgetNEW([CompetitiveMarket(c, DiagramEnum.microShortage)]),
-    DiagramWidgetNEW([CompetitiveMarket(c, DiagramEnum.microSurplus)]),
-    DiagramWidgetNEW([
+    DiagramWidget([CompetitiveMarket(c, DiagramEnum.microMarketEquilibrium)]),
+    DiagramWidget([CompetitiveMarket(c, DiagramEnum.microShortage)]),
+    DiagramWidget([CompetitiveMarket(c, DiagramEnum.microSurplus)]),
+    DiagramWidget([
       CompetitiveMarket(c, DiagramEnum.microDemandIncreasePriceMechanism),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       CompetitiveMarket(c, DiagramEnum.microDemandDecreasePriceMechanism),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       CompetitiveMarket(c, DiagramEnum.microAllocativeEfficiency),
     ]),
-    DiagramWidgetNEW([Supply(c, DiagramEnum.microMarginalProduct)]),
-    DiagramWidgetNEW([Supply(c, DiagramEnum.microTotalAndMarginalProduct)]),
-    DiagramWidgetNEW([Supply(c, DiagramEnum.microMarginalCost)]),
+    DiagramWidget([Supply(c, DiagramEnum.microMarginalProduct)]),
+    DiagramWidget([Supply(c, DiagramEnum.microTotalAndMarginalProduct)]),
+    DiagramWidget([Supply(c, DiagramEnum.microMarginalCost)]),
 
     /// Elasticity
-    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microDemandElastic)]),
-    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microDemandInelastic)]),
-    DiagramWidgetNEW([
-      Elasticities(c, DiagramEnum.microDemandPerfectlyElastic),
-    ]),
-    DiagramWidgetNEW([
-      Elasticities(c, DiagramEnum.microDemandPerfectlyInelastic),
-    ]),
-    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microDemandEngelCurve)]),
-    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microSupplyElastic)]),
-    DiagramWidgetNEW([Elasticities(c, DiagramEnum.microSupplyInelastic)]),
-    DiagramWidgetNEW([
-      Elasticities(c, DiagramEnum.microSupplyPrimaryCommodities),
-    ]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microDemandElastic)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microDemandInelastic)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microDemandPerfectlyElastic)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microDemandPerfectlyInelastic)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microDemandEngelCurve)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microSupplyElastic)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microSupplyInelastic)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microSupplyPrimaryCommodities)]),
 
     /// Price Controls
-    DiagramWidgetNEW([PriceControls(c, DiagramEnum.microPriceCeiling)]),
-    DiagramWidgetNEW([PriceControls(c, DiagramEnum.microMinimumWage)]),
-    DiagramWidgetNEW([
-      PriceControls(c, DiagramEnum.microAgriculturalPriceFloor),
-    ]),
+    DiagramWidget([PriceControls(c, DiagramEnum.microPriceCeiling)]),
+    DiagramWidget([PriceControls(c, DiagramEnum.microMinimumWage)]),
+    DiagramWidget([PriceControls(c, DiagramEnum.microAgriculturalPriceFloor)]),
 
     /// Intervention
-    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microIndirectTax)]),
-    DiagramWidgetNEW([
+    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microIndirectTax)]),
+    DiagramWidget([
       TaxesSubsidies(c, DiagramEnum.microIndirectTaxInelasticPED),
     ]),
-    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticPED)]),
-    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microSubsidy)]),
-    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticPED)]),
-    DiagramWidgetNEW([TaxesSubsidies(c, DiagramEnum.microSubsidyInelasticPED)]),
+    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticPED)]),
+    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidy)]),
+    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticPED)]),
+    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyInelasticPED)]),
 
     /// Externalities
-    DiagramWidgetNEW([
+    DiagramWidget([
       Externalities(c, DiagramEnum.microNegativeProductionExternality),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       Externalities(c, DiagramEnum.microNegativeConsumptionExternality),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       Externalities(c, DiagramEnum.microPositiveProductionExternality),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       Externalities(c, DiagramEnum.microPositiveConsumptionExternality),
     ]),
-    DiagramWidgetNEW([Externalities(c, DiagramEnum.microCarbonTax)]),
-    DiagramWidgetNEW([
+    DiagramWidget([Externalities(c, DiagramEnum.microCarbonTax)]),
+    DiagramWidget([
       Externalities(c, DiagramEnum.microTradablePollutionPermits),
     ]),
 
     /// Public Goods
-    DiagramWidgetNEW([PublicGoods(c, DiagramEnum.microPublicGoods)]),
+    DiagramWidget([PublicGoods(c, DiagramEnum.microPublicGoods)]),
 
     /// ============================================================
     /// PERFECT COMPETITION PAIRINGS (Displayed Together)
     /// ============================================================
-    DiagramWidgetNEW([
+    DiagramWidget([
       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
       MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketAbnormalProfit),
       MarketPower(
         c,
         DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment,
       ),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLoss),
       MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLoss),
     ]),
@@ -126,53 +118,66 @@ List<DiagramWidgetNEW> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     /// ============================================================
     /// MONOPOLY & OTHERS (Back to individual elements)
     /// ============================================================
-    DiagramWidgetNEW([MarketPower(c, DiagramEnum.microMonopolyAbnormalProfit)]),
-    DiagramWidgetNEW([MarketPower(c, DiagramEnum.microMonopolyWelfare)]),
-    DiagramWidgetNEW([MarketPower(c, DiagramEnum.microMonopolyNatural)]),
-    DiagramWidgetNEW([
+    DiagramWidget([MarketPower(c, DiagramEnum.microMonopolyAbnormalProfit)]),
+    DiagramWidget([MarketPower(c, DiagramEnum.microMonopolyWelfare)]),
+    DiagramWidget([MarketPower(c, DiagramEnum.microMonopolyNatural)]),
+    DiagramWidget([
       MarketPower(c, DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       MarketPower(c, DiagramEnum.microMonopolyNaturalMarginalCostPricing),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       MarketPower(
         c,
         DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare,
       ),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       MarketPower(c, DiagramEnum.microOligopolyKinkedDemandCurve),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       MarketPower(c, DiagramEnum.microMonopolisticCompetitionLongRun),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       MarketPower(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
     ]),
 
+    /// Circular Flow
+    DiagramWidget([
+      CircularFlowDiagram(c, DiagramEnum.macroCircularFlowClosed),
+    ]),
+    DiagramWidget([CircularFlowDiagram(c, DiagramEnum.macroCircularFlowOpen)]),
+
+    ///Biz cycle
+    DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycle)]),
+
     /// AD-AS
-    DiagramWidgetNEW([
+    DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASClassicalFullEmployment),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASClassicalDeflationaryGap),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASClassicalInflationaryGap),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASKeynesianFullEmployment),
     ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASKeynesianDeflationaryGap),
     ]),
-    DiagramWidgetNEW([
-      ADASDiagram(c, DiagramEnum.macroADASKeynesianFullEmployment),
-    ]),
-    DiagramWidgetNEW([
+    DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASKeynesianInflationaryGap),
     ]),
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroADASClassicalLongTermGrowth),
+    ]),
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianLongTermGrowth),
+    ]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASCostPushInflation)]),
   ];
 }
 

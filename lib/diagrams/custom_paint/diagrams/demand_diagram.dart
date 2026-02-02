@@ -13,11 +13,11 @@ import '../painter_constants.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/paint_line_segment.dart';
+import '../painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
 
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 
-class DemandDiagram extends BaseDiagramPainter3 {
+class DemandDiagram extends BaseDiagramPainter {
   DemandDiagram(super.config, super.diagram);
 
   @override

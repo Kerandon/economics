@@ -1,4 +1,4 @@
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/diagram_painter_config.dart';
@@ -10,7 +10,7 @@ void paintTitle(
   IDiagramCanvas canvas, // Made nullable
   String label,
 ) {
-  paintText2(
+  paintText(
     config,
     canvas,
     label,

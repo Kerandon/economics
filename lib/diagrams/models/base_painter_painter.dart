@@ -9,15 +9,15 @@ import '../mixins/mixins.dart';
 import 'diagram_model.dart';
 import 'diagram_painter_config.dart';
 
-abstract class BaseDiagramPainter3 extends CustomPainter
-    with DiagramIdentifierMixin3 {
+abstract class BaseDiagramPainter extends CustomPainter
+    with DiagramIdentifierMixin {
   final DiagramPainterConfig config;
 
   @override
   final DiagramEnum diagram;
   final Subunit subunit;
 
-  BaseDiagramPainter3(this.config, this.diagram) : subunit = diagram.subunit;
+  BaseDiagramPainter(this.config, this.diagram) : subunit = diagram.subunit;
 
   // --- Standard Flutter Entry Point ---
   @override
@@ -34,5 +34,5 @@ abstract class BaseDiagramPainter3 extends CustomPainter
   void drawDiagram(IDiagramCanvas canvas, Size size);
 
   @override
-  bool shouldRepaint(covariant BaseDiagramPainter3 oldDelegate) => true;
+  bool shouldRepaint(covariant BaseDiagramPainter oldDelegate) => true;
 }

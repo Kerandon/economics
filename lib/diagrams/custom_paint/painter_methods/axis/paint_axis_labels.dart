@@ -5,7 +5,7 @@ import '../../diagrams/demand_diagram.dart';
 import '../../i_diagram_canvas.dart';
 import '../../painter_constants.dart';
 import '../paint_diagram_dash_lines.dart';
-import '../paint_text_2.dart';
+import '../paint_text.dart';
 
 void paintAxisLabels(
   DiagramPainterConfig config,
@@ -18,7 +18,7 @@ void paintAxisLabels(
   final effectiveColor = config.colorScheme.onSurface;
 
   if (axis == CustomAxis.y) {
-    paintText2(
+    paintText(
       config,
       canvas,
       label,
@@ -30,7 +30,7 @@ void paintAxisLabels(
       style: TextStyle(color: effectiveColor, fontStyle: FontStyle.italic),
     );
   } else {
-    paintText2(
+    paintText(
       config,
       canvas,
       label,

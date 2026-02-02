@@ -6,8 +6,8 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_line
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
@@ -19,7 +19,7 @@ import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
 import '../painter_methods/axis/paint_axis_labels.dart';
 
-class Externalities extends BaseDiagramPainter3 {
+class Externalities extends BaseDiagramPainter {
   Externalities(super.config, super.diagram);
 
   // Note: No need to override 'paint' anymore, the base class handles it!
@@ -87,7 +87,7 @@ class Externalities extends BaseDiagramPainter3 {
   ) {
     String supplyLabel = DiagramLabel.msc.label;
 
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.externalCost.label,
@@ -107,7 +107,7 @@ class Externalities extends BaseDiagramPainter3 {
       Offset(0.44, 0.59),
       Offset(0.44, 0.36),
     ]);
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.welfareLoss.label,
@@ -202,7 +202,7 @@ class Externalities extends BaseDiagramPainter3 {
       yLabel: DiagramLabel.pm.label,
       xLabel: DiagramLabel.qm.label,
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       'Initial Carbon Tax',
@@ -243,7 +243,7 @@ class Externalities extends BaseDiagramPainter3 {
     IDiagramCanvas canvas,
     DiagramEnum bundle,
   ) {
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.externalCost.label,
@@ -265,7 +265,7 @@ class Externalities extends BaseDiagramPainter3 {
       Offset(0.465, 0.72),
       Offset(0.465, 0.50),
     ]);
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.welfareLoss.label,
@@ -325,7 +325,7 @@ class Externalities extends BaseDiagramPainter3 {
     IDiagramCanvas canvas,
     DiagramEnum bundle,
   ) {
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.externalBenefit.label,
@@ -346,7 +346,7 @@ class Externalities extends BaseDiagramPainter3 {
       Offset(0.33, 0.70),
       Offset(0.46, 0.60),
     ]);
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.welfareLoss.label,
@@ -414,7 +414,7 @@ class Externalities extends BaseDiagramPainter3 {
     IDiagramCanvas canvas,
     DiagramEnum bundle,
   ) {
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.externalBenefit.label,
@@ -437,7 +437,7 @@ class Externalities extends BaseDiagramPainter3 {
       Offset(0.45, 0.49),
     ]);
 
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.welfareLoss.label,

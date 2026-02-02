@@ -11,9 +11,9 @@ void paintShading(
   ShadeType shade,
   List<dynamic> pointsAndBeziers, {
   bool striped = true,
-  double stripeSpacing = 12.0, // Tighter for professional look
-  double strokeWidth = 0.8, // Thinner lines for print
-  int alpha = 40, // Much lower alpha for print compatibility
+  double stripeSpacing = 20.0, // Tighter for professional look
+  double strokeWidth = 2, // Thinner lines for print
+  int alpha = 150, // Much lower alpha for print compatibility
   bool invertStripes = false,
 }) {
   if (pointsAndBeziers.isEmpty) return;

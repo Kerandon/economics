@@ -1,7 +1,7 @@
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
 import '../painter_methods/legend/legend_display.dart';
 
-class PublicGoods extends BaseDiagramPainter3 {
+class PublicGoods extends BaseDiagramPainter {
   PublicGoods(super.config, super.diagram);
 
   @override
@@ -73,21 +73,21 @@ class PublicGoods extends BaseDiagramPainter3 {
     );
 
     // 5. Annotations and Labels
-    paintText2(
+    paintText(
       c,
       canvas,
       'Individual MB1',
       const Offset(0.80, 0.95),
       pointerLine: const Offset(0.52, 0.95),
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       'Individual MB2',
       const Offset(0.80, 0.85),
       pointerLine: const Offset(0.44, 0.85),
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       'MSB = MB1 + MB2',

@@ -5,8 +5,8 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_a
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_marginal_cost.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
@@ -20,7 +20,7 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
 
-class MarketPower extends BaseDiagramPainter3 {
+class MarketPower extends BaseDiagramPainter {
   MarketPower(super.config, super.diagram);
 
   @override
@@ -243,7 +243,7 @@ class MarketPower extends BaseDiagramPainter3 {
         Offset(0.48, 1),
         Offset(0, 1),
       ]);
-      paintText2(
+      paintText(
         c,
         canvas,
         'TR=TC (zero profit)',
@@ -276,14 +276,14 @@ class MarketPower extends BaseDiagramPainter3 {
         label2Align: LabelAlign.centerRight,
       );
 
-      paintText2(
+      paintText(
         c,
         canvas,
         DiagramLabel.abnormalProfit.label,
         Offset(0.35, 0.20),
         pointerLine: Offset(0.35, 0.40),
       );
-      paintText2(
+      paintText(
         c,
         canvas,
         'Total Cost',
@@ -436,7 +436,7 @@ class MarketPower extends BaseDiagramPainter3 {
         angle: pi / 2,
         length: 0.10,
       );
-      paintText2(
+      paintText(
         c,
         canvas,
         DiagramLabel.abnormalProfit.label,
@@ -518,7 +518,7 @@ class MarketPower extends BaseDiagramPainter3 {
         angle: -pi / 2,
         length: 0.10,
       );
-      paintText2(
+      paintText(
         c,
         canvas,
         DiagramLabel.loss.label,
@@ -599,7 +599,7 @@ class MarketPower extends BaseDiagramPainter3 {
         color: Colors.red,
       );
 
-      paintText2(
+      paintText(
         c,
         canvas,
         'AFC=ATC-AVC',
@@ -671,7 +671,7 @@ class MarketPower extends BaseDiagramPainter3 {
     if (diagram == DiagramEnum.microMonopolyWelfare ||
         diagram == DiagramEnum.microMonopolyWelfareAllocativelyEfficient) {
       if (diagram == DiagramEnum.microMonopolyWelfare) {
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -679,7 +679,7 @@ class MarketPower extends BaseDiagramPainter3 {
           Offset(0.20, 0.05),
           pointerLine: Offset(0.15, 0.30),
         );
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -687,7 +687,7 @@ class MarketPower extends BaseDiagramPainter3 {
           Offset(0.40, 0.25),
           pointerLine: Offset(0.40, 0.50),
         );
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -722,7 +722,7 @@ class MarketPower extends BaseDiagramPainter3 {
           yLabel: DiagramLabel.pMC.label,
           xLabel: DiagramLabel.qMC.label,
         );
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -730,7 +730,7 @@ class MarketPower extends BaseDiagramPainter3 {
           Offset(0.42, 0.20),
           pointerLine: Offset(0.25, 0.45),
         );
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -738,7 +738,7 @@ class MarketPower extends BaseDiagramPainter3 {
           Offset(0.70, 0.50),
           pointerLine: Offset(0.35, 0.45),
         );
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -782,7 +782,7 @@ class MarketPower extends BaseDiagramPainter3 {
     if (diagram == DiagramEnum.microMonopolyAbnormalProfit ||
         diagram == DiagramEnum.microMonopolyAbnormalProfitAndCosts) {
       if (diagram == DiagramEnum.microMonopolyAbnormalProfitAndCosts) {
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -807,7 +807,7 @@ class MarketPower extends BaseDiagramPainter3 {
         yLabel: DiagramLabel.c.label,
         hideXLine: true,
       );
-      paintText2(
+      paintText(
         c,
         canvas,
 
@@ -895,7 +895,7 @@ class MarketPower extends BaseDiagramPainter3 {
       label2Align: LabelAlign.centerRight,
     );
     if (diagram == DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare) {
-      paintText2(
+      paintText(
         c,
         canvas,
 
@@ -903,7 +903,7 @@ class MarketPower extends BaseDiagramPainter3 {
         Offset(0.60, 0.50),
         pointerLine: Offset(0.30, 0.50),
       );
-      paintText2(
+      paintText(
         c,
         canvas,
 
@@ -923,7 +923,7 @@ class MarketPower extends BaseDiagramPainter3 {
       ]);
     }
     if (diagram == DiagramEnum.microMonopolyNaturalUnregulatedWelfare) {
-      paintText2(
+      paintText(
         c,
         canvas,
 
@@ -931,7 +931,7 @@ class MarketPower extends BaseDiagramPainter3 {
         Offset(0.50, 0.40),
         pointerLine: Offset(0.20, 0.40),
       );
-      paintText2(
+      paintText(
         c,
         canvas,
 
@@ -939,7 +939,7 @@ class MarketPower extends BaseDiagramPainter3 {
         Offset(0.55, 0.50),
         pointerLine: Offset(0.35, 0.65),
       );
-      paintText2(
+      paintText(
         c,
         canvas,
 
@@ -986,7 +986,7 @@ class MarketPower extends BaseDiagramPainter3 {
     }
     if (diagram == DiagramEnum.microMonopolyNaturalMarginalCostPricing) {
       if (diagram == DiagramEnum.microMonopolyNaturalMarginalCostPricing) {
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -1013,7 +1013,7 @@ class MarketPower extends BaseDiagramPainter3 {
       }
     }
     if (diagram == DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare) {
-      paintText2(
+      paintText(
         c,
         canvas,
 
@@ -1122,7 +1122,7 @@ class MarketPower extends BaseDiagramPainter3 {
       xAxisLabel: DiagramLabel.quantity.label,
     );
 
-    paintText2(
+    paintText(
       c,
       canvas,
 
@@ -1130,8 +1130,8 @@ class MarketPower extends BaseDiagramPainter3 {
       Offset(0.70, 0.30),
       pointerLine: Offset(0.55, 0.30),
     );
-    paintText2(c, canvas, 'Elastic', Offset(0.40, 0.15));
-    paintText2(c, canvas, 'Inelastic', Offset(0.80, 0.60));
+    paintText(c, canvas, 'Elastic', Offset(0.40, 0.15));
+    paintText(c, canvas, 'Inelastic', Offset(0.80, 0.60));
     paintDiagramLines(
       c,
       canvas,
@@ -1204,7 +1204,7 @@ class MarketPower extends BaseDiagramPainter3 {
         diagram == DiagramEnum.microMonopolisticCompetitionLossShift) {
       if (diagram ==
           DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift) {
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -1233,7 +1233,7 @@ class MarketPower extends BaseDiagramPainter3 {
       }
 
       if (diagram == DiagramEnum.microMonopolisticCompetitionLossShift) {
-        paintText2(
+        paintText(
           c,
           canvas,
 
@@ -1289,7 +1289,7 @@ class MarketPower extends BaseDiagramPainter3 {
       );
     }
     if (diagram == DiagramEnum.microMonopolisticCompetitionAbnormalProfit) {
-      paintText2(
+      paintText(
         c,
         canvas,
 
@@ -1342,7 +1342,7 @@ class MarketPower extends BaseDiagramPainter3 {
       paintDot(c, canvas, Offset(0.375, 0.665));
     }
     if (diagram == DiagramEnum.microMonopolisticCompetitionLoss) {
-      paintText2(
+      paintText(
         c,
         canvas,
 

@@ -2,7 +2,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
@@ -15,9 +15,9 @@ import '../i_diagram_canvas.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/legend/legend_display.dart';
 import '../painter_methods/paint_legend_table.dart';
-import '../painter_methods/paint_line_segment.dart';
+import '../painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
 
-class PriceControls extends BaseDiagramPainter3 {
+class PriceControls extends BaseDiagramPainter {
   PriceControls(super.config, super.diagram);
 
   @override
@@ -95,7 +95,7 @@ void _paintPriceCeiling(
     DiagramLabel.d: const Offset(0.31, 0.59),
     DiagramLabel.e: const Offset(0.11, 0.80),
   };
-  labels.forEach((label, offset) => paintText2(c, canvas, label.label, offset));
+  labels.forEach((label, offset) => paintText(c, canvas, label.label, offset));
 
   paintAxis(
     c,
@@ -210,7 +210,7 @@ void _paintPriceFloor(
     DiagramLabel.d: const Offset(0.12, 0.62),
     DiagramLabel.e: const Offset(0.32, 0.60),
   };
-  labels.forEach((label, offset) => paintText2(c, canvas, label.label, offset));
+  labels.forEach((label, offset) => paintText(c, canvas, label.label, offset));
 
   paintAxis(
     c,
@@ -244,7 +244,7 @@ void _paintPriceFloor(
     polylineOffsets: [const Offset(1.0, 0.25)],
   );
 
-  paintText2(
+  paintText(
     c,
     canvas,
     DiagramLabel.welfareLoss.label,
@@ -288,7 +288,7 @@ void _paintMinWage(
   DiagramEnum bundle,
 ) {
   if (bundle == DiagramEnum.microMinimumWageWelfare) {
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.welfareLoss.label,
@@ -309,7 +309,7 @@ void _paintMinWage(
       DiagramLabel.e: const Offset(0.35, 0.57),
     };
     labels.forEach(
-      (label, offset) => paintText2(c, canvas, label.label, offset),
+      (label, offset) => paintText(c, canvas, label.label, offset),
     );
   }
 
@@ -386,7 +386,7 @@ void _paintNMWInelasticDemand(
   IDiagramCanvas canvas,
   Size size,
 ) {
-  paintText2(
+  paintText(
     c,
     canvas,
     DiagramLabel.welfareLoss.label,
@@ -530,7 +530,7 @@ void _paintAgriculturalPriceFloor(
     DiagramLabel.h: const Offset(0.60, 0.80),
     DiagramLabel.i: const Offset(0.60, 0.50),
   };
-  labels.forEach((label, offset) => paintText2(c, canvas, label.label, offset));
+  labels.forEach((label, offset) => paintText(c, canvas, label.label, offset));
 
   paintAxis(
     c,

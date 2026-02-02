@@ -10,7 +10,7 @@ class AllDiagrams {
 
   AllDiagrams({required this.size, required this.colorScheme});
 
-  List<DiagramWidgetNEW> getDiagramWidgets({List<DiagramEnum>? diagrams}) {
+  List<DiagramWidget> getDiagramWidgets({List<DiagramEnum>? diagrams}) {
     // Create config (same as AllDiagrams)
     final config = DiagramPainterConfig(
       painterSize: size,

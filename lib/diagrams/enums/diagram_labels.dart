@@ -198,25 +198,40 @@ enum DiagramLabel {
   firms,
   factorsOfProduction,
   factorPayments,
-  landLaborCapitalEnterprise,
+  factorPaymentsY,
+  landLaborCapitalEntrepreneurship,
   householdSpending,
+  householdSpendingE,
   householdSpendingFirmRevenue,
   goodsAndServices,
+  goodsAndServicesO,
   leakages,
   injections,
   rentWagesInterestProfit,
+  rentWagesInterestProfitY,
   factorMarkets,
   productMarkets,
   government,
+  governmentSpendingG,
+  publicSector,
   society,
   financialSector,
   foreignSector,
   tax,
   governmentTaxRevenue,
   taxes,
+  taxesT,
   governmentBudget,
   savings,
+  savingsS,
   investment,
+  investmentI,
+  peak,
+  expansion,
+  contraction,
+  trough,
+  deflationaryGap,
+  inflationaryGap,
   interestRate,
   quantityOfMoney,
   sM,
@@ -224,12 +239,15 @@ enum DiagramLabel {
   sM1,
   sM2,
   imports,
+  importsM,
   exports,
+  exportsX,
   monetaristsNewClassical,
   keynesian,
   priceLevel,
   realGDP,
   potentialOutput,
+  potentialGDP,
   timeYears,
   aggregateDemand,
   aD,
@@ -249,6 +267,10 @@ enum DiagramLabel {
   lRAS,
   pL,
   pLe,
+  pLf,
+  plInF,
+  plDef,
+
   pL1,
   pL2,
   yF,
@@ -443,13 +465,12 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.investment => 'Investment',
       DiagramLabel.imports => 'Imports',
       DiagramLabel.exports => 'Exports',
-      DiagramLabel.landLaborCapitalEnterprise =>
-        'Factors of Production (Land, Labor, Capital, Enterprise)',
+      DiagramLabel.landLaborCapitalEntrepreneurship =>
+        'Land, Labor, Capital, Entrepreneurship',
       DiagramLabel.householdSpendingFirmRevenue =>
         'Household Spending / Firm Revenue',
       DiagramLabel.goodsAndServices => 'Goods & Services',
-      DiagramLabel.rentWagesInterestProfit =>
-        'Factor Payments (Rent, Wages, Interest, Profit)',
+      DiagramLabel.rentWagesInterestProfit => 'Rent, Wages, Interest, Profit',
       DiagramLabel.factorsOfProduction => 'Factors of Production',
       DiagramLabel.factorPayments => 'Factor Payments',
       DiagramLabel.householdSpending => 'Household Spending',
@@ -610,6 +631,45 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.pLe => 'PLe',
       DiagramLabel.pL1 => 'PL1',
       DiagramLabel.pL2 => 'PL2',
+      DiagramLabel.pLf => 'PLf',
+      DiagramLabel.plInF => 'PLInf',
+      DiagramLabel.plDef => 'PLDef',
+      DiagramLabel.publicSector => 'Public Sector',
+
+      DiagramLabel.factorPaymentsY => 'Factor Payments (Y)',
+
+      DiagramLabel.householdSpendingE => 'Household Spending (E)',
+
+      DiagramLabel.goodsAndServicesO => 'Goods & Services (O)',
+
+      DiagramLabel.rentWagesInterestProfitY =>
+        'Rent, Wages, Interest, Profit (Y)',
+
+      DiagramLabel.governmentSpendingG => 'Government\nSpending (G)',
+
+      DiagramLabel.taxesT => 'Taxes (T)',
+
+      DiagramLabel.savingsS => 'Savings (S)',
+
+      DiagramLabel.investmentI => 'Investment (I)',
+
+      DiagramLabel.importsM => 'Imports (M)',
+
+      DiagramLabel.exportsX => 'Exports (X)',
+
+      DiagramLabel.potentialGDP => 'Potential GDP',
+
+      DiagramLabel.peak => 'Peak',
+
+      DiagramLabel.expansion => 'Expansion',
+
+      DiagramLabel.contraction => 'Contraction',
+
+      DiagramLabel.trough => 'Trough',
+
+      DiagramLabel.deflationaryGap => 'Deflationary Gap',
+
+      DiagramLabel.inflationaryGap => 'Inflationary Gap',
     };
   }
 }

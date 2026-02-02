@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/diagram_enum.dart';
@@ -14,14 +14,14 @@ import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_dot.dart';
-import '../painter_methods/paint_text_2.dart' show paintText2;
+import '../painter_methods/paint_text.dart' show paintText;
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 import '../shade/paint_shading.dart';
 import '../shade/shade_type.dart';
 
 const double marketCurveLengthAdjustment = -0.10;
 
-class Elasticities extends BaseDiagramPainter3 {
+class Elasticities extends BaseDiagramPainter {
   Elasticities(super.config, super.diagram);
 
   @override
@@ -273,9 +273,9 @@ class Elasticities extends BaseDiagramPainter3 {
       xLabel: 'Q*',
       showDotAtIntersection: true,
     );
-    paintText2(c, canvas, 'PED > 1', const Offset(0.20, 0.25));
-    paintText2(c, canvas, 'PED = 1', const Offset(0.50, 0.08));
-    paintText2(c, canvas, 'PED < 1', const Offset(0.80, 0.25));
+    paintText(c, canvas, 'PED > 1', const Offset(0.20, 0.25));
+    paintText(c, canvas, 'PED = 1', const Offset(0.50, 0.08));
+    paintText(c, canvas, 'PED < 1', const Offset(0.80, 0.25));
   }
 
   void _paintMicroDemandElasticityChange(
@@ -319,8 +319,8 @@ class Elasticities extends BaseDiagramPainter3 {
       xLabel: 'Q2',
       showDotAtIntersection: true,
     );
-    paintText2(c, canvas, 'PED > 1', const Offset(0.30, 0.15));
-    paintText2(
+    paintText(c, canvas, 'PED > 1', const Offset(0.30, 0.15));
+    paintText(
       c,
       canvas,
       'PED = 1',
@@ -328,7 +328,7 @@ class Elasticities extends BaseDiagramPainter3 {
 
       pointerLine: const Offset(0.50, 0.50),
     );
-    paintText2(c, canvas, 'PED < 1', const Offset(0.80, 0.65));
+    paintText(c, canvas, 'PED < 1', const Offset(0.80, 0.65));
   }
 
   void _paintDemandEngelCurve(DiagramPainterConfig c, IDiagramCanvas canvas) {
@@ -341,7 +341,7 @@ class Elasticities extends BaseDiagramPainter3 {
       startPos: const Offset(0.10, 0.80),
       polylineOffsets: [const Offset(0.60, 0.65)],
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.normalGoodLuxury.label,
@@ -357,7 +357,7 @@ class Elasticities extends BaseDiagramPainter3 {
       startPos: const Offset(0.60, 0.90),
       polylineOffsets: [const Offset(0.80, 0.30)],
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.normalGoodNecessity.label,
@@ -373,7 +373,7 @@ class Elasticities extends BaseDiagramPainter3 {
       polylineOffsets: [const Offset(0.60, 0.50)],
     );
 
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.inferiorGood.label,
@@ -531,14 +531,14 @@ class Elasticities extends BaseDiagramPainter3 {
     IDiagramCanvas? iCanvas,
   }) {
     paintLineSegment(c, canvas, origin: Offset(0.61, 0.20), angle: pi);
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.gainedRevenue.label,
       Offset(0.20, 0.20),
       pointerLine: Offset(0.20, 0.50),
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.lostRevenue.label,

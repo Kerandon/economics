@@ -4,8 +4,8 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legen
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_shape.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
 import '../../enums/diagram_enum.dart';
 import '../../enums/diagram_labels.dart';
@@ -20,7 +20,7 @@ import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:flutter/material.dart';
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 
-class Supply extends BaseDiagramPainter3 {
+class Supply extends BaseDiagramPainter {
   Supply(super.config, super.diagram);
 
   @override
@@ -232,21 +232,21 @@ class Supply extends BaseDiagramPainter3 {
 
     final fontSize = kFontSmall;
     const yPos = 0.10;
-    paintText2(
+    paintText(
       c,
       canvas,
       fontSize: fontSize,
       'Increasing\nReturns',
       const Offset(0.15, yPos),
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       fontSize: fontSize,
       'Diminishing\nReturns',
       const Offset(0.52, yPos),
     );
-    paintText2(
+    paintText(
       c,
       canvas,
       fontSize: fontSize,
@@ -280,7 +280,7 @@ class Supply extends BaseDiagramPainter3 {
       ],
     );
 
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.diminishingReturnsSetIn.label,

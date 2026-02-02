@@ -106,12 +106,20 @@ enum DiagramEnum {
   microMonopolisticCompetitionLongRun,
 
   /// Macro
+  macroCircularFlowClosed,
+  macroCircularFlowOpen,
+  macroBusinessCycle,
   macroADASClassicalFullEmployment,
   macroADASClassicalDeflationaryGap,
   macroADASClassicalInflationaryGap,
   macroADASKeynesianFullEmployment,
   macroADASKeynesianDeflationaryGap,
   macroADASKeynesianInflationaryGap,
+  macroADASClassicalDeflationaryGapAdjustment,
+  macroADASClassicalInflationaryGapAdjustment,
+  macroADASClassicalLongTermGrowth,
+  macroADASKeynesianLongTermGrowth,
+  macroADASCostPushInflation,
 
   ///Global
   globalWorldPrice,
@@ -348,6 +356,43 @@ extension DiagramBundleEnumUnit on DiagramEnum {
       Subunit.marketFailurePower,
     DiagramEnum.microMonopolisticCompetitionLossShift =>
       Subunit.marketFailurePower,
+
+    ///Macro
+    DiagramEnum.macroCircularFlowClosed => Subunit.measuringEconomicActivity,
+
+    DiagramEnum.macroCircularFlowOpen => Subunit.measuringEconomicActivity,
+    DiagramEnum.macroBusinessCycle => Subunit.measuringEconomicActivity,
+    DiagramEnum.macroADASClassicalFullEmployment =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASClassicalDeflationaryGap =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASClassicalInflationaryGap =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASKeynesianFullEmployment =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASKeynesianDeflationaryGap =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASKeynesianInflationaryGap =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASClassicalDeflationaryGapAdjustment =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASClassicalInflationaryGapAdjustment =>
+      Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroADASClassicalLongTermGrowth => Subunit.macroObjectives,
+
+    DiagramEnum.macroADASKeynesianLongTermGrowth => Subunit.macroObjectives,
+
+    DiagramEnum.macroADASCostPushInflation => Subunit.macroObjectives,
+
+    /// Global
     DiagramEnum.globalWorldPrice => Subunit.benefitsTrade,
     DiagramEnum.globalWorldPriceStandAlone => Subunit.benefitsTrade,
     DiagramEnum.globalNetExporter => Subunit.benefitsTrade,
@@ -390,23 +435,5 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalProductionSubsidyWelfareLoss =>
       Subunit.typesTradeProtection,
     DiagramEnum.globalProductionSubsidyWelfare => Subunit.typesTradeProtection,
-
-    DiagramEnum.macroADASClassicalFullEmployment =>
-      Subunit.variationsActivityADAS,
-
-    DiagramEnum.macroADASClassicalDeflationaryGap =>
-      Subunit.variationsActivityADAS,
-
-    DiagramEnum.macroADASClassicalInflationaryGap =>
-      Subunit.variationsActivityADAS,
-
-    DiagramEnum.macroADASKeynesianFullEmployment =>
-      Subunit.variationsActivityADAS,
-
-    DiagramEnum.macroADASKeynesianDeflationaryGap =>
-      Subunit.variationsActivityADAS,
-
-    DiagramEnum.macroADASKeynesianInflationaryGap =>
-      Subunit.variationsActivityADAS,
   };
 }

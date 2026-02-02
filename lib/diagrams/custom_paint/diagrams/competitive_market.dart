@@ -4,8 +4,8 @@ import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text_2.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
@@ -17,7 +17,7 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
 
-class CompetitiveMarket extends BaseDiagramPainter3 {
+class CompetitiveMarket extends BaseDiagramPainter {
   CompetitiveMarket(super.config, super.diagram);
 
   @override
@@ -335,7 +335,7 @@ void _paintMarginalBenefitAndMarginalCostSteps(
   for (int i = 0; i < 10; i++) {
     double val = isBenefit ? (90.0 - i * 10) : (i * 10.0);
     double pos = 0.05 + i * 0.10;
-    paintText2(
+    paintText(
       c,
       canvas,
       val.toInt().toString(),
@@ -366,7 +366,7 @@ void _paintMarginalBenefitAndMarginalCostSteps(
     polylineOffsets: steps,
   );
 
-  paintText2(
+  paintText(
     c,
     canvas,
     isBenefit
@@ -411,7 +411,7 @@ void _paintConsumerProducerSurplusAllocativeEfficiency(
       const Offset(0.45, 0.50),
       const Offset(0, 0.50),
     ]);
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.consumerSurplus.label,
@@ -427,7 +427,7 @@ void _paintConsumerProducerSurplusAllocativeEfficiency(
       const Offset(0.45, 0.50),
       const Offset(0, 0.90),
     ]);
-    paintText2(
+    paintText(
       c,
       canvas,
       DiagramLabel.producerSurplus.label,

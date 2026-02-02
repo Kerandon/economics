@@ -10,7 +10,7 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
 
-class ADASDiagram extends BaseDiagramPainter3 {
+class ADASDiagram extends BaseDiagramPainter {
   ADASDiagram(super.config, super.diagram);
 
   @override
@@ -113,7 +113,58 @@ void _paintKeynesianADAS(
   if (diagram == DiagramEnum.macroADASKeynesianFullEmployment) {
     paintMarketCurve(c, canvas, type: MarketCurveType.ad);
     paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.74,
+      xAxisEndPos: 0.74,
+      yLabel: DiagramLabel.pLf.label,
+      xLabel: DiagramLabel.yF.label,
+      showDotAtIntersection: true,
+    );
   }
-  if (diagram == DiagramEnum.macroADASKeynesianDeflationaryGap) {}
-  if (diagram == DiagramEnum.macroADASKeynesianInflationaryGap) {}
+  if (diagram == DiagramEnum.macroADASKeynesianDeflationaryGap) {
+    paintMarketCurve(
+      c,
+      canvas,
+      type: MarketCurveType.ad,
+      horizontalShift: -0.20,
+      verticalShift: 0.10,
+
+      lengthAdjustment: -0.15,
+      angle: 0.15,
+    );
+    paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.80,
+      xAxisEndPos: 0.45,
+      yLabel: DiagramLabel.pLf.label,
+      xLabel: DiagramLabel.yF.label,
+      showDotAtIntersection: true,
+    );
+  }
+  if (diagram == DiagramEnum.macroADASKeynesianInflationaryGap) {
+    paintMarketCurve(
+      c,
+      canvas,
+      type: MarketCurveType.ad,
+      horizontalShift: 0.20,
+      verticalShift: -0.02,
+
+      lengthAdjustment: -0.15,
+      angle: 0.15,
+    );
+    paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.62,
+      xAxisEndPos: 0.80,
+      yLabel: DiagramLabel.plInF.label,
+      xLabel: DiagramLabel.yInf.label,
+      showDotAtIntersection: true,
+    );
+  }
 }

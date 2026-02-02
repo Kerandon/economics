@@ -6,7 +6,7 @@ import '../models/slide_content.dart';
 import 'package:flutter/material.dart';
 
 class DiagramGallery extends StatelessWidget {
-  final List<DiagramWidgetNEW> diagrams;
+  final List<DiagramWidget> diagrams;
   final double spacing;
 
   const DiagramGallery({super.key, required this.diagrams, this.spacing = 1.0});

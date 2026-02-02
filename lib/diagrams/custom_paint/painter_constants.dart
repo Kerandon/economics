@@ -34,7 +34,7 @@ const kLabelTextStyle = TextStyle(
 );
 
 /// Dot
-const kDotRadius = 12.0;
+const kDotRadius = 8.0;
 
 enum CurveStyle { standard, dashed, dotted, bold }
 

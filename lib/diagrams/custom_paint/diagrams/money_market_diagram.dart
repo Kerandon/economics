@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../models/base_painter_painter.dart';
 import '../i_diagram_canvas.dart';
 
-class MoneyMarketDiagram extends BaseDiagramPainter3 {
+class MoneyMarketDiagram extends BaseDiagramPainter {
   MoneyMarketDiagram(super.config, super.diagram);
 
   @override
