@@ -1,12 +1,19 @@
 import 'package:economics_app/diagrams/custom_paint/diagrams/ad_as_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/biz_cycle_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/circular_flow_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/comparative_advantage.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/competitive_market.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/exchange_rate_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/lorenz_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/market_power.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/money_market_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/poverty_cycle_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/ppc_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/price_controls.dart';
 import '../custom_paint/diagrams/demand_diagram.dart';
 import '../custom_paint/diagrams/elasticities.dart';
 import '../custom_paint/diagrams/externalities.dart';
+import '../custom_paint/diagrams/global_trade_diagram.dart';
 import '../custom_paint/diagrams/public_goods.dart';
 import '../custom_paint/diagrams/supply.dart';
 import '../custom_paint/diagrams/taxes_subsidies.dart';
@@ -163,6 +170,12 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       ADASDiagram(c, DiagramEnum.macroADASClassicalInflationaryGap),
     ]),
     DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroADASClassicalDeflationaryGapAdjustment),
+    ]),
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroADASClassicalInflationaryGapAdjustment),
+    ]),
+    DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASKeynesianFullEmployment),
     ]),
     DiagramWidget([
@@ -171,6 +184,7 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASKeynesianInflationaryGap),
     ]),
+
     DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASClassicalLongTermGrowth),
     ]),
@@ -178,107 +192,115 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       ADASDiagram(c, DiagramEnum.macroADASKeynesianLongTermGrowth),
     ]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASCostPushInflation)]),
+
+    ///Inequality and Poverty
+    DiagramWidget([
+      LorenzCurveDiagram(c, DiagramEnum.macroLorenzCurveCalculation),
+    ]),
+    DiagramWidget([
+      LorenzCurveDiagram(c, DiagramEnum.macroLorenzCurveImprovedEquality),
+    ]),
+
+    /// Money market
+    DiagramWidget([MoneyMarketDiagram(c, DiagramEnum.macroMoneyMarket)]),
+    DiagramWidget([
+      MoneyMarketDiagram(
+        c,
+        DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy,
+      ),
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianExpansionaryPolicy),
+    ]),
+    DiagramWidget([
+      MoneyMarketDiagram(
+        c,
+        DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy,
+      ),
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianContractionaryPolicy),
+    ]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASKeynesianMultiplier)]),
+
+    /// --- MONEY MARKET ---
+    DiagramWidget([MoneyMarketDiagram(c, DiagramEnum.macroMoneyMarket)]),
+    DiagramWidget([
+      MoneyMarketDiagram(
+        c,
+        DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy,
+      ),
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianExpansionaryPolicy),
+    ]),
+    DiagramWidget([
+      MoneyMarketDiagram(
+        c,
+        DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy,
+      ),
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianContractionaryPolicy),
+    ]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASKeynesianMultiplier)]),
+
+    /// --- GLOBAL TRADE ---
+
+    /// Free Trade
+    DiagramWidget([
+      GlobalTradeDiagram(c, DiagramEnum.globalWorldPriceHigher),
+      GlobalTradeDiagram(c, DiagramEnum.globalDomesticExporter),
+    ]),
+    DiagramWidget([
+      GlobalTradeDiagram(c, DiagramEnum.globalWorldPriceLower),
+      GlobalTradeDiagram(c, DiagramEnum.globalDomesticImporter),
+    ]),
+    DiagramWidget([
+      ComparativeAdvantageDiagram(
+        c,
+        DiagramEnum.globalAbsoluteAdvantageDifferentGoods,
+      ),
+    ]),
+    DiagramWidget([
+      ComparativeAdvantageDiagram(c, DiagramEnum.globalComparativeAdvantage),
+    ]),
+    DiagramWidget([
+      ComparativeAdvantageDiagram(c, DiagramEnum.globalNoComparativeAdvantage),
+    ]),
+
+    /// Trade Protectionism
+    DiagramWidget([GlobalTradeDiagram(c, DiagramEnum.globalTariff)]),
+    DiagramWidget([GlobalTradeDiagram(c, DiagramEnum.globalImportQuota)]),
+    DiagramWidget([GlobalTradeDiagram(c, DiagramEnum.globalProductionSubsidy)]),
+    DiagramWidget([GlobalTradeDiagram(c, DiagramEnum.globalExportSubsidy)]),
+
+    /// Exchange Rates & BOP
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalForeignExchangeRate),
+    ]),
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalUSDAppreciates),
+      ExchangeRateDiagram(c, DiagramEnum.globalEuroDepreciates),
+    ]),
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalFloatingRateDemandIncrease),
+    ]),
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalFloatingRateDemandDecrease),
+    ]),
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalFloatingRateSupplyIncrease),
+    ]),
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalFloatingRateSupplyDecrease),
+    ]),
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalManagedRateRateDemandIncrease),
+    ]),
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalFixedRateDemandIncrease),
+    ]),
+    DiagramWidget([
+      ExchangeRateDiagram(c, DiagramEnum.globalFixedRateDemandDecrease),
+    ]),
+    DiagramWidget([ExchangeRateDiagram(c, DiagramEnum.globalJCurveDeficit)]),
+    DiagramWidget([ExchangeRateDiagram(c, DiagramEnum.globalJCurveSurplus)]),
+
+    /// Economic Development
+    DiagramWidget([PPCDiagram(c, DiagramEnum.globalPPCReallocation)]),
+    DiagramWidget([PovertyCycleDiagram(c, DiagramEnum.globalPovertyCycle)]),
   ];
 }
-
-//
-// List<DiagramWidget> getDiagramWidgetList(DiagramPainterConfig c) {
-//   return [
-//     /// Demand
-//     DiagramWidgetNEW(DemandDiagram(c, DiagramEnum.microDemand)),
-//     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandExtension)),
-//     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandContraction)),
-//     DiagramWidget(
-//       DemandDiagram(c, DiagramEnum.microDemandQuantityChangeDueToSupply),
-//     ),
-//     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandIncrease)),
-//     DiagramWidget(DemandDiagram(c, DiagramEnum.microDemandDecrease)),
-//
-//     /// Market Power
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
-//     ),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
-//     ),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketAbnormalProfit),
-//     ),
-//     DiagramWidget(
-//       MarketPower(
-//         c,
-//         DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment,
-//       ),
-//     ),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLoss),
-//     ),
-//     DiagramWidget(MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLoss)),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microPerfectCompetitionShutdownPoint),
-//     ),
-//     DiagramWidget(
-//       MarketPower(
-//         c,
-//         DiagramEnum.microPerfectCompetitionNormalProfitRevenueCostsCalculation,
-//       ),
-//     ),
-//     DiagramWidget(
-//       MarketPower(
-//         c,
-//         DiagramEnum
-//             .microPerfectCompetitionAbnormalProfitRevenueCostsCalculation,
-//       ),
-//     ),
-//     DiagramWidget(
-//       MarketPower(
-//         c,
-//         DiagramEnum.microPerfectCompetitionShutdownLossCalculation,
-//       ),
-//     ),
-//     DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyAbnormalProfit)),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolyAbnormalProfitAndCosts),
-//     ),
-//     DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyWelfare)),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolyWelfareAllocativelyEfficient),
-//     ),
-//     DiagramWidget(MarketPower(c, DiagramEnum.microMonopolyNatural)),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolyNaturalUnregulatedWelfare),
-//     ),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolyNaturalPricingComparisons),
-//     ),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
-//     ),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolyNaturalMarginalCostPricing),
-//     ),
-//     DiagramWidget(
-//       MarketPower(
-//         c,
-//         DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare,
-//       ),
-//     ),
-//     DiagramWidget(MarketPower(c, DiagramEnum.microOligopolyKinkedDemandCurve)),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
-//     ),
-//     DiagramWidget(MarketPower(c, DiagramEnum.microMonopolisticCompetitionLoss)),
-//     DiagramWidget(
-//       MarketPower(
-//         c,
-//         DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift,
-//       ),
-//     ),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolisticCompetitionLossShift),
-//     ),
-//     DiagramWidget(
-//       MarketPower(c, DiagramEnum.microMonopolisticCompetitionLongRun),
-//     ),
-//   ];
-// }

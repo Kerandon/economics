@@ -14,7 +14,7 @@ void paintTitle(
     config,
     canvas,
     label,
-    const Offset(0.5, 0), // Typically centered top
+    const Offset(0.5, -0.10), // Typically centered top
     fontSize: kFontMedium,
     style: TextStyle(
       fontStyle: FontStyle.italic,

@@ -79,7 +79,7 @@ enum DiagramLabel {
   QTax,
   qACP,
   qMC,
-  pp,
+  pP,
   pSub,
   priceCeiling,
   priceFloor,
@@ -121,6 +121,9 @@ enum DiagramLabel {
   pedEqual1,
   income,
   y,
+  y1,
+  y2,
+  y3,
   normalGoodNecessity,
   normalGoodLuxury,
   inferiorGood,
@@ -270,31 +273,43 @@ enum DiagramLabel {
   pLf,
   plInF,
   plDef,
-
+  cumulativePercentageOfIncome,
+  cumulativePercentageOfPopulation,
+  moneySupply,
+  mS1,
+  mS2,
   pL1,
+  iE,
+  i1,
+  i2,
   pL2,
   yF,
   yP,
   yE,
   yInf,
   yDef,
-  cheese,
+  cheeseKG,
   wineBottles,
   dW,
   dS,
   sWT,
   sWQ,
+  sWS,
   pW,
   pWT,
   pWQ,
   pWS,
+  pQ,
   euroPerDollar,
+  dollarPerEuro,
   quantityOfUSD,
+  quantityOfEuro,
   qUSD,
   supplyOfUSD,
   demandForUSD,
   euroUSD,
   eR,
+  eRE,
   eR1,
   eR2,
   eRF,
@@ -315,6 +330,14 @@ enum DiagramLabel {
   lowInvestment,
   lowProductivity,
   depreciationDevaluation,
+  countryA,
+  countryB,
+  autarky,
+  freeTrade,
+  tariff,
+  quota,
+  exportSubsidy,
+  productionSubsidy,
 }
 
 extension MicroLabelExtension on DiagramLabel {
@@ -401,7 +424,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.qpi => 'Qπ',
       DiagramLabel.sTax => 'S+Tax',
       DiagramLabel.pc => 'Pc',
-      DiagramLabel.pp => 'Pp',
+      DiagramLabel.pP => 'Pp',
       DiagramLabel.sSub => 'S+Sub',
       DiagramLabel.qTax => 'Qtax',
       DiagramLabel.qSub => 'Qsub',
@@ -416,14 +439,19 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.sDQ => 'Sd+q',
       DiagramLabel.sDSub => 'Sd+sub',
       DiagramLabel.pSub => 'P+Sub',
-      DiagramLabel.pWS => 'PW+Sub',
+      DiagramLabel.pWS => 'Pw+Sub',
       DiagramLabel.pD => 'Pd',
       DiagramLabel.goodA => 'Good A',
       DiagramLabel.goodB => 'Good B',
-      DiagramLabel.euroPerDollar => 'Euro € per USD \$',
-      DiagramLabel.quantityOfUSD => 'Qty of USD \$',
+
+    /// Exchange Rates
+      DiagramLabel.euroPerDollar => '€ / \$',
+      DiagramLabel.quantityOfUSD => 'Qty of \$',
       DiagramLabel.supplyOfUSD => 'Supply of USD \$',
       DiagramLabel.demandForUSD => 'Demand for USD \$',
+      DiagramLabel.eRE => 'ERe',
+      DiagramLabel.dollarPerEuro => '\$ / €',
+      DiagramLabel.quantityOfEuro => 'Quantity of €',
       DiagramLabel.eR1 => 'ER₁',
       DiagramLabel.eR2 => 'ER₂',
       DiagramLabel.eR => 'ER',
@@ -435,6 +463,8 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.exchangeRate => 'Exchange Rate',
       DiagramLabel.quantityOfCurrency => 'Qty of Currency',
       DiagramLabel.eRF => 'ERf',
+
+    /// Economic Development
       DiagramLabel.lowIncome => 'low Income',
       DiagramLabel.lowSavings => 'Low Savings',
       DiagramLabel.lowInvestment => 'Low Investment',
@@ -522,8 +552,8 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.dMarket => 'D (Market)',
       DiagramLabel.dW => 'Dw',
       DiagramLabel.dS => 'Sw',
-      DiagramLabel.cheese => 'Cheese\n',
-      DiagramLabel.wineBottles => 'Wine\n',
+      DiagramLabel.cheeseKG => 'Cheese (kg)',
+      DiagramLabel.wineBottles => 'Wine (bottles)',
       DiagramLabel.product => 'Product',
       DiagramLabel.totalProduct => 'Total Product',
       DiagramLabel.marginalProduct => 'Marginal Product',
@@ -670,6 +700,51 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.deflationaryGap => 'Deflationary Gap',
 
       DiagramLabel.inflationaryGap => 'Inflationary Gap',
+
+      DiagramLabel.cumulativePercentageOfIncome => 'Cumulative % \nof Income',
+
+      DiagramLabel.cumulativePercentageOfPopulation =>
+        'Cumulative %\nof Population',
+
+      DiagramLabel.moneySupply => 'Money Supply',
+
+      DiagramLabel.mS1 => 'MS1',
+
+      DiagramLabel.mS2 => 'MS2',
+
+      DiagramLabel.iE => 'ie',
+
+      DiagramLabel.i1 => 'i1',
+
+      DiagramLabel.i2 => 'i2',
+
+      DiagramLabel.y1 => 'Y1',
+
+      DiagramLabel.y2 => 'Y2',
+
+      DiagramLabel.y3 => 'Y3',
+
+      DiagramLabel.countryA => 'Country A',
+
+      DiagramLabel.countryB => 'Country B',
+
+      DiagramLabel.freeTrade => 'Free Trade',
+
+      DiagramLabel.tariff => 'Tariff',
+
+      DiagramLabel.quota => 'Quota',
+
+      DiagramLabel.exportSubsidy => 'Export Subsidy',
+
+      DiagramLabel.productionSubsidy => 'Production Subsidy',
+
+      DiagramLabel.autarky => 'Autarky',
+
+      DiagramLabel.pQ => 'P+q',
+
+      DiagramLabel.sWS => 'Sw+s',
+
+
     };
   }
 }

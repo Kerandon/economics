@@ -137,7 +137,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
 
       yAxisStartPos: 0.675,
       xAxisEndPos: 0.425,
-      yLabel: DiagramLabel.pp.label,
+      yLabel: DiagramLabel.pP.label,
       hideXLine: true,
       showDotAtIntersection: true,
     );
@@ -226,7 +226,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
 
       yAxisStartPos: 0.64,
       xAxisEndPos: 0.46,
-      yLabel: DiagramLabel.pp.label,
+      yLabel: DiagramLabel.pP.label,
       hideXLine: true,
       showDotAtIntersection: true,
     );
@@ -323,7 +323,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
 
       yAxisStartPos: 0.30,
       xAxisEndPos: 0.55,
-      yLabel: DiagramLabel.pp.label,
+      yLabel: DiagramLabel.pP.label,
       xLabel: DiagramLabel.qSub.label,
       showDotAtIntersection: true,
     );
@@ -401,7 +401,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
 
       yAxisStartPos: 0.325,
       xAxisEndPos: 0.52,
-      yLabel: DiagramLabel.pp.label,
+      yLabel: DiagramLabel.pP.label,
       xLabel: ' ${DiagramLabel.qSub.label}',
       showDotAtIntersection: true,
     );
@@ -526,7 +526,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
 
       yAxisStartPos: 0.71,
       xAxisEndPos: 0.39,
-      yLabel: DiagramLabel.pp.label,
+      yLabel: DiagramLabel.pP.label,
       hideXLine: true,
       showDotAtIntersection: true,
     );
@@ -594,7 +594,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
 
       yAxisStartPos: 0.27,
       xAxisEndPos: 0.58,
-      yLabel: DiagramLabel.pp.label,
+      yLabel: DiagramLabel.pP.label,
       xLabel: ' ${DiagramLabel.qSub.label}',
       showDotAtIntersection: true,
     );

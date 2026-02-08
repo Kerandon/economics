@@ -8,18 +8,19 @@ import 'package:flutter/material.dart';
 import 'i_diagram_canvas.dart';
 // Import your constants...
 
+import 'dart:ui' as ui;
+import 'package:flutter/material.dart';
+
 class FlutterDiagramCanvas implements IDiagramCanvas {
   final Canvas canvas;
-  final double scale;
 
-  FlutterDiagramCanvas(this.canvas, {this.scale = 1.0});
+  FlutterDiagramCanvas(this.canvas);
 
   @override
   void drawLine(Offset p1, Offset p2, Color color, double width) {
     final paint = Paint()
       ..color = color
-      ..strokeWidth = width * scale
-      ..strokeCap = StrokeCap.round
+      ..strokeWidth = width
       ..style = PaintingStyle.stroke;
     canvas.drawLine(p1, p2, paint);
   }
@@ -28,97 +29,117 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
   void drawDashedLine(Offset p1, Offset p2, Color color, double width) {
     final paint = Paint()
       ..color = color
-      ..strokeWidth = width * scale
+      ..strokeWidth = width
       ..style = PaintingStyle.stroke;
-    drawDashedLineForGrid(canvas, p1, p2, paint);
+
+    const double dashWidth = 4.0;
+    const double dashSpace = 4.0;
+    double currentDist = 0.0;
+    final double totalDist = (p2 - p1).distance;
+
+    if (totalDist == 0) return;
+
+    final double dx = (p2.dx - p1.dx) / totalDist;
+    final double dy = (p2.dy - p1.dy) / totalDist;
+
+    while (currentDist < totalDist) {
+      final double endDraw = (currentDist + dashWidth).clamp(0.0, totalDist);
+
+      canvas.drawLine(
+        Offset(p1.dx + dx * currentDist, p1.dy + dy * currentDist),
+        Offset(p1.dx + dx * endDraw, p1.dy + dy * endDraw),
+        paint,
+      );
+      currentDist += dashWidth + dashSpace;
+    }
+    // NOTICE: No canvas.restore() here!
+  }
+
+  @override
+  void drawPath(List<Offset> points, Color color, {bool fill = true}) {
+    if (points.isEmpty) return;
+    final path = Path()..moveTo(points.first.dx, points.first.dy);
+    for (int i = 1; i < points.length; i++) {
+      path.lineTo(points[i].dx, points[i].dy);
+    }
+    if (fill) path.close();
+
+    final paint = Paint()
+      ..color = color
+      ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
+      ..strokeWidth = fill ? 0 : 1.5;
+
+    canvas.drawPath(path, paint);
   }
 
   @override
   void drawRect(Rect rect, Color color, {bool fill = false}) {
     final paint = Paint()
       ..color = color
-      ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke;
-    // If not filling, you might want a stroke width here, e.g. ..strokeWidth = 1.0
+      ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
+      ..strokeWidth = fill ? 0 : 1.5;
     canvas.drawRect(rect, paint);
   }
 
-  // --- NEW IMPLEMENTATION ---
   @override
   void drawRRect(Rect rect, Radius radius, Color color, {bool fill = true}) {
     final paint = Paint()
       ..color = color
-      ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke;
-
-    // Create the Rounded Rectangle from the Rect and Radius
-    final rrect = RRect.fromRectAndRadius(rect, radius);
-
-    canvas.drawRRect(rrect, paint);
-  }
-  // --------------------------
-
-  @override
-  void drawDot(
-    Offset center,
-    Color color, {
-    double radius = 4.0,
-    bool fill = true,
-  }) {
-    final paint = Paint()
-      ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth = 2.0;
-    canvas.drawCircle(center, radius * scale, paint);
+      ..strokeWidth = fill ? 0 : 1.5;
+    canvas.drawRRect(RRect.fromRectAndRadius(rect, radius), paint);
   }
 
   @override
-  void drawPath(List<Offset> points, Color color, {bool fill = false}) {
-    if (points.isEmpty) return;
+  void drawDot(Offset center, Color color, {double? radius, bool fill = true}) {
     final paint = Paint()
       ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth = (fill ? 1.0 : kCurveWidth) * scale
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-
-    final path = Path()..moveTo(points.first.dx, points.first.dy);
-    for (int i = 1; i < points.length; i++) {
-      path.lineTo(points[i].dx, points[i].dy);
-    }
-
-    if (fill) {
-      path.close();
-      canvas.drawPath(path, paint);
-    } else {
-      canvas.drawPath(path, paint);
-    }
+      ..strokeWidth = 1.5;
+    canvas.drawCircle(center, radius ?? 4.0, paint);
   }
 
   @override
   void drawText(String text, Offset position, double fontSize, Color color) {
+    final textSpan = TextSpan(
+      text: text,
+      style: TextStyle(color: color, fontSize: fontSize),
+    );
     final textPainter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(color: color, fontSize: fontSize * scale),
-      ),
+      text: textSpan,
       textDirection: TextDirection.ltr,
-    )..layout();
-
+    );
+    textPainter.layout();
     textPainter.paint(canvas, position);
+    // NOTICE: No canvas.restore() here!
   }
 
   @override
+  void paintTextPainter(TextPainter painter, Offset offset) {
+    painter.paint(canvas, offset);
+  }
+
+  // --- Stack Management ---
+  @override
   void save() => canvas.save();
+
   @override
   void restore() => canvas.restore();
+
   @override
   void translate(double dx, double dy) => canvas.translate(dx, dy);
+
   @override
   void rotate(double radians) => canvas.rotate(radians);
 
   @override
   void clipPath(List<Offset> points) {
     if (points.isEmpty) return;
-    final path = Path()..addPolygon(points, true);
+    final path = Path()..moveTo(points.first.dx, points.first.dy);
+    for (int i = 1; i < points.length; i++) {
+      path.lineTo(points[i].dx, points[i].dy);
+    }
+    path.close();
     canvas.clipPath(path);
   }
 }

@@ -2,10 +2,9 @@ import 'package:economics_app/diagrams/custom_paint/i_diagram_canvas.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/diagram_painter_config.dart';
-import '../flutter_diagram_canvas.dart';
 import '../painter_constants.dart';
 
-Future<void> paintLegendTable(
+void paintLegendTable(
   IDiagramCanvas iCanvas, // 👈 Required interface
   DiagramPainterConfig config, {
   Offset normalizedTopLeft = const Offset(
@@ -24,7 +23,7 @@ Future<void> paintLegendTable(
   double currentY = normalizedTopLeft.dy * size.height;
 
   // 1. Unified Style
-  final double fontSize = kFontTiny * config.averageRatio;
+  final double fontSize = kFontMedium * config.averageRatio;
 
   // 2. Measure Column Widths
   // We use TextPainter locally for measurement as it's the most reliable cross-platform tool

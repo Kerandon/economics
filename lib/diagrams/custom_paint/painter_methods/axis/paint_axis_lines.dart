@@ -6,10 +6,13 @@ import '../../i_diagram_canvas.dart';
 
 import '../../../models/diagram_painter_config.dart';
 import '../../painter_constants.dart';
+import 'axis_enum.dart';
+
+import 'dart:math';
 
 void paintAxisLines(
   DiagramPainterConfig config,
-  IDiagramCanvas canvas, { // Now only takes the unified interface
+  IDiagramCanvas canvas, {
   Color? color,
   double strokeWidth = kAxisWidth,
   double? xMaxValue,
@@ -18,46 +21,59 @@ void paintAxisLines(
   int? yDivisions,
   GridLineStyle gridLineStyle = GridLineStyle.full,
   int decimalPlaces = 0,
+  AxisStyle axisStyle = AxisStyle.arrows,
 }) {
-  // 1. Math remains identical
   final widthAndHeight = config.painterSize.width;
   final indent = widthAndHeight * kAxisIndent;
+
   final indentXLeft = indent;
+  final indentXRight = widthAndHeight * (1 - kAxisIndent);
   final indentYTop = indent * kTopAxisIndent;
   final indentYBottom = widthAndHeight - (indent * kBottomAxisIndent);
-  final indentXRight = widthAndHeight * (1 - (kAxisIndent));
 
-  final startYOffset = Offset(indentXLeft, indentYTop);
-  final endYOffset = Offset(indentXLeft, indentYBottom);
-  final startXOffset = Offset(indentXLeft, indentYBottom);
-  final endXOffset = Offset(indentXRight, indentYBottom);
-
-  // 2. Painting Logic
-  // We use the same code for Flutter and PDF now
   final axisColor = color ?? config.colorScheme.onSurface;
   final axisWidth = kCurveWidth * config.averageRatio;
 
-  // Vertical Y-Axis
-  canvas.drawLine(startYOffset, endYOffset, axisColor, axisWidth);
-  // Horizontal X-Axis
-  canvas.drawLine(startXOffset, endXOffset, axisColor, axisWidth);
+  // Axis Endpoints
+  final bottomLeft = Offset(indentXLeft, indentYBottom);
+  final bottomRight = Offset(indentXRight, indentYBottom);
+  final topLeft = Offset(indentXLeft, indentYTop);
+  final topRight = Offset(indentXRight, indentYTop);
 
-  paintArrowHead(
-    config,
-    canvas,
-    positionOfArrow: startYOffset,
-    rotationAngle: 0,
-    color: color ?? config.colorScheme.onSurface,
-    //isCentered: false
-  );
-  paintArrowHead(
-    config,
-    canvas,
-    positionOfArrow: endXOffset,
-    rotationAngle: pi / 2,
-    color: color ?? config.colorScheme.onSurface,
-  );
+  if (axisStyle == AxisStyle.arrows) {
+    // 1. Draw Lines
+    canvas.drawLine(bottomLeft, topLeft, axisColor, axisWidth);
+    canvas.drawLine(bottomLeft, bottomRight, axisColor, axisWidth);
 
+    // 2. Draw Arrows
+    // Y-Axis Arrow
+    paintArrowHead(
+      config,
+      canvas,
+      color: axisColor,
+      positionOfArrow: topLeft,
+      rotationAngle: 0.0,
+      isCentered: false,
+    );
+
+    // X-Axis Arrow
+    paintArrowHead(
+      config,
+      canvas,
+      color: axisColor,
+      positionOfArrow: bottomRight,
+      rotationAngle: pi / 2,
+      isCentered: false,
+    );
+  } else {
+    // ⬛ Lorenz-style box
+    canvas.drawLine(bottomLeft, bottomRight, axisColor, axisWidth);
+    canvas.drawLine(bottomRight, topRight, axisColor, axisWidth);
+    canvas.drawLine(topRight, topLeft, axisColor, axisWidth);
+    canvas.drawLine(topLeft, bottomLeft, axisColor, axisWidth);
+  }
+
+  // ✅ RESTORED: This was missing in the previous snippet
   if (gridLineStyle != GridLineStyle.none) {
     paintGridLines(
       config,

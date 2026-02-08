@@ -9,7 +9,7 @@ import '../../paint_text.dart';
 
 void paintGridLines(
   DiagramPainterConfig config,
-  IDiagramCanvas canvas, { // Unified interface
+  IDiagramCanvas canvas, {
   double? xMaxValue,
   double? yMaxValue,
   int? xDivisions,
@@ -18,6 +18,7 @@ void paintGridLines(
   double strokeWidth = 2.0,
   GridLineStyle gridLineStyle = GridLineStyle.full,
   int decimalPlaces = 1,
+  double? fontSize, // ✅ NEW: Allow manual override
 }) {
   if (xMaxValue == null ||
       yMaxValue == null ||
@@ -33,7 +34,10 @@ void paintGridLines(
 
   final effectiveColor = color ?? config.colorScheme.onSurface;
   final effectiveWidth = strokeWidth * config.averageRatio;
-  final fontSize = kFontVerySmall * config.averageRatio;
+
+  // ✅ FIX: Use kFontSizeAverageRatio by default (much bigger), or the user's override
+  final baseFontSize = fontSize ?? kFontSizeAverageRatioSmall;
+  final effectiveFontSize = baseFontSize * config.averageRatio;
 
   final indentXLeft = indent;
   final indentYBottom = widthAndHeight - (indent * kBottomAxisIndent);
@@ -45,14 +49,13 @@ void paintGridLines(
   final xStepValue = xMaxValue / xDivisions;
   final xStepSize = (indentXRight - indentXLeft) / xDivisions;
 
-  // ✅ Y-axis gridlines/ticks and labels
+  // Y-axis
   for (int i = 1; i <= yDivisions; i++) {
     final y = indentYBottom - (i * yStepSize);
     final yLabel = (i * yStepValue).toStringAsFixed(decimalPlaces);
     final pStart = Offset(indentXLeft, y);
     final pEnd = Offset(indentXRight, y);
 
-    // Draw Lines based on style
     _drawGridLineByStyle(
       canvas,
       gridLineStyle,
@@ -68,22 +71,21 @@ void paintGridLines(
       canvas,
       yLabel,
       Offset(indentXLeft - labelIndent, y),
-      fontSize: fontSize,
-      horizontalPivot: LabelPivot.right, // Aligns text to the left of the axis
-      verticalPivot: LabelPivot.middle, // Centers text vertically on the tick
-      normalize: false, // Grid math uses absolute coordinates
+      fontSize: effectiveFontSize, // Use the larger size
+      horizontalPivot: LabelPivot.right,
+      verticalPivot: LabelPivot.middle,
+      normalize: false,
       style: TextStyle(color: effectiveColor),
     );
   }
 
-  // ✅ X-axis gridlines/ticks and labels
+  // X-axis
   for (int i = 1; i <= xDivisions; i++) {
     final x = indentXLeft + (i * xStepSize);
     final xLabel = (i * xStepValue).toStringAsFixed(decimalPlaces);
     final pStart = Offset(x, indentYBottom);
     final pEnd = Offset(x, indentYTop);
 
-    // Draw Lines based on style
     _drawGridLineByStyle(
       canvas,
       gridLineStyle,
@@ -94,17 +96,15 @@ void paintGridLines(
       effectiveWidth,
     );
 
-    // Draw Labels
     paintText(
       config,
       canvas,
       xLabel,
       Offset(x, indentYBottom + labelIndent),
-      fontSize: fontSize,
-      horizontalPivot:
-          LabelPivot.center, // Centers text horizontally under the tick
-      verticalPivot: LabelPivot.top, // Aligns top of text to the padding
-      normalize: false, // Grid math uses absolute coordinates
+      fontSize: effectiveFontSize, // Use the larger size
+      horizontalPivot: LabelPivot.center,
+      verticalPivot: LabelPivot.top,
+      normalize: false,
       style: TextStyle(color: effectiveColor),
     );
   }

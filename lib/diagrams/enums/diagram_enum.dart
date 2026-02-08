@@ -115,43 +115,56 @@ enum DiagramEnum {
   macroADASKeynesianFullEmployment,
   macroADASKeynesianDeflationaryGap,
   macroADASKeynesianInflationaryGap,
+  macroADASKeynesianExpansionaryPolicy,
+  macroADASKeynesianContractionaryPolicy,
   macroADASClassicalDeflationaryGapAdjustment,
   macroADASClassicalInflationaryGapAdjustment,
   macroADASClassicalLongTermGrowth,
   macroADASKeynesianLongTermGrowth,
+  macroADASClassicalDemandPullInflation,
+  macroKeynesianDemandPullInflation,
   macroADASCostPushInflation,
+  macroLorenzCurveCalculation,
+  macroLorenzCurveImprovedEquality,
+  macroMoneyMarket,
+  macroMoneyMarketExpansionaryMonetaryPolicy,
+  macroMoneyMarketContractionaryMonetaryPolicy,
+  macroADASKeynesianMultiplier,
 
-  ///Global
-  globalWorldPrice,
-  globalWorldPriceStandAlone,
-  globalNetExporter,
-  globalNetImporter,
+  ///Global*****************************************
+
+  /// Free Trade
+  globalWorldPriceHigher,
+  globalWorldPriceLower,
+  globalDomesticExporter,
+  globalDomesticImporter,
   globalAbsoluteAdvantageDifferentGoods,
-  globalAbsoluteAdvantageBothGoods,
   globalComparativeAdvantage,
-  globalComparativeAdvantageTradeAndConsumption,
-  globalComparativeAdvantageTradeAndConsumptionMixed,
+  globalNoComparativeAdvantage,
+
+  /// Protectionism
   globalTariff,
-  globalTariffWelfare,
-  globalTariffConsumerSurplus,
-  globalTariffConsumerSurplusChange,
-  globalTariffProducerSurplus,
-  globalTariffProducerSurplusChange,
-  globalTariffWelfareLoss,
-  globalTariffGovernmentRevenue,
   globalImportQuota,
-  globalImportQuotaWelfare,
-  globalImportQuotaConsumerSurplus,
-  globalImportQuotaConsumerSurplusChange,
-  globalImportQuotaProducerSurplus,
-  globalImportQuotaProducerSurplusChange,
-  globalImportQuotaWelfareLoss,
   globalProductionSubsidy,
-  globalProductionSubsidyConsumerSurplus,
-  globalProductionSubsidyProducerSurplus,
-  globalProductionSubsidyProducerSurplusChange,
-  globalProductionSubsidyWelfareLoss,
-  globalProductionSubsidyWelfare,
+  globalExportSubsidy,
+
+  /// Exchange Rates
+  globalForeignExchangeRate,
+  globalEuroDepreciates,
+  globalUSDAppreciates,
+  globalFloatingRateDemandIncrease,
+  globalFloatingRateDemandDecrease,
+  globalFloatingRateSupplyIncrease,
+  globalFloatingRateSupplyDecrease,
+  globalManagedRateRateDemandIncrease,
+  globalFixedRateDemandDecrease,
+  globalFixedRateDemandIncrease,
+  globalJCurveDeficit,
+  globalJCurveSurplus,
+
+  /// Economic Development
+  globalPPCReallocation,
+  globalPovertyCycle,
 }
 
 extension DiagramBundleEnumExtension on DiagramEnum {
@@ -386,54 +399,67 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroADASClassicalInflationaryGapAdjustment =>
       Subunit.variationsActivityADAS,
 
+    /// Macro Objectives
     DiagramEnum.macroADASClassicalLongTermGrowth => Subunit.macroObjectives,
 
     DiagramEnum.macroADASKeynesianLongTermGrowth => Subunit.macroObjectives,
 
     DiagramEnum.macroADASCostPushInflation => Subunit.macroObjectives,
+    DiagramEnum.macroADASClassicalDemandPullInflation =>
+      Subunit.macroObjectives,
 
-    /// Global
-    DiagramEnum.globalWorldPrice => Subunit.benefitsTrade,
-    DiagramEnum.globalWorldPriceStandAlone => Subunit.benefitsTrade,
-    DiagramEnum.globalNetExporter => Subunit.benefitsTrade,
-    DiagramEnum.globalNetImporter => Subunit.benefitsTrade,
+    /// Poverty and Inequality
+    DiagramEnum.macroLorenzCurveCalculation => Subunit.inequalityPoverty,
+
+    DiagramEnum.macroLorenzCurveImprovedEquality => Subunit.inequalityPoverty,
+
+    /// Demand-side
+    DiagramEnum.macroKeynesianDemandPullInflation => Subunit.macroObjectives,
+    DiagramEnum.macroADASKeynesianMultiplier => Subunit.demandManagementFiscal,
+    DiagramEnum.macroMoneyMarket => Subunit.demandManagementMonetary,
+    DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy =>
+      Subunit.demandManagementMonetary,
+    DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy =>
+      Subunit.demandManagementMonetary,
+    DiagramEnum.macroADASKeynesianExpansionaryPolicy =>
+      Subunit.demandManagementMonetary,
+    DiagramEnum.macroADASKeynesianContractionaryPolicy =>
+      Subunit.demandManagementMonetary,
+
+    /// Global***************
+
+    /// Free Trade
+    DiagramEnum.globalWorldPriceHigher => Subunit.benefitsTrade,
+    DiagramEnum.globalWorldPriceLower => Subunit.benefitsTrade,
+    DiagramEnum.globalDomesticExporter => Subunit.benefitsTrade,
+    DiagramEnum.globalDomesticImporter => Subunit.benefitsTrade,
     DiagramEnum.globalAbsoluteAdvantageDifferentGoods => Subunit.benefitsTrade,
-    DiagramEnum.globalAbsoluteAdvantageBothGoods => Subunit.benefitsTrade,
     DiagramEnum.globalComparativeAdvantage => Subunit.benefitsTrade,
-    DiagramEnum.globalComparativeAdvantageTradeAndConsumption =>
-      Subunit.benefitsTrade,
-    DiagramEnum.globalComparativeAdvantageTradeAndConsumptionMixed =>
-      Subunit.benefitsTrade,
+    DiagramEnum.globalNoComparativeAdvantage => Subunit.benefitsTrade,
+
+    /// Trade Protectionism
     DiagramEnum.globalTariff => Subunit.typesTradeProtection,
-    DiagramEnum.globalTariffWelfare => Subunit.typesTradeProtection,
-    DiagramEnum.globalTariffConsumerSurplus => Subunit.typesTradeProtection,
-    DiagramEnum.globalTariffConsumerSurplusChange =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalTariffProducerSurplus => Subunit.typesTradeProtection,
-    DiagramEnum.globalTariffProducerSurplusChange =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalTariffWelfareLoss => Subunit.typesTradeProtection,
-    DiagramEnum.globalTariffGovernmentRevenue => Subunit.typesTradeProtection,
     DiagramEnum.globalImportQuota => Subunit.typesTradeProtection,
-    DiagramEnum.globalImportQuotaWelfare => Subunit.typesTradeProtection,
-    DiagramEnum.globalImportQuotaConsumerSurplus =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalImportQuotaConsumerSurplusChange =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalImportQuotaProducerSurplus =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalImportQuotaProducerSurplusChange =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalImportQuotaWelfareLoss => Subunit.typesTradeProtection,
     DiagramEnum.globalProductionSubsidy => Subunit.typesTradeProtection,
-    DiagramEnum.globalProductionSubsidyConsumerSurplus =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalProductionSubsidyProducerSurplus =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalProductionSubsidyProducerSurplusChange =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalProductionSubsidyWelfareLoss =>
-      Subunit.typesTradeProtection,
-    DiagramEnum.globalProductionSubsidyWelfare => Subunit.typesTradeProtection,
+    DiagramEnum.globalExportSubsidy => Subunit.typesTradeProtection,
+
+    /// Exchange Rates & BOP
+    DiagramEnum.globalForeignExchangeRate => Subunit.exchangeRates,
+    DiagramEnum.globalEuroDepreciates => Subunit.exchangeRates,
+    DiagramEnum.globalUSDAppreciates => Subunit.exchangeRates,
+    DiagramEnum.globalFloatingRateDemandIncrease => Subunit.exchangeRates,
+    DiagramEnum.globalFloatingRateDemandDecrease => Subunit.exchangeRates,
+    DiagramEnum.globalFloatingRateSupplyIncrease => Subunit.exchangeRates,
+    DiagramEnum.globalFloatingRateSupplyDecrease => Subunit.exchangeRates,
+    DiagramEnum.globalManagedRateRateDemandIncrease => Subunit.exchangeRates,
+    DiagramEnum.globalFixedRateDemandDecrease => Subunit.exchangeRates,
+    DiagramEnum.globalFixedRateDemandIncrease => Subunit.exchangeRates,
+    DiagramEnum.globalJCurveDeficit => Subunit.balanceOfPayments,
+    DiagramEnum.globalJCurveSurplus => Subunit.balanceOfPayments,
+
+    /// Economic Development
+    DiagramEnum.globalPPCReallocation => Subunit.barriersGrowth,
+    DiagramEnum.globalPovertyCycle => Subunit.barriersGrowth,
+
   };
 }

@@ -12,40 +12,41 @@ enum DiagramFlowArrow {
   forward, // Points in the direction of the line (Start -> End)
   backward, // Points opposite to the line (End -> Start)
 }
+
 void paintDiagramLines(
-    DiagramPainterConfig config,
-    IDiagramCanvas canvas, {
-      required Offset startPos,
-      List<CustomBezier>? bezierPoints,
-      List<Offset>? polylineOffsets,
-      Color? color,
-      double strokeWidth = 5.0,
+  DiagramPainterConfig config,
+  IDiagramCanvas canvas, {
+  required Offset startPos,
+  List<CustomBezier>? bezierPoints,
+  List<Offset>? polylineOffsets,
+  Color? color,
+  double strokeWidth = 5.0,
 
-      // LABELS
-      String? label1,
-      String? label2,
-      String? middleLabel,
-      LabelAlign label1Align = LabelAlign.centerTop,
-      LabelAlign label2Align = LabelAlign.centerBottom,
-      LabelAlign middleLabelAlign = LabelAlign.center,
+  // LABELS
+  String? label1,
+  String? label2,
+  String? middleLabel,
+  LabelAlign label1Align = LabelAlign.centerTop,
+  LabelAlign label2Align = LabelAlign.centerBottom,
+  LabelAlign middleLabelAlign = LabelAlign.center,
 
-      double labelPadding = 18.0,
+  double labelPadding = 18.0,
 
-      // ARROWS
-      bool arrowOnStart = false,
-      bool arrowOnEnd = false,
-      double arrowOnStartAngle = 0,
-      double arrowOnEndAngle = 0,
-      DiagramFlowArrow flowArrow = DiagramFlowArrow.none,
-      int flowArrowCount = 1,
+  // ARROWS
+  bool arrowOnStart = false,
+  bool arrowOnEnd = false,
+  double arrowOnStartAngle = 0,
+  double arrowOnEndAngle = 0,
+  DiagramFlowArrow flowArrow = DiagramFlowArrow.none,
+  int flowArrowCount = 1,
 
-      // DECORATION
-      bool circleAtEnd = false,
-      bool circleAtStart = false,
-      double circleRadius = 10,
-      CurveStyle curveStyle = CurveStyle.standard,
-      bool normalizeToDiagramArea = true,
-    }) {
+  // DECORATION
+  bool circleAtEnd = false,
+  bool circleAtStart = false,
+  double circleRadius = 10,
+  CurveStyle curveStyle = CurveStyle.standard,
+  bool normalizeToDiagramArea = true,
+}) {
   // --- 1. CONFIG & MATH ---
   final double widthAndHeight = config.painterSize.width;
   final double normalize = normalizeToDiagramArea ? 1 - (kAxisIndent * 2) : 1.0;
@@ -64,7 +65,7 @@ void paintDiagramLines(
   // Calculate width once
   final double effectiveWidth =
       (curveStyle == CurveStyle.bold ? strokeWidth * 2 : strokeWidth) *
-          config.averageRatio;
+      config.averageRatio;
 
   final Offset start = computeOffset(startPos);
 
@@ -110,12 +111,7 @@ void paintDiagramLines(
     // we draw connected line segments. Since drawLine accepts width,
     // this respects your strokeWidth parameter.
     for (int i = 0; i < points.length - 1; i++) {
-      canvas.drawLine(
-        points[i],
-        points[i + 1],
-        mainColor,
-        effectiveWidth,
-      );
+      canvas.drawLine(points[i], points[i + 1], mainColor, effectiveWidth);
     }
   }
 
@@ -151,7 +147,7 @@ void paintDiagramLines(
           segmentEnd.dy - segmentStart.dy,
           segmentEnd.dx - segmentStart.dx,
         ) +
-            (pi / 2);
+        (pi / 2);
 
     return [pos, angle];
   }
@@ -267,15 +263,15 @@ void paintDiagramLines(
 }
 
 void _paintDiagramLabel(
-    DiagramPainterConfig config,
-    IDiagramCanvas canvas,
-    String label,
-    Offset pixelPos,
-    LabelAlign align,
-    Color color,
-    bool normalize,
-    double padding,
-    ) {
+  DiagramPainterConfig config,
+  IDiagramCanvas canvas,
+  String label,
+  Offset pixelPos,
+  LabelAlign align,
+  Color color,
+  bool normalize,
+  double padding,
+) {
   LabelPivot horizontal = LabelPivot.center;
   LabelPivot vertical = LabelPivot.middle;
 

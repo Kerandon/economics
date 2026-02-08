@@ -24,10 +24,11 @@ const kSimilarities = 'Similarities';
 const kDifferences = 'Differences';
 
 /// Text
-const kFontTiny = 11.0;
-const kFontVerySmall = 14.0;
-const kFontSmall = 18.0;
-const kFontMedium = 26.0;
+const kFontTiny = 16.0;
+const kFontVerySmall = 22.0;
+const kFontSmall = 22.0;
+const kFontMedium = 28.0;
+const kFontSizeAverageRatioSmall = 30.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
   fontSize: kFontMedium,
@@ -38,7 +39,28 @@ const kDotRadius = 8.0;
 
 enum CurveStyle { standard, dashed, dotted, bold }
 
-enum MarketCurveType { demand, supply, ad, sras, lras, keynesianAS }
+enum MarketCurveType {
+  demand,
+  supply,
+  ad,
+  sras,
+  lras,
+  keynesianAS,
+  moneySupply,
+  lrpc,
+  srpc,
+  moneyDemand,
+
+  // --- NEW TRADE TYPES ---
+  demandDomestic, // Downward sloping (Dd)
+  supplyDomestic, // Upward sloping (Sd)
+  demandWorld, // Downward sloping (Dw) - Assuming 'worldDomestic' implies World Demand
+  supplyWorld, // Upward sloping (Sw)
+
+  // --- Currency ---
+  demandUSD,
+  supplyUSD,
+}
 
 enum LabelAlign { center, centerLeft, centerRight, centerTop, centerBottom }
 

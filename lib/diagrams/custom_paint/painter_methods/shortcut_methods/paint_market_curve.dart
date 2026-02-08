@@ -12,8 +12,8 @@ void paintMarketCurve(
   DiagramPainterConfig config,
   IDiagramCanvas canvas, {
   required MarketCurveType type,
-  String? label, // Defaults to curve name (e.g. "LRAS") at the END
-  String? startLabel, // New: Defaults to "Yp" for LRAS at the START
+  String? label,
+  String? startLabel,
   double lengthAdjustment = 0.0,
   double horizontalShift = 0.0,
   double verticalShift = 0.0,
@@ -28,25 +28,50 @@ void paintMarketCurve(
   Offset baseEnd;
   List<CustomBezier>? beziers;
 
+  // Helper to identify vertical curves
+  bool isVertical =
+      type == MarketCurveType.lras ||
+      type == MarketCurveType.moneySupply ||
+      type == MarketCurveType.lrpc;
+
   switch (type) {
+    // --- DOWNWARD SLOPING (DEMAND-LIKE) ---
     case MarketCurveType.demand:
-    case MarketCurveType.ad:
-      baseStart = const Offset(0.15, 0.15);
-      baseEnd = const Offset(0.85, 0.85);
+    case MarketCurveType.srpc:
+    case MarketCurveType.moneyDemand:
+    case MarketCurveType.demandDomestic: // New
+    case MarketCurveType.demandWorld:
+    case MarketCurveType.demandUSD:
+      baseStart = const Offset(0.10, 0.10);
+      baseEnd = const Offset(0.90, 0.90);
       break;
 
+    // --- UPWARD SLOPING (SUPPLY-LIKE) ---
     case MarketCurveType.supply:
     case MarketCurveType.sras:
-      baseStart = const Offset(0.15, 0.85);
-      baseEnd = const Offset(0.85, 0.15);
+    case MarketCurveType.supplyDomestic: // New
+    case MarketCurveType.supplyWorld:
+    case MarketCurveType.supplyUSD:
+      baseStart = const Offset(0.10, 0.90);
+      baseEnd = const Offset(0.90, 0.10);
       break;
 
+    // --- SPECIAL AD CURVE ---
+    case MarketCurveType.ad:
+      // Steeper & Lower
+      baseStart = const Offset(0.30, 0.20);
+      baseEnd = const Offset(0.70, 0.90);
+      break;
+
+    // --- VERTICAL CURVES ---
     case MarketCurveType.lras:
-      // Start at bottom (1.0), End at top (0.10)
+    case MarketCurveType.moneySupply:
+    case MarketCurveType.lrpc:
       baseStart = Offset(lrasX, 1.0);
       baseEnd = Offset(lrasX, 0.10);
       break;
 
+    // --- COMPLEX CURVES ---
     case MarketCurveType.keynesianAS:
       baseStart = Offset(0.10, 0.80);
       baseEnd = Offset(keynesianAS, 0.10);
@@ -104,7 +129,6 @@ void paintMarketCurve(
   }
 
   // 3. DETERMINE LABELS
-  // Label 2 (End of line / Top)
   String finalLabel2 = label ?? '';
   if (label == null) {
     switch (type) {
@@ -126,17 +150,41 @@ void paintMarketCurve(
       case MarketCurveType.keynesianAS:
         finalLabel2 = "Keynesian AS";
         break;
+      case MarketCurveType.moneySupply:
+        finalLabel2 = "MS";
+        break;
+      case MarketCurveType.lrpc:
+        finalLabel2 = "LRPC";
+        break;
+      case MarketCurveType.srpc:
+        finalLabel2 = "SRPC";
+        break;
+      case MarketCurveType.moneyDemand:
+        finalLabel2 = "Md";
+        break;
+
+      // --- NEW TRADE LABELS ---
+      case MarketCurveType.demandDomestic:
+        finalLabel2 = "Dd"; // Domestic Demand
+        break;
+      case MarketCurveType.supplyDomestic:
+        finalLabel2 = "Sd"; // Domestic Supply
+        break;
+      case MarketCurveType.demandWorld:
+        finalLabel2 = "Dw"; // World Demand (Assuming interpretation)
+        break;
+      case MarketCurveType.supplyWorld:
+        finalLabel2 = "Sw"; // World Supply
+        break;
+      case MarketCurveType.demandUSD:
+        // TODO: Handle this case.
+        finalLabel2 = 'Dfor\$';
+      case MarketCurveType.supplyUSD:
+        finalLabel2 = 'Sof\$';
     }
   }
 
-  // Label 1 (Start of line / Bottom)
   String? finalLabel1 = startLabel;
-
-  // *** LRAS SPECIAL LOGIC ***
-  // If it's LRAS and no start label was provided, default to "Yp"
-  if (type == MarketCurveType.lras && startLabel == null) {
-    finalLabel1 = "Yp";
-  }
 
   // 4. DRAW
   if (type == MarketCurveType.keynesianAS) {
@@ -157,23 +205,10 @@ void paintMarketCurve(
       canvas,
       startPos: start,
       polylineOffsets: [end],
-
-      // Pass the Start Label (Yp) and End Label (LRAS)
       label1: finalLabel1,
       label2: finalLabel2,
-
-      // Alignments:
-      // For LRAS: Top label centered, Bottom label centered
-      // For Others: End label right-aligned
-      label1Align: type == MarketCurveType.lras
-          ? LabelAlign
-                .centerBottom // Yp sits below the axis
-          : LabelAlign.centerTop,
-      label2Align: type == MarketCurveType.lras
-          ? LabelAlign
-                .centerTop // LRAS sits above the line
-          : LabelAlign.centerRight,
-
+      label1Align: isVertical ? LabelAlign.centerBottom : LabelAlign.centerTop,
+      label2Align: isVertical ? LabelAlign.centerTop : LabelAlign.centerRight,
       curveStyle: curveStyle,
       color: color,
     );

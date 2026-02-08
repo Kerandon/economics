@@ -6,23 +6,27 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_z
 import 'package:flutter/material.dart';
 import '../../../models/diagram_painter_config.dart';
 import '../../i_diagram_canvas.dart';
+import 'axis_enum.dart';
 
 void paintAxis(
   DiagramPainterConfig config,
-  IDiagramCanvas canvas, { // Unified interface
+  IDiagramCanvas canvas, {
   String yAxisLabel = 'P',
   String xAxisLabel = 'Q',
   double? xMaxValue,
   double? yMaxValue,
   int? xDivisions,
   int? yDivisions,
-  bool drawGridlines = false,
+  bool drawGridlines = false, // This was being ignored!
   int decimalPlaces = 0,
   GridLineStyle gridLineStyle = GridLineStyle.full,
   double labelPad = kLabelPadding,
+  AxisStyle axisStyle = AxisStyle.arrows,
 }) {
-  // 1. Draw the Lines and Grid
-  // Ensure paintAxisLines is updated to: void paintAxisLines(config, IDiagramCanvas canvas, ...)
+  // Logic: If drawGridlines is false, force style to none.
+  // Otherwise, use the provided style.
+  final effectiveGridStyle = drawGridlines ? gridLineStyle : GridLineStyle.none;
+
   paintAxisLines(
     config,
     canvas,
@@ -31,14 +35,14 @@ void paintAxis(
     xMaxValue: xMaxValue,
     xDivisions: xDivisions,
     decimalPlaces: decimalPlaces,
-    gridLineStyle: gridLineStyle,
+    gridLineStyle: effectiveGridStyle, // Pass the effective style
+    axisStyle: axisStyle,
   );
 
-  // 2. Draw the Labels (Price/Quantity)
   paintAxisLabels(config, canvas, axis: CustomAxis.y, label: yAxisLabel);
-
   paintAxisLabels(config, canvas, axis: CustomAxis.x, label: xAxisLabel);
 
-  // 3. Draw the Zero origin
-  paintZero(config, canvas);
+  if (axisStyle == AxisStyle.arrows) {
+    paintZero(config, canvas);
+  }
 }

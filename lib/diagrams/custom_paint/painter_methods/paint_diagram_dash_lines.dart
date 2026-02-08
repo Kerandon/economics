@@ -10,13 +10,21 @@ import '../painter_constants.dart';
 
 void paintDiagramDashedLines(
   DiagramPainterConfig config,
-  IDiagramCanvas canvas, { // Unified interface
+  IDiagramCanvas canvas, {
   required double yAxisStartPos,
-  required double xAxisEndPos,
+  required double xAxisEndPos, // Primary X Position
+  List<double>? additionalXPositions, // Additional X Positions
   String? yLabel,
   String? xLabel,
-  bool hideYLine = false,
-  bool hideXLine = false,
+  List<String>? additionalXLabels,
+  String? rightYLabel,
+
+  // --- VISIBILITY FLAGS (Only affect Primary Lines) ---
+  bool hideYLine = false, // Hides the Primary Horizontal Line
+  bool hideXLine = false, // Hides the Primary Vertical Line
+  bool hideYLabels = false, // Hides Primary Left Axis Label
+  bool hideXLabels = false, // Hides Primary Bottom Axis Label
+
   bool makeDashed = true,
   Color? color,
   bool showDotAtIntersection = false,
@@ -26,24 +34,30 @@ void paintDiagramDashedLines(
   final c = color ?? config.colorScheme.onSurface;
   final width = config.painterSize.width;
 
-  // 1. Core Coordinate Math
+  // 1. SETUP COORDINATES
   final top = kAxisIndent * kTopAxisIndent;
   final bottom = 1 - (kAxisIndent * kBottomAxisIndent);
   final left = kAxisIndent;
   final spanY = bottom - top;
 
-  // Convert normalized 0.0-1.0 to absolute pixel coordinates
   final yPos = (top + yAxisStartPos * spanY) * width;
-  final xEndPos = (left + xAxisEndPos * spanY) * width;
   final axisLeft = left * width;
   final axisBottom = bottom * width;
-
   final strokeWidth = 1.5 * config.averageRatio;
 
-  // 2. Draw the Lines
+  // 2. CALCULATE MAX WIDTH (Horizontal line must stretch to cover ALL X lines)
+  double maxXValue = xAxisEndPos;
+  if (additionalXPositions != null) {
+    for (final pos in additionalXPositions) {
+      if (pos > maxXValue) maxXValue = pos;
+    }
+  }
+  final furthestXPixel = (left + maxXValue * spanY) * width;
+
+  // 3. DRAW PRIMARY HORIZONTAL LINE (Controlled by hideYLine)
   if (!hideYLine) {
     final p1 = Offset(axisLeft, yPos);
-    final p2 = Offset(xEndPos, yPos);
+    final p2 = Offset(furthestXPixel, yPos);
 
     if (makeDashed) {
       canvas.drawDashedLine(p1, p2, c, strokeWidth);
@@ -52,16 +66,76 @@ void paintDiagramDashedLines(
     }
   }
 
-  if (!hideXLine) {
-    final p1 = Offset(xEndPos, yPos);
-    final p2 = Offset(xEndPos, axisBottom);
+  // 4. DRAW PRIMARY VERTICAL LINE (Controlled by hideXLine)
+  final mainXPixel = (left + xAxisEndPos * spanY) * width;
 
-    // Vertical equilibrium lines are almost always dashed
-    canvas.drawDashedLine(p1, p2, c, strokeWidth);
+  if (!hideXLine) {
+    canvas.drawDashedLine(
+      Offset(mainXPixel, yPos),
+      Offset(mainXPixel, axisBottom),
+      c,
+      strokeWidth,
+    );
   }
 
-  // 3. Labels (Now using the pivot system)
-  if (yLabel != null) {
+  // Draw Primary Dot (Controlled by showDotAtIntersection)
+  // Note: We generally draw the dot even if line is hidden if 'showDot' is true
+  if (showDotAtIntersection) {
+    final r = dotRadius * config.averageRatio * 0.60;
+    canvas.drawDot(
+      Offset(mainXPixel, yPos),
+      dotColor ?? c,
+      radius: r,
+      fill: true,
+    );
+  }
+
+  // Draw Primary X Label (Controlled by hideXLabels)
+  if (xLabel != null && !hideXLabels) {
+    _paintTextForDashedLines(config, canvas, xLabel, xAxisEndPos, CustomAxis.x);
+  }
+
+  // 5. DRAW ADDITIONAL VERTICAL LINES (ALWAYS VISIBLE)
+  // These ignore 'hideXLine' because they were explicitly added.
+  if (additionalXPositions != null) {
+    for (int i = 0; i < additionalXPositions.length; i++) {
+      final xVal = additionalXPositions[i];
+      final xPixel = (left + xVal * spanY) * width;
+
+      // Always draw additional lines
+      canvas.drawDashedLine(
+        Offset(xPixel, yPos),
+        Offset(xPixel, axisBottom),
+        c,
+        strokeWidth,
+      );
+
+      // Always draw additional dots if main dot is enabled
+      if (showDotAtIntersection) {
+        final r = dotRadius * config.averageRatio * 0.60;
+        canvas.drawDot(
+          Offset(xPixel, yPos),
+          dotColor ?? c,
+          radius: r,
+          fill: true,
+        );
+      }
+
+      // Always draw additional labels if they exist
+      if (additionalXLabels != null && i < additionalXLabels.length) {
+        _paintTextForDashedLines(
+          config,
+          canvas,
+          additionalXLabels[i],
+          xVal,
+          CustomAxis.x,
+        );
+      }
+    }
+  }
+
+  // 6. DRAW PRIMARY Y LABELS (Controlled by hideYLabels)
+  if (yLabel != null && !hideYLabels) {
     _paintTextForDashedLines(
       config,
       canvas,
@@ -70,15 +144,20 @@ void paintDiagramDashedLines(
       CustomAxis.y,
     );
   }
-  if (xLabel != null) {
-    _paintTextForDashedLines(config, canvas, xLabel, xAxisEndPos, CustomAxis.x);
-  }
 
-  // 4. Dot at Intersection
-  if (showDotAtIntersection) {
-    final r = dotRadius * config.averageRatio * 0.60;
-    final intersection = Offset(xEndPos, yPos);
-    canvas.drawDot(intersection, dotColor ?? c, radius: r, fill: true);
+  // 7. DRAW RIGHT-SIDE LABEL (Always Visible if provided)
+  if (rightYLabel != null) {
+    const padding = 0.015;
+    paintText(
+      config,
+      canvas,
+      rightYLabel,
+      Offset(maxXValue + padding, yAxisStartPos),
+      horizontalPivot: LabelPivot.left,
+      verticalPivot: LabelPivot.middle,
+      normalize: true,
+      style: TextStyle(color: config.colorScheme.onSurface),
+    );
   }
 }
 

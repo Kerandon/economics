@@ -32,7 +32,8 @@ class BizDiagram extends BaseDiagramPainter {
     paintShading(
       c,
       canvas,
-      ShadeType.gainedRevenue, // "Gain" usually maps to Green/Red depending on config (Inflation)
+      ShadeType
+          .gainedRevenue, // "Gain" usually maps to Green/Red depending on config (Inflation)
       [
         Offset(0.0, 0.70), // Start at axis intersection
         // Up to Peak
