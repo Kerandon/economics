@@ -156,9 +156,10 @@ enum DiagramEnum {
   globalFloatingRateDemandDecrease,
   globalFloatingRateSupplyIncrease,
   globalFloatingRateSupplyDecrease,
-  globalManagedRateRateDemandIncrease,
-  globalFixedRateDemandDecrease,
-  globalFixedRateDemandIncrease,
+  globalManagedExchangeRate,
+  globalFixedRateDemandDecreaseBuyCurrency,
+  globalFixedRateDemandIncreaseSellCurrency,
+  globalFixedRateDemandDecreaseReduceSupply,
   globalJCurveDeficit,
   globalJCurveSurplus,
 
@@ -451,9 +452,13 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalFloatingRateDemandDecrease => Subunit.exchangeRates,
     DiagramEnum.globalFloatingRateSupplyIncrease => Subunit.exchangeRates,
     DiagramEnum.globalFloatingRateSupplyDecrease => Subunit.exchangeRates,
-    DiagramEnum.globalManagedRateRateDemandIncrease => Subunit.exchangeRates,
-    DiagramEnum.globalFixedRateDemandDecrease => Subunit.exchangeRates,
-    DiagramEnum.globalFixedRateDemandIncrease => Subunit.exchangeRates,
+    DiagramEnum.globalManagedExchangeRate => Subunit.exchangeRates,
+    DiagramEnum.globalFixedRateDemandDecreaseBuyCurrency =>
+      Subunit.exchangeRates,
+    DiagramEnum.globalFixedRateDemandIncreaseSellCurrency =>
+      Subunit.exchangeRates,
+    DiagramEnum.globalFixedRateDemandDecreaseReduceSupply =>
+      Subunit.exchangeRates,
     DiagramEnum.globalJCurveDeficit => Subunit.balanceOfPayments,
     DiagramEnum.globalJCurveSurplus => Subunit.balanceOfPayments,
 
@@ -461,5 +466,6 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalPPCReallocation => Subunit.barriersGrowth,
     DiagramEnum.globalPovertyCycle => Subunit.barriersGrowth,
 
+    ///
   };
 }

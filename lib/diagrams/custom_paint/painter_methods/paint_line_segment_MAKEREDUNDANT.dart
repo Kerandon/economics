@@ -8,10 +8,9 @@ import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
 
-/// MAKE REDUNDANT REPLACE WITH PAINTDIAGRAMLINES
 void paintLineSegment(
   DiagramPainterConfig config,
-  IDiagramCanvas canvas, { // Unified interface
+  IDiagramCanvas canvas, {
   required Offset origin,
   double angle = 0,
   double length = 0.10,
@@ -72,7 +71,7 @@ void paintLineSegment(
     canvas.drawLine(startOffset, endOffset, mainColor, effectiveStrokeWidth);
   }
 
-  // --- 2. Draw End Marks (Arrows or Ticks) ---
+  // --- 2. Draw End Marks (Arrows, Ticks, or Circles) ---
   switch (endStyle) {
     case LineEndStyle.arrow:
       paintArrowHead(
@@ -117,6 +116,13 @@ void paintLineSegment(
         strokeWidth: effectiveStrokeWidth,
       );
       break;
+    case LineEndStyle.circlesOnEnd:
+      // UPDATED: Using drawDot instead of drawCircle
+      final double dotRadius = effectiveStrokeWidth * 2.5;
+
+      canvas.drawDot(startOffset, mainColor, radius: dotRadius, fill: true);
+      canvas.drawDot(endOffset, mainColor, radius: dotRadius, fill: true);
+      break;
     case LineEndStyle.none:
       break;
   }
@@ -130,7 +136,6 @@ void paintLineSegment(
     final double labelOffsetPx = widthAndHeight * 0.04;
     final Offset perpUnit = Offset(-sin(angle), cos(angle));
 
-    // Calculate displacement for the label so it doesn't overlap the line
     Offset deltaNormalized = (labelAlign == LabelAlign.centerTop)
         ? perpUnit * -labelOffsetPx / widthAndHeight
         : (labelAlign == LabelAlign.centerBottom)
@@ -142,7 +147,7 @@ void paintLineSegment(
       canvas,
       label,
       midNormalized + deltaNormalized,
-      fontSize: kFontSmall,
+      fontSize: kFontTiny,
       horizontalPivot: LabelPivot.center,
       verticalPivot: LabelPivot.middle,
       normalize: normalizeToDiagramArea,

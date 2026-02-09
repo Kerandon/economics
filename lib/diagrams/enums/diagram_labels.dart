@@ -312,6 +312,7 @@ enum DiagramLabel {
   eRE,
   eR1,
   eR2,
+  eR3,
   eRF,
   ninety,
   ninetyFive,
@@ -338,6 +339,10 @@ enum DiagramLabel {
   quota,
   exportSubsidy,
   productionSubsidy,
+  uSDPerDong,
+  quantityOfDong,
+  uSDPerHKD,
+  quantityOfHKD,
 }
 
 extension MicroLabelExtension on DiagramLabel {
@@ -444,7 +449,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.goodA => 'Good A',
       DiagramLabel.goodB => 'Good B',
 
-    /// Exchange Rates
+      /// Exchange Rates
       DiagramLabel.euroPerDollar => '€ / \$',
       DiagramLabel.quantityOfUSD => 'Qty of \$',
       DiagramLabel.supplyOfUSD => 'Supply of USD \$',
@@ -452,8 +457,9 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.eRE => 'ERe',
       DiagramLabel.dollarPerEuro => '\$ / €',
       DiagramLabel.quantityOfEuro => 'Quantity of €',
-      DiagramLabel.eR1 => 'ER₁',
-      DiagramLabel.eR2 => 'ER₂',
+      DiagramLabel.eR1 => 'ER1',
+      DiagramLabel.eR2 => 'ER2',
+      DiagramLabel.eR3 => 'ER3',
       DiagramLabel.eR => 'ER',
       DiagramLabel.euroUSD => '€ per \$',
       DiagramLabel.qUSD => 'Q of \$',
@@ -464,7 +470,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.quantityOfCurrency => 'Qty of Currency',
       DiagramLabel.eRF => 'ERf',
 
-    /// Economic Development
+      /// Economic Development
       DiagramLabel.lowIncome => 'low Income',
       DiagramLabel.lowSavings => 'Low Savings',
       DiagramLabel.lowInvestment => 'Low Investment',
@@ -744,7 +750,13 @@ extension MicroLabelExtension on DiagramLabel {
 
       DiagramLabel.sWS => 'Sw+s',
 
+      DiagramLabel.uSDPerDong => 'USD / VND',
 
+      DiagramLabel.quantityOfDong => 'Quantity of VND',
+
+      DiagramLabel.uSDPerHKD => 'USD / HKD',
+
+      DiagramLabel.quantityOfHKD => 'Quantity of HKD',
     };
   }
 }

@@ -24,7 +24,7 @@ const kSimilarities = 'Similarities';
 const kDifferences = 'Differences';
 
 /// Text
-const kFontTiny = 16.0;
+const kFontTiny = 18.0;
 const kFontVerySmall = 22.0;
 const kFontSmall = 22.0;
 const kFontMedium = 28.0;
@@ -56,7 +56,6 @@ enum MarketCurveType {
   supplyDomestic, // Upward sloping (Sd)
   demandWorld, // Downward sloping (Dw) - Assuming 'worldDomestic' implies World Demand
   supplyWorld, // Upward sloping (Sw)
-
   // --- Currency ---
   demandUSD,
   supplyUSD,
@@ -66,19 +65,7 @@ enum LabelAlign { center, centerLeft, centerRight, centerTop, centerBottom }
 
 enum CustomAxis { x, y }
 
-enum LineEndStyle {
-  /// No special termination, just the line itself.
-  none,
-
-  /// Standard single arrowhead at the 'endPos'.
-  arrow,
-
-  /// Arrowheads at both start and end (like a vector).
-  arrowBothEnds,
-
-  /// A perpendicular line segment at both ends, visually extending measurement bounds.
-  arrowRightAngles,
-}
+enum LineEndStyle { none, arrow, arrowBothEnds, arrowRightAngles, circlesOnEnd }
 
 enum GridLineStyle {
   none, // No gridlines or ticks

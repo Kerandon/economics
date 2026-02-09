@@ -4,6 +4,7 @@ import 'package:economics_app/diagrams/custom_paint/diagrams/circular_flow_diagr
 import 'package:economics_app/diagrams/custom_paint/diagrams/comparative_advantage.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/competitive_market.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/exchange_rate_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/j_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/lorenz_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/market_power.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/money_market_diagram.dart';
@@ -288,16 +289,29 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       ExchangeRateDiagram(c, DiagramEnum.globalFloatingRateSupplyDecrease),
     ]),
     DiagramWidget([
-      ExchangeRateDiagram(c, DiagramEnum.globalManagedRateRateDemandIncrease),
+      ExchangeRateDiagram(c, DiagramEnum.globalManagedExchangeRate),
+    ]),
+
+    DiagramWidget([
+      ExchangeRateDiagram(
+        c,
+        DiagramEnum.globalFixedRateDemandDecreaseBuyCurrency,
+      ),
     ]),
     DiagramWidget([
-      ExchangeRateDiagram(c, DiagramEnum.globalFixedRateDemandIncrease),
+      ExchangeRateDiagram(
+        c,
+        DiagramEnum.globalFixedRateDemandIncreaseSellCurrency,
+      ),
     ]),
     DiagramWidget([
-      ExchangeRateDiagram(c, DiagramEnum.globalFixedRateDemandDecrease),
+      ExchangeRateDiagram(
+        c,
+        DiagramEnum.globalFixedRateDemandDecreaseReduceSupply,
+      ),
     ]),
-    DiagramWidget([ExchangeRateDiagram(c, DiagramEnum.globalJCurveDeficit)]),
-    DiagramWidget([ExchangeRateDiagram(c, DiagramEnum.globalJCurveSurplus)]),
+    DiagramWidget([JCurveDiagram(c, DiagramEnum.globalJCurveDeficit)]),
+    DiagramWidget([JCurveDiagram(c, DiagramEnum.globalJCurveSurplus)]),
 
     /// Economic Development
     DiagramWidget([PPCDiagram(c, DiagramEnum.globalPPCReallocation)]),

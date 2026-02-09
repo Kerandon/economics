@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
+
 class ComparativeAdvantageDiagram extends BaseDiagramPainter {
   ComparativeAdvantageDiagram(super.config, super.diagram);
 
@@ -41,27 +42,47 @@ class ComparativeAdvantageDiagram extends BaseDiagramPainter {
   }
 
   // --- New Diagram: No Comparative Advantage (Parallel Lines) ---
-  void _paintNoComparativeAdvantage(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  void _paintNoComparativeAdvantage(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+  ) {
     // Slopes must be equal for parallel lines.
     // France: (1.0 - 0.20) / 0.80 = 1.0
     // Germany: (1.0 - 0.60) / 0.40 = 1.0
 
-    _paintCountryPPC(c, canvas,
-        yPoint: 0.20, xPoint: 0.80, label: 'France');
+    _paintCountryPPC(c, canvas, yPoint: 0.20, xPoint: 0.80, label: 'France');
 
-    _paintCountryPPC(c, canvas,
-        yPoint: 0.60, xPoint: 0.40, label: 'Germany', color: Colors.blue);
+    _paintCountryPPC(
+      c,
+      canvas,
+      yPoint: 0.60,
+      xPoint: 0.40,
+      label: 'Germany',
+      color: Colors.blue,
+    );
 
-    paintDescription(c, canvas, '''Parallel PPCs indicate same opportunity costs. Neither country has a Comparative Advantage. No benefit to trade''');
+    paintDescription(
+      c,
+      canvas,
+      '''Parallel PPCs indicate same opportunity costs. Neither country has a Comparative Advantage. No benefit to trade''',
+    );
   }
 
   // --- Existing Diagrams (Refactored) ---
-  void _paintComparativeAdvantage(DiagramPainterConfig c, IDiagramCanvas canvas) {
-    _paintCountryPPC(c, canvas,
-        yPoint: 0.20, xPoint: 0.80, label: 'France');
+  void _paintComparativeAdvantage(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+  ) {
+    _paintCountryPPC(c, canvas, yPoint: 0.20, xPoint: 0.80, label: 'France');
 
-    _paintCountryPPC(c, canvas,
-        yPoint: 0.40, xPoint: 0.30, label: 'Germany', color: Colors.blue);
+    _paintCountryPPC(
+      c,
+      canvas,
+      yPoint: 0.40,
+      xPoint: 0.30,
+      label: 'Germany',
+      color: Colors.blue,
+    );
 
     paintLegendTable(
       canvas,
@@ -78,45 +99,56 @@ class ComparativeAdvantageDiagram extends BaseDiagramPainter {
     );
 
     paintText(
-        c,
-        canvas,
-        '''Steeper PPC 
+      c,
+      canvas,
+      '''Steeper PPC 
      has a CA in the good 
      on vertical axis
      (e.g., Germany in Wine)''',
-        Offset(0.45, 0.20),
-        pointerLine: Offset(0.10, 0.60));
+      Offset(0.45, 0.20),
+      pointerLine: Offset(0.10, 0.60),
+    );
 
     paintText(
-        c,
-        canvas,
-        '''Flatter PPC 
+      c,
+      canvas,
+      '''Flatter PPC 
      has a CA in the good 
      on horizontal axis
      (e.g., France in Cheese)''',
-        Offset(0.85, 0.60),
-        pointerLine: Offset(0.70, 0.90));
+      Offset(0.85, 0.60),
+      pointerLine: Offset(0.70, 0.90),
+    );
   }
 
   void _paintAbsoluteAdvantage(DiagramPainterConfig c, IDiagramCanvas canvas) {
-    _paintCountryPPC(c, canvas,
-        yPoint: 0.50, xPoint: 0.80, label: 'France');
+    _paintCountryPPC(c, canvas, yPoint: 0.50, xPoint: 0.80, label: 'France');
 
-    _paintCountryPPC(c, canvas,
-        yPoint: 0.20, xPoint: 0.50, label: 'Germany', color: Colors.blue);
+    _paintCountryPPC(
+      c,
+      canvas,
+      yPoint: 0.20,
+      xPoint: 0.50,
+      label: 'Germany',
+      color: Colors.blue,
+    );
 
-    paintDescription(c, canvas, '''When PPCs cross each country has an Absolute Advantage (AA) in one good each. E.g., Germany AA is in wine, France AA is in Cheese.''');
+    paintDescription(
+      c,
+      canvas,
+      '''When PPCs cross each country has an Absolute Advantage (AA) in one good each. E.g., Germany AA is in wine, France AA is in Cheese.''',
+    );
   }
 
   // --- Helper for Tidying Up ---
   void _paintCountryPPC(
-      DiagramPainterConfig c,
-      IDiagramCanvas canvas, {
-        required double yPoint,
-        required double xPoint,
-        required String label,
-        Color color = Colors.black,
-      }) {
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas, {
+    required double yPoint,
+    required double xPoint,
+    required String label,
+    Color color = Colors.black,
+  }) {
     paintDiagramLines(
       c,
       canvas,

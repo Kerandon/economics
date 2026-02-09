@@ -9,8 +9,13 @@ class PovertyCycleDiagram extends BaseDiagramPainter {
   @override
   void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
-    paintText(c, canvas, 'Low Savings', Offset(0.15,0.50), ignoreIndent: true,
-    shape: DiagramShape.diamond,
+    paintText(
+      c,
+      canvas,
+      'Low Savings',
+      Offset(0.15, 0.50),
+      ignoreIndent: true,
+      shape: DiagramShape.diamond,
     );
   }
 }

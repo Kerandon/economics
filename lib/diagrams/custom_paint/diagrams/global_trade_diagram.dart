@@ -79,7 +79,6 @@ void _paintWorldPrice(
       type: MarketCurveType.demandWorld,
       horizontalShift: 0.10,
       verticalShift: -0.10,
-
     );
     paintMarketCurve(
       c,
@@ -485,15 +484,25 @@ void _paintExportSubsidy(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintLegendTable(
     canvas,
     c,
-    headers: ['', DiagramLabel.autarky.label, DiagramLabel.subsidy.label,],
+    headers: ['', DiagramLabel.autarky.label, DiagramLabel.subsidy.label],
     data: [
       [DiagramLabel.consumerSurplus.label, '+(a,b,c)', '+a'],
       [DiagramLabel.producerSurplus.label, '+(f,g,h,i)', '+(b,c,d,f,g,h,i)'],
       [DiagramLabel.governmentBudget.label, '-', '-(c,d,e)'],
-      [DiagramLabel.socialWelfare.label, '+(a,b,c,f,g,h,i)', '+(a,b,f,g,h,i), -(c,e)'],
+      [
+        DiagramLabel.socialWelfare.label,
+        '+(a,b,c,f,g,h,i)',
+        '+(a,b,f,g,h,i), -(c,e)',
+      ],
     ],
   );
-  paintLineSegment(c, canvas, origin: Offset(0.90,0.16),angle: pi/2,length: 0.08);
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.90, 0.16),
+    angle: pi / 2,
+    length: 0.08,
+  );
 }
 
 void _paintDomesticDemandAndSupply(

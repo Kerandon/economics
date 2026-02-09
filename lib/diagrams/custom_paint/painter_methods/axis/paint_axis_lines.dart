@@ -46,7 +46,6 @@ void paintAxisLines(
     canvas.drawLine(bottomLeft, bottomRight, axisColor, axisWidth);
 
     // 2. Draw Arrows
-    // Y-Axis Arrow
     paintArrowHead(
       config,
       canvas,
@@ -56,7 +55,6 @@ void paintAxisLines(
       isCentered: false,
     );
 
-    // X-Axis Arrow
     paintArrowHead(
       config,
       canvas,
@@ -65,15 +63,16 @@ void paintAxisLines(
       rotationAngle: pi / 2,
       isCentered: false,
     );
-  } else {
-    // ⬛ Lorenz-style box
+  } else if (axisStyle == AxisStyle.box) {
+    // ⬛ Lorenz-style box (Only draw if explicitly set to Box)
     canvas.drawLine(bottomLeft, bottomRight, axisColor, axisWidth);
     canvas.drawLine(bottomRight, topRight, axisColor, axisWidth);
     canvas.drawLine(topRight, topLeft, axisColor, axisWidth);
     canvas.drawLine(topLeft, bottomLeft, axisColor, axisWidth);
   }
+  // If AxisStyle.jCurve is passed here, we do nothing
+  // (logic is handled in the helper or ignored safely).
 
-  // ✅ RESTORED: This was missing in the previous snippet
   if (gridLineStyle != GridLineStyle.none) {
     paintGridLines(
       config,
