@@ -40,25 +40,14 @@ const kDotRadius = 8.0;
 enum CurveStyle { standard, dashed, dotted, bold }
 
 enum MarketCurveType {
-  demand,
-  supply,
-  ad,
-  sras,
-  lras,
-  keynesianAS,
-  moneySupply,
-  lrpc,
-  srpc,
-  moneyDemand,
-
-  // --- NEW TRADE TYPES ---
-  demandDomestic, // Downward sloping (Dd)
-  supplyDomestic, // Upward sloping (Sd)
-  demandWorld, // Downward sloping (Dw) - Assuming 'worldDomestic' implies World Demand
-  supplyWorld, // Upward sloping (Sw)
-  // --- Currency ---
-  demandUSD,
-  supplyUSD,
+  demand, supply, ad, sras, lras, keynesianAS, moneySupply, lrpc, srpc, moneyDemand,
+  demandDomestic, supplyDomestic, demandWorld, supplyWorld, demandUSD, supplyUSD,
+  ad1, ad2, ad3, lras1, lras2, sras1, sras2,
+  // New Labor Market & Shifted Types
+  dl, dl1, dl2,
+  sl, sl1, sl2,
+  d1, d2, // General Demand shifts
+  s1, s2  // General Supply shifts
 }
 
 enum LabelAlign { center, centerLeft, centerRight, centerTop, centerBottom }

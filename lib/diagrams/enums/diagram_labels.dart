@@ -97,7 +97,11 @@ enum DiagramLabel {
   q4,
   qpi,
   pE,
-  we,
+  wE,
+  w1,
+  wMin,
+  w2,
+  wEff,
   pme,
   qE,
   qTax,
@@ -167,7 +171,7 @@ enum DiagramLabel {
   gainedRevenue,
   lostRevenue,
   rMax,
-  priceCostsRevenue,
+  priceRevenueCosts,
   priceCostsRevenueDollar,
   market,
   firm,
@@ -259,20 +263,29 @@ enum DiagramLabel {
   aD3,
   inflationRate,
   unemploymentRate,
+  lFEffective,
+  lF,
   sRPC,
   lRPC,
   aggregateSupply,
   keynesianAS,
   aS,
+  aS1,
+  aS2,
   shortRunAggregateSupply,
   sRAS,
+  sRAS1,
+  sRAS2,
   longRunAggregateSupply,
   lRAS,
+  lRAS1,
+  lRAS2,
   pL,
+  pL3,
   pLe,
   pLf,
   plInF,
-  plDef,
+  pLDef,
   cumulativePercentageOfIncome,
   cumulativePercentageOfPopulation,
   moneySupply,
@@ -284,6 +297,7 @@ enum DiagramLabel {
   i2,
   pL2,
   yF,
+  yEEqualYF,
   yP,
   yE,
   yInf,
@@ -343,6 +357,8 @@ enum DiagramLabel {
   quantityOfDong,
   uSDPerHKD,
   quantityOfHKD,
+  consumerGoods,
+  capitalGoods,
 }
 
 extension MicroLabelExtension on DiagramLabel {
@@ -382,7 +398,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.dEqualsMPB => 'D=MPB',
       DiagramLabel.qOpt => 'Qopt',
       DiagramLabel.qm => 'Qm',
-      DiagramLabel.priceCostsRevenue => 'Price,\nCosts,\nRevenues',
+      DiagramLabel.priceRevenueCosts => 'Price,\nRevenues,\nCosts,',
       DiagramLabel.priceCostsRevenueDollar => 'Price,\nCosts,\nRevenues\n\$',
       DiagramLabel.quantityThousands => 'Quantity (\'000)',
       DiagramLabel.dARMR1 => 'D=AR=MR(1)',
@@ -473,8 +489,8 @@ extension MicroLabelExtension on DiagramLabel {
       /// Economic Development
       DiagramLabel.lowIncome => 'low Income',
       DiagramLabel.lowSavings => 'Low Savings',
-      DiagramLabel.lowInvestment => 'Low Investment',
-      DiagramLabel.lowProductivity => 'Low Productivity',
+      DiagramLabel.lowInvestment => 'Low Investment\n(physical, human, natural capital)',
+      DiagramLabel.lowProductivity => 'Low Productivity\n(Output / Labor Hours)',
       DiagramLabel.tradeBalance => 'Trade Balance',
       DiagramLabel.tradeSurplus => 'Trade\nSurplus\nX > M',
       DiagramLabel.tradeDeficit => 'Trade\nDeficit\nX < M',
@@ -602,7 +618,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.socialWelfare => 'Social Welfare',
       DiagramLabel.shortageQdMinusQs => 'Shortage (Qd - Qs)',
       DiagramLabel.surplusQsMinusQd => 'Surplus (Qs - Qd)',
-      DiagramLabel.we => 'We',
+      DiagramLabel.wE => 'We',
       DiagramLabel.qSStar => 'Qs*',
       DiagramLabel.qDStar => 'Qd*',
       DiagramLabel.governmentBoughtSurplus => 'Government-Bought Surplus',
@@ -668,8 +684,8 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.pL1 => 'PL1',
       DiagramLabel.pL2 => 'PL2',
       DiagramLabel.pLf => 'PLf',
-      DiagramLabel.plInF => 'PLInf',
-      DiagramLabel.plDef => 'PLDef',
+      DiagramLabel.plInF => 'PLinf',
+      DiagramLabel.pLDef => 'PLdef',
       DiagramLabel.publicSector => 'Public Sector',
 
       DiagramLabel.factorPaymentsY => 'Factor Payments (Y)',
@@ -757,6 +773,38 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.uSDPerHKD => 'USD / HKD',
 
       DiagramLabel.quantityOfHKD => 'Quantity of HKD',
+
+      DiagramLabel.consumerGoods => 'Consumer Goods',
+
+      DiagramLabel.capitalGoods => 'Capital Goods',
+
+      DiagramLabel.sRAS1 => 'SRAS1',
+
+      DiagramLabel.sRAS2 => 'SRAS2',
+
+      DiagramLabel.lRAS1 => 'LRAS1',
+
+      DiagramLabel.lRAS2 => 'LRAS2',
+
+      DiagramLabel.pL3 => 'PL3',
+
+      DiagramLabel.aS1 => 'AS1',
+
+      DiagramLabel.aS2 => 'AS2',
+
+      DiagramLabel.yEEqualYF => 'Ye=Yf',
+ 
+      DiagramLabel.w1 => 'W1',
+ 
+      DiagramLabel.w2 => 'W2',
+
+      DiagramLabel.wMin => 'Wmin',
+
+      DiagramLabel.lFEffective => 'LFe',
+
+      DiagramLabel.lF => 'LF',
+
+      DiagramLabel.wEff => 'Weff',
     };
   }
 }

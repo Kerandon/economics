@@ -49,13 +49,13 @@ class BizDiagram extends BaseDiagramPainter {
     paintShading(
       c,
       canvas,
-      ShadeType.loss, // "Loss" usually maps to Red/Blue (Deflation)
+      ShadeType.loss,
       [
         Offset(0.34, 0.59), // Start at previous intersection
         // Down to Trough (using the rest of the recession bezier)
         CustomBezier(control: Offset(0.38, 0.65), endPoint: Offset(0.50, 0.62)),
         // Up to Line Intersection (Approximated at x=0.63)
-        CustomBezier(control: Offset(0.58, 0.60), endPoint: Offset(0.63, 0.49)),
+        CustomBezier(control: Offset(0.58, 0.60), endPoint: Offset(0.65, 0.49)),
       ],
       invertStripes: true, // Distinguish visually from the other gap
     );

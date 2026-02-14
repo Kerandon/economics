@@ -8,9 +8,11 @@ import 'package:economics_app/diagrams/custom_paint/diagrams/j_curve_diagram.dar
 import 'package:economics_app/diagrams/custom_paint/diagrams/lorenz_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/market_power.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/money_market_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/phillips_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/poverty_cycle_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/ppc_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/price_controls.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/unemployment_diagram.dart';
 import '../custom_paint/diagrams/demand_diagram.dart';
 import '../custom_paint/diagrams/elasticities.dart';
 import '../custom_paint/diagrams/externalities.dart';
@@ -161,40 +163,73 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycle)]),
 
     /// AD-AS
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalFullEmployment)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGap)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalInflationaryGap)]),
     DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASClassicalFullEmployment),
+      ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGapAdjustment),
     ]),
     DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASClassicalDeflationaryGap),
-    ]),
-    DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASClassicalInflationaryGap),
-    ]),
-    DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASClassicalDeflationaryGapAdjustment),
-    ]),
-    DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASClassicalInflationaryGapAdjustment),
+      ADASDiagram(c, DiagramEnum.macroClassicalInflationaryGapAdjustment),
     ]),
     DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASKeynesianFullEmployment),
     ]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianDeflationaryGap)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianInflationaryGap)]),
+
+    /// Economic growth
     DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASKeynesianDeflationaryGap),
+      ADASDiagram(c, DiagramEnum.macroClassicalLongTermGrowth),
+      ADASDiagram(c, DiagramEnum.macroKeynesianLongTermGrowth),
+    ]),
+    DiagramWidget([PPCDiagram(c, DiagramEnum.globalPPCEconomicGrowth)]),
+
+    /// Inflation
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroClassicalDemandPullInflation),
+      ADASDiagram(c, DiagramEnum.macroKeynesianDemandPullInflation),
+    ]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroCostPushInflation)]),
+
+    /// Unemployment
+    DiagramWidget([
+      UnemploymentDiagram(c, DiagramEnum.macroUnemploymentStructural),
     ]),
     DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASKeynesianInflationaryGap),
+      UnemploymentDiagram(
+        c,
+        DiagramEnum.macroUnemploymentLaborMarketRigidities,
+      ),
+    ]),
+    DiagramWidget([
+      UnemploymentDiagram(c, DiagramEnum.macroUnemploymentNationalMinimumWage),
+    ]),
+    DiagramWidget([
+      UnemploymentDiagram(c, DiagramEnum.macroUnemploymentEfficiencyWages),
     ]),
 
     DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASClassicalLongTermGrowth),
+      UnemploymentDiagram(c, DiagramEnum.macroNaturalRateOfUnemployment),
+    ]),
+
+    /// Philips Curve
+    DiagramWidget([
+      PhillipsCurveDiagram(c, DiagramEnum.macroSRPC),
     ]),
     DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroADASKeynesianLongTermGrowth),
+      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCCostPushInflation),
     ]),
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASCostPushInflation)]),
-
-    ///Inequality and Poverty
+    DiagramWidget([
+      PhillipsCurveDiagram(c, DiagramEnum.macroPhillipsCurveInflationaryDeflationaryGap),
+    ]),
+    DiagramWidget([
+      PhillipsCurveDiagram(c, DiagramEnum.macroLRPC),
+    ]),
+    DiagramWidget([
+      PhillipsCurveDiagram(c, DiagramEnum.macroLRPCFallInNRU),
+    ]),
+    /// Inequality and Poverty
     DiagramWidget([
       LorenzCurveDiagram(c, DiagramEnum.macroLorenzCurveCalculation),
     ]),
@@ -209,16 +244,16 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
         c,
         DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy,
       ),
-      ADASDiagram(c, DiagramEnum.macroADASKeynesianExpansionaryPolicy),
+      ADASDiagram(c, DiagramEnum.macroKeynesianExpansionaryPolicy),
     ]),
     DiagramWidget([
       MoneyMarketDiagram(
         c,
         DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy,
       ),
-      ADASDiagram(c, DiagramEnum.macroADASKeynesianContractionaryPolicy),
+      ADASDiagram(c, DiagramEnum.macroKeynesianContractionaryPolicy),
     ]),
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASKeynesianMultiplier)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianMultiplier)]),
 
     /// --- MONEY MARKET ---
     DiagramWidget([MoneyMarketDiagram(c, DiagramEnum.macroMoneyMarket)]),
@@ -227,16 +262,16 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
         c,
         DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy,
       ),
-      ADASDiagram(c, DiagramEnum.macroADASKeynesianExpansionaryPolicy),
+      ADASDiagram(c, DiagramEnum.macroKeynesianExpansionaryPolicy),
     ]),
     DiagramWidget([
       MoneyMarketDiagram(
         c,
         DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy,
       ),
-      ADASDiagram(c, DiagramEnum.macroADASKeynesianContractionaryPolicy),
+      ADASDiagram(c, DiagramEnum.macroKeynesianContractionaryPolicy),
     ]),
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASKeynesianMultiplier)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianMultiplier)]),
 
     /// --- GLOBAL TRADE ---
 
@@ -314,7 +349,12 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([JCurveDiagram(c, DiagramEnum.globalJCurveSurplus)]),
 
     /// Economic Development
+    DiagramWidget([
+      PPCDiagram(c, DiagramEnum.globalPPCUnsustainableUseOfNaturalResources),
+    ]),
     DiagramWidget([PPCDiagram(c, DiagramEnum.globalPPCReallocation)]),
+
+    DiagramWidget([PPCDiagram(c, DiagramEnum.globalPPCCapitalInvestment)]),
     DiagramWidget([PovertyCycleDiagram(c, DiagramEnum.globalPovertyCycle)]),
   ];
 }

@@ -319,7 +319,7 @@ void _paintMinWage(
 
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.we.label,
+    yLabel: DiagramLabel.wE.label,
     xLabel: DiagramLabel.qE.label,
   );
   paintLineSegment(
@@ -404,7 +404,7 @@ void _paintNMWInelasticDemand(
     canvas,
     yAxisStartPos: 0.50,
     xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.we.label,
+    yLabel: DiagramLabel.wE.label,
     xLabel: DiagramLabel.qE.label,
   );
   paintLineSegment(

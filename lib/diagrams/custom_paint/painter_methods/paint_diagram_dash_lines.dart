@@ -147,7 +147,7 @@ void paintDiagramDashedLines(
 
   // 7. DRAW RIGHT-SIDE LABEL (Always Visible if provided)
   if (rightYLabel != null) {
-    const padding = 0.015;
+    const padding = 0.04;
     paintText(
       config,
       canvas,

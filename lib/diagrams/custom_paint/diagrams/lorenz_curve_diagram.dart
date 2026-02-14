@@ -31,7 +31,6 @@ class LorenzCurveDiagram extends BaseDiagramPainter {
       xMaxValue: 100,
       yMaxValue: 100,
       gridLineStyle: GridLineStyle.indents,
-      axisStyle: AxisStyle.box,
     );
     paintDiagramLines(
       c,

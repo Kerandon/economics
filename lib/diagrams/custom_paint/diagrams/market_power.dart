@@ -77,7 +77,7 @@ class MarketPower extends BaseDiagramPainter {
     paintAxis(
       c,
       canvas,
-      yAxisLabel: DiagramLabel.priceCostsRevenue.label,
+      yAxisLabel: DiagramLabel.priceRevenueCosts.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
 
@@ -223,7 +223,7 @@ class MarketPower extends BaseDiagramPainter {
     IDiagramCanvas canvas,
     DiagramEnum diagram,
   ) {
-    String pLabel = DiagramLabel.priceCostsRevenue.label;
+    String pLabel = DiagramLabel.priceRevenueCosts.label;
     String qLabel = DiagramLabel.quantity.label;
     if (diagram ==
         DiagramEnum
@@ -664,7 +664,7 @@ class MarketPower extends BaseDiagramPainter {
       c,
       canvas,
 
-      yAxisLabel: DiagramLabel.priceCostsRevenue.label,
+      yAxisLabel: DiagramLabel.priceRevenueCosts.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
 
@@ -871,7 +871,7 @@ class MarketPower extends BaseDiagramPainter {
       c,
       canvas,
 
-      yAxisLabel: DiagramLabel.priceCostsRevenue.label,
+      yAxisLabel: DiagramLabel.priceRevenueCosts.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
     paintDiagramLines(
@@ -1180,7 +1180,7 @@ class MarketPower extends BaseDiagramPainter {
       c,
       canvas,
 
-      yAxisLabel: DiagramLabel.priceCostsRevenue.label,
+      yAxisLabel: DiagramLabel.priceRevenueCosts.label,
       xAxisLabel: DiagramLabel.quantity.label,
     );
 

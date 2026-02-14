@@ -105,31 +105,58 @@ enum DiagramEnum {
   microMonopolisticCompetitionLossShift,
   microMonopolisticCompetitionLongRun,
 
-  /// Macro
+  /// Macro**********
+
+  /// National income & biz cycle
   macroCircularFlowClosed,
   macroCircularFlowOpen,
   macroBusinessCycle,
-  macroADASClassicalFullEmployment,
-  macroADASClassicalDeflationaryGap,
-  macroADASClassicalInflationaryGap,
+
+  /// AD-AS
+  macroClassicalFullEmployment,
+  macroClassicalDeflationaryGap,
+  macroClassicalInflationaryGap,
   macroADASKeynesianFullEmployment,
-  macroADASKeynesianDeflationaryGap,
-  macroADASKeynesianInflationaryGap,
-  macroADASKeynesianExpansionaryPolicy,
-  macroADASKeynesianContractionaryPolicy,
-  macroADASClassicalDeflationaryGapAdjustment,
-  macroADASClassicalInflationaryGapAdjustment,
-  macroADASClassicalLongTermGrowth,
-  macroADASKeynesianLongTermGrowth,
-  macroADASClassicalDemandPullInflation,
+  macroKeynesianDeflationaryGap,
+  macroKeynesianInflationaryGap,
+  macroKeynesianExpansionaryPolicy,
+  macroKeynesianContractionaryPolicy,
+  macroClassicalDeflationaryGapAdjustment,
+  macroClassicalInflationaryGapAdjustment,
+
+  /// Economic growth
+  macroClassicalLongTermGrowth,
+  macroKeynesianLongTermGrowth,
+
+  /// Inflation
+  macroClassicalDemandPullInflation,
   macroKeynesianDemandPullInflation,
-  macroADASCostPushInflation,
+  macroCostPushInflation,
+
+  /// Unemployment
+  macroUnemploymentStructural,
+  macroUnemploymentLaborMarketRigidities,
+  macroUnemploymentNationalMinimumWage,
+  macroUnemploymentEfficiencyWages,
+  macroNaturalRateOfUnemployment,
+  
+  /// Phillips Curve
+  macroSRPC,
+  macroPhillipsCurveInflationaryDeflationaryGap,
+  macroSRPCCostPushInflation,
+  macroLRPC,
+  macroLRPCFallInNRU,
+
+  /// Poverty and Inequality
   macroLorenzCurveCalculation,
   macroLorenzCurveImprovedEquality,
+
+  /// Demand and Supply-Side
   macroMoneyMarket,
   macroMoneyMarketExpansionaryMonetaryPolicy,
   macroMoneyMarketContractionaryMonetaryPolicy,
-  macroADASKeynesianMultiplier,
+  macroKeynesianMultiplier,
+  macroSupplSidePoliciesLowInflation,
 
   ///Global*****************************************
 
@@ -165,6 +192,9 @@ enum DiagramEnum {
 
   /// Economic Development
   globalPPCReallocation,
+  globalPPCCapitalInvestment,
+  globalPPCEconomicGrowth,
+  globalPPCUnsustainableUseOfNaturalResources,
   globalPovertyCycle,
 }
 
@@ -376,56 +406,71 @@ extension DiagramBundleEnumUnit on DiagramEnum {
 
     DiagramEnum.macroCircularFlowOpen => Subunit.measuringEconomicActivity,
     DiagramEnum.macroBusinessCycle => Subunit.measuringEconomicActivity,
-    DiagramEnum.macroADASClassicalFullEmployment =>
+    DiagramEnum.macroClassicalFullEmployment =>
       Subunit.variationsActivityADAS,
 
-    DiagramEnum.macroADASClassicalDeflationaryGap =>
+    DiagramEnum.macroClassicalDeflationaryGap =>
       Subunit.variationsActivityADAS,
 
-    DiagramEnum.macroADASClassicalInflationaryGap =>
+    DiagramEnum.macroClassicalInflationaryGap =>
       Subunit.variationsActivityADAS,
 
     DiagramEnum.macroADASKeynesianFullEmployment =>
       Subunit.variationsActivityADAS,
 
-    DiagramEnum.macroADASKeynesianDeflationaryGap =>
+    DiagramEnum.macroKeynesianDeflationaryGap =>
       Subunit.variationsActivityADAS,
 
-    DiagramEnum.macroADASKeynesianInflationaryGap =>
+    DiagramEnum.macroKeynesianInflationaryGap =>
       Subunit.variationsActivityADAS,
 
-    DiagramEnum.macroADASClassicalDeflationaryGapAdjustment =>
+    DiagramEnum.macroClassicalDeflationaryGapAdjustment =>
       Subunit.variationsActivityADAS,
 
-    DiagramEnum.macroADASClassicalInflationaryGapAdjustment =>
+    DiagramEnum.macroClassicalInflationaryGapAdjustment =>
       Subunit.variationsActivityADAS,
 
-    /// Macro Objectives
-    DiagramEnum.macroADASClassicalLongTermGrowth => Subunit.macroObjectives,
+    /// Economic growth
+    DiagramEnum.macroClassicalLongTermGrowth => Subunit.macroObjectives,
+    DiagramEnum.macroKeynesianLongTermGrowth => Subunit.macroObjectives,
 
-    DiagramEnum.macroADASKeynesianLongTermGrowth => Subunit.macroObjectives,
+    /// Inflation
+    DiagramEnum.macroCostPushInflation => Subunit.macroObjectives,
+    DiagramEnum.macroClassicalDemandPullInflation => Subunit.macroObjectives,
 
-    DiagramEnum.macroADASCostPushInflation => Subunit.macroObjectives,
-    DiagramEnum.macroADASClassicalDemandPullInflation =>
+    /// Unemployment
+    DiagramEnum.macroUnemploymentStructural => Subunit.macroObjectives,
+    DiagramEnum.macroUnemploymentLaborMarketRigidities =>
       Subunit.macroObjectives,
+    DiagramEnum.macroUnemploymentNationalMinimumWage => Subunit.macroObjectives,
+    DiagramEnum.macroUnemploymentEfficiencyWages => Subunit.macroObjectives,
+    DiagramEnum.macroNaturalRateOfUnemployment => Subunit.macroObjectives,
+
+    ///Philips Curve
+    DiagramEnum.macroSRPC => Subunit.macroObjectives,
+    DiagramEnum.macroPhillipsCurveInflationaryDeflationaryGap => Subunit.macroObjectives,
+    DiagramEnum.macroSRPCCostPushInflation => Subunit.macroObjectives,
+    DiagramEnum.macroLRPC => Subunit.macroObjectives,
+    DiagramEnum.macroLRPCFallInNRU => Subunit.macroObjectives,
 
     /// Poverty and Inequality
     DiagramEnum.macroLorenzCurveCalculation => Subunit.inequalityPoverty,
-
     DiagramEnum.macroLorenzCurveImprovedEquality => Subunit.inequalityPoverty,
 
-    /// Demand-side
+    /// Demand-side & Supply-side
     DiagramEnum.macroKeynesianDemandPullInflation => Subunit.macroObjectives,
-    DiagramEnum.macroADASKeynesianMultiplier => Subunit.demandManagementFiscal,
+    DiagramEnum.macroKeynesianMultiplier => Subunit.demandManagementFiscal,
     DiagramEnum.macroMoneyMarket => Subunit.demandManagementMonetary,
     DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy =>
       Subunit.demandManagementMonetary,
     DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy =>
       Subunit.demandManagementMonetary,
-    DiagramEnum.macroADASKeynesianExpansionaryPolicy =>
+    DiagramEnum.macroKeynesianExpansionaryPolicy =>
       Subunit.demandManagementMonetary,
-    DiagramEnum.macroADASKeynesianContractionaryPolicy =>
+    DiagramEnum.macroKeynesianContractionaryPolicy =>
       Subunit.demandManagementMonetary,
+    DiagramEnum.macroSupplSidePoliciesLowInflation =>
+      Subunit.supplySidePolicies,
 
     /// Global***************
 
@@ -463,9 +508,11 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalJCurveSurplus => Subunit.balanceOfPayments,
 
     /// Economic Development
-    DiagramEnum.globalPPCReallocation => Subunit.barriersGrowth,
+    DiagramEnum.globalPPCUnsustainableUseOfNaturalResources =>
+      Subunit.barriersGrowth,
     DiagramEnum.globalPovertyCycle => Subunit.barriersGrowth,
-
-    ///
+    DiagramEnum.globalPPCReallocation => Subunit.sustainableDevelopment,
+    DiagramEnum.globalPPCEconomicGrowth => Subunit.sustainableDevelopment,
+    DiagramEnum.globalPPCCapitalInvestment => Subunit.sustainableDevelopment,
   };
 }

@@ -12,6 +12,6 @@ class JCurveDiagram extends BaseDiagramPainter {
   @override
   void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
-    paintAxis(c, canvas, axisStyle: AxisStyle.jCurve);
+    paintAxis(c, canvas, axisType: AxisType.jCurve);
   }
 }
