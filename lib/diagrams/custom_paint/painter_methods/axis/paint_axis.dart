@@ -15,7 +15,6 @@ import '../paint_text.dart';
 import 'axis_enum.dart';
 
 
-
 enum AxisType {
   supplyDemand,
   laborMarket,
@@ -23,8 +22,8 @@ enum AxisType {
   macroADAS,
   jCurve,
   macroPPC,
+  phillipsCurve, // Added new type
 }
-
 
 // THE HELPER: Extends functionality without changing the object structure
 extension AxisTypeData on AxisType {
@@ -34,7 +33,10 @@ extension AxisTypeData on AxisType {
       case AxisType.laborMarket: return DiagramLabel.wageRate.label;
       case AxisType.priceRevenueCosts: return DiagramLabel.priceRevenueCosts.label;
       case AxisType.macroADAS: return DiagramLabel.priceLevel.label;
-    // Default fallback for others
+
+    // Phillips Curve: Y-Axis is Inflation Rate
+      case AxisType.phillipsCurve: return 'Inflation Rate';
+
       default: return 'P';
     }
   }
@@ -45,7 +47,10 @@ extension AxisTypeData on AxisType {
       case AxisType.laborMarket: return DiagramLabel.quantityOfLabor.label;
       case AxisType.priceRevenueCosts: return DiagramLabel.quantity.label;
       case AxisType.macroADAS: return DiagramLabel.realGDP.label;
-    // Default fallback for others
+
+    // Phillips Curve: X-Axis is Unemployment Rate
+      case AxisType.phillipsCurve: return 'Unemployment Rate';
+
       default: return 'Q';
     }
   }
@@ -53,10 +58,13 @@ extension AxisTypeData on AxisType {
   AxisStyle get style {
     switch (this) {
       case AxisType.jCurve: return AxisStyle.jCurve;
+    // Phillips curve uses standard arrows, so it falls to default
       default: return AxisStyle.arrows;
     }
   }
-}void paintAxis(
+}
+
+void paintAxis(
     DiagramPainterConfig config,
     IDiagramCanvas canvas, {
       // Arguments keep their default values to maintain backward compatibility

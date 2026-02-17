@@ -38,11 +38,17 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([DemandDiagram(c, DiagramEnum.microDemandDecrease)]),
 
     /// Supply
-    DiagramWidget([Supply(c, DiagramEnum.microSupplyExtension)]),
-    DiagramWidget([Supply(c, DiagramEnum.microSupplyContraction)]),
-    DiagramWidget([Supply(c, DiagramEnum.microSupplyIncrease)]),
-    DiagramWidget([Supply(c, DiagramEnum.microSupplyDecrease)]),
-
+    DiagramWidget([SupplyDiagram(c, DiagramEnum.microSupplyExtension)]),
+    DiagramWidget([SupplyDiagram(c, DiagramEnum.microSupplyContraction)]),
+    DiagramWidget([SupplyDiagram(c, DiagramEnum.microSupplyIncrease)]),
+    DiagramWidget([SupplyDiagram(c, DiagramEnum.microSupplyDecrease)]),
+    DiagramWidget([SupplyDiagram(c, DiagramEnum.microTotalAndMarginalProduct)]),
+    DiagramWidget(
+        title: 'Marginal Product and Marginal Cost',
+        description: 'Marginal cost (MC) is inversely related to marginal product (MP), given by MC = W / MP, where W is the wage rate. As diminishing marginal returns set in, MP declines, increasing the marginal cost of each additional unit of output.',
+        [
+      SupplyDiagram(c, DiagramEnum.microMarginalProduct),
+      SupplyDiagram(c, DiagramEnum.microMarginalCost)]),
     /// Equilibrium & Surplus
     DiagramWidget([CompetitiveMarket(c, DiagramEnum.microMarketEquilibrium)]),
     DiagramWidget([CompetitiveMarket(c, DiagramEnum.microShortage)]),
@@ -56,9 +62,7 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([
       CompetitiveMarket(c, DiagramEnum.microAllocativeEfficiency),
     ]),
-    DiagramWidget([Supply(c, DiagramEnum.microMarginalProduct)]),
-    DiagramWidget([Supply(c, DiagramEnum.microTotalAndMarginalProduct)]),
-    DiagramWidget([Supply(c, DiagramEnum.microMarginalCost)]),
+
 
     /// Elasticity
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandElastic)]),
@@ -109,7 +113,10 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     /// ============================================================
     /// PERFECT COMPETITION PAIRINGS (Displayed Together)
     /// ============================================================
-    DiagramWidget([
+    DiagramWidget(
+        title: 'Perfect Competition - Long Run Equilibrium',
+        description: 'In the long-run a firm in perfect competition can only make normal profit (TR - TC = 0).',
+        [
       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
       MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
     ]),
@@ -190,7 +197,7 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       ADASDiagram(c, DiagramEnum.macroClassicalDemandPullInflation),
       ADASDiagram(c, DiagramEnum.macroKeynesianDemandPullInflation),
     ]),
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroCostPushInflation)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASCostPushInflation)]),
 
     /// Unemployment
     DiagramWidget([
@@ -215,16 +222,21 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
 
     /// Philips Curve
     DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroSRPC),
+      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCAndLRPC),
     ]),
     DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCCostPushInflation),
+      PhillipsCurveDiagram(c, DiagramEnum.macroPhillipsCurveStagflation),
+      ADASDiagram(c, DiagramEnum.macroADASCostPushInflation),
+
     ]),
     DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroPhillipsCurveInflationaryDeflationaryGap),
+
+      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCInflationaryGapAdjustment),
+      ADASDiagram(c, DiagramEnum.macroClassicalInflationaryGapAdjustment),
     ]),
     DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroLRPC),
+      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCDeflationaryGapAdjustment),
+      ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGapAdjustment),
     ]),
     DiagramWidget([
       PhillipsCurveDiagram(c, DiagramEnum.macroLRPCFallInNRU),

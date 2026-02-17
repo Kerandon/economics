@@ -131,7 +131,7 @@ enum DiagramEnum {
   /// Inflation
   macroClassicalDemandPullInflation,
   macroKeynesianDemandPullInflation,
-  macroCostPushInflation,
+  macroADASCostPushInflation,
 
   /// Unemployment
   macroUnemploymentStructural,
@@ -141,10 +141,10 @@ enum DiagramEnum {
   macroNaturalRateOfUnemployment,
   
   /// Phillips Curve
-  macroSRPC,
-  macroPhillipsCurveInflationaryDeflationaryGap,
-  macroSRPCCostPushInflation,
-  macroLRPC,
+  macroSRPCAndLRPC,
+  macroPhillipsCurveStagflation,
+  macroSRPCInflationaryGapAdjustment,
+  macroSRPCDeflationaryGapAdjustment,
   macroLRPCFallInNRU,
 
   /// Poverty and Inequality
@@ -435,7 +435,7 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroKeynesianLongTermGrowth => Subunit.macroObjectives,
 
     /// Inflation
-    DiagramEnum.macroCostPushInflation => Subunit.macroObjectives,
+    DiagramEnum.macroADASCostPushInflation => Subunit.macroObjectives,
     DiagramEnum.macroClassicalDemandPullInflation => Subunit.macroObjectives,
 
     /// Unemployment
@@ -447,10 +447,10 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroNaturalRateOfUnemployment => Subunit.macroObjectives,
 
     ///Philips Curve
-    DiagramEnum.macroSRPC => Subunit.macroObjectives,
-    DiagramEnum.macroPhillipsCurveInflationaryDeflationaryGap => Subunit.macroObjectives,
-    DiagramEnum.macroSRPCCostPushInflation => Subunit.macroObjectives,
-    DiagramEnum.macroLRPC => Subunit.macroObjectives,
+    DiagramEnum.macroSRPCAndLRPC => Subunit.macroObjectives,
+  DiagramEnum.macroPhillipsCurveStagflation => Subunit.macroObjectives,
+    DiagramEnum.macroSRPCInflationaryGapAdjustment => Subunit.macroObjectives,
+    DiagramEnum.macroSRPCDeflationaryGapAdjustment => Subunit.macroObjectives,
     DiagramEnum.macroLRPCFallInNRU => Subunit.macroObjectives,
 
     /// Poverty and Inequality

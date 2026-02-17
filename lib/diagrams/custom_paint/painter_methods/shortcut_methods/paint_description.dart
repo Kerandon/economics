@@ -10,8 +10,8 @@ void paintDescription(
   IDiagramCanvas canvas,
   String text, {
   // CHANGED: 0.98 puts it just above the bottom edge of the canvas.
-  double yPos = 0.95,
-  double fontSize = kFontSizeAverageRatioSmall,
+  double yPos = 1,
+  double fontSize = kFontSizeAverageRatioSmall * 0.8,
   double horizontalPadding = 20.0,
 }) {
   // 1. Calculate Safe Width
@@ -23,7 +23,6 @@ void paintDescription(
     config,
     canvas,
     text,
-    shape: DiagramShape.square,
     Offset(0.50, yPos),
 
     // Formatting

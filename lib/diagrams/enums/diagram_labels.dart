@@ -86,12 +86,23 @@ enum DiagramLabel {
   surplusLabor,
   pf,
   wageRate,
-  Wmin,
   q,
   qProfitMax,
   quantityOfChocolateBars,
   q1,
   q2,
+  pi1,
+  pi2,
+  pi3,
+  u1,
+  u2,
+  u3,
+  nRU1,
+  nRU2,
+  uInf,
+  uDef,
+  yInf,
+  yDef,
   q2Star,
   q3,
   q4,
@@ -255,6 +266,7 @@ enum DiagramLabel {
   realGDP,
   potentialOutput,
   potentialGDP,
+  nRU,
   timeYears,
   aggregateDemand,
   aD,
@@ -300,8 +312,6 @@ enum DiagramLabel {
   yEEqualYF,
   yP,
   yE,
-  yInf,
-  yDef,
   cheeseKG,
   wineBottles,
   dW,
@@ -489,8 +499,10 @@ extension MicroLabelExtension on DiagramLabel {
       /// Economic Development
       DiagramLabel.lowIncome => 'low Income',
       DiagramLabel.lowSavings => 'Low Savings',
-      DiagramLabel.lowInvestment => 'Low Investment\n(physical, human, natural capital)',
-      DiagramLabel.lowProductivity => 'Low Productivity\n(Output / Labor Hours)',
+      DiagramLabel.lowInvestment =>
+        'Low Investment\n(physical, human, natural capital)',
+      DiagramLabel.lowProductivity =>
+        'Low Productivity\n(Output / Labor Hours)',
       DiagramLabel.tradeBalance => 'Trade Balance',
       DiagramLabel.tradeSurplus => 'Trade\nSurplus\nX > M',
       DiagramLabel.tradeDeficit => 'Trade\nDeficit\nX < M',
@@ -601,7 +613,6 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.pf => 'Pf',
       DiagramLabel.wageRate => 'Wage Rate',
       DiagramLabel.quantityOfLabor => 'Quantity of labor',
-      DiagramLabel.Wmin => 'Wmin',
       DiagramLabel.dEqualsMB => 'D=MB',
       DiagramLabel.sEqualsMC => 'S=MC',
       DiagramLabel.dL => 'D for Labor',
@@ -793,9 +804,9 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.aS2 => 'AS2',
 
       DiagramLabel.yEEqualYF => 'Ye=Yf',
- 
+
       DiagramLabel.w1 => 'W1',
- 
+
       DiagramLabel.w2 => 'W2',
 
       DiagramLabel.wMin => 'Wmin',
@@ -805,6 +816,19 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.lF => 'LF',
 
       DiagramLabel.wEff => 'Weff',
+      DiagramLabel.u1 => 'U1',
+      DiagramLabel.u2 => 'U2',
+      DiagramLabel.u3 => 'U23',
+      DiagramLabel.pi1 => 'π1',
+      DiagramLabel.pi2 => 'π2',
+      DiagramLabel.pi3 => 'π3',
+      DiagramLabel.nRU => 'NRU',
+      DiagramLabel.uInf => 'Uinf',
+      DiagramLabel.uDef => 'Udef',
+
+      DiagramLabel.nRU1 => 'NRU1',
+
+      DiagramLabel.nRU2 => 'NRU2',
     };
   }
 }

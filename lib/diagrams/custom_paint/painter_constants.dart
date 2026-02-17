@@ -15,7 +15,7 @@ const kExtendBy20 = 0.20;
 const kTopAxisIndent = 0.50;
 const kBottomAxisIndent = 1.50;
 const kLabelPadding = 0.06;
-const kAxisIndent = 0.20;
+const kAxisIndent = 0.15;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 5.0;
 const kAdvantages = 'Advantages';
@@ -28,6 +28,7 @@ const kFontTiny = 18.0;
 const kFontVerySmall = 22.0;
 const kFontSmall = 22.0;
 const kFontMedium = 28.0;
+const kFontSizeBig = 40.0;
 const kFontSizeAverageRatioSmall = 30.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
@@ -43,13 +44,18 @@ enum MarketCurveType {
   demand, supply, ad, sras, lras, keynesianAS, moneySupply, lrpc, srpc, moneyDemand,
   demandDomestic, supplyDomestic, demandWorld, supplyWorld, demandUSD, supplyUSD,
   ad1, ad2, ad3, lras1, lras2, sras1, sras2,
+  lrpc1, lrpc2,
+
+  // --- ADDED THESE ---
+  srpc1, srpc2,
+  // ------------------
+
   // New Labor Market & Shifted Types
   dl, dl1, dl2,
   sl, sl1, sl2,
   d1, d2, // General Demand shifts
   s1, s2  // General Supply shifts
 }
-
 enum LabelAlign { center, centerLeft, centerRight, centerTop, centerBottom }
 
 enum CustomAxis { x, y }

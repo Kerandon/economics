@@ -1,5 +1,4 @@
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
-
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
@@ -357,7 +356,7 @@ void _paintMinWage(
     canvas,
     startPos: const Offset(0, 0.30),
     polylineOffsets: [const Offset(1.0, 0.30)],
-    label1: DiagramLabel.Wmin.label,
+    label1: DiagramLabel.wMin.label,
     label1Align: LabelAlign.centerLeft,
     color: Colors.red,
   );
@@ -445,7 +444,7 @@ void _paintNMWInelasticDemand(
     canvas,
     startPos: const Offset(0, 0.30),
     polylineOffsets: [const Offset(1.0, 0.30)],
-    label1: DiagramLabel.Wmin.label,
+    label1: DiagramLabel.wMin.label,
     label1Align: LabelAlign.centerLeft,
     color: Colors.red,
   );
