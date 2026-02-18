@@ -14,7 +14,7 @@ import '../i_diagram_canvas.dart';
 import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/legend/legend_display.dart';
 import '../painter_methods/paint_legend_table.dart';
-import '../painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import '../painter_methods/paint_line_segment.dart';
 
 class PriceControls extends BaseDiagramPainter {
   PriceControls(super.config, super.diagram);

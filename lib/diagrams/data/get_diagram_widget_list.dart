@@ -44,11 +44,15 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([SupplyDiagram(c, DiagramEnum.microSupplyDecrease)]),
     DiagramWidget([SupplyDiagram(c, DiagramEnum.microTotalAndMarginalProduct)]),
     DiagramWidget(
-        title: 'Marginal Product and Marginal Cost',
-        description: 'Marginal cost (MC) is inversely related to marginal product (MP), given by MC = W / MP, where W is the wage rate. As diminishing marginal returns set in, MP declines, increasing the marginal cost of each additional unit of output.',
-        [
-      SupplyDiagram(c, DiagramEnum.microMarginalProduct),
-      SupplyDiagram(c, DiagramEnum.microMarginalCost)]),
+      title: 'Marginal Product and Marginal Cost',
+      description:
+          'Marginal cost (MC) is inversely related to marginal product (MP), given by MC = W / MP, where W is the wage rate. As diminishing marginal returns set in, MP declines, increasing the marginal cost of each additional unit of output.',
+      [
+        SupplyDiagram(c, DiagramEnum.microMarginalProduct),
+        SupplyDiagram(c, DiagramEnum.microMarginalCost),
+      ],
+    ),
+
     /// Equilibrium & Surplus
     DiagramWidget([CompetitiveMarket(c, DiagramEnum.microMarketEquilibrium)]),
     DiagramWidget([CompetitiveMarket(c, DiagramEnum.microShortage)]),
@@ -62,7 +66,6 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([
       CompetitiveMarket(c, DiagramEnum.microAllocativeEfficiency),
     ]),
-
 
     /// Elasticity
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandElastic)]),
@@ -114,12 +117,14 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     /// PERFECT COMPETITION PAIRINGS (Displayed Together)
     /// ============================================================
     DiagramWidget(
-        title: 'Perfect Competition - Long Run Equilibrium',
-        description: 'In the long-run a firm in perfect competition can only make normal profit (TR - TC = 0).',
-        [
-      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
-      MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
-    ]),
+      title: 'Perfect Competition - Long Run Equilibrium',
+      description:
+          'In the long-run a firm in perfect competition can only make normal profit (TR - TC = 0).',
+      [
+        MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
+        MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
+      ],
+    ),
     DiagramWidget([
       MarketPower(c, DiagramEnum.microPerfectCompetitionMarketAbnormalProfit),
       MarketPower(
@@ -221,16 +226,12 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     ]),
 
     /// Philips Curve
-    DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCAndLRPC),
-    ]),
+    DiagramWidget([PhillipsCurveDiagram(c, DiagramEnum.macroSRPCAndLRPC)]),
     DiagramWidget([
       PhillipsCurveDiagram(c, DiagramEnum.macroPhillipsCurveStagflation),
       ADASDiagram(c, DiagramEnum.macroADASCostPushInflation),
-
     ]),
     DiagramWidget([
-
       PhillipsCurveDiagram(c, DiagramEnum.macroSRPCInflationaryGapAdjustment),
       ADASDiagram(c, DiagramEnum.macroClassicalInflationaryGapAdjustment),
     ]),
@@ -238,9 +239,8 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       PhillipsCurveDiagram(c, DiagramEnum.macroSRPCDeflationaryGapAdjustment),
       ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGapAdjustment),
     ]),
-    DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroLRPCFallInNRU),
-    ]),
+    DiagramWidget([PhillipsCurveDiagram(c, DiagramEnum.macroLRPCFallInNRU)]),
+
     /// Inequality and Poverty
     DiagramWidget([
       LorenzCurveDiagram(c, DiagramEnum.macroLorenzCurveCalculation),

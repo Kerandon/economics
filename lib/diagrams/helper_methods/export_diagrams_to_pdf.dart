@@ -9,10 +9,10 @@ import '../models/diagram_painter_config.dart';
 import '../models/diagram_widget.dart';
 
 Future<void> exportDiagramsToPdf(
-    List<DiagramWidget> diagrams,
-    DiagramPainterConfig config,
-    BuildContext context,
-    ) async {
+  List<DiagramWidget> diagrams,
+  DiagramPainterConfig config,
+  BuildContext context,
+) async {
   final pdf = pw.Document();
 
   // 1. Load the Unicode-enabled font
@@ -30,11 +30,11 @@ Future<void> exportDiagramsToPdf(
         build: (pw.Context context) {
           return pw.GridView(
             crossAxisCount: 2,
-            childAspectRatio: 0.75, // Made taller to accommodate titles/descriptions
+            childAspectRatio:
+                0.75, // Made taller to accommodate titles/descriptions
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             children: group.map((dWidget) {
-
               // Prepare the list of PDF diagram widgets
               // We map each painter in the bundle to a PDF-compatible CustomPaint
               final pdfDiagrams = dWidget.painters.map((painter) {
@@ -44,7 +44,9 @@ Future<void> exportDiagramsToPdf(
                       size: const PdfPoint(400, 400),
                       painter: (PdfGraphics graphics, PdfPoint size) {
                         // Extract low-level font
-                        final PdfFont resolvedFont = unicodeFont.getFont(context);
+                        final PdfFont resolvedFont = unicodeFont.getFont(
+                          context,
+                        );
 
                         // Bridge to your existing drawing logic
                         final bridge = PdfDiagramCanvas(

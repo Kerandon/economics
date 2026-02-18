@@ -2,33 +2,10 @@ import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/diagrams/data/get_diagram_widget_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-// FIX 1: Use 'package:' import here to match the other imports.
-// Mixing relative (../../) and package imports causes Type Mismatches in Maps.
 import 'package:economics_app/diagrams/enums/unit_type.dart';
-
 import '../../../diagrams/models/diagram_painter_config.dart';
 import '../../../diagrams/models/diagram_widget.dart';
 import '../../../diagrams/helper_methods/export_diagrams_to_pdf.dart';
-
-
-
-
-
-
-
-
-
-import 'dart:math' show min; // Used implicitly in some logic usually
-
-// Models & Enums
-
-// Data & Helpers
-
-
-// Models & Enums
-
-// Data & Helpers
 
 class DiagramsPage extends ConsumerStatefulWidget {
   const DiagramsPage({super.key});
@@ -42,8 +19,6 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
   String _searchQuery = "";
 
   final ScrollController _mainScrollController = ScrollController();
-
-  // Store keys to jump to specific diagrams
   final Map<String, GlobalKey> _diagramKeys = {};
 
   @override
@@ -53,7 +28,6 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
     super.dispose();
   }
 
-  // FIX: Added 'index' to ensure unique IDs even if text is identical
   String _getDiagramId(DiagramWidget d, int index) {
     final subunitId = d.painters.first.subunit?.id ?? "misc";
     final textId = d.painters.first.diagram.toText;
@@ -62,7 +36,6 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
 
   void _scrollToDiagram(String diagramId) {
     final key = _diagramKeys[diagramId];
-    // We check if the key is attached to a context (rendered)
     if (key?.currentContext != null) {
       Scrollable.ensureVisible(
         key!.currentContext!,
@@ -71,66 +44,209 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
         alignment: 0.1,
       );
     } else {
-      // Optional: Handle case where item is filtered out or not rendered yet
       debugPrint("Cannot scroll to $diagramId - context is null");
     }
   }
 
   void _showDiagramDialog(
-      BuildContext context,
-      Widget diagramWidget,
-      String title,
-      ) {
+    BuildContext context,
+    List<DiagramWidget> allDiagrams,
+    int initialIndex,
+  ) {
     showDialog(
       context: context,
-      builder: (ctx) => Dialog(
-        backgroundColor: Colors.transparent,
-        insetPadding: const EdgeInsets.all(24),
-        child: Stack(
-          alignment: Alignment.topRight,
-          children: [
-            Container(
-              width: 1100,
-              height: 800,
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              padding: const EdgeInsets.all(32),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            final size = MediaQuery.of(context).size;
+            final theme = Theme.of(context);
+
+            // 1. TREAT WIDGET AS DATA
+            final data = allDiagrams[initialIndex];
+            final title = data.title ?? data.painters.first.diagram.toText;
+
+            // Fallback Description Logic
+            final effectiveDescription =
+                data.description ?? data.painters.first.diagram.description;
+
+            final hasPrevious = initialIndex > 0;
+            final hasNext = initialIndex < allDiagrams.length - 1;
+
+            // 2. CALCULATE EXACT CONTENT WIDTH
+            const double cardWidth = 516.0;
+            final double layoutWidth = (data.axis == Axis.vertical)
+                ? cardWidth
+                : cardWidth * data.painters.length;
+
+            // Define a common subtle button style
+            final ButtonStyle subtleButtonStyle = IconButton.styleFrom(
+              backgroundColor: theme.colorScheme.onSurface.withOpacity(0.05),
+              hoverColor: theme.colorScheme.onSurface.withOpacity(0.1),
+              highlightColor: theme.colorScheme.onSurface.withOpacity(0.2),
+              foregroundColor: theme.colorScheme.onSurface.withOpacity(
+                0.6,
+              ), // Icon color
+            );
+
+            return Dialog(
+              backgroundColor: Colors.transparent,
+              insetPadding: const EdgeInsets.all(16),
+              child: Stack(
+                alignment: Alignment.topRight,
                 children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    width: (size.width * 0.95).clamp(0, 1600),
+                    height: (size.height * 0.95).clamp(0, 1000),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface,
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    textAlign: TextAlign.center,
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // HEADER
+                        Column(
+                          children: [
+                            Text(
+                              title,
+                              style: theme.textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              "${initialIndex + 1} of ${allDiagrams.length}",
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.outline,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+
+                        // CONTENT AREA
+                        Expanded(
+                          child: Row(
+                            children: [
+                              // PREV BUTTON (SUBTLE)
+                              IconButton(
+                                style: subtleButtonStyle,
+                                onPressed: hasPrevious
+                                    ? () => setDialogState(() => initialIndex--)
+                                    : null,
+                                icon: const Icon(Icons.arrow_back_ios_new),
+                              ),
+
+                              const SizedBox(width: 8),
+
+                              // CUSTOM DIAGRAM BUILDER
+                              Expanded(
+                                child: ClipRect(
+                                  child: InteractiveViewer(
+                                    key: ValueKey(initialIndex),
+                                    minScale: 0.1,
+                                    maxScale: 5.0,
+                                    boundaryMargin: const EdgeInsets.all(
+                                      double.infinity,
+                                    ),
+                                    child: Center(
+                                      child: FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: SizedBox(
+                                          // 3. APPLY EXACT WIDTH CONSTRAINT
+                                          width: layoutWidth,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              // Description (Custom or Default)
+                                              if (effectiveDescription
+                                                  .isNotEmpty)
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                        bottom: 24.0,
+                                                        left: 8.0,
+                                                        right: 8.0,
+                                                      ),
+                                                  child: Text(
+                                                    effectiveDescription,
+                                                    style: const TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black87,
+                                                    ),
+                                                  ),
+                                                ),
+
+                                              // The Diagrams
+                                              Flex(
+                                                direction: data.axis,
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: data.painters.map((
+                                                  painter,
+                                                ) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                          8.0,
+                                                        ),
+                                                    child: Container(
+                                                      width: 500,
+                                                      height: 500,
+                                                      color: Colors.white,
+                                                      child: CustomPaint(
+                                                        painter: painter,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 8),
+
+                              // NEXT BUTTON (SUBTLE)
+                              IconButton(
+                                style: subtleButtonStyle,
+                                onPressed: hasNext
+                                    ? () => setDialogState(() => initialIndex++)
+                                    : null,
+                                icon: const Icon(Icons.arrow_forward_ios),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 24),
-                  Expanded(
-                    child: InteractiveViewer(
-                      minScale: 0.1,
-                      maxScale: 5.0,
-                      boundaryMargin: const EdgeInsets.all(double.infinity),
-                      child: Center(
-                        child: diagramWidget,
-                      ),
+
+                  // CLOSE BUTTON (SUBTLE)
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: IconButton(
+                      style: subtleButtonStyle,
+                      onPressed: () => Navigator.of(ctx).pop(),
+                      icon: const Icon(Icons.close),
                     ),
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: IconButton.filled(
-                onPressed: () => Navigator.of(ctx).pop(),
-                icon: const Icon(Icons.close),
-              ),
-            ),
-          ],
-        ),
-      ),
+            );
+          },
+        );
+      },
     );
   }
 
@@ -155,14 +271,10 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
           displayTitle.contains(_searchQuery.toLowerCase());
     }).toList();
 
-    // Organize Diagrams: Subunit -> List<Diagram>
     final Map<Subunit, List<DiagramWidget>> diagramsBySubunit = {};
     for (var d in filteredDiagrams) {
       final subunit = d.painters.first.subunit ?? Subunit.whatIsEconomics;
       diagramsBySubunit.putIfAbsent(subunit, () => []).add(d);
-
-      // Note: We don't generate keys here anymore because we need the index
-      // relative to the specific subunit list which we iterate later.
     }
 
     final Map<UnitType, List<Subunit>> activeUnits = {};
@@ -177,9 +289,7 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // -------------------------------------------------------------------
-          // SIDEBAR (Lists Subunits -> Diagrams)
-          // -------------------------------------------------------------------
+          // SIDEBAR
           if (isWideScreen)
             Container(
               width: 300,
@@ -211,48 +321,82 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                         for (var unit in UnitType.values)
                           if (activeUnits.containsKey(unit))
                             Theme(
-                              data: theme.copyWith(dividerColor: Colors.transparent),
+                              data: theme.copyWith(
+                                dividerColor: Colors.transparent,
+                              ),
                               child: ExpansionTile(
                                 initiallyExpanded: true,
-                                leading: Icon(Icons.folder,
-                                    color: theme.colorScheme.primary),
+                                leading: Icon(
+                                  Icons.folder,
+                                  color: theme.colorScheme.primary,
+                                ),
                                 title: Text(
                                   unit.title,
                                   style: theme.textTheme.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 children: [
                                   for (var subunit in activeUnits[unit]!)
                                     ExpansionTile(
                                       initiallyExpanded: false,
-                                      tilePadding: const EdgeInsets.only(left: 20, right: 16),
+                                      tilePadding: const EdgeInsets.only(
+                                        left: 20,
+                                        right: 16,
+                                      ),
                                       title: Text(
                                         "${subunit.id} ${subunit.title}",
-                                        style: theme.textTheme.labelLarge?.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: theme.colorScheme.onSurfaceVariant
-                                        ),
+                                        style: theme.textTheme.labelLarge
+                                            ?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: theme
+                                                  .colorScheme
+                                                  .onSurfaceVariant,
+                                            ),
                                       ),
                                       children: [
-                                        // FIX: Use .asMap().entries to get index for unique ID
-                                        for (final entry in diagramsBySubunit[subunit]!.asMap().entries)
+                                        for (final entry
+                                            in diagramsBySubunit[subunit]!
+                                                .asMap()
+                                                .entries)
                                           ListTile(
                                             dense: true,
-                                            visualDensity: VisualDensity.compact,
-                                            contentPadding: const EdgeInsets.only(left: 36, right: 16),
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                            contentPadding:
+                                                const EdgeInsets.only(
+                                                  left: 36,
+                                                  right: 16,
+                                                ),
                                             minLeadingWidth: 0,
-                                            leading: Icon(Icons.bar_chart, size: 16, color: theme.colorScheme.secondary),
+                                            leading: Icon(
+                                              Icons.bar_chart,
+                                              size: 16,
+                                              color:
+                                                  theme.colorScheme.secondary,
+                                            ),
+                                            // TEXT WRAPPING ENABLED
                                             title: Text(
-                                              entry.value.title ?? entry.value.painters.first.diagram.toText,
-                                              style: theme.textTheme.bodySmall,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
+                                              entry.value.title ??
+                                                  entry
+                                                      .value
+                                                      .painters
+                                                      .first
+                                                      .diagram
+                                                      .toText,
+                                              style: theme.textTheme.bodySmall
+                                                  ?.copyWith(height: 1.3),
                                             ),
                                             onTap: () => _scrollToDiagram(
-                                                _getDiagramId(entry.value, entry.key)
+                                              _getDiagramId(
+                                                entry.value,
+                                                entry.key,
+                                              ),
                                             ),
-                                            hoverColor: theme.colorScheme.surfaceContainerHigh,
-                                          )
+                                            hoverColor: theme
+                                                .colorScheme
+                                                .surfaceContainerHigh,
+                                          ),
                                       ],
                                     ),
                                 ],
@@ -265,9 +409,7 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
               ),
             ),
 
-          // -------------------------------------------------------------------
           // MAIN GALLERY AREA
-          // -------------------------------------------------------------------
           Expanded(
             child: Center(
               child: ConstrainedBox(
@@ -292,7 +434,8 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                                 setState(() => _searchQuery = val),
                             elevation: WidgetStateProperty.all(0),
                             backgroundColor: WidgetStateProperty.all(
-                                theme.colorScheme.surfaceContainerHigh),
+                              theme.colorScheme.surfaceContainerHigh,
+                            ),
                           ),
                         ),
                       ),
@@ -316,11 +459,12 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                             for (var unit in UnitType.values)
                               if (activeUnits.containsKey(unit))
                                 _buildUnitSection(
-                                    context,
-                                    theme,
-                                    unit,
-                                    activeUnits[unit]!,
-                                    diagramsBySubunit
+                                  context,
+                                  theme,
+                                  unit,
+                                  activeUnits[unit]!,
+                                  diagramsBySubunit,
+                                  filteredDiagrams,
                                 ),
                           ],
                         ),
@@ -337,16 +481,16 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
   }
 
   Widget _buildUnitSection(
-      BuildContext context,
-      ThemeData theme,
-      UnitType unit,
-      List<Subunit> subunits,
-      Map<Subunit, List<DiagramWidget>> diagramsBySubunit,
-      ) {
+    BuildContext context,
+    ThemeData theme,
+    UnitType unit,
+    List<Subunit> subunits,
+    Map<Subunit, List<DiagramWidget>> diagramsBySubunit,
+    List<DiagramWidget> fullFilteredList,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // BIG UNIT HEADER
         Padding(
           padding: const EdgeInsets.only(top: 48.0, bottom: 24.0),
           child: Column(
@@ -378,13 +522,14 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // SUBUNIT HEADER
               Padding(
                 padding: const EdgeInsets.only(top: 16, bottom: 24),
                 child: Row(
                   children: [
-                    Icon(Icons.label_important,
-                        color: theme.colorScheme.secondary),
+                    Icon(
+                      Icons.label_important,
+                      color: theme.colorScheme.secondary,
+                    ),
                     const SizedBox(width: 12),
                     Text(
                       '${subunit.id} ${subunit.title}',
@@ -397,7 +542,6 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                 ),
               ),
 
-              // THE GALLERY GRID
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -410,18 +554,20 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                 itemCount: diagramsBySubunit[subunit]!.length,
                 itemBuilder: (ctx, index) {
                   final diagram = diagramsBySubunit[subunit]![index];
-
-                  // FIX: Use index in ID generation
                   final id = _getDiagramId(diagram, index);
 
-                  // Ensure key exists
                   if (!_diagramKeys.containsKey(id)) {
                     _diagramKeys[id] = GlobalKey();
                   }
 
                   return Container(
-                      key: _diagramKeys[id], // Correctly unique key
-                      child: _buildGalleryTile(context, theme, diagram)
+                    key: _diagramKeys[id],
+                    child: _buildGalleryTile(
+                      context,
+                      theme,
+                      diagram,
+                      fullFilteredList,
+                    ),
                   );
                 },
               ),
@@ -433,13 +579,27 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
   }
 
   Widget _buildGalleryTile(
-      BuildContext context, ThemeData theme, DiagramWidget diagram) {
-
+    BuildContext context,
+    ThemeData theme,
+    DiagramWidget diagram,
+    List<DiagramWidget> fullList,
+  ) {
     final title = diagram.title ?? diagram.painters.first.diagram.toText;
+
+    // FIX: Create a display-only version of the widget.
+    // We strip the title and description so they don't affect the aspect ratio
+    // or width calculation inside the FittedBox.
+    final displayWidget = DiagramWidget(
+      diagram.painters,
+      axis: diagram.axis,
+      title: null, // Title is already in the card footer
+      description:
+          null, // HIDE description in tile (only shown on tap in dialog)
+    );
 
     final responsiveWidget = FittedBox(
       fit: BoxFit.contain,
-      child: diagram,
+      child: displayWidget,
     );
 
     return Card(
@@ -451,28 +611,28 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
         side: BorderSide(color: theme.colorScheme.outlineVariant),
       ),
       child: InkWell(
-        onTap: () => _showDiagramDialog(context, responsiveWidget, title),
+        onTap: () {
+          final index = fullList.indexOf(diagram);
+          if (index != -1) {
+            _showDiagramDialog(context, fullList, index);
+          }
+        },
         borderRadius: BorderRadius.circular(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // DIAGRAM PREVIEW
             Expanded(
               child: Container(
                 margin: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.black12.withOpacity(0.05))
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.black12.withOpacity(0.05)),
                 ),
                 padding: const EdgeInsets.all(12),
-                child: AbsorbPointer(
-                  child: Center(child: responsiveWidget),
-                ),
+                child: AbsorbPointer(child: Center(child: responsiveWidget)),
               ),
             ),
-
-            // TITLE FOOTER
             Container(
               height: 55,
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -485,15 +645,17 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.labelMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          height: 1.2
+                        fontWeight: FontWeight.bold,
+                        height: 1.2,
                       ),
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Icon(Icons.open_in_full,
-                      size: 18,
-                      color: theme.colorScheme.primary.withOpacity(0.7)),
+                  Icon(
+                    Icons.open_in_full,
+                    size: 18,
+                    color: theme.colorScheme.primary.withOpacity(0.7),
+                  ),
                 ],
               ),
             ),

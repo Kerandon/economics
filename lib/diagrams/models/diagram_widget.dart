@@ -1,3 +1,4 @@
+import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:flutter/material.dart';
 import 'base_painter_painter.dart';
 
@@ -9,22 +10,21 @@ class DiagramWidget extends StatelessWidget {
   final String? description;
   final Axis axis;
 
-  /// Creates a widget that displays one or more diagrams.
-  ///
-  /// [painters] : List of diagram painters to render.
-  /// [title] : Optional title for the diagram bundle.
-  /// [description] : Optional description text.
-  /// [axis] : Defaults to [Axis.horizontal]. Change to [Axis.vertical] to stack diagrams.
   const DiagramWidget(
-      this.painters, {
-        super.key,
-        this.title,
-        this.description,
-        this.axis = Axis.horizontal,
-      });
+    this.painters, {
+    super.key,
+    this.title,
+    this.description,
+    this.axis = Axis.horizontal,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // FALLBACK LOGIC:
+    // Use the passed description, otherwise ask the first diagram for its default description
+    final effectiveDescription =
+        description ?? painters.first.diagram.description;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -33,27 +33,21 @@ class DiagramWidget extends StatelessWidget {
         if (title != null) ...[
           Text(
             title!,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
         ],
 
-        // 2. Optional Description
-        if (description != null) ...[
+        // 2. Description (Custom OR Default)
+        if (effectiveDescription.isNotEmpty) ...[
           Text(
-            description!,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.grey,
-            ),
+            effectiveDescription,
+            style: const TextStyle(fontSize: 14, color: Colors.grey),
           ),
           const SizedBox(height: 16),
         ],
 
-        // 3. The Diagrams (Laid out Horizontally or Vertically)
+        // 3. The Diagrams
         Flex(
           direction: axis,
           mainAxisSize: MainAxisSize.min,

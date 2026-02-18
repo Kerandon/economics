@@ -5,7 +5,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';

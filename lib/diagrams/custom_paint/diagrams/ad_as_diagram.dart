@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
+
 class ADASDiagram extends BaseDiagramPainter {
   ADASDiagram(super.config, super.diagram);
 
@@ -54,10 +55,10 @@ class ADASDiagram extends BaseDiagramPainter {
 }
 
 void _paintClassicalADAS(
-    DiagramPainterConfig c,
-    IDiagramCanvas canvas,
-    DiagramEnum diagram,
-    ) {
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+  DiagramEnum diagram,
+) {
   switch (diagram) {
     case DiagramEnum.macroClassicalFullEmployment:
       _paintLRAS(c, canvas);
@@ -418,10 +419,10 @@ void _paintLRAS(DiagramPainterConfig c, IDiagramCanvas canvas) {
 }
 
 void _paintKeynesianADAS(
-    DiagramPainterConfig c,
-    IDiagramCanvas canvas,
-    DiagramEnum diagram,
-    ) {
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+  DiagramEnum diagram,
+) {
   switch (diagram) {
     case DiagramEnum.macroADASKeynesianFullEmployment:
       paintMarketCurve(

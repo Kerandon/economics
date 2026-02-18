@@ -3,7 +3,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_legend_table.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';

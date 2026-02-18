@@ -9,31 +9,30 @@ import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
 
 void paintDiagramDashedLines(
-    DiagramPainterConfig config,
-    IDiagramCanvas canvas, {
-      required double yAxisStartPos,
-      required double xAxisEndPos, // Primary X Position
-      List<double>? additionalXPositions, // Additional X Positions
-      List<double>? additionalYPositions, // Additional Y Positions
-      String? yLabel,
-      String? xLabel,
-      List<String>? additionalXLabels,
-      List<String>? additionalYLabels,
-      String? rightYLabel,
-      List<String>? additionalRightYLabels, // NEW: Additional Right-side Y Labels
+  DiagramPainterConfig config,
+  IDiagramCanvas canvas, {
+  required double yAxisStartPos,
+  required double xAxisEndPos, // Primary X Position
+  List<double>? additionalXPositions, // Additional X Positions
+  List<double>? additionalYPositions, // Additional Y Positions
+  String? yLabel,
+  String? xLabel,
+  List<String>? additionalXLabels,
+  List<String>? additionalYLabels,
+  String? rightYLabel,
+  List<String>? additionalRightYLabels, // NEW: Additional Right-side Y Labels
+  // --- VISIBILITY FLAGS (Only affect Primary Lines) ---
+  bool hideYLine = false, // Hides the Primary Horizontal Line
+  bool hideXLine = false, // Hides the Primary Vertical Line
+  bool hideYLabels = false, // Hides Primary Left Axis Label
+  bool hideXLabels = false, // Hides Primary Bottom Axis Label
 
-      // --- VISIBILITY FLAGS (Only affect Primary Lines) ---
-      bool hideYLine = false, // Hides the Primary Horizontal Line
-      bool hideXLine = false, // Hides the Primary Vertical Line
-      bool hideYLabels = false, // Hides Primary Left Axis Label
-      bool hideXLabels = false, // Hides Primary Bottom Axis Label
-
-      bool makeDashed = true,
-      Color? color,
-      bool showDotAtIntersection = false,
-      double dotRadius = kDotRadius,
-      Color? dotColor,
-    }) {
+  bool makeDashed = true,
+  Color? color,
+  bool showDotAtIntersection = false,
+  double dotRadius = kDotRadius,
+  Color? dotColor,
+}) {
   final c = color ?? config.colorScheme.onSurface;
   final width = config.painterSize.width;
 

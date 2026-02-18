@@ -40,6 +40,8 @@ void paintText(
   final double scaledFontSize =
       (style?.fontSize ?? fontSize) * config.averageRatio;
   final bool isDarkTheme = config.colorScheme.brightness == Brightness.dark;
+
+  // Ensure "Pure" background for legibility (Black in dark mode, White in light)
   final Color surfaceColor = isDarkTheme ? Colors.black : Colors.white;
   final Color onSurfaceColor = isDarkTheme ? Colors.white : Colors.black87;
 
@@ -90,7 +92,8 @@ void paintText(
   if (verticalPivot == LabelPivot.middle) shiftY = textPainter.height / 2;
   if (verticalPivot == LabelPivot.bottom) shiftY = textPainter.height;
 
-  // 5. Pointer Line (No Save/Restore here)
+  // 5. Pointer Line
+  // (Drawn FIRST so it sits behind the text layer)
   if (pointerLine != null) {
     final endPos = toPixels(pointerLine);
     final lineColor = effectiveStyle.color ?? onSurfaceColor;
@@ -104,15 +107,15 @@ void paintText(
     );
   }
 
-  // 6. Draw Shape & Text (Safe Block)
-  canvas.save(); // <--- START BLOCK
+  // 6. Draw Background Shape & Text
+  canvas.save();
 
   canvas.translate(drawPos.dx, drawPos.dy);
   if (angle != 0) canvas.rotate(angle);
 
   final relativeTopLeft = Offset(-shiftX, -shiftY);
-  final padX = 22.0 * config.averageRatio;
-  final padY = 12.0 * config.averageRatio;
+  final padX = 6.0 * config.averageRatio;
+  final padY = 6.0 * config.averageRatio;
 
   final textRect = Rect.fromLTWH(
     relativeTopLeft.dx - (padX / 2),
@@ -128,27 +131,38 @@ void paintText(
       canvas.drawRRect(inflated, radius, surfaceColor, fill: true);
       canvas.drawRRect(inflated, radius, onSurfaceColor, fill: false);
       break;
+
     case DiagramShape.diamond:
+      // FIX 2: Diamond Shape Logic
       final inflated = textRect.inflate(textRect.width * 0.35);
       final points = [
-        Offset(inflated.center.dx, inflated.top),
-        Offset(inflated.right, inflated.center.dy),
-        Offset(inflated.center.dx, inflated.bottom),
-        Offset(inflated.left, inflated.center.dy),
+        Offset(inflated.center.dx, inflated.top), // Top
+        Offset(inflated.right, inflated.center.dy), // Right
+        Offset(inflated.center.dx, inflated.bottom), // Bottom
+        Offset(inflated.left, inflated.center.dy), // Left
+        Offset(
+          inflated.center.dx,
+          inflated.top,
+        ), // Top (Repeated to close loop)
       ];
       canvas.drawPath(points, surfaceColor, fill: true);
       canvas.drawPath(points, onSurfaceColor, fill: false);
       break;
+
     case DiagramShape.square:
       canvas.drawRect(textRect, surfaceColor, fill: true);
       canvas.drawRect(textRect, onSurfaceColor, fill: false);
       break;
+
     case DiagramShape.none:
+      // FIX 1: Draw background even for 'none' to hide the pointer line
+      // We only draw the fill (surfaceColor), not the border (onSurfaceColor)
+      canvas.drawRect(textRect, surfaceColor, fill: true);
       break;
   }
 
   // 7. Paint Text
   canvas.paintTextPainter(textPainter, relativeTopLeft);
 
-  canvas.restore(); // <--- END BLOCK
+  canvas.restore();
 }

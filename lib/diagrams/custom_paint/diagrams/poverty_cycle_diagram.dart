@@ -6,6 +6,7 @@ import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
 import '../../models/base_painter_painter.dart';
 import '../i_diagram_canvas.dart';
+
 class PovertyCycleDiagram extends BaseDiagramPainter {
   PovertyCycleDiagram(super.config, super.diagram);
 
@@ -26,7 +27,7 @@ class PovertyCycleDiagram extends BaseDiagramPainter {
         CustomBezier(
           control: Offset(0.20, 0.05), // Shifted (0.15 -> 0.05)
           endPoint: Offset(0.50, 0.10), // Shifted (0.20 -> 0.10)
-        )
+        ),
       ],
       normalizeToDiagramArea: false,
       flowArrow: DiagramFlowArrow.forward,
@@ -41,7 +42,7 @@ class PovertyCycleDiagram extends BaseDiagramPainter {
         CustomBezier(
           control: Offset(0.80, 0.05), // Shifted (0.15 -> 0.05)
           endPoint: Offset(0.80, 0.40), // Shifted (0.50 -> 0.40)
-        )
+        ),
       ],
       normalizeToDiagramArea: false,
       flowArrow: DiagramFlowArrow.forward,
@@ -56,7 +57,7 @@ class PovertyCycleDiagram extends BaseDiagramPainter {
         CustomBezier(
           control: Offset(0.80, 0.75), // Shifted (0.85 -> 0.75)
           endPoint: Offset(0.50, 0.70), // Shifted (0.80 -> 0.70)
-        )
+        ),
       ],
       normalizeToDiagramArea: false,
       flowArrow: DiagramFlowArrow.forward,
@@ -71,7 +72,7 @@ class PovertyCycleDiagram extends BaseDiagramPainter {
         CustomBezier(
           control: Offset(0.20, 0.75), // Shifted (0.85 -> 0.75)
           endPoint: Offset(0.20, 0.40), // Shifted (0.50 -> 0.40)
-        )
+        ),
       ],
       normalizeToDiagramArea: false,
       flowArrow: DiagramFlowArrow.forward,
@@ -113,6 +114,10 @@ class PovertyCycleDiagram extends BaseDiagramPainter {
     );
 
     // Description is automatically placed at the bottom area
-    paintDescription(c, canvas, 'The poverty cycle shows how poverty is a self-reinforcing system, transmitted from one generation to the next. Investment refers to spending on physical, human and natural capital');
+    paintDescription(
+      c,
+      canvas,
+      'The poverty cycle shows how poverty is a self-reinforcing system, transmitted from one generation to the next. Investment refers to spending on physical, human and natural capital',
+    );
   }
 }

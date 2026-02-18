@@ -1,10 +1,5 @@
 import 'dart:math';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_shape.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
 import '../../enums/diagram_enum.dart';
@@ -157,7 +152,10 @@ class SupplyDiagram extends BaseDiagramPainter {
     );
   }
 
-  void _paintTotalMarginalProduct(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  void _paintTotalMarginalProduct(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+  ) {
     // Total Product (TP)
     paintDiagramLines(
       c,

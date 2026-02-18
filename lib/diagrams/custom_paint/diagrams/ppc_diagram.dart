@@ -6,7 +6,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_a
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
@@ -106,16 +106,20 @@ void _paintPPCGlobal(
         CustomBezier(control: Offset(0.70, 0.30), endPoint: Offset(0.85, 1.0)),
       ],
     );
-    paintDiagramDashedLines(c, canvas,
-        yAxisStartPos: 0.60,
-        xAxisEndPos: 0.45,
-    showDotAtIntersection: true,
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.60,
+      xAxisEndPos: 0.45,
+      showDotAtIntersection: true,
       rightYLabel: 'X',
       yLabel: DiagramLabel.q1.label,
       xLabel: DiagramLabel.q1.label,
     );
 
-    paintDiagramDashedLines(c, canvas,
+    paintDiagramDashedLines(
+      c,
+      canvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.62,
       showDotAtIntersection: true,
@@ -124,12 +128,10 @@ void _paintPPCGlobal(
       xLabel: DiagramLabel.q2.label,
     );
     paintDescription(
-        c,
-        canvas,
-        'Long-term growth policies - such as investment in infrastructure, education, and technology; stronger property rights and financial/legal systems; and pro-competition reforms - raise labor and capital productivity.'
-
+      c,
+      canvas,
+      'Long-term growth policies - such as investment in infrastructure, education, and technology; stronger property rights and financial/legal systems; and pro-competition reforms - raise labor and capital productivity.',
     );
-
   }
   if (diagram == DiagramEnum.globalPPCUnsustainableUseOfNaturalResources) {
     paintAxis(
@@ -154,7 +156,9 @@ void _paintPPCGlobal(
         CustomBezier(control: Offset(0.70, 0.30), endPoint: Offset(0.85, 1.0)),
       ],
     );
-    paintDiagramDashedLines(c, canvas,
+    paintDiagramDashedLines(
+      c,
+      canvas,
       yAxisStartPos: 0.70,
       xAxisEndPos: 0.40,
       showDotAtIntersection: true,
@@ -163,7 +167,9 @@ void _paintPPCGlobal(
       hideXLine: true,
     );
 
-    paintDiagramDashedLines(c, canvas,
+    paintDiagramDashedLines(
+      c,
+      canvas,
       yAxisStartPos: 0.82,
       xAxisEndPos: 0.18,
       showDotAtIntersection: true,
@@ -171,14 +177,13 @@ void _paintPPCGlobal(
       hideYLine: true,
       hideXLine: true,
     );
-    paintLineSegment(c, canvas, origin: Offset(0.60,0.60),
-    angle: pi * 0.80
+    paintLineSegment(c, canvas, origin: Offset(0.60, 0.60), angle: pi * 0.80);
+    paintLineSegment(c, canvas, origin: Offset(0.32, 0.76), angle: pi * -0.20);
+    paintDescription(
+      c,
+      canvas,
+      'Externalities caused by over-fishing, deforestation and air, soil and water pollution leads to short-term increases in economic growth, but result in lower production potential in the long-run.',
     );
-    paintLineSegment(c, canvas, origin: Offset(0.32,0.76),
-        angle: pi * -0.20,
-    );
-    paintDescription(c, canvas,
-    'Externalities caused by over-fishing, deforestation and air, soil and water pollution leads to short-term increases in economic growth, but result in lower production potential in the long-run.');
   }
   if (diagram == DiagramEnum.globalPPCCapitalInvestment) {
     paintAxis(

@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
 import 'package:flutter/material.dart';
 
 import '../../enums/diagram_enum.dart';
@@ -10,11 +8,9 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
-
 import '../painter_methods/axis/paint_axis.dart';
-import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
-import '../painter_methods/paint_line_segment_MAKEREDUNDANT.dart';
+import '../painter_methods/paint_line_segment.dart';
 
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 
@@ -42,11 +38,6 @@ class DemandDiagram extends BaseDiagramPainter {
       default:
         break;
     }
-
-    // Paint the description if available in the constants
-    if (_kDemandDescriptions.containsKey(diagram)) {
-      paintDescription(c, canvas, _kDemandDescriptions[diagram]!);
-    }
   }
 
   // --- PRIVATE METHODS ---
@@ -67,10 +58,10 @@ class DemandDiagram extends BaseDiagramPainter {
   }
 
   void _paintIncreaseDecreaseDemand(
-      DiagramPainterConfig c,
-      IDiagramCanvas canvas,
-      DiagramEnum diagram,
-      ) {
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
     paintAxis(
       c,
       canvas,
@@ -115,7 +106,7 @@ class DemandDiagram extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.65,
-      
+
       yLabel: DiagramLabel.p.label,
       xLabel: isDecrease ? DiagramLabel.q1.label : DiagramLabel.q2.label,
     );
@@ -126,17 +117,17 @@ class DemandDiagram extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.35,
-      
+
       hideYLine: true,
       xLabel: isDecrease ? DiagramLabel.q2.label : DiagramLabel.q1.label,
     );
   }
 
   void _paintExtensionContractionDemand(
-      DiagramPainterConfig c,
-      IDiagramCanvas canvas,
-      DiagramEnum diagram,
-      ) {
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
     paintAxis(
       c,
       canvas,
@@ -145,7 +136,8 @@ class DemandDiagram extends BaseDiagramPainter {
     );
 
     final isContraction = diagram == DiagramEnum.microDemandContraction;
-    final isSupplyChange = diagram == DiagramEnum.microDemandQuantityChangeDueToSupply;
+    final isSupplyChange =
+        diagram == DiagramEnum.microDemandQuantityChangeDueToSupply;
 
     // Calculate arrow angle
     // Standard contraction moves up-left, extension moves down-right
@@ -207,23 +199,3 @@ class DemandDiagram extends BaseDiagramPainter {
 }
 
 // --- CONSTANTS ---
-
-const Map<DiagramEnum, String> _kDemandDescriptions = {
-  DiagramEnum.microDemand:
-  'The law of demand: Negative relationship between price and quantity demanded. Reasons: Diminishing marginal utility, Substitution effect, Income effect.',
-
-  DiagramEnum.microDemandIncrease:
-  'Increase in Demand: A rightward shift of the curve caused by non-price determinants (e.g., higher income, popularity). Price remains constant, Quantity increases.',
-
-  DiagramEnum.microDemandDecrease:
-  'Decrease in Demand: A leftward shift of the curve caused by non-price determinants (e.g., lower income, substitute goods). Price remains constant, Quantity decreases.',
-
-  DiagramEnum.microDemandExtension:
-  'Extension of Demand: Movement down along the curve caused by a decrease in price. Quantity demanded increases.',
-
-  DiagramEnum.microDemandContraction:
-  'Contraction of Demand: Movement up along the curve caused by an increase in price. Quantity demanded decreases.',
-
-  DiagramEnum.microDemandQuantityChangeDueToSupply:
-  'Change in Quantity Demanded: Movement along the demand curve caused by a shift in supply.',
-};
