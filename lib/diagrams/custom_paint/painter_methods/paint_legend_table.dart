@@ -5,28 +5,23 @@ import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
 
 void paintLegendTable(
-  IDiagramCanvas iCanvas, // 👈 Required interface
+  IDiagramCanvas iCanvas,
   DiagramPainterConfig config, {
-  Offset normalizedTopLeft = const Offset(
-    kAxisIndent,
-    1 - (kAxisIndent * 0.95),
-  ),
   required List<String> headers,
   required List<List<String>> data,
-  double rowHeight = 14.0,
+  // 1. Reduced rowHeight from 14.0 to 12.0 for a tighter look
+  double rowHeight = 12.0,
   Color? borderColor,
-  double cellPadding = 6.0, // Adjusted for typical table padding
+  // 2. Reduced padding slightly from 6.0 to 4.0
+  double cellPadding = 4.0,
 }) async {
   final primaryColor = config.colorScheme.onSurface;
   final size = config.painterSize;
-  final double startX = normalizedTopLeft.dx * size.width;
-  double currentY = normalizedTopLeft.dy * size.height;
 
-  // 1. Unified Style
-  final double fontSize = kFontMedium * config.averageRatio;
+  // 3. Made font slightly smaller (multiplier from 0.65 -> 0.6)
+  final double fontSize = (kFontMedium * config.averageRatio) * 0.6;
 
-  // 2. Measure Column Widths
-  // We use TextPainter locally for measurement as it's the most reliable cross-platform tool
+  // Measure Column Widths
   final int numCols = headers.length;
   List<double> colWidths = List.filled(numCols, 0.0);
 
@@ -53,12 +48,16 @@ void paintLegendTable(
 
   final double totalWidth = colWidths.reduce((a, b) => a + b);
 
-  // 3. Helper to draw a full row
+  // 4. CHANGE: Instead of subtracting height, we start AT the bottom edge
+  // and push down by the offset. This ensures it doesn't overlap the diagram.
+  final double startX = (size.width - totalWidth) / 2.0;
+  double currentY = size.height + -((kAxisIndent * size.height) / 2);
+
+  // Helper to draw a full row
   void drawRow(List<String> rowData, bool isHeader) {
     double x = startX;
 
     if (isHeader) {
-      // Light background for header
       iCanvas.drawRect(
         Rect.fromLTWH(x, currentY, totalWidth, rowHeight),
         primaryColor.withOpacity(0.1),
@@ -69,12 +68,16 @@ void paintLegendTable(
     for (int i = 0; i < numCols; i++) {
       final rect = Rect.fromLTWH(x, currentY, colWidths[i], rowHeight);
 
-      // Cell Border
-      iCanvas.drawRect(rect, borderColor ?? primaryColor, fill: false);
+      // Thinner borders (0.5 stroke)
+      iCanvas.drawRect(
+        rect,
+        borderColor ??
+            primaryColor.withOpacity(0.3), // Slightly lighter opacity
+        fill: false,
+        strokeWidth: 0.5,
+      );
 
       if (i < rowData.length) {
-        // Center text horizontally, and slightly adjust vertically for the baseline
-        // Note: position needs to be Top-Left for your bridge logic
         final tp = TextPainter(
           text: TextSpan(
             text: rowData[i],
@@ -83,9 +86,12 @@ void paintLegendTable(
           textDirection: TextDirection.ltr,
         )..layout();
 
+        // Centering the text inside the cell
         final textOffset = Offset(
           rect.left + (rect.width - tp.width) / 2,
-          rect.top + (rowHeight - fontSize) / 2,
+          rect.top +
+              (rowHeight - tp.height) /
+                  2, // Using tp.height for vertical precision
         );
 
         iCanvas.drawText(rowData[i], textOffset, fontSize, primaryColor);
@@ -95,7 +101,7 @@ void paintLegendTable(
     currentY += rowHeight;
   }
 
-  // 4. Execute Drawing
+  // Execute Drawing
   drawRow(headers, true);
   for (var row in data) {
     drawRow(row, false);

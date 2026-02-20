@@ -76,12 +76,10 @@ extension AxisTypeData on AxisType {
 void paintAxis(
   DiagramPainterConfig config,
   IDiagramCanvas canvas, {
-  // Arguments keep their default values to maintain backward compatibility
   String yAxisLabel = 'P',
   String xAxisLabel = 'Q',
   AxisStyle axisStyle = AxisStyle.arrows,
-  AxisType? axisType, // The optional preset
-
+  AxisType? axisType,
   double? xMaxValue,
   double? yMaxValue,
   int? xDivisions,
@@ -89,43 +87,29 @@ void paintAxis(
   bool drawGridlines = false,
   int decimalPlaces = 0,
   GridLineStyle gridLineStyle = GridLineStyle.full,
-
-  // Original labelPad (kept for compatibility, though previously unused in labels)
   double labelPad = kLabelPadding,
-
-  // NEW: Explicit extra padding controls
-  // Positive values move the labels further away from the graph
   double extraXLabelPadding = 0.0,
   double extraYLabelPadding = 0.0,
+  bool showLabelBackground = true, // 👈 New Property
 }) {
-  // --- 1. RESOLVE CONFIGURATION ---
-  // We determine the final labels and style here.
-
   String finalY = yAxisLabel;
   String finalX = xAxisLabel;
   AxisStyle finalStyle = axisStyle;
 
   if (axisType != null) {
-    // Logic: Only apply the Enum preset if the user hasn't
-    // explicitly passed a custom label (i.e., if it's still the default 'P'/'Q')
     if (yAxisLabel == 'P') finalY = axisType.yLabel;
     if (xAxisLabel == 'Q') finalX = axisType.xLabel;
-
-    // For style, usually the Enum dictates the geometry (like J-Curve)
-    // so we can trust the extension.
     if (axisStyle == AxisStyle.arrows) finalStyle = axisType.style;
   }
 
-  // --- 2. J-CURVE SPECIAL HANDLING ---
-  // J-Curves are geometrically different (centered axis), so we check the STYLE.
   if (finalStyle == AxisStyle.jCurve) {
     paintJCurveAxes(config, canvas, finalX, finalY);
-    return; // Exit early
+    return;
   }
 
-  // --- 3. STANDARD AXIS PAINTING ---
   final effectiveGridStyle = drawGridlines ? gridLineStyle : GridLineStyle.none;
 
+  // Pass background property down to grid lines
   paintAxisLines(
     config,
     canvas,
@@ -136,40 +120,28 @@ void paintAxis(
     decimalPlaces: decimalPlaces,
     gridLineStyle: effectiveGridStyle,
     axisStyle: finalStyle,
+    showLabelBackground: showLabelBackground,
   );
 
-  // --- 4. PAINT LABELS WITH EXTRA PADDING ---
-
-  // A small default buffer to ensure they aren't touching the lines by default
   const double baseBuffer = 0.02;
-
-  // Y-AXIS LOGIC:
-  // "Extra Padding" for Y usually means moving it further LEFT (Negative X).
-  // We sum the base buffer + user's extra padding.
-  final double totalYShift = baseBuffer + extraYLabelPadding;
 
   paintAxisLabels(
     config,
     canvas,
     axis: CustomAxis.y,
     label: finalY,
-    offsetAdjustment: Offset(-totalYShift, 0), // Move Left
+    offsetAdjustment: Offset(-(baseBuffer + extraYLabelPadding), 0),
+    showBackground: showLabelBackground, // Pass to helper
   );
-
-  // X-AXIS LOGIC:
-  // "Extra Padding" for X usually means moving it further RIGHT (Positive X)
-  // or slightly Down depending on preference. Here we move it Right to avoid overlaps.
-  final double totalXShift = baseBuffer + extraXLabelPadding;
 
   paintAxisLabels(
     config,
     canvas,
     axis: CustomAxis.x,
     label: finalX,
-    offsetAdjustment: Offset(totalXShift, 0), // Move Right
+    offsetAdjustment: Offset(baseBuffer + extraXLabelPadding, 0),
+    showBackground: showLabelBackground, // Pass to helper
   );
 
-  if (finalStyle == AxisStyle.arrows) {
-    paintZero(config, canvas);
-  }
+  if (finalStyle == AxisStyle.arrows) paintZero(config, canvas);
 }

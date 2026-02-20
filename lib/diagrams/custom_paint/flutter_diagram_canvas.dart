@@ -73,11 +73,18 @@ class FlutterDiagramCanvas implements IDiagramCanvas {
   }
 
   @override
-  void drawRect(Rect rect, Color color, {bool fill = false}) {
+  void drawRect(
+    Rect rect,
+    Color color, {
+    bool fill = false,
+    double strokeWidth = 1.0,
+  }) {
+    // 👈 Add it here
     final paint = Paint()
       ..color = color
       ..style = fill ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth = fill ? 0 : 1.5;
+      ..strokeWidth = strokeWidth; // 👈 Apply it to the Paint object
+
     canvas.drawRect(rect, paint);
   }
 

@@ -18,49 +18,43 @@ void paintGridLines(
   double strokeWidth = 2.0,
   GridLineStyle gridLineStyle = GridLineStyle.full,
   int decimalPlaces = 1,
-  double? fontSize, // ✅ NEW: Allow manual override
+  double? fontSize,
+  bool showBackground = true, // 👈 Pass through to paintText
 }) {
   if (xMaxValue == null ||
       yMaxValue == null ||
       xDivisions == null ||
-      yDivisions == null) {
+      yDivisions == null)
     return;
-  }
 
-  final widthAndHeight = config.painterSize.width;
-  final indent = widthAndHeight * kAxisIndent;
-  final labelIndent = widthAndHeight * 0.025;
-  final kIndentLength = widthAndHeight * 0.015;
+  final size = config.painterSize.width;
+  final indent = size * kAxisIndent;
+  final labelIndent = size * 0.025;
+  final kIndentLength = size * 0.015;
 
   final effectiveColor = color ?? config.colorScheme.onSurface;
   final effectiveWidth = strokeWidth * config.averageRatio;
-
-  // ✅ FIX: Use kFontSizeAverageRatio by default (much bigger), or the user's override
-  final baseFontSize = fontSize ?? kFontSizeAverageRatioSmall;
-  final effectiveFontSize = baseFontSize * config.averageRatio;
+  final effectiveFontSize =
+      (fontSize ?? kFontSizeAverageRatioSmall) * config.averageRatio;
 
   final indentXLeft = indent;
-  final indentYBottom = widthAndHeight - (indent * kBottomAxisIndent);
-  final indentXRight = widthAndHeight * (1 - kAxisIndent);
+  final indentXRight = size * (1 - kAxisIndent);
   final indentYTop = indent * kTopAxisIndent;
+  final indentYBottom = size - (indent * kBottomAxisIndent);
 
-  final yStepValue = yMaxValue / yDivisions;
   final yStepSize = (indentYBottom - indentYTop) / yDivisions;
-  final xStepValue = xMaxValue / xDivisions;
   final xStepSize = (indentXRight - indentXLeft) / xDivisions;
 
   // Y-axis
   for (int i = 1; i <= yDivisions; i++) {
     final y = indentYBottom - (i * yStepSize);
-    final yLabel = (i * yStepValue).toStringAsFixed(decimalPlaces);
-    final pStart = Offset(indentXLeft, y);
-    final pEnd = Offset(indentXRight, y);
+    final val = (i * (yMaxValue / yDivisions)).toStringAsFixed(decimalPlaces);
 
     _drawGridLineByStyle(
       canvas,
       gridLineStyle,
-      pStart,
-      pEnd,
+      Offset(indentXLeft, y),
+      Offset(indentXRight, y),
       Offset(indentXLeft - kIndentLength, y),
       effectiveColor,
       effectiveWidth,
@@ -69,12 +63,13 @@ void paintGridLines(
     paintText(
       config,
       canvas,
-      yLabel,
+      val,
       Offset(indentXLeft - labelIndent, y),
-      fontSize: effectiveFontSize, // Use the larger size
+      fontSize: effectiveFontSize,
       horizontalPivot: LabelPivot.right,
       verticalPivot: LabelPivot.middle,
       normalize: false,
+      showBackground: showBackground, // 👈 Applied here
       style: TextStyle(color: effectiveColor),
     );
   }
@@ -82,15 +77,13 @@ void paintGridLines(
   // X-axis
   for (int i = 1; i <= xDivisions; i++) {
     final x = indentXLeft + (i * xStepSize);
-    final xLabel = (i * xStepValue).toStringAsFixed(decimalPlaces);
-    final pStart = Offset(x, indentYBottom);
-    final pEnd = Offset(x, indentYTop);
+    final val = (i * (xMaxValue / xDivisions)).toStringAsFixed(decimalPlaces);
 
     _drawGridLineByStyle(
       canvas,
       gridLineStyle,
-      pStart,
-      pEnd,
+      Offset(x, indentYBottom),
+      Offset(x, indentYTop),
       Offset(x, indentYBottom + kIndentLength),
       effectiveColor,
       effectiveWidth,
@@ -99,12 +92,13 @@ void paintGridLines(
     paintText(
       config,
       canvas,
-      xLabel,
+      val,
       Offset(x, indentYBottom + labelIndent),
-      fontSize: effectiveFontSize, // Use the larger size
+      fontSize: effectiveFontSize,
       horizontalPivot: LabelPivot.center,
       verticalPivot: LabelPivot.top,
       normalize: false,
+      showBackground: showBackground, // 👈 Applied here
       style: TextStyle(color: effectiveColor),
     );
   }
@@ -128,6 +122,7 @@ void _drawGridLineByStyle(
       canvas.drawDashedLine(start, end, color, width);
       break;
     case GridLineStyle.indents:
+      // This draws the small "tick" mark outside the axis
       canvas.drawLine(start, indentEnd, color, width);
       break;
     case GridLineStyle.none:

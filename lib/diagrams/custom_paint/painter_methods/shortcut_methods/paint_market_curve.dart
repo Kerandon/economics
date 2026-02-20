@@ -76,6 +76,9 @@ void paintMarketCurve(
     case MarketCurveType.sl:
     case MarketCurveType.sl1:
     case MarketCurveType.sl2:
+    case MarketCurveType.sTax:
+    case MarketCurveType.sSubsidy:
+    case MarketCurveType.sSub:
       baseStart = const Offset(0.10, 0.90);
       baseEnd = const Offset(0.90, 0.10);
       break;
@@ -322,6 +325,17 @@ void paintMarketCurve(
         break;
       case MarketCurveType.lrpc2:
         finalLabel2 = "LRPC2";
+        break;
+      case MarketCurveType.sTax:
+        finalLabel2 = 'S+Tax';
+        break;
+
+      case MarketCurveType.sSubsidy:
+        finalLabel2 = 'S+Subsidy';
+        break;
+
+      case MarketCurveType.sSub:
+        finalLabel2 = 'S+Sub';
         break;
     }
   }

@@ -82,7 +82,10 @@ enum MarketCurveType {
   d1,
   d2, // General Demand shifts
   s1,
-  s2, // General Supply shifts
+  s2,
+  sTax,
+  sSubsidy,
+  sSub, // General Supply shifts
 }
 
 enum LabelAlign { center, centerLeft, centerRight, centerTop, centerBottom }

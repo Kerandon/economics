@@ -81,10 +81,18 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   }
 
   @override
-  void drawRect(Rect rect, Color color, {bool fill = false}) {
+  void drawRect(
+    Rect rect,
+    Color color, {
+    bool fill = false,
+    double strokeWidth = 1.0,
+  }) {
     graphics
       ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setFillColor(PdfColor.fromInt(color.value));
+      ..setFillColor(PdfColor.fromInt(color.value))
+      ..setLineWidth(
+        strokeWidth,
+      ); // 👈 Tell the PDF canvas how thick to draw the line
 
     // Convert Top-Down Rect to Bottom-Up PDF Rect
     // PDF drawRect usually takes (x, y, width, height) where y is the bottom-left corner

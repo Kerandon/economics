@@ -12,26 +12,27 @@ void paintDiagramDashedLines(
   DiagramPainterConfig config,
   IDiagramCanvas canvas, {
   required double yAxisStartPos,
-  required double xAxisEndPos, // Primary X Position
-  List<double>? additionalXPositions, // Additional X Positions
-  List<double>? additionalYPositions, // Additional Y Positions
+  required double xAxisEndPos,
+  List<double>? additionalXPositions,
+  List<double>? additionalYPositions,
   String? yLabel,
   String? xLabel,
   List<String>? additionalXLabels,
   List<String>? additionalYLabels,
   String? rightYLabel,
-  List<String>? additionalRightYLabels, // NEW: Additional Right-side Y Labels
-  // --- VISIBILITY FLAGS (Only affect Primary Lines) ---
-  bool hideYLine = false, // Hides the Primary Horizontal Line
-  bool hideXLine = false, // Hides the Primary Vertical Line
-  bool hideYLabels = false, // Hides Primary Left Axis Label
-  bool hideXLabels = false, // Hides Primary Bottom Axis Label
-
+  List<String>? additionalRightYLabels,
+  bool hideYLine = false,
+  bool hideXLine = false,
+  bool hideYLabels = false,
+  bool hideXLabels = false,
   bool makeDashed = true,
   Color? color,
   bool showDotAtIntersection = false,
   double dotRadius = kDotRadius,
   Color? dotColor,
+  // NEW: Label Padding Passthrough
+  Offset xLabelPadding = Offset.zero,
+  Offset yLabelPadding = Offset.zero,
 }) {
   final c = color ?? config.colorScheme.onSurface;
   final width = config.painterSize.width;
@@ -47,7 +48,6 @@ void paintDiagramDashedLines(
   final axisBottom = bottom * width;
   final strokeWidth = 1.5 * config.averageRatio;
 
-  // 2. CALCULATE MAX WIDTH (Horizontal lines must stretch to cover ALL X lines)
   double maxXValue = xAxisEndPos;
   if (additionalXPositions != null) {
     for (final pos in additionalXPositions) {
@@ -55,29 +55,22 @@ void paintDiagramDashedLines(
     }
   }
   final furthestXPixel = (left + maxXValue * spanY) * width;
-
-  // Calculate Primary Vertical Line Pixel (Needed for Y-line intersections)
   final mainXPixel = (left + xAxisEndPos * spanY) * width;
 
-  // 3. DRAW PRIMARY HORIZONTAL LINE (Controlled by hideYLine)
+  // 3. DRAW PRIMARY HORIZONTAL LINE
   if (!hideYLine) {
     final p1 = Offset(axisLeft, yPos);
     final p2 = Offset(furthestXPixel, yPos);
-
-    if (makeDashed) {
-      canvas.drawDashedLine(p1, p2, c, strokeWidth);
-    } else {
-      canvas.drawLine(p1, p2, c, strokeWidth);
-    }
+    makeDashed
+        ? canvas.drawDashedLine(p1, p2, c, strokeWidth)
+        : canvas.drawLine(p1, p2, c, strokeWidth);
   }
 
-  // 4. DRAW ADDITIONAL HORIZONTAL LINES (ALWAYS VISIBLE)
+  // 4. DRAW ADDITIONAL HORIZONTAL LINES
   if (additionalYPositions != null) {
     for (int i = 0; i < additionalYPositions.length; i++) {
       final yVal = additionalYPositions[i];
       final yPixelLocal = (top + yVal * spanY) * width;
-
-      // Draw line from Left Axis to Furthest X
       canvas.drawDashedLine(
         Offset(axisLeft, yPixelLocal),
         Offset(furthestXPixel, yPixelLocal),
@@ -85,18 +78,15 @@ void paintDiagramDashedLines(
         strokeWidth,
       );
 
-      // Draw dot at intersection with PRIMARY Vertical Line
       if (showDotAtIntersection) {
-        final r = dotRadius * config.averageRatio * 0.60;
         canvas.drawDot(
           Offset(mainXPixel, yPixelLocal),
           dotColor ?? c,
-          radius: r,
+          radius: dotRadius * config.averageRatio * 0.6,
           fill: true,
         );
       }
 
-      // Draw Left Label (Standard Additional Y Label)
       if (additionalYLabels != null && i < additionalYLabels.length) {
         _paintTextForDashedLines(
           config,
@@ -104,27 +94,26 @@ void paintDiagramDashedLines(
           additionalYLabels[i],
           yVal,
           CustomAxis.y,
+          paddingOffset: yLabelPadding,
         );
       }
 
-      // Draw Right Label (NEW: Additional Right Y Label)
       if (additionalRightYLabels != null && i < additionalRightYLabels.length) {
-        const padding = 0.04;
         paintText(
           config,
           canvas,
           additionalRightYLabels[i],
-          Offset(maxXValue + padding, yVal),
+          Offset(maxXValue + 0.04, yVal),
           horizontalPivot: LabelPivot.left,
           verticalPivot: LabelPivot.middle,
           normalize: true,
-          style: TextStyle(color: config.colorScheme.onSurface),
+          showBackground: false,
         );
       }
     }
   }
 
-  // 5. DRAW PRIMARY VERTICAL LINE (Controlled by hideXLine)
+  // 5. DRAW PRIMARY VERTICAL LINE
   if (!hideXLine) {
     canvas.drawDashedLine(
       Offset(mainXPixel, yPos),
@@ -134,48 +123,48 @@ void paintDiagramDashedLines(
     );
   }
 
-  // Draw Primary Dot (Controlled by showDotAtIntersection)
   if (showDotAtIntersection) {
-    final r = dotRadius * config.averageRatio * 0.60;
     canvas.drawDot(
       Offset(mainXPixel, yPos),
       dotColor ?? c,
-      radius: r,
+      radius: dotRadius * config.averageRatio * 0.6,
       fill: true,
     );
   }
 
-  // Draw Primary X Label (Controlled by hideXLabels)
+  // Draw Primary X Label
   if (xLabel != null && !hideXLabels) {
-    _paintTextForDashedLines(config, canvas, xLabel, xAxisEndPos, CustomAxis.x);
+    _paintTextForDashedLines(
+      config,
+      canvas,
+      xLabel,
+      xAxisEndPos,
+      CustomAxis.x,
+      paddingOffset: xLabelPadding,
+    );
   }
 
-  // 6. DRAW ADDITIONAL VERTICAL LINES (ALWAYS VISIBLE)
+  // 6. DRAW ADDITIONAL VERTICAL LINES
   if (additionalXPositions != null) {
     for (int i = 0; i < additionalXPositions.length; i++) {
       final xVal = additionalXPositions[i];
       final xPixel = (left + xVal * spanY) * width;
-
-      // Always draw additional lines
       canvas.drawDashedLine(
-        Offset(xPixel, yPos), // Start at Primary Y Height
+        Offset(xPixel, yPos),
         Offset(xPixel, axisBottom),
         c,
         strokeWidth,
       );
 
-      // Always draw additional dots (Intersection with Primary Horizontal Line)
       if (showDotAtIntersection) {
-        final r = dotRadius * config.averageRatio * 0.60;
         canvas.drawDot(
           Offset(xPixel, yPos),
           dotColor ?? c,
-          radius: r,
+          radius: dotRadius * config.averageRatio * 0.6,
           fill: true,
         );
       }
 
-      // Always draw additional labels if they exist
       if (additionalXLabels != null && i < additionalXLabels.length) {
         _paintTextForDashedLines(
           config,
@@ -183,12 +172,13 @@ void paintDiagramDashedLines(
           additionalXLabels[i],
           xVal,
           CustomAxis.x,
+          paddingOffset: xLabelPadding,
         );
       }
     }
   }
 
-  // 7. DRAW PRIMARY Y LABELS (Controlled by hideYLabels)
+  // 7. DRAW PRIMARY Y LABELS
   if (yLabel != null && !hideYLabels) {
     _paintTextForDashedLines(
       config,
@@ -196,60 +186,57 @@ void paintDiagramDashedLines(
       yLabel,
       yAxisStartPos,
       CustomAxis.y,
+      paddingOffset: yLabelPadding,
     );
   }
 
-  // 8. DRAW PRIMARY RIGHT-SIDE LABEL (Always Visible if provided)
+  // 8. DRAW PRIMARY RIGHT-SIDE LABEL
   if (rightYLabel != null) {
-    const padding = 0.04;
     paintText(
       config,
       canvas,
       rightYLabel,
-      Offset(maxXValue + padding, yAxisStartPos),
+      Offset(maxXValue + 0.04, yAxisStartPos),
       horizontalPivot: LabelPivot.left,
       verticalPivot: LabelPivot.middle,
       normalize: true,
-      style: TextStyle(color: config.colorScheme.onSurface),
     );
   }
 }
 
-/// Simplified Helper using paintText2 and Pivots
 void _paintTextForDashedLines(
   DiagramPainterConfig config,
   IDiagramCanvas canvas,
   String label,
-  double pos, // 0.0 to 1.0 position along the span
-  CustomAxis axis,
-) {
-  const padding = 0.015; // Normalized padding
+  double pos,
+  CustomAxis axis, {
+  Offset paddingOffset = Offset.zero, // 👈 New Helper parameter
+}) {
+  const basePadding = 0.015;
 
   if (axis == CustomAxis.x) {
-    // X-Axis labels (Quantities)
-    // We anchor at the bottom of the diagram area
     paintText(
       config,
       canvas,
       label,
-      Offset(pos, 1.0 + padding), // Positioned just below the X-axis
+      Offset(pos, 1.0 + basePadding),
       horizontalPivot: LabelPivot.center,
       verticalPivot: LabelPivot.top,
       normalize: true,
-      style: TextStyle(color: config.colorScheme.onSurface),
+      showBackground: false,
+      textPadding: paddingOffset, // 👈 Applied here
     );
   } else {
-    // Y-Axis labels (Prices)
-    // We anchor at the left of the diagram area
     paintText(
       config,
       canvas,
       label,
-      Offset(0.0 - padding, pos), // Positioned just to the left of the Y-axis
+      Offset(0.0 - basePadding, pos),
       horizontalPivot: LabelPivot.right,
       verticalPivot: LabelPivot.middle,
       normalize: true,
-      style: TextStyle(color: config.colorScheme.onSurface),
+      showBackground: false,
+      textPadding: paddingOffset, // 👈 Applied here
     );
   }
 }

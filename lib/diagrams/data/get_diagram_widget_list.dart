@@ -72,6 +72,10 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandInelastic)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandPerfectlyElastic)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandPerfectlyInelastic)]),
+    DiagramWidget([
+      Elasticities(c, DiagramEnum.microDemandElasticityRevenueChange),
+      Elasticities(c, DiagramEnum.microDemandElasticityChange),
+    ]),
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandEngelCurve)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microSupplyElastic)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microSupplyInelastic)]),
@@ -85,12 +89,12 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     /// Intervention
     DiagramWidget([TaxesSubsidies(c, DiagramEnum.microIndirectTax)]),
     DiagramWidget([
-      TaxesSubsidies(c, DiagramEnum.microIndirectTaxInelasticPED),
+      TaxesSubsidies(c, DiagramEnum.microIndirectTaxInelasticDemand),
     ]),
-    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticPED)]),
+    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticDemand)]),
     DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidy)]),
-    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticPED)]),
-    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyInelasticPED)]),
+    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyElasticDemand)]),
+    DiagramWidget([TaxesSubsidies(c, DiagramEnum.microSubsidyInelasticDemand)]),
 
     /// Externalities
     DiagramWidget([

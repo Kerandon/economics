@@ -14,6 +14,10 @@ enum DiagramLabel {
   producerBurden,
   consumerGain,
   producerGain,
+  cs,
+  ps,
+  welfare,
+  dwl,
   abnormalProfit,
   totalCost,
   totalRevenue,
@@ -83,7 +87,7 @@ enum DiagramLabel {
   pSub,
   priceCeiling,
   priceFloor,
-  surplusLabor,
+  laborSurplus,
   pf,
   wageRate,
   q,
@@ -179,6 +183,8 @@ enum DiagramLabel {
   mscEqualsMPCPlusSubsidy,
   mscEqualsMPCPlusGovernmentProvision,
   revenue,
+  revenue$,
+  tR,
   gainedRevenue,
   lostRevenue,
   rMax,
@@ -369,6 +375,9 @@ enum DiagramLabel {
   quantityOfHKD,
   consumerGoods,
   capitalGoods,
+  pedGreaterThanOne,
+  pedEqualToOne,
+  pedLessThanOne,
 }
 
 extension MicroLabelExtension on DiagramLabel {
@@ -641,7 +650,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.sociallyOptimumOutput => 'Socially Optimum Output',
       DiagramLabel.priceCeiling => 'Price Ceiling',
       DiagramLabel.priceFloor => 'Price Floor',
-      DiagramLabel.surplusLabor => 'Surplus Labor',
+      DiagramLabel.laborSurplus => 'Labor Surplus\n(Unemployment)',
       DiagramLabel.pPEqualsPOpt => 'Pp=POpt',
       DiagramLabel.mscEqualsMPCPlusTax => 'MSC=MPC+Tax',
       DiagramLabel.pigouvianTaxEqualsExternalCost =>
@@ -829,6 +838,24 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.nRU1 => 'NRU1',
 
       DiagramLabel.nRU2 => 'NRU2',
+
+      DiagramLabel.revenue$ => 'Revenue\n(\$)',
+
+      DiagramLabel.tR => 'TR',
+
+      DiagramLabel.pedGreaterThanOne => 'PED > 1',
+
+      DiagramLabel.pedEqualToOne => 'PED = 1',
+
+      DiagramLabel.pedLessThanOne => 'PED < 1',
+
+      DiagramLabel.cs => 'CS',
+
+      DiagramLabel.ps => 'PS',
+
+      DiagramLabel.welfare => 'Welfare',
+
+      DiagramLabel.dwl => 'DWL',
     };
   }
 }

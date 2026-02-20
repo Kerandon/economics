@@ -51,11 +51,11 @@ enum DiagramEnum {
   microNationalMinimumWageInelasticDemandAndSupply,
   microAgriculturalPriceFloor,
   microIndirectTax,
-  microIndirectTaxInelasticPED,
-  microIndirectTaxElasticPED,
+  microIndirectTaxInelasticDemand,
+  microIndirectTaxElasticDemand,
   microSubsidy,
-  microSubsidyInelasticPED,
-  microSubsidyElasticPED,
+  microSubsidyInelasticDemand,
+  microSubsidyElasticDemand,
   microNegativeProductionExternality,
   microNegativeProductionExternalityWelfare,
   microNegativeProductionExternalityPigouvianTax,
@@ -297,10 +297,10 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.microAgriculturalPriceFloor => Subunit.roleOfGovernment,
     DiagramEnum.microIndirectTax => Subunit.roleOfGovernment,
     DiagramEnum.microSubsidy => Subunit.roleOfGovernment,
-    DiagramEnum.microIndirectTaxInelasticPED => Subunit.roleOfGovernment,
-    DiagramEnum.microIndirectTaxElasticPED => Subunit.roleOfGovernment,
-    DiagramEnum.microSubsidyInelasticPED => Subunit.roleOfGovernment,
-    DiagramEnum.microSubsidyElasticPED => Subunit.roleOfGovernment,
+    DiagramEnum.microIndirectTaxInelasticDemand => Subunit.roleOfGovernment,
+    DiagramEnum.microIndirectTaxElasticDemand => Subunit.roleOfGovernment,
+    DiagramEnum.microSubsidyInelasticDemand => Subunit.roleOfGovernment,
+    DiagramEnum.microSubsidyElasticDemand => Subunit.roleOfGovernment,
 
     DiagramEnum.microNegativeProductionExternalityWelfare =>
       Subunit.marketFailureExternalities,
@@ -629,15 +629,15 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Government purchasing the surplus to support agricultural prices.",
       DiagramEnum.microIndirectTax =>
         "A specific tax shifting supply vertically upwards by the amount of the tax.",
-      DiagramEnum.microIndirectTaxInelasticPED =>
+      DiagramEnum.microIndirectTaxInelasticDemand =>
         "Tax incidence falls mostly on consumers when demand is inelastic.",
-      DiagramEnum.microIndirectTaxElasticPED =>
+      DiagramEnum.microIndirectTaxElasticDemand =>
         "Tax incidence falls mostly on producers when demand is elastic.",
       DiagramEnum.microSubsidy =>
         "A government payment shifting supply vertically downwards.",
-      DiagramEnum.microSubsidyInelasticPED =>
+      DiagramEnum.microSubsidyInelasticDemand =>
         "Consumers benefit most from a subsidy when demand is inelastic.",
-      DiagramEnum.microSubsidyElasticPED =>
+      DiagramEnum.microSubsidyElasticDemand =>
         "Producers benefit most from a subsidy when demand is elastic.",
 
       // Market Failure: Externalities

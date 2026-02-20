@@ -28,66 +28,76 @@ class Elasticities extends BaseDiagramPainter {
   void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    // 1. Determine Axis Labels
-    String yLabel = DiagramLabel.p.label;
-    if (diagram == DiagramEnum.microDemandEngelCurve) {
-      yLabel = DiagramLabel.y.label;
-    } else if (diagram == DiagramEnum.microDemandElasticityRevenueChange) {
-      yLabel = DiagramLabel.revenue.label;
-    }
-
-    paintAxis(c, canvas, yAxisLabel: yLabel, xAxisLabel: DiagramLabel.q.label);
+    // 1. Determine Axis Labels via Lookup
+    final axisLabels = _getAxisLabels();
+    paintAxis(
+      c,
+      canvas,
+      yAxisLabel: axisLabels['y']!,
+      xAxisLabel: axisLabels['x']!,
+    );
 
     // 2. Delegate to Specific Painters
+    _triggerSpecificPainter(c, canvas);
+  }
+
+  Map<String, String> _getAxisLabels() {
+    String y = DiagramLabel.p.label;
+    String x = DiagramLabel.q.label;
+
     switch (diagram) {
-      // -- Demand --
+      case DiagramEnum.microDemandEngelCurve:
+        y = DiagramLabel.y.label;
+        break;
+      case DiagramEnum.microDemandElasticityRevenueChange:
+        y = DiagramLabel.revenue$.label;
+        x = DiagramLabel.quantity.label;
+        break;
+      case DiagramEnum.microDemandElasticityChange:
+        y = DiagramLabel.price$.label;
+        x = DiagramLabel.quantity.label;
+        break;
+      default:
+        break;
+    }
+    return {'x': x, 'y': y};
+  }
+
+  void _triggerSpecificPainter(DiagramPainterConfig c, IDiagramCanvas canvas) {
+    switch (diagram) {
+      // Demand
       case DiagramEnum.microDemandElastic:
       case DiagramEnum.microDemandElasticRevenue:
         _paintElasticDemand(c, canvas);
-        break;
       case DiagramEnum.microDemandInelastic:
       case DiagramEnum.microDemandInelasticRevenue:
         _paintInelasticDemand(c, canvas);
-        break;
       case DiagramEnum.microDemandUnitElastic:
         _paintUnitElastic(c, canvas);
-        break;
       case DiagramEnum.microDemandPerfectlyElastic:
         _paintDemandPerfectlyElastic(c, canvas);
-        break;
       case DiagramEnum.microDemandPerfectlyInelastic:
         _paintDemandPerfectlyInelastic(c, canvas);
-        break;
       case DiagramEnum.microDemandEngelCurve:
         _paintDemandEngelCurve(c, canvas);
-        break;
       case DiagramEnum.microDemandElasticityChange:
         _paintMicroDemandElasticityChange(c, canvas);
-        break;
       case DiagramEnum.microDemandElasticityRevenueChange:
         _paintMicroDemandRevenueChange(c, canvas);
-        break;
 
-      // -- Supply --
+      // Supply
       case DiagramEnum.microSupplyElastic:
         _paintSupplyElastic(c, canvas);
-        break;
       case DiagramEnum.microSupplyInelastic:
         _paintSupplyInelastic(c, canvas);
-        break;
       case DiagramEnum.microSupplyUnitElastic:
         _paintSupplyUnitElastic(c, canvas);
-        break;
       case DiagramEnum.microSupplyPerfectlyElastic:
         _paintSupplyPerfectlyElastic(c, canvas);
-        break;
       case DiagramEnum.microSupplyPerfectlyInelastic:
         _paintSupplyPerfectlyInelastic(c, canvas);
-        break;
       case DiagramEnum.microSupplyPrimaryCommodities:
         _paintMicroSupplyPrimaryCommodities(c, canvas);
-        break;
-
       default:
         break;
     }
@@ -103,21 +113,13 @@ class Elasticities extends BaseDiagramPainter {
       angle: -0.40,
       lengthAdjustment: marketCurveLengthAdjustment,
     );
-    paintDiagramDashedLines(
+    _paintStandardDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.45,
-      xAxisEndPos: 0.36,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.60,
-      xAxisEndPos: 0.74,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      p1: 0.45,
+      q1: 0.36,
+      p2: 0.60,
+      q2: 0.74,
     );
 
     if (diagram == DiagramEnum.microDemandInelasticRevenue) {
@@ -133,21 +135,13 @@ class Elasticities extends BaseDiagramPainter {
       angle: 0.40,
       lengthAdjustment: marketCurveLengthAdjustment,
     );
-    paintDiagramDashedLines(
+    _paintStandardDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.45,
-      xAxisEndPos: 0.475,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.60,
-      xAxisEndPos: 0.54,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      p1: 0.45,
+      q1: 0.475,
+      p2: 0.60,
+      q2: 0.54,
     );
 
     if (diagram == DiagramEnum.microDemandElasticRevenue) {
@@ -169,21 +163,13 @@ class Elasticities extends BaseDiagramPainter {
       label2: DiagramLabel.d.label,
       label2Align: LabelAlign.centerRight,
     );
-    paintDiagramDashedLines(
+    _paintStandardDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.50,
-      xAxisEndPos: 0.16,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.75,
-      xAxisEndPos: 0.35,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      p1: 0.50,
+      q1: 0.16,
+      p2: 0.75,
+      q2: 0.35,
     );
   }
 
@@ -252,18 +238,47 @@ class Elasticities extends BaseDiagramPainter {
           endPoint: const Offset(1, 1),
         ),
       ],
+      label2: DiagramLabel.tR.label,
+      label2Align: LabelAlign.centerRight,
     );
     paintDiagramDashedLines(
       c,
       canvas,
       yAxisStartPos: 0.15,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.rMax.label,
-      xLabel: DiagramLabel.qStar.label,
+      xLabel: '50',
+      yLabel: '100',
     );
-    paintText(c, canvas, 'PED > 1', const Offset(0.20, 0.25));
-    paintText(c, canvas, 'PED = 1', const Offset(0.50, 0.08));
-    paintText(c, canvas, 'PED < 1', const Offset(0.80, 0.25));
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.35,
+      xAxisEndPos: 0.745,
+      additionalXLabels: ['25'],
+      additionalXPositions: [0.255],
+      xLabel: '75',
+      yLabel: '75',
+    );
+
+    // Labels using DiagramLabel constants
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.pedGreaterThanOne.label,
+      const Offset(0.20, 0.275),
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.pedEqualToOne.label,
+      const Offset(0.50, 0.10),
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.pedLessThanOne.label,
+      const Offset(0.80, 0.275),
+    );
   }
 
   void _paintMicroDemandElasticityChange(
@@ -281,79 +296,73 @@ class Elasticities extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.25,
       xAxisEndPos: 0.25,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      yLabel: '3',
+      xLabel: '25',
     );
     paintDiagramDashedLines(
       c,
       canvas,
       yAxisStartPos: 0.50,
       xAxisEndPos: 0.50,
-      yLabel: DiagramLabel.pStar.label,
-      xLabel: DiagramLabel.qStar.label,
+      yLabel: '2',
+      xLabel: '50',
     );
     paintDiagramDashedLines(
       c,
       canvas,
       yAxisStartPos: 0.75,
       xAxisEndPos: 0.75,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yLabel: '1',
+      xLabel: '75',
     );
-    paintText(c, canvas, 'PED > 1', const Offset(0.30, 0.15));
+
     paintText(
       c,
       canvas,
-      'PED = 1',
-      const Offset(0.60, 0.40),
-      pointerLine: const Offset(0.50, 0.50),
+      DiagramLabel.pedGreaterThanOne.label,
+      const Offset(0.35, 0.225),
     );
-    paintText(c, canvas, 'PED < 1', const Offset(0.80, 0.65));
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.pedEqualToOne.label,
+      const Offset(0.60, 0.50),
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.pedLessThanOne.label,
+      const Offset(0.85, 0.75),
+    );
   }
 
   void _paintDemandEngelCurve(DiagramPainterConfig c, IDiagramCanvas canvas) {
-    // Luxuries
-    paintDiagramLines(
+    _paintEngelLine(
       c,
       canvas,
-      startPos: const Offset(0.10, 0.80),
-      polylineOffsets: [const Offset(0.60, 0.65)],
+      start: const Offset(0.10, 0.80),
+      end: const Offset(0.60, 0.65),
+      label: DiagramLabel.normalGoodLuxury.label,
+      textPos: const Offset(0.25, 0.60),
+      pointer: const Offset(0.25, 0.76),
     );
-    paintText(
+    _paintEngelLine(
       c,
       canvas,
-      DiagramLabel.normalGoodLuxury.label,
-      const Offset(0.25, 0.60),
-      pointerLine: const Offset(0.25, 0.76),
+      start: const Offset(0.60, 0.90),
+      end: const Offset(0.80, 0.30),
+      label: DiagramLabel.normalGoodNecessity.label,
+      textPos: const Offset(0.90, 0.70),
+      pointer: const Offset(0.66, 0.70),
     );
-
-    // Necessities
-    paintDiagramLines(
+    _paintEngelLine(
       c,
       canvas,
-      startPos: const Offset(0.60, 0.90),
-      polylineOffsets: [const Offset(0.80, 0.30)],
-    );
-    paintText(
-      c,
-      canvas,
-      DiagramLabel.normalGoodNecessity.label,
-      const Offset(0.90, 0.70),
-      pointerLine: const Offset(0.66, 0.70),
-    );
-    // Inferior
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: const Offset(0.10, 0.20),
-      polylineOffsets: [const Offset(0.60, 0.50)],
-    );
-    paintText(
-      c,
-      canvas,
-      DiagramLabel.inferiorGood.label,
-      const Offset(0.25, 0.15),
-      pointerLine: const Offset(0.25, 0.29),
+      start: const Offset(0.10, 0.20),
+      end: const Offset(0.60, 0.50),
+      label: DiagramLabel.inferiorGood.label,
+      textPos: const Offset(0.25, 0.15),
+      pointer: const Offset(0.25, 0.29),
     );
   }
 
@@ -367,21 +376,13 @@ class Elasticities extends BaseDiagramPainter {
       angle: 0.40,
       lengthAdjustment: marketCurveLengthAdjustment,
     );
-    paintDiagramDashedLines(
+    _paintStandardDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.56,
-      xAxisEndPos: 0.36,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.405,
-      xAxisEndPos: 0.74,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      p1: 0.56,
+      q1: 0.36,
+      p2: 0.405,
+      q2: 0.74,
     );
   }
 
@@ -393,21 +394,13 @@ class Elasticities extends BaseDiagramPainter {
       angle: -0.40,
       lengthAdjustment: marketCurveLengthAdjustment,
     );
-    paintDiagramDashedLines(
+    _paintStandardDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.55,
-      xAxisEndPos: 0.48,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.35,
-      xAxisEndPos: 0.56,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      p1: 0.55,
+      q1: 0.48,
+      p2: 0.35,
+      q2: 0.56,
     );
   }
 
@@ -526,25 +519,56 @@ class Elasticities extends BaseDiagramPainter {
       angle: pi * -0.15,
       lengthAdjustment: marketCurveLengthAdjustment,
     );
-    paintDiagramDashedLines(
+    _paintStandardDashedLines(
       c,
       canvas,
-      yAxisStartPos: 0.35,
-      xAxisEndPos: 0.45,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.65,
-      xAxisEndPos: 0.55,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
+      p1: 0.65,
+      q1: 0.55,
+      p2: 0.35,
+      q2: 0.45,
     );
   }
 
-  // --- REVENUE UTILITY ---
+  // --- REUSABLE UTILITIES ---
+
+  void _paintStandardDashedLines(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas, {
+    required double p1,
+    required double q1,
+    required double p2,
+    required double q2,
+  }) {
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: p1,
+      xAxisEndPos: q1,
+      yLabel: DiagramLabel.p1.label,
+      xLabel: DiagramLabel.q1.label,
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: p2,
+      xAxisEndPos: q2,
+      yLabel: DiagramLabel.p2.label,
+      xLabel: DiagramLabel.q2.label,
+    );
+  }
+
+  void _paintEngelLine(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas, {
+    required Offset start,
+    required Offset end,
+    required String label,
+    required Offset textPos,
+    required Offset pointer,
+  }) {
+    paintDiagramLines(c, canvas, startPos: start, polylineOffsets: [end]);
+    paintText(c, canvas, label, textPos, pointerLine: pointer);
+  }
 
   void _paintRevenueShading(
     DiagramPainterConfig c,

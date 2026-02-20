@@ -22,57 +22,53 @@ void paintAxisLines(
   GridLineStyle gridLineStyle = GridLineStyle.full,
   int decimalPlaces = 0,
   AxisStyle axisStyle = AxisStyle.arrows,
+  bool showLabelBackground = true,
 }) {
-  final widthAndHeight = config.painterSize.width;
-  final indent = widthAndHeight * kAxisIndent;
+  final size = config.painterSize.width;
+  final indent = size * kAxisIndent;
 
-  final indentXLeft = indent;
-  final indentXRight = widthAndHeight * (1 - kAxisIndent);
-  final indentYTop = indent * kTopAxisIndent;
-  final indentYBottom = widthAndHeight - (indent * kBottomAxisIndent);
+  // Coordinate Calculations
+  final double xL = indent;
+  final double xR = size * (1 - kAxisIndent);
+  final double yT = indent * kTopAxisIndent;
+  final double yB = size - (indent * kBottomAxisIndent);
 
   final axisColor = color ?? config.colorScheme.onSurface;
   final axisWidth = kCurveWidth * config.averageRatio;
 
-  // Axis Endpoints
-  final bottomLeft = Offset(indentXLeft, indentYBottom);
-  final bottomRight = Offset(indentXRight, indentYBottom);
-  final topLeft = Offset(indentXLeft, indentYTop);
-  final topRight = Offset(indentXRight, indentYTop);
+  final bottomLeft = Offset(xL, yB);
+  final bottomRight = Offset(xR, yB);
+  final topLeft = Offset(xL, yT);
+  final topRight = Offset(xR, yT);
 
+  // 1. Draw Axis Geometry
   if (axisStyle == AxisStyle.arrows) {
-    // 1. Draw Lines
     canvas.drawLine(bottomLeft, topLeft, axisColor, axisWidth);
     canvas.drawLine(bottomLeft, bottomRight, axisColor, axisWidth);
 
-    // 2. Draw Arrows
     paintArrowHead(
       config,
       canvas,
       color: axisColor,
       positionOfArrow: topLeft,
       rotationAngle: 0.0,
-      isCentered: false,
     );
-
     paintArrowHead(
       config,
       canvas,
       color: axisColor,
       positionOfArrow: bottomRight,
       rotationAngle: pi / 2,
-      isCentered: false,
     );
   } else if (axisStyle == AxisStyle.box) {
-    // ⬛ Lorenz-style box (Only draw if explicitly set to Box)
+    // Standard box for Lorenz curves or 45-degree diagrams
     canvas.drawLine(bottomLeft, bottomRight, axisColor, axisWidth);
     canvas.drawLine(bottomRight, topRight, axisColor, axisWidth);
     canvas.drawLine(topRight, topLeft, axisColor, axisWidth);
     canvas.drawLine(topLeft, bottomLeft, axisColor, axisWidth);
   }
-  // If AxisStyle.jCurve is passed here, we do nothing
-  // (logic is handled in the helper or ignored safely).
 
+  // 2. Draw Grid/Ticks
   if (gridLineStyle != GridLineStyle.none) {
     paintGridLines(
       config,
@@ -83,6 +79,7 @@ void paintAxisLines(
       yDivisions: yDivisions,
       gridLineStyle: gridLineStyle,
       decimalPlaces: decimalPlaces,
+      showBackground: showLabelBackground, // Passes your new property
     );
   }
 }

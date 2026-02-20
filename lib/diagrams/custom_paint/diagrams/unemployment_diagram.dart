@@ -211,7 +211,7 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       origin: const Offset(0.50, 0.25),
       endStyle: LineEndStyle.circlesOnEnd,
       length: 0.40,
-      label: DiagramLabel.surplusLabor.label,
+      label: DiagramLabel.laborSurplus.label,
     );
 
     paintDescription(

@@ -9,7 +9,12 @@ abstract class IDiagramCanvas {
   void drawLine(Offset p1, Offset p2, Color color, double width);
   void drawDashedLine(Offset p1, Offset p2, Color color, double width);
   void drawPath(List<Offset> points, Color color, {bool fill = true});
-  void drawRect(Rect rect, Color color, {bool fill = false});
+  void drawRect(
+    Rect rect,
+    Color color, {
+    bool fill = false,
+    double strokeWidth = 1.0,
+  }); // 👈 Add it here
   void drawRRect(Rect rect, Radius radius, Color color, {bool fill = true});
   void drawDot(Offset center, Color color, {double radius, bool fill = true});
   void clipPath(List<Offset> points);
