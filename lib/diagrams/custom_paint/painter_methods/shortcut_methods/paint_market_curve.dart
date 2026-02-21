@@ -45,6 +45,9 @@ void paintMarketCurve(
     case MarketCurveType.dl2:
     case MarketCurveType.d1:
     case MarketCurveType.d2:
+    case MarketCurveType.dEqualsMPBMSB:
+    case MarketCurveType.dEqualsMPB:
+    case MarketCurveType.msb:
       baseStart = const Offset(0.10, 0.10);
       baseEnd = const Offset(0.90, 0.90);
       break;
@@ -79,6 +82,14 @@ void paintMarketCurve(
     case MarketCurveType.sTax:
     case MarketCurveType.sSubsidy:
     case MarketCurveType.sSub:
+    case MarketCurveType.sEqualsMPC:
+    case MarketCurveType.sEqualsMPCMSC:
+    case MarketCurveType.mpc:
+    case MarketCurveType.msc:
+    case MarketCurveType.mpcTax:
+    case MarketCurveType.mscEqualsMpcTax1:
+    case MarketCurveType.mpcSub:
+    case MarketCurveType.mscEqualsMpcTax2:
       baseStart = const Offset(0.10, 0.90);
       baseEnd = const Offset(0.90, 0.10);
       break;
@@ -97,7 +108,7 @@ void paintMarketCurve(
       baseStart = const Offset(0.20, 0.20);
       baseEnd = const Offset(0.80, 0.80);
       break;
-
+    case MarketCurveType.perfectlyInelasticSupply:
     case MarketCurveType.lras:
     case MarketCurveType.lras1:
     case MarketCurveType.lras2:
@@ -336,6 +347,50 @@ void paintMarketCurve(
 
       case MarketCurveType.sSub:
         finalLabel2 = 'S+Sub';
+        break;
+      case MarketCurveType.dEqualsMPBMSB:
+        finalLabel2 = 'D=MPB=MSB';
+        break;
+
+      case MarketCurveType.dEqualsMPB:
+        finalLabel2 = 'D=MPB';
+        break;
+      case MarketCurveType.sEqualsMPC:
+        finalLabel2 = 'S=MPC';
+        break;
+      case MarketCurveType.sEqualsMPCMSC:
+        finalLabel2 = 'S=MPC=MSC';
+        break;
+
+      case MarketCurveType.mpc:
+        finalLabel2 = 'MPC';
+        break;
+
+      case MarketCurveType.msc:
+        finalLabel2 = 'MSC';
+        break;
+
+      case MarketCurveType.msb:
+        finalLabel2 = 'MSB';
+        break;
+      case MarketCurveType.mpcTax:
+        finalLabel2 = 'MPC+Tax';
+        break;
+
+      case MarketCurveType.mscEqualsMpcTax1:
+        finalLabel2 = 'MSC=MPC+Tax1';
+        break;
+
+      case MarketCurveType.mscEqualsMpcTax2:
+        finalLabel2 = 'MSC=MPC+Tax2';
+        break;
+
+      case MarketCurveType.mpcSub:
+        finalLabel2 = 'MPC+Sub';
+        break;
+
+      case MarketCurveType.perfectlyInelasticSupply:
+        finalLabel2 = 'S';
         break;
     }
   }

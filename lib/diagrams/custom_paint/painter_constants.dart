@@ -43,6 +43,7 @@ enum CurveStyle { standard, dashed, dotted, bold }
 enum MarketCurveType {
   demand,
   supply,
+  perfectlyInelasticSupply,
   ad,
   sras,
   lras,
@@ -86,6 +87,17 @@ enum MarketCurveType {
   sTax,
   sSubsidy,
   sSub, // General Supply shifts
+  dEqualsMPBMSB,
+  dEqualsMPB,
+  sEqualsMPC,
+  sEqualsMPCMSC,
+  mpc,
+  msc,
+  msb,
+  mpcTax,
+  mscEqualsMpcTax1,
+  mscEqualsMpcTax2,
+  mpcSub,
 }
 
 enum LabelAlign { center, centerLeft, centerRight, centerTop, centerBottom }

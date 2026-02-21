@@ -169,6 +169,8 @@ enum DiagramLabel {
   msc,
   msb,
   pOpt,
+  pOpt1,
+  pOpt2,
   pm,
   pm1,
   pm2,
@@ -856,6 +858,10 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.welfare => 'Welfare',
 
       DiagramLabel.dwl => 'DWL',
+
+      DiagramLabel.pOpt1 => 'Popt1',
+
+      DiagramLabel.pOpt2 => 'Popt2',
     };
   }
 }
