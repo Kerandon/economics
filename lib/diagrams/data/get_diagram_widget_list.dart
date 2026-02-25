@@ -98,20 +98,86 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
 
     /// Externalities
     DiagramWidget([
-      Externalities(c, DiagramEnum.microNegativeProductionExternality),
+      Externalities(
+        c,
+        DiagramEnum.microNegativeProductionExternalityIncludingOveruseOfCPR,
+      ),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microNegativeProductionExternalityPigouvianTax,
+      ),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microNegativeProductionExternalityRegulations,
+      ),
+    ]),
+    DiagramWidget([Externalities(c, DiagramEnum.microCarbonTax)]),
+    DiagramWidget([
+      Externalities(c, DiagramEnum.microTradablePollutionPermits),
     ]),
     DiagramWidget([
       Externalities(c, DiagramEnum.microNegativeConsumptionExternality),
     ]),
     DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microNegativeConsumptionExternalityPigouvianTax,
+      ),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges,
+      ),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microNegativeConsumptionExternalityRegulations,
+      ),
+    ]),
+    DiagramWidget([
       Externalities(c, DiagramEnum.microPositiveProductionExternality),
+    ]),
+    DiagramWidget([
+      Externalities(c, DiagramEnum.microPositiveProductionExternalitySubsidy),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microPositiveProductionExternalityGovernmentProvision,
+      ),
     ]),
     DiagramWidget([
       Externalities(c, DiagramEnum.microPositiveConsumptionExternality),
     ]),
-    DiagramWidget([Externalities(c, DiagramEnum.microCarbonTax)]),
     DiagramWidget([
-      Externalities(c, DiagramEnum.microTradablePollutionPermits),
+      Externalities(c, DiagramEnum.microPositiveConsumptionExternalitySubsidy),
+    ]),
+    DiagramWidget([
+      Externalities(c, DiagramEnum.microPositiveConsumptionExternalitySubsidy),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microPositiveConsumptionExternalityGovernmentProvision,
+      ),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microPositiveConsumptionExternalityRegulations,
+      ),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microPositiveConsumptionExternalityEducationAndNudges,
+      ),
     ]),
 
     /// Public Goods

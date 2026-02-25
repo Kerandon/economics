@@ -24,19 +24,20 @@ const kSimilarities = 'Similarities';
 const kDifferences = 'Differences';
 
 /// Text
-const kFontTiny = 18.0;
+const kFontTiny = 20.0;
 const kFontVerySmall = 22.0;
 const kFontSmall = 22.0;
 const kFontMedium = 28.0;
 const kFontSizeBig = 40.0;
 const kFontSizeAverageRatioSmall = 30.0;
+const kFontSizeAverageRatioStandard = 60.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
   fontSize: kFontMedium,
 );
 
 /// Dot
-const kDotRadius = 8.0;
+const kDotRadius = 6.0;
 
 enum CurveStyle { standard, dashed, dotted, bold }
 
@@ -95,12 +96,24 @@ enum MarketCurveType {
   msc,
   msb,
   mpcTax,
+  sPlusProvision,
   mscEqualsMpcTax1,
   mscEqualsMpcTax2,
   mpcSub,
+  sPlusProvisionEqualsMSC,
 }
 
-enum LabelAlign { center, centerLeft, centerRight, centerTop, centerBottom }
+enum LabelAlign {
+  topLeft,
+  centerTop, // <-- Added back
+  topRight,
+  left,
+  center,
+  right,
+  bottomLeft,
+  centerBottom, // <-- Added back
+  bottomRight,
+}
 
 enum CustomAxis { x, y }
 

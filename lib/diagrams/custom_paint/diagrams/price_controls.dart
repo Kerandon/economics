@@ -1,3 +1,4 @@
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
@@ -123,7 +124,7 @@ void _paintPriceCeiling(DiagramPainterConfig c, IDiagramCanvas canvas) {
     xLabel: DiagramLabel.qE.label,
   );
 
-  _drawPriceControlLine(c, canvas, 0.75, DiagramLabel.pc.label);
+  _drawPriceControlLine(c, canvas, 0.75, DiagramLabel.pC.label);
 }
 
 void _paintPriceFloor(DiagramPainterConfig c, IDiagramCanvas canvas) {
@@ -479,9 +480,9 @@ void _drawPriceControlLine(
   paintDiagramLines(
     c,
     canvas,
-    color: Colors.red,
+    color: kHighLightedColor,
     label1: label,
-    label1Align: LabelAlign.centerLeft,
+    label1Align: LabelAlign.left,
     startPos: Offset(0.0, yPos),
     polylineOffsets: [Offset(1.0, yPos)],
   );

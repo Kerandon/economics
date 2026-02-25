@@ -378,7 +378,7 @@ class CompetitiveMarket extends BaseDiagramPainter {
       startPos: const Offset(0.0, 0.10),
       polylineOffsets: [const Offset(0.90, 0.90)],
       label2: DiagramLabel.dEqualsMB.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
 
     paintDiagramLines(
@@ -387,7 +387,7 @@ class CompetitiveMarket extends BaseDiagramPainter {
       startPos: const Offset(0.0, 0.90),
       polylineOffsets: [const Offset(0.90, 0.10)],
       label2: DiagramLabel.sEqualsMC.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
 
     // 2. Shading Logic

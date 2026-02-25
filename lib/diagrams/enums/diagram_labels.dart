@@ -35,6 +35,7 @@ enum DiagramLabel {
   s,
   sTax,
   sSub,
+  taxEqualsExternalCost,
   sm,
   sme,
   sm1,
@@ -79,7 +80,7 @@ enum DiagramLabel {
   p1,
   p2,
   p3,
-  pc,
+  pC,
   QTax,
   qACP,
   qMC,
@@ -160,14 +161,17 @@ enum DiagramLabel {
   dEqualsMPBMSB,
   sEqualsMPC,
   sEqualsMPCMSC,
-  mPCPlusSubsidy,
+  mPCMinusSubsidy,
   externality,
   externalBenefit,
   externalCost,
   externalCostOfOverFishing,
+  education,
   mpc,
   msc,
   msb,
+  mPBPlusEducationEqualsMSC,
+  mPBPlusRegulationsEqualsMSC,
   pOpt,
   pOpt1,
   pOpt2,
@@ -178,12 +182,16 @@ enum DiagramLabel {
   qOpt,
   qm,
   pPEqualsPOpt,
-  mscEqualsMPCPlusTax,
+  pCEqualsPOpt,
+  mPCPlusTaxEqualsMSC,
+  mPCPlusRegulationsEqualsMSC,
   pigouvianTaxEqualsExternalCost,
   subsidyEqualExternalBenefits,
+  provision,
   governmentDirectProvision,
-  mscEqualsMPCPlusSubsidy,
-  mscEqualsMPCPlusGovernmentProvision,
+  mPCMinusSubsidyEqualsMSC,
+  sPlusProvisionEqualsMSC,
+  sPlusProvision,
   revenue,
   revenue$,
   tR,
@@ -211,7 +219,8 @@ enum DiagramLabel {
   mcEqualsMR,
   breakEvenPoint,
   shutdownPoint,
-  mscPlusRegulations,
+  mPCPlusRegEqualsMSC,
+  regulations,
   governmentRegulations,
   goodA,
   goodB,
@@ -465,7 +474,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.externality => 'Externality',
       DiagramLabel.qpi => 'Qπ',
       DiagramLabel.sTax => 'S+Tax',
-      DiagramLabel.pc => 'Pc',
+      DiagramLabel.pC => 'Pc',
       DiagramLabel.pP => 'Pp',
       DiagramLabel.sSub => 'S+Sub',
       DiagramLabel.qTax => 'Qtax',
@@ -654,22 +663,22 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.priceFloor => 'Price Floor',
       DiagramLabel.laborSurplus => 'Labor Surplus\n(Unemployment)',
       DiagramLabel.pPEqualsPOpt => 'Pp=POpt',
-      DiagramLabel.mscEqualsMPCPlusTax => 'MSC=MPC+Tax',
+      DiagramLabel.mPCPlusTaxEqualsMSC => 'MPC+Tax=MSC',
       DiagramLabel.pigouvianTaxEqualsExternalCost =>
         'Pigouvian Tax\n= External Cost',
-      DiagramLabel.mscPlusRegulations => 'MSC=MPC+\nRegulations',
+      DiagramLabel.mPCPlusRegEqualsMSC => 'MPC+Reg=MSC',
       DiagramLabel.governmentRegulations => 'Government\nRegulations',
       DiagramLabel.externalCostOfOverFishing =>
         'External Cost of\nOver-Fishing',
       DiagramLabel.governmentTaxRevenue => 'Government\nTax Revenue',
-      DiagramLabel.mscEqualsMPCPlusSubsidy => 'MSC\n=MPC+Subsidy',
+      DiagramLabel.mPCMinusSubsidyEqualsMSC => 'MPC-Sub=MSC',
       DiagramLabel.subsidyEqualExternalBenefits =>
         'Subsidy =\nExternal Benefits',
       DiagramLabel.priceCostsBenefits => 'Price,\nCosts,\nBenefits',
       DiagramLabel.governmentDirectProvision => 'Government\nDirect Provision',
-      DiagramLabel.mscEqualsMPCPlusGovernmentProvision =>
-        'MSC=MPC\n+Government\nProvision',
-      DiagramLabel.mPCPlusSubsidy => 'MPC+Subsidy',
+      DiagramLabel.sPlusProvisionEqualsMSC => 'S+Provision=MSC',
+
+      DiagramLabel.mPCMinusSubsidy => 'MPC-Sub',
       DiagramLabel.rMax => 'Rmax',
       DiagramLabel.q2Star => 'Q2*',
       DiagramLabel.qStar => 'Q*',
@@ -862,6 +871,24 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.pOpt1 => 'Popt1',
 
       DiagramLabel.pOpt2 => 'Popt2',
+
+      DiagramLabel.taxEqualsExternalCost => 'Tax=External Cost',
+
+      DiagramLabel.pCEqualsPOpt => 'Pc=Popt',
+
+      DiagramLabel.mPCPlusRegulationsEqualsMSC => 'MPC+Reg=MSC',
+
+      DiagramLabel.mPBPlusEducationEqualsMSC => 'MPB+Edu=MSC',
+
+      DiagramLabel.mPBPlusRegulationsEqualsMSC => 'MPB+Reg=MSC',
+
+      DiagramLabel.sPlusProvision => 'S+Provision',
+
+      DiagramLabel.provision => 'Provision',
+
+      DiagramLabel.regulations => 'Regulations',
+
+      DiagramLabel.education => 'Education',
     };
   }
 }

@@ -94,7 +94,7 @@ void paintText(
   if (pointerLine != null) {
     final endPos = toPixels(pointerLine);
     final lineColor = effectiveStyle.color ?? onSurfaceColor;
-    final lineWidth = (kCurveWidth / 5) * config.averageRatio;
+    final lineWidth = (kCurveWidth / 10) * config.averageRatio;
     canvas.drawLine(drawPos, endPos, lineColor, lineWidth);
     canvas.drawDot(
       endPos,
@@ -111,8 +111,8 @@ void paintText(
 
   final relativeTopLeft = Offset(-shiftX, -shiftY);
   // Increase box padding slightly for better aesthetics
-  final padX = 4.0 * config.averageRatio;
-  final padY = 2.0 * config.averageRatio;
+  final padX = 1.0 * config.averageRatio;
+  final padY = 1.0 * config.averageRatio;
 
   final textRect = Rect.fromLTWH(
     relativeTopLeft.dx - (padX / 2),
@@ -126,8 +126,9 @@ void paintText(
     case DiagramShape.circle:
       final inflated = textRect.inflate(textRect.height * 0.4);
       final radius = Radius.circular(inflated.height / 2);
-      if (showBackground)
+      if (showBackground) {
         canvas.drawRRect(inflated, radius, surfaceColor, fill: true);
+      }
       canvas.drawRRect(inflated, radius, onSurfaceColor, fill: false);
       break;
     case DiagramShape.diamond:

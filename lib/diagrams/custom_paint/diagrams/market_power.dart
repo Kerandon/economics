@@ -273,7 +273,7 @@ class MarketPower extends BaseDiagramPainter {
         startPos: Offset(0, 0.35),
         polylineOffsets: [Offset(0.80, 0.35)],
         label2: DiagramLabel.dEqualsARMR.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
 
       paintText(
@@ -348,7 +348,7 @@ class MarketPower extends BaseDiagramPainter {
         startPos: Offset(0, 0.50),
         polylineOffsets: [Offset(0.90, 0.50)],
         label2: DiagramLabel.dEqualsARMR.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramDashedLines(
         c,
@@ -377,7 +377,7 @@ class MarketPower extends BaseDiagramPainter {
         startPos: Offset(0, 0.35),
         polylineOffsets: [Offset(0.90, 0.35)],
         label2: DiagramLabel.dARMR1.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramLines(
         c,
@@ -385,7 +385,7 @@ class MarketPower extends BaseDiagramPainter {
         startPos: Offset(0, 0.50),
         polylineOffsets: [Offset(0.90, 0.50)],
         label2: DiagramLabel.dARMR2.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramDashedLines(
         c,
@@ -466,7 +466,7 @@ class MarketPower extends BaseDiagramPainter {
         startPos: Offset(0, 0.65),
         polylineOffsets: [Offset(0.90, 0.65)],
         label2: DiagramLabel.dARMR1.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramLines(
         c,
@@ -474,7 +474,7 @@ class MarketPower extends BaseDiagramPainter {
         startPos: Offset(0, 0.50),
         polylineOffsets: [Offset(0.90, 0.50)],
         label2: DiagramLabel.dARMR2.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramDashedLines(
         c,
@@ -539,7 +539,7 @@ class MarketPower extends BaseDiagramPainter {
           ),
         ],
         label2: DiagramLabel.avc.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramLines(
         c,
@@ -548,7 +548,7 @@ class MarketPower extends BaseDiagramPainter {
         polylineOffsets: [Offset(0.80, 0.50)],
         color: Colors.blueAccent,
         label2: DiagramLabel.breakEvenPoint.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramLines(
         c,
@@ -557,7 +557,7 @@ class MarketPower extends BaseDiagramPainter {
         polylineOffsets: [Offset(0.80, 0.705)],
         color: Colors.red,
         label2: DiagramLabel.shutdownPoint.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramDashedLines(
         c,
@@ -618,7 +618,7 @@ class MarketPower extends BaseDiagramPainter {
           ),
         ],
         label2: DiagramLabel.avc.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramDashedLines(
         c,
@@ -647,9 +647,9 @@ class MarketPower extends BaseDiagramPainter {
         curveStyle: CurveStyle.dashed,
         color: Colors.red,
         label1: DiagramLabel.p.label,
-        label1Align: LabelAlign.centerLeft,
+        label1Align: LabelAlign.left,
         label2: 'P<AVCmin (firm has shut-down)',
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
     }
   }
@@ -883,7 +883,7 @@ class MarketPower extends BaseDiagramPainter {
         CustomBezier(control: Offset(0.20, 0.80), endPoint: Offset(0.90, 0.80)),
       ],
       label2: DiagramLabel.lrac.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
     paintDiagramLines(
       c,
@@ -892,7 +892,7 @@ class MarketPower extends BaseDiagramPainter {
       startPos: Offset(0.03, 0.15),
       polylineOffsets: [Offset(0.75, 0.92)],
       label2: DiagramLabel.dEqualsAR.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
     if (diagram == DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare) {
       paintText(
@@ -1074,7 +1074,7 @@ class MarketPower extends BaseDiagramPainter {
           ),
         ],
         label2: DiagramLabel.lrmc.label,
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
       paintDiagramLines(
         c,

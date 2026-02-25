@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const kAppName = 'IB Econ Toolkit';
 const kLevel = 'level';
 const kHL = 'HL';
@@ -26,3 +28,4 @@ const kAnimationDuration = 500;
 
 /// Colors
 const kBackgroundAlphaLight = 10;
+const kHighLightedColor = Colors.red;

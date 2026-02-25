@@ -163,7 +163,7 @@ void _paintDomesticNetExporterImporter(c, canvas, diagram) {
       polylineOffsets: [Offset(0.90, 0.75)],
       color: Colors.red,
       label2: DiagramLabel.sW.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
     paintText(c, canvas, DiagramLabel.a.label, Offset(0.15, 0.35));
     paintText(c, canvas, DiagramLabel.b.label, Offset(0.15, 0.65));

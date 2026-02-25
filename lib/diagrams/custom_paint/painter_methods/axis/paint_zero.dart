@@ -9,13 +9,14 @@ void paintZero(DiagramPainterConfig config, IDiagramCanvas canvas) {
   final widthAndHeight = config.painterSize.width;
   final indent = widthAndHeight * kAxisIndent;
   final fontSize =
-      kFontTiny * config.averageRatio; // Standard origin label size
+      kFontSizeAverageRatioStandard *
+      config.averageRatio; // Standard origin label size
 
   // The exact mathematical origin point (intersection of axes)
   final origin = Offset(indent, widthAndHeight - (indent * kBottomAxisIndent));
 
   // We nudge the '0' slightly so it doesn't overlap the axis lines
-  final nudge = widthAndHeight * 0.01;
+  final nudge = widthAndHeight * 0.005;
 
   paintText(
     config,

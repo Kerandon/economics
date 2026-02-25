@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
+import '../painter_methods/paint_text.dart';
 import 'shade_type.dart';
 import '../../models/custom_bezier.dart';
 import '../painter_constants.dart';
@@ -11,10 +12,16 @@ void paintShading(
   ShadeType shade,
   List<dynamic> pointsAndBeziers, {
   bool striped = true,
-  double stripeSpacing = 20.0, // Tighter for professional look
-  double strokeWidth = 2, // Thinner lines for print
-  int alpha = 150, // Much lower alpha for print compatibility
+  double stripeSpacing = 20.0,
+  double strokeWidth = 6,
+  int alpha = 160,
   bool invertStripes = false,
+  // NEW PROPERTIES
+  String? label,
+  Color? labelColor,
+  LabelAlign labelAlign = LabelAlign.center,
+  bool showLabelBackground = true,
+  double labelPadding = 20.0, // Controls how far it pushes from the center
 }) {
   if (pointsAndBeziers.isEmpty) return;
 
@@ -64,16 +71,14 @@ void paintShading(
   final color = shade.setShadeColor();
 
   // 2. Draw a very light solid background first
-  // alpha ~/ 3 ensures it's just a hint of color on paper
   canvas.drawPath(polyline, color.withAlpha(alpha ~/ 3), fill: true);
 
-  // 3. Draw the Stripes (The important part for PDF)
+  // 3. Draw the Stripes
   if (striped) {
     canvas.save();
-    canvas.clipPath(polyline); // Keeps lines inside the triangle/box
+    canvas.clipPath(polyline);
 
     final double maxDim = width + height;
-    // Use a slightly darker alpha for the actual lines so they "pop"
     final stripeColor = color.withAlpha(alpha + 20);
     final double spacing = stripeSpacing * config.averageRatio;
 
@@ -84,5 +89,91 @@ void paintShading(
     }
 
     canvas.restore();
+  }
+
+  // 4. Draw Center Label with Fixed Nudge
+  if (label != null && polyline.isNotEmpty) {
+    // Find absolute center
+    double minX = polyline.first.dx;
+    double maxX = polyline.first.dx;
+    double minY = polyline.first.dy;
+    double maxY = polyline.first.dy;
+
+    for (final p in polyline) {
+      if (p.dx < minX) minX = p.dx;
+      if (p.dx > maxX) maxX = p.dx;
+      if (p.dy < minY) minY = p.dy;
+      if (p.dy > maxY) maxY = p.dy;
+    }
+
+    final Offset centerPos = Offset((minX + maxX) / 2, (minY + maxY) / 2);
+
+    // Apply exact Nudge + Pivot logic to force clear movement
+    final double gapValue = labelPadding * config.averageRatio;
+    Offset nudge = Offset.zero;
+    LabelPivot hPivot = LabelPivot.center;
+    LabelPivot vPivot = LabelPivot.middle;
+
+    switch (labelAlign) {
+      case LabelAlign.centerTop:
+        hPivot = LabelPivot.center;
+        vPivot = LabelPivot.bottom;
+        nudge = Offset(0, -gapValue);
+        break;
+      case LabelAlign.centerBottom:
+        hPivot = LabelPivot.center;
+        vPivot = LabelPivot.top;
+        nudge = Offset(0, gapValue);
+        break;
+      case LabelAlign.left:
+        hPivot = LabelPivot.right;
+        vPivot = LabelPivot.middle;
+        nudge = Offset(-gapValue, 0);
+        break;
+      case LabelAlign.right:
+        hPivot = LabelPivot.left;
+        vPivot = LabelPivot.middle;
+        nudge = Offset(gapValue, 0);
+        break;
+      case LabelAlign.topLeft:
+        hPivot = LabelPivot.right;
+        vPivot = LabelPivot.bottom;
+        nudge = Offset(-gapValue, -gapValue);
+        break;
+      case LabelAlign.topRight:
+        hPivot = LabelPivot.left;
+        vPivot = LabelPivot.bottom;
+        nudge = Offset(gapValue, -gapValue);
+        break;
+      case LabelAlign.bottomLeft:
+        hPivot = LabelPivot.right;
+        vPivot = LabelPivot.top;
+        nudge = Offset(-gapValue, gapValue);
+        break;
+      case LabelAlign.bottomRight:
+        hPivot = LabelPivot.left;
+        vPivot = LabelPivot.top;
+        nudge = Offset(gapValue, gapValue);
+        break;
+      case LabelAlign.center:
+        hPivot = LabelPivot.center;
+        vPivot = LabelPivot.middle;
+        nudge = Offset.zero;
+        break;
+    }
+
+    paintText(
+      config,
+      canvas,
+      label,
+      centerPos + nudge, // Target the center, then explicitly push it
+      fontSize: kFontTiny,
+      style: TextStyle(color: labelColor ?? config.colorScheme.onSurface),
+      horizontalPivot: hPivot,
+      verticalPivot: vPivot,
+      normalize: false,
+      showBackground: showLabelBackground,
+      shape: DiagramShape.none,
+    );
   }
 }

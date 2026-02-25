@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:economics_app/app/configs/constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_entry.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/paint_legend.dart';
@@ -98,7 +99,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       horizontalShift: -kExtendBy10,
       verticalShift: -kExtendBy5,
       label: DiagramLabel.sTax.label,
-      color: Colors.red,
+      color: kHighLightedColor,
     );
     paintMarketCurve(
       c,
@@ -122,7 +123,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.425,
       xAxisEndPos: 0.425,
-      yLabel: DiagramLabel.pc.label,
+      yLabel: DiagramLabel.pC.label,
       xLabel: DiagramLabel.qTax.label,
     );
     paintDiagramDashedLines(
@@ -178,7 +179,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       type: MarketCurveType.sTax,
       horizontalShift: -kExtendBy10,
       verticalShift: -kExtendBy5,
-      color: Colors.red,
+      color: kHighLightedColor,
       angle: 0.10,
       lengthAdjustment: -0.10,
     );
@@ -203,7 +204,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.40,
       xAxisEndPos: 0.46,
-      yLabel: DiagramLabel.pc.label,
+      yLabel: DiagramLabel.pC.label,
       xLabel: DiagramLabel.qTax.label,
     );
     paintDiagramDashedLines(
@@ -264,7 +265,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       type: MarketCurveType.sSub,
       horizontalShift: kExtendBy5,
       verticalShift: kExtendBy5,
-      color: Colors.red,
+      color: kHighLightedColor,
     );
     paintMarketCurve(
       c,
@@ -279,7 +280,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.55,
       xAxisEndPos: 0.55,
-      yLabel: DiagramLabel.pc.label,
+      yLabel: DiagramLabel.pC.label,
       hideXLine: true,
     );
     paintDiagramDashedLines(
@@ -343,7 +344,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       type: MarketCurveType.sSub,
       horizontalShift: kExtendBy5,
       verticalShift: kExtendBy5,
-      color: Colors.red,
+      color: kHighLightedColor,
     );
     paintMarketCurve(
       c,
@@ -358,7 +359,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.575,
       xAxisEndPos: 0.52,
-      yLabel: DiagramLabel.pc.label,
+      yLabel: DiagramLabel.pC.label,
       hideXLine: true,
     );
     paintDiagramDashedLines(
@@ -454,7 +455,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       horizontalShift: -kExtendBy10,
       verticalShift: -kExtendBy5,
       label: DiagramLabel.sTax.label,
-      color: Colors.red,
+      color: kHighLightedColor,
     );
     paintMarketCurve(
       c,
@@ -476,7 +477,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.47,
       xAxisEndPos: 0.39,
-      yLabel: DiagramLabel.pc.label,
+      yLabel: DiagramLabel.pC.label,
       xLabel: DiagramLabel.qTax.label,
     );
     paintDiagramDashedLines(
@@ -536,7 +537,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       canvas,
       yAxisStartPos: 0.52,
       xAxisEndPos: 0.58,
-      yLabel: DiagramLabel.pc.label,
+      yLabel: DiagramLabel.pC.label,
       hideXLine: true,
     );
     paintDiagramDashedLines(

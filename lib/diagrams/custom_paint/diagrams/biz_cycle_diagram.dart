@@ -69,7 +69,7 @@ class BizDiagram extends BaseDiagramPainter {
       startPos: Offset(0.0, 0.70),
       polylineOffsets: [Offset(0.92, 0.40)],
       label2: DiagramLabel.potentialGDP.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
       color: c.colorScheme.onSurface,
       curveStyle: CurveStyle.dashed,
     );
@@ -92,7 +92,7 @@ class BizDiagram extends BaseDiagramPainter {
       color: config.colorScheme.primary,
       strokeWidth: 3.0,
       label2: DiagramLabel.realGDP.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
       arrowOnEnd: true,
     );
 

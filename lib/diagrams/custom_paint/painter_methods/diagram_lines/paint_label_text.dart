@@ -38,11 +38,11 @@ void paintLabelText(
       dx = -textPainter.width / 2;
       dy = -textPainter.height / 2;
       break;
-    case LabelAlign.centerLeft:
+    case LabelAlign.left:
       dx = -textPainter.width - padding;
       dy = -textPainter.height / 2;
       break;
-    case LabelAlign.centerRight:
+    case LabelAlign.right:
       dx = padding;
       dy = -textPainter.height / 2;
       break;
@@ -54,6 +54,18 @@ void paintLabelText(
       dx = -textPainter.width / 2;
       dy = padding;
       break;
+    case LabelAlign.topLeft:
+      // TODO: Handle this case.
+      throw UnimplementedError();
+    case LabelAlign.topRight:
+      // TODO: Handle this case.
+      throw UnimplementedError();
+    case LabelAlign.bottomLeft:
+      // TODO: Handle this case.
+      throw UnimplementedError();
+    case LabelAlign.bottomRight:
+      // TODO: Handle this case.
+      throw UnimplementedError();
   }
 
   baseOffset = baseOffset.translate(dx, dy);

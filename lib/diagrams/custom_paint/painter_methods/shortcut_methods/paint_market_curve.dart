@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
+import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import '../../../models/custom_bezier.dart';
 import '../../i_diagram_canvas.dart';
 import '../../../models/diagram_painter_config.dart';
@@ -90,6 +91,8 @@ void paintMarketCurve(
     case MarketCurveType.mscEqualsMpcTax1:
     case MarketCurveType.mpcSub:
     case MarketCurveType.mscEqualsMpcTax2:
+    case MarketCurveType.sPlusProvisionEqualsMSC:
+    case MarketCurveType.sPlusProvision:
       baseStart = const Offset(0.10, 0.90);
       baseEnd = const Offset(0.90, 0.10);
       break;
@@ -386,12 +389,16 @@ void paintMarketCurve(
         break;
 
       case MarketCurveType.mpcSub:
-        finalLabel2 = 'MPC+Sub';
+        finalLabel2 = DiagramLabel.mPCMinusSubsidy.label;
         break;
 
       case MarketCurveType.perfectlyInelasticSupply:
         finalLabel2 = 'S';
         break;
+      case MarketCurveType.sPlusProvision:
+        finalLabel2 = 'S+Provision';
+      case MarketCurveType.sPlusProvisionEqualsMSC:
+        finalLabel2 = DiagramLabel.sPlusProvisionEqualsMSC.label;
     }
   }
 
@@ -419,7 +426,7 @@ void paintMarketCurve(
       label1: finalLabel1,
       label2: finalLabel2,
       label1Align: isVertical ? LabelAlign.centerBottom : LabelAlign.centerTop,
-      label2Align: isVertical ? LabelAlign.centerTop : LabelAlign.centerRight,
+      label2Align: isVertical ? LabelAlign.centerTop : LabelAlign.right,
       curveStyle: curveStyle,
       color: color,
     );

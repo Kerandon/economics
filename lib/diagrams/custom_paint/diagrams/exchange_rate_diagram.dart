@@ -409,7 +409,7 @@ void _paintManagedRate(DiagramPainterConfig c, IDiagramCanvas canvas) {
     startPos: Offset(0, 0.38),
     polylineOffsets: [Offset(0.85, 0.38)],
     label2: DiagramLabel.upperBand.label,
-    label2Align: LabelAlign.centerRight,
+    label2Align: LabelAlign.right,
     color: Colors.red,
     curveStyle: CurveStyle.dashed,
   );
@@ -421,7 +421,7 @@ void _paintManagedRate(DiagramPainterConfig c, IDiagramCanvas canvas) {
     startPos: Offset(0, 0.62),
     polylineOffsets: [Offset(0.85, 0.62)],
     label2: DiagramLabel.lowerBand.label,
-    label2Align: LabelAlign.centerRight,
+    label2Align: LabelAlign.right,
     color: Colors.red,
     curveStyle: CurveStyle.dashed,
   );

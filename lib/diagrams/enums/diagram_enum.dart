@@ -56,7 +56,9 @@ enum DiagramEnum {
   microSubsidy,
   microSubsidyInelasticDemand,
   microSubsidyElasticDemand,
-  microNegativeProductionExternality,
+
+  /// Externalities
+  microNegativeProductionExternalityIncludingOveruseOfCPR,
   microNegativeProductionExternalityWelfare,
   microNegativeProductionExternalityPigouvianTax,
   microNegativeProductionExternalityRegulations,
@@ -66,18 +68,23 @@ enum DiagramEnum {
   microNegativeConsumptionExternality,
   microNegativeConsumptionExternalityWelfare,
   microNegativeConsumptionExternalityPigouvianTax,
-  microNegativeConsumptionExternalityPublicAwareness,
-  microNegativeConsumptionExternalityGovernmentRegulations,
+  microNegativeConsumptionExternalityRegulations,
+  microNegativeConsumptionExternalityEducationAndNudges,
   microPositiveProductionExternality,
   microPositiveProductionExternalityWelfare,
   microPositiveConsumptionExternality,
   microPositiveConsumptionExternalityWelfare,
   microPositiveConsumptionExternalitySubsidy,
-  microPositiveConsumptionExternalityAdvertising,
-  microPositiveConsumptionExternalityDirectProvision,
+  microPositiveConsumptionExternalityEducationAndNudges,
+  microPositiveConsumptionExternalityGovernmentProvision,
+  microPositiveConsumptionExternalityRegulations,
   microPositiveProductionExternalitySubsidy,
-  microPositiveProductionExternalityDirectProvision,
+  microPositiveProductionExternalityGovernmentProvision,
+
+  /// Public Goods
   microPublicGoods,
+
+  /// Market Power
   microPerfectCompetitionFirmLongRun,
   microPerfectCompetitionMarketLongRun,
   microPerfectCompetitionFirmAbnormalProfitAdjustment,
@@ -310,13 +317,13 @@ extension DiagramBundleEnumUnit on DiagramEnum {
       Subunit.marketFailureExternalities,
     DiagramEnum.microPositiveConsumptionExternalityWelfare =>
       Subunit.marketFailureExternalities,
-    DiagramEnum.microNegativeConsumptionExternalityGovernmentRegulations =>
+    DiagramEnum.microNegativeConsumptionExternalityRegulations =>
       Subunit.marketFailureExternalities,
     DiagramEnum.microNegativeProductionExternalityPigouvianTax =>
       Subunit.marketFailureExternalities,
     DiagramEnum.microNegativeProductionExternalityRegulations =>
       Subunit.marketFailureExternalities,
-    DiagramEnum.microNegativeProductionExternality =>
+    DiagramEnum.microNegativeProductionExternalityIncludingOveruseOfCPR =>
       Subunit.marketFailureExternalities,
 
     DiagramEnum.microCarbonTax => Subunit.marketFailureExternalities,
@@ -334,22 +341,26 @@ extension DiagramBundleEnumUnit on DiagramEnum {
       Subunit.marketFailureExternalities,
     DiagramEnum.microNegativeConsumptionExternalityPigouvianTax =>
       Subunit.marketFailureExternalities,
-    DiagramEnum.microNegativeConsumptionExternalityPublicAwareness =>
-      Subunit.marketFailureExternalities,
     DiagramEnum.microCommonPoolResources => Subunit.marketFailureExternalities,
     DiagramEnum.microPositiveConsumptionExternalitySubsidy =>
       Subunit.marketFailureExternalities,
-    DiagramEnum.microPositiveConsumptionExternalityAdvertising =>
+    DiagramEnum.microPositiveConsumptionExternalityEducationAndNudges =>
       Subunit.marketFailureExternalities,
-
-    DiagramEnum.microPositiveConsumptionExternalityDirectProvision =>
+    DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges =>
+      Subunit.marketFailureExternalities,
+    DiagramEnum.microPositiveConsumptionExternalityGovernmentProvision =>
       Subunit.marketFailureExternalities,
     DiagramEnum.microPositiveProductionExternalitySubsidy =>
       Subunit.marketFailureExternalities,
-    DiagramEnum.microPositiveProductionExternalityDirectProvision =>
+    DiagramEnum.microPositiveProductionExternalityGovernmentProvision =>
       Subunit.marketFailureExternalities,
+    DiagramEnum.microPositiveConsumptionExternalityRegulations =>
+      Subunit.marketFailureExternalities,
+
+    /// Public Goods
     DiagramEnum.microPublicGoods => Subunit.marketFailurePublicGoods,
 
+    /// Market Power
     DiagramEnum.microPerfectCompetitionFirmLongRun =>
       Subunit.marketFailurePower,
 
@@ -641,7 +652,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Producers benefit most from a subsidy when demand is elastic.",
 
       // Market Failure: Externalities
-      DiagramEnum.microNegativeProductionExternality =>
+      DiagramEnum.microNegativeProductionExternalityIncludingOveruseOfCPR =>
         "MSC > MPC. Over-production and welfare loss due to external costs.",
       DiagramEnum.microNegativeProductionExternalityWelfare =>
         "Deadweight loss area shown when the market ignores negative production externalities.",
@@ -661,9 +672,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Deadweight loss area caused by over-consumption of demerit goods.",
       DiagramEnum.microNegativeConsumptionExternalityPigouvianTax =>
         "Taxing consumers (shifting MPB) or producers to reduce consumption.",
-      DiagramEnum.microNegativeConsumptionExternalityPublicAwareness =>
-        "Advertising shifts demand left to align MPB with MSB.",
-      DiagramEnum.microNegativeConsumptionExternalityGovernmentRegulations =>
+      DiagramEnum.microNegativeConsumptionExternalityRegulations =>
         "Bans or restrictions forcing consumption down to the social optimum.",
       DiagramEnum.microPositiveProductionExternality =>
         "MSC < MPC. Under-production of goods with external benefits (e.g., R&D).",
@@ -675,14 +684,16 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Potential welfare gain lost due to under-consumption.",
       DiagramEnum.microPositiveConsumptionExternalitySubsidy =>
         "Subsidizing consumption to shift MPB rightward or Supply rightward.",
-      DiagramEnum.microPositiveConsumptionExternalityAdvertising =>
+      DiagramEnum.microPositiveConsumptionExternalityEducationAndNudges =>
         "Increasing demand for merit goods through education/advertising.",
-      DiagramEnum.microPositiveConsumptionExternalityDirectProvision =>
+      DiagramEnum.microPositiveConsumptionExternalityGovernmentProvision =>
         "Government directly providing the good (Supply shifts to Qopt).",
       DiagramEnum.microPositiveProductionExternalitySubsidy =>
         "Subsidizing firms to reduce costs and increase production.",
-      DiagramEnum.microPositiveProductionExternalityDirectProvision =>
+      DiagramEnum.microPositiveProductionExternalityGovernmentProvision =>
         "Government taking over production to reach social optimum.",
+      DiagramEnum.microPositiveConsumptionExternalityRegulations =>
+        'Health insurance mandates which require consumers to purchase health insurance is shown by a rightward shift in Demand/MPB towards MSB',
       DiagramEnum.microPublicGoods =>
         "Illustrates the 'Missing Market' for non-excludable, non-rival goods.",
 
@@ -888,7 +899,6 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Marshall-Lerner condition: Depreciation initially worsens trade balance before improving it.",
       DiagramEnum.globalJCurveSurplus =>
         "Inverse J-Curve effect on a trade surplus.",
-
       // Development
       DiagramEnum.globalPPCReallocation =>
         "Moving along the PPC to prioritize merit goods or capital.",
@@ -900,6 +910,8 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Inward shift of the PPC due to resource depletion.",
       DiagramEnum.globalPovertyCycle =>
         "Circular flow showing how low income leads to low savings and investment.",
+      DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges =>
+        'Education and Nudges work to decrease consumer demand.',
     };
   }
 }

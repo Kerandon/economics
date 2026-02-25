@@ -15,7 +15,7 @@ void paintAxisLabels(
   Offset offsetAdjustment = Offset.zero,
   bool showBackground = true, // 👈 New property passed from paintAxis
 }) {
-  const double fontSize = kFontMedium;
+  double fontSize = kFontSizeAverageRatioStandard * config.averageRatio;
   final effectiveColor = config.colorScheme.onSurface;
 
   // 1. Determine Base Position & Pivots based on Axis
@@ -24,11 +24,11 @@ void paintAxisLabels(
   // Y-Axis Base: Slightly left (-0.04) and near the top (0.05)
   // X-Axis Base: At the far right (1.0) and slightly below (1.04)
   final Offset basePos = isYAxis
-      ? const Offset(-0.04, 0.05)
+      ? const Offset(-0.04, 0.00)
       : const Offset(1.0, 1.04);
 
-  final horizontalPivot = isYAxis ? LabelPivot.right : LabelPivot.right;
-  final verticalPivot = isYAxis ? LabelPivot.bottom : LabelPivot.top;
+  final horizontalPivot = LabelPivot.right;
+  final verticalPivot = LabelPivot.top;
 
   // 2. Execute Painting
   paintText(

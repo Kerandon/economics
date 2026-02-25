@@ -162,7 +162,7 @@ class SupplyDiagram extends BaseDiagramPainter {
       canvas,
       startPos: const Offset(0, 1.0),
       label2: DiagramLabel.totalProduct.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
       bezierPoints: [
         CustomBezier(
           endPoint: const Offset(0.79, 0.15),

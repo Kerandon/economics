@@ -155,7 +155,7 @@ class ComparativeAdvantageDiagram extends BaseDiagramPainter {
       startPos: Offset(0.0, yPoint),
       polylineOffsets: [Offset(xPoint, 1.0)],
       middleLabel: label,
-      middleLabelAlign: LabelAlign.centerRight,
+      middleLabelAlign: LabelAlign.right,
       color: color,
     );
     paintDiagramDashedLines(

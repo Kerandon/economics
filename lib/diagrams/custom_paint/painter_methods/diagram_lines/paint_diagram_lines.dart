@@ -280,22 +280,50 @@ void _paintDiagramLabel(
 
   switch (align) {
     case LabelAlign.centerTop:
+      horizontal = LabelPivot.center;
       vertical = LabelPivot.bottom;
       nudge = Offset(0, -gapValue);
       break;
     case LabelAlign.centerBottom:
+      horizontal = LabelPivot.center;
       vertical = LabelPivot.top;
       nudge = Offset(0, gapValue);
       break;
-    case LabelAlign.centerLeft:
+    case LabelAlign.left:
       horizontal = LabelPivot.right;
+      vertical = LabelPivot.middle;
       nudge = Offset(-gapValue, 0);
       break;
-    case LabelAlign.centerRight:
+    case LabelAlign.right:
       horizontal = LabelPivot.left;
+      vertical = LabelPivot.middle;
       nudge = Offset(gapValue, 0);
       break;
+    case LabelAlign.topLeft:
+      horizontal = LabelPivot.right;
+      vertical = LabelPivot.bottom;
+      nudge = Offset(-gapValue, -gapValue);
+      break;
+    case LabelAlign.topRight:
+      horizontal = LabelPivot.left;
+      vertical = LabelPivot.bottom;
+      nudge = Offset(gapValue, -gapValue);
+      break;
+    case LabelAlign.bottomLeft:
+      horizontal = LabelPivot.right;
+      vertical = LabelPivot.top;
+      nudge = Offset(-gapValue, gapValue);
+      break;
+    case LabelAlign.bottomRight:
+      horizontal = LabelPivot.left;
+      vertical = LabelPivot.top;
+      nudge = Offset(gapValue, gapValue);
+      break;
     case LabelAlign.center:
+    default:
+      horizontal = LabelPivot.center;
+      vertical = LabelPivot.middle;
+      nudge = Offset.zero;
       break;
   }
 

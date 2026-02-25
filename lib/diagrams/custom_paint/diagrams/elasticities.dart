@@ -161,7 +161,7 @@ class Elasticities extends BaseDiagramPainter {
         ),
       ],
       label2: DiagramLabel.d.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
     _paintStandardDashedLines(
       c,
@@ -183,7 +183,7 @@ class Elasticities extends BaseDiagramPainter {
       startPos: const Offset(0.0, 0.50),
       polylineOffsets: [const Offset(0.90, 0.50)],
       label2: DiagramLabel.d.label.toUpperCase(),
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
     paintDiagramDashedLines(
       c,
@@ -239,7 +239,7 @@ class Elasticities extends BaseDiagramPainter {
         ),
       ],
       label2: DiagramLabel.tR.label,
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
     paintDiagramDashedLines(
       c,
@@ -417,7 +417,7 @@ class Elasticities extends BaseDiagramPainter {
         startPos: const Offset(0, 1.0),
         polylineOffsets: [supplyCurves[i]],
         label2: 'S${i + 1}',
-        label2Align: LabelAlign.centerRight,
+        label2Align: LabelAlign.right,
       );
     }
     paintDot(c, canvas, const Offset(0.005, 0.995));
@@ -433,7 +433,7 @@ class Elasticities extends BaseDiagramPainter {
       startPos: const Offset(0.0, 0.50),
       polylineOffsets: [const Offset(0.90, 0.50)],
       label2: DiagramLabel.s.label.toUpperCase(),
-      label2Align: LabelAlign.centerRight,
+      label2Align: LabelAlign.right,
     );
     paintDiagramDashedLines(
       c,
