@@ -10,16 +10,16 @@ void paintLegendTable(
   required List<String> headers,
   required List<List<String>> data,
   // 1. Reduced rowHeight from 14.0 to 12.0 for a tighter look
-  double rowHeight = 12.0,
+  double rowHeight = 16.0,
   Color? borderColor,
   // 2. Reduced padding slightly from 6.0 to 4.0
-  double cellPadding = 4.0,
+  double cellPadding = 6.0,
 }) async {
   final primaryColor = config.colorScheme.onSurface;
   final size = config.painterSize;
 
   // 3. Made font slightly smaller (multiplier from 0.65 -> 0.6)
-  final double fontSize = (kFontMedium * config.averageRatio) * 0.6;
+  final double fontSize = (kFontMedium * config.averageRatio) * 0.9;
 
   // Measure Column Widths
   final int numCols = headers.length;
@@ -51,7 +51,7 @@ void paintLegendTable(
   // 4. CHANGE: Instead of subtracting height, we start AT the bottom edge
   // and push down by the offset. This ensures it doesn't overlap the diagram.
   final double startX = (size.width - totalWidth) / 2.0;
-  double currentY = size.height + -((kAxisIndent * size.height) / 2);
+  double currentY = size.height + -((kAxisIndent * size.height) / 1.2);
 
   // Helper to draw a full row
   void drawRow(List<String> rowData, bool isHeader) {

@@ -20,7 +20,7 @@ void paintDiagramLines(
   List<CustomBezier>? bezierPoints,
   List<Offset>? polylineOffsets,
   Color? color,
-  double strokeWidth = 5.0,
+  double strokeWidth = kCurveWidth,
 
   // LABELS
   String? label1,
@@ -96,25 +96,58 @@ void paintDiagramLines(
     }
   }
 
-  // --- 3. DRAW LINE (UPDATED) ---
+// --- 3. DRAW LINE (UPDATED) ---
   if (curveStyle == CurveStyle.dashed || curveStyle == CurveStyle.dotted) {
+    // 1. Define dash and gap lengths based on the chosen style
+    final double dashOn = curveStyle == CurveStyle.dotted ? effectiveWidth : 12.0;
+    final double dashOff = curveStyle == CurveStyle.dotted ? effectiveWidth * 1.5 : 8.0;
+
+    double currentDashLength = 0.0;
+    bool isDrawing = true;
+
+    // 2. Walk through all segments (macro polylines OR micro bezier steps)
     for (int i = 0; i < points.length - 1; i++) {
-      canvas.drawDashedLine(
-        points[i],
-        points[i + 1],
-        mainColor,
-        effectiveWidth,
-      );
+      final p1 = points[i];
+      final p2 = points[i + 1];
+      final double segmentDist = (p2 - p1).distance;
+
+      if (segmentDist == 0) continue; // Skip 0-length segments
+
+      final Offset direction = (p2 - p1) / segmentDist; // Unit vector
+      double walked = 0.0;
+
+      // 3. Step along the current segment in dash/gap increments
+      while (walked < segmentDist) {
+        final double remainingInSegment = segmentDist - walked;
+        final double requiredForState = (isDrawing ? dashOn : dashOff) - currentDashLength;
+
+        // Take the smaller step: finish the segment, or finish the dash/gap
+        final double step = remainingInSegment < requiredForState
+            ? remainingInSegment
+            : requiredForState;
+
+        if (isDrawing) {
+          final Offset startDraw = p1 + (direction * walked);
+          final Offset endDraw = startDraw + (direction * step);
+          canvas.drawLine(startDraw, endDraw, mainColor, effectiveWidth);
+        }
+
+        walked += step;
+        currentDashLength += step;
+
+        // Toggle state if we completed a dash or gap
+        if (currentDashLength >= (isDrawing ? dashOn : dashOff)) {
+          isDrawing = !isDrawing;
+          currentDashLength = 0.0;
+        }
+      }
     }
   } else {
-    // FIX: Instead of drawPath (which ignores width in your interface),
-    // we draw connected line segments. Since drawLine accepts width,
-    // this respects your strokeWidth parameter.
+    // Solid line
     for (int i = 0; i < points.length - 1; i++) {
       canvas.drawLine(points[i], points[i + 1], mainColor, effectiveWidth);
     }
   }
-
   // --- 4. CALCULATE PATH METRICS ---
   double totalLength = 0;
   List<double> dists = [0];
@@ -320,8 +353,7 @@ void _paintDiagramLabel(
       nudge = Offset(gapValue, gapValue);
       break;
     case LabelAlign.center:
-    default:
-      horizontal = LabelPivot.center;
+    horizontal = LabelPivot.center;
       vertical = LabelPivot.middle;
       nudge = Offset.zero;
       break;

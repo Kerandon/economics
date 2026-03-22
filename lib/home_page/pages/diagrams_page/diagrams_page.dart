@@ -8,7 +8,6 @@ import '../../../diagrams/models/diagram_widget.dart';
 import '../../../diagrams/helper_methods/export_diagrams_to_pdf.dart';
 import 'diagrams_gallery.dart';
 import 'diagrams_side_bar.dart';
-
 class DiagramsPage extends ConsumerStatefulWidget {
   const DiagramsPage({super.key});
 
@@ -31,7 +30,7 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
 
   // Helper to generate IDs
   String _getDiagramId(DiagramWidget d, int index) {
-    final subunitId = d.painters.first.subunit?.id ?? "misc";
+    final subunitId = d.painters.first.subunit.id ?? "misc";
     final textId = d.painters.first.diagram.toText;
     return "${subunitId}_${textId}_$index";
   }
@@ -48,12 +47,12 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
     }
   }
 
-  // --- UPDATED DIALOG LOGIC ---
+  // --- DIALOG LOGIC ---
   void _showDiagramDialog(
-    BuildContext context,
-    List<DiagramWidget> allDiagrams,
-    int initialIndex,
-  ) {
+      BuildContext context,
+      List<DiagramWidget> allDiagrams,
+      int initialIndex,
+      ) {
     showDialog(
       context: context,
       builder: (ctx) {
@@ -70,7 +69,6 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
             final hasPrevious = initialIndex > 0;
             final hasNext = initialIndex < allDiagrams.length - 1;
 
-            // 1. Fixed Card Width logic matches the Container size below
             const double cardWidth = 516.0;
             final double layoutWidth = (data.axis == Axis.vertical)
                 ? cardWidth
@@ -140,18 +138,18 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                                           width: layoutWidth,
                                           child: Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               if (effectiveDescription
                                                   .isNotEmpty)
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                        bottom: 24,
-                                                        left: 8,
-                                                        right: 8,
-                                                      ),
+                                                  const EdgeInsets.only(
+                                                    bottom: 24,
+                                                    left: 8,
+                                                    right: 8,
+                                                  ),
                                                   child: Text(
                                                     effectiveDescription,
                                                     style: const TextStyle(
@@ -162,30 +160,23 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                                               Flex(
                                                 direction: data.axis,
                                                 mainAxisSize: MainAxisSize.min,
-                                                // Center alignment helps distribute extra space if any
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                                 children: data.painters.map((
-                                                  painter,
-                                                ) {
-                                                  // --- FIX IS HERE ---
-                                                  // Removed external Padding widget.
-                                                  // Added padding INSIDE the Container.
+                                                    painter,
+                                                    ) {
                                                   return Container(
                                                     width: 500,
                                                     height: 500,
                                                     margin:
-                                                        const EdgeInsets.all(8),
-                                                    // This shrinks the canvas to 436x436
-                                                    // leaving 32px of safe space for overflow
+                                                    const EdgeInsets.all(8),
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                          32.0,
-                                                        ),
+                                                    const EdgeInsets.all(
+                                                      32.0,
+                                                    ),
                                                     color: Colors.white,
                                                     child: CustomPaint(
                                                       painter: painter,
-                                                      // Ensure we don't clip the overflow
                                                       foregroundPainter: null,
                                                     ),
                                                   );
@@ -276,8 +267,9 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
             DiagramsSidebar(
               activeUnits: activeUnits,
               diagramsBySubunit: diagramsBySubunit,
-              onExportPdf: () =>
-                  exportDiagramsToPdf(allDiagrams, config, context),
+              onExportAllPdf: () {
+                exportDiagramsToPdf(allDiagrams, config, context);
+              },
               onDiagramTap: (d, index) =>
                   _scrollToDiagram(_getDiagramId(d, index)),
             ),
@@ -323,7 +315,19 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                           activeUnits: activeUnits,
                           diagramsBySubunit: diagramsBySubunit,
                           filteredDiagrams: filteredDiagrams,
-                          // Pass key generation logic
+                          onPrintUnit: (unit) {
+                            final unitDiagrams = <DiagramWidget>[];
+                            if (activeUnits.containsKey(unit)) {
+                              for (var subunit in activeUnits[unit]!) {
+                                unitDiagrams.addAll(
+                                    diagramsBySubunit[subunit] ?? []);
+                              }
+                            }
+                            exportDiagramsToPdf(unitDiagrams, config, context);
+                          },
+                          onPrintDiagram: (diagram) {
+                            exportDiagramsToPdf([diagram], config, context);
+                          },
                           getDiagramKey: (d, i) {
                             final id = _getDiagramId(d, i);
                             if (!_diagramKeys.containsKey(id)) {

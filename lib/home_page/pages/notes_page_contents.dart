@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../state_management/home_page_state.dart';
-import 'notes_page.dart';
+import 'notes_page/notes_page.dart';
 
 class NotesPageContents extends ConsumerWidget {
   const NotesPageContents({super.key});

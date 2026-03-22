@@ -104,15 +104,23 @@ void paintText(
     );
   }
 
-  // 6. Draw Background Shape & Text
+// 6. Draw Background Shape & Text
   canvas.save();
   canvas.translate(drawPos.dx, drawPos.dy);
   if (angle != 0) canvas.rotate(angle);
 
   final relativeTopLeft = Offset(-shiftX, -shiftY);
-  // Increase box padding slightly for better aesthetics
-  final padX = 1.0 * config.averageRatio;
-  final padY = 1.0 * config.averageRatio;
+
+  // NEW: Conditional padding logic
+  // Use significant padding for shapes, zero/minimal for 'none'
+  double padX = 0;
+  double padY = 0;
+
+  if (shape != DiagramShape.none) {
+    // Adjust these multipliers to your preference for "breathability"
+    padX = 26.0 * config.averageRatio;
+    padY = 18.0 * config.averageRatio;
+  }
 
   final textRect = Rect.fromLTWH(
     relativeTopLeft.dx - (padX / 2),
@@ -120,9 +128,12 @@ void paintText(
     textPainter.width + padX,
     textPainter.height + padY,
   );
-
+  if (showBackground) {
+    canvas.drawRect(textRect, surfaceColor, fill: true);
+  }
   // Shape logic remains the same...
   switch (shape) {
+
     case DiagramShape.circle:
       final inflated = textRect.inflate(textRect.height * 0.4);
       final radius = Radius.circular(inflated.height / 2);
@@ -151,7 +162,6 @@ void paintText(
       if (showBackground) canvas.drawRect(textRect, surfaceColor, fill: true);
       break;
   }
-
   // 7. Paint Text
   canvas.paintTextPainter(textPainter, relativeTopLeft);
   canvas.restore();

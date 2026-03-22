@@ -4,7 +4,6 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_a
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
@@ -257,7 +256,7 @@ class Externalities extends BaseDiagramPainter {
       LineEndStyle.arrow,
       0.32,
       label: '1',
-      labelAlign: LabelAlign.bottomRight,
+      labelAlign: LabelAlign.center,
     );
     _paintShift(
       c,
@@ -267,7 +266,7 @@ class Externalities extends BaseDiagramPainter {
       LineEndStyle.arrow,
       0.14,
       label: '2',
-      labelAlign: LabelAlign.right,
+      labelAlign: LabelAlign.center,
     );
     paintDescription(
       c,

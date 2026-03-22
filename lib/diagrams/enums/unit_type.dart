@@ -216,6 +216,11 @@ enum SyllabusPoint {
     Subunit.marketFailurePower,
     'Legislation, regulations, government ownership and fines',
     [Skill.a03],
+  ),
+  measuringEconomicActivity(
+  Subunit.measuringEconomicActivity,
+  'Measuring economic activity and illustrating its variations',
+  [Skill.a02, Skill.a03, Skill.a04],
   );
 
   final Subunit subunit;

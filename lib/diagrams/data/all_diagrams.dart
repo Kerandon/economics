@@ -11,25 +11,24 @@ class AllDiagrams {
   AllDiagrams({required this.size, required this.colorScheme});
 
   List<DiagramWidget> getDiagramWidgets({List<DiagramEnum>? diagrams}) {
-    // Create config (same as AllDiagrams)
     final config = DiagramPainterConfig(
       painterSize: size,
       appSize: Size(size.width, size.height),
       colorScheme: colorScheme,
     );
 
-    // Generate all diagram widgets
     final all = getDiagramWidgetsListNEW(config).toList();
 
     // If filtering by enum
     if (diagrams?.isNotEmpty ?? false) {
-      // return all.where((w) => diagrams)
-      // return all
-      //     .where((w) => diagrams!.contains(w.basePainterDiagram.diagram))
-      //     .toList();
+      return all.where((w) {
+        // We check if ANY of the painters inside this widget match the requested enums.
+        // NOTE: Replace `painters` and `diagram` with whatever you named
+        // those variables inside your DiagramWidget and BasePainter classes!
+        return w.painters.any((painter) => diagrams!.contains(painter.diagram));
+      }).toList();
     }
 
-    // Otherwise return all
     return all;
   }
 }

@@ -17,9 +17,24 @@ class _HomePageWebState extends State<HomePageWeb> {
     return Scaffold(
       backgroundColor: Colors.grey[50], // Light background for contrast
       appBar: AppBar(
-        title: const Text(
-          'Economics Hub',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+        leading: SizedBox(),
+        toolbarHeight: 150,
+        title: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 150,
+                  child: Image.asset('assets/images/logo.png',
+                    fit: BoxFit.contain,
+
+                  ),
+                ),
+              ),
+
+            ),
+          ],
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -42,23 +57,10 @@ class _HomePageWebState extends State<HomePageWeb> {
           constraints: const BoxConstraints(maxWidth: 1200),
           // Prevent stretching on ultra-wide screens
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // A nice header section
-                const Text(
-                  "Welcome back",
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "Select a topic to review notes, diagrams, and practice questions.",
-                  style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-                ),
-                const SizedBox(height: 32),
-
-                // The Grid
                 Expanded(
                   child: GridView.builder(
                     gridDelegate:

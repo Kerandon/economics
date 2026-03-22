@@ -1,22 +1,11 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import '../custom_paint/i_diagram_canvas.dart';
-
 import 'dart:math' as math;
-import 'dart:ui' as ui;
-import 'package:flutter/material.dart' show TextPainter, TextSpan, Colors;
-// Assuming you are using the 'pdf' package. Adjust imports if using 'syncfusion_flutter_pdf'.
+import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-
-import 'dart:math' as math;
-import 'dart:ui' as ui;
-import 'package:flutter/material.dart' show TextPainter, TextSpan, Colors;
-// Assuming you are using the 'pdf' package. Adjust imports if using 'syncfusion_flutter_pdf'.
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
+import '../custom_paint/i_diagram_canvas.dart';
 
 class PdfDiagramCanvas implements IDiagramCanvas {
   final PdfGraphics graphics;
@@ -24,14 +13,28 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   final double pageHeight;
   final PdfFont pdfFont;
 
-  static const double pdfScale = 1.5;
+  // FIX FOR ISSUE 2 & 4: Setting scale to 1.0 ensures text bounding boxes
+  // match exactly with Flutter's calculations, preventing labels from overlapping axes
+  // and keeping text contained in the drawn shape borders.
+  static const double pdfScale = 1.0;
 
   PdfDiagramCanvas(
-    this.graphics,
-    this.document,
-    this.pageHeight, {
-    required this.pdfFont,
-  });
+      this.graphics,
+      this.document,
+      this.pageHeight, {
+        required this.pdfFont,
+      });
+
+  // FIX FOR ISSUE 3 & 4: Properly extract the Alpha channel from Flutter Color
+  // so transparent colors (like the legend header and shaded areas) don't render as solid black.
+  PdfColor _toPdfColor(Color c) {
+    return PdfColor(
+      c.red / 255.0,
+      c.green / 255.0,
+      c.blue / 255.0,
+      c.alpha / 255.0,
+    );
+  }
 
   /// Helper to convert Flutter Y (Top-Down) to PDF Y (Bottom-Up)
   double _transY(double y) => pageHeight - y;
@@ -39,7 +42,7 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   @override
   void drawLine(Offset p1, Offset p2, Color color, double width) {
     graphics
-      ..setStrokeColor(PdfColor.fromInt(color.value))
+      ..setStrokeColor(_toPdfColor(color))
       ..setLineWidth(width * pdfScale)
       ..moveTo(p1.dx, _transY(p1.dy))
       ..lineTo(p2.dx, _transY(p2.dy))
@@ -51,7 +54,7 @@ class PdfDiagramCanvas implements IDiagramCanvas {
     graphics
       ..saveContext()
       ..setLineDashPattern([3, 3])
-      ..setStrokeColor(PdfColor.fromInt(color.value))
+      ..setStrokeColor(_toPdfColor(color))
       ..setLineWidth(width * pdfScale)
       ..moveTo(p1.dx, _transY(p1.dy))
       ..lineTo(p2.dx, _transY(p2.dy))
@@ -64,8 +67,8 @@ class PdfDiagramCanvas implements IDiagramCanvas {
     if (points.length < 2) return;
 
     graphics
-      ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setFillColor(PdfColor.fromInt(color.value))
+      ..setStrokeColor(_toPdfColor(color))
+      ..setFillColor(_toPdfColor(color))
       ..setLineWidth(0.5 * pdfScale);
 
     graphics.moveTo(points.first.dx, _transY(points.first.dy));
@@ -74,31 +77,27 @@ class PdfDiagramCanvas implements IDiagramCanvas {
     }
 
     if (fill) {
-      graphics.fillPath(); // implicitly closes path
+      graphics.fillPath();
     } else {
-      graphics.strokePath(); // usually open unless closed manually
+      graphics.strokePath();
     }
   }
 
   @override
   void drawRect(
-    Rect rect,
-    Color color, {
-    bool fill = false,
-    double strokeWidth = 1.0,
-  }) {
+      Rect rect,
+      Color color, {
+        bool fill = false,
+        double strokeWidth = 1.0,
+      }) {
     graphics
-      ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setFillColor(PdfColor.fromInt(color.value))
-      ..setLineWidth(
-        strokeWidth,
-      ); // 👈 Tell the PDF canvas how thick to draw the line
+      ..setStrokeColor(_toPdfColor(color))
+      ..setFillColor(_toPdfColor(color))
+      ..setLineWidth(strokeWidth * pdfScale);
 
-    // Convert Top-Down Rect to Bottom-Up PDF Rect
-    // PDF drawRect usually takes (x, y, width, height) where y is the bottom-left corner
     graphics.drawRect(
       rect.left,
-      _transY(rect.bottom), // Bottom-left Y in PDF coords
+      _transY(rect.bottom),
       rect.width,
       rect.height,
     );
@@ -110,12 +109,11 @@ class PdfDiagramCanvas implements IDiagramCanvas {
     }
   }
 
-  // --- UPDATED: Rounded Rectangle ---
   @override
   void drawRRect(Rect rect, Radius radius, Color color, {bool fill = true}) {
     graphics
-      ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setFillColor(PdfColor.fromInt(color.value))
+      ..setStrokeColor(_toPdfColor(color))
+      ..setFillColor(_toPdfColor(color))
       ..setLineWidth(0.5 * pdfScale);
 
     final double r = radius.x;
@@ -124,13 +122,7 @@ class PdfDiagramCanvas implements IDiagramCanvas {
     final double left = rect.left;
     final double right = rect.right;
 
-    // Helper to draw corners (Approximation)
-    void drawCorner(
-      double cx,
-      double cy,
-      double startAngle,
-      double sweepAngle,
-    ) {
+    void drawCorner(double cx, double cy, double startAngle, double sweepAngle) {
       const int steps = 6;
       for (int i = 0; i <= steps; i++) {
         final double theta = startAngle + (sweepAngle * (i / steps));
@@ -145,31 +137,14 @@ class PdfDiagramCanvas implements IDiagramCanvas {
       }
     }
 
-    // Start drawing (Move to start of top line)
     graphics.moveTo(left + r, _transY(top));
-
-    // Top Edge
     graphics.lineTo(right - r, _transY(top));
-
-    // Top-Right Corner (approx -PI/2 to 0)
     drawCorner(right - r, top + r, -math.pi / 2, math.pi / 2);
-
-    // Right Edge
     graphics.lineTo(right, _transY(bottom - r));
-
-    // Bottom-Right Corner (0 to PI/2)
     drawCorner(right - r, bottom - r, 0, math.pi / 2);
-
-    // Bottom Edge
     graphics.lineTo(left + r, _transY(bottom));
-
-    // Bottom-Left Corner (PI/2 to PI)
     drawCorner(left + r, bottom - r, math.pi / 2, math.pi / 2);
-
-    // Left Edge
     graphics.lineTo(left, _transY(top + r));
-
-    // Top-Left Corner (PI to 3PI/2)
     drawCorner(left + r, top + r, math.pi, math.pi / 2);
 
     graphics.closePath();
@@ -185,11 +160,9 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   void drawDot(Offset center, Color color, {double? radius, bool fill = true}) {
     final r = (radius ?? 4.0) * pdfScale;
     graphics
-      ..setStrokeColor(PdfColor.fromInt(color.value))
-      ..setFillColor(PdfColor.fromInt(color.value));
+      ..setStrokeColor(_toPdfColor(color))
+      ..setFillColor(_toPdfColor(color));
 
-    // Draw Ellipse (PDF coordinates usually center-based or bounding box)
-    // Assuming standard drawEllipse(x, y, rx, ry)
     graphics.drawEllipse(center.dx, _transY(center.dy), r, r);
 
     if (fill) {
@@ -203,51 +176,58 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   void drawText(String text, Offset position, double fontSize, Color color) {
     graphics
       ..saveContext()
-      ..setFillColor(PdfColor.fromInt(color.value));
+      ..setFillColor(_toPdfColor(color));
 
-    // Adjust Y because PDF draws from baseline, Flutter draws from Top-Left
-    double pdfY = _transY(position.dy) - (fontSize * pdfScale * 0.8);
-
-    // Note: This relies on your specific PDF library's API.
-    // Standard 'pdf' package uses: drawString(font, size, text, x, y)
-    graphics.drawString(pdfFont, fontSize * pdfScale, text, position.dx, pdfY);
+    // FIX FOR ISSUE 1: Split simple text by newline to render multi-line labels
+    final lines = text.split('\n');
+    for (int i = 0; i < lines.length; i++) {
+      final line = lines[i];
+      double lineDy = position.dy + (i * (fontSize * 1.2));
+      double pdfY = _transY(lineDy) - (fontSize * pdfScale * 0.8);
+      graphics.drawString(pdfFont, fontSize * pdfScale, line, position.dx, pdfY);
+    }
 
     graphics.restoreContext();
   }
 
-  // --- NEW: Implementation of paintTextPainter ---
   @override
   void paintTextPainter(TextPainter painter, Offset offset) {
-    // 1. Extract plain text (PDF fonts don't support Flutter's TextSpans directly)
     final String text = painter.text?.toPlainText() ?? '';
     if (text.isEmpty) return;
 
-    // 2. Extract basic style
     final TextStyle? style = painter.text?.style;
     final double fontSize = style?.fontSize ?? 12.0;
     final Color color = style?.color ?? Colors.black;
 
-    // 3. Handle Multiline Text
-    // Since we can't easily replicate Flutter's exact wrapping in raw PDF drawing
-    // without a complex layout engine, we will check if the user wanted wrapping.
+    // FIX FOR ISSUE 1: Split string by newline character for complex painters
+    final lines = text.split('\n');
 
-    // If the text is long, you might want to split it manually or assume
-    // the string already has newline characters if you formatted it yourself.
+    graphics
+      ..saveContext()
+      ..setFillColor(_toPdfColor(color));
 
-    // For now, we map it to our existing drawText logic.
-    // If your PDF library supports multi-line drawString (wraps at \n), this works.
-    drawText(text, offset, fontSize, color);
+    for (int i = 0; i < lines.length; i++) {
+      final line = lines[i];
 
-    /* NOTE: If you need true automatic wrapping in PDF (like max-width),
-       you typically need to use a high-level widget (like pw.Paragraph)
-       rather than raw PdfGraphics commands.
+      // Approximate X alignment based on Flutter's text layout width
+      double lineDx = offset.dx;
+      if (painter.textAlign == TextAlign.center) {
+        double lineW = line.length * (fontSize * 0.55 * pdfScale);
+        lineDx += (painter.width - lineW) / 2;
+      } else if (painter.textAlign == TextAlign.right) {
+        double lineW = line.length * (fontSize * 0.55 * pdfScale);
+        lineDx += (painter.width - lineW);
+      }
 
-       Since this class is for raw drawing commands, we assume the text
-       passed in is either short labels or pre-formatted with \n.
-    */
+      // Adjust Y for multiple lines
+      double lineDy = offset.dy + (i * (fontSize * 1.2));
+      double pdfY = _transY(lineDy) - (fontSize * pdfScale * 0.8);
+
+      graphics.drawString(pdfFont, fontSize * pdfScale, line, lineDx, pdfY);
+    }
+
+    graphics.restoreContext();
   }
-
-  // --- Transformation Stubs ---
 
   @override
   void save() => graphics.saveContext();
@@ -257,14 +237,11 @@ class PdfDiagramCanvas implements IDiagramCanvas {
 
   @override
   void translate(double dx, double dy) {
-    // Note: PDF matrices might differ. Usually (1, 0, 0, 1, dx, dy).
-    // Be careful with Y-axis flipping if doing complex transforms.
     graphics.setTransform(Matrix4.translationValues(dx, -dy, 0));
   }
 
   @override
   void rotate(double radians) {
-    // Rotate around Z axis
     graphics.setTransform(Matrix4.rotationZ(-radians));
   }
 

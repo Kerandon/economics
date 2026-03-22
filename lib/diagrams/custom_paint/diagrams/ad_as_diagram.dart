@@ -28,6 +28,12 @@ class ADASDiagram extends BaseDiagramPainter {
     );
 
     switch (diagram) {
+      case DiagramEnum.macroAggregateDemand:
+      case DiagramEnum.macroAggregateDemandIncrease:
+      case DiagramEnum.macroAggregateDemandDecrease:
+      case DiagramEnum.macroSRAS:
+      case DiagramEnum.macroSRASIncrease:
+      case DiagramEnum.macroSRASDecrease:
       case DiagramEnum.macroClassicalFullEmployment:
       case DiagramEnum.macroClassicalDeflationaryGap:
       case DiagramEnum.macroClassicalInflationaryGap:
@@ -60,6 +66,10 @@ void _paintClassicalADAS(
   DiagramEnum diagram,
 ) {
   switch (diagram) {
+
+    case DiagramEnum.macroAggregateDemand:
+      paintMarketCurve(c, canvas, type: MarketCurveType.ad);
+
     case DiagramEnum.macroClassicalFullEmployment:
       _paintLRAS(c, canvas);
       paintMarketCurve(c, canvas, type: MarketCurveType.ad);

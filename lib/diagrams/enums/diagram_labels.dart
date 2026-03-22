@@ -229,21 +229,21 @@ enum DiagramLabel {
   sDSub,
   dD,
   sW,
-  households,
+  consumers,
   firms,
   factorsOfProduction,
   factorPayments,
   factorPaymentsY,
-  landLaborCapitalEntrepreneurship,
+  fOPLandLaborCapitalEntrepreneurship,
   householdSpending,
-  householdSpendingE,
-  householdSpendingFirmRevenue,
+  expenditure,
+  consumerExpenditure,
   goodsAndServices,
-  goodsAndServicesO,
+  outputGoodsAndServices,
   leakages,
   injections,
   rentWagesInterestProfit,
-  rentWagesInterestProfitY,
+  incomeRentWagesInterestProfitY,
   factorMarkets,
   productMarkets,
   government,
@@ -251,7 +251,7 @@ enum DiagramLabel {
   publicSector,
   society,
   financialSector,
-  foreignSector,
+  foreignMarkets,
   tax,
   governmentTaxRevenue,
   taxes,
@@ -283,6 +283,7 @@ enum DiagramLabel {
   realGDP,
   potentialOutput,
   potentialGDP,
+  potentialGDP1,
   nRU,
   timeYears,
   aggregateDemand,
@@ -536,23 +537,23 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.c => 'c',
       DiagramLabel.upperBand => 'Upper Band',
       DiagramLabel.lowerBand => 'Lower Band',
-      DiagramLabel.households => 'Households',
+      DiagramLabel.consumers => 'Consumers',
       DiagramLabel.firms => 'Firms',
       DiagramLabel.factorMarkets => 'Factor Markets',
       DiagramLabel.productMarkets => 'Product Markets',
       DiagramLabel.government => 'Government',
-      DiagramLabel.financialSector => 'Financial Sector',
-      DiagramLabel.foreignSector => 'Foreign Sector',
+      DiagramLabel.financialSector => 'Financial Markets',
+      DiagramLabel.foreignMarkets => 'Foreign Sector',
       DiagramLabel.taxes => 'Taxes',
       DiagramLabel.governmentBudget => 'Government Budget',
       DiagramLabel.savings => 'Savings',
       DiagramLabel.investment => 'Investment',
       DiagramLabel.imports => 'Imports',
       DiagramLabel.exports => 'Exports',
-      DiagramLabel.landLaborCapitalEntrepreneurship =>
-        'Land, Labor, Capital, Entrepreneurship',
-      DiagramLabel.householdSpendingFirmRevenue =>
-        'Household Spending / Firm Revenue',
+      DiagramLabel.fOPLandLaborCapitalEntrepreneurship =>
+        'Resources\n(Land, Labor,\nCapital, Entrepreneurship)',
+      DiagramLabel.consumerExpenditure =>
+        'E - Expenditure',
       DiagramLabel.goodsAndServices => 'Goods & Services',
       DiagramLabel.rentWagesInterestProfit => 'Rent, Wages, Interest, Profit',
       DiagramLabel.factorsOfProduction => 'Factors of Production',
@@ -721,12 +722,12 @@ extension MicroLabelExtension on DiagramLabel {
 
       DiagramLabel.factorPaymentsY => 'Factor Payments (Y)',
 
-      DiagramLabel.householdSpendingE => 'Household Spending (E)',
+      DiagramLabel.expenditure => '(E) Expenditure',
 
-      DiagramLabel.goodsAndServicesO => 'Goods & Services (O)',
+      DiagramLabel.outputGoodsAndServices => '(O) Output\n(Goods & Services)',
 
-      DiagramLabel.rentWagesInterestProfitY =>
-        'Rent, Wages, Interest, Profit (Y)',
+      DiagramLabel.incomeRentWagesInterestProfitY =>
+        '(Y) Income\n(Rent, Wages, Interest, Profit)',
 
       DiagramLabel.governmentSpendingG => 'Government\nSpending (G)',
 
@@ -889,6 +890,8 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.regulations => 'Regulations',
 
       DiagramLabel.education => 'Education',
+
+      DiagramLabel.potentialGDP1 => 'Potential GDP1',
     };
   }
 }

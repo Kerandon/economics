@@ -1,14 +1,10 @@
-import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/grid_lines/draw_dashed_line_for_grid.dart';
 import 'package:flutter/material.dart';
 
 import 'i_diagram_canvas.dart';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'i_diagram_canvas.dart';
 // Import your constants...
 
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 class FlutterDiagramCanvas implements IDiagramCanvas {

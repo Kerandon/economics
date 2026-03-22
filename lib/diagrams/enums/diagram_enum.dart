@@ -115,11 +115,19 @@ enum DiagramEnum {
   /// Macro**********
 
   /// National income & biz cycle
-  macroCircularFlowClosed,
-  macroCircularFlowOpen,
+  macroCircularFlowTwoSectorEconomy,
+  macroCircularFlowOpenEconomy,
   macroBusinessCycle,
+  macroBusinessCycleStabilizationPolicies,
+  macroBusinessCycleIncreaseInPotentialGDP,
 
   /// AD-AS
+  macroAggregateDemand,
+  macroAggregateDemandIncrease,
+  macroAggregateDemandDecrease,
+  macroSRAS,
+  macroSRASIncrease,
+  macroSRASDecrease,
   macroClassicalFullEmployment,
   macroClassicalDeflationaryGap,
   macroClassicalInflationaryGap,
@@ -413,10 +421,36 @@ extension DiagramBundleEnumUnit on DiagramEnum {
       Subunit.marketFailurePower,
 
     ///Macro
-    DiagramEnum.macroCircularFlowClosed => Subunit.measuringEconomicActivity,
+  /// Measuring economic activity
+    DiagramEnum.macroCircularFlowTwoSectorEconomy =>
+      Subunit.measuringEconomicActivity,
 
-    DiagramEnum.macroCircularFlowOpen => Subunit.measuringEconomicActivity,
+    DiagramEnum.macroCircularFlowOpenEconomy =>
+      Subunit.measuringEconomicActivity,
     DiagramEnum.macroBusinessCycle => Subunit.measuringEconomicActivity,
+
+    DiagramEnum.macroBusinessCycleStabilizationPolicies =>
+    Subunit.measuringEconomicActivity,
+
+    DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP =>
+    Subunit.measuringEconomicActivity,
+  ///AD-AS
+
+
+
+    DiagramEnum.macroAggregateDemand => Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroAggregateDemandIncrease => Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroAggregateDemandDecrease => Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroSRAS => Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroSRASIncrease => Subunit.variationsActivityADAS,
+
+    DiagramEnum.macroSRASDecrease => Subunit.variationsActivityADAS,
+
+
     DiagramEnum.macroClassicalFullEmployment => Subunit.variationsActivityADAS,
 
     DiagramEnum.macroClassicalDeflationaryGap => Subunit.variationsActivityADAS,
@@ -520,6 +554,7 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.globalPPCReallocation => Subunit.sustainableDevelopment,
     DiagramEnum.globalPPCEconomicGrowth => Subunit.sustainableDevelopment,
     DiagramEnum.globalPPCCapitalInvestment => Subunit.sustainableDevelopment,
+
   };
 }
 
@@ -757,14 +792,25 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       // -----------------------------------------------------------------------
 
       // Activity & Biz Cycle
-      DiagramEnum.macroCircularFlowClosed =>
+      DiagramEnum.macroCircularFlowTwoSectorEconomy =>
         "Two-sector model showing flows of income and expenditure between Households and Firms.",
-      DiagramEnum.macroCircularFlowOpen =>
+      DiagramEnum.macroCircularFlowOpenEconomy =>
         "Four-sector model including Government, Financial, and Foreign sectors.",
       DiagramEnum.macroBusinessCycle =>
         "Fluctuations in GDP over time: Boom, Recession, Trough, and Recovery.",
 
       // AD-AS
+      DiagramEnum.macroAggregateDemand => '',
+
+      DiagramEnum.macroAggregateDemandIncrease => '',
+
+      DiagramEnum.macroAggregateDemandDecrease => '',
+
+      DiagramEnum.macroSRAS => '',
+
+      DiagramEnum.macroSRASIncrease => '',
+
+      DiagramEnum.macroSRASDecrease => '',
       DiagramEnum.macroClassicalFullEmployment =>
         "Long-run equilibrium where AD intersects SRAS and LRAS at Yfe.",
       DiagramEnum.macroClassicalDeflationaryGap =>
@@ -912,6 +958,11 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Circular flow showing how low income leads to low savings and investment.",
       DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges =>
         'Education and Nudges work to decrease consumer demand.',
+
+      DiagramEnum.macroBusinessCycleStabilizationPolicies =>
+        'Progressive taxation reduces the size of an inflationary gap, while unemployment payments reduce the size of a deflationary gap',
+      DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP =>
+        'An increase in Potential GDP is due policies that increase the productive capacity of the economy (supply-side policies)',
     };
   }
 }

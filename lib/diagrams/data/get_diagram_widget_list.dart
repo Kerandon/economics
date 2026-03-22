@@ -237,14 +237,21 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
 
     /// Circular Flow
     DiagramWidget([
-      CircularFlowDiagram(c, DiagramEnum.macroCircularFlowClosed),
+      CircularFlowDiagram(c, DiagramEnum.macroCircularFlowTwoSectorEconomy),
     ]),
-    DiagramWidget([CircularFlowDiagram(c, DiagramEnum.macroCircularFlowOpen)]),
+    DiagramWidget([CircularFlowDiagram(c, DiagramEnum.macroCircularFlowOpenEconomy)]),
 
     ///Biz cycle
     DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycle)]),
-
+    DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycleStabilizationPolicies)]),
+    DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP)]),
     /// AD-AS
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroAggregateDemand)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroAggregateDemandIncrease)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroAggregateDemandDecrease)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRAS)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRASIncrease)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRASDecrease)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalFullEmployment)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGap)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalInflationaryGap)]),

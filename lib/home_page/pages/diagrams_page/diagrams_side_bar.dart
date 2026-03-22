@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import '../../../diagrams/enums/unit_type.dart';
 import '../../../diagrams/models/diagram_widget.dart';
 // Import your models (UnitType, Subunit, DiagramWidget, etc.)
+import 'package:flutter/material.dart';
 
 class DiagramsSidebar extends StatelessWidget {
   final Map<UnitType, List<Subunit>> activeUnits;
   final Map<Subunit, List<DiagramWidget>> diagramsBySubunit;
   final Function(DiagramWidget, int) onDiagramTap;
-  final VoidCallback onExportPdf;
+  final VoidCallback onExportAllPdf; // NEW
 
   const DiagramsSidebar({
     super.key,
     required this.activeUnits,
     required this.diagramsBySubunit,
     required this.onDiagramTap,
-    required this.onExportPdf,
+    required this.onExportAllPdf,
   });
 
   @override
@@ -36,15 +37,16 @@ class DiagramsSidebar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
             child: FloatingActionButton.extended(
-              heroTag: 'pdf_export',
-              onPressed: onExportPdf,
+              heroTag: 'pdf_export_all',
+              onPressed: onExportAllPdf,
               icon: const Icon(Icons.picture_as_pdf_outlined),
-              label: const Text("Export PDF"),
+              label: const Text("Export All to PDF"), // Updated Label
               backgroundColor: theme.colorScheme.primaryContainer,
               elevation: 0,
             ),
           ),
           const Divider(height: 1),
+          // ... (The rest of your expansion tile lists remain exactly the same) ...
           Expanded(
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -81,10 +83,7 @@ class DiagramsSidebar extends StatelessWidget {
                                 ),
                               ),
                               children: [
-                                for (final entry
-                                    in diagramsBySubunit[subunit]!
-                                        .asMap()
-                                        .entries)
+                                for (final entry in diagramsBySubunit[subunit]!.asMap().entries)
                                   ListTile(
                                     dense: true,
                                     visualDensity: VisualDensity.compact,
@@ -100,19 +99,11 @@ class DiagramsSidebar extends StatelessWidget {
                                     ),
                                     title: Text(
                                       entry.value.title ??
-                                          entry
-                                              .value
-                                              .painters
-                                              .first
-                                              .diagram
-                                              .toText,
-                                      style: theme.textTheme.bodySmall
-                                          ?.copyWith(height: 1.3),
+                                          entry.value.painters.first.diagram.toText,
+                                      style: theme.textTheme.bodySmall?.copyWith(height: 1.3),
                                     ),
-                                    onTap: () =>
-                                        onDiagramTap(entry.value, entry.key),
-                                    hoverColor:
-                                        theme.colorScheme.surfaceContainerHigh,
+                                    onTap: () => onDiagramTap(entry.value, entry.key),
+                                    hoverColor: theme.colorScheme.surfaceContainerHigh,
                                   ),
                               ],
                             ),

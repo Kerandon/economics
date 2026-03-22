@@ -7,12 +7,19 @@ import '../../../diagrams/models/diagram_widget.dart';
 import 'package:flutter/material.dart';
 // Import your models
 
+import 'package:flutter/material.dart';
+// Import your models
+
 class DiagramsGallery extends StatelessWidget {
   final Map<UnitType, List<Subunit>> activeUnits;
   final Map<Subunit, List<DiagramWidget>> diagramsBySubunit;
   final List<DiagramWidget> filteredDiagrams;
   final Function(DiagramWidget) onCardTap;
-  final Function(DiagramWidget, int) getDiagramKey; // Helper to pass keys back
+  final Function(DiagramWidget, int) getDiagramKey;
+
+  // NEW: Callbacks for printing
+  final Function(UnitType) onPrintUnit;
+  final Function(DiagramWidget) onPrintDiagram;
 
   const DiagramsGallery({
     super.key,
@@ -21,6 +28,8 @@ class DiagramsGallery extends StatelessWidget {
     required this.filteredDiagrams,
     required this.onCardTap,
     required this.getDiagramKey,
+    required this.onPrintUnit,
+    required this.onPrintDiagram,
   });
 
   @override
@@ -49,36 +58,48 @@ class DiagramsGallery extends StatelessWidget {
   }
 
   Widget _buildUnitSection(
-    BuildContext context,
-    ThemeData theme,
-    UnitType unit,
-    List<Subunit> subunits,
-  ) {
+      BuildContext context,
+      ThemeData theme,
+      UnitType unit,
+      List<Subunit> subunits,
+      ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 48.0, bottom: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                unit.title.toUpperCase(),
-                style: theme.textTheme.displaySmall?.copyWith(
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.0,
-                  color: theme.colorScheme.onSurface,
-                  fontSize: 28,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    unit.title.toUpperCase(),
+                    style: theme.textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.0,
+                      color: theme.colorScheme.onSurface,
+                      fontSize: 28,
+                    ),
+                  ),
+                  Container(
+                    height: 6,
+                    width: 80,
+                    margin: const EdgeInsets.only(top: 8),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.primary,
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                height: 6,
-                width: 80,
-                margin: const EdgeInsets.only(top: 8),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primary,
-                  borderRadius: BorderRadius.circular(3),
-                ),
+              // NEW: Print Icon for the Main Topic/Unit
+              IconButton.filledTonal(
+                icon: const Icon(Icons.picture_as_pdf),
+                tooltip: "Export ${unit.title} Diagrams",
+                onPressed: () => onPrintUnit(unit),
               ),
             ],
           ),
@@ -96,13 +117,16 @@ class DiagramsGallery extends StatelessWidget {
                       color: theme.colorScheme.secondary,
                     ),
                     const SizedBox(width: 12),
-                    Text(
-                      '${subunit.id} ${subunit.title}',
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: theme.colorScheme.secondary,
+                    Expanded(
+                      child: Text(
+                        '${subunit.id} ${subunit.title}',
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.secondary,
+                        ),
                       ),
                     ),
+                    // Removed the "Select Group" button here
                   ],
                 ),
               ),
@@ -118,11 +142,10 @@ class DiagramsGallery extends StatelessWidget {
                 itemCount: diagramsBySubunit[subunit]!.length,
                 itemBuilder: (ctx, index) {
                   final diagram = diagramsBySubunit[subunit]![index];
-                  // Assign key via callback
                   final key = getDiagramKey(diagram, index);
 
                   return Container(
-                    key: key as Key?, // Cast depending on your implementation
+                    key: key as Key?,
                     child: _buildGalleryTile(context, theme, diagram),
                   );
                 },
@@ -135,13 +158,12 @@ class DiagramsGallery extends StatelessWidget {
   }
 
   Widget _buildGalleryTile(
-    BuildContext context,
-    ThemeData theme,
-    DiagramWidget diagram,
-  ) {
+      BuildContext context,
+      ThemeData theme,
+      DiagramWidget diagram,
+      ) {
     final title = diagram.title ?? diagram.painters.first.diagram.toText;
 
-    // Display-only version (no description)
     final displayWidget = DiagramWidget(
       diagram.painters,
       axis: diagram.axis,
@@ -155,58 +177,84 @@ class DiagramsGallery extends StatelessWidget {
       color: theme.colorScheme.surfaceContainer,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: theme.colorScheme.outlineVariant),
+        side: BorderSide(
+          color: theme.colorScheme.outlineVariant,
+          width: 1,
+        ),
       ),
-      child: InkWell(
-        onTap: () => onCardTap(diagram),
-        borderRadius: BorderRadius.circular(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.black12.withOpacity(0.05)),
-                ),
-                padding: const EdgeInsets.all(12),
-                child: AbsorbPointer(
-                  child: Center(
-                    child: FittedBox(fit: BoxFit.contain, child: displayWidget),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 55,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              alignment: Alignment.centerLeft,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        height: 1.2,
+      child: Stack(
+        children: [
+          InkWell(
+            onTap: () => onCardTap(diagram),
+            borderRadius: BorderRadius.circular(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.black12.withOpacity(0.05)),
+                    ),
+                    padding: const EdgeInsets.all(12),
+                    child: AbsorbPointer(
+                      child: Center(
+                        child: FittedBox(
+                            fit: BoxFit.contain, child: displayWidget),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Icon(
-                    Icons.open_in_full,
-                    size: 18,
-                    color: theme.colorScheme.primary.withOpacity(0.7),
+                ),
+                Container(
+                  height: 55,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            height: 1.2,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.open_in_full,
+                        size: 18,
+                        color: theme.colorScheme.primary.withOpacity(0.7),
+                      ),
+                    ],
                   ),
-                ],
+                ),
+              ],
+            ),
+          ),
+
+          // NEW: Individual PDF print button (replaces the checkbox)
+          Positioned(
+            top: 8,
+            right: 8,
+            child: Container(
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface.withOpacity(0.9),
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.picture_as_pdf_outlined, size: 20),
+                color: theme.colorScheme.primary,
+                tooltip: "Export Diagram",
+                onPressed: () => onPrintDiagram(diagram),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

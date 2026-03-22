@@ -1,10 +1,5 @@
 enum Topic {
-  introNotes,
-  microNotes,
-  macroNotes,
-  globalNotes,
+  notes,
   allDiagrams,
   paper1Questions,
-  paper3Questions,
-  terms,
 }

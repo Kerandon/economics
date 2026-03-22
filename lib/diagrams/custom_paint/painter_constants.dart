@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 
 /// Curves
-const kCurveWidth = 3.0;
-const kCurveWidthSlim = 2.0;
+const kCurveWidth = 6.0;
+const kCurveWidthSlim = 4.0;
 const kArrowSize = 16.0;
 const kExtendBy5 = 0.05;
 const kExtendBy10 = 0.10;
@@ -15,7 +15,7 @@ const kExtendBy20 = 0.20;
 const kTopAxisIndent = 0.50;
 const kBottomAxisIndent = 1.50;
 const kLabelPadding = 0.06;
-const kAxisIndent = 0.15;
+const kAxisIndent = 0.22;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 5.0;
 const kAdvantages = 'Advantages';
@@ -26,11 +26,11 @@ const kDifferences = 'Differences';
 /// Text
 const kFontTiny = 20.0;
 const kFontVerySmall = 22.0;
-const kFontSmall = 22.0;
-const kFontMedium = 28.0;
+const kFontSmall = 24.0;
+const kFontMedium = 30.0;
 const kFontSizeBig = 40.0;
 const kFontSizeAverageRatioSmall = 30.0;
-const kFontSizeAverageRatioStandard = 60.0;
+const kFontSizeAverageRatioStandard = 70.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
   fontSize: kFontMedium,

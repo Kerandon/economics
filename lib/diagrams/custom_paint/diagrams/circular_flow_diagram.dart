@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
@@ -19,9 +22,9 @@ class CircularFlowDiagram extends BaseDiagramPainter {
     final moneyFlowColor = Colors.green;
     final factorsFlowColor = Colors.blueAccent;
     switch (diagram) {
-      case DiagramEnum.macroCircularFlowClosed:
+      case DiagramEnum.macroCircularFlowTwoSectorEconomy:
         _paintCircularClosed(c, canvas, moneyFlowColor, factorsFlowColor, 1);
-      case DiagramEnum.macroCircularFlowOpen:
+      case DiagramEnum.macroCircularFlowOpenEconomy:
         _paintCircularOpen(c, canvas, moneyFlowColor, factorsFlowColor, 1);
       default:
     }
@@ -40,14 +43,14 @@ void _paintCircularClosed(
     canvas,
     startPos: Offset(0.08, 0.50),
     bezierPoints: [
-      CustomBezier(control: Offset(0.50, 0.0), endPoint: Offset(0.92, 0.50)),
+      CustomBezier(control: Offset(0.50, -0.20), endPoint: Offset(0.92, 0.50)),
     ],
     arrowOnEndAngle: 0.25,
     normalizeToDiagramArea: false,
-    flowArrow: DiagramFlowArrow.forward,
+    flowArrow: DiagramFlowArrow.backward,
     flowArrowCount: flowCount,
     color: moneyFlowColor,
-    middleLabel: DiagramLabel.landLaborCapitalEntrepreneurship.label,
+    middleLabel: DiagramLabel.incomeRentWagesInterestProfitY.label,
     middleLabelAlign: LabelAlign.centerTop,
   );
   paintDiagramLines(
@@ -55,30 +58,15 @@ void _paintCircularClosed(
     canvas,
     startPos: Offset(0.10, 0.50),
     bezierPoints: [
-      CustomBezier(control: Offset(0.50, 0.3), endPoint: Offset(0.90, 0.50)),
+      CustomBezier(control: Offset(0.50, 0.30), endPoint: Offset(0.90, 0.50)),
     ],
     arrowOnEndAngle: 0.25,
     normalizeToDiagramArea: false,
-    flowArrow: DiagramFlowArrow.backward,
+    flowArrow: DiagramFlowArrow.forward,
     flowArrowCount: flowCount,
     color: factorsFlowColor,
-    middleLabel: DiagramLabel.rentWagesInterestProfitY.label,
+    middleLabel: DiagramLabel.fOPLandLaborCapitalEntrepreneurship.label,
     middleLabelAlign: LabelAlign.centerTop,
-  );
-  paintDiagramLines(
-    c,
-    canvas,
-    startPos: Offset(0.08, 0.50),
-    bezierPoints: [
-      CustomBezier(control: Offset(0.50, 1.0), endPoint: Offset(0.92, 0.50)),
-    ],
-    arrowOnEndAngle: 0.25,
-    normalizeToDiagramArea: false,
-    flowArrow: DiagramFlowArrow.backward,
-    flowArrowCount: flowCount,
-    color: moneyFlowColor,
-    middleLabel: DiagramLabel.goodsAndServicesO.label,
-    middleLabelAlign: LabelAlign.centerBottom,
   );
   paintDiagramLines(
     c,
@@ -89,30 +77,46 @@ void _paintCircularClosed(
     ],
     arrowOnEndAngle: 0.25,
     normalizeToDiagramArea: false,
-    flowArrow: DiagramFlowArrow.forward,
+    flowArrow: DiagramFlowArrow.backward,
     flowArrowCount: flowCount,
     color: factorsFlowColor,
-    middleLabel: DiagramLabel.householdSpendingE.label,
+    middleLabel: DiagramLabel.outputGoodsAndServices.label,
     middleLabelAlign: LabelAlign.centerBottom,
   );
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.08, 0.50),
+    bezierPoints: [
+      CustomBezier(control: Offset(0.50, 1.2), endPoint: Offset(0.92, 0.50)),
+    ],
+    arrowOnEndAngle: 0.25,
+    normalizeToDiagramArea: false,
+    flowArrow: DiagramFlowArrow.forward,
+    flowArrowCount: flowCount,
+    color: moneyFlowColor,
+    middleLabel: DiagramLabel.expenditure.label,
+    middleLabelAlign: LabelAlign.centerBottom,
+  );
+
   paintText(
     c,
     canvas,
     DiagramLabel.factorMarkets.label,
-    Offset(0.50, 0.31),
+    Offset(0.50, 0.225),
     ignoreIndent: true,
   );
   paintText(
     c,
     canvas,
     DiagramLabel.productMarkets.label,
-    Offset(0.50, 0.69),
+    Offset(0.50, 0.75),
     ignoreIndent: true,
   );
   paintText(
     c,
     canvas,
-    DiagramLabel.households.label,
+    DiagramLabel.consumers.label,
     Offset(0.10, 0.50),
     ignoreIndent: true,
     shape: DiagramShape.circle,
@@ -126,6 +130,7 @@ void _paintCircularClosed(
     ignoreIndent: true,
     shape: DiagramShape.circle,
   );
+  paintDescription(c, canvas, 'Y = O = E');
 }
 
 void _paintCircularOpen(
@@ -137,7 +142,7 @@ void _paintCircularOpen(
 ) {
   // --- 1. CONFIG ---
   final leakagesColor = Colors.red;
-  final injectionsColor = Colors.blueAccent;
+  final injectionsColor = Colors.deepPurple;
 
   // --- COORDINATE TUNING ---
   final double householdsX = 0.05;
@@ -154,7 +159,7 @@ void _paintCircularOpen(
 
   // Box Logic
   final double centerX = 0.50;
-  final double boxPad = 0.12;
+  final double boxPad = 0.16;
 
   final double sectorLeftX = centerX - boxPad;
   final double sectorRightX = centerX + boxPad;
@@ -180,10 +185,10 @@ void _paintCircularOpen(
     arrowOnEnd: true,
     arrowOnEndAngle: 0.2,
     normalizeToDiagramArea: false,
-    flowArrow: DiagramFlowArrow.forward,
+    flowArrow: DiagramFlowArrow.backward,
     flowArrowCount: flowCount,
     color: productsColor,
-    middleLabel: DiagramLabel.factorsOfProduction.label,
+    middleLabel: '(Y) Income',
     middleLabelAlign: LabelAlign.centerTop,
   );
 
@@ -200,11 +205,11 @@ void _paintCircularOpen(
     arrowOnEnd: true,
     arrowOnEndAngle: 0.2,
     normalizeToDiagramArea: false,
-    flowArrow: DiagramFlowArrow.backward,
+    flowArrow: DiagramFlowArrow.forward,
     flowArrowCount: flowCount,
     color: moneyColor,
-    middleLabel: DiagramLabel.factorPayments.label,
-    middleLabelAlign: LabelAlign.centerTop,
+    middleLabel: 'Resources',
+    middleLabelAlign: LabelAlign.centerBottom,
   );
 
   // BOTTOM ARCS
@@ -221,11 +226,11 @@ void _paintCircularOpen(
     arrowOnEnd: true,
     arrowOnEndAngle: 0.2,
     normalizeToDiagramArea: false,
-    flowArrow: DiagramFlowArrow.forward,
+    flowArrow: DiagramFlowArrow.backward,
     flowArrowCount: flowCount,
     color: moneyColor,
-    middleLabel: DiagramLabel.householdSpending.label,
-    middleLabelAlign: LabelAlign.centerBottom,
+    middleLabel: '(O) Output',
+    middleLabelAlign: LabelAlign.centerTop,
   );
 
   paintDiagramLines(
@@ -241,10 +246,10 @@ void _paintCircularOpen(
     arrowOnEnd: true,
     arrowOnEndAngle: 0.2,
     normalizeToDiagramArea: false,
-    flowArrow: DiagramFlowArrow.backward,
+    flowArrow: DiagramFlowArrow.forward,
     flowArrowCount: flowCount,
     color: productsColor,
-    middleLabel: DiagramLabel.goodsAndServices.label,
+    middleLabel: '(E) Expenditure',
     middleLabelAlign: LabelAlign.centerBottom,
   );
 
@@ -252,7 +257,7 @@ void _paintCircularOpen(
   paintText(
     c,
     canvas,
-    DiagramLabel.publicSector.label,
+    DiagramLabel.government.label,
     Offset(centerX, publicSectorY),
     shape: DiagramShape.square,
     ignoreIndent: true,
@@ -268,7 +273,7 @@ void _paintCircularOpen(
   paintText(
     c,
     canvas,
-    DiagramLabel.foreignSector.label,
+    DiagramLabel.foreignMarkets.label,
     Offset(centerX, foreignSectorY),
     shape: DiagramShape.square,
     ignoreIndent: true,
@@ -349,7 +354,7 @@ void _paintCircularOpen(
   paintText(
     c,
     canvas,
-    DiagramLabel.households.label,
+    DiagramLabel.consumers.label,
     Offset(householdsX, mainFlowY),
     ignoreIndent: true,
     shape: DiagramShape.circle,
@@ -362,5 +367,24 @@ void _paintCircularOpen(
     Offset(firmsX, mainFlowY),
     ignoreIndent: true,
     shape: DiagramShape.circle,
+  );
+
+  paintText(
+    c,
+    canvas,
+    '(W) Leakages (Withdrawals)',
+    Offset(0.0, 0.60),
+    angle: -pi / 2,
+    ignoreIndent: true,
+      style: TextStyle(color: leakagesColor)
+  );
+  paintText(
+    c,
+    canvas,
+    '(J) Injections',
+    Offset(1.0, 0.60),
+    angle: -pi / 2,
+    ignoreIndent: true,
+    style: TextStyle(color: injectionsColor)
   );
 }

@@ -1,4 +1,4 @@
-import 'package:economics_app/diagrams/models/size_adjuster.dart';
+
 import 'package:flutter/material.dart';
 
 class DiagramPainterConfig {
