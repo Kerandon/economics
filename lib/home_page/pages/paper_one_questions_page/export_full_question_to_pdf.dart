@@ -229,7 +229,7 @@ Future<void> exportFullQuestionToPdf(
             pageElements.add(
               pw.Padding(
                 padding: const pw.EdgeInsets.only(left: 8),
-                child: pw.Text('•  ${example.text}', style: pw.TextStyle(font: unicodeFont, fontSize: 11, fontStyle: pw.FontStyle.italic)),
+                child: pw.Text('•  ${example.example}, ${example.explanation}', style: pw.TextStyle(font: unicodeFont, fontSize: 11, fontStyle: pw.FontStyle.italic)),
               ),
             );
             pageElements.add(pw.SizedBox(height: 4));

@@ -13,12 +13,8 @@ import 'handle_pdf_export.dart';
 class QuestionDetailPage extends StatelessWidget {
   final PaperQuestion question;
 
-  const QuestionDetailPage({
-    super.key,
-    required this.question,
-  });
+  const QuestionDetailPage({super.key, required this.question});
 
-  @override
   @override
   Widget build(BuildContext context) {
     final answer = question.answer;
@@ -29,15 +25,14 @@ class QuestionDetailPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black87), // Ensures back button is visible
+        iconTheme: const IconThemeData(color: Colors.black87),
         actions: [
-          // ✨ THE NEW PDF EXPORT BUTTON ✨
           IconButton(
             icon: const Icon(Icons.picture_as_pdf, color: Colors.redAccent),
             tooltip: 'Export Diagrams to PDF',
             onPressed: () => handlePdfExport(context, question),
           ),
-          const SizedBox(width: 16), // A little padding on the right edge
+          const SizedBox(width: 16),
         ],
       ),
       body: Center(
@@ -46,89 +41,39 @@ class QuestionDetailPage extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.all(24.0),
             children: [
-
-              // --- HEADER (Restored Question Title!) ---
+              // --- HEADER ---
               RichText(
                 text: TextSpan(
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                    height: 1.4,
-                  ),
+                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black87, height: 1.4),
                   children: [
                     if (isHL)
-                      const TextSpan(
-                        text: '[HL] ',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
+                      const TextSpan(text: '[HL] ', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w900)),
                     TextSpan(text: question.question),
                   ],
                 ),
               ),
               const SizedBox(height: 8),
-
-              // --- SUBUNIT TITLE ---
               Text(
-                question.subunit.name.toUpperCase(), // adjust to .title if needed
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 1.2,
-                ),
+                question.subunit.name.toUpperCase(),
+                style: const TextStyle(fontSize: 14, color: Colors.grey, fontWeight: FontWeight.w600, letterSpacing: 1.2),
               ),
-
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 24.0),
                 child: Divider(thickness: 2, color: Colors.black12),
               ),
-// --- 0. TL;DR SECTION ---
+
+              // --- 0. TL;DR ---
               if (answer.tldr != null && answer.tldr!.isNotEmpty) ...[
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.amber.shade50, // Soft highlight background
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border(left: BorderSide(color: Colors.amber.shade500, width: 4)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'TL;DR',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.amber.shade800,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        answer.tldr!,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600, // Semi-bold for punchiness
-                          color: Colors.black87,
-                          height: 1.4,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildTldr(answer.tldr!),
                 const SizedBox(height: 32),
               ],
-              // 1. TERMS SECTION (Updated to use EconTerm properties)
+
+              // --- 1. DEFINITIONS ---
               if (answer.terms != null && answer.terms!.isNotEmpty) ...[
                 _buildSectionHeader('DEFINITIONS'),
                 ...answer.terms!.map((econTerm) => Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: HtmlWidget(
-                    // Accessing properties directly from the enum
                     '<b>${econTerm.termName}:</b> ${econTerm.explanation}',
                     textStyle: const TextStyle(fontSize: 18, height: 1.6, color: Colors.black87),
                   ),
@@ -136,55 +81,66 @@ class QuestionDetailPage extends StatelessWidget {
                 const SizedBox(height: 32),
               ],
 
-              // 2. EXPLANATION SECTION
+              // --- 2. EXPLANATION ---
               if (answer.explanation != null && answer.explanation!.isNotEmpty) ...[
                 _buildSectionHeader('EXPLANATION'),
                 ...answer.explanation!.map((content) => _buildContentBlock(context, content)),
                 const SizedBox(height: 32),
               ],
 
-// 3. DIAGRAMS SECTION
+              // --- 3. DIAGRAMS ---
               if (answer.diagrams != null && answer.diagrams!.enums.isNotEmpty) ...[
                 _buildSectionHeader('DIAGRAMS'),
-
-                // Renders the side-by-side diagrams
                 _buildDiagramsRow(context, answer.diagrams!.enums),
-
-                // ✨ Optional Diagram Explanation / Caption
                 if (answer.diagrams!.explanation != null) ...[
                   const SizedBox(height: 16),
                   HtmlWidget(
                     answer.diagrams!.explanation!,
-                    textStyle: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black87,
-                      fontStyle: FontStyle.italic, // Italics look great for captions
-                    ),
+                    textStyle: const TextStyle(fontSize: 16, color: Colors.black87, fontStyle: FontStyle.italic),
                   ),
                 ],
                 const SizedBox(height: 32),
               ],
 
-              // 4. REAL WORLD EXAMPLES SECTION
+              // --- 4. REAL WORLD EXAMPLES (Updated for your new Enum) ---
               if (answer.realWorldExamples != null && answer.realWorldExamples!.isNotEmpty) ...[
                 _buildSectionHeader('REAL WORLD EXAMPLES'),
-                ...answer.realWorldExamples!.map((example) => Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: Text('• ${example.text}', style: const TextStyle(fontSize: 18, fontStyle: FontStyle.italic)),
+                ...answer.realWorldExamples!.map((rwe) => Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '• ${rwe.example}', // The main title from the enum
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
+                      ),
+                      if (rwe.explanation != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18.0, top: 4.0),
+                          child: Text(
+                            rwe.explanation!, // The context from the enum
+                            style: TextStyle(fontSize: 16, color: Colors.grey.shade800, fontStyle: FontStyle.italic),
+                          ),
+                        ),
+                    ],
+                  ),
                 )),
                 const SizedBox(height: 32),
               ],
 
-              // 5. EVALUATION SECTION
-              if (answer.evaluation != null) ...[
+              // --- 5. EVALUATION (Updated to handle multiple items) ---
+              if (answer.evaluation != null && answer.evaluation!.isNotEmpty) ...[
                 _buildSectionHeader('EVALUATION'),
-                EvaluationWidget(
-                  title: answer.evaluation!.title,
-                  leftTitle: answer.evaluation!.leftTitle,
-                  rightTitle: answer.evaluation!.rightTitle,
-                  leftItems: answer.evaluation!.leftItems,
-                  rightItems: answer.evaluation!.rightItems,
-                ),
+                ...answer.evaluation!.map((evalData) => Padding(
+                  padding: const EdgeInsets.only(bottom: 24.0),
+                  child: EvaluationWidget(
+                    title: evalData.title,
+                    leftTitle: evalData.leftTitle,
+                    rightTitle: evalData.rightTitle,
+                    leftItems: evalData.leftItems,
+                    rightItems: evalData.rightItems,
+                  ),
+                )),
                 const SizedBox(height: 32),
               ],
             ],
@@ -194,22 +150,34 @@ class QuestionDetailPage extends StatelessWidget {
     );
   }
 
-  // --- HELPER FOR HEADERS ---
-  // This creates that "small, non-intrusive" grey header for each section
-  Widget _buildSectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.bold,
-          color: Colors.black45, // Subtle grey so it doesn't distract from the content
-          letterSpacing: 1.5,
-        ),
+  // TL;DR Helper to keep build clean
+  Widget _buildTldr(String text) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.amber.shade50,
+        borderRadius: BorderRadius.circular(8),
+        border: Border(left: BorderSide(color: Colors.amber.shade500, width: 4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('TL;DR', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w900, color: Colors.amber.shade800, letterSpacing: 1.5)),
+          const SizedBox(height: 8),
+          Text(text, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87, height: 1.4)),
+        ],
       ),
     );
   }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black45, letterSpacing: 1.5)),
+    );
+  }
+
+
 
   /// Helper builder that translates SlideContent into UI
   Widget _buildContentBlock(BuildContext context, SlideContent block) {

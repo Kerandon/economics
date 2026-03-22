@@ -19,9 +19,14 @@ String? _sectionTitleForTag(Tag? tag) {
       return 'HL';
     case Tag.supplement:
       return 'Supplement';
+    case Tag.p1a:
+      return 'P1a [10 Marks]';
+    case Tag.p1b:
+      return 'P1b [15 Marks]';
     case null:
     case Tag.none:
       return null;
+
   }
 }
 

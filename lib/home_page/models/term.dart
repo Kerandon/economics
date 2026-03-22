@@ -6,4 +6,4 @@ class Term {
   Term({required this.term, required this.explanation, this.tag});
 }
 
-enum Tag { none, hl, supplement }
+enum Tag { none, hl, supplement, p1a, p1b, }

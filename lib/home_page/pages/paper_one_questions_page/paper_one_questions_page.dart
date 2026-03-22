@@ -1,4 +1,4 @@
-import 'package:economics_app/home_page/pages/paper_one_questions_page/paper_one_questions.dart';
+import 'package:economics_app/home_page/pages/paper_one_questions_page/paper_one_questions_repository/paper_one_questions_data.dart';
 import 'package:economics_app/home_page/pages/paper_one_questions_page/question_detail_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,14 +17,14 @@ class _PaperOneQuestionsPageState extends State<PaperOneQuestionsPage> {
       appBar: AppBar(title: const Text('Paper 1 Questions')),
       body: GridView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: paperOneQuestions.length,
+        itemCount: paperOneQuestionsData.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
         ),
         itemBuilder: (context, index) {
-          final question = paperOneQuestions[index];
+          final question = paperOneQuestionsData[index];
 
           return Card(
             elevation: 2,
