@@ -4,7 +4,8 @@ class AppColors {
   static const hLColor = Colors.orange;
   static const supplementColor = Colors.red;
 
-  static const defaultAppColor = Color(0xff008080);
+  static const defaultAppColor = Colors.indigo;
+  //Color(0xff008080);
   static const defaultAppColorDarker = Color(0xff003931);
   static const defaultAppColorDarkest = Color(0xff00322B);
 

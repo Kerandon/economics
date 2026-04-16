@@ -34,6 +34,8 @@ class BizDiagram extends BaseDiagramPainter {
     switch (diagram) {
       case DiagramEnum.macroBusinessCycle:
         _paintBusinessCycleStandard(c, canvas);
+      case DiagramEnum.macroBusinessCycleNRU:
+        _paintBusinessCycleNRU(c, canvas);
       case DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP:
         _paintBusinessCycleIncreasePotentialGDP(c, canvas);
       case DiagramEnum.macroBusinessCycleStabilizationPolicies:
@@ -45,7 +47,7 @@ class BizDiagram extends BaseDiagramPainter {
       canvas,
       startPos: Offset(0.0, 0.70),
       polylineOffsets: [Offset(0.92, 0.40)],
-      label2: DiagramLabel.potentialGDP.label,
+      label2: 'Potential GDP\nUnemployment = NRU\n(Full Employment)',
       label2Align: LabelAlign.right,
       color: c.colorScheme.onSurface,
       curveStyle: CurveStyle.dotted,
@@ -170,7 +172,70 @@ void _paintBusinessCycleStandard(
     ],
   );
 }
+void _paintBusinessCycleNRU(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+    ) {
+  // --- 2. SHADING ---
+  // A. Inflationary Gap (The P
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.0, 0.70),
+    bezierPoints: [
+      // --- Cycle 1 ---
+      // Crest 1 (Pulls UP)
+      CustomBezier(
+        control: Offset(0.125, 0.325),
+        endPoint: Offset(0.250, 0.550),
+      ),
+      // Trough 1 (Pulls DOWN - exaggerated as you had it)
+      CustomBezier(
+        control: Offset(0.400, 1.100),
+        endPoint: Offset(0.550, 0.500),
+      ),
 
+      // --- Cycle 2 ---
+      // Crest 2 (Pulls UP)
+      CustomBezier(
+        control: Offset(0.625, 0.225),
+        endPoint: Offset(0.700, 0.450),
+      ),
+      // Trough 2 (Pulls DOWN, then sweeps high UP)
+      CustomBezier(
+        control: Offset(0.875, 0.775),
+        endPoint: Offset(0.9000, 0.2500), // Changed from 0.400 to 0.100
+      ),
+    ],
+    color: c.colorScheme.primary,
+    strokeWidth: 3.0,
+    label2: DiagramLabel.realGDP.label,
+    label2Align: LabelAlign.centerTop,
+  );
+
+  // Gap Labels (Removed hardcoded colors, moved closer to gaps)
+  paintText(
+    c,
+    canvas,
+    'Inflationary Gap\n'
+        'Unemployment < NRU',
+    Offset(0.25, 0.38),
+    pointerLine: Offset(0.15, 0.47),
+type: DiagramTextType.label,
+    shape: DiagramShape.none,
+  );
+
+  paintText(
+    c,
+    canvas,
+    'Deflationary Gap / Recessionary Gap\n'
+        'Unemployment > NRU',
+    Offset(0.50, 0.90),
+    pointerLine: Offset(0.40, 0.815),
+    type: DiagramTextType.label,
+    shape: DiagramShape.none,
+  );
+}
 void _paintBusinessCycleStabilization(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,

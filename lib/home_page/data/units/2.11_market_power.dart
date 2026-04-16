@@ -438,12 +438,12 @@ List<Slide> get marketPowerSlides => [
             [
               '<strong>Low Price</strong>',
               // FIRM A DOMINANT: Underline
-              '<span style="text-decoration:underline; font-weight:bold;">\$150m</span>, \$30m',
+              '<span style="text-decoration:underline; fonts-weight:bold;">\$150m</span>, \$30m',
 
               // NASH EQUILIBRIUM: Light Red Background
               // Firm A underlined, Firm B Circled
               '<span style="background-color:#FFCDD2; padding:6px 10px; border-radius:12px; display:inline-block;">'
-                  '<span style="text-decoration:underline; font-weight:bold;">\$50m</span>, '
+                  '<span style="text-decoration:underline; fonts-weight:bold;">\$50m</span>, '
                   '<span style="border:1px solid black; padding:3px 5px; border-radius:50%; display:inline-block;">\$50m</span>'
                   '</span>',
             ],

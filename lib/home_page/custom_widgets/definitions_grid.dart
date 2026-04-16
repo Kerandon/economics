@@ -27,6 +27,8 @@ String? _sectionTitleForTag(Tag? tag) {
     case Tag.none:
       return null;
 
+    case Tag.sl:
+      return 'SL';
   }
 }
 

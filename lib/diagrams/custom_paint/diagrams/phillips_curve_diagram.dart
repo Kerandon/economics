@@ -26,14 +26,16 @@ class PhillipsCurveDiagram extends BaseDiagramPainter {
 
     paintAxis(c, canvas, axisType: AxisType.phillipsCurve);
     switch (diagram) {
-      case DiagramEnum.macroSRPCAndLRPC:
+      case DiagramEnum.macroSRPC:
         _paintSRPC(c, canvas);
-      case DiagramEnum.macroPhillipsCurveStagflation:
+      case DiagramEnum.macroSRPCLRPC:
+        _paintSRPCLRPC(c, canvas);
+      case DiagramEnum.macroSRPCCostPushInflation:
         _paintStagflation(c, canvas);
-      case DiagramEnum.macroSRPCInflationaryGapAdjustment:
-        _paintSRPCInflationaryGapAdjustment(c, canvas);
-      case DiagramEnum.macroSRPCDeflationaryGapAdjustment:
-        _paintSRPCDeflationaryGapAdjustment(c, canvas);
+      case DiagramEnum.macroExpectationsAugmentedPhillipsCurveInflationaryGap:
+        _paintExpectationsAugmentedPCInflationGap(c, canvas);
+      case DiagramEnum.macroExpectationsAugmentedPhillipsCurveDeflationaryGap:
+        _paintExpectationsAugmentedPhillipsCurveDeflationaryGap(c, canvas);
       case DiagramEnum.macroLRPCFallInNRU:
         _paintLRPCFallInNRU(c, canvas);
       default:
@@ -46,54 +48,73 @@ void _paintSRPC(DiagramPainterConfig c, IDiagramCanvas canvas) {
     c,
     canvas,
     yAxisStartPos: 0.60,
-    xAxisEndPos: 0.29,
-    yLabel: DiagramLabel.pi1.label,
-    xLabel: DiagramLabel.u1.label,
+    xAxisEndPos: 0.24,
+    yLabel: '5%',
+    xLabel: '4%',
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.75,
+    xAxisEndPos: 0.40,
+    yLabel: '3%',
+    xLabel: '5%',
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.85,
+    xAxisEndPos: 0.62,
+    yLabel: '1.5%',
+    xLabel: '7%',
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.srpc);
+}
+void _paintSRPCLRPC(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.54,
+    xAxisEndPos: 0.24,
+    yLabel: '4%',
+    xLabel: 'U<NRU',
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.77,
     xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.pi2.label,
-    xLabel: 'U2=NRU',
+    yLabel: '2%',
+    xLabel: 'U=NRU',
   );
   paintDiagramDashedLines(
     c,
     canvas,
     yAxisStartPos: 0.90,
-    xAxisEndPos: 0.78,
-    yLabel: DiagramLabel.pi3.label,
-    xLabel: DiagramLabel.u3.label,
+    xAxisEndPos: 0.77,
+    yLabel: '1%',
+    xLabel: 'U>NRU',
   );
   paintMarketCurve(c, canvas, type: MarketCurveType.srpc);
   paintMarketCurve(c, canvas, type: MarketCurveType.lrpc);
-  paintDescription(
-    c,
-    canvas,
-    'SRPC shows the trade-off between the inflation rate and unemployment rate in the short-run: π1/U1 Inflationary gap; π3/U3 deflationary gap. In the long-run: LRPC=LRAS=NRU - unemployment rate / real GDP is independent of inflation rate.',
-  );
 }
-
 void _paintStagflation(DiagramPainterConfig c, IDiagramCanvas canvas) {
   final length = -0.25;
   paintDiagramDashedLines(
     c,
     canvas,
-    yAxisStartPos: 0.80,
-    xAxisEndPos: 0.51,
-    yLabel: DiagramLabel.pi1.label,
-    xLabel: DiagramLabel.u1.label,
-    rightYLabel: 'A',
+    yAxisStartPos: 0.75,
+    xAxisEndPos: 0.38,
+    yLabel: '4%',
+    xLabel: '5%',
   );
   paintDiagramDashedLines(
     c,
     canvas,
-    yAxisStartPos: 0.61,
-    xAxisEndPos: 0.60,
-    yLabel: DiagramLabel.pi2.label,
-    xLabel: DiagramLabel.u2.label,
-    rightYLabel: 'B',
+    yAxisStartPos: 0.60,
+    xAxisEndPos: 0.54,
+    yLabel: '5%',
+    xLabel: '7%',
   );
   paintMarketCurve(
     c,
@@ -112,14 +133,9 @@ void _paintStagflation(DiagramPainterConfig c, IDiagramCanvas canvas) {
     lengthAdjustment: length,
   );
   paintLineSegment(c, canvas, origin: Offset(0.28, 0.45), angle: pi * -0.22);
-  paintDescription(
-    c,
-    canvas,
-    'Negative supply shocks (e.g., political instability causing global oil supply-chain disruptions) shifts SRPC outwards (higher inflation + higher unemployment)',
-  );
 }
 
-void _paintSRPCInflationaryGapAdjustment(
+void _paintExpectationsAugmentedPCInflationGap(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,
 ) {
@@ -127,10 +143,73 @@ void _paintSRPCInflationaryGapAdjustment(
   paintDiagramDashedLines(
     c,
     canvas,
-    yAxisStartPos: 0.83,
+    yAxisStartPos: 0.88,
     xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.pi1.label,
-    additionalYLabels: [DiagramLabel.pi3.label],
+    yLabel: '1%',
+    additionalYLabels: ['3%'],
+    additionalYPositions: [0.57],
+    xLabel: DiagramLabel.nRU.label,
+    rightYLabel: DiagramLabel.a.label,
+    rightYVerticalPivot: LabelPivot.bottom,
+    additionalRightYLabels: [ DiagramLabel.c.label],
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.73,
+    xAxisEndPos: 0.28,
+    yLabel: '2%',
+    xLabel: 'U<NRU',
+    rightYLabel:  DiagramLabel.b.label,
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.lrpc);
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.srpc2,
+    horizontalShift: 0.10,
+    verticalShift: -0.14,
+    lengthAdjustment: length,
+    color: Colors.red,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.srpc1,
+    horizontalShift: -0.05,
+    verticalShift: 0.09,
+    lengthAdjustment: length,
+  );
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.68, 0.78),
+
+    angle: pi * -0.22,
+    length: 0.15,
+  );
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.22, 0.38),
+
+    angle: pi * -0.22,
+    length: 0.15,
+  );
+}
+
+void _paintExpectationsAugmentedPhillipsCurveDeflationaryGap(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+) {
+  final length = -0.15;
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.85,
+    xAxisEndPos: 0.50,
+    yLabel: '2%',
+    additionalYLabels: ['6%'],
     additionalYPositions: [0.525],
     xLabel: DiagramLabel.nRU.label,
     rightYLabel: 'A',
@@ -139,9 +218,9 @@ void _paintSRPCInflationaryGapAdjustment(
   paintDiagramDashedLines(
     c,
     canvas,
-    yAxisStartPos: 0.645,
-    xAxisEndPos: 0.25,
-    yLabel: DiagramLabel.pi1.label,
+    yAxisStartPos: 0.70,
+    xAxisEndPos: 0.30,
+    yLabel: '4%',
     xLabel: DiagramLabel.uInf.label,
     rightYLabel: 'B',
   );
@@ -178,78 +257,6 @@ void _paintSRPCInflationaryGapAdjustment(
 
     angle: pi * -0.22,
     length: 0.15,
-  );
-  paintDescription(
-    c,
-    canvas,
-    'A: Actual unemployment = NRU. B: Increase in AD - higher inflation; unemployment < NRU. C: Real wages fall workers demand higher nominal wages / resource prices bid up due to competition (SRPC1 ->  SRPC2). C: Actual Employment again = NRU but at higher inflation rate.',
-  );
-}
-
-void _paintSRPCDeflationaryGapAdjustment(
-  DiagramPainterConfig c,
-  IDiagramCanvas canvas,
-) {
-  final length = -0.15;
-  paintDiagramDashedLines(
-    c,
-    canvas,
-    yAxisStartPos: 0.83,
-    xAxisEndPos: 0.50,
-    yLabel: DiagramLabel.pi1.label,
-    additionalYLabels: [DiagramLabel.pi3.label],
-    additionalYPositions: [0.525],
-    xLabel: DiagramLabel.nRU.label,
-    rightYLabel: 'A',
-    additionalRightYLabels: ['C'],
-  );
-  paintDiagramDashedLines(
-    c,
-    canvas,
-    yAxisStartPos: 0.645,
-    xAxisEndPos: 0.25,
-    yLabel: DiagramLabel.pi1.label,
-    xLabel: DiagramLabel.uInf.label,
-    rightYLabel: 'B',
-  );
-  paintMarketCurve(c, canvas, type: MarketCurveType.lrpc);
-  paintMarketCurve(
-    c,
-    canvas,
-    type: MarketCurveType.srpc2,
-    horizontalShift: 0.10,
-    verticalShift: -0.14,
-    lengthAdjustment: length,
-    color: Colors.red,
-  );
-  paintMarketCurve(
-    c,
-    canvas,
-    type: MarketCurveType.srpc1,
-    horizontalShift: -0.05,
-    verticalShift: 0.08,
-    lengthAdjustment: length,
-  );
-  paintLineSegment(
-    c,
-    canvas,
-    origin: Offset(0.68, 0.78),
-
-    angle: pi * -0.22,
-    length: 0.15,
-  );
-  paintLineSegment(
-    c,
-    canvas,
-    origin: Offset(0.22, 0.38),
-
-    angle: pi * -0.22,
-    length: 0.15,
-  );
-  paintDescription(
-    c,
-    canvas,
-    'A: Actual unemployment = NRU. B: Increase in AD - higher inflation; unemployment < NRU. C: Real wages fall workers demand higher nominal wages / resource prices bid up due to competition (SRPC1 ->  SRPC2). C: Actual Employment again = NRU but at higher inflation rate.',
   );
 }
 
@@ -266,13 +273,13 @@ void _paintLRPCFallInNRU(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintMarketCurve(
     c,
     canvas,
-    type: MarketCurveType.lrpc2,
+    type: MarketCurveType.lrpc1,
     horizontalShift: 0.15,
   );
   paintMarketCurve(
     c,
     canvas,
-    type: MarketCurveType.lrpc1,
+    type: MarketCurveType.lrpc2,
     horizontalShift: -0.15,
   );
   paintLineSegment(
@@ -281,10 +288,5 @@ void _paintLRPCFallInNRU(DiagramPainterConfig c, IDiagramCanvas canvas) {
     origin: Offset(0.50, 0.50),
     angle: pi,
     length: 0.15,
-  );
-  paintDescription(
-    c,
-    canvas,
-    'A leftward shift of the LRPC reflects a fall in the natural rate of unemployment (NRU) due to structural labour market improvements such as greater labour market flexibility, improved job matching, and higher human capital through education and skills training.',
   );
 }

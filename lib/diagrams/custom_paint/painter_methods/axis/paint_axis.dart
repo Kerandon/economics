@@ -22,12 +22,14 @@ enum AxisType {
 
 // THE HELPER: Extends functionality without changing the object structure
 extension AxisTypeData on AxisType {
-  String get yLabel {
+  String get yLabel
+
+  {
     switch (this) {
       case AxisType.supplyDemand:
         return DiagramLabel.p.label;
       case AxisType.laborMarket:
-        return DiagramLabel.wageRate.label;
+        return DiagramLabel.realWageRate.label;
       case AxisType.priceRevenueCosts:
         return DiagramLabel.priceRevenueCosts.label;
       case AxisType.macroADAS:
@@ -35,7 +37,7 @@ extension AxisTypeData on AxisType {
 
       // Phillips Curve: Y-Axis is Inflation Rate
       case AxisType.phillipsCurve:
-        return 'Inflation Rate';
+        return 'Inflation\nRate';
 
       default:
         return 'P';
@@ -123,7 +125,7 @@ void paintAxis(
     showLabelBackground: showLabelBackground,
   );
 
-  const double baseBuffer = 0.02;
+  const double baseBuffer = 0.05;
 
   paintAxisLabels(
     config,
@@ -139,7 +141,7 @@ void paintAxis(
     canvas,
     axis: CustomAxis.x,
     label: finalX,
-    offsetAdjustment: Offset(baseBuffer + extraXLabelPadding, 0),
+    offsetAdjustment: Offset(baseBuffer + extraXLabelPadding, 0.05),
     showBackground: showLabelBackground, // Pass to helper
   );
 

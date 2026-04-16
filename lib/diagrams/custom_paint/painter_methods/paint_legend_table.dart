@@ -18,7 +18,7 @@ void paintLegendTable(
   final primaryColor = config.colorScheme.onSurface;
   final size = config.painterSize;
 
-  // 3. Made font slightly smaller (multiplier from 0.65 -> 0.6)
+  // 3. Made fonts slightly smaller (multiplier from 0.65 -> 0.6)
   final double fontSize = (kFontMedium * config.averageRatio) * 0.9;
 
   // Measure Column Widths

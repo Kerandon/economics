@@ -232,7 +232,7 @@ void _paintMinWage(
   _drawBasicMarket(
     c,
     canvas,
-    yLabel: DiagramLabel.wageRate.label,
+    yLabel: DiagramLabel.realWageRate.label,
     xLabel: DiagramLabel.quantityOfLabor.label,
     dLabel: DiagramLabel.dL,
     sLabel: DiagramLabel.sL,
@@ -286,7 +286,7 @@ void _paintNMWInelasticDemand(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintAxis(
     c,
     canvas,
-    yAxisLabel: DiagramLabel.wageRate.label,
+    yAxisLabel: DiagramLabel.realWageRate.label,
     xAxisLabel: DiagramLabel.quantityOfLabor.label,
   );
   paintMarketCurve(

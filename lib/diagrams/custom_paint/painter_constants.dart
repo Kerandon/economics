@@ -15,7 +15,7 @@ const kExtendBy20 = 0.20;
 const kTopAxisIndent = 0.50;
 const kBottomAxisIndent = 1.50;
 const kLabelPadding = 0.06;
-const kAxisIndent = 0.22;
+const kAxisIndent = 0.20;
 const kAxisWidth = 0.30;
 const kDashedLineWidth = 5.0;
 const kAdvantages = 'Advantages';
@@ -68,13 +68,8 @@ enum MarketCurveType {
   sras2,
   lrpc1,
   lrpc2,
-
-  // --- ADDED THESE ---
   srpc1,
   srpc2,
-  // ------------------
-
-  // New Labor Market & Shifted Types
   dl,
   dl1,
   dl2,
@@ -82,12 +77,12 @@ enum MarketCurveType {
   sl1,
   sl2,
   d1,
-  d2, // General Demand shifts
+  d2,
   s1,
   s2,
   sTax,
   sSubsidy,
-  sSub, // General Supply shifts
+  sSub,
   dEqualsMPBMSB,
   dEqualsMPB,
   sEqualsMPC,
@@ -101,6 +96,20 @@ enum MarketCurveType {
   mscEqualsMpcTax2,
   mpcSub,
   sPlusProvisionEqualsMSC,
+
+  /// Market power
+  // --- MICROECONOMICS CURVES ---
+  mc,
+  ac, // or atc
+  avc,
+  mr,
+
+  dArMonopoly, // Replaces dSteep
+  mrMonopoly,  // Replaces mrSteep
+
+  // --- COMBO CURVES ---
+  mcAtc,
+  dArMrMonopoly, // Draws Monopoly Demand & MR together
 }
 
 enum LabelAlign {

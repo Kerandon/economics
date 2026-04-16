@@ -40,39 +40,39 @@ class SimpleTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    defaultCellStyle ?? theme.textTheme.displaySmall;
-    defaultHeaderStyle ??
-        theme.textTheme.displaySmall?.copyWith(fontWeight: FontWeight.bold);
+    final defaultCellStyleToUse = defaultCellStyle ?? theme.textTheme.bodyMedium;
+    final defaultHeaderStyleToUse = defaultHeaderStyle ??
+        theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold);
 
     final headerRow = TableRow(
       decoration: const BoxDecoration(color: Color(0xFFF2F2F2)),
       children: headers
           .map(
             (h) => Padding(
-              padding: EdgeInsets.all(cellPadding),
-              child: Center(
-                child: HtmlWidget(h, textStyle: defaultHeaderStyle),
-              ),
-            ),
-          )
+          padding: EdgeInsets.all(cellPadding),
+          child: Center(
+            child: HtmlWidget(h, textStyle: defaultHeaderStyleToUse),
+          ),
+        ),
+      )
           .toList(),
     );
 
     final dataRows = data
         .map(
           (row) => TableRow(
-            children: row
-                .map(
-                  (cell) => Padding(
-                    padding: EdgeInsets.all(cellPadding),
-                    child: Center(
-                      child: HtmlWidget(cell, textStyle: defaultCellStyle),
-                    ),
-                  ),
-                )
-                .toList(),
+        children: row
+            .map(
+              (cell) => Padding(
+            padding: EdgeInsets.all(cellPadding),
+            child: Center(
+              child: HtmlWidget(cell, textStyle: defaultCellStyleToUse),
+            ),
           ),
         )
+            .toList(),
+      ),
+    )
         .toList();
 
     return Column(
@@ -84,123 +84,120 @@ class SimpleTable extends StatelessWidget {
             child: Text(
               title!,
               textAlign: TextAlign.center,
-              style: theme.textTheme.headlineSmall?.copyWith(
+              style: theme.textTheme.bodyMedium?.copyWith(
                 fontStyle: FontStyle.italic,
               ),
             ),
           ),
 
-        Center(
-          child: IntrinsicWidth(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // TOP LABEL
-                if (topLabel != null)
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      if (leftLabel != null)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          // FIX: Use "I" instead of leftLabel! to prevent vertical height blowout
-                          child: RotatedBox(
-                            quarterTurns: 3,
-                            child: _buildOuterLabel("I", isGhost: true),
-                          ),
-                        ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: _buildOuterLabel(topLabel!),
+        // 🌟 FIX 1: Removed IntrinsicWidth wrapper from here
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // TOP LABEL
+            if (topLabel != null)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  if (leftLabel != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: RotatedBox(
+                        quarterTurns: 3,
+                        child: _buildOuterLabel("I", isGhost: true),
+                      ),
+                    ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: _buildOuterLabel(topLabel!),
+                    ),
+                  ),
+                  if (rightLabel != null)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: _buildOuterLabel("I", isGhost: true),
+                      ),
+                    ),
+                ],
+              ),
+
+            IntrinsicHeight(
+              child: Row(
+                // mainAxisSize: MainAxisSize.min, // Removed to allow horizontal expansion
+                children: [
+                  if (leftLabel != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: Center(
+                        child: RotatedBox(
+                          quarterTurns: 3,
+                          child: _buildOuterLabel(leftLabel!),
                         ),
                       ),
-                      if (rightLabel != null)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          // FIX: Use "I" here as well
-                          child: RotatedBox(
-                            quarterTurns: 1,
-                            child: _buildOuterLabel("I", isGhost: true),
-                          ),
-                        ),
-                    ],
-                  ),
+                    ),
 
-                IntrinsicHeight(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (leftLabel != null)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: Center(
-                            child: RotatedBox(
-                              quarterTurns: 3,
-                              child: _buildOuterLabel(leftLabel!),
-                            ),
-                          ),
-                        ),
-
-                      Table(
-                        defaultColumnWidth: const IntrinsicColumnWidth(),
-                        border: TableBorder.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: [headerRow, ...dataRows],
+                  // 🌟 FIX 2: Wrapped the Table in an Expanded widget
+                  Expanded(
+                    child: Table(
+                      // 🌟 FIX 3: Changed to FlexColumnWidth to force text wrapping
+                      defaultColumnWidth: const FlexColumnWidth(),
+                      border: TableBorder.all(
+                        color: Colors.black,
+                        width: 2.0,
                       ),
-
-                      if (rightLabel != null)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Center(
-                            child: RotatedBox(
-                              quarterTurns: 1,
-                              child: _buildOuterLabel(rightLabel!),
-                            ),
-                          ),
-                        ),
-                    ],
+                      defaultVerticalAlignment:
+                      TableCellVerticalAlignment.middle,
+                      children: [headerRow, ...dataRows],
+                    ),
                   ),
-                ),
 
-                // BOTTOM LABEL
-                if (bottomLabel != null)
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (leftLabel != null)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          // FIX: Use "I" for ghost
-                          child: RotatedBox(
-                            quarterTurns: 3,
-                            child: _buildOuterLabel("I", isGhost: true),
-                          ),
-                        ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: _buildOuterLabel(bottomLabel!),
+                  if (rightLabel != null)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: Center(
+                        child: RotatedBox(
+                          quarterTurns: 1,
+                          child: _buildOuterLabel(rightLabel!),
                         ),
                       ),
-                      if (rightLabel != null)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          // FIX: Use "I" for ghost
-                          child: RotatedBox(
-                            quarterTurns: 1,
-                            child: _buildOuterLabel("I", isGhost: true),
-                          ),
-                        ),
-                    ],
-                  ),
-              ],
+                    ),
+                ],
+              ),
             ),
-          ),
+
+            // BOTTOM LABEL
+            if (bottomLabel != null)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (leftLabel != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: RotatedBox(
+                        quarterTurns: 3,
+                        child: _buildOuterLabel("I", isGhost: true),
+                      ),
+                    ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: _buildOuterLabel(bottomLabel!),
+                    ),
+                  ),
+                  if (rightLabel != null)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: _buildOuterLabel("I", isGhost: true),
+                      ),
+                    ),
+                ],
+              ),
+          ],
         ),
 
         if (figCaption != null)

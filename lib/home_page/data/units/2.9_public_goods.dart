@@ -73,7 +73,6 @@ List<Slide> get publicGoodsSlides => [
     ],
   ),
   Slide(
-    hl: true,
     skills: [],
     subunit: Subunit.marketFailurePublicGoods,
     title: 'Government intervention in response to public goods',

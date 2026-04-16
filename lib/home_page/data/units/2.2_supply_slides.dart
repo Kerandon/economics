@@ -126,7 +126,6 @@ List<Slide> get supplySlides => [
   Slide(
     subunit: Subunit.supply,
     title: 'Assumptions underlying the law of supply',
-    hl: true,
     contents: [
       SlideContent.text(
         'Marginal Product (MP) is the additional output produced by one more unit of a variable input, ceteris paribus. '

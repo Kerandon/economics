@@ -1,25 +1,52 @@
 import '../../../diagrams/enums/unit_type.dart';
 import '../../models/term.dart';
+
 enum RealWorldExamples {
+  /// PED
+  airlinesPriceDiscrimination(
+    'Airlines (e.g. Singapore Airlines, British Airways)',
+    explanation:
+    'Use PED to price discriminate; business travellers (inelastic) pay higher last-minute fares, while tourists (elastic) get cheaper advance tickets, increasing total revenue.',
+    subunit: Subunit.elasticityDemand,
+  ),
+
+  cigaretteTaxRevenue(
+    'Cigarette Taxes (e.g. UK, Australia)',
+    explanation:
+    'Governments tax cigarettes with PED < 1, so %∆Qd < %∆P; demand falls slightly while tax revenue remains stable or increases.',
+    subunit: Subunit.elasticityDemand,
+  ),
+
+  disneylandPricing(
+    'Disneyland (e.g. Shanghai, California)',
+    explanation:
+    'Uses PED-based price discrimination by charging higher peak/weekend prices (more inelastic demand) and lower off-peak prices to increase revenue.',
+    subunit: Subunit.elasticityDemand,
+  ),
+
   // --- OLIGOPOLY ---
   bigFourBanks(
     'Big-Four Banks in Australia (CBA, Westpac, NAB, ANZ)',
-    explanation: 'High strategic interdependence; when one bank changes mortgage rates, others typically follow within hours.',
+    explanation:
+        'High strategic interdependence; when one bank changes mortgage rates, others typically follow within hours.',
     subunit: Subunit.marketFailurePower,
   ),
   bigSuperMarketsAustralia(
     'Coles and Woolworths (Australia)',
-    explanation: 'A "Duopoly" accused of using market power to squeeze suppliers and inflate grocery prices (Implicit Collusion).',
+    explanation:
+        'A "Duopoly" accused of using market power to squeeze suppliers and inflate grocery prices (Implicit Collusion).',
     subunit: Subunit.marketFailurePower,
   ),
   eVIndustryInChina(
     'Xiaomi, Tesla, BYD',
-    explanation: 'Fierce "Price Wars" and rapid innovation (Non-price competition) to capture market share in a growing industry.',
+    explanation:
+        'Fierce "Price Wars" and rapid innovation (Non-price competition) to capture market share in a growing industry.',
     subunit: Subunit.marketFailurePower,
   ),
   llmMarket(
     'Google (Gemini), Anthropic (Claude), OpenAI (ChatGPT)',
-    explanation: 'A modern "Tech Oligopoly" where firms compete through massive R&D and rapid feature releases.',
+    explanation:
+        'A modern "Tech Oligopoly" where firms compete through massive R&D and rapid feature releases.',
     subunit: Subunit.marketFailurePower,
     tags: [Tag.hl],
   ),
@@ -27,24 +54,28 @@ enum RealWorldExamples {
   // --- MONOPOLISTIC COMPETITION ---
   shanghaiCoffeeShops(
     'Coffee Shops in Shanghai / Melbourne',
-    explanation: 'Many sellers with low barriers to entry. Each shop uses "Brand Differentiation" (vibe, specialty beans) to gain some price-making power.',
+    explanation:
+        'Many sellers with low barriers to entry. Each shop uses "Brand Differentiation" (vibe, specialty beans) to gain some price-making power.',
     subunit: Subunit.marketFailurePower,
   ),
   fastFashion(
     'Zara, H&M, Uniqlo',
-    explanation: 'Products are similar but not identical. Heavy reliance on advertising and branding to create "Perceived Differentiation."',
+    explanation:
+        'Products are similar but not identical. Heavy reliance on advertising and branding to create "Perceived Differentiation."',
     subunit: Subunit.marketFailurePower,
   ),
 
   // --- PERFECT COMPETITION (Closest Real-World Approximations) ---
   wheatFarmers(
     'Global Wheat or Corn Markets',
-    explanation: 'Large number of buyers and sellers dealing with a "Homogeneous Product." Farmers are "Price Takers" based on global exchange prices.',
+    explanation:
+        'Large number of buyers and sellers dealing with a "Homogeneous Product." Farmers are "Price Takers" based on global exchange prices.',
     subunit: Subunit.marketFailurePower,
   ),
   forexMarket(
     'Foreign Exchange (USD/AUD)',
-    explanation: 'Almost perfect information and a perfectly standardized product. No single buyer or seller can influence the market price.',
+    explanation:
+        'Almost perfect information and a perfectly standardized product. No single buyer or seller can influence the market price.',
     subunit: Subunit.marketFailurePower,
     tags: [Tag.hl],
   ),
@@ -52,12 +83,14 @@ enum RealWorldExamples {
   // --- MONOPOLY (Pros & Cons) ---
   luxottica(
     'Luxottica (Eyewear)',
-    explanation: 'Controls ~80% of major eyewear brands (Ray-Ban, Oakley). CON: Higher prices for consumers due to lack of viable substitutes.',
+    explanation:
+        'Controls ~80% of major eyewear brands (Ray-Ban, Oakley). CON: Higher prices for consumers due to lack of viable substitutes.',
     subunit: Subunit.marketFailurePower,
   ),
   pharmaceuticalPatents(
     'Patented Life-Saving Drugs',
-    explanation: 'PRO: High abnormal profits provide the incentive for expensive R&D. CON: Creates "Allocative Inefficiency" (P > MC).',
+    explanation:
+        'PRO: High abnormal profits provide the incentive for expensive R&D. CON: Creates "Allocative Inefficiency" (P > MC).',
     subunit: Subunit.marketFailurePower,
     tags: [Tag.hl],
   ),
@@ -65,14 +98,77 @@ enum RealWorldExamples {
   // --- NATURAL MONOPOLY ---
   sydneyWater(
     'Sydney Water / Utility Grid',
-    explanation: 'Extremely high fixed "Set-up Costs." It is most efficient for one firm to provide the service to reach "Economies of Scale" and avoid duplicating pipes.',
+    explanation:
+        'Extremely high fixed "Set-up Costs." It is most efficient for one firm to provide the service to reach "Economies of Scale" and avoid duplicating pipes.',
     subunit: Subunit.marketFailurePower,
   ),
   stateGridChina(
     'State Grid Corporation of China',
-    explanation: 'An industry where the "Minimum Efficient Scale" is so large that the market can only support one producer profitably.',
+    explanation:
+        'An industry where the "Minimum Efficient Scale" is so large that the market can only support one producer profitably.',
     subunit: Subunit.marketFailurePower,
     tags: [Tag.hl],
+  ),
+  oilCrisisStagflationUSA1970s(
+    '1973–74 Oil Shock Causes Stagflation in USA',
+    explanation:
+    'OPEC oil embargo: oil prices rose \$3 to ~\$12/barrel. USA high inflation + high unemployment.',
+    subunit: Subunit.macroObjectives,
+    tags: [Tag.hl],
+  ),
+
+  economicBoomOf1990s(
+    '1990s USA: Strong real GDP growth and low inflation',
+    explanation:
+    'US real GDP was strong ~4% (late 1990s), unemployment fell to ~4% (2000) while inflation remained low ~3%.',
+    subunit: Subunit.macroObjectives,
+    tags: [Tag.hl],
+  ),
+
+  globalFinancialCrisis2008(
+    '2008–09 Global Financial Crisis',
+    explanation:
+    'US unemployment rose from ~5% (2007) to ~10% (2009) while inflation fell to ~-0.4% (2009).',
+    subunit: Subunit.macroObjectives,
+    tags: [Tag.hl],
+  ),
+
+  covidPandemic2020(
+    '2020 COVID-19 Pandemic',
+    explanation:
+    'US unemployment spiked to ~14.7% (Apr 2020) while inflation initially fell ~0.1%.',
+    subunit: Subunit.macroObjectives,
+    tags: [Tag.hl],
+  ),
+
+  postPandemicInflation2022(
+    '2021–22 Inflation Surge (US/UK)',
+    explanation:
+    'US inflation peaked ~9.1% (2022) with unemployment ~3.5% → Phillips Curve shift, unstable trade-off.',
+    subunit: Subunit.macroObjectives,
+    tags: [Tag.hl],
+  ),
+
+  usFinancialCrisis2008(
+    '2008–14 Global Financial Crisis (US)',
+    explanation:
+    'Fed cut rates to ~0–0.25% and used QE (> \$3 trillion) → lower borrowing costs, boosting C and I, shifting AD right.',
+    subunit: Subunit.demandManagementMonetary,
+    tags: [Tag.hl, Tag.p1b],
+  ),
+  japanLiquidityTrap1990s(
+    '1990s–Present Liquidity Trap (Japan)',
+    explanation:
+        'Despite 0% interest rates, negative consumer and firm confidence remained.',
+    subunit: Subunit.demandManagementMonetary,
+    tags: [Tag.hl, Tag.p1b],
+  ),
+  eurozoneNegativeRates2014(
+    '2014–19 Negative Interest Rates (Eurozone)',
+    explanation:
+     '',
+    subunit: Subunit.demandManagementMonetary,
+    tags: [Tag.hl, Tag.p1b],
   );
 
   // --- PROPERTIES ---
@@ -83,9 +179,9 @@ enum RealWorldExamples {
 
   // --- CONSTRUCTOR ---
   const RealWorldExamples(
-      this.example, {
-        this.explanation,
-        this.subunit,
-        this.tags = const [],
-      });
+    this.example, {
+    this.explanation,
+    this.subunit,
+    this.tags = const [],
+  });
 }

@@ -15,7 +15,7 @@ void paintAxisLabels(
   Offset offsetAdjustment = Offset.zero,
   bool showBackground = true, // 👈 New property passed from paintAxis
 }) {
-  double fontSize = kFontSizeAverageRatioStandard * config.averageRatio;
+  double fontSize = kFontMedium;
   final effectiveColor = config.colorScheme.onSurface;
 
   // 1. Determine Base Position & Pivots based on Axis

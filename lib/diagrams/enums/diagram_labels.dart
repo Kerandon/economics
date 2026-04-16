@@ -90,7 +90,7 @@ enum DiagramLabel {
   priceFloor,
   laborSurplus,
   pf,
-  wageRate,
+  realWageRate,
   q,
   qProfitMax,
   quantityOfChocolateBars,
@@ -200,6 +200,7 @@ enum DiagramLabel {
   rMax,
   priceRevenueCosts,
   priceCostsRevenueDollar,
+  priceCostsRevenue,
   market,
   firm,
   quantity,
@@ -284,6 +285,7 @@ enum DiagramLabel {
   potentialOutput,
   potentialGDP,
   potentialGDP1,
+  potentialGDPEqualsFullEmployment,
   nRU,
   timeYears,
   aggregateDemand,
@@ -293,7 +295,8 @@ enum DiagramLabel {
   aD3,
   inflationRate,
   unemploymentRate,
-  lFEffective,
+  aSL,
+  aDL,
   lF,
   sRPC,
   lRPC,
@@ -561,7 +564,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.householdSpending => 'Household Spending',
       DiagramLabel.leakages => 'Leakages',
       DiagramLabel.injections => 'Injections',
-      DiagramLabel.priceLevel => 'Price Level',
+      DiagramLabel.priceLevel => 'Price\nLevel',
       DiagramLabel.realGDP => 'Real GDP',
       DiagramLabel.aggregateDemand => 'Aggregate Demand',
       DiagramLabel.aD => 'AD',
@@ -632,7 +635,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.pedBigger1 => 'PED > 1',
       DiagramLabel.pedEqual1 => 'PED = 1',
       DiagramLabel.pf => 'Pf',
-      DiagramLabel.wageRate => 'Wage Rate',
+      DiagramLabel.realWageRate => 'Real\nWage Rate',
       DiagramLabel.quantityOfLabor => 'Quantity of labor',
       DiagramLabel.dEqualsMB => 'D=MB',
       DiagramLabel.sEqualsMC => 'S=MC',
@@ -832,8 +835,8 @@ extension MicroLabelExtension on DiagramLabel {
 
       DiagramLabel.wMin => 'Wmin',
 
-      DiagramLabel.lFEffective => 'LFe',
-
+      DiagramLabel.aSL => 'ASL',
+      DiagramLabel.aDL => 'ADL',
       DiagramLabel.lF => 'LF',
 
       DiagramLabel.wEff => 'Weff',
@@ -892,6 +895,11 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.education => 'Education',
 
       DiagramLabel.potentialGDP1 => 'Potential GDP1',
+
+      DiagramLabel.priceCostsRevenue => 'Price,\nCosts,\nRevenues',
+      DiagramLabel.potentialGDPEqualsFullEmployment => 'Real GDP = Potential GDP',
+
+
     };
   }
 }

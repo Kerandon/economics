@@ -9,31 +9,34 @@ import '../i_diagram_canvas.dart';
 import '../painter_constants.dart';
 
 void paintDiagramDashedLines(
-  DiagramPainterConfig config,
-  IDiagramCanvas canvas, {
-  required double yAxisStartPos,
-  required double xAxisEndPos,
-  List<double>? additionalXPositions,
-  List<double>? additionalYPositions,
-  String? yLabel,
-  String? xLabel,
-  List<String>? additionalXLabels,
-  List<String>? additionalYLabels,
-  String? rightYLabel,
-  List<String>? additionalRightYLabels,
-  bool hideYLine = false,
-  bool hideXLine = false,
-  bool hideYLabels = false,
-  bool hideXLabels = false,
-  bool makeDashed = true,
-  Color? color,
-  bool showDotAtIntersection = false,
-  double dotRadius = kDotRadius,
-  Color? dotColor,
-  // NEW: Label Padding Passthrough
-  Offset xLabelPadding = Offset.zero,
-  Offset yLabelPadding = Offset.zero,
-}) {
+    DiagramPainterConfig config,
+    IDiagramCanvas canvas, {
+      required double yAxisStartPos,
+      required double xAxisEndPos,
+      List<double>? additionalXPositions,
+      List<double>? additionalYPositions,
+      String? yLabel,
+      String? xLabel,
+      List<String>? additionalXLabels,
+      List<String>? additionalYLabels,
+      String? rightYLabel,
+      List<String>? additionalRightYLabels,
+      bool hideYLine = false,
+      bool hideXLine = false,
+      bool hideYLabels = false,
+      bool hideXLabels = false,
+      bool makeDashed = true,
+      Color? color,
+      bool showDotAtIntersection = false,
+      double dotRadius = kDotRadius,
+      Color? dotColor,
+      // NEW: Label Padding Passthrough
+      Offset xLabelPadding = Offset.zero,
+      Offset yLabelPadding = Offset.zero,
+      // NEW: Right Y Label Alignment
+      LabelPivot rightYHorizontalPivot = LabelPivot.left,
+      LabelPivot rightYVerticalPivot = LabelPivot.middle,
+    }) {
   final c = color ?? config.colorScheme.onSurface;
   final width = config.painterSize.width;
 
@@ -104,8 +107,8 @@ void paintDiagramDashedLines(
           canvas,
           additionalRightYLabels[i],
           Offset(maxXValue + 0.04, yVal),
-          horizontalPivot: LabelPivot.left,
-          verticalPivot: LabelPivot.middle,
+          horizontalPivot: rightYHorizontalPivot, // 👈 Applied here
+          verticalPivot: rightYVerticalPivot,     // 👈 Applied here
           normalize: true,
           showBackground: false,
         );
@@ -197,21 +200,21 @@ void paintDiagramDashedLines(
       canvas,
       rightYLabel,
       Offset(maxXValue + 0.04, yAxisStartPos),
-      horizontalPivot: LabelPivot.left,
-      verticalPivot: LabelPivot.middle,
+      horizontalPivot: rightYHorizontalPivot, // 👈 Applied here
+      verticalPivot: rightYVerticalPivot,     // 👈 Applied here
       normalize: true,
     );
   }
 }
 
 void _paintTextForDashedLines(
-  DiagramPainterConfig config,
-  IDiagramCanvas canvas,
-  String label,
-  double pos,
-  CustomAxis axis, {
-  Offset paddingOffset = Offset.zero, // 👈 New Helper parameter
-}) {
+    DiagramPainterConfig config,
+    IDiagramCanvas canvas,
+    String label,
+    double pos,
+    CustomAxis axis, {
+      Offset paddingOffset = Offset.zero,
+    }) {
   const basePadding = 0.015;
 
   if (axis == CustomAxis.x) {
@@ -224,7 +227,7 @@ void _paintTextForDashedLines(
       verticalPivot: LabelPivot.top,
       normalize: true,
       showBackground: false,
-      textPadding: paddingOffset, // 👈 Applied here
+      textPadding: paddingOffset,
     );
   } else {
     paintText(
@@ -236,7 +239,9 @@ void _paintTextForDashedLines(
       verticalPivot: LabelPivot.middle,
       normalize: true,
       showBackground: false,
-      textPadding: paddingOffset, // 👈 Applied here
+      textPadding: paddingOffset,
     );
   }
 }
+
+

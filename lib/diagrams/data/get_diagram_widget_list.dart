@@ -8,6 +8,8 @@ import 'package:economics_app/diagrams/custom_paint/diagrams/j_curve_diagram.dar
 import 'package:economics_app/diagrams/custom_paint/diagrams/lorenz_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/market_power.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/money_market_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/oligopoly_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/perfect_competition.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/phillips_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/poverty_cycle_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/ppc_diagram.dart';
@@ -191,20 +193,23 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       description:
           'In the long-run a firm in perfect competition can only make normal profit (TR - TC = 0).',
       [
-        MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
-        MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
+        PerfectCompetition(c, DiagramEnum.microPerfectCompetitionMarketLongRun),
+        PerfectCompetition(c, DiagramEnum.microPerfectCompetitionFirmLongRun),
       ],
     ),
     DiagramWidget([
-      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketAbnormalProfit),
-      MarketPower(
+      PerfectCompetition(
+        c,
+        DiagramEnum.microPerfectCompetitionMarketAbnormalProfit,
+      ),
+      PerfectCompetition(
         c,
         DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment,
       ),
     ]),
     DiagramWidget([
-      MarketPower(c, DiagramEnum.microPerfectCompetitionMarketLoss),
-      MarketPower(c, DiagramEnum.microPerfectCompetitionFirmLoss),
+      PerfectCompetition(c, DiagramEnum.microPerfectCompetitionMarketLoss),
+      PerfectCompetition(c, DiagramEnum.microPerfectCompetitionFirmLoss),
     ]),
 
     /// ============================================================
@@ -225,6 +230,7 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
         DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare,
       ),
     ]),
+    DiagramWidget([OligopolyDiagram(c, DiagramEnum.microOligopolyCartel)]),
     DiagramWidget([
       MarketPower(c, DiagramEnum.microOligopolyKinkedDemandCurve),
     ]),
@@ -239,18 +245,29 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([
       CircularFlowDiagram(c, DiagramEnum.macroCircularFlowTwoSectorEconomy),
     ]),
-    DiagramWidget([CircularFlowDiagram(c, DiagramEnum.macroCircularFlowOpenEconomy)]),
+    DiagramWidget([
+      CircularFlowDiagram(c, DiagramEnum.macroCircularFlowOpenEconomy),
+    ]),
 
     ///Biz cycle
     DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycle)]),
-    DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycleStabilizationPolicies)]),
-    DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP)]),
+    DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycleNRU)]),
+    DiagramWidget([
+      BizDiagram(c, DiagramEnum.macroBusinessCycleStabilizationPolicies),
+    ]),
+    DiagramWidget([
+      BizDiagram(c, DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP),
+    ]),
+
     /// AD-AS
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroAggregateDemand)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroAggregateDemandIncrease)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroAggregateDemandDecrease)]),
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroAggregateDemandInflationTradeOff),
+    ]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRAS)]),
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRASIncrease)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRASCostPushInflation)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRASDecrease)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalFullEmployment)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGap)]),
@@ -263,6 +280,9 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     ]),
     DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroADASKeynesianFullEmployment),
+    ]),
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroADASKeynesianSpareCapacity),
     ]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianDeflationaryGap)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianInflationaryGap)]),
@@ -303,17 +323,21 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     ]),
 
     /// Philips Curve
-    DiagramWidget([PhillipsCurveDiagram(c, DiagramEnum.macroSRPCAndLRPC)]),
+    DiagramWidget([PhillipsCurveDiagram(c, DiagramEnum.macroSRPC)]),
     DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroPhillipsCurveStagflation),
-      ADASDiagram(c, DiagramEnum.macroADASCostPushInflation),
+      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCCostPushInflation),
     ]),
     DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCInflationaryGapAdjustment),
-      ADASDiagram(c, DiagramEnum.macroClassicalInflationaryGapAdjustment),
+      PhillipsCurveDiagram(
+        c,
+        DiagramEnum.macroExpectationsAugmentedPhillipsCurveInflationaryGap,
+      ),
     ]),
     DiagramWidget([
-      PhillipsCurveDiagram(c, DiagramEnum.macroSRPCDeflationaryGapAdjustment),
+      PhillipsCurveDiagram(
+        c,
+        DiagramEnum.macroExpectationsAugmentedPhillipsCurveDeflationaryGap,
+      ),
       ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGapAdjustment),
     ]),
     DiagramWidget([PhillipsCurveDiagram(c, DiagramEnum.macroLRPCFallInNRU)]),
@@ -328,24 +352,9 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
 
     /// Money market
     DiagramWidget([MoneyMarketDiagram(c, DiagramEnum.macroMoneyMarket)]),
-    DiagramWidget([
-      MoneyMarketDiagram(
-        c,
-        DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy,
-      ),
-      ADASDiagram(c, DiagramEnum.macroKeynesianExpansionaryPolicy),
-    ]),
-    DiagramWidget([
-      MoneyMarketDiagram(
-        c,
-        DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy,
-      ),
-      ADASDiagram(c, DiagramEnum.macroKeynesianContractionaryPolicy),
-    ]),
+
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianMultiplier)]),
 
-    /// --- MONEY MARKET ---
-    DiagramWidget([MoneyMarketDiagram(c, DiagramEnum.macroMoneyMarket)]),
     DiagramWidget([
       MoneyMarketDiagram(
         c,
@@ -360,7 +369,6 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       ),
       ADASDiagram(c, DiagramEnum.macroKeynesianContractionaryPolicy),
     ]),
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianMultiplier)]),
 
     /// --- GLOBAL TRADE ---
 

@@ -105,6 +105,7 @@ enum DiagramEnum {
   microMonopolyNaturalAverageCostPricingWelfare,
   microMonopolyNaturalMarginalCostPricing,
   microMonopolyNaturalMarginalCostPricingWelfare,
+  microOligopolyCartel,
   microOligopolyKinkedDemandCurve,
   microMonopolisticCompetitionAbnormalProfit,
   microMonopolisticCompetitionAbnormalProfitShift,
@@ -118,6 +119,7 @@ enum DiagramEnum {
   macroCircularFlowTwoSectorEconomy,
   macroCircularFlowOpenEconomy,
   macroBusinessCycle,
+  macroBusinessCycleNRU,
   macroBusinessCycleStabilizationPolicies,
   macroBusinessCycleIncreaseInPotentialGDP,
 
@@ -125,13 +127,15 @@ enum DiagramEnum {
   macroAggregateDemand,
   macroAggregateDemandIncrease,
   macroAggregateDemandDecrease,
+  macroAggregateDemandInflationTradeOff,
   macroSRAS,
-  macroSRASIncrease,
+  macroSRASCostPushInflation,
   macroSRASDecrease,
   macroClassicalFullEmployment,
   macroClassicalDeflationaryGap,
   macroClassicalInflationaryGap,
   macroADASKeynesianFullEmployment,
+  macroADASKeynesianSpareCapacity,
   macroKeynesianDeflationaryGap,
   macroKeynesianInflationaryGap,
   macroKeynesianExpansionaryPolicy,
@@ -156,10 +160,11 @@ enum DiagramEnum {
   macroNaturalRateOfUnemployment,
 
   /// Phillips Curve
-  macroSRPCAndLRPC,
-  macroPhillipsCurveStagflation,
-  macroSRPCInflationaryGapAdjustment,
-  macroSRPCDeflationaryGapAdjustment,
+  macroSRPC,
+  macroSRPCLRPC,
+  macroSRPCCostPushInflation,
+  macroExpectationsAugmentedPhillipsCurveInflationaryGap,
+  macroExpectationsAugmentedPhillipsCurveDeflationaryGap,
   macroLRPCFallInNRU,
 
   /// Poverty and Inequality
@@ -410,6 +415,7 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.microMonopolyAbnormalProfitAndCosts =>
       Subunit.marketFailurePower,
     DiagramEnum.microOligopolyKinkedDemandCurve => Subunit.marketFailurePower,
+    DiagramEnum.microOligopolyCartel => Subunit.marketFailurePower,
     DiagramEnum.microMonopolisticCompetitionAbnormalProfit =>
       Subunit.marketFailurePower,
     DiagramEnum.microMonopolisticCompetitionLoss => Subunit.marketFailurePower,
@@ -423,52 +429,52 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     ///Macro
   /// Measuring economic activity
     DiagramEnum.macroCircularFlowTwoSectorEconomy =>
-      Subunit.measuringEconomicActivity,
+      Subunit.economicActivity,
 
     DiagramEnum.macroCircularFlowOpenEconomy =>
-      Subunit.measuringEconomicActivity,
-    DiagramEnum.macroBusinessCycle => Subunit.measuringEconomicActivity,
-
+      Subunit.economicActivity,
+    DiagramEnum.macroBusinessCycle => Subunit.economicActivity,
+    DiagramEnum.macroBusinessCycleNRU => Subunit.economicActivity,
     DiagramEnum.macroBusinessCycleStabilizationPolicies =>
-    Subunit.measuringEconomicActivity,
+    Subunit.economicActivity,
 
     DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP =>
-    Subunit.measuringEconomicActivity,
+    Subunit.economicActivity,
   ///AD-AS
 
 
 
-    DiagramEnum.macroAggregateDemand => Subunit.variationsActivityADAS,
+    DiagramEnum.macroAggregateDemand => Subunit.aDAS,
+    DiagramEnum.macroAggregateDemandInflationTradeOff => Subunit.aDAS,
+    DiagramEnum.macroAggregateDemandIncrease => Subunit.aDAS,
 
-    DiagramEnum.macroAggregateDemandIncrease => Subunit.variationsActivityADAS,
+    DiagramEnum.macroAggregateDemandDecrease => Subunit.aDAS,
 
-    DiagramEnum.macroAggregateDemandDecrease => Subunit.variationsActivityADAS,
+    DiagramEnum.macroSRAS => Subunit.aDAS,
 
-    DiagramEnum.macroSRAS => Subunit.variationsActivityADAS,
+    DiagramEnum.macroSRASCostPushInflation => Subunit.aDAS,
 
-    DiagramEnum.macroSRASIncrease => Subunit.variationsActivityADAS,
-
-    DiagramEnum.macroSRASDecrease => Subunit.variationsActivityADAS,
+    DiagramEnum.macroSRASDecrease => Subunit.aDAS,
 
 
-    DiagramEnum.macroClassicalFullEmployment => Subunit.variationsActivityADAS,
+    DiagramEnum.macroClassicalFullEmployment => Subunit.aDAS,
 
-    DiagramEnum.macroClassicalDeflationaryGap => Subunit.variationsActivityADAS,
+    DiagramEnum.macroClassicalDeflationaryGap => Subunit.aDAS,
 
-    DiagramEnum.macroClassicalInflationaryGap => Subunit.variationsActivityADAS,
+    DiagramEnum.macroClassicalInflationaryGap => Subunit.aDAS,
 
     DiagramEnum.macroADASKeynesianFullEmployment =>
-      Subunit.variationsActivityADAS,
+      Subunit.aDAS,
+    DiagramEnum.macroADASKeynesianSpareCapacity => Subunit.aDAS,
+    DiagramEnum.macroKeynesianDeflationaryGap => Subunit.aDAS,
 
-    DiagramEnum.macroKeynesianDeflationaryGap => Subunit.variationsActivityADAS,
-
-    DiagramEnum.macroKeynesianInflationaryGap => Subunit.variationsActivityADAS,
+    DiagramEnum.macroKeynesianInflationaryGap => Subunit.aDAS,
 
     DiagramEnum.macroClassicalDeflationaryGapAdjustment =>
-      Subunit.variationsActivityADAS,
+      Subunit.aDAS,
 
     DiagramEnum.macroClassicalInflationaryGapAdjustment =>
-      Subunit.variationsActivityADAS,
+      Subunit.aDAS,
 
     /// Economic growth
     DiagramEnum.macroClassicalLongTermGrowth => Subunit.macroObjectives,
@@ -487,10 +493,11 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroNaturalRateOfUnemployment => Subunit.macroObjectives,
 
     ///Philips Curve
-    DiagramEnum.macroSRPCAndLRPC => Subunit.macroObjectives,
-    DiagramEnum.macroPhillipsCurveStagflation => Subunit.macroObjectives,
-    DiagramEnum.macroSRPCInflationaryGapAdjustment => Subunit.macroObjectives,
-    DiagramEnum.macroSRPCDeflationaryGapAdjustment => Subunit.macroObjectives,
+    DiagramEnum.macroSRPC => Subunit.macroObjectives,
+    DiagramEnum.macroSRPCLRPC => Subunit.macroObjectives,
+    DiagramEnum.macroSRPCCostPushInflation => Subunit.macroObjectives,
+    DiagramEnum.macroExpectationsAugmentedPhillipsCurveInflationaryGap => Subunit.macroObjectives,
+    DiagramEnum.macroExpectationsAugmentedPhillipsCurveDeflationaryGap => Subunit.macroObjectives,
     DiagramEnum.macroLRPCFallInNRU => Subunit.macroObjectives,
 
     /// Poverty and Inequality
@@ -626,39 +633,54 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.microMarginalBenefit =>
         "The additional satisfaction or utility gained from consuming one more unit.",
 
-      // Elasticity
-      DiagramEnum.microDemandElastic =>
-        "Elastic Demand (PED > 1): Quantity changes by a greater percentage than price.",
-      DiagramEnum.microDemandInelastic =>
-        "Inelastic Demand (PED < 1): Quantity changes by a smaller percentage than price.",
-      DiagramEnum.microDemandUnitElastic =>
-        "Unit Elastic Demand (PED = 1): Percentage change in quantity equals percentage change in price.",
-      DiagramEnum.microDemandPerfectlyElastic =>
-        "Perfectly Elastic Demand (PED = ∞): Consumers will only buy at one specific price.",
-      DiagramEnum.microDemandPerfectlyInelastic =>
-        "Perfectly Inelastic Demand (PED = 0): Quantity demanded remains constant regardless of price.",
-      DiagramEnum.microDemandInelasticRevenue =>
-        "Increasing price on an inelastic good increases Total Revenue.",
-      DiagramEnum.microDemandElasticRevenue =>
-        "Decreasing price on an elastic good increases Total Revenue.",
-      DiagramEnum.microDemandElasticityChange =>
-        "Shows how PED varies along a linear demand curve (elastic at top, inelastic at bottom).",
-      DiagramEnum.microDemandElasticityRevenueChange =>
-        "The relationship between PED and the Total Revenue curve (max revenue at Unit Elasticity).",
-      DiagramEnum.microDemandEngelCurve =>
-        "Shows the relationship between income and quantity demanded for normal vs inferior goods.",
-      DiagramEnum.microSupplyElastic =>
-        "Elastic Supply (PES > 1): Producers are responsive to price changes.",
-      DiagramEnum.microSupplyInelastic =>
-        "Inelastic Supply (PES < 1): Producers are unresponsive to price changes.",
-      DiagramEnum.microSupplyUnitElastic =>
-        "Unit Elastic Supply (PES = 1): Supply curve passes through the origin.",
-      DiagramEnum.microSupplyPerfectlyElastic =>
-        "Perfectly Elastic Supply (PES = ∞): Horizontal supply curve.",
-      DiagramEnum.microSupplyPerfectlyInelastic =>
-        "Perfectly Inelastic Supply (PES = 0): Vertical supply curve (fixed quantity).",
-      DiagramEnum.microSupplyPrimaryCommodities =>
-        "Comparison of volatility between primary commodities (inelastic) and manufactured goods.",
+
+    DiagramEnum.microDemandElastic =>
+    "Elastic Demand (PED > 1): %∆Qd > %∆P.",
+
+    DiagramEnum.microDemandInelastic =>
+    "Inelastic Demand (PED < 1): %∆Qd < %∆P.",
+
+    DiagramEnum.microDemandUnitElastic =>
+    "Unit Elastic Demand (PED = 1): %∆Qd = %∆P.",
+
+    DiagramEnum.microDemandPerfectlyElastic =>
+    "Perfectly Elastic Demand (PED = ∞): %∆Qd → ∞ for any %∆P.",
+
+    DiagramEnum.microDemandPerfectlyInelastic =>
+    "Perfectly Inelastic Demand (PED = 0): %∆Qd = 0 for any %∆P.",
+
+    DiagramEnum.microDemandInelasticRevenue =>
+    "Inelastic Demand (PED < 1): %∆P > %∆Qd → Total Revenue increases when price increases.",
+
+    DiagramEnum.microDemandElasticRevenue =>
+    "Elastic Demand (PED > 1): %∆Qd > %∆P → Total Revenue increases when price decreases.",
+
+    DiagramEnum.microDemandElasticityChange =>
+    "PED along a linear demand curve: PED > 1 (top), PED = 1 (midpoint), PED < 1 (bottom).",
+
+    DiagramEnum.microDemandElasticityRevenueChange =>
+    "Total Revenue maximized where PED = 1 (%∆Qd = %∆P).",
+
+    DiagramEnum.microDemandEngelCurve =>
+    "Engel Curve: %∆Qd varies with %∆Y (income) for normal (+) and inferior (−) goods.",
+
+    DiagramEnum.microSupplyElastic =>
+    "Elastic Supply (PES > 1): %∆Qs > %∆P.",
+
+    DiagramEnum.microSupplyInelastic =>
+    "Inelastic Supply (PES < 1): %∆Qs < %∆P.",
+
+    DiagramEnum.microSupplyUnitElastic =>
+    "Unit Elastic Supply (PES = 1): %∆Qs = %∆P.",
+
+    DiagramEnum.microSupplyPerfectlyElastic =>
+    "Perfectly Elastic Supply (PES = ∞): %∆Qs → ∞ at a given price.",
+
+    DiagramEnum.microSupplyPerfectlyInelastic =>
+    "Perfectly Inelastic Supply (PES = 0): %∆Qs = 0 for any %∆P.",
+
+    DiagramEnum.microSupplyPrimaryCommodities =>
+    "Primary Commodities: PED < 1 & PES < 1 → large price volatility from small shifts in demand/supply.",
 
       // Government Intervention
       DiagramEnum.microPriceCeiling =>
@@ -777,7 +799,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.microOligopolyKinkedDemandCurve =>
         "Price rigidity due to interdependent reactions to price changes.",
       DiagramEnum.microMonopolisticCompetitionAbnormalProfit =>
-        "Short-run profit with a downward-sloping (elastic) demand curve.",
+        "Short-run profit: AR>AC at MC=MR",
       DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift =>
         "Entry of substitutes shifts demand left in the long run.",
       DiagramEnum.microMonopolisticCompetitionLoss =>
@@ -785,8 +807,8 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.microMonopolisticCompetitionLossShift =>
         "Exit of firms shifts demand right in the long run.",
       DiagramEnum.microMonopolisticCompetitionLongRun =>
-        "Long-run Tangency Equilibrium: P = ATC but P > MC.",
-
+        "Long-run: P/AR = ATC; but P > MC.",
+      DiagramEnum.microOligopolyCartel => 'A cartel acts as a monopoly, earning abnormal profits.',
       // -----------------------------------------------------------------------
       // MACROECONOMICS
       // -----------------------------------------------------------------------
@@ -808,7 +830,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
 
       DiagramEnum.macroSRAS => '',
 
-      DiagramEnum.macroSRASIncrease => '',
+      DiagramEnum.macroSRASCostPushInflation => 'Cost push inflation is shown by a decrease in SRAS leading to a higher price level and lower real GDP.',
 
       DiagramEnum.macroSRASDecrease => '',
       DiagramEnum.macroClassicalFullEmployment =>
@@ -856,16 +878,16 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.macroUnemploymentEfficiencyWages =>
         "Wages kept above equilibrium to boost worker productivity.",
       DiagramEnum.macroNaturalRateOfUnemployment =>
-        "The rate of unemployment when the labor market is in equilibrium (Structural + Frictional).",
+        "When labor market is in equilibrium U = NRU only (Q1-Qe).",
 
       // Phillips Curve
-      DiagramEnum.macroSRPCAndLRPC =>
-        "Short-run trade-off vs Long-run vertical curve at the NRU.",
-      DiagramEnum.macroPhillipsCurveStagflation =>
-        "SRPC shifting right due to supply shocks or higher inflation expectations.",
-      DiagramEnum.macroSRPCInflationaryGapAdjustment =>
-        "Movement along SRPC to higher inflation/lower unemployment.",
-      DiagramEnum.macroSRPCDeflationaryGapAdjustment =>
+      DiagramEnum.macroSRPC =>
+        "SRPC shows trade-off between unemployment and inflation.",
+      DiagramEnum.macroSRPCCostPushInflation =>
+        "Outward shift in SRPC due to cost-push inflation (can lead to stagflation).",
+      DiagramEnum.macroExpectationsAugmentedPhillipsCurveInflationaryGap =>
+        "a: U=NRU, π=πe; b: U<NRU, π>πe (inflationary-gap) labor-market shortages; c: nominal wage costs rise, inflation expectations adjust, return to U=NRU, π=πe.",
+      DiagramEnum.macroExpectationsAugmentedPhillipsCurveDeflationaryGap =>
         "Movement along SRPC to lower inflation/higher unemployment.",
       DiagramEnum.macroLRPCFallInNRU =>
         "LRPC shifting left due to supply-side policies improving labor markets.",
@@ -963,6 +985,10 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         'Progressive taxation reduces the size of an inflationary gap, while unemployment payments reduce the size of a deflationary gap',
       DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP =>
         'An increase in Potential GDP is due policies that increase the productive capacity of the economy (supply-side policies)',
+      DiagramEnum.macroBusinessCycleNRU => 'When real GDP = potential GDP there is full employment. Unemployment = NRU only.',
+      DiagramEnum.macroADASKeynesianSpareCapacity => 'Government stimulus spending during a severe-recession has limited impact on price-level due to idle resources / spare capacity. ',
+      DiagramEnum.macroSRPCLRPC => 'SRPC shows a short-run inflation–unemployment trade-off; LRPC shows no long-run trade-off.',
+      DiagramEnum.macroAggregateDemandInflationTradeOff => 'Increases in AD under monetarist/new-classical model show inflation–unemployment trade-off.',
     };
   }
 }

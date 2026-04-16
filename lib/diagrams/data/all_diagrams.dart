@@ -7,14 +7,16 @@ import 'get_diagram_widget_list.dart';
 class AllDiagrams {
   final Size size;
   final ColorScheme colorScheme;
+  final double indent;
 
-  AllDiagrams({required this.size, required this.colorScheme});
+  AllDiagrams({required this.size, required this.colorScheme, this.indent = 0.12});
 
   List<DiagramWidget> getDiagramWidgets({List<DiagramEnum>? diagrams}) {
     final config = DiagramPainterConfig(
       painterSize: size,
       appSize: Size(size.width, size.height),
       colorScheme: colorScheme,
+      indent: indent,
     );
 
     final all = getDiagramWidgetsListNEW(config).toList();

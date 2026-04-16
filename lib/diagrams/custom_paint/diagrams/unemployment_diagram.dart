@@ -213,12 +213,6 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       length: 0.40,
       label: DiagramLabel.laborSurplus.label,
     );
-
-    paintDescription(
-      c,
-      canvas,
-      'Real Wage Unemployment: A price floor (Min Wage) above equilibrium (We) creates a disequilibrium. Supply of labor extends to Qs, but Demand contracts to Qd. The gap (Qs - Qd) represents classical unemployment.',
-    );
   }
 
   void _paintNaturalRateOfUnemployment(
@@ -237,8 +231,15 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       additionalXPositions: [0.435],
       additionalXLabels: [DiagramLabel.qE.label],
     );
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: const Offset(0.25, 0.10),
+      polylineOffsets: [const Offset(0.70, 0.90)],
+      label2: DiagramLabel.aDL.label,
+      label2Align: LabelAlign.bottomRight
+    );
 
-    paintMarketCurve(c, canvas, type: MarketCurveType.dl);
 
     // Supply Curves
     paintDiagramLines(
@@ -246,14 +247,14 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       canvas,
       startPos: const Offset(0.60, 0.10),
       polylineOffsets: [const Offset(0.20, 0.90)],
-      label1: DiagramLabel.lFEffective.label,
+      label1: DiagramLabel.aSL.label,
     );
 
     paintDiagramLines(
       c,
       canvas,
-      startPos: const Offset(0.70, 0.10),
-      polylineOffsets: [const Offset(0.50, 0.90)],
+      startPos: const Offset(0.68, 0.10),
+      polylineOffsets: [const Offset(0.55, 0.90)],
       label1: DiagramLabel.lF.label,
     );
 
@@ -262,15 +263,9 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       canvas,
       origin: const Offset(0.53, 0.43),
       endStyle: LineEndStyle.circlesOnEnd,
-      length: 0.17,
+      length: 0.19,
       color: Colors.red,
       label: 'NRU',
-    );
-
-    paintDescription(
-      c,
-      canvas,
-      'Natural Rate (NRU): The difference between the Total Labor Force (LF) and the Effective Labor Force (LF-eff) at equilibrium. These workers are voluntarily unemployed (not willing to take jobs at We) due to Frictional (search) or Structural (mismatch) factors.',
     );
   }
 
@@ -310,11 +305,5 @@ class UnemploymentDiagram extends BaseDiagramPainter {
 
     paintMarketCurve(c, canvas, type: MarketCurveType.dl);
     paintMarketCurve(c, canvas, type: MarketCurveType.sl);
-
-    paintDescription(
-      c,
-      canvas,
-      'Efficiency Wages: Firms voluntarily pay above-market wages (Weff > We) to boost morale, reduce turnover, and attract talent. While efficient for the firm, it acts as a price floor, causing aggregate labor surplus (unemployment).',
-    );
   }
 }

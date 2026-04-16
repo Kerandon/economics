@@ -30,7 +30,7 @@ void paintDiagramLines(
   LabelAlign label2Align = LabelAlign.centerBottom,
   LabelAlign middleLabelAlign = LabelAlign.center,
 
-  double labelPadding = 18.0,
+  double labelPadding = 12.0,
 
   // ARROWS
   bool arrowOnStart = false,
@@ -367,6 +367,6 @@ void _paintDiagramLabel(
     horizontalPivot: horizontal,
     verticalPivot: vertical,
     normalize: normalize,
-    style: TextStyle(color: color, fontWeight: FontWeight.bold),
+    type: DiagramTextType.label,
   );
 }

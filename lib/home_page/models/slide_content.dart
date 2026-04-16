@@ -1,12 +1,15 @@
 import 'dart:typed_data';
 import 'package:economics_app/home_page/models/key_content.dart';
 import 'package:economics_app/home_page/models/term.dart';
+import 'package:economics_app/home_page/models/example.dart';
 import 'package:economics_app/home_page/models/tip.dart';
 import 'package:flutter/material.dart';
 import '../../diagrams/enums/diagram_enum.dart';
 import '../../diagrams/models/diagram_widget.dart';
 import '../custom_widgets/definitions_grid.dart';
 import '../custom_widgets/simple_table.dart';
+import '../pages/real_world_examples/real_world_examples.dart';
+import '../pages/terms/terms.dart';
 import 'alert.dart';
 import 'content.dart';
 
@@ -45,20 +48,22 @@ class EvaluationData {
     this.centerLabel = 'VS',
   });
 }
-
 class SlideContent {
   // Basic Text Types
   final Content? content;
   final KeyContent? keyContent;
   final Term? term;
   final Alert? alert;
-  final Example? examples;
+  final Tip? tip; // 🆕 Added Tip
+  final String? tldr;
+  final List<EconTerm>? econTerms;
+  final List<RealWorldExamples>? realWorldExamples;
 
   // Visuals
   final List<DiagramEnum>? diagramEnums;
   final List<DiagramWidget>? diagramWidgets;
 
-  // 🆕 This field stores the "captured" screenshots for the PDF
+  // This field stores the "captured" screenshots for the PDF
   final List<Uint8List>? diagramImages;
 
   // Custom Widgets (For UI rendering)
@@ -74,10 +79,13 @@ class SlideContent {
     this.keyContent,
     this.term,
     this.alert,
-    this.examples,
+    this.tip, // 🆕 Added
+    this.tldr,
+    this.econTerms,
+    this.realWorldExamples,
     this.diagramEnums,
     this.diagramWidgets,
-    this.diagramImages, // 🆕 Added
+    this.diagramImages,
     this.widget,
     this.glossaryItems,
     this.tableData,
@@ -89,10 +97,13 @@ class SlideContent {
     KeyContent? keyContent,
     Term? term,
     Alert? alert,
-    Example? examples,
+    Tip? tip, // 🆕 Added
+    String? tldr,
+    List<EconTerm>? econTerms,
+    List<RealWorldExamples>? realWorldExamples,
     List<DiagramEnum>? diagramEnums,
     List<DiagramWidget>? diagramWidgets,
-    List<Uint8List>? diagramImages, // 🆕 Added
+    List<Uint8List>? diagramImages,
     Widget? widget,
     List<SlideContent>? glossaryItems,
     TableData? tableData,
@@ -103,10 +114,13 @@ class SlideContent {
       keyContent: keyContent ?? this.keyContent,
       term: term ?? this.term,
       alert: alert ?? this.alert,
-      examples: examples ?? this.examples,
+      tip: tip ?? this.tip, // 🆕 Added
+      tldr: tldr ?? this.tldr,
+      econTerms: econTerms ?? this.econTerms,
+      realWorldExamples: realWorldExamples ?? this.realWorldExamples,
       diagramWidgets: diagramWidgets ?? this.diagramWidgets,
       diagramEnums: diagramEnums ?? this.diagramEnums,
-      diagramImages: diagramImages ?? this.diagramImages, // 🆕 Added
+      diagramImages: diagramImages ?? this.diagramImages,
       widget: widget ?? this.widget,
       glossaryItems: glossaryItems ?? this.glossaryItems,
       tableData: tableData ?? this.tableData,
@@ -131,8 +145,17 @@ class SlideContent {
 
   factory SlideContent.alert(String text) => SlideContent(alert: Alert(text));
 
-  factory SlideContent.examples(String text) =>
-      SlideContent(examples: Example(text));
+  // 🆕 Added Tip Factory
+  factory SlideContent.tip(String text, {List<Tag>? tags}) =>
+      SlideContent(tip: Tip(text, tags: tags));
+
+  factory SlideContent.tldr(String text) => SlideContent(tldr: text);
+
+  factory SlideContent.econTerms(List<EconTerm> terms) =>
+      SlideContent(econTerms: terms);
+
+  factory SlideContent.realWorldExamples(List<RealWorldExamples> examples) =>
+      SlideContent(realWorldExamples: examples);
 
   factory SlideContent.diagrams(List<DiagramEnum> diagrams) =>
       SlideContent(diagramEnums: diagrams);
@@ -202,4 +225,3 @@ class SlideContent {
     );
   }
 }
-

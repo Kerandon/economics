@@ -12,9 +12,9 @@ void paintShading(
   ShadeType shade,
   List<dynamic> pointsAndBeziers, {
   bool striped = true,
-  double stripeSpacing = 20.0,
-  double strokeWidth = 6,
-  int alpha = 160,
+  double stripeSpacing = 30.0,
+  double strokeWidth = 8,
+  int alpha = 80,
   bool invertStripes = false,
   // NEW PROPERTIES
   String? label,

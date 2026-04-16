@@ -36,7 +36,7 @@ class _PaperOneQuestionsPageState extends State<PaperOneQuestionsPage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => QuestionDetailPage(
-                      question: question, // Pass the whole object
+                      slide: question, // Pass the whole object
                     ),
                   ),
                 );
@@ -45,7 +45,7 @@ class _PaperOneQuestionsPageState extends State<PaperOneQuestionsPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Text(
-                    question.question,
+                    question.question ?? '',
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),

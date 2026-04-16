@@ -1,6 +1,8 @@
-class Example {
-  final String text;
-  final bool? hl;
+import 'package:economics_app/home_page/models/term.dart';
 
-  Example(this.text, {this.hl = false});
+class Tip {
+  final String text;
+  final List<Tag>? tags;
+
+  Tip(this.text, {this.tags});
 }

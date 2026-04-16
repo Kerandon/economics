@@ -106,7 +106,6 @@ List<Slide> get elasticityDemandSlides => [
   ),
   Slide(
     subunit: Subunit.elasticityDemand,
-    hl: true,
     title: 'PED and Primary Commodities and Manufactured Goods (AO3)',
     contents: [],
   ),

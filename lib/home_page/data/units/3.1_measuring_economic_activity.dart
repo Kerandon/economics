@@ -8,7 +8,7 @@ import '../../models/slide_content.dart';
 
 List<Slide> get measuringEconomicActivitySlides => [
   Slide(
-    subunit: Subunit.measuringEconomicActivity,
+    subunit: Subunit.economicActivity,
     title: 'Circular Flow Of Income Model',
     skills: [Skill.a02, Skill.a04],
     contents: [
@@ -33,7 +33,7 @@ A more realistic model is an open-model which adds Government, Financial Markets
     ],
   ),
   Slide(
-    subunit: Subunit.measuringEconomicActivity,
+    subunit: Subunit.economicActivity,
     title: 'GDP and GNI',
     contents: [
       SlideContent.text('''

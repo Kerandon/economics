@@ -64,12 +64,12 @@ enum Subunit {
   ),
 
   // Macro
-  measuringEconomicActivity(
+  economicActivity(
     '3.1',
     'Measuring economic activity and illustrating its variations',
     UnitType.macro,
   ),
-  variationsActivityADAS(
+  aDAS(
     '3.2',
     'Variations in economic activity—aggregate demand and aggregate supply',
     UnitType.macro,
@@ -218,7 +218,7 @@ enum SyllabusPoint {
     [Skill.a03],
   ),
   measuringEconomicActivity(
-  Subunit.measuringEconomicActivity,
+  Subunit.economicActivity,
   'Measuring economic activity and illustrating its variations',
   [Skill.a02, Skill.a03, Skill.a04],
   );

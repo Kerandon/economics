@@ -50,7 +50,7 @@ final appProvider = StateNotifierProvider<AppNotifier, AppState>(
     AppState(
       isDarkTheme: false,
       page: 0,
-      fontSize: FontSize.medium, // Default font size
+      fontSize: FontSize.medium, // Default fonts size
     ),
   ),
 );

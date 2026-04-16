@@ -4,7 +4,10 @@ import '../i_diagram_canvas.dart';
 
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
-
+enum DiagramTextType {
+  standard, // Uses kFontMedium, normal style
+  label,    // Uses kFontSmall, italic style (perfect for curve labels like D=AR)
+}
 // Ensure LabelPivot is defined (as per your request)
 enum LabelPivot { left, center, right, top, middle, bottom }
 
@@ -17,37 +20,51 @@ enum DiagramShape {
 }
 
 void paintText(
-  DiagramPainterConfig config,
-  IDiagramCanvas canvas,
-  String label,
-  Offset position, {
-  Offset? pointerLine,
-  double fontSize = kFontMedium,
-  TextStyle? style,
-  double angle = 0,
-  LabelPivot horizontalPivot = LabelPivot.center,
-  LabelPivot verticalPivot = LabelPivot.middle,
-  bool normalize = true,
-  bool ignoreIndent = false,
-  DiagramShape shape = DiagramShape.none,
-  double? maxWidth,
-  TextAlign textAlign = TextAlign.center,
-  bool showBackground = true,
-  // NEW: Precise padding control (dx for horizontal, dy for vertical)
-  Offset textPadding = Offset.zero,
-}) {
+    DiagramPainterConfig config,
+    IDiagramCanvas canvas,
+    String label,
+    Offset position, {
+      Offset? pointerLine,
+      double fontSize = kFontMedium,
+      TextStyle? style,
+      double angle = 0,
+      LabelPivot horizontalPivot = LabelPivot.center,
+      LabelPivot verticalPivot = LabelPivot.middle,
+      bool normalize = true,
+      bool ignoreIndent = false,
+      DiagramShape shape = DiagramShape.none,
+      double? maxWidth,
+      TextAlign textAlign = TextAlign.center,
+      bool showBackground = true,
+      Offset textPadding = Offset.zero,
+      // ✨ NEW: Add the type parameter with a standard default
+      DiagramTextType type = DiagramTextType.standard,
+    }) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
 
+  // ✨ NEW: Adjust defaults based on the requested text type
+  double baseFontSize = fontSize;
+  FontStyle baseFontStyle = FontStyle.normal;
+
+  if (type == DiagramTextType.label) {
+    baseFontSize = kFontSmall; // Or kFontVerySmall depending on your preference
+    baseFontStyle = FontStyle.italic;
+  }
+
   // 1. Setup Scaling & Colors
+  // Use the type-adjusted defaults if a custom style wasn't explicitly provided
   final double scaledFontSize =
-      (style?.fontSize ?? fontSize) * config.averageRatio;
+      (style?.fontSize ?? baseFontSize) * config.averageRatio;
+
   final bool isDarkTheme = config.colorScheme.brightness == Brightness.dark;
   final Color surfaceColor = isDarkTheme ? Colors.black : Colors.white;
   final Color onSurfaceColor = isDarkTheme ? Colors.white : Colors.black87;
 
+  // Combine everything into the final effective style
   final effectiveStyle = (style ?? TextStyle(color: onSurfaceColor)).copyWith(
     fontSize: scaledFontSize,
+    fontStyle: style?.fontStyle ?? baseFontStyle, // Fallback to our enum's fonts style
   );
 
   // 2. Normalization
@@ -104,20 +121,17 @@ void paintText(
     );
   }
 
-// 6. Draw Background Shape & Text
+  // 6. Draw Background Shape & Text
   canvas.save();
   canvas.translate(drawPos.dx, drawPos.dy);
   if (angle != 0) canvas.rotate(angle);
 
   final relativeTopLeft = Offset(-shiftX, -shiftY);
 
-  // NEW: Conditional padding logic
-  // Use significant padding for shapes, zero/minimal for 'none'
   double padX = 0;
   double padY = 0;
 
   if (shape != DiagramShape.none) {
-    // Adjust these multipliers to your preference for "breathability"
     padX = 26.0 * config.averageRatio;
     padY = 18.0 * config.averageRatio;
   }
@@ -128,12 +142,12 @@ void paintText(
     textPainter.width + padX,
     textPainter.height + padY,
   );
+
   if (showBackground) {
     canvas.drawRect(textRect, surfaceColor, fill: true);
   }
-  // Shape logic remains the same...
-  switch (shape) {
 
+  switch (shape) {
     case DiagramShape.circle:
       final inflated = textRect.inflate(textRect.height * 0.4);
       final radius = Radius.circular(inflated.height / 2);
@@ -162,6 +176,7 @@ void paintText(
       if (showBackground) canvas.drawRect(textRect, surfaceColor, fill: true);
       break;
   }
+
   // 7. Paint Text
   canvas.paintTextPainter(textPainter, relativeTopLeft);
   canvas.restore();

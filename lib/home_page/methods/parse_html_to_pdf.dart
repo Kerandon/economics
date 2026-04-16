@@ -11,7 +11,7 @@ List<pw.InlineSpan> parseHtmlToPdfTextSpans(
 ) {
   // 🚀 FIX: Pre-process the text to handle problematic symbols and quotes
   String cleanedHtmlText = htmlText
-      // 1. Fix for Delta symbol (use text as replacement if font fails)
+      // 1. Fix for Delta symbol (use text as replacement if fonts fails)
       .replaceAll('∆', 'Change In ')
       .replaceAll('&Delta;', 'Change in ')
       // 2. Fix for various single quote/apostrophe characters

@@ -5,6 +5,7 @@ class DiagramPainterConfig {
   final Size appSize;
   final Size painterSize;
   final ColorScheme colorScheme;
+  final double indent;
 
   // Cached values calculated once at initialization
   final Size sizeRatio;
@@ -14,6 +15,7 @@ class DiagramPainterConfig {
     required this.appSize,
     required this.painterSize,
     required this.colorScheme,
+    this.indent = 0.15,
   }) : sizeRatio = Size(
          appSize.width == 0 ? 0 : painterSize.width / appSize.width,
          appSize.height == 0 ? 0 : painterSize.height / appSize.height,

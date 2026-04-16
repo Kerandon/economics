@@ -98,7 +98,7 @@ void paintLegend(
       );
 
       // B. Draw the Text via Bridge
-      // We use the same vertical centering logic: (box height / 2) - (font size / 2)
+      // We use the same vertical centering logic: (box height / 2) - (fonts size / 2)
       iCanvas.drawText(
         item.entry.label,
         Offset(

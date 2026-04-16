@@ -28,22 +28,26 @@ class ADASDiagram extends BaseDiagramPainter {
     );
 
     switch (diagram) {
+      case DiagramEnum.macroAggregateDemandInflationTradeOff:
+        _paintADTradeOff(c, canvas);
+      case DiagramEnum.macroSRASCostPushInflation:
+        _paintSRASCostPushInflation(c, canvas);
+
       case DiagramEnum.macroAggregateDemand:
       case DiagramEnum.macroAggregateDemandIncrease:
       case DiagramEnum.macroAggregateDemandDecrease:
       case DiagramEnum.macroSRAS:
-      case DiagramEnum.macroSRASIncrease:
-      case DiagramEnum.macroSRASDecrease:
+
       case DiagramEnum.macroClassicalFullEmployment:
       case DiagramEnum.macroClassicalDeflationaryGap:
       case DiagramEnum.macroClassicalInflationaryGap:
-      case DiagramEnum.macroClassicalInflationaryGapAdjustment:
       case DiagramEnum.macroClassicalDeflationaryGapAdjustment:
       case DiagramEnum.macroClassicalLongTermGrowth:
       case DiagramEnum.macroClassicalDemandPullInflation:
       case DiagramEnum.macroADASCostPushInflation:
         _paintClassicalADAS(c, canvas, diagram);
-        break;
+      case DiagramEnum.macroClassicalInflationaryGapAdjustment:
+        _paintInflationaryGapAdjustment(c, canvas);
       case DiagramEnum.macroADASKeynesianFullEmployment:
       case DiagramEnum.macroKeynesianInflationaryGap:
       case DiagramEnum.macroKeynesianDeflationaryGap:
@@ -53,23 +57,131 @@ class ADASDiagram extends BaseDiagramPainter {
       case DiagramEnum.macroKeynesianLongTermGrowth:
       case DiagramEnum.macroKeynesianDemandPullInflation:
         _paintKeynesianADAS(c, canvas, diagram);
+      case DiagramEnum.macroADASKeynesianSpareCapacity:
+        _paintKeynesianSpareCapacity(c, canvas, diagram);
         break;
       default:
         break;
     }
   }
 }
+void _paintADTradeOff(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.38,
+    xAxisEndPos: 0.625,
+    yLabel: DiagramLabel.pL3.label,
+    xLabel: DiagramLabel.y3.label,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.50,
+    xAxisEndPos: 0.50,
+    yLabel: DiagramLabel.pL2.label,
+    xLabel: DiagramLabel.y2.label,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.62,
+    xAxisEndPos: 0.375,
+    yLabel: DiagramLabel.pL1.label,
+    xLabel: DiagramLabel.y1.label,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.sras,
+    lengthAdjustment: 0.20,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad1,
+    horizontalShift: -0.12,
+    verticalShift: 0.12,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad2,
+    horizontalShift: 0,
+    verticalShift: 0,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad3,
+    horizontalShift: 0.12,
+    verticalShift: -0.12,
+  );
+}
+void _paintSRASCostPushInflation(DiagramPainterConfig c, IDiagramCanvas canvas) {
 
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.55,
+    xAxisEndPos: 0.55,
+    yLabel: DiagramLabel.pL1.label,
+    xLabel: DiagramLabel.y1.label,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.40,
+    xAxisEndPos: 0.40,
+    yLabel: DiagramLabel.pL2.label,
+    xLabel: DiagramLabel.y2.label,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.sras1,
+      horizontalShift: 0.05,
+      verticalShift: 0.05
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.sras2,
+    horizontalShift: -0.10,
+    verticalShift: -0.10
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad,
+
+  );
+  paintLineSegment(c, canvas, origin: Offset(0.65,0.30),
+  angle: -pi, length: 0.15
+  );
+
+}
 void _paintClassicalADAS(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,
   DiagramEnum diagram,
 ) {
   switch (diagram) {
-
     case DiagramEnum.macroAggregateDemand:
       paintMarketCurve(c, canvas, type: MarketCurveType.ad);
-
+    case DiagramEnum.macroAggregateDemandIncrease:
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.ad,
+        horizontalShift: -0.10,
+      );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.ad,
+        horizontalShift: 0.10,
+      );
     case DiagramEnum.macroClassicalFullEmployment:
       _paintLRAS(c, canvas);
       paintMarketCurve(c, canvas, type: MarketCurveType.ad);
@@ -210,7 +322,7 @@ void _paintClassicalADAS(
         length: 0.15,
         label: '2',
       );
-      paintDescription(c, canvas, kDescClassicalDeflationaryAdj);
+
       break;
 
     case DiagramEnum.macroClassicalInflationaryGapAdjustment:
@@ -282,7 +394,7 @@ void _paintClassicalADAS(
         length: 0.15,
         label: '1',
       );
-      paintDescription(c, canvas, kDescClassicalInflationaryAdj);
+
       break;
 
     case DiagramEnum.macroClassicalLongTermGrowth:
@@ -356,7 +468,7 @@ void _paintClassicalADAS(
         angle: pi,
         length: 0.15,
       );
-      paintDescription(c, canvas, kDescCostPushInflation);
+
       break;
 
     case DiagramEnum.macroClassicalDemandPullInflation:
@@ -407,12 +519,78 @@ void _paintClassicalADAS(
         verticalShift: 0.05,
         lengthAdjustment: 0.10,
       );
-      paintDescription(c, canvas, kDescClassicalDemandPull);
+
       break;
 
     default:
       break;
   }
+}
+
+
+
+void _paintInflationaryGapAdjustment(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+) {
+  _paintLRAS(c, canvas);
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad1,
+    horizontalShift: -0.10,
+    verticalShift: 0.10,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad2,
+    horizontalShift: 0.05,
+    verticalShift: 0,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.sras1,
+    horizontalShift: 0.10,
+    verticalShift: 0.10,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.sras2,
+    horizontalShift: -0.05,
+    verticalShift: 0,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.70,
+    xAxisEndPos: 0.50,
+    additionalYPositions: [0.45],
+    additionalYLabels: [DiagramLabel.pL3.label],
+    yLabel: DiagramLabel.pL1.label,
+    additionalRightYLabels: [DiagramLabel.c.label],
+    rightYLabel: DiagramLabel.a.label,
+    hideXLine: true,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.575,
+    xAxisEndPos: 0.625,
+    yLabel: DiagramLabel.pL2.label,
+    rightYLabel: DiagramLabel.b.label,
+    xLabel: 'Ye>Yp',
+  );
+  paintLineSegment(c, canvas, origin: Offset(0.65, 0.75), length: 0.11);
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.75, 0.32),
+    angle: pi,
+    length: 0.11,
+  );
 }
 
 void _paintLRAS(DiagramPainterConfig c, IDiagramCanvas canvas) {
@@ -638,7 +816,6 @@ void _paintKeynesianADAS(
       paintLineSegment(c, canvas, origin: Offset(0.46, 0.50), length: 0.12);
       paintText(c, canvas, '\$10m', Offset(0.27, 0.45));
       paintText(c, canvas, '\$15m', Offset(0.420, 0.45));
-      paintDescription(c, canvas, kDescKeynesianMultiplier);
       break;
 
     case DiagramEnum.macroKeynesianLongTermGrowth:
@@ -718,7 +895,6 @@ void _paintKeynesianADAS(
         angle: angle,
       );
       paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
-      paintDescription(c, canvas, kDescKeynesianDemandPull);
       break;
 
     default:
@@ -726,22 +902,39 @@ void _paintKeynesianADAS(
   }
 }
 
-// --- Description Constants ---
-
-const kDescCostPushInflation =
-    'Higher wages and business tax rates, weaker exchange rates (imported inflation) and negative supply-shocks cause SRAS to decrease, resulting in a higher PL and lower real GDP. Serious/prolonged falls is Stagflation.';
-
-const kDescClassicalDeflationaryAdj =
-    'A: real GDP = potential GDP. B: AD falls, real GDP < potential GDP, unemployment rises and price level falls. C: Idle resources & low inflationary expectations, wages / resource prices fall (SRAS1 to SRAS2), real GDP returns to potential GDP at lower PL.';
-
-const kDescClassicalInflationaryAdj =
-    'A: real GDP = potential GDP (full employment). B: AD increases, real GDP > potential GDP, higher price level and low unemployment. C: Fall in real wages / rising competition for scarce resources, SRAS1 -> SRAS2, actual real GDP = potential GDP in the long-run at a higher price level.';
-
-const kDescClassicalDemandPull =
-    'In the classical/new-monetarist model, real GDP and the price level is determined when AD=SRAS. As SRAS is upward sloping any increases in AD result in a higher PL (and thus inflation).';
-
-const kDescKeynesianMultiplier =
-    'Initial Government Spending \$10m. MPC = 0.60. 1/(1-MPC) = 2.5. 2.5 X \$10m = \$25m total spending (autonomous spending = \$10m, induced spending = \$15)';
-
-const kDescKeynesianDemandPull =
-    'In the Keynesian model, during a recessionary gap increases in AD do not lead to a higher PL. Demand-pull inflation occurs when AD increases once the economy has reached its potential output and LRAS is vertical.';
+void _paintKeynesianSpareCapacity(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+  DiagramEnum diagram,
+) {
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.80,
+    xAxisEndPos: 0.33,
+    additionalXPositions: [0.58],
+    yLabel: DiagramLabel.pL.label,
+    xLabel: DiagramLabel.y1.label,
+    additionalXLabels: [DiagramLabel.y2.label],
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad1,
+    horizontalShift: -0.25,
+    verticalShift: 0.10,
+    angle: 0.40,
+    lengthAdjustment: -0.15,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad2,
+    horizontalShift: 0,
+    verticalShift: 0.10,
+    angle: 0.40,
+    lengthAdjustment: -0.15,
+  );
+  paintLineSegment(c, canvas, origin: Offset(0.32, 0.50), length: 0.15);
+}

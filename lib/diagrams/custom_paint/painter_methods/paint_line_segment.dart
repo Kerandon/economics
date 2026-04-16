@@ -57,9 +57,15 @@ void paintLineSegment(
   );
 
   final mainColor = color ?? config.colorScheme.onSurface;
-  final effectiveStrokeWidth =
+
+  double effectiveStrokeWidth =
       (style == CurveStyle.bold ? strokeWidth * 2 : strokeWidth) *
-      config.averageRatio;
+          config.averageRatio;
+
+  // ✨ NEW: Reduce line thickness by 50% if an arrow is painted
+  if (endStyle == LineEndStyle.arrow || endStyle == LineEndStyle.arrowBothEnds) {
+    effectiveStrokeWidth *= 0.3;
+  }
 
   final startOffset = computeOffset(startPos);
   final endOffset = computeOffset(endPos);
@@ -122,7 +128,7 @@ void paintLineSegment(
       );
       break;
     case LineEndStyle.circlesOnEnd:
-      final double dotRadius = effectiveStrokeWidth * 2.5;
+      final double dotRadius = effectiveStrokeWidth * 1;
       canvas.drawDot(startOffset, mainColor, radius: dotRadius, fill: true);
       canvas.drawDot(endOffset, mainColor, radius: dotRadius, fill: true);
       break;
