@@ -13,16 +13,12 @@ import '../../../diagrams/models/pdf_diagram_canvas.dart';
 import '../../models/slide.dart';
 import '../../models/term.dart';
 
-
 // Adjust these paths if your project structure is slightly different
 // Note: Make sure the import for PdfDiagramCanvas is correct for your project!
 
 // ==========================================
 // 1. MAIN EXPORT FUNCTION
 // ==========================================
-
-
-
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/pdf.dart';
@@ -34,9 +30,9 @@ import 'package:html/dom.dart' as dom;
 // NOTE: Ensure your domain-specific imports (Slide, Tag, AllDiagrams, DiagramWidget, etc.) are present here.
 
 Future<void> exportFullQuestionToPdf(
-    Slide slide,
-    AllDiagrams allDiagramsService,
-    ) async {
+  Slide slide,
+  AllDiagrams allDiagramsService,
+) async {
   final pdf = pw.Document();
 
   // Load the fonts completely offline from your app assets
@@ -57,7 +53,10 @@ Future<void> exportFullQuestionToPdf(
         child: pw.Text(
           'Page ${context.pageNumber} of ${context.pagesCount}  |  IBEconToolkit.com',
           style: pw.TextStyle(
-              font: unicodeFont, fontSize: 9, color: PdfColors.grey500),
+            font: unicodeFont,
+            fontSize: 9,
+            color: PdfColors.grey500,
+          ),
         ),
       ),
       build: (pw.Context pdfContext) {
@@ -68,10 +67,11 @@ Future<void> exportFullQuestionToPdf(
           pw.Text(
             'PAPER ONE QUESTION',
             style: pw.TextStyle(
-                font: unicodeFont,
-                fontSize: 11,
-                color: PdfColors.red800,
-                fontWeight: pw.FontWeight.bold),
+              font: unicodeFont,
+              fontSize: 11,
+              color: PdfColors.red800,
+              fontWeight: pw.FontWeight.bold,
+            ),
           ),
         );
         pageElements.add(pw.SizedBox(height: 4));
@@ -81,9 +81,10 @@ Future<void> exportFullQuestionToPdf(
           pw.Text(
             (isHL ? '[HL] ' : '') + (slide.question ?? slide.title),
             style: pw.TextStyle(
-                font: unicodeFont,
-                fontSize: 16,
-                fontWeight: pw.FontWeight.bold),
+              font: unicodeFont,
+              fontSize: 16,
+              fontWeight: pw.FontWeight.bold,
+            ),
           ),
         );
         pageElements.add(pw.SizedBox(height: 4));
@@ -91,7 +92,10 @@ Future<void> exportFullQuestionToPdf(
           pw.Text(
             slide.subunit.name.toUpperCase(),
             style: pw.TextStyle(
-                font: unicodeFont, fontSize: 10, color: PdfColors.grey700),
+              font: unicodeFont,
+              fontSize: 10,
+              color: PdfColors.grey700,
+            ),
           ),
         );
 
@@ -125,22 +129,30 @@ Future<void> exportFullQuestionToPdf(
                   decoration: pw.BoxDecoration(
                     color: PdfColors.amber50,
                     border: pw.Border(
-                        left: pw.BorderSide(
-                            color: PdfColors.amber500, width: 4)),
+                      left: pw.BorderSide(color: PdfColors.amber500, width: 4),
+                    ),
                   ),
                   child: pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.Text('TL;DR',
-                          style: pw.TextStyle(
-                              font: boldUnicodeFont, // Used bold font here
-                              fontSize: 10,
-                              fontWeight: pw.FontWeight.bold,
-                              color: PdfColors.amber800)),
+                      pw.Text(
+                        'TL;DR',
+                        style: pw.TextStyle(
+                          font: boldUnicodeFont, // Used bold font here
+                          fontSize: 10,
+                          fontWeight: pw.FontWeight.bold,
+                          color: PdfColors.amber800,
+                        ),
+                      ),
                       pw.SizedBox(height: 4),
-                      pw.Text(stripHtmlIfNeeded(block.tldr!),
-                          style: pw.TextStyle(
-                              font: unicodeFont, fontSize: 11, lineSpacing: 2)),
+                      pw.Text(
+                        stripHtmlIfNeeded(block.tldr!),
+                        style: pw.TextStyle(
+                          font: unicodeFont,
+                          fontSize: 11,
+                          lineSpacing: 2,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -161,14 +173,18 @@ Future<void> exportFullQuestionToPdf(
                     child: pw.RichText(
                       text: pw.TextSpan(
                         style: pw.TextStyle(
-                            font: unicodeFont, fontSize: 11, lineSpacing: 2),
+                          font: unicodeFont,
+                          fontSize: 11,
+                          lineSpacing: 2,
+                        ),
                         children: [
                           pw.TextSpan(
                             text: '-  ${term.termName}: ',
                             style: pw.TextStyle(
-                                font: boldUnicodeFont,
-                                fontWeight: pw.FontWeight.bold,
-                                color: PdfColors.black),
+                              font: boldUnicodeFont,
+                              fontWeight: pw.FontWeight.bold,
+                              color: PdfColors.black,
+                            ),
                           ),
                           pw.TextSpan(
                             text: stripHtmlIfNeeded(term.explanation),
@@ -185,7 +201,9 @@ Future<void> exportFullQuestionToPdf(
 
             // 2. EXPLANATION TEXT (HTML PARSED)
             if (block.content != null && block.content!.text.isNotEmpty) {
-              pageElements.add(_buildSectionHeader('EXPLANATION', boldUnicodeFont));
+              pageElements.add(
+                _buildSectionHeader('EXPLANATION', boldUnicodeFont),
+              );
 
               // 🔧 NEW: Replaced single pw.Text with the HTML builder
               pageElements.addAll(
@@ -208,11 +226,14 @@ Future<void> exportFullQuestionToPdf(
                     color: PdfColors.red50,
                     border: pw.Border.all(color: PdfColors.red200),
                   ),
-                  child: pw.Text(block.alert!.text,
-                      style: pw.TextStyle(
-                          font: unicodeFont,
-                          fontSize: 11,
-                          color: PdfColors.red900)),
+                  child: pw.Text(
+                    block.alert!.text,
+                    style: pw.TextStyle(
+                      font: unicodeFont,
+                      fontSize: 11,
+                      color: PdfColors.red900,
+                    ),
+                  ),
                 ),
               );
             }
@@ -230,18 +251,24 @@ Future<void> exportFullQuestionToPdf(
                   child: pw.Row(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
-                      pw.Text('TIP: ',
-                          style: pw.TextStyle(
-                              font: boldUnicodeFont,
-                              fontSize: 11,
-                              fontWeight: pw.FontWeight.bold,
-                              color: PdfColors.blue900)),
+                      pw.Text(
+                        'TIP: ',
+                        style: pw.TextStyle(
+                          font: boldUnicodeFont,
+                          fontSize: 11,
+                          fontWeight: pw.FontWeight.bold,
+                          color: PdfColors.blue900,
+                        ),
+                      ),
                       pw.Expanded(
-                        child: pw.Text(block.tip!.text,
-                            style: pw.TextStyle(
-                                font: unicodeFont,
-                                fontSize: 11,
-                                color: PdfColors.blue900)),
+                        child: pw.Text(
+                          block.tip!.text,
+                          style: pw.TextStyle(
+                            font: unicodeFont,
+                            fontSize: 11,
+                            color: PdfColors.blue900,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -251,13 +278,16 @@ Future<void> exportFullQuestionToPdf(
 
             // 5. DIAGRAMS
             if (block.diagramEnums != null && block.diagramEnums!.isNotEmpty) {
-              pageElements.add(_buildSectionHeader('DIAGRAMS', boldUnicodeFont));
+              pageElements.add(
+                _buildSectionHeader('DIAGRAMS', boldUnicodeFont),
+              );
 
               final widgets = allDiagramsService
                   .getDiagramWidgets(diagrams: block.diagramEnums!)
                   .toList();
               pageElements.add(
-                  _buildPdfDiagramRow(widgets, unicodeFont, pdfContext));
+                _buildPdfDiagramRow(widgets, unicodeFont, pdfContext),
+              );
               pageElements.add(pw.SizedBox(height: 12));
             }
 
@@ -265,17 +295,20 @@ Future<void> exportFullQuestionToPdf(
             if (block.realWorldExamples != null &&
                 block.realWorldExamples!.isNotEmpty) {
               pageElements.add(
-                  _buildSectionHeader('REAL WORLD EXAMPLES', boldUnicodeFont));
+                _buildSectionHeader('REAL WORLD EXAMPLES', boldUnicodeFont),
+              );
               for (var example in block.realWorldExamples!) {
                 pageElements.add(
                   pw.Padding(
                     padding: const pw.EdgeInsets.only(left: 8, bottom: 6),
                     child: pw.Text(
-                        '-  ${example.example}, ${example.explanation}',
-                        style: pw.TextStyle(
-                            font: unicodeFont,
-                            fontSize: 11,
-                            fontStyle: pw.FontStyle.italic)),
+                      '-  ${example.example}, ${example.explanation}',
+                      style: pw.TextStyle(
+                        font: unicodeFont,
+                        fontSize: 11,
+                        fontStyle: pw.FontStyle.italic,
+                      ),
+                    ),
                   ),
                 );
               }
@@ -290,8 +323,10 @@ Future<void> exportFullQuestionToPdf(
                   .map((h) => stripHtmlIfNeeded(h))
                   .toList();
               final cleanData = tableInfo.data
-                  .map((row) =>
-                  row.map((cell) => stripHtmlIfNeeded(cell)).toList())
+                  .map(
+                    (row) =>
+                        row.map((cell) => stripHtmlIfNeeded(cell)).toList(),
+                  )
                   .toList();
 
               if (tableInfo.title != null) {
@@ -303,10 +338,11 @@ Future<void> exportFullQuestionToPdf(
                         stripHtmlIfNeeded(tableInfo.title!),
                         textAlign: pw.TextAlign.center,
                         style: pw.TextStyle(
-                            font: boldUnicodeFont,
-                            fontSize: 11,
-                            fontStyle: pw.FontStyle.italic,
-                            fontWeight: pw.FontWeight.bold),
+                          font: boldUnicodeFont,
+                          fontSize: 11,
+                          fontStyle: pw.FontStyle.italic,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -318,20 +354,26 @@ Future<void> exportFullQuestionToPdf(
                   headers: cleanHeaders,
                   data: cleanData,
                   border: pw.TableBorder.all(
-                      color: PdfColors.grey600, width: 0.5),
+                    color: PdfColors.grey600,
+                    width: 0.5,
+                  ),
                   headerStyle: pw.TextStyle(
-                      font: boldUnicodeFont,
-                      fontSize: 10,
-                      fontWeight: pw.FontWeight.bold),
-                  headerDecoration:
-                  const pw.BoxDecoration(color: PdfColors.grey200),
+                    font: boldUnicodeFont,
+                    fontSize: 10,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  headerDecoration: const pw.BoxDecoration(
+                    color: PdfColors.grey200,
+                  ),
                   cellStyle: pw.TextStyle(font: unicodeFont, fontSize: 10),
                   cellPadding: const pw.EdgeInsets.symmetric(
-                      vertical: 6, horizontal: 8),
+                    vertical: 6,
+                    horizontal: 8,
+                  ),
                   cellAlignment: pw.Alignment.center,
                   columnWidths: {
                     for (int i = 0; i < cleanHeaders.length; i++)
-                      i: const pw.FlexColumnWidth()
+                      i: const pw.FlexColumnWidth(),
                   },
                 ),
               );
@@ -343,10 +385,11 @@ Future<void> exportFullQuestionToPdf(
                     child: pw.Text(
                       stripHtmlIfNeeded(tableInfo.figCaption!),
                       style: pw.TextStyle(
-                          font: unicodeFont,
-                          fontSize: 9,
-                          fontStyle: pw.FontStyle.italic,
-                          color: PdfColors.grey700),
+                        font: unicodeFont,
+                        fontSize: 9,
+                        fontStyle: pw.FontStyle.italic,
+                        color: PdfColors.grey700,
+                      ),
                     ),
                   ),
                 );
@@ -364,19 +407,22 @@ Future<void> exportFullQuestionToPdf(
 
   // GENERATE DYNAMIC FILE NAME
   String rawTitle = slide.question ?? slide.title;
-  String cleanTitle = rawTitle.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_').replaceAll(RegExp(r'_+'), '_');
-  if (cleanTitle.endsWith('_')) cleanTitle = cleanTitle.substring(0, cleanTitle.length - 1);
+  String cleanTitle = rawTitle
+      .replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_')
+      .replaceAll(RegExp(r'_+'), '_');
+  if (cleanTitle.endsWith('_'))
+    cleanTitle = cleanTitle.substring(0, cleanTitle.length - 1);
   if (cleanTitle.length > 40) cleanTitle = cleanTitle.substring(0, 40);
 
   String tagsStr = slide.tags.map((t) => t.name.toUpperCase()).join('_');
   final bool isHL = slide.tags.contains(Tag.hl);
   final String prefix = isHL ? "HL" : "SL";
-  final String pdfFileName = '${prefix}_${cleanTitle}_$tagsStr.pdf'.replaceAll('__', '_');
-
-  await Printing.sharePdf(
-    bytes: await pdf.save(),
-    filename: pdfFileName,
+  final String pdfFileName = '${prefix}_${cleanTitle}_$tagsStr.pdf'.replaceAll(
+    '__',
+    '_',
   );
+
+  await Printing.sharePdf(bytes: await pdf.save(), filename: pdfFileName);
 }
 
 // -----------------------------------------------------------------------------
@@ -392,10 +438,11 @@ pw.Widget _buildSectionHeader(String title, pw.Font font) {
     child: pw.Text(
       title,
       style: pw.TextStyle(
-          font: font,
-          fontSize: 12,
-          color: PdfColors.grey600,
-          fontWeight: pw.FontWeight.bold),
+        font: font,
+        fontSize: 12,
+        color: PdfColors.grey600,
+        fontWeight: pw.FontWeight.bold,
+      ),
     ),
   );
 }
@@ -411,7 +458,10 @@ String stripHtmlIfNeeded(String text) {
 }
 
 pw.Widget _buildPdfDiagramRow(
-    List<DiagramWidget> widgets, pw.Font unicodeFont, pw.Context pdfContext) {
+  List<DiagramWidget> widgets,
+  pw.Font unicodeFont,
+  pw.Context pdfContext,
+) {
   if (widgets.isEmpty) return pw.Container();
 
   if (widgets.length == 1) {
@@ -440,14 +490,15 @@ pw.Widget _buildPdfDiagramRow(
 }
 
 pw.Widget _buildPdfDiagramCell(
-    DiagramWidget dWidget,
-    pw.Font unicodeFont,
-    pw.Context pdfContext,
-    ) {
+  DiagramWidget dWidget,
+  pw.Font unicodeFont,
+  pw.Context pdfContext,
+) {
   final String effectiveTitle =
       dWidget.title ?? dWidget.painters.first.diagram.toText;
   final String effectiveDescription = stripHtmlIfNeeded(
-      dWidget.description ?? dWidget.painters.first.diagram.description);
+    dWidget.description ?? dWidget.painters.first.diagram.description,
+  );
 
   final pdfDiagrams = <pw.Widget>[];
 
@@ -548,21 +599,26 @@ pw.Widget _buildPdfDiagramCell(
 class HtmlPdfBuilder {
   /// Converts an HTML string into a list of pw.Widget blocks.
   static List<pw.Widget> build(
-      String html, {
-        required pw.Font regularFont,
-        pw.Font? boldFont,
-        pw.Font? italicFont,
-      }) {
+    String html, {
+    required pw.Font regularFont,
+    pw.Font? boldFont,
+    pw.Font? italicFont,
+  }) {
     final document = html_parser.parse(html);
-    return _parseBlocks(document.body?.nodes ?? [], regularFont, boldFont, italicFont);
+    return _parseBlocks(
+      document.body?.nodes ?? [],
+      regularFont,
+      boldFont,
+      italicFont,
+    );
   }
 
   static List<pw.Widget> _parseBlocks(
-      List<dom.Node> nodes,
-      pw.Font font,
-      pw.Font? boldFont,
-      pw.Font? italicFont,
-      ) {
+    List<dom.Node> nodes,
+    pw.Font font,
+    pw.Font? boldFont,
+    pw.Font? italicFont,
+  ) {
     List<pw.Widget> widgets = [];
 
     for (var node in nodes) {
@@ -572,12 +628,21 @@ class HtmlPdfBuilder {
           case 'h2':
           case 'h3':
           case 'h4':
-            final double size = node.localName == 'h1' ? 16 : (node.localName == 'h2' ? 14 : 12);
+            final double size = node.localName == 'h1'
+                ? 16
+                : (node.localName == 'h2' ? 14 : 12);
             widgets.add(
               pw.Padding(
                 padding: const pw.EdgeInsets.only(top: 8, bottom: 4),
                 child: pw.RichText(
-                  text: _parseInline(node, font, boldFont, italicFont, isBold: true, fontSize: size),
+                  text: _parseInline(
+                    node,
+                    font,
+                    boldFont,
+                    italicFont,
+                    isBold: true,
+                    fontSize: size,
+                  ),
                 ),
               ),
             );
@@ -621,38 +686,44 @@ class HtmlPdfBuilder {
             widgets.add(pw.SizedBox(height: 6));
             break;
           default:
-          // Fallback for unknown blocks (e.g., div, blockquote)
+            // Fallback for unknown blocks (e.g., div, blockquote)
             widgets.add(
-                pw.Padding(
-                  padding: const pw.EdgeInsets.only(bottom: 4),
-                  child: pw.RichText(text: _parseInline(node, font, boldFont, italicFont)),
-                )
+              pw.Padding(
+                padding: const pw.EdgeInsets.only(bottom: 4),
+                child: pw.RichText(
+                  text: _parseInline(node, font, boldFont, italicFont),
+                ),
+              ),
             );
         }
       } else if (node is dom.Text && node.text.trim().isNotEmpty) {
         // Stray text outside of a block tag
-        widgets.add(pw.RichText(text: _parseInline(node, font, boldFont, italicFont)));
+        widgets.add(
+          pw.RichText(text: _parseInline(node, font, boldFont, italicFont)),
+        );
       }
     }
     return widgets;
   }
 
   static pw.TextSpan _parseInline(
-      dom.Node node,
-      pw.Font font,
-      pw.Font? boldFont,
-      pw.Font? italicFont, {
-        bool isBold = false,
-        bool isItalic = false,
-        double fontSize = 11,
-      }) {
+    dom.Node node,
+    pw.Font font,
+    pw.Font? boldFont,
+    pw.Font? italicFont, {
+    bool isBold = false,
+    bool isItalic = false,
+    double fontSize = 11,
+  }) {
     if (node is dom.Text) {
       // HTML strings often have extra whitespace/newlines. Compress them.
       String text = node.text.replaceAll(RegExp(r'\s+'), ' ');
       return pw.TextSpan(
         text: text,
         style: pw.TextStyle(
-          font: isBold ? (boldFont ?? font) : (isItalic ? (italicFont ?? font) : font),
+          font: isBold
+              ? (boldFont ?? font)
+              : (isItalic ? (italicFont ?? font) : font),
           fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
           fontStyle: isItalic ? pw.FontStyle.italic : pw.FontStyle.normal,
           fontSize: fontSize,
@@ -669,8 +740,17 @@ class HtmlPdfBuilder {
 
       return pw.TextSpan(
         children: node.nodes
-            .map((n) => _parseInline(n, font, boldFont, italicFont,
-            isBold: bold, isItalic: italic, fontSize: fontSize))
+            .map(
+              (n) => _parseInline(
+                n,
+                font,
+                boldFont,
+                italicFont,
+                isBold: bold,
+                isItalic: italic,
+                fontSize: fontSize,
+              ),
+            )
             .toList(),
       );
     }

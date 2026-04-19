@@ -1,5 +1,1 @@
-enum Topic {
-  notes,
-  allDiagrams,
-  paper1Questions,
-}
+enum Topic { notes, allDiagrams, paper1Questions }

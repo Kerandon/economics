@@ -1,15 +1,16 @@
-
 // We use a top-level variable so we can import it elsewhere
-import '../../../../../../diagrams/enums/diagram_enum.dart';
-import '../../../../../../diagrams/enums/unit_type.dart';
-import '../../../../../models/slide.dart';
-import '../../../../../models/slide_content.dart';
-import '../../../../../models/term.dart';
-import '../../../../terms/terms.dart';
+import '../../../../../../../diagrams/enums/diagram_enum.dart';
+import '../../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../../models/slide.dart';
+import '../../../../../../models/slide_content.dart';
+import '../../../../../../models/term.dart';
+import '../../../../../terms/terms.dart';
+
 final explainWhyPerfectCompetitionOnlyEarnNormalProfitInLR = Slide(
   subunit: Subunit.marketFailurePower,
   tags: [Tag.hl],
-  question: 'Explain why firms in perfect competition can only earn abnormal profits in the short run.',
+  question:
+      'Explain why firms in perfect competition can only earn abnormal profits in the short run.',
 
   contents: [
     SlideContent.econTerms([

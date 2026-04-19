@@ -5,6 +5,7 @@ import '../../models/example.dart';
 import '../real_world_examples/real_world_examples.dart';
 import '../terms/terms.dart';
 import 'diagram_group.dart';
+
 class PaperOneAnswer {
   final String? tldr;
   final List<EconTerm>? terms;

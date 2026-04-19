@@ -2,7 +2,6 @@ import 'package:economics_app/home_page/pages/topic_details.dart';
 import 'package:economics_app/home_page/pages/topic_enum.dart';
 import 'package:flutter/material.dart';
 
-
 TopicDetails getTopicDetails(Topic topic) {
   switch (topic) {
     case Topic.notes:

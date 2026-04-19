@@ -15,9 +15,6 @@ void paintAxisLabels(
   Offset offsetAdjustment = Offset.zero,
   bool showBackground = true, // 👈 New property passed from paintAxis
 }) {
-  double fontSize = kFontMedium;
-  final effectiveColor = config.colorScheme.onSurface;
-
   // 1. Determine Base Position & Pivots based on Axis
   final bool isYAxis = axis == CustomAxis.y;
 
@@ -36,11 +33,10 @@ void paintAxisLabels(
     canvas,
     label,
     basePos + offsetAdjustment,
-    fontSize: fontSize,
     horizontalPivot: horizontalPivot,
     verticalPivot: verticalPivot,
     normalize: true,
     showBackground: showBackground, // 👈 Logic applied here
-    style: TextStyle(color: effectiveColor, fontStyle: FontStyle.italic),
+    type: DiagramTextType.axisNames,
   );
 }

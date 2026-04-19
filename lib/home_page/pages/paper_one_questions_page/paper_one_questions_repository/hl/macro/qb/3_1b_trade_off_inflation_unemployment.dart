@@ -1,15 +1,17 @@
 import 'package:economics_app/home_page/pages/real_world_examples/real_world_examples.dart';
 
-import '../../../../../../diagrams/enums/diagram_enum.dart';
-import '../../../../../../diagrams/enums/unit_type.dart';
-import '../../../../../models/slide.dart';
-import '../../../../../models/slide_content.dart';
-import '../../../../../models/term.dart';
-import '../../../../terms/terms.dart';
+import '../../../../../../../diagrams/enums/diagram_enum.dart';
+import '../../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../../models/slide.dart';
+import '../../../../../../models/slide_content.dart';
+import '../../../../../../models/term.dart';
+import '../../../../../terms/terms.dart';
+
 final tradeOffInflationAndUnemployment15Mark = Slide(
   subunit: Subunit.macroObjectives,
   tags: [Tag.hl, Tag.p1a],
-  question: 'Using real-world examples, discuss the potential trade-off between unemployment and inflation.',
+  question:
+      'Using real-world examples, discuss the potential trade-off between unemployment and inflation.',
   contents: [
     SlideContent.econTerms([
       EconTerm.nru,
@@ -63,9 +65,7 @@ final tradeOffInflationAndUnemployment15Mark = Slide(
       DiagramEnum.macroExpectationsAugmentedPhillipsCurveInflationaryGap,
       DiagramEnum.macroClassicalDeflationaryGapAdjustment,
     ]),
-    SlideContent.diagrams([
-      DiagramEnum.macroADASKeynesianSpareCapacity,
-    ]),
+    SlideContent.diagrams([DiagramEnum.macroADASKeynesianSpareCapacity]),
     SlideContent.realWorldExamples([
       RealWorldExamples.oilCrisisStagflationUSA1970s,
       RealWorldExamples.economicBoomOf1990s,
@@ -74,5 +74,4 @@ final tradeOffInflationAndUnemployment15Mark = Slide(
       RealWorldExamples.postPandemicInflation2022,
     ]),
   ],
-
 );

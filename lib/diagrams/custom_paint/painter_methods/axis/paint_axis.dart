@@ -22,9 +22,7 @@ enum AxisType {
 
 // THE HELPER: Extends functionality without changing the object structure
 extension AxisTypeData on AxisType {
-  String get yLabel
-
-  {
+  String get yLabel {
     switch (this) {
       case AxisType.supplyDemand:
         return DiagramLabel.p.label;

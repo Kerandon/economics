@@ -19,11 +19,11 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   static const double pdfScale = 1.0;
 
   PdfDiagramCanvas(
-      this.graphics,
-      this.document,
-      this.pageHeight, {
-        required this.pdfFont,
-      });
+    this.graphics,
+    this.document,
+    this.pageHeight, {
+    required this.pdfFont,
+  });
 
   // FIX FOR ISSUE 3 & 4: Properly extract the Alpha channel from Flutter Color
   // so transparent colors (like the legend header and shaded areas) don't render as solid black.
@@ -85,22 +85,17 @@ class PdfDiagramCanvas implements IDiagramCanvas {
 
   @override
   void drawRect(
-      Rect rect,
-      Color color, {
-        bool fill = false,
-        double strokeWidth = 1.0,
-      }) {
+    Rect rect,
+    Color color, {
+    bool fill = false,
+    double strokeWidth = 1.0,
+  }) {
     graphics
       ..setStrokeColor(_toPdfColor(color))
       ..setFillColor(_toPdfColor(color))
       ..setLineWidth(strokeWidth * pdfScale);
 
-    graphics.drawRect(
-      rect.left,
-      _transY(rect.bottom),
-      rect.width,
-      rect.height,
-    );
+    graphics.drawRect(rect.left, _transY(rect.bottom), rect.width, rect.height);
 
     if (fill) {
       graphics.fillPath();
@@ -122,7 +117,12 @@ class PdfDiagramCanvas implements IDiagramCanvas {
     final double left = rect.left;
     final double right = rect.right;
 
-    void drawCorner(double cx, double cy, double startAngle, double sweepAngle) {
+    void drawCorner(
+      double cx,
+      double cy,
+      double startAngle,
+      double sweepAngle,
+    ) {
       const int steps = 6;
       for (int i = 0; i <= steps; i++) {
         final double theta = startAngle + (sweepAngle * (i / steps));
@@ -184,7 +184,13 @@ class PdfDiagramCanvas implements IDiagramCanvas {
       final line = lines[i];
       double lineDy = position.dy + (i * (fontSize * 1.2));
       double pdfY = _transY(lineDy) - (fontSize * pdfScale * 0.8);
-      graphics.drawString(pdfFont, fontSize * pdfScale, line, position.dx, pdfY);
+      graphics.drawString(
+        pdfFont,
+        fontSize * pdfScale,
+        line,
+        position.dx,
+        pdfY,
+      );
     }
 
     graphics.restoreContext();

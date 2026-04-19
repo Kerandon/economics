@@ -218,9 +218,9 @@ enum SyllabusPoint {
     [Skill.a03],
   ),
   measuringEconomicActivity(
-  Subunit.economicActivity,
-  'Measuring economic activity and illustrating its variations',
-  [Skill.a02, Skill.a03, Skill.a04],
+    Subunit.economicActivity,
+    'Measuring economic activity and illustrating its variations',
+    [Skill.a02, Skill.a03, Skill.a04],
   );
 
   final Subunit subunit;

@@ -1,10 +1,10 @@
-import '../../../../../../diagrams/enums/diagram_enum.dart';
-import '../../../../../../diagrams/enums/unit_type.dart';
-import '../../../../../models/slide.dart';
-import '../../../../../models/slide_content.dart' show SlideContent;
-import '../../../../../models/term.dart';
-import '../../../../real_world_examples/real_world_examples.dart';
-import '../../../../terms/terms.dart';
+import '../../../../../../../diagrams/enums/diagram_enum.dart';
+import '../../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../../models/slide.dart';
+import '../../../../../../models/slide_content.dart' show SlideContent;
+import '../../../../../../models/term.dart';
+import '../../../../../real_world_examples/real_world_examples.dart';
+import '../../../../../terms/terms.dart';
 
 final discussImportanceOfInelasticPEDForFirmsAndGovernment = Slide(
   subunit: Subunit.elasticityDemand,
@@ -17,8 +17,7 @@ final discussImportanceOfInelasticPEDForFirmsAndGovernment = Slide(
       EconTerm.priceElasticDemand,
       EconTerm.priceInelasticDemand,
     ]),
-    SlideContent.text(
-      '''
+    SlideContent.text('''
 <h3>Firms</h3>
 <ul>
 <li><b>Revenue maximization:</b> beneficial for firms to have knowledge of <b>PED</b> of their products. Raising prices increases <b>TR</b> when <b>PED < 1</b>; cutting prices when <b>PED > 1</b>.</li>
@@ -34,8 +33,7 @@ final discussImportanceOfInelasticPEDForFirmsAndGovernment = Slide(
 <li><b>Externalities:</b> PED helps determine effectiveness of <b>Pigouvian taxes</b> on demerit goods.</li>
 <li><b>Limitations:</b> imperfect information about PED.</li>
 </ul>
-      ''',
-    ),
+      '''),
     SlideContent.diagrams([
       DiagramEnum.microDemandElasticRevenue,
       DiagramEnum.microDemandInelasticRevenue,

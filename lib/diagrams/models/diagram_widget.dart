@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'base_painter_painter.dart';
 
 import 'package:flutter/material.dart';
+
 class DiagramWidget extends StatelessWidget {
   final List<BaseDiagramPainter> painters;
   final String? title;
@@ -10,16 +11,17 @@ class DiagramWidget extends StatelessWidget {
   final Axis axis;
 
   const DiagramWidget(
-      this.painters, {
-        super.key,
-        this.title,
-        this.description,
-        this.axis = Axis.horizontal,
-      });
+    this.painters, {
+    super.key,
+    this.title,
+    this.description,
+    this.axis = Axis.horizontal,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final effectiveDescription = description ?? painters.first.diagram.description;
+    final effectiveDescription =
+        description ?? painters.first.diagram.description;
 
     // 🆕 Calculate the exact width this widget needs.
     // Each painter is strictly 500 wide + 8 horizontal padding on each side = 516.

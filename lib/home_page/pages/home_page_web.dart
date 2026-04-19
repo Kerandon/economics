@@ -26,13 +26,12 @@ class _HomePageWebState extends State<HomePageWeb> {
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   height: 150,
-                  child: Image.asset('assets/images/logo.png',
+                  child: Image.asset(
+                    'assets/images/logo.png',
                     fit: BoxFit.contain,
-
                   ),
                 ),
               ),
-
             ),
           ],
         ),

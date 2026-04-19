@@ -83,7 +83,10 @@ class DiagramsSidebar extends StatelessWidget {
                                 ),
                               ),
                               children: [
-                                for (final entry in diagramsBySubunit[subunit]!.asMap().entries)
+                                for (final entry
+                                    in diagramsBySubunit[subunit]!
+                                        .asMap()
+                                        .entries)
                                   ListTile(
                                     dense: true,
                                     visualDensity: VisualDensity.compact,
@@ -99,11 +102,19 @@ class DiagramsSidebar extends StatelessWidget {
                                     ),
                                     title: Text(
                                       entry.value.title ??
-                                          entry.value.painters.first.diagram.toText,
-                                      style: theme.textTheme.bodySmall?.copyWith(height: 1.3),
+                                          entry
+                                              .value
+                                              .painters
+                                              .first
+                                              .diagram
+                                              .toText,
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(height: 1.3),
                                     ),
-                                    onTap: () => onDiagramTap(entry.value, entry.key),
-                                    hoverColor: theme.colorScheme.surfaceContainerHigh,
+                                    onTap: () =>
+                                        onDiagramTap(entry.value, entry.key),
+                                    hoverColor:
+                                        theme.colorScheme.surfaceContainerHigh,
                                   ),
                               ],
                             ),

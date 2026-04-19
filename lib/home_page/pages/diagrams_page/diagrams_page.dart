@@ -8,6 +8,7 @@ import '../../../diagrams/models/diagram_widget.dart';
 import '../../../diagrams/helper_methods/export_diagrams_to_pdf.dart';
 import 'diagrams_gallery.dart';
 import 'diagrams_side_bar.dart';
+
 class DiagramsPage extends ConsumerStatefulWidget {
   const DiagramsPage({super.key});
 
@@ -49,10 +50,10 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
 
   // --- DIALOG LOGIC ---
   void _showDiagramDialog(
-      BuildContext context,
-      List<DiagramWidget> allDiagrams,
-      int initialIndex,
-      ) {
+    BuildContext context,
+    List<DiagramWidget> allDiagrams,
+    int initialIndex,
+  ) {
     showDialog(
       context: context,
       builder: (ctx) {
@@ -138,18 +139,18 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                                           width: layoutWidth,
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               if (effectiveDescription
                                                   .isNotEmpty)
                                                 Padding(
                                                   padding:
-                                                  const EdgeInsets.only(
-                                                    bottom: 24,
-                                                    left: 8,
-                                                    right: 8,
-                                                  ),
+                                                      const EdgeInsets.only(
+                                                        bottom: 24,
+                                                        left: 8,
+                                                        right: 8,
+                                                      ),
                                                   child: Text(
                                                     effectiveDescription,
                                                     style: const TextStyle(
@@ -161,19 +162,19 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                                                 direction: data.axis,
                                                 mainAxisSize: MainAxisSize.min,
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                                    CrossAxisAlignment.center,
                                                 children: data.painters.map((
-                                                    painter,
-                                                    ) {
+                                                  painter,
+                                                ) {
                                                   return Container(
                                                     width: 500,
                                                     height: 500,
                                                     margin:
-                                                    const EdgeInsets.all(8),
+                                                        const EdgeInsets.all(8),
                                                     padding:
-                                                    const EdgeInsets.all(
-                                                      32.0,
-                                                    ),
+                                                        const EdgeInsets.all(
+                                                          32.0,
+                                                        ),
                                                     color: Colors.white,
                                                     child: CustomPaint(
                                                       painter: painter,
@@ -320,7 +321,8 @@ class _DiagramsPageState extends ConsumerState<DiagramsPage> {
                             if (activeUnits.containsKey(unit)) {
                               for (var subunit in activeUnits[unit]!) {
                                 unitDiagrams.addAll(
-                                    diagramsBySubunit[subunit] ?? []);
+                                  diagramsBySubunit[subunit] ?? [],
+                                );
                               }
                             }
                             exportDiagramsToPdf(unitDiagrams, config, context);

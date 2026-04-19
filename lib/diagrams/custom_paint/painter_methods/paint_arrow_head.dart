@@ -12,12 +12,12 @@ void paintArrowHead(
   required Color color,
   required Offset positionOfArrow,
   required double rotationAngle,
-  double arrowSize = 10.0,
+  double arrowSize = 6.0,
   double scale = 1.0, // Added scale to support 1.2x sizing
   bool isCentered = true,
 }) {
   final double size = arrowSize * config.averageRatio * scale;
-  final double height = size * 2.0;
+  final double height = size * 3.0;
 
   // Calculate vertical offsets relative to the pivot
   final double tipOffset = isCentered ? -(height / 2) : 0.0;

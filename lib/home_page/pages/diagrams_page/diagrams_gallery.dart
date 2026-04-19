@@ -58,11 +58,11 @@ class DiagramsGallery extends StatelessWidget {
   }
 
   Widget _buildUnitSection(
-      BuildContext context,
-      ThemeData theme,
-      UnitType unit,
-      List<Subunit> subunits,
-      ) {
+    BuildContext context,
+    ThemeData theme,
+    UnitType unit,
+    List<Subunit> subunits,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -158,10 +158,10 @@ class DiagramsGallery extends StatelessWidget {
   }
 
   Widget _buildGalleryTile(
-      BuildContext context,
-      ThemeData theme,
-      DiagramWidget diagram,
-      ) {
+    BuildContext context,
+    ThemeData theme,
+    DiagramWidget diagram,
+  ) {
     final title = diagram.title ?? diagram.painters.first.diagram.toText;
 
     final displayWidget = DiagramWidget(
@@ -177,10 +177,7 @@ class DiagramsGallery extends StatelessWidget {
       color: theme.colorScheme.surfaceContainer,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: theme.colorScheme.outlineVariant,
-          width: 1,
-        ),
+        side: BorderSide(color: theme.colorScheme.outlineVariant, width: 1),
       ),
       child: Stack(
         children: [
@@ -196,13 +193,17 @@ class DiagramsGallery extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black12.withOpacity(0.05)),
+                      border: Border.all(
+                        color: Colors.black12.withOpacity(0.05),
+                      ),
                     ),
                     padding: const EdgeInsets.all(12),
                     child: AbsorbPointer(
                       child: Center(
                         child: FittedBox(
-                            fit: BoxFit.contain, child: displayWidget),
+                          fit: BoxFit.contain,
+                          child: displayWidget,
+                        ),
                       ),
                     ),
                   ),

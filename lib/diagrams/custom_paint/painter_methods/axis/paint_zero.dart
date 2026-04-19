@@ -8,10 +8,6 @@ import '../paint_text.dart';
 void paintZero(DiagramPainterConfig config, IDiagramCanvas canvas) {
   final widthAndHeight = config.painterSize.width;
   final indent = widthAndHeight * kAxisIndent;
-  final fontSize =
-      kFontSizeAverageRatioStandard *
-      config.averageRatio; // Standard origin label size
-
   // The exact mathematical origin point (intersection of axes)
   final origin = Offset(indent, widthAndHeight - (indent * kBottomAxisIndent));
 
@@ -23,10 +19,10 @@ void paintZero(DiagramPainterConfig config, IDiagramCanvas canvas) {
     canvas,
     '0',
     Offset(origin.dx - nudge, origin.dy + nudge),
-    fontSize: fontSize,
     horizontalPivot: LabelPivot.right, // Grows to the left of the anchor
     verticalPivot: LabelPivot.top, // Grows downward from the anchor
     normalize: false, // Uses raw pixel coordinates
     style: TextStyle(color: config.colorScheme.onSurface),
+    type: DiagramTextType.axisLabels,
   );
 }

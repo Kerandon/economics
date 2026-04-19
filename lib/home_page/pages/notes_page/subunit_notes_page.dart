@@ -4,7 +4,6 @@ import '../../../diagrams/enums/unit_type.dart';
 import '../../models/slide.dart';
 // NOTE: Make sure to add 'flutter_html: ^3.0.0' (or latest) to pubspec.yaml
 
-
 import '../../models/slide_content.dart';
 // NEW: Import the flutter_widget_from_html package
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -24,7 +23,9 @@ class SubunitNotesPage extends StatelessWidget {
     // 1. Group the slides by SyllabusPoint
     final Map<SyllabusPoint?, List<Slide>> groupedBySyllabusPoint = {};
     for (var slide in slides) {
-      groupedBySyllabusPoint.putIfAbsent(slide.syllabusPoint, () => []).add(slide);
+      groupedBySyllabusPoint
+          .putIfAbsent(slide.syllabusPoint, () => [])
+          .add(slide);
     }
 
     final syllabusPoints = groupedBySyllabusPoint.keys.toList();
@@ -43,7 +44,10 @@ class SubunitNotesPage extends StatelessWidget {
             maxWidth: 750, // The maximum width of your reading strip
           ),
           child: ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 32.0,
+              horizontal: 24.0,
+            ),
             itemCount: syllabusPoints.length,
             itemBuilder: (context, index) {
               final point = syllabusPoints[index];
@@ -56,9 +60,7 @@ class SubunitNotesPage extends StatelessWidget {
                   if (point != null) ...[
                     HtmlWidget(
                       point.title,
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      textStyle: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     if (point.hlOnly)
                       const Padding(
@@ -84,15 +86,16 @@ class SubunitNotesPage extends StatelessWidget {
                         children: [
                           // Optional: Slide Sub-heading
                           if (slide.title.isNotEmpty) ...[
-                            HtmlWidget(
-                              slide.title,
-                            ),
+                            HtmlWidget(slide.title),
                             const Divider(height: 24, thickness: 2),
                           ],
 
                           // 3. Dynamically build each content block
                           if (slide.contents != null)
-                            ...slide.contents!.map((contentBlock) => _buildContentBlock(contentBlock)),
+                            ...slide.contents!.map(
+                              (contentBlock) =>
+                                  _buildContentBlock(contentBlock),
+                            ),
                         ],
                       ),
                     );
@@ -145,7 +148,9 @@ class SubunitNotesPage extends StatelessWidget {
         widgets.add(
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24.0),
-            child: Center(child: diagramWidget), // Centering diagrams looks great in articles
+            child: Center(
+              child: diagramWidget,
+            ), // Centering diagrams looks great in articles
           ),
         );
       }
@@ -170,7 +175,9 @@ class SubunitNotesPage extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.blue.shade50, // Changed to a softer blue for notes
             borderRadius: BorderRadius.circular(8),
-            border: Border(left: BorderSide(color: Colors.blue.shade700, width: 4)),
+            border: Border(
+              left: BorderSide(color: Colors.blue.shade700, width: 4),
+            ),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +187,11 @@ class SubunitNotesPage extends StatelessWidget {
               Expanded(
                 child: Text(
                   block.alert!.text,
-                  style: TextStyle(fontSize: 16, height: 1.5, color: Colors.blue.shade900),
+                  style: TextStyle(
+                    fontSize: 16,
+                    height: 1.5,
+                    color: Colors.blue.shade900,
+                  ),
                 ),
               ),
             ],
@@ -196,7 +207,11 @@ class SubunitNotesPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: RichText(
             text: TextSpan(
-              style: const TextStyle(color: Colors.black87, fontSize: 18, height: 1.5),
+              style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 18,
+                height: 1.5,
+              ),
               children: [
                 TextSpan(
                   text: '${block.term!.term}: ',

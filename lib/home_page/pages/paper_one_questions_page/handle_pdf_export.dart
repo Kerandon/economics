@@ -8,17 +8,24 @@ import '../../../diagrams/helper_methods/export_diagrams_to_pdf.dart';
 import '../../../diagrams/models/diagram_painter_config.dart';
 import '../../models/slide.dart';
 import 'export_full_question_to_pdf.dart';
+
 // Update this in QuestionDetailPage
 // Update this in QuestionDetailPage (or wherever you keep it)
 Future<void> handlePdfExport(BuildContext context, Slide slide) async {
   ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(content: Text('Generating Full PDF...'), duration: Duration(seconds: 1)),
+    const SnackBar(
+      content: Text('Generating Full PDF...'),
+      duration: Duration(seconds: 1),
+    ),
   );
 
   // Hydrate all diagrams for the whole page ahead of time
   final size = MediaQuery.of(context).size;
   final theme = Theme.of(context);
-  final allDiagramsService = AllDiagrams(size: size, colorScheme: theme.colorScheme);
+  final allDiagramsService = AllDiagrams(
+    size: size,
+    colorScheme: theme.colorScheme,
+  );
 
   await exportFullQuestionToPdf(slide, allDiagramsService);
 }

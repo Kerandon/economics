@@ -73,6 +73,7 @@ enum DiagramLabel {
   price,
   priceCostsBenefits,
   price$,
+  priceOfPermits,
   pProfitMax,
   pACP,
   pMC,
@@ -81,7 +82,8 @@ enum DiagramLabel {
   p2,
   p3,
   pC,
-  QTax,
+  quantityOfPermits,
+  aTax,
   qACP,
   qMC,
   pP,
@@ -140,6 +142,7 @@ enum DiagramLabel {
   pedBigger1,
   pedEqual1,
   income,
+  realIncome,
   y,
   y1,
   y2,
@@ -416,7 +419,7 @@ extension MicroLabelExtension on DiagramLabel {
 
       DiagramLabel.s2 => 'S2',
       DiagramLabel.d2 => 'D2',
-
+      DiagramLabel.realIncome => 'Real\nIncome',
       DiagramLabel.dEqualsMPBMSB => 'D=MPB=MSB',
       DiagramLabel.mpc => 'S=MPC',
       DiagramLabel.qS => 'Qs',
@@ -555,8 +558,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.exports => 'Exports',
       DiagramLabel.fOPLandLaborCapitalEntrepreneurship =>
         'Resources\n(Land, Labor,\nCapital, Entrepreneurship)',
-      DiagramLabel.consumerExpenditure =>
-        'E - Expenditure',
+      DiagramLabel.consumerExpenditure => 'E - Expenditure',
       DiagramLabel.goodsAndServices => 'Goods & Services',
       DiagramLabel.rentWagesInterestProfit => 'Rent, Wages, Interest, Profit',
       DiagramLabel.factorsOfProduction => 'Factors of Production',
@@ -687,7 +689,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.q2Star => 'Q2*',
       DiagramLabel.qStar => 'Q*',
       DiagramLabel.pStar => 'P*',
-      DiagramLabel.QTax => 'Qtax',
+      DiagramLabel.aTax => 'Qtax',
       DiagramLabel.subsidy => 'Subsidy',
       DiagramLabel.pc1 => 'Pc1',
       DiagramLabel.pc2 => 'Pc2',
@@ -897,9 +899,12 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.potentialGDP1 => 'Potential GDP1',
 
       DiagramLabel.priceCostsRevenue => 'Price,\nCosts,\nRevenues',
-      DiagramLabel.potentialGDPEqualsFullEmployment => 'Real GDP = Potential GDP',
+      DiagramLabel.potentialGDPEqualsFullEmployment =>
+        'Real GDP = Potential GDP',
 
+      DiagramLabel.priceOfPermits => 'Price\nof\nPermits',
 
+      DiagramLabel.quantityOfPermits => 'Quantity of Permits',
     };
   }
 }

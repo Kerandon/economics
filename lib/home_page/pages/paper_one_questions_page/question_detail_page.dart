@@ -9,7 +9,6 @@ import '../../models/slide_content.dart';
 import '../../models/term.dart';
 import 'handle_pdf_export.dart';
 
-
 class QuestionDetailPage extends StatelessWidget {
   final Slide slide;
 
@@ -19,13 +18,15 @@ class QuestionDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isHL = slide.tags.contains(Tag.hl);
 
+    // 🌟 NEW: Track which headers have been displayed across all blocks
+    final Set<String> seenHeaders = {};
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black87),
-        // 🆕 Actions removed; PDF icon moved to the body
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -47,32 +48,37 @@ class QuestionDetailPage extends StatelessWidget {
                         child: RichText(
                           text: TextSpan(
                             style: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                                height: 1.4),
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                              height: 1.4,
+                            ),
                             children: [
                               if (isHL)
                                 const TextSpan(
-                                    text: '[HL] ',
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.w900)),
+                                  text: '[HL] ',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
                               TextSpan(text: slide.question ?? slide.title),
                             ],
                           ),
                         ),
                       ),
                       const SizedBox(width: 16),
-                      // 🆕 Modernized PDF Button moved next to title
+                      // Modernized PDF Button
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.red.shade50,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
-                          icon: const Icon(Icons.picture_as_pdf_rounded,
-                              color: Colors.redAccent),
+                          icon: const Icon(
+                            Icons.picture_as_pdf_rounded,
+                            color: Colors.redAccent,
+                          ),
                           tooltip: 'Export to PDF',
                           onPressed: () => handlePdfExport(context, slide),
                         ),
@@ -85,14 +91,15 @@ class QuestionDetailPage extends StatelessWidget {
                   Text(
                     slide.subunit.title,
                     style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2),
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.2,
+                    ),
                   ),
                   const SizedBox(height: 12),
 
-                  // 🆕 Modernized Tags as Pill Chips
+                  // Tags as Pill Chips
                   if (slide.tags.isNotEmpty)
                     Wrap(
                       spacing: 8,
@@ -100,7 +107,9 @@ class QuestionDetailPage extends StatelessWidget {
                       children: slide.tags.map((t) {
                         return Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.blueGrey.shade50,
                             borderRadius: BorderRadius.circular(16),
@@ -125,12 +134,14 @@ class QuestionDetailPage extends StatelessWidget {
 
                   // --- CONTENTS ---
                   if (slide.contents != null)
-                    ...slide.contents!.map((block) => Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: _buildContentBlock(context, block),
-                    )),
+                    ...slide.contents!.map(
+                      (block) => Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        // 🌟 NEW: Pass the seenHeaders set into the block builder
+                        child: _buildContentBlock(context, block, seenHeaders),
+                      ),
+                    ),
 
-                  // 🆕 Clean visual indicator for end of content
                   const SizedBox(height: 24),
                   Center(
                     child: Text(
@@ -142,7 +153,7 @@ class QuestionDetailPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 48), // Bottom padding scroll buffer
+                  const SizedBox(height: 48),
                 ],
               ),
             ),
@@ -159,12 +170,15 @@ class QuestionDetailPage extends StatelessWidget {
   Widget _buildSectionHeader(String title) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
-      child: Text(title,
-          style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color: Colors.black45,
-              letterSpacing: 1.5)),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.bold,
+          color: Colors.black45,
+          letterSpacing: 1.5,
+        ),
+      ),
     );
   }
 
@@ -173,35 +187,58 @@ class QuestionDetailPage extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.amber.shade50,
-        borderRadius: BorderRadius.circular(12), // 🆕 Slightly rounder borders
-        border:
-        Border(left: BorderSide(color: Colors.amber.shade500, width: 4)),
+        borderRadius: BorderRadius.circular(12),
+        border: Border(
+          left: BorderSide(color: Colors.amber.shade500, width: 4),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('TL;DR',
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.amber.shade800,
-                  letterSpacing: 1.5)),
+          Text(
+            'TL;DR',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w900,
+              color: Colors.amber.shade800,
+              letterSpacing: 1.5,
+            ),
+          ),
           const SizedBox(height: 8),
-          HtmlWidget(text,
-              textStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                  height: 1.4)),
+          HtmlWidget(
+            text,
+            textStyle: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+              height: 1.4,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildContentBlock(BuildContext context, SlideContent block) {
+  // 🌟 NEW: Added seenHeaders parameter
+  Widget _buildContentBlock(
+    BuildContext context,
+    SlideContent block,
+    Set<String> seenHeaders,
+  ) {
     List<Widget> widgets = [];
-    const baseTextStyle =
-    TextStyle(fontSize: 18, height: 1.6, color: Colors.black87);
+    const baseTextStyle = TextStyle(
+      fontSize: 18,
+      height: 1.6,
+      color: Colors.black87,
+    );
+
+    // 🌟 NEW: Helper function to check and add headers
+    void tryAddHeader(String title) {
+      if (!seenHeaders.contains(title)) {
+        widgets.add(_buildSectionHeader(title));
+        seenHeaders.add(title);
+      }
+    }
 
     // 0. TL;DR
     if (block.tldr != null && block.tldr!.isNotEmpty) {
@@ -210,7 +247,7 @@ class QuestionDetailPage extends StatelessWidget {
 
     // 1. EconTerms List
     if (block.econTerms != null && block.econTerms!.isNotEmpty) {
-      widgets.add(_buildSectionHeader('TERMS'));
+      tryAddHeader('TERMS'); // 🌟 Use tryAddHeader
       for (var econTerm in block.econTerms!) {
         widgets.add(
           Padding(
@@ -226,7 +263,7 @@ class QuestionDetailPage extends StatelessWidget {
 
     // 2. Legacy Single Term
     if (block.term != null) {
-      widgets.add(_buildSectionHeader('TERMS'));
+      tryAddHeader('TERMS'); // 🌟 Use tryAddHeader
       widgets.add(
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
@@ -240,14 +277,11 @@ class QuestionDetailPage extends StatelessWidget {
 
     // 3. Standard Text / HTML
     if (block.content != null && block.content!.text.isNotEmpty) {
-      widgets.add(_buildSectionHeader('EXPLANATION'));
+      tryAddHeader('EXPLANATION'); // 🌟 Use tryAddHeader
       widgets.add(
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
-          child: HtmlWidget(
-            block.content!.text,
-            textStyle: baseTextStyle,
-          ),
+          child: HtmlWidget(block.content!.text, textStyle: baseTextStyle),
         ),
       );
     }
@@ -264,7 +298,7 @@ class QuestionDetailPage extends StatelessWidget {
 
     // 5. Diagrams (from Enums)
     if (block.diagramEnums != null && block.diagramEnums!.isNotEmpty) {
-      widgets.add(_buildSectionHeader('DIAGRAMS'));
+      tryAddHeader('DIAGRAMS'); // 🌟 Use tryAddHeader
       widgets.add(
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
@@ -275,10 +309,9 @@ class QuestionDetailPage extends StatelessWidget {
 
     // 6. Diagrams (from Widgets)
     if (block.diagramWidgets != null && block.diagramWidgets!.isNotEmpty) {
-      // Check to prevent duplicate 'DIAGRAMS' header if both enums and widgets exist in the same block
-      if (block.diagramEnums == null || block.diagramEnums!.isEmpty) {
-        widgets.add(_buildSectionHeader('DIAGRAMS'));
-      }
+      tryAddHeader(
+        'DIAGRAMS',
+      ); // 🌟 Use tryAddHeader (replaces the old if-empty check)
       widgets.add(
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
@@ -290,7 +323,7 @@ class QuestionDetailPage extends StatelessWidget {
     // 7. Real World Examples
     if (block.realWorldExamples != null &&
         block.realWorldExamples!.isNotEmpty) {
-      widgets.add(_buildSectionHeader('REAL WORLD EXAMPLES'));
+      tryAddHeader('REAL WORLD EXAMPLES'); // 🌟 Use tryAddHeader
       for (var rwe in block.realWorldExamples!) {
         widgets.add(
           Padding(
@@ -301,9 +334,10 @@ class QuestionDetailPage extends StatelessWidget {
                 Text(
                   '• ${rwe.example}',
                   style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87),
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
                 if (rwe.explanation != null)
                   Padding(
@@ -311,9 +345,10 @@ class QuestionDetailPage extends StatelessWidget {
                     child: Text(
                       rwe.explanation!,
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey.shade800,
-                          fontStyle: FontStyle.italic),
+                        fontSize: 16,
+                        color: Colors.grey.shade800,
+                        fontStyle: FontStyle.italic,
+                      ),
                     ),
                   ),
               ],
@@ -325,7 +360,7 @@ class QuestionDetailPage extends StatelessWidget {
 
     // 8. Evaluation Block
     if (block.evaluationData != null) {
-      widgets.add(_buildSectionHeader('EVALUATION'));
+      tryAddHeader('EVALUATION'); // 🌟 Use tryAddHeader
       widgets.add(
         Padding(
           padding: const EdgeInsets.only(bottom: 24.0),
@@ -355,8 +390,11 @@ class QuestionDetailPage extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.warning_amber_rounded,
-                    color: Colors.red.shade700, size: 24),
+                Icon(
+                  Icons.warning_amber_rounded,
+                  color: Colors.red.shade700,
+                  size: 24,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -376,7 +414,7 @@ class QuestionDetailPage extends StatelessWidget {
       );
     }
 
-    // 10. Tips 🆕
+    // 10. Tips
     if (block.tip != null && block.tip!.text.isNotEmpty) {
       widgets.add(
         Padding(
@@ -391,8 +429,11 @@ class QuestionDetailPage extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.lightbulb_outline,
-                    color: Colors.blue.shade700, size: 24),
+                Icon(
+                  Icons.lightbulb_outline,
+                  color: Colors.blue.shade700,
+                  size: 24,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -426,23 +467,18 @@ class QuestionDetailPage extends StatelessWidget {
 
     if (diagramWidgets.length == 1) {
       return Center(
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: diagramWidgets.first,
-        ),
+        child: FittedBox(fit: BoxFit.scaleDown, child: diagramWidgets.first),
       );
     } else {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: diagramWidgets.map((diagWidget) {
           return Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: FittedBox(
-                fit: BoxFit.contain,
-                alignment: Alignment.topCenter,
-                child: diagWidget,
-              ),
+            // 🌟 REMOVED: Padding widget that was wrapping the FittedBox
+            child: FittedBox(
+              fit: BoxFit.contain,
+              alignment: Alignment.topCenter,
+              child: diagWidget,
             ),
           );
         }).toList(),
@@ -452,7 +488,9 @@ class QuestionDetailPage extends StatelessWidget {
 
   // --- HELPER FOR DIAGRAM ENUMS ROW ---
   Widget _buildDiagramsRow(
-      BuildContext context, List<DiagramEnum> diagramEnums) {
+    BuildContext context,
+    List<DiagramEnum> diagramEnums,
+  ) {
     if (diagramEnums.isEmpty) return const SizedBox.shrink();
 
     final size = MediaQuery.of(context).size;

@@ -1,11 +1,11 @@
 import 'package:economics_app/home_page/pages/real_world_examples/real_world_examples.dart';
 
-import '../../../../../../diagrams/enums/diagram_enum.dart';
-import '../../../../../../diagrams/enums/unit_type.dart';
-import '../../../../../models/slide.dart';
-import '../../../../../models/slide_content.dart';
-import '../../../../../models/term.dart';
-import '../../../../terms/terms.dart';
+import '../../../../../../../diagrams/enums/diagram_enum.dart';
+import '../../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../../models/slide.dart';
+import '../../../../../../models/slide_content.dart';
+import '../../../../../../models/term.dart';
+import '../../../../../terms/terms.dart';
 
 final useRWEEvaluateMonetaryPolicyReduceInflationaryGap1bHL = Slide(
   subunit: Subunit.demandManagementMonetary,
@@ -35,31 +35,31 @@ final useRWEEvaluateMonetaryPolicyReduceInflationaryGap1bHL = Slide(
       data: [
         [
           'Lower interest rates increase consumption and investment',
-          'Low confidence limits consumption and investment'
+          'Low confidence limits consumption and investment',
         ],
         [
           'Quick to implement by central bank',
-          'Liquidity trap when interest rates are near zero'
+          'Liquidity trap when interest rates are near zero',
         ],
         [
           'No crowding out so policy fully supports AD',
-          'Becomes ineffective in deep recessions'
+          'Becomes ineffective in deep recessions',
         ],
         [
           'Currency depreciation increases export demand',
-          'Depreciation may be limited if many countries ease policy'
+          'Depreciation may be limited if many countries ease policy',
         ],
         [
           'Quantitative easing increases liquidity',
-          'Banks may not lend (credit crunch)'
+          'Banks may not lend (credit crunch)',
         ],
         [
           'No increase in government debt',
-          'Does not solve structural unemployment'
+          'Does not solve structural unemployment',
         ],
         [
           'Independent decision-making allows fast response',
-          'Risk of future inflation or asset bubbles'
+          'Risk of future inflation or asset bubbles',
         ],
       ],
     ),

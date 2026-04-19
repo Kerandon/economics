@@ -376,7 +376,7 @@ void _paintCircularOpen(
     Offset(0.0, 0.60),
     angle: -pi / 2,
     ignoreIndent: true,
-      style: TextStyle(color: leakagesColor)
+    style: TextStyle(color: leakagesColor),
   );
   paintText(
     c,
@@ -385,6 +385,6 @@ void _paintCircularOpen(
     Offset(1.0, 0.60),
     angle: -pi / 2,
     ignoreIndent: true,
-    style: TextStyle(color: injectionsColor)
+    style: TextStyle(color: injectionsColor),
   );
 }

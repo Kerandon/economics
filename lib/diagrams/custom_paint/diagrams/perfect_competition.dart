@@ -47,11 +47,11 @@ class PerfectCompetition extends BaseDiagramPainter {
   }
 
   void _paintPerfectCompMarket(
-      DiagramPainterConfig c,
-      IDiagramCanvas canvas,
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
 
-      DiagramEnum diagram,
-      ) {
+    DiagramEnum diagram,
+  ) {
     paintTitle(c, canvas, DiagramLabel.market.label);
 
     paintAxis(
@@ -183,10 +183,10 @@ class PerfectCompetition extends BaseDiagramPainter {
   }
 
   void _perfectCompFirm(
-      DiagramPainterConfig c,
-      IDiagramCanvas canvas,
-      DiagramEnum diagram,
-      ) {
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
     String pLabel = DiagramLabel.priceRevenueCosts.label;
     String qLabel = DiagramLabel.quantity.label;
     if (diagram ==

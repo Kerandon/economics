@@ -1,15 +1,17 @@
 // We use a top-level variable so we can import it elsewhere
-import '../../../../../../diagrams/enums/diagram_enum.dart';
-import '../../../../../../diagrams/enums/unit_type.dart';
-import '../../../../../models/slide.dart';
-import '../../../../../models/slide_content.dart';
-import '../../../../../models/term.dart';
-import '../../../../real_world_examples/real_world_examples.dart';
-import '../../../../terms/terms.dart';
+import '../../../../../../../diagrams/enums/diagram_enum.dart';
+import '../../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../../models/slide.dart';
+import '../../../../../../models/slide_content.dart';
+import '../../../../../../models/term.dart';
+import '../../../../../real_world_examples/real_world_examples.dart';
+import '../../../../../terms/terms.dart';
+
 final evaluateMonopolisticVsOligopolyQuestion = Slide(
   subunit: Subunit.marketFailurePower,
   tags: [Tag.hl, Tag.p1b],
-  question: 'Using real-world examples, discuss the view that monopolistic competition is a more desirable market structure than oligopoly.',
+  question:
+      'Using real-world examples, discuss the view that monopolistic competition is a more desirable market structure than oligopoly.',
   contents: [
     // 1. TL;DR
     SlideContent.tldr('''
@@ -48,7 +50,7 @@ final evaluateMonopolisticVsOligopolyQuestion = Slide(
 
     // 5. Diagram Explanation (Italicized text below diagrams)
     SlideContent.text(
-        '<i>Contrast Monopolistic Competition (LR normal profit, relatively elastic demand) with a Collusive Oligopoly (Abnormal profit, inelastic demand, acting as a monopoly).</i>'
+      '<i>Contrast Monopolistic Competition (LR normal profit, relatively elastic demand) with a Collusive Oligopoly (Abnormal profit, inelastic demand, acting as a monopoly).</i>',
     ),
 
     // 6. Real World Examples
@@ -65,11 +67,11 @@ final evaluateMonopolisticVsOligopolyQuestion = Slide(
       rightTitle: 'Cons',
       leftItems: [
         'High consumer sovereignty and choice.',
-        'Lower prices due to high competition.'
+        'Lower prices due to high competition.',
       ],
       rightItems: [
         'Productive inefficiency (not at min AC).',
-        'Lack of R&D investment due to long-run normal profits.'
+        'Lack of R&D investment due to long-run normal profits.',
       ],
     ),
 
@@ -80,11 +82,11 @@ final evaluateMonopolisticVsOligopolyQuestion = Slide(
       rightTitle: 'Cons',
       leftItems: [
         'Dynamic efficiency: R&D leading to innovation.',
-        'Economies of scale can lead to lower Long-Run AC.'
+        'Economies of scale can lead to lower Long-Run AC.',
       ],
       rightItems: [
         'Potential for collusive behavior (higher prices).',
-        'High barriers to entry limit market contestability.'
+        'High barriers to entry limit market contestability.',
       ],
     ),
   ],

@@ -20,18 +20,19 @@ class NotesPage extends StatelessWidget {
     // 2. Get the unique subunits that actually have slides
     final availableSubunits = slidesBySubunit.keys.toList();
 
-   final s = slidesBySubunit.entries.first;
-   print('s1 is ${s.value.elementAt(0).contents?.first.content?.text}');
-    print('s2 is ${s.value.elementAt(0).contents?.elementAt(1).diagramWidgets?.first.painters.first}');
+    final s = slidesBySubunit.entries.first;
+    print('s1 is ${s.value.elementAt(0).contents?.first.content?.text}');
+    print(
+      's2 is ${s.value.elementAt(0).contents?.elementAt(1).diagramWidgets?.first.painters.first}',
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('IB Economics Notes'),
-      ),
+      appBar: AppBar(title: const Text('IB Economics Notes')),
       body: GridView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: availableSubunits.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4, // You can change this if the titles get too squished
+          crossAxisCount:
+              4, // You can change this if the titles get too squished
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
         ),

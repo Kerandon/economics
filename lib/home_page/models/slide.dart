@@ -3,6 +3,7 @@ import 'package:economics_app/home_page/models/slide_content.dart';
 import 'package:economics_app/home_page/models/term.dart';
 
 import '../enums/skill.dart';
+
 class Slide {
   final SyllabusPoint? syllabusPoint;
 
@@ -27,9 +28,9 @@ class Slide {
     List<Skill>? skills,
     this.question, // 🆕 Added to constructor
   }) : _subunitOverride = subunit,
-        _titleOverride = title,
-        _tagsOverride = tags,
-        _skillsOverride = skills;
+       _titleOverride = title,
+       _tagsOverride = tags,
+       _skillsOverride = skills;
 
   // -------------------------
   // Resolved properties

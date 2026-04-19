@@ -32,12 +32,13 @@ class ADASDiagram extends BaseDiagramPainter {
         _paintADTradeOff(c, canvas);
       case DiagramEnum.macroSRASCostPushInflation:
         _paintSRASCostPushInflation(c, canvas);
+      case DiagramEnum.macroSupplySidePoliciesLowInflation:
+        _paintSupplySideLowInflation(c, canvas);
 
       case DiagramEnum.macroAggregateDemand:
       case DiagramEnum.macroAggregateDemandIncrease:
       case DiagramEnum.macroAggregateDemandDecrease:
       case DiagramEnum.macroSRAS:
-
       case DiagramEnum.macroClassicalFullEmployment:
       case DiagramEnum.macroClassicalDeflationaryGap:
       case DiagramEnum.macroClassicalInflationaryGap:
@@ -65,6 +66,7 @@ class ADASDiagram extends BaseDiagramPainter {
     }
   }
 }
+
 void _paintADTradeOff(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintDiagramDashedLines(
     c,
@@ -118,8 +120,11 @@ void _paintADTradeOff(DiagramPainterConfig c, IDiagramCanvas canvas) {
     verticalShift: -0.12,
   );
 }
-void _paintSRASCostPushInflation(DiagramPainterConfig c, IDiagramCanvas canvas) {
 
+void _paintSRASCostPushInflation(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+) {
   paintDiagramDashedLines(
     c,
     canvas,
@@ -140,27 +145,26 @@ void _paintSRASCostPushInflation(DiagramPainterConfig c, IDiagramCanvas canvas) 
     c,
     canvas,
     type: MarketCurveType.sras1,
-      horizontalShift: 0.05,
-      verticalShift: 0.05
+    horizontalShift: 0.05,
+    verticalShift: 0.05,
   );
   paintMarketCurve(
     c,
     canvas,
     type: MarketCurveType.sras2,
     horizontalShift: -0.10,
-    verticalShift: -0.10
+    verticalShift: -0.10,
   );
-  paintMarketCurve(
+  paintMarketCurve(c, canvas, type: MarketCurveType.ad);
+  paintLineSegment(
     c,
     canvas,
-    type: MarketCurveType.ad,
-
+    origin: Offset(0.65, 0.30),
+    angle: -pi,
+    length: 0.15,
   );
-  paintLineSegment(c, canvas, origin: Offset(0.65,0.30),
-  angle: -pi, length: 0.15
-  );
-
 }
+
 void _paintClassicalADAS(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,
@@ -526,8 +530,6 @@ void _paintClassicalADAS(
       break;
   }
 }
-
-
 
 void _paintInflationaryGapAdjustment(
   DiagramPainterConfig c,
@@ -937,4 +939,41 @@ void _paintKeynesianSpareCapacity(
     lengthAdjustment: -0.15,
   );
   paintLineSegment(c, canvas, origin: Offset(0.32, 0.50), length: 0.15);
+}
+
+void _paintSupplySideLowInflation(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+) {
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.50,
+    xAxisEndPos: 0.35,
+    additionalXPositions: [0.65],
+    yLabel: DiagramLabel.pL.label,
+    xLabel: DiagramLabel.y1.label,
+    additionalXLabels: [DiagramLabel.y2.label],
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.lras1,
+    horizontalShift: -0.15,
+  );
+
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.lras2,
+    horizontalShift: 0.15,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad1,
+    horizontalShift: -0.15,
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.ad2, horizontalShift: 0.15);
+  paintLineSegment(c, canvas, origin: Offset(0.49, 0.20), length: 0.15);
 }

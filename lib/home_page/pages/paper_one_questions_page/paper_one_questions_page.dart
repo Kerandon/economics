@@ -2,7 +2,6 @@ import 'package:economics_app/home_page/pages/paper_one_questions_page/paper_one
 import 'package:economics_app/home_page/pages/paper_one_questions_page/question_detail_page.dart';
 import 'package:flutter/material.dart';
 
-
 class PaperOneQuestionsPage extends StatefulWidget {
   const PaperOneQuestionsPage({super.key});
 

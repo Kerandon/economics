@@ -96,11 +96,15 @@ void paintDiagramLines(
     }
   }
 
-// --- 3. DRAW LINE (UPDATED) ---
+  // --- 3. DRAW LINE (UPDATED) ---
   if (curveStyle == CurveStyle.dashed || curveStyle == CurveStyle.dotted) {
     // 1. Define dash and gap lengths based on the chosen style
-    final double dashOn = curveStyle == CurveStyle.dotted ? effectiveWidth : 12.0;
-    final double dashOff = curveStyle == CurveStyle.dotted ? effectiveWidth * 1.5 : 8.0;
+    final double dashOn = curveStyle == CurveStyle.dotted
+        ? effectiveWidth
+        : 12.0;
+    final double dashOff = curveStyle == CurveStyle.dotted
+        ? effectiveWidth * 1.5
+        : 8.0;
 
     double currentDashLength = 0.0;
     bool isDrawing = true;
@@ -119,7 +123,8 @@ void paintDiagramLines(
       // 3. Step along the current segment in dash/gap increments
       while (walked < segmentDist) {
         final double remainingInSegment = segmentDist - walked;
-        final double requiredForState = (isDrawing ? dashOn : dashOff) - currentDashLength;
+        final double requiredForState =
+            (isDrawing ? dashOn : dashOff) - currentDashLength;
 
         // Take the smaller step: finish the segment, or finish the dash/gap
         final double step = remainingInSegment < requiredForState
@@ -353,7 +358,7 @@ void _paintDiagramLabel(
       nudge = Offset(gapValue, gapValue);
       break;
     case LabelAlign.center:
-    horizontal = LabelPivot.center;
+      horizontal = LabelPivot.center;
       vertical = LabelPivot.middle;
       nudge = Offset.zero;
       break;
@@ -367,6 +372,6 @@ void _paintDiagramLabel(
     horizontalPivot: horizontal,
     verticalPivot: vertical,
     normalize: normalize,
-    type: DiagramTextType.label,
+    type: DiagramTextType.axisNames,
   );
 }

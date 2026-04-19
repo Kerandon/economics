@@ -47,7 +47,9 @@ class Elasticities extends BaseDiagramPainter {
 
     switch (diagram) {
       case DiagramEnum.microDemandEngelCurve:
-        y = DiagramLabel.y.label;
+        y = DiagramLabel.realIncome.label;
+
+        x = DiagramLabel.quantity.label;
         break;
       case DiagramEnum.microDemandElasticityRevenueChange:
         y = DiagramLabel.revenue$.label;

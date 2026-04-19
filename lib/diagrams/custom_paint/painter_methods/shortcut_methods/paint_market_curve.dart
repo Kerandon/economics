@@ -6,34 +6,82 @@ import '../../i_diagram_canvas.dart';
 import '../../../models/diagram_painter_config.dart';
 import '../../painter_constants.dart';
 import '../rotate_around.dart';
-void paintMarketCurve(
-    DiagramPainterConfig config,
-    IDiagramCanvas canvas, {
-      required MarketCurveType type,
-      String? label,
-      String? startLabel,
-      double lengthAdjustment = 0.0,
-      double horizontalShift = 0.0,
-      double verticalShift = 0.0,
-      double angle = 0.0,
-      CurveStyle curveStyle = CurveStyle.standard,
-      Color? color,
-      double lrasX = 0.5,
-      double keynesianAS = 0.80,
-    }) {
 
+void paintMarketCurve(
+  DiagramPainterConfig config,
+  IDiagramCanvas canvas, {
+  required MarketCurveType type,
+  String? label,
+  String? startLabel,
+  double lengthAdjustment = 0.0,
+  double horizontalShift = 0.0,
+  double verticalShift = 0.0,
+  double angle = 0.0,
+  CurveStyle curveStyle = CurveStyle.standard,
+  Color? color,
+  double lrasX = 0.5,
+  double keynesianAS = 0.80,
+}) {
   // ==========================================
   // 0. HANDLE "COMBO" TYPES FIRST
   // ==========================================
   if (type == MarketCurveType.mcAtc) {
-    paintMarketCurve(config, canvas, type: MarketCurveType.ac, lengthAdjustment: lengthAdjustment, horizontalShift: horizontalShift, verticalShift: verticalShift, angle: angle, curveStyle: curveStyle, color: color, lrasX: lrasX, keynesianAS: keynesianAS);
-    paintMarketCurve(config, canvas, type: MarketCurveType.mc, lengthAdjustment: lengthAdjustment, horizontalShift: horizontalShift, verticalShift: verticalShift, angle: angle, curveStyle: curveStyle, color: color, lrasX: lrasX, keynesianAS: keynesianAS);
+    paintMarketCurve(
+      config,
+      canvas,
+      type: MarketCurveType.ac,
+      lengthAdjustment: lengthAdjustment,
+      horizontalShift: horizontalShift,
+      verticalShift: verticalShift,
+      angle: angle,
+      curveStyle: curveStyle,
+      color: color,
+      lrasX: lrasX,
+      keynesianAS: keynesianAS,
+    );
+    paintMarketCurve(
+      config,
+      canvas,
+      type: MarketCurveType.mc,
+      lengthAdjustment: lengthAdjustment,
+      horizontalShift: horizontalShift,
+      verticalShift: verticalShift,
+      angle: angle,
+      curveStyle: curveStyle,
+      color: color,
+      lrasX: lrasX,
+      keynesianAS: keynesianAS,
+    );
     return;
   }
 
   if (type == MarketCurveType.dArMrMonopoly) {
-    paintMarketCurve(config, canvas, type: MarketCurveType.dArMonopoly, lengthAdjustment: lengthAdjustment, horizontalShift: horizontalShift, verticalShift: verticalShift, angle: angle, curveStyle: curveStyle, color: color, lrasX: lrasX, keynesianAS: keynesianAS);
-    paintMarketCurve(config, canvas, type: MarketCurveType.mrMonopoly, lengthAdjustment: lengthAdjustment, horizontalShift: horizontalShift, verticalShift: verticalShift, angle: angle, curveStyle: curveStyle, color: color, lrasX: lrasX, keynesianAS: keynesianAS);
+    paintMarketCurve(
+      config,
+      canvas,
+      type: MarketCurveType.dArMonopoly,
+      lengthAdjustment: lengthAdjustment,
+      horizontalShift: horizontalShift,
+      verticalShift: verticalShift,
+      angle: angle,
+      curveStyle: curveStyle,
+      color: color,
+      lrasX: lrasX,
+      keynesianAS: keynesianAS,
+    );
+    paintMarketCurve(
+      config,
+      canvas,
+      type: MarketCurveType.mrMonopoly,
+      lengthAdjustment: lengthAdjustment,
+      horizontalShift: horizontalShift,
+      verticalShift: verticalShift,
+      angle: angle,
+      curveStyle: curveStyle,
+      color: color,
+      lrasX: lrasX,
+      keynesianAS: keynesianAS,
+    );
     return;
   }
 
@@ -43,26 +91,22 @@ void paintMarketCurve(
 
   bool isVertical =
       type == MarketCurveType.lras ||
-          type == MarketCurveType.lras1 ||
-          type == MarketCurveType.lras2 ||
-          type == MarketCurveType.moneySupply ||
-          type == MarketCurveType.lrpc ||
-          type == MarketCurveType.lrpc1 ||
-          type == MarketCurveType.lrpc2 ||
-          type == MarketCurveType.perfectlyInelasticSupply;
+      type == MarketCurveType.lras1 ||
+      type == MarketCurveType.lras2 ||
+      type == MarketCurveType.moneySupply ||
+      type == MarketCurveType.lrpc ||
+      type == MarketCurveType.lrpc1 ||
+      type == MarketCurveType.lrpc2 ||
+      type == MarketCurveType.perfectlyInelasticSupply;
 
   // 1. DEFINE BASE GEOMETRY
   switch (type) {
-
-  // --- MICROECONOMICS J-CURVES & U-CURVES ---
+    // --- MICROECONOMICS J-CURVES & U-CURVES ---
     case MarketCurveType.mc:
       baseStart = const Offset(0.03, 0.80);
       baseEnd = const Offset(0.68, 0.10);
       beziers = [
-        CustomBezier(
-          control: const Offset(0.12, 1.26),
-          endPoint: baseEnd,
-        ),
+        CustomBezier(control: const Offset(0.12, 1.26), endPoint: baseEnd),
       ];
       break;
 
@@ -70,10 +114,7 @@ void paintMarketCurve(
       baseStart = const Offset(0.05, 0.20);
       baseEnd = const Offset(0.90, 0.20);
       beziers = [
-        CustomBezier(
-          control: const Offset(0.40, 0.885),
-          endPoint: baseEnd,
-        ),
+        CustomBezier(control: const Offset(0.40, 0.885), endPoint: baseEnd),
       ];
       break;
 
@@ -81,14 +122,11 @@ void paintMarketCurve(
       baseStart = const Offset(0.05, 0.55);
       baseEnd = const Offset(0.92, 0.15);
       beziers = [
-        CustomBezier(
-          control: const Offset(0.50, 1.0),
-          endPoint: baseEnd,
-        ),
+        CustomBezier(control: const Offset(0.50, 1.0), endPoint: baseEnd),
       ];
       break;
 
-  // --- MICROECONOMICS FIRM REVENUE ---
+    // --- MICROECONOMICS FIRM REVENUE ---
     case MarketCurveType.mr:
       baseStart = const Offset(0.05, 0.10);
       baseEnd = const Offset(0.50, 0.90);
@@ -104,7 +142,7 @@ void paintMarketCurve(
       baseEnd = const Offset(0.50, 1.10);
       break;
 
-  // --- DOWNWARD SLOPING (Linear) ---
+    // --- DOWNWARD SLOPING (Linear) ---
     case MarketCurveType.demand:
     case MarketCurveType.moneyDemand:
     case MarketCurveType.demandDomestic:
@@ -122,7 +160,7 @@ void paintMarketCurve(
       baseEnd = const Offset(0.90, 0.90);
       break;
 
-  // --- PHILLIPS CURVE (SRPC - C-Shaped) ---
+    // --- PHILLIPS CURVE (SRPC - C-Shaped) ---
     case MarketCurveType.srpc:
     case MarketCurveType.srpc1:
     case MarketCurveType.srpc2:
@@ -136,7 +174,7 @@ void paintMarketCurve(
       ];
       break;
 
-  // --- UPWARD SLOPING (Supply-like) ---
+    // --- UPWARD SLOPING (Supply-like) ---
     case MarketCurveType.supply:
     case MarketCurveType.s1:
     case MarketCurveType.s2:
@@ -217,7 +255,6 @@ void paintMarketCurve(
   if (type != MarketCurveType.keynesianAS &&
       type != MarketCurveType.mcAtc &&
       type != MarketCurveType.dArMrMonopoly) {
-
     // --- A. LENGTH ADJUSTMENT (SCALING) ---
     if (lengthAdjustment != 0.0) {
       final mid = Offset(
@@ -233,10 +270,12 @@ void paintMarketCurve(
       end = scalePoint(baseEnd);
       if (beziers != null) {
         beziers = beziers
-            .map((b) => CustomBezier(
-          control: scalePoint(b.control),
-          endPoint: scalePoint(b.endPoint),
-        ))
+            .map(
+              (b) => CustomBezier(
+                control: scalePoint(b.control),
+                endPoint: scalePoint(b.endPoint),
+              ),
+            )
             .toList();
       }
     }
@@ -248,17 +287,20 @@ void paintMarketCurve(
       end = rotateAround(end, mid, angle);
       if (beziers != null) {
         beziers = beziers
-            .map((b) => CustomBezier(
-          control: rotateAround(b.control, mid, angle),
-          endPoint: rotateAround(b.endPoint, mid, angle),
-        ))
+            .map(
+              (b) => CustomBezier(
+                control: rotateAround(b.control, mid, angle),
+                endPoint: rotateAround(b.endPoint, mid, angle),
+              ),
+            )
             .toList();
       }
     }
   }
 
   // --- C. SHIFTING (Horizontal/Vertical) ---
-  Offset shift(Offset o) => Offset(o.dx + horizontalShift, o.dy + verticalShift);
+  Offset shift(Offset o) =>
+      Offset(o.dx + horizontalShift, o.dy + verticalShift);
 
   if (type == MarketCurveType.keynesianAS) {
     start = Offset(0.0, baseStart.dy + verticalShift);
@@ -268,10 +310,12 @@ void paintMarketCurve(
 
   if (beziers != null) {
     beziers = beziers
-        .map((b) => CustomBezier(
-      control: shift(b.control),
-      endPoint: shift(b.endPoint),
-    ))
+        .map(
+          (b) => CustomBezier(
+            control: shift(b.control),
+            endPoint: shift(b.endPoint),
+          ),
+        )
         .toList();
   } else {
     end = shift(end);
@@ -281,7 +325,7 @@ void paintMarketCurve(
   String finalLabel2 = label ?? '';
   if (label == null) {
     switch (type) {
-    // Micro Labels
+      // Micro Labels
       case MarketCurveType.mc:
         finalLabel2 = "MC";
         break;
@@ -299,61 +343,169 @@ void paintMarketCurve(
         finalLabel2 = "D=AR";
         break;
 
-    // Existing Labels
-      case MarketCurveType.demand: finalLabel2 = "D"; break;
-      case MarketCurveType.supply: finalLabel2 = "S"; break;
-      case MarketCurveType.ad: finalLabel2 = "AD"; break;
-      case MarketCurveType.ad1: finalLabel2 = "AD1"; break;
-      case MarketCurveType.ad2: finalLabel2 = "AD2"; break;
-      case MarketCurveType.ad3: finalLabel2 = "AD3"; break;
-      case MarketCurveType.sras: finalLabel2 = "SRAS"; break;
-      case MarketCurveType.sras1: finalLabel2 = "SRAS1"; break;
-      case MarketCurveType.sras2: finalLabel2 = "SRAS2"; break;
-      case MarketCurveType.lras: finalLabel2 = "LRAS"; break;
-      case MarketCurveType.lras1: finalLabel2 = "LRAS1"; break;
-      case MarketCurveType.lras2: finalLabel2 = "LRAS2"; break;
-      case MarketCurveType.keynesianAS: finalLabel2 = "AS"; break;
-      case MarketCurveType.moneySupply: finalLabel2 = "MS"; break;
-      case MarketCurveType.lrpc: finalLabel2 = "LRPC"; break;
-      case MarketCurveType.srpc: finalLabel2 = "SRPC"; break;
-      case MarketCurveType.srpc1: finalLabel2 = "SRPC1"; break;
-      case MarketCurveType.srpc2: finalLabel2 = "SRPC2"; break;
-      case MarketCurveType.moneyDemand: finalLabel2 = "Md"; break;
-      case MarketCurveType.demandDomestic: finalLabel2 = "Dd"; break;
-      case MarketCurveType.supplyDomestic: finalLabel2 = "Sd"; break;
-      case MarketCurveType.demandWorld: finalLabel2 = "Dw"; break;
-      case MarketCurveType.supplyWorld: finalLabel2 = "Sw"; break;
-      case MarketCurveType.demandUSD: finalLabel2 = r'Dfor$'; break;
-      case MarketCurveType.supplyUSD: finalLabel2 = r'Sof$'; break;
-      case MarketCurveType.dl: finalLabel2 = "DL"; break;
-      case MarketCurveType.dl1: finalLabel2 = "DL1"; break;
-      case MarketCurveType.dl2: finalLabel2 = "DL2"; break;
-      case MarketCurveType.sl: finalLabel2 = "SL"; break;
-      case MarketCurveType.sl1: finalLabel2 = "SL1"; break;
-      case MarketCurveType.sl2: finalLabel2 = "SL2"; break;
-      case MarketCurveType.d1: finalLabel2 = "D1"; break;
-      case MarketCurveType.d2: finalLabel2 = "D2"; break;
-      case MarketCurveType.s1: finalLabel2 = "S1"; break;
-      case MarketCurveType.s2: finalLabel2 = "S2"; break;
-      case MarketCurveType.lrpc1: finalLabel2 = "LRPC1"; break;
-      case MarketCurveType.lrpc2: finalLabel2 = "LRPC2"; break;
-      case MarketCurveType.sTax: finalLabel2 = 'S+Tax'; break;
-      case MarketCurveType.sSubsidy: finalLabel2 = 'S+Subsidy'; break;
-      case MarketCurveType.sSub: finalLabel2 = 'S+Sub'; break;
-      case MarketCurveType.dEqualsMPBMSB: finalLabel2 = 'D=MPB=MSB'; break;
-      case MarketCurveType.dEqualsMPB: finalLabel2 = 'D=MPB'; break;
-      case MarketCurveType.sEqualsMPC: finalLabel2 = 'S=MPC'; break;
-      case MarketCurveType.sEqualsMPCMSC: finalLabel2 = 'S=MPC=MSC'; break;
-      case MarketCurveType.mpc: finalLabel2 = 'MPC'; break;
-      case MarketCurveType.msc: finalLabel2 = 'MSC'; break;
-      case MarketCurveType.msb: finalLabel2 = 'MSB'; break;
-      case MarketCurveType.mpcTax: finalLabel2 = 'MPC+Tax'; break;
-      case MarketCurveType.mscEqualsMpcTax1: finalLabel2 = 'MSC=MPC+Tax1'; break;
-      case MarketCurveType.mscEqualsMpcTax2: finalLabel2 = 'MSC=MPC+Tax2'; break;
-      case MarketCurveType.mpcSub: finalLabel2 = DiagramLabel.mPCMinusSubsidy.label; break;
-      case MarketCurveType.perfectlyInelasticSupply: finalLabel2 = 'S'; break;
-      case MarketCurveType.sPlusProvision: finalLabel2 = 'S+Provision'; break;
-      case MarketCurveType.sPlusProvisionEqualsMSC: finalLabel2 = DiagramLabel.sPlusProvisionEqualsMSC.label; break;
+      // Existing Labels
+      case MarketCurveType.demand:
+        finalLabel2 = "D";
+        break;
+      case MarketCurveType.supply:
+        finalLabel2 = "S";
+        break;
+      case MarketCurveType.ad:
+        finalLabel2 = "AD";
+        break;
+      case MarketCurveType.ad1:
+        finalLabel2 = "AD1";
+        break;
+      case MarketCurveType.ad2:
+        finalLabel2 = "AD2";
+        break;
+      case MarketCurveType.ad3:
+        finalLabel2 = "AD3";
+        break;
+      case MarketCurveType.sras:
+        finalLabel2 = "SRAS";
+        break;
+      case MarketCurveType.sras1:
+        finalLabel2 = "SRAS1";
+        break;
+      case MarketCurveType.sras2:
+        finalLabel2 = "SRAS2";
+        break;
+      case MarketCurveType.lras:
+        finalLabel2 = "LRAS";
+        break;
+      case MarketCurveType.lras1:
+        finalLabel2 = "LRAS1";
+        break;
+      case MarketCurveType.lras2:
+        finalLabel2 = "LRAS2";
+        break;
+      case MarketCurveType.keynesianAS:
+        finalLabel2 = "AS";
+        break;
+      case MarketCurveType.moneySupply:
+        finalLabel2 = "MS";
+        break;
+      case MarketCurveType.lrpc:
+        finalLabel2 = "LRPC";
+        break;
+      case MarketCurveType.srpc:
+        finalLabel2 = "SRPC";
+        break;
+      case MarketCurveType.srpc1:
+        finalLabel2 = "SRPC1";
+        break;
+      case MarketCurveType.srpc2:
+        finalLabel2 = "SRPC2";
+        break;
+      case MarketCurveType.moneyDemand:
+        finalLabel2 = "Md";
+        break;
+      case MarketCurveType.demandDomestic:
+        finalLabel2 = "Dd";
+        break;
+      case MarketCurveType.supplyDomestic:
+        finalLabel2 = "Sd";
+        break;
+      case MarketCurveType.demandWorld:
+        finalLabel2 = "Dw";
+        break;
+      case MarketCurveType.supplyWorld:
+        finalLabel2 = "Sw";
+        break;
+      case MarketCurveType.demandUSD:
+        finalLabel2 = r'Dfor$';
+        break;
+      case MarketCurveType.supplyUSD:
+        finalLabel2 = r'Sof$';
+        break;
+      case MarketCurveType.dl:
+        finalLabel2 = "DL";
+        break;
+      case MarketCurveType.dl1:
+        finalLabel2 = "DL1";
+        break;
+      case MarketCurveType.dl2:
+        finalLabel2 = "DL2";
+        break;
+      case MarketCurveType.sl:
+        finalLabel2 = "SL";
+        break;
+      case MarketCurveType.sl1:
+        finalLabel2 = "SL1";
+        break;
+      case MarketCurveType.sl2:
+        finalLabel2 = "SL2";
+        break;
+      case MarketCurveType.d1:
+        finalLabel2 = "D1";
+        break;
+      case MarketCurveType.d2:
+        finalLabel2 = "D2";
+        break;
+      case MarketCurveType.s1:
+        finalLabel2 = "S1";
+        break;
+      case MarketCurveType.s2:
+        finalLabel2 = "S2";
+        break;
+      case MarketCurveType.lrpc1:
+        finalLabel2 = "LRPC1";
+        break;
+      case MarketCurveType.lrpc2:
+        finalLabel2 = "LRPC2";
+        break;
+      case MarketCurveType.sTax:
+        finalLabel2 = 'S+Tax';
+        break;
+      case MarketCurveType.sSubsidy:
+        finalLabel2 = 'S+Subsidy';
+        break;
+      case MarketCurveType.sSub:
+        finalLabel2 = 'S+Sub';
+        break;
+      case MarketCurveType.dEqualsMPBMSB:
+        finalLabel2 = 'D=MPB=MSB';
+        break;
+      case MarketCurveType.dEqualsMPB:
+        finalLabel2 = 'D=MPB';
+        break;
+      case MarketCurveType.sEqualsMPC:
+        finalLabel2 = 'S=MPC';
+        break;
+      case MarketCurveType.sEqualsMPCMSC:
+        finalLabel2 = 'S=MPC=MSC';
+        break;
+      case MarketCurveType.mpc:
+        finalLabel2 = 'MPC';
+        break;
+      case MarketCurveType.msc:
+        finalLabel2 = 'MSC';
+        break;
+      case MarketCurveType.msb:
+        finalLabel2 = 'MSB';
+        break;
+      case MarketCurveType.mpcTax:
+        finalLabel2 = 'MPC+Tax';
+        break;
+      case MarketCurveType.mscEqualsMpcTax1:
+        finalLabel2 = 'MSC=MPC+Tax1';
+        break;
+      case MarketCurveType.mscEqualsMpcTax2:
+        finalLabel2 = 'MSC=MPC+Tax2';
+        break;
+      case MarketCurveType.mpcSub:
+        finalLabel2 = DiagramLabel.mPCMinusSubsidy.label;
+        break;
+      case MarketCurveType.perfectlyInelasticSupply:
+        finalLabel2 = 'S';
+        break;
+      case MarketCurveType.sPlusProvision:
+        finalLabel2 = 'S+Provision';
+        break;
+      case MarketCurveType.sPlusProvisionEqualsMSC:
+        finalLabel2 = DiagramLabel.sPlusProvisionEqualsMSC.label;
+        break;
 
       case MarketCurveType.mcAtc:
       case MarketCurveType.dArMrMonopoly:
@@ -367,7 +519,8 @@ void paintMarketCurve(
   if (type != MarketCurveType.mcAtc && type != MarketCurveType.dArMrMonopoly) {
     if (beziers != null) {
       // ✨ NEW: Check if this is an SRPC curve
-      bool isSrpc = type == MarketCurveType.srpc ||
+      bool isSrpc =
+          type == MarketCurveType.srpc ||
           type == MarketCurveType.srpc1 ||
           type == MarketCurveType.srpc2;
 
@@ -391,7 +544,9 @@ void paintMarketCurve(
         polylineOffsets: [end],
         label1: finalLabel1,
         label2: finalLabel2,
-        label1Align: isVertical ? LabelAlign.centerBottom : LabelAlign.centerTop,
+        label1Align: isVertical
+            ? LabelAlign.centerBottom
+            : LabelAlign.centerTop,
         label2Align: isVertical ? LabelAlign.centerTop : LabelAlign.right,
         curveStyle: curveStyle,
         color: color,

@@ -48,6 +48,7 @@ class EvaluationData {
     this.centerLabel = 'VS',
   });
 }
+
 class SlideContent {
   // Basic Text Types
   final Content? content;

@@ -100,6 +100,9 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
 
     /// Externalities
     DiagramWidget([
+      Externalities(c, DiagramEnum.microNegativeProductionExternality),
+    ]),
+    DiagramWidget([
       Externalities(
         c,
         DiagramEnum.microNegativeProductionExternalityIncludingOveruseOfCPR,
@@ -120,6 +123,12 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([Externalities(c, DiagramEnum.microCarbonTax)]),
     DiagramWidget([
       Externalities(c, DiagramEnum.microTradablePollutionPermits),
+    ]),
+    DiagramWidget([
+      Externalities(
+        c,
+        DiagramEnum.microTradablePollutionPermitsSupplyDemandDecrease,
+      ),
     ]),
     DiagramWidget([
       Externalities(c, DiagramEnum.microNegativeConsumptionExternality),
@@ -368,6 +377,11 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
         DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy,
       ),
       ADASDiagram(c, DiagramEnum.macroKeynesianContractionaryPolicy),
+    ]),
+
+    /// 3.7 Supply-Side
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroSupplySidePoliciesLowInflation),
     ]),
 
     /// --- GLOBAL TRADE ---

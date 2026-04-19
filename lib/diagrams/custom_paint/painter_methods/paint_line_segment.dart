@@ -59,11 +59,12 @@ void paintLineSegment(
   final mainColor = color ?? config.colorScheme.onSurface;
 
   double effectiveStrokeWidth =
-      (style == CurveStyle.bold ? strokeWidth * 2 : strokeWidth) *
-          config.averageRatio;
+      (style == CurveStyle.bold ? strokeWidth * 2 : strokeWidth * 0.90) *
+      config.averageRatio;
 
   // ✨ NEW: Reduce line thickness by 50% if an arrow is painted
-  if (endStyle == LineEndStyle.arrow || endStyle == LineEndStyle.arrowBothEnds) {
+  if (endStyle == LineEndStyle.arrow ||
+      endStyle == LineEndStyle.arrowBothEnds) {
     effectiveStrokeWidth *= 0.3;
   }
 

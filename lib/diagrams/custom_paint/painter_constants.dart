@@ -27,7 +27,7 @@ const kDifferences = 'Differences';
 const kFontTiny = 20.0;
 const kFontVerySmall = 22.0;
 const kFontSmall = 24.0;
-const kFontMedium = 30.0;
+const kFontMedium = 28.0;
 const kFontSizeBig = 40.0;
 const kFontSizeAverageRatioSmall = 30.0;
 const kFontSizeAverageRatioStandard = 70.0;
@@ -37,7 +37,7 @@ const kLabelTextStyle = TextStyle(
 );
 
 /// Dot
-const kDotRadius = 6.0;
+const kDotRadius = 4.0;
 
 enum CurveStyle { standard, dashed, dotted, bold }
 
@@ -105,8 +105,7 @@ enum MarketCurveType {
   mr,
 
   dArMonopoly, // Replaces dSteep
-  mrMonopoly,  // Replaces mrSteep
-
+  mrMonopoly, // Replaces mrSteep
   // --- COMBO CURVES ---
   mcAtc,
   dArMrMonopoly, // Draws Monopoly Demand & MR together

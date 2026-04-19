@@ -70,6 +70,7 @@ void _paintSRPC(DiagramPainterConfig c, IDiagramCanvas canvas) {
   );
   paintMarketCurve(c, canvas, type: MarketCurveType.srpc);
 }
+
 void _paintSRPCLRPC(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintDiagramDashedLines(
     c,
@@ -98,6 +99,7 @@ void _paintSRPCLRPC(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintMarketCurve(c, canvas, type: MarketCurveType.srpc);
   paintMarketCurve(c, canvas, type: MarketCurveType.lrpc);
 }
+
 void _paintStagflation(DiagramPainterConfig c, IDiagramCanvas canvas) {
   final length = -0.25;
   paintDiagramDashedLines(
@@ -151,7 +153,7 @@ void _paintExpectationsAugmentedPCInflationGap(
     xLabel: DiagramLabel.nRU.label,
     rightYLabel: DiagramLabel.a.label,
     rightYVerticalPivot: LabelPivot.bottom,
-    additionalRightYLabels: [ DiagramLabel.c.label],
+    additionalRightYLabels: [DiagramLabel.c.label],
   );
   paintDiagramDashedLines(
     c,
@@ -160,7 +162,7 @@ void _paintExpectationsAugmentedPCInflationGap(
     xAxisEndPos: 0.28,
     yLabel: '2%',
     xLabel: 'U<NRU',
-    rightYLabel:  DiagramLabel.b.label,
+    rightYLabel: DiagramLabel.b.label,
   );
   paintMarketCurve(c, canvas, type: MarketCurveType.lrpc);
   paintMarketCurve(

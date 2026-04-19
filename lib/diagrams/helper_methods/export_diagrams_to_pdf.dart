@@ -26,10 +26,11 @@ import 'package:printing/printing.dart';
 // import '../custom_paint/pdf_diagram_canvas.dart';
 
 Future<void> exportDiagramsToPdf(
-    List<DiagramWidget> diagrams,
-    DiagramPainterConfig config,
-    BuildContext flutterContext, // Flutter context (keep for potential future use)
-    ) async {
+  List<DiagramWidget> diagrams,
+  DiagramPainterConfig config,
+  BuildContext
+  flutterContext, // Flutter context (keep for potential future use)
+) async {
   final pdf = pw.Document();
   final pw.Font unicodeFont = await PdfGoogleFonts.robotoRegular();
 
@@ -122,10 +123,10 @@ Future<void> exportDiagramsToPdf(
 // Helper to build an individual diagram cell
 // FIX: The context parameter is now explicitly pw.Context instead of BuildContext
 pw.Widget _buildPdfDiagramCell(
-    DiagramWidget dWidget,
-    pw.Font unicodeFont,
-    pw.Context pdfContext,
-    ) {
+  DiagramWidget dWidget,
+  pw.Font unicodeFont,
+  pw.Context pdfContext,
+) {
   final String effectiveTitle =
       dWidget.title ?? dWidget.painters.first.diagram.toText;
   final String effectiveDescription =
@@ -147,7 +148,6 @@ pw.Widget _buildPdfDiagramCell(
                 child: pw.CustomPaint(
                   size: const PdfPoint(400, 400),
                   painter: (PdfGraphics graphics, PdfPoint size) {
-
                     // ALL CLEAR: We are using the correct pdfContext here!
                     final bridge = PdfDiagramCanvas(
                       graphics,

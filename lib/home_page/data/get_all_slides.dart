@@ -31,5 +31,5 @@ List<Slide> get allSlides => [
   // ...inabilityAchieveEquitySlides,
   // ...benefitsOfInternationalTradeSlides,
   // ...typesOfTradeProtectionSlides,
-  ...measuringEconomicActivitySlides
+  ...measuringEconomicActivitySlides,
 ];

@@ -172,10 +172,8 @@ void _paintBusinessCycleStandard(
     ],
   );
 }
-void _paintBusinessCycleNRU(
-    DiagramPainterConfig c,
-    IDiagramCanvas canvas,
-    ) {
+
+void _paintBusinessCycleNRU(DiagramPainterConfig c, IDiagramCanvas canvas) {
   // --- 2. SHADING ---
   // A. Inflationary Gap (The P
   paintDiagramLines(
@@ -218,10 +216,10 @@ void _paintBusinessCycleNRU(
     c,
     canvas,
     'Inflationary Gap\n'
-        'Unemployment < NRU',
+    'Unemployment < NRU',
     Offset(0.25, 0.38),
     pointerLine: Offset(0.15, 0.47),
-type: DiagramTextType.label,
+    type: DiagramTextType.label,
     shape: DiagramShape.none,
   );
 
@@ -229,13 +227,14 @@ type: DiagramTextType.label,
     c,
     canvas,
     'Deflationary Gap / Recessionary Gap\n'
-        'Unemployment > NRU',
+    'Unemployment > NRU',
     Offset(0.50, 0.90),
     pointerLine: Offset(0.40, 0.815),
     type: DiagramTextType.label,
     shape: DiagramShape.none,
   );
 }
+
 void _paintBusinessCycleStabilization(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,

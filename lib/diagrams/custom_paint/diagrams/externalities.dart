@@ -4,6 +4,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_a
 import 'package:economics_app/diagrams/custom_paint/painter_methods/legend/legend_display.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
@@ -24,46 +25,51 @@ class Externalities extends BaseDiagramPainter {
   void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    paintAxis(
-      c,
-      canvas,
-      yAxisLabel: DiagramLabel.priceCostsBenefits.label,
-      xAxisLabel: DiagramLabel.quantity.label,
-    );
+    if (diagram !=
+        DiagramEnum.microTradablePollutionPermitsSupplyDemandDecrease) {
+      paintAxis(
+        c,
+        canvas,
+        yAxisLabel: DiagramLabel.priceCostsBenefits.label,
+        xAxisLabel: DiagramLabel.quantity.label,
+      );
+    }
 
     switch (diagram) {
-      case DiagramEnum
-              .microNegativeProductionExternalityIncludingOveruseOfCPR ||
-          DiagramEnum.microCommonPoolResources ||
-          DiagramEnum.microNegativeProductionExternalityPigouvianTax ||
-          DiagramEnum.microNegativeProductionExternalityRegulations:
+      case DiagramEnum.microNegativeProductionExternality:
+      case DiagramEnum.microNegativeProductionExternalityIncludingOveruseOfCPR:
+      case DiagramEnum.microCommonPoolResources:
+      case DiagramEnum.microNegativeProductionExternalityPigouvianTax:
+      case DiagramEnum.microNegativeProductionExternalityRegulations:
         _paintNegativeProduction(c, canvas);
 
       case DiagramEnum.microCarbonTax:
         _paintCarbonTax(c, canvas);
 
       case DiagramEnum.microTradablePollutionPermits:
-        _paintTradablePermits(c, canvas);
+      case DiagramEnum.microTradablePollutionPermitsSupplyDemandDecrease:
+        _paintTradablePermits(c, canvas, diagram);
 
-      case DiagramEnum.microNegativeConsumptionExternality ||
-          DiagramEnum.microNegativeConsumptionExternalityWelfare ||
-          DiagramEnum.microNegativeConsumptionExternalityPigouvianTax ||
-          DiagramEnum.microNegativeConsumptionExternalityRegulations ||
-          DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges:
+      case DiagramEnum.microNegativeConsumptionExternality:
+      case DiagramEnum.microNegativeConsumptionExternalityWelfare:
+      case DiagramEnum.microNegativeConsumptionExternalityPigouvianTax:
+      case DiagramEnum.microNegativeConsumptionExternalityRegulations:
+      case DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges:
         _paintNegativeConsumption(c, canvas);
+        break;
 
-      case DiagramEnum.microPositiveProductionExternality ||
-          DiagramEnum.microPositiveProductionExternalityWelfare ||
-          DiagramEnum.microPositiveProductionExternalitySubsidy ||
-          DiagramEnum.microPositiveProductionExternalityGovernmentProvision:
+      case DiagramEnum.microPositiveProductionExternality:
+      case DiagramEnum.microPositiveProductionExternalityWelfare:
+      case DiagramEnum.microPositiveProductionExternalitySubsidy:
+      case DiagramEnum.microPositiveProductionExternalityGovernmentProvision:
         _paintPositiveProduction(c, canvas);
 
-      case DiagramEnum.microPositiveConsumptionExternality ||
-          DiagramEnum.microPositiveConsumptionExternalityWelfare ||
-          DiagramEnum.microPositiveConsumptionExternalitySubsidy ||
-          DiagramEnum.microPositiveConsumptionExternalityEducationAndNudges ||
-          DiagramEnum.microPositiveConsumptionExternalityRegulations ||
-          DiagramEnum.microPositiveConsumptionExternalityGovernmentProvision:
+      case DiagramEnum.microPositiveConsumptionExternality:
+      case DiagramEnum.microPositiveConsumptionExternalityWelfare:
+      case DiagramEnum.microPositiveConsumptionExternalitySubsidy:
+      case DiagramEnum.microPositiveConsumptionExternalityEducationAndNudges:
+      case DiagramEnum.microPositiveConsumptionExternalityRegulations:
+      case DiagramEnum.microPositiveConsumptionExternalityGovernmentProvision:
         _paintPositiveConsumption(c, canvas);
       default:
         break;
@@ -85,8 +91,6 @@ class Externalities extends BaseDiagramPainter {
   // --- PRIVATE PAINTING METHODS ---
 
   void _paintNegativeProduction(DiagramPainterConfig c, IDiagramCanvas canvas) {
-    paintTitle(c, canvas, 'Factories Emitting Air Pollution');
-
     bool isTax =
         diagram == DiagramEnum.microNegativeProductionExternalityPigouvianTax;
     bool isReg =
@@ -159,15 +163,21 @@ class Externalities extends BaseDiagramPainter {
       color: (isTax || isReg) ? kHighLightedColor : c.colorScheme.primary,
     );
 
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.externalCost.label,
+      Offset(0.45, 0.20),
+      type: DiagramTextType.label,
+      pointerLine: Offset(0.70, 0.28),
+    );
     _paintShift(
       c,
       canvas,
       Offset(0.70, 0.28),
       pi * 1.5,
       isTax || isReg ? LineEndStyle.arrow : LineEndStyle.arrowBothEnds,
-      0.18,
-      label: extLabel,
-      labelAlign: LabelAlign.center,
+      0.15,
     );
 
     paintDiagramDashedLines(
@@ -186,8 +196,6 @@ class Externalities extends BaseDiagramPainter {
       yLabel: DiagramLabel.pm.label,
       xLabel: DiagramLabel.qm.label,
     );
-
-    paintDescription(c, canvas, desc);
   }
 
   void _paintCarbonTax(DiagramPainterConfig c, IDiagramCanvas canvas) {
@@ -275,81 +283,97 @@ class Externalities extends BaseDiagramPainter {
     );
   }
 
-  void _paintTradablePermits(DiagramPainterConfig c, IDiagramCanvas canvas) {
-    paintTitle(c, canvas, 'Secondary Market for Pollution Permits');
-
-    paintDiagramDashedLines(
+  void _paintTradablePermits(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
+    paintAxis(
       c,
       canvas,
-      yAxisStartPos: 0.40,
-      xAxisEndPos: 0.55,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-      yAxisStartPos: 0.35,
-      xAxisEndPos: 0.35,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
+      yAxisLabel: DiagramLabel.priceOfPermits.label,
+      xAxisLabel: DiagramLabel.quantityOfPermits.label,
     );
 
-    paintMarketCurve(
-      c,
-      canvas,
-      type: MarketCurveType.perfectlyInelasticSupply,
-      label: DiagramLabel.s1.label,
-      horizontalShift: 0.05,
-    );
-    paintMarketCurve(
-      c,
-      canvas,
-      type: MarketCurveType.perfectlyInelasticSupply,
-      label: DiagramLabel.s2.label,
-      color: kHighLightedColor,
-      horizontalShift: -0.15,
-    );
-    paintMarketCurve(
-      c,
-      canvas,
-      type: MarketCurveType.d1,
-      horizontalShift: 0.10,
-      verticalShift: -0.05,
-      lengthAdjustment: -0.05,
-    );
-    paintMarketCurve(
-      c,
-      canvas,
-      type: MarketCurveType.d2,
-      color: Colors.red,
-      lengthAdjustment: -0.05,
-    );
+    if (diagram == DiagramEnum.microTradablePollutionPermits) {
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.40,
+        xAxisEndPos: 0.55,
+        yLabel: DiagramLabel.pE.label,
+        xLabel: DiagramLabel.qE.label,
+      );
 
-    _paintShift(
-      c,
-      canvas,
-      Offset(0.46, 0.80),
-      pi,
-      LineEndStyle.arrow,
-      0.15,
-      label: '1',
-    );
-    _paintShift(
-      c,
-      canvas,
-      Offset(0.77, 0.69),
-      pi,
-      LineEndStyle.arrow,
-      0.1,
-      label: '2',
-    );
-    paintDescription(
-      c,
-      canvas,
-      ''
-      'The supply of permits is perfectly inelastic as the quantity is set by the government. 1. Government reduces fixed supply pushing up price. 2. Producers substitute to clean energy reducing demand.',
-    );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.perfectlyInelasticSupply,
+        label: DiagramLabel.s.label,
+        horizontalShift: 0.05,
+      );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.demand,
+        horizontalShift: 0.10,
+        verticalShift: -0.05,
+        lengthAdjustment: -0.05,
+      );
+    }
+    if (diagram ==
+        DiagramEnum.microTradablePollutionPermitsSupplyDemandDecrease) {
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.40,
+        xAxisEndPos: 0.55,
+        yLabel: DiagramLabel.p1.label,
+        xLabel: DiagramLabel.q1.label,
+      );
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.35,
+        xAxisEndPos: 0.35,
+        yLabel: DiagramLabel.p2.label,
+        xLabel: DiagramLabel.q2.label,
+      );
+
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.perfectlyInelasticSupply,
+        label: DiagramLabel.s1.label,
+        horizontalShift: 0.05,
+      );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.perfectlyInelasticSupply,
+        label: DiagramLabel.s2.label,
+        color: kHighLightedColor,
+        horizontalShift: -0.15,
+      );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.d1,
+        horizontalShift: 0.10,
+        verticalShift: -0.05,
+        lengthAdjustment: -0.05,
+      );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.d2,
+        color: Colors.red,
+        lengthAdjustment: -0.05,
+      );
+
+      _paintShift(c, canvas, Offset(0.46, 0.80), pi, LineEndStyle.arrow, 0.11);
+      _paintShift(c, canvas, Offset(0.77, 0.69), pi, LineEndStyle.arrow, 0.08);
+    }
   }
 
   void _paintNegativeConsumption(

@@ -23,7 +23,7 @@ final meritVsPublicGoods = Slide(
       headers: ['Merit Good', 'Public Good'],
       data: [
         ['Excludable and Rivalrous', 'Non-excludable and Non-rivalrous'],
-        ['Rejectable','Usually non-rejectable (can\'t refuse)'],
+        ['Rejectable', 'Usually non-rejectable (can\'t refuse)'],
         [
           'Under-consumed in a free market (positive externalities/information failure)',
           'Complete market failure due to free rider problem',

@@ -86,7 +86,7 @@ class DemandDiagram extends BaseDiagramPainter {
       canvas,
       type: MarketCurveType.demand,
       horizontalShift: -0.15,
-      lengthAdjustment: -0.15,
+      lengthAdjustment: -0.25,
       label: isDecrease ? DiagramLabel.d2.label : DiagramLabel.d1.label,
     );
 
@@ -96,7 +96,7 @@ class DemandDiagram extends BaseDiagramPainter {
       canvas,
       type: MarketCurveType.demand,
       horizontalShift: 0.15,
-      lengthAdjustment: -0.15,
+      lengthAdjustment: -0.25,
       label: isDecrease ? DiagramLabel.d1.label : DiagramLabel.d2.label,
     );
 

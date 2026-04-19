@@ -4,10 +4,14 @@ import '../i_diagram_canvas.dart';
 
 import '../../models/diagram_painter_config.dart';
 import '../painter_constants.dart';
+
 enum DiagramTextType {
-  standard, // Uses kFontMedium, normal style
-  label,    // Uses kFontSmall, italic style (perfect for curve labels like D=AR)
+  standard,
+  axisLabels,
+  axisNames, // Uses kFontMedium, normal style
+  label, // Uses kFontSmall, italic style (perfect for curve labels like D=AR)
 }
+
 // Ensure LabelPivot is defined (as per your request)
 enum LabelPivot { left, center, right, top, middle, bottom }
 
@@ -20,26 +24,26 @@ enum DiagramShape {
 }
 
 void paintText(
-    DiagramPainterConfig config,
-    IDiagramCanvas canvas,
-    String label,
-    Offset position, {
-      Offset? pointerLine,
-      double fontSize = kFontMedium,
-      TextStyle? style,
-      double angle = 0,
-      LabelPivot horizontalPivot = LabelPivot.center,
-      LabelPivot verticalPivot = LabelPivot.middle,
-      bool normalize = true,
-      bool ignoreIndent = false,
-      DiagramShape shape = DiagramShape.none,
-      double? maxWidth,
-      TextAlign textAlign = TextAlign.center,
-      bool showBackground = true,
-      Offset textPadding = Offset.zero,
-      // ✨ NEW: Add the type parameter with a standard default
-      DiagramTextType type = DiagramTextType.standard,
-    }) {
+  DiagramPainterConfig config,
+  IDiagramCanvas canvas,
+  String label,
+  Offset position, {
+  Offset? pointerLine,
+  double fontSize = kFontMedium,
+  TextStyle? style,
+  double angle = 0,
+  LabelPivot horizontalPivot = LabelPivot.center,
+  LabelPivot verticalPivot = LabelPivot.middle,
+  bool normalize = true,
+  bool ignoreIndent = false,
+  DiagramShape shape = DiagramShape.none,
+  double? maxWidth,
+  TextAlign textAlign = TextAlign.center,
+  bool showBackground = true,
+  Offset textPadding = Offset.zero,
+  // ✨ NEW: Add the type parameter with a standard default
+  DiagramTextType type = DiagramTextType.standard,
+}) {
   final width = config.painterSize.width;
   final height = config.painterSize.height;
 
@@ -48,10 +52,17 @@ void paintText(
   FontStyle baseFontStyle = FontStyle.normal;
 
   if (type == DiagramTextType.label) {
-    baseFontSize = kFontSmall; // Or kFontVerySmall depending on your preference
+    baseFontSize =
+        kFontVerySmall; // Or kFontVerySmall depending on your preference
     baseFontStyle = FontStyle.italic;
   }
-
+  if (type == DiagramTextType.axisNames) {
+    baseFontSize =
+        kFontMedium; // Or kFontVerySmall depending on your preference
+  }
+  if (type == DiagramTextType.axisLabels) {
+    baseFontSize = kFontSmall; // Or kFontVerySmall depending on your preference
+  }
   // 1. Setup Scaling & Colors
   // Use the type-adjusted defaults if a custom style wasn't explicitly provided
   final double scaledFontSize =
@@ -64,7 +75,8 @@ void paintText(
   // Combine everything into the final effective style
   final effectiveStyle = (style ?? TextStyle(color: onSurfaceColor)).copyWith(
     fontSize: scaledFontSize,
-    fontStyle: style?.fontStyle ?? baseFontStyle, // Fallback to our enum's fonts style
+    fontStyle:
+        style?.fontStyle ?? baseFontStyle, // Fallback to our enum's fonts style
   );
 
   // 2. Normalization

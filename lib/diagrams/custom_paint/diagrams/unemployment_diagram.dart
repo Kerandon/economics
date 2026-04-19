@@ -237,9 +237,8 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       startPos: const Offset(0.25, 0.10),
       polylineOffsets: [const Offset(0.70, 0.90)],
       label2: DiagramLabel.aDL.label,
-      label2Align: LabelAlign.bottomRight
+      label2Align: LabelAlign.bottomRight,
     );
-
 
     // Supply Curves
     paintDiagramLines(

@@ -54,8 +54,6 @@ class MarketPower extends BaseDiagramPainter {
     }
   }
 
-
-
   void _paintStandardMonopoly(
     DiagramPainterConfig c,
     IDiagramCanvas canvas,

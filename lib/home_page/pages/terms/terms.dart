@@ -2,6 +2,7 @@ import '../../../diagrams/enums/unit_type.dart';
 import '../../models/term.dart';
 
 enum EconTerm {
+  ///2.5-2.6 Elasticities
   realIncome(
     termName: 'Real Income',
     explanation:
@@ -22,7 +23,8 @@ enum EconTerm {
   ),
   manufacturedGood(
     termName: 'Manufactured Good',
-    explanation: 'A product processed from raw materials into a finished good.',
+    explanation:
+        'A product processed from raw materials (primary sector) into a finished good.',
     subunit: Subunit.elasticityDemand,
   ),
   necessities(
@@ -46,13 +48,13 @@ enum EconTerm {
   priceElasticDemand(
     termName: 'Price elastic demand (PED > 1)',
     explanation:
-        'Change in price leads to a proportionally larger change in quantity demanded (PED > 1), (luxuries and services).',
+        'Change in price leads to a proportionally larger change in quantity demanded (PED > 1) (luxuries, services).',
     subunit: Subunit.elasticityDemand,
   ),
   priceInelasticDemand(
     termName: 'Price inelastic demand (PED < 1)',
     explanation:
-        "A change in price leads to a proportionally smaller change in quantity demanded (PED < 1) (e.g. salt, gasoline, rice).",
+        "A change in price leads to a proportionally smaller change in quantity demanded (PED < 1) (salt, gasoline, rice).",
     subunit: Subunit.elasticityDemand,
   ),
   unitaryPriceElasticDemand(
@@ -76,13 +78,13 @@ enum EconTerm {
   primarySector(
     termName: 'Primary sector',
     explanation:
-        'Extraction of raw materials from nature, such as farming, fishing, forestry, and mining.',
+        'Extraction of raw materials from nature (agricultural, fishing, forestry, mining).',
     subunit: Subunit.elasticityDemand,
   ),
   secondarySector(
     termName: 'Secondary sector',
     explanation:
-        'Processing / manufacturing of raw materials into finished goods.',
+        'Processing and manufacturing of raw materials (primary sector) into finished goods.',
     subunit: Subunit.elasticityDemand,
   ),
   tertiarySector(
@@ -103,6 +105,30 @@ enum EconTerm {
         'Low-income countries facing severe barriers to economic development.',
     subunit: Subunit.measuringDevelopment,
   ),
+
+  ///2.8 Externalities
+  externalities(
+    termName: 'Externalities',
+    explanation:
+        'Costs or benefits of production/consumption imposed on third parties not reflected in market prices.',
+    subunit: Subunit.marketFailureExternalities,
+  ),
+
+  negativeProductionExternality(
+    termName: 'Negative Production Externality',
+    explanation:
+        'External cost from production imposed on third parties (MSC > MPC), leading to overproduction.',
+    subunit: Subunit.marketFailureExternalities,
+  ),
+
+  tradablePermits(
+    termName: 'Tradable Permits',
+    explanation:
+        'Market-based policy setting a cap on pollution; firms can buy/sell permits, internalising external costs.',
+    subunit: Subunit.marketFailureExternalities,
+  ),
+
+  ///2.9 Public Goods
   freeRiderProblem(
     termName: 'Free Rider Problem',
     explanation:
@@ -160,7 +186,25 @@ enum EconTerm {
   monopolisticCompetition(
     termName: 'Monopolistic Competition',
     explanation:
-        'Many small firms relative to a large industry, each with limited (some) market power. Low barriers to entry, very high product differentiation.',
+        'Many small firms, each with some (limited) market power. High product differentiation, low barriers to entry/exit.',
+    subunit: Subunit.marketFailurePower,
+  ),
+  monopoly(
+    termName: 'Monopoly',
+    explanation:
+        'A single supplier of a good or service. Very high barriers to entry and significant market power P>MC.',
+    subunit: Subunit.marketFailurePower,
+  ),
+  naturalMonopoly(
+    termName: 'Natural Monopoly',
+    explanation:
+        'A market where a single firm can supply the entire market demand at a lower average cost than two or more firms due to high fixed costs and massive economies of scale.',
+    subunit: Subunit.marketFailurePower,
+  ),
+  marketPower(
+    termName: 'Market Power',
+    explanation:
+        'The ability of a firm to influence the price of a good, set P>MC.',
     subunit: Subunit.marketFailurePower,
   ),
   abnormalProfit(
@@ -207,19 +251,16 @@ enum EconTerm {
   nationalIncome(
     termName: 'National income',
     explanation:
-    'Total market value of all final goods and services produced by a country in one year.',
+        'Total market value of all final goods and services produced by a country in one year.',
     subunit: Subunit.economicActivity,
   ),
 
   /// 3.2 AD-AS
 
-
-
-
   equilibriumNationalIncome(
     termName: 'Equilibrium level of national income',
     explanation:
-    'The level of output where aggregate demand equals aggregate supply (AD = SRAS/AS).',
+        'The level of output where aggregate demand equals aggregate supply (AD = SRAS/AS).',
     subunit: Subunit.aDAS,
   ),
   deflationaryGap(
@@ -235,12 +276,9 @@ enum EconTerm {
   interestRates(
     termName: 'Interest rates',
     explanation:
-    'The cost of borrowing money (price of a loan); or the reward for saving.',
+        'The cost of borrowing money (price of a loan); or the reward for saving.',
     subunit: Subunit.demandManagementMonetary,
   ),
-
-
-
 
   inflation(
     termName: 'Inflation',
@@ -255,6 +293,12 @@ enum EconTerm {
         'Working age who are actively looking for a job but are unable to find one.',
     subunit: Subunit.macroObjectives,
     tags: [Tag.hl],
+  ),
+  economicGrowth(
+    termName: 'Economic Growth',
+    explanation:
+        'A sustained increase in the real output (real GDP) of an economy over-time.',
+    subunit: Subunit.macroObjectives,
   ),
   nru(
     termName: 'Natural Rate of Unemployment (NRU)',
@@ -341,7 +385,37 @@ enum EconTerm {
         'Monetary policy ineffective when already low interest rates, increases in money supply fail to stimulate aggregate demand.',
     subunit: Subunit.demandManagementMonetary,
     tags: [],
+  ),
+
+  /// 3.7 Supply-Side
+  supplySidePolicies(
+    termName: 'Supply-Side Policies',
+    explanation:
+        'Policies to increase LRAS and potential output. Market-based and interventionist.',
+    subunit: Subunit.supplySidePolicies,
+  ),
+  foreignAid(
+    termName: 'Foreign Aid',
+    explanation:
+        'Transfer of money, goods or expertise to developing countries to promote economic development (ODA) or provide humanitarian relief. Should be concessional and non-commercial.',
+    subunit: Subunit.sustainableDevelopment,
+  ),
+
+  economicallyLessDevelopedCountry(
+    termName: 'Economically Less Developed Country (ELDC)',
+    explanation:
+        'A country with low income and living standards. Often has high poverty, limited infrastructure, and reliance on the primary sector.',
+    subunit: Subunit.sustainableDevelopment,
+  ),
+
+  economicDevelopment(
+    termName: 'Economic Development',
+    explanation:
+        'An improvement in living standards and quality of life, including higher income, better health and education, and reduced poverty and inequality.',
+    subunit: Subunit.sustainableDevelopment,
   );
+
+  /// 4.10 Economic Development Strategies
 
   // --- PROPERTIES ---
   final String termName;

@@ -9,7 +9,11 @@ class AllDiagrams {
   final ColorScheme colorScheme;
   final double indent;
 
-  AllDiagrams({required this.size, required this.colorScheme, this.indent = 0.12});
+  AllDiagrams({
+    required this.size,
+    required this.colorScheme,
+    this.indent = 0.12,
+  });
 
   List<DiagramWidget> getDiagramWidgets({List<DiagramEnum>? diagrams}) {
     final config = DiagramPainterConfig(

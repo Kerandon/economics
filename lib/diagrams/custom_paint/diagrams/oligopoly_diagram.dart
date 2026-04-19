@@ -43,14 +43,14 @@ void _paintCartel(DiagramPainterConfig c, IDiagramCanvas canvas) {
     Offset(0, 0),
     Offset(0.34, 0.36),
     Offset(0, 0.36),
-  ],);
+  ]);
   paintText(
     c,
     canvas,
     DiagramLabel.consumerSurplus.label,
     Offset(0.30, 0.10),
     type: DiagramTextType.label,
-    pointerLine: Offset(0.20,0.30)
+    pointerLine: Offset(0.20, 0.30),
   );
   paintShading(c, canvas, ShadeType.abnormalProfit, [
     Offset(0, 0.36),
@@ -64,7 +64,7 @@ void _paintCartel(DiagramPainterConfig c, IDiagramCanvas canvas) {
     DiagramLabel.abnormalProfit.label,
     Offset(-0.20, 0.45),
     type: DiagramTextType.label,
-      pointerLine: Offset(0.05,0.45)
+    pointerLine: Offset(0.05, 0.45),
   );
   paintShading(c, canvas, ShadeType.welfareLoss, [
     Offset(0.34, 0.36),
@@ -77,7 +77,7 @@ void _paintCartel(DiagramPainterConfig c, IDiagramCanvas canvas) {
     DiagramLabel.welfareLoss.label,
     Offset(0.50, 0.70),
     type: DiagramTextType.label,
-    pointerLine: Offset(0.38,0.58)
+    pointerLine: Offset(0.38, 0.58),
   );
   paintDiagramDashedLines(
     c,

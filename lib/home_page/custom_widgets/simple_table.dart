@@ -40,8 +40,10 @@ class SimpleTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final defaultCellStyleToUse = defaultCellStyle ?? theme.textTheme.bodyMedium;
-    final defaultHeaderStyleToUse = defaultHeaderStyle ??
+    final defaultCellStyleToUse =
+        defaultCellStyle ?? theme.textTheme.bodyMedium;
+    final defaultHeaderStyleToUse =
+        defaultHeaderStyle ??
         theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold);
 
     final headerRow = TableRow(
@@ -49,30 +51,36 @@ class SimpleTable extends StatelessWidget {
       children: headers
           .map(
             (h) => Padding(
-          padding: EdgeInsets.all(cellPadding),
-          child: Center(
-            child: HtmlWidget(h, textStyle: defaultHeaderStyleToUse),
-          ),
-        ),
-      )
+              padding: EdgeInsets.all(cellPadding),
+              child: Center(
+                child: HtmlWidget(
+                  '<div style="text-align: center;">$h</div>',
+                  textStyle: defaultHeaderStyleToUse,
+                ),
+              ),
+            ),
+          )
           .toList(),
     );
 
     final dataRows = data
         .map(
           (row) => TableRow(
-        children: row
-            .map(
-              (cell) => Padding(
-            padding: EdgeInsets.all(cellPadding),
-            child: Center(
-              child: HtmlWidget(cell, textStyle: defaultCellStyleToUse),
-            ),
+            children: row
+                .map(
+                  (cell) => Padding(
+                    padding: EdgeInsets.all(cellPadding),
+                    child: Center(
+                      child: HtmlWidget(
+                        '<div style="text-align: center;">$cell</div>',
+                        textStyle: defaultCellStyleToUse,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
           ),
         )
-            .toList(),
-      ),
-    )
         .toList();
 
     return Column(
@@ -144,12 +152,9 @@ class SimpleTable extends StatelessWidget {
                     child: Table(
                       // 🌟 FIX 3: Changed to FlexColumnWidth to force text wrapping
                       defaultColumnWidth: const FlexColumnWidth(),
-                      border: TableBorder.all(
-                        color: Colors.black,
-                        width: 2.0,
-                      ),
+                      border: TableBorder.all(color: Colors.black, width: 2.0),
                       defaultVerticalAlignment:
-                      TableCellVerticalAlignment.middle,
+                          TableCellVerticalAlignment.middle,
                       children: [headerRow, ...dataRows],
                     ),
                   ),
