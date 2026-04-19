@@ -60,6 +60,8 @@ class ADASDiagram extends BaseDiagramPainter {
         _paintKeynesianADAS(c, canvas, diagram);
       case DiagramEnum.macroADASKeynesianSpareCapacity:
         _paintKeynesianSpareCapacity(c, canvas, diagram);
+      case DiagramEnum.macroCrowdingOut:
+        _paintCrowdingOut(c, canvas);
         break;
       default:
         break;
@@ -976,4 +978,8 @@ void _paintSupplySideLowInflation(
   );
   paintMarketCurve(c, canvas, type: MarketCurveType.ad2, horizontalShift: 0.15);
   paintLineSegment(c, canvas, origin: Offset(0.49, 0.20), length: 0.15);
+}
+
+void _paintCrowdingOut(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
 }

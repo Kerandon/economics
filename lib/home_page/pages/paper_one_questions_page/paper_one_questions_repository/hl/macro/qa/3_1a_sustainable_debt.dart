@@ -16,19 +16,48 @@ final explainImportanceOfSustainableDebt10Mark = Slide(
       EconTerm.debtToGDPRatio,
       EconTerm.budgetDeficit,
       EconTerm.nationalDebt,
-      EconTerm.sustainableDebt,
+      EconTerm.unsustainableDebt,
       EconTerm.crowdingOut,
     ]),
 
-    // 3. Explanation Text
     SlideContent.text('''
-    <p>Government debt refers to the accumulation of past budget deficits (tax revenue is less than government spending in one year).</p>
-    <p>Debt can be measured by the <strong>debt-to-GDP ratio = (debt / GDP) × 100.</strong></p>
-    <p><strong>Sustainable debt</strong> is beneficial as it funds merit goods, infrastructure, and supports the economy during a deflationary gap.</p>
-    <p><strong>Unsustainable debt</strong> refers to high debt that is not manageable without significant costs to society.</p>
-    <p>A major cost of unsustainable debt is that the government will either need to make steep cuts in future fiscal spending or implement significant increases in tax. Therefore, a major consequence of unsustainable debt is lower long-term economic growth.</p>
-    <p>Another major cost is that interest rates might increase to attract borrowers. This acts as contractionary monetary policy and is another drag on the economy.</p>
-    <p>Very high levels of debt cannot be repaid even with tax increases, and this can lead to sovereign risk default. This can result in a long-term negative impact on a country's economic growth.</p>
-    '''),
+      <p>Important to focus on meaning of <strong>'sustainable'</strong>. Sustainable debt is beneficial - government can borrow to invest in merit goods and infrastructure to promote long-term economic growth.</p> 
+      <p>Unsustainable national debt has very high opportunity costs particularly on future economic growth.</p>
+      '''),
+    SlideContent.simpleTable(
+      title: 'Sustainable vs Unsustainable Debt',
+      headers: ['Benefits of Sustainable Debt', 'Costs of Unsustainable Debt'],
+      data: [
+        [
+          'Funds merit goods & infrastructure',
+          'High debt servicing (interest opportunity cost)',
+        ],
+        [
+          'Supports AD in recession (deflationary gap)',
+          'Opportunity cost in future: Higher T, Lower G.',
+        ],
+        [
+          'Promotes long-term economic growth',
+          'Crowding out of private investment',
+        ],
+        [
+          'Maintains investor confidence',
+          'Higher interest rates / poor credit ratings',
+        ],
+        [
+          'Stable debt-to-GDP ratio (manageable)',
+          'Risk of sovereign default / debt trap',
+        ],
+        [
+          'Greater fiscal flexibility in future',
+          'Reduced fiscal space in recessions',
+        ],
+        ['', 'Capital flight & lower FDI'],
+        ['', 'Inflation risk (monetising debt)'],
+        ['', 'Exchange rate risk (external debt)'],
+      ],
+    ),
+    SlideContent.diagrams([DiagramEnum.macroCrowdingOut]),
+    SlideContent.diagrams([DiagramEnum.macroClassicalLongTermGrowth]),
   ],
 );

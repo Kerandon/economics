@@ -249,6 +249,12 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([
       MarketPower(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
     ]),
+    DiagramWidget([
+      MarketPower(
+        c,
+        DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift,
+      ),
+    ]),
 
     /// Circular Flow
     DiagramWidget([
@@ -378,6 +384,9 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       ),
       ADASDiagram(c, DiagramEnum.macroKeynesianContractionaryPolicy),
     ]),
+
+    /// 3.6 Demand-side fiscal
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroCrowdingOut)]),
 
     /// 3.7 Supply-Side
     DiagramWidget([

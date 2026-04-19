@@ -1,4 +1,3 @@
-// We use a top-level variable so we can import it elsewhere
 import '../../../../../../../diagrams/enums/diagram_enum.dart';
 import '../../../../../../../diagrams/enums/unit_type.dart';
 import '../../../../../../models/slide.dart';
@@ -21,8 +20,8 @@ final explainWhyPerfectCompetitionOnlyEarnNormalProfitInLR = Slide(
     ]),
     SlideContent.text('''
 <ul>
-  <li>In the short run, abnormal profits (AR > AC at MC = MR) attract new entrants due to <b>free entry and exit</b>.</li>
-  <li>Firms have <b>perfect information</b> on profits and costs; and <b>perfect factor mobility</b>, allowing resources to be easily reallocated to industry.</li>
+  <li>In the short run, abnormal profits (AR > ATC at MC = MR) attract new entrants due to <b>free entry and exit</b>.</li>
+  <li>Firms have <b>perfect information</b> on profits and costs; and <b>perfect factor mobility</b>, allowing resources to be easily reallocated to the industry.</li>
   <li>New firms enter, increasing <b>market supply</b> and causing the <b>market price to fall</b> (firms are price takers).</li>
   <li>In the long run, price falls until <b>P = minimum ATC</b>, so firms earn only <b>normal profit</b>.</li>
 </ul>

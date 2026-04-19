@@ -180,13 +180,13 @@ enum EconTerm {
   perfectCompetition(
     termName: 'Perfect Competition',
     explanation:
-        'Many small independent firms with no market power (P=MC) all selling an identical good. No barriers to entry and exit, perfect information on prices, costs and resources, and perfect factor mobility of labor and capital.',
+        'Many small firms with no market power (price-takers), selling a homogeneous product. Free entry/exit, perfect information on prices and technology, and perfect factor mobility of labor and capital.',
     subunit: Subunit.marketFailurePower,
   ),
   monopolisticCompetition(
     termName: 'Monopolistic Competition',
     explanation:
-        'Many small firms, each with some (limited) market power. High product differentiation, low barriers to entry/exit.',
+        'Many small firms, each with some (limited) market power. Very high product differentiation, low barriers to entry/exit.',
     subunit: Subunit.marketFailurePower,
   ),
   monopoly(
@@ -227,7 +227,7 @@ enum EconTerm {
   barriersToEntry(
     termName: 'Barriers to Entry',
     explanation:
-        'Factors with prevents entry of new firms into an industry, such as: economies of scale, branding, patents, or legal barriers.',
+        'Factors with prevents entry of new firms into an industry (economies of scale, branding, patents, or legal barriers).',
     subunit: Subunit.marketFailurePower,
     tags: [Tag.hl],
   ),
@@ -303,44 +303,40 @@ enum EconTerm {
   nru(
     termName: 'Natural Rate of Unemployment (NRU)',
     explanation:
-        'Sum of structural, frictional and seasonal unemployment. Full Employment is U = NRU (zero cyclical); Ye=Yp; stable inflation rate (actual inflation = expected inflation).',
+        'Sum of frictional, structural, and seasonal unemployment, excluding cyclical unemployment. Occurs when economy is in long-run equilibrium (full employment).',
     subunit: Subunit.macroObjectives,
     tags: [],
   ),
   nationalDebt(
     termName: 'National Debt',
     explanation:
-        'Total accumulation over-time of budget deficits minus budget surpluses.',
+        'Total government borrowing over time. Sum of budget deficits less budget surpluses.',
     subunit: Subunit.macroObjectives,
     tags: [],
   ),
+
   budgetDeficit(
     termName: 'Budget Deficit',
-    explanation:
-        'Government\'s total expenditures > total tax revenues over one year (G>T)',
+    explanation: 'G > T for one year',
     subunit: Subunit.macroObjectives,
     tags: [],
   ),
   debtToGDPRatio(
     termName: 'Debt-to-GDP Ratio',
-    explanation:
-        'A metric that compares a country\'s total national debt to its Gross Domestic Product (GDP). It acts as a key indicator of a country\'s ability to pay back its debt relative to the size and output of its economy.',
+    explanation: '(Total Debt / GDP) × 100.',
     subunit: Subunit.macroObjectives,
-    tags: [],
-  ),
-  sustainableDebt(
-    termName: 'Sustainable Debt',
-    explanation:
-        'A level of national debt where a government can comfortably meet its current and future debt obligations (paying interest and principal) without defaulting, needing debt relief, or restricting economic growth.',
-    subunit: Subunit.macroObjectives,
-    tags: [],
   ),
   crowdingOut(
     termName: 'Crowding Out',
     explanation:
-        'An increase in government spending financed by borrowing may lead to higher interest rates, reducing private investment. It can also occur through competition for scarce resources (labor and capital), raising costs for the private sector.',
+        'Increased government borrowing causes higher interest rates, which reduces (crowds out) private sector investment due to higher costs of borrowing.',
     subunit: Subunit.macroObjectives,
-    tags: [],
+  ),
+  unsustainableDebt(
+    termName: 'Unsustainable Debt',
+    explanation:
+        'High debt-to-GDP ratio - significant opportunity costs on future economic growth (higher IR, higher T, lower G); and risk of sovereign default.',
+    subunit: Subunit.macroObjectives,
   ),
 
   /// Monetary Policy
@@ -354,7 +350,7 @@ enum EconTerm {
   openMarketOperations(
     termName: 'Open Market Operations (OMO)',
     explanation:
-        'Central bank buys and sells government securities from commercial banks to influence the money supply and interest rates.',
+        'Central bank buys and sells government securities (bonds) from commercial banks to influence the money supply and interest rates.',
     subunit: Subunit.macroObjectives,
     tags: [],
   ),
@@ -382,7 +378,7 @@ enum EconTerm {
   liquidityTrap(
     termName: 'Liquidity Trap',
     explanation:
-        'Monetary policy ineffective when already low interest rates, increases in money supply fail to stimulate aggregate demand.',
+        'Monetary policy ineffective when already low interest rates, increases in money supply fail to stimulate aggregate demand (low AD: very low consumer/business confidence, high unemployment, firm bankruptcies, high real debt burden).',
     subunit: Subunit.demandManagementMonetary,
     tags: [],
   ),

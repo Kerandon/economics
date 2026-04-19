@@ -29,14 +29,11 @@ final explainWhyMonopolisticOnlyEarnNormalProfitInLR = Slide(
 <p>A restaurant earning abnormal profits attracts new entrants due to low barriers to entry. As more restaurants enter, consumers have greater choice, reducing demand and profits for existing firms.</p>
 '''),
     // 4. Alert / Exam Tip
-    SlideContent.alert(
-      'In LR equilibrium, AR curve is tangent to AC directly above where MC = MR.',
-    ),
 
     // 5. Diagrams
     SlideContent.diagrams([
       DiagramEnum.microMonopolisticCompetitionAbnormalProfit,
-      DiagramEnum.microMonopolisticCompetitionLongRun,
+      DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift,
     ]),
   ],
 );

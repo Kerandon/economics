@@ -608,9 +608,10 @@ class MarketPower extends BaseDiagramPainter {
           c,
           canvas,
 
-          'D/AR & MR shift left\n(also more elastic)\n'
+          'D/AR + MR left\n(and more elastic)\n'
           'until P=ATC',
           Offset(0.85, 0.60),
+          type: DiagramTextType.label,
         );
         paintLineSegment(
           c,
@@ -694,7 +695,7 @@ class MarketPower extends BaseDiagramPainter {
         canvas,
 
         DiagramLabel.abnormalProfit.label,
-        Offset(0.30, 0.25),
+        Offset(0.30, 0.15),
         pointerLine: Offset(0.30, 0.51),
       );
       paintShading(c, canvas, ShadeType.abnormalProfit, [

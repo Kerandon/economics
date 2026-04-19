@@ -178,6 +178,7 @@ enum DiagramEnum {
   macroMoneyMarketExpansionaryMonetaryPolicy,
   macroMoneyMarketContractionaryMonetaryPolicy,
   macroKeynesianMultiplier,
+  macroCrowdingOut,
   macroSupplySidePoliciesLowInflation,
 
   ///Global*****************************************
@@ -503,6 +504,7 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroLorenzCurveImprovedEquality => Subunit.inequalityPoverty,
 
     /// Demand-side & Supply-side
+    DiagramEnum.macroCrowdingOut => Subunit.demandManagementFiscal,
     DiagramEnum.macroKeynesianDemandPullInflation => Subunit.macroObjectives,
     DiagramEnum.macroKeynesianMultiplier => Subunit.demandManagementFiscal,
     DiagramEnum.macroMoneyMarket => Subunit.demandManagementMonetary,
@@ -793,7 +795,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.microOligopolyKinkedDemandCurve =>
         "Price rigidity due to interdependent reactions to price changes.",
       DiagramEnum.microMonopolisticCompetitionAbnormalProfit =>
-        "Short-run profit: AR>AC at MC=MR",
+        "Abnormal profit: AR>AC at MC=MR",
       DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift =>
         "Entry of substitutes shifts demand left in the long run.",
       DiagramEnum.microMonopolisticCompetitionLoss =>
@@ -992,6 +994,8 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
 
       DiagramEnum.microTradablePollutionPermits =>
         'Supply is perfectly inelastic as set by government.',
+      DiagramEnum.macroCrowdingOut =>
+        'Increased government spending drives up interest rates leading to a fall in (crowding out) private investment.',
     };
   }
 }
