@@ -26,5 +26,12 @@ TopicDetails getTopicDetails(Topic topic) {
         Icons.question_answer_outlined,
         Colors.green,
       );
+    case Topic.quickNotes:
+      return TopicDetails(
+        "Quick Notes",
+        "Last Minute Revision",
+        Icons.note_alt_sharp,
+        Colors.orange,
+      );
   }
 }

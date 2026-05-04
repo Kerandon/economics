@@ -4,6 +4,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../../../diagrams/data/all_diagrams.dart';
 import '../../../diagrams/enums/diagram_enum.dart';
 import '../../custom_widgets/evaluation_widget.dart';
+import '../../enums/tag.dart';
 import '../../models/slide.dart';
 import '../../models/slide_content.dart';
 import '../../models/term.dart';
@@ -84,18 +85,6 @@ class QuestionDetailPage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 12),
-
-                  // Subunit Meta
-                  Text(
-                    slide.subunit.title,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.2,
-                    ),
                   ),
                   const SizedBox(height: 12),
 
@@ -240,11 +229,6 @@ class QuestionDetailPage extends StatelessWidget {
       }
     }
 
-    // 0. TL;DR
-    if (block.tldr != null && block.tldr!.isNotEmpty) {
-      widgets.add(_buildTldr(block.tldr!));
-    }
-
     // 1. EconTerms List
     if (block.econTerms != null && block.econTerms!.isNotEmpty) {
       tryAddHeader('TERMS'); // 🌟 Use tryAddHeader
@@ -262,18 +246,7 @@ class QuestionDetailPage extends StatelessWidget {
     }
 
     // 2. Legacy Single Term
-    if (block.term != null) {
-      tryAddHeader('TERMS'); // 🌟 Use tryAddHeader
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: HtmlWidget(
-            '<b>${block.term!.term}:</b> ${block.term!.explanation}',
-            textStyle: baseTextStyle,
-          ),
-        ),
-      );
-    }
+
 
     // 3. Standard Text / HTML
     if (block.content != null && block.content!.text.isNotEmpty) {
@@ -320,60 +293,80 @@ class QuestionDetailPage extends StatelessWidget {
       );
     }
 
-    // 7. Real World Examples
+    // 7. Real World Examples (Updated to Table Format)
     if (block.realWorldExamples != null &&
         block.realWorldExamples!.isNotEmpty) {
-      tryAddHeader('REAL WORLD EXAMPLES'); // 🌟 Use tryAddHeader
-      for (var rwe in block.realWorldExamples!) {
-        widgets.add(
-          Padding(
-            padding: const EdgeInsets.only(bottom: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '• ${rwe.example}',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                ),
-                if (rwe.explanation != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0, top: 4.0),
-                    child: Text(
-                      rwe.explanation!,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey.shade800,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        );
-      }
-    }
+      tryAddHeader('REAL WORLD EXAMPLES');
 
-    // 8. Evaluation Block
-    if (block.evaluationData != null) {
-      tryAddHeader('EVALUATION'); // 🌟 Use tryAddHeader
       widgets.add(
         Padding(
           padding: const EdgeInsets.only(bottom: 24.0),
-          child: EvaluationWidget(
-            title: block.evaluationData!.title,
-            leftTitle: block.evaluationData!.leftTitle,
-            rightTitle: block.evaluationData!.rightTitle,
-            leftItems: block.evaluationData!.leftItems,
-            rightItems: block.evaluationData!.rightItems,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            clipBehavior:
+                Clip.antiAlias, // Ensures border radius clips the table corners
+            child: Table(
+              // Controls the ratio of the columns. 1.2 vs 2.8 makes the right column much bigger
+              columnWidths: const {
+                0: FlexColumnWidth(1.2),
+                1: FlexColumnWidth(2.8),
+              },
+              // Adds internal grid lines
+              border: TableBorder(
+                horizontalInside: BorderSide(color: Colors.grey.shade200),
+                verticalInside: BorderSide(color: Colors.grey.shade200),
+              ),
+              children: block.realWorldExamples!.asMap().entries.map((entry) {
+                final int index = entry.key;
+                final rwe = entry.value;
+
+                return TableRow(
+                  // Zebra striping for readability
+                  decoration: BoxDecoration(
+                    color: index % 2 == 0
+                        ? Colors.white
+                        : Colors.blueGrey.shade50.withOpacity(0.3),
+                  ),
+                  children: [
+                    // Column 1: Title
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        rwe.example,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                          height: 1.3,
+                        ),
+                      ),
+                    ),
+                    // Column 2: Explanation
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        rwe.explanation ?? '',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade800,
+                          height: 1.5,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }).toList(),
+            ),
           ),
         ),
       );
     }
+
+    // 8. Evaluation Block
+
 
     // 9. Alerts / Warnings
     if (block.alert != null && block.alert!.text.isNotEmpty) {

@@ -613,7 +613,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.dW => 'Dw',
       DiagramLabel.dS => 'Sw',
       DiagramLabel.cheeseKG => 'Cheese (kg)',
-      DiagramLabel.wineBottles => 'Wine (bottles)',
+      DiagramLabel.wineBottles => 'Wine\n(bottles)',
       DiagramLabel.product => 'Product',
       DiagramLabel.totalProduct => 'Total Product',
       DiagramLabel.marginalProduct => 'Marginal Product',

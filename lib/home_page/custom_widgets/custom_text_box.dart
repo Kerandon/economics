@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../../app/configs/app_colors.dart';
 import '../../app/configs/constants.dart';
+import '../enums/tag.dart';
 import '../enums/text_box_type.dart';
 import '../models/term.dart';
 

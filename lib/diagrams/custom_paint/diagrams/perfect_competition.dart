@@ -282,17 +282,7 @@ class PerfectCompetition extends BaseDiagramPainter {
         strokeWidth: kCurveWidth,
       );
     }
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0.05, 0.10),
-      bezierPoints: [
-        CustomBezier(control: Offset(0.45, 0.90), endPoint: Offset(0.90, 0.10)),
-      ],
-      label2: DiagramLabel.atc.label,
-      label2Align: LabelAlign.centerTop,
-    );
-    paintMarginalCost(c, canvas);
+
     if (diagram == DiagramEnum.microPerfectCompetitionFirmLongRun) {
       paintTitle(c, canvas, DiagramLabel.firm.label);
     }
@@ -586,5 +576,16 @@ class PerfectCompetition extends BaseDiagramPainter {
         label2Align: LabelAlign.right,
       );
     }
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.05, 0.10),
+      bezierPoints: [
+        CustomBezier(control: Offset(0.45, 0.90), endPoint: Offset(0.90, 0.10)),
+      ],
+      label2: DiagramLabel.atc.label,
+      label2Align: LabelAlign.centerTop,
+    );
+    paintMarginalCost(c, canvas);
   }
 }

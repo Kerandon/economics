@@ -3,6 +3,7 @@ import 'package:economics_app/home_page/models/slide_content.dart';
 import 'package:economics_app/home_page/models/term.dart';
 
 import '../enums/skill.dart';
+import '../enums/tag.dart';
 
 class Slide {
   final SyllabusPoint? syllabusPoint;

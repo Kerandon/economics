@@ -2,6 +2,7 @@ import 'package:economics_app/home_page/pages/real_world_examples/real_world_exa
 
 import '../../../../../../../diagrams/enums/diagram_enum.dart';
 import '../../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../../enums/tag.dart';
 import '../../../../../../models/slide.dart';
 import '../../../../../../models/slide_content.dart';
 import '../../../../../../models/term.dart';

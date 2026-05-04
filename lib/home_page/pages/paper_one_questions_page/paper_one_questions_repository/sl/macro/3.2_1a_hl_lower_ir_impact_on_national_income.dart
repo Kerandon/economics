@@ -1,14 +1,15 @@
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 
-import '../../../../../../../diagrams/enums/unit_type.dart';
-import '../../../../../../models/slide.dart';
-import '../../../../../../models/slide_content.dart';
-import '../../../../../../models/term.dart';
-import '../../../../../terms/terms.dart';
+import '../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../enums/tag.dart';
+import '../../../../../models/slide.dart';
+import '../../../../../models/slide_content.dart';
+import '../../../../../models/term.dart';
+import '../../../../terms/terms.dart';
 
-final explainLowerIRImpactOnNationalIncome1aHL = Slide(
+final explainLowerIRImpactOnNationalIncome1aSL = Slide(
   subunit: Subunit.aDAS,
-  tags: [Tag.hl, Tag.p1a],
+  tags: [Tag.sl, Tag.p1a],
   question:
       'Explain how a decrease in interest rates is likely to affect the equilibrium level of national income.',
   contents: [

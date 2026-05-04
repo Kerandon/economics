@@ -24,13 +24,13 @@ const kSimilarities = 'Similarities';
 const kDifferences = 'Differences';
 
 /// Text
-const kFontTiny = 20.0;
-const kFontVerySmall = 22.0;
-const kFontSmall = 24.0;
-const kFontMedium = 28.0;
-const kFontSizeBig = 40.0;
-const kFontSizeAverageRatioSmall = 30.0;
-const kFontSizeAverageRatioStandard = 70.0;
+const kFontTiny = 12.0;
+const kFontVerySmall = 20.0;
+const kFontSmall = 22.0;
+const kFontMedium = 26.0;
+const kFontSizeBig = 38.0;
+const kFontSizeAverageRatioSmall = 28.0;
+const kFontSizeAverageRatioStandard = 65.0;
 const kLabelTextStyle = TextStyle(
   fontStyle: FontStyle.italic,
   fontSize: kFontMedium,

@@ -65,7 +65,7 @@ void paintLineSegment(
   // ✨ NEW: Reduce line thickness by 50% if an arrow is painted
   if (endStyle == LineEndStyle.arrow ||
       endStyle == LineEndStyle.arrowBothEnds) {
-    effectiveStrokeWidth *= 0.3;
+    effectiveStrokeWidth *= 0.20;
   }
 
   final startOffset = computeOffset(startPos);

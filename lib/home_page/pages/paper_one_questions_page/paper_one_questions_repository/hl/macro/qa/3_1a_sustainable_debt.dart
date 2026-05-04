@@ -1,6 +1,7 @@
 // We use a top-level variable so we can import it elsewhere
 import '../../../../../../../diagrams/enums/diagram_enum.dart';
 import '../../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../../enums/tag.dart';
 import '../../../../../../models/slide.dart';
 import '../../../../../../models/slide_content.dart';
 import '../../../../../../models/term.dart';
@@ -19,10 +20,10 @@ final explainImportanceOfSustainableDebt10Mark = Slide(
       EconTerm.unsustainableDebt,
       EconTerm.crowdingOut,
     ]),
-
     SlideContent.text('''
-      <p>Important to focus on meaning of <strong>'sustainable'</strong>. Sustainable debt is beneficial - government can borrow to invest in merit goods and infrastructure to promote long-term economic growth.</p> 
-      <p>Unsustainable national debt has very high opportunity costs particularly on future economic growth.</p>
+      <p>Important to focus on meaning of <strong>'sustainable'</strong>. Sustainable debt can be beneficial to macroeconomic objectives of economic growth, employment and price stability - government can borrow to invest in merit goods and capital infrastructure to increase potential output.</p> 
+      <p>Unsustainable government debt has high opportunity costs and reduces long-term economic growth through higher interest payments, crowding out of private investment, and reduced fiscal flexibility.</p>
+      <p>A falling debt-to-GDP ratio indicates debt is cecomimng .</p>
       '''),
     SlideContent.simpleTable(
       title: 'Sustainable vs Unsustainable Debt',
@@ -33,7 +34,7 @@ final explainImportanceOfSustainableDebt10Mark = Slide(
           'High debt servicing (interest opportunity cost)',
         ],
         [
-          'Supports AD in recession (deflationary gap)',
+          'Government spending supports AD in recession.',
           'Opportunity cost in future: Higher T, Lower G.',
         ],
         [
@@ -53,7 +54,10 @@ final explainImportanceOfSustainableDebt10Mark = Slide(
           'Reduced fiscal space in recessions',
         ],
         ['', 'Capital flight & lower FDI'],
-        ['', 'Inflation risk (monetising debt)'],
+        [
+          '',
+          'Inflation risk (monetising debt - central bank buys government bonds increasing money supply)',
+        ],
         ['', 'Exchange rate risk (external debt)'],
       ],
     ),

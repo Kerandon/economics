@@ -1,70 +1,187 @@
 import '../../../diagrams/enums/unit_type.dart';
+import '../../enums/tag.dart';
 import '../../models/term.dart';
 
 enum RealWorldExamples {
+  /// 2.4 Critique
+  organDonationOptOut(
+    'Organ Donation (Choice Architecture - Default Choice)',
+    explanation:
+    'Countries with "opt-out" systems have higher donation rates than "opt-in" systems, leveraging the default bias.',
+    subunit: Subunit.critiqueBehaviour,
+    tags: [Tag.hl],
+  ),
+
+  cafeteriaLayoutNudge(
+    'School Cafeteria',
+    explanation:
+    'Placing healthy foods at eye-level nudges students toward healthier eating without banning junk food.',
+    subunit: Subunit.critiqueBehaviour,
+
+    tags: [Tag.hl],
+  ),
+  pianoStairs(
+    'Piano Stairs (Sweden)',
+    explanation:
+    'A Stockholm subway turned stairs into a working piano, increasing stair usage by 66% by making exercise fun.',
+    subunit: Subunit.critiqueBehaviour,
+    tags: [Tag.hl],
+  ),
+
+  fatFreeFraming(
+    '90% Fat-Free (Framing)',
+    explanation:
+    'Labeling milk "90% fat-free" instead of "10% fat" uses positive framing to make the exact same product seem healthier.',
+    subunit: Subunit.critiqueBehaviour,
+  ),
+
+  hiddenCigarettes(
+    'Hidden Cigarettes (Australia)',
+    explanation:
+    'Requiring stores to hide cigarettes behind cupboard doors adds friction, nudging consumers away from impulse purchases.',
+    subunit: Subunit.critiqueBehaviour,
+  ),
+  patagoniaCSR(
+    'Patagonia: Corporate Social Responsibility (CSR)',
+    explanation:
+    'Uses recycled materials and donates 1% of sales to environmental causes.',
+    subunit: Subunit.critiqueBehaviour,
+  ),
+  unileverCSR(
+    'Unilever: Corporate Social Responsibility (CSR)',
+    explanation:
+    'Focuses on sustainable sourcing and reducing environmental impact.',
+    subunit: Subunit.critiqueBehaviour,
+  ),
   /// PED
   airlinesPriceDiscrimination(
-    'Airlines (e.g. Singapore Airlines, British Airways)',
+    'Airlines (e.g. Singapore Airlines, British Airways): PED and Price Discrimination',
     explanation:
         'Use PED to price discriminate; business travellers (inelastic) pay higher last-minute fares, while tourists (elastic) get cheaper advance tickets, increasing total revenue.',
     subunit: Subunit.elasticityDemand,
   ),
 
   cigaretteTaxRevenue(
-    'Cigarette Taxes (e.g. UK, Australia)',
+    'Cigarette Taxes (e.g. UK, Australia): PED and Price Discrimination',
     explanation:
         'Governments tax cigarettes with PED < 1, so %∆Qd < %∆P; demand falls slightly while tax revenue remains stable or increases.',
     subunit: Subunit.elasticityDemand,
   ),
 
   disneylandPricing(
-    'Disneyland (e.g. Shanghai, California)',
+    'Disneyland (e.g. Shanghai, California): PED and Price Discrimination',
     explanation:
         'Uses PED-based price discrimination by charging higher peak/weekend prices (more inelastic demand) and lower off-peak prices to increase revenue.',
     subunit: Subunit.elasticityDemand,
   ),
 
-  // --- OLIGOPOLY ---
-  bigFourBanks(
-    'Big-Four Banks in Australia (CBA, Westpac, NAB, ANZ)',
+ /// YED
+  usSectorStructure(
+    'USA: YED and Tertiary Sector',
     explanation:
-        'High strategic interdependence; when one bank changes mortgage rates, others typically follow within hours.',
+    'The US economy is highly service-based: 80% of GDP comes from tertiary sector, ~19% from secondary, and 1% from primary sector. High development, productivity.',
+    subunit: Subunit.elasticityDemand,
+  ),
+  burundiSectorStructure(
+    'Burundi: Very High Primary Sector Dependence',
+    explanation:
+    'Primary sector over 1/3 of GDP and employs 85% of the workforce. Very low industrialisation / development.',
+    subunit: Subunit.elasticityDemand,
+  ),
+  hongKongSectorShift(
+    'Hong Kong: Shift to a Service Economy',
+    explanation:
+    'Hong Kong shifted from manufacturing to services: today tertiary is 90%+ of GDP (50 years ago 60%).',
+    subunit: Subunit.elasticityDemand,
+  ),
+  // Oligopoly examples
+
+  oligopolyXbox(
+    'Xbox Game Pass (Bundling)',
+    explanation:
+    'Bundling (Oligopoly): Microsoft bundles hundreds of individual games into a single monthly subscription. This increases overall sales and makes it harder for competing services to attract players.',
     subunit: Subunit.marketFailurePower,
   ),
-  bigSuperMarketsAustralia(
-    'Coles and Woolworths (Australia)',
+  oligopolyBigFourBanks(
+    'Big Four Banks Australia',
     explanation:
-        'A "Duopoly" accused of using market power to squeeze suppliers and inflate grocery prices (Implicit Collusion).',
+        'Tacit collusion (oligopoly - interdependence): Firms avoid price wars through price leadership.',
     subunit: Subunit.marketFailurePower,
   ),
-  eVIndustryInChina(
-    'Xiaomi, Tesla, BYD',
+
+  oligopolyBigSuperMarketsAustralia(
+    'Coles & Woolworths',
     explanation:
-        'Fierce "Price Wars" and rapid innovation (Non-price competition) to capture market share in a growing industry.',
+        'Implicit collusion (oligopoly - duopoly): Market power linked to higher grocery prices.',
     subunit: Subunit.marketFailurePower,
   ),
-  llmMarket(
-    'Google (Gemini), Anthropic (Claude), OpenAI (ChatGPT)',
+
+  oligopolyEVIndustryInChina(
+    'BYD, Tesla, Xiaomi (EVs)',
     explanation:
-        'A modern "Tech Oligopoly" where firms compete through massive R&D and rapid feature releases.',
+        'Price competition + innovation (oligopoly - dynamic competition): strong R&D and price wars.',
+    subunit: Subunit.marketFailurePower,
+  ),
+
+  oligopolyAIIndustry(
+    'Google, OpenAI, DeepSeek',
+    explanation:
+        'R&D-driven competition (oligopoly - tech industry): high dynamic efficiency through innovation.',
+    subunit: Subunit.marketFailurePower,
+    tags: [Tag.hl],
+  ),
+  marketPowerAmazon(
+    'Amazon (anti-competitive)',
+    explanation:
+    'Predatory pricing: temporarily setting very low prices (even below cost) to drive smaller competitors out of the market, then raising prices once market power is increased.',
     subunit: Subunit.marketFailurePower,
     tags: [Tag.hl],
   ),
 
-  // --- MONOPOLISTIC COMPETITION ---
-  shanghaiCoffeeShops(
-    'Coffee Shops in Shanghai / Melbourne',
+  marketPowerMicrosoft(
+    'Microsoft (anti-competitive)',
     explanation:
-        'Many sellers with low barriers to entry. Each shop uses "Brand Differentiation" (vibe, specialty beans) to gain some price-making power.',
+    'Bundling: combining products (e.g. operating system + browser/software) to reduce consumer choice and make it harder for rival firms to compete.',
     subunit: Subunit.marketFailurePower,
+    tags: [Tag.hl],
   ),
-  fastFashion(
-    'Zara, H&M, Uniqlo',
+  oligopolyBoeingAirbusDuopoly(
+    'Boeing & Airbus',
     explanation:
-        'Products are similar but not identical. Heavy reliance on advertising and branding to create "Perceived Differentiation."',
+        'Duopoly (oligopoly - duopoly): high barriers, compete via non-price factors (safety, efficiency).',
     subunit: Subunit.marketFailurePower,
   ),
 
+  oligopolyOpecCartel(
+    'OPEC',
+    explanation:
+        'Cartel (oligopoly - cartel): restricts output to increase oil prices.',
+    subunit: Subunit.marketFailurePower,
+    tags: [Tag.hl],
+  ),
+
+  // Monopolistic competition examples
+
+  monopolisticCompetitionMelbourneCoffeeShops(
+    'Melbourne Coffee Shops',
+    explanation:
+        'Monopolistic competition: many firms, low barriers, product differentiation.',
+    subunit: Subunit.marketFailurePower,
+  ),
+
+  monopolisticCompetitionSydneyHairSalons(
+    'Sydney Hair Salons',
+    explanation:
+        'Monopolistic competition: differentiated services, easy entry and exit.',
+    subunit: Subunit.marketFailurePower,
+  ),
+
+  monopolisticCompetitionShanghaiRestaurants(
+    'Shanghai Restaurants',
+    explanation:
+        'Monopolistic competition: many firms, strong non-price competition.',
+    subunit: Subunit.marketFailurePower,
+  ),
   // --- PERFECT COMPETITION (Closest Real-World Approximations) ---
   wheatFarmers(
     'Global Wheat or Corn Markets',
@@ -81,13 +198,7 @@ enum RealWorldExamples {
   ),
 
   // --- MONOPOLY (Pros & Cons) ---
-  luxottica(
-    'Luxottica (Eyewear)',
-    explanation:
-        'Controls ~80% of major eyewear brands (Ray-Ban, Oakley). CON: Higher prices for consumers due to lack of viable substitutes.',
-    subunit: Subunit.marketFailurePower,
-  ),
-  pharmaceuticalPatents(
+  marketPowerPharmaceuticalPatents(
     'Patented Life-Saving Drugs',
     explanation:
         'PRO: High abnormal profits provide the incentive for expensive R&D. CON: Creates "Allocative Inefficiency" (P > MC).',
@@ -96,16 +207,17 @@ enum RealWorldExamples {
   ),
 
   // --- NATURAL MONOPOLY ---
-  sydneyWater(
-    'Sydney Water / Utility Grid',
-    explanation:
-        'Extremely high fixed "Set-up Costs." It is most efficient for one firm to provide the service to reach "Economies of Scale" and avoid duplicating pipes.',
-    subunit: Subunit.marketFailurePower,
-  ),
-  stateGridChina(
+  naturalMonopolyStateGridChina(
     'State Grid Corporation of China',
     explanation:
-        'An industry where the "Minimum Efficient Scale" is so large that the market can only support one producer profitably.',
+    'Extremely high fixed "Set-up Costs." It is most efficient for one firm to provide the service to reach "Economies of Scale" and avoid duplicating pipes.',
+    subunit: Subunit.marketFailurePower,
+    tags: [Tag.hl],
+  ),
+  naturalMonopolyChinaRailway(
+    'China State Railway Group',
+    explanation:
+    'Extremely high fixed costs for infrastructure like tracks and stations. It is most efficient for one firm to provide the service to reach "Economies of Scale" and avoid duplicating railway networks.',
     subunit: Subunit.marketFailurePower,
     tags: [Tag.hl],
   ),
@@ -277,7 +389,7 @@ enum RealWorldExamples {
     explanation:
         'Targeted subsidies and export promotion developed high-value industries.',
     subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
+    tags: [],
   ),
 
   germanyApprenticeshipSystem(
@@ -285,7 +397,26 @@ enum RealWorldExamples {
     explanation:
         'Vocational training system improves skills and reduces structural unemployment.',
     subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
+    tags: [],
+  ),
+
+  burundiBarriersToDevelopment(
+    'Burundi (East Africa) – Barriers to Development',
+    explanation:
+        'Burundi is a landlocked ELDC in East Africa facing multiple barriers to development. Around 85% of employment is in agriculture, showing heavy dependence on low-productivity primary sector activity. Limited infrastructure, weak human capital, poor governance, and restricted access to international markets constrain development. Its geography and tropical climate also contribute to disease burdens and low productivity.',
+    subunit: Subunit.sustainableDevelopment,
+  ),
+  bangladeshBarriersToDevelopment(
+    'Bangladesh (South Asia) – Barriers to Development',
+    explanation:
+        'Bangladesh is a developing country facing several structural barriers to development. A significant share of employment is still in low-productivity agriculture and informal urban work, limiting productivity growth. It also faces vulnerability to climate change (flooding and cyclones), high population density, infrastructure constraints, and uneven access to education and healthcare, despite recent strong export-led growth in garments.',
+    subunit: Subunit.sustainableDevelopment,
+  ),
+  boliviaBarriersToDevelopment(
+    'Bolivia (South America) – Barriers to Development',
+    explanation:
+        'Bolivia is a landlocked developing country in South America facing structural barriers to development. Around 30% of employment is in agriculture, showing continued reliance on lower-productivity primary sector activity. It faces geographic isolation, limited access to international markets, weak infrastructure in rural areas, and regional inequality, despite recent improvements in poverty reduction.',
+    subunit: Subunit.sustainableDevelopment,
   );
 
   // --- PROPERTIES ---

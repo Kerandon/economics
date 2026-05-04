@@ -41,7 +41,7 @@ class EconApp extends ConsumerWidget {
         builder: (context) {
           final bp = ResponsiveBreakpoints.of(context);
           if (bp.isMobile) {
-            return const HomePageMobile();
+            return const HomePageWeb();
           } else {
             return const HomePageWeb();
           }

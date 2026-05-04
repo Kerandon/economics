@@ -6,8 +6,9 @@ import 'package:economics_app/diagrams/custom_paint/diagrams/competitive_market.
 import 'package:economics_app/diagrams/custom_paint/diagrams/exchange_rate_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/j_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/lorenz_curve_diagram.dart';
-import 'package:economics_app/diagrams/custom_paint/diagrams/market_power.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/monopoly_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/money_market_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/monopolistic_competition.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/oligopoly_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/perfect_competition.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/phillips_curve_diagram.dart';
@@ -46,11 +47,12 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([SupplyDiagram(c, DiagramEnum.microSupplyDecrease)]),
     DiagramWidget([SupplyDiagram(c, DiagramEnum.microTotalAndMarginalProduct)]),
     DiagramWidget(
-      title: 'Marginal Product and Marginal Cost',
-      description:
-          'Marginal cost (MC) is inversely related to marginal product (MP), given by MC = W / MP, where W is the wage rate. As diminishing marginal returns set in, MP declines, increasing the marginal cost of each additional unit of output.',
       [
         SupplyDiagram(c, DiagramEnum.microMarginalProduct),
+      ],
+    ),
+    DiagramWidget(
+      [
         SupplyDiagram(c, DiagramEnum.microMarginalCost),
       ],
     ),
@@ -72,12 +74,15 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     /// Elasticity
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandElastic)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandInelastic)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microDemandUnitElastic)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandPerfectlyElastic)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandPerfectlyInelastic)]),
     DiagramWidget([
       Elasticities(c, DiagramEnum.microDemandElasticityRevenueChange),
       Elasticities(c, DiagramEnum.microDemandElasticityChange),
     ]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microDemandElasticRevenue)]),
+    DiagramWidget([Elasticities(c, DiagramEnum.microDemandInelasticRevenue)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microDemandEngelCurve)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microSupplyElastic)]),
     DiagramWidget([Elasticities(c, DiagramEnum.microSupplyInelastic)]),
@@ -224,33 +229,33 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     /// ============================================================
     /// MONOPOLY & OTHERS (Back to individual elements)
     /// ============================================================
-    DiagramWidget([MarketPower(c, DiagramEnum.microMonopolyAbnormalProfit)]),
-    DiagramWidget([MarketPower(c, DiagramEnum.microMonopolyWelfare)]),
-    DiagramWidget([MarketPower(c, DiagramEnum.microMonopolyNatural)]),
+    DiagramWidget([MonopolyDiagram(c, DiagramEnum.microMonopolyAbnormalProfit)]),
+    DiagramWidget([MonopolyDiagram(c, DiagramEnum.microMonopolyWelfare)]),
+    DiagramWidget([MonopolyDiagram(c, DiagramEnum.microMonopolyNatural)]),
     DiagramWidget([
-      MarketPower(c, DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
+      MonopolyDiagram(c, DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
     ]),
     DiagramWidget([
-      MarketPower(c, DiagramEnum.microMonopolyNaturalMarginalCostPricing),
+      MonopolyDiagram(c, DiagramEnum.microMonopolyNaturalMarginalCostPricing),
     ]),
     DiagramWidget([
-      MarketPower(
+      MonopolyDiagram(
         c,
         DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare,
       ),
     ]),
     DiagramWidget([OligopolyDiagram(c, DiagramEnum.microOligopolyCartel)]),
     DiagramWidget([
-      MarketPower(c, DiagramEnum.microOligopolyKinkedDemandCurve),
+      OligopolyDiagram(c, DiagramEnum.microOligopolyKinkedDemandCurve),
     ]),
     DiagramWidget([
-      MarketPower(c, DiagramEnum.microMonopolisticCompetitionLongRun),
+      MonopolisticCompetitionDiagram(c, DiagramEnum.microMonopolisticCompetitionLongRun),
     ]),
     DiagramWidget([
-      MarketPower(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
+      MonopolisticCompetitionDiagram(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
     ]),
     DiagramWidget([
-      MarketPower(
+      MonopolisticCompetitionDiagram(
         c,
         DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift,
       ),
@@ -303,10 +308,7 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianInflationaryGap)]),
 
     /// Economic growth
-    DiagramWidget([
-      ADASDiagram(c, DiagramEnum.macroClassicalLongTermGrowth),
-      ADASDiagram(c, DiagramEnum.macroKeynesianLongTermGrowth),
-    ]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalLongTermGrowth)]),
     DiagramWidget([PPCDiagram(c, DiagramEnum.globalPPCEconomicGrowth)]),
 
     /// Inflation

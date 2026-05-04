@@ -112,12 +112,5 @@ class PovertyCycleDiagram extends BaseDiagramPainter {
       ignoreIndent: true,
       shape: shape,
     );
-
-    // Description is automatically placed at the bottom area
-    paintDescription(
-      c,
-      canvas,
-      'The poverty cycle shows how poverty is a self-reinforcing system, transmitted from one generation to the next. Investment refers to spending on physical, human and natural capital',
-    );
   }
 }

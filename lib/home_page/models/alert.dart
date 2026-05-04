@@ -1,4 +1,6 @@
-import 'package:economics_app/home_page/models/term.dart';
+
+
+import '../enums/tag.dart';
 
 class Alert {
   final String text;

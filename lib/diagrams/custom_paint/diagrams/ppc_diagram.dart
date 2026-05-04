@@ -77,11 +77,6 @@ void _paintPPCGlobal(
 
       rightYLabel: 'Y',
     );
-    paintDescription(
-      c,
-      canvas,
-      'If an economy is producing on its PPC, it can improve economic well-being if it allocates more resources to merit goods, such as public health and education. However, these gains will be limited without increases in the PPC.',
-    );
   }
   if (diagram == DiagramEnum.globalPPCEconomicGrowth) {
     paintAxis(
@@ -126,11 +121,6 @@ void _paintPPCGlobal(
       rightYLabel: 'Y',
       yLabel: DiagramLabel.q2.label,
       xLabel: DiagramLabel.q2.label,
-    );
-    paintDescription(
-      c,
-      canvas,
-      'Long-term growth policies - such as investment in infrastructure, education, and technology; stronger property rights and financial/legal systems; and pro-competition reforms - raise labor and capital productivity.',
     );
   }
   if (diagram == DiagramEnum.globalPPCUnsustainableUseOfNaturalResources) {
@@ -179,11 +169,6 @@ void _paintPPCGlobal(
     );
     paintLineSegment(c, canvas, origin: Offset(0.60, 0.60), angle: pi * 0.80);
     paintLineSegment(c, canvas, origin: Offset(0.32, 0.76), angle: pi * -0.20);
-    paintDescription(
-      c,
-      canvas,
-      'Externalities caused by over-fishing, deforestation and air, soil and water pollution leads to short-term increases in economic growth, but result in lower production potential in the long-run.',
-    );
   }
   if (diagram == DiagramEnum.globalPPCCapitalInvestment) {
     paintAxis(
@@ -218,11 +203,6 @@ void _paintPPCGlobal(
         CustomBezier(control: Offset(0.75, 0.40), endPoint: Offset(0.85, 1.0)),
       ],
       color: Colors.red,
-    );
-    paintDescription(
-      c,
-      canvas,
-      'Increased production capital goods will increase the production potential of the economy compared to consumer goods.',
     );
   }
 }

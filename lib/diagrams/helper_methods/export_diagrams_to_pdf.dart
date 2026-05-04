@@ -148,16 +148,17 @@ pw.Widget _buildPdfDiagramCell(
                 child: pw.CustomPaint(
                   size: const PdfPoint(400, 400),
                   painter: (PdfGraphics graphics, PdfPoint size) {
-                    // ALL CLEAR: We are using the correct pdfContext here!
+                    const double renderSize = 220.0;
+                    const double baseSize = 400.0;
+                    final double scale = renderSize / baseSize;
                     final bridge = PdfDiagramCanvas(
                       graphics,
                       pdfContext.document,
                       size.y,
                       pdfFont: unicodeFont.getFont(pdfContext),
+                      scale: scale, // ✅ THIS is the correct value
                     );
-                    painter.drawDiagram(bridge, const Size(400, 400));
-                  },
-                ),
+                  })
               ),
             ),
             // Faint grey watermark on EVERY diagram

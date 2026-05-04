@@ -78,6 +78,7 @@ class ComparativeAdvantageDiagram extends BaseDiagramPainter {
     _paintCountryPPC(
       c,
       canvas,
+
       yPoint: 0.40,
       xPoint: 0.30,
       label: 'Germany',
@@ -97,28 +98,6 @@ class ComparativeAdvantageDiagram extends BaseDiagramPainter {
         ['Germany', '(30/6)=5 (CA)', '(6/30)=0.20'],
       ],
     );
-
-    paintText(
-      c,
-      canvas,
-      '''Steeper PPC 
-     has a CA in the good 
-     on vertical axis
-     (e.g., Germany in Wine)''',
-      Offset(0.45, 0.20),
-      pointerLine: Offset(0.10, 0.60),
-    );
-
-    paintText(
-      c,
-      canvas,
-      '''Flatter PPC 
-     has a CA in the good 
-     on horizontal axis
-     (e.g., France in Cheese)''',
-      Offset(0.85, 0.60),
-      pointerLine: Offset(0.70, 0.90),
-    );
   }
 
   void _paintAbsoluteAdvantage(DiagramPainterConfig c, IDiagramCanvas canvas) {
@@ -131,12 +110,6 @@ class ComparativeAdvantageDiagram extends BaseDiagramPainter {
       xPoint: 0.50,
       label: 'Germany',
       color: Colors.blue,
-    );
-
-    paintDescription(
-      c,
-      canvas,
-      '''When PPCs cross each country has an Absolute Advantage (AA) in one good each. E.g., Germany AA is in wine, France AA is in Cheese.''',
     );
   }
 

@@ -33,6 +33,8 @@ class OligopolyDiagram extends BaseDiagramPainter {
     switch (diagram) {
       case DiagramEnum.microOligopolyCartel:
         _paintCartel(c, canvas);
+      case DiagramEnum.microOligopolyKinkedDemandCurve:
+        return _paintKinkedDemand(c, canvas, diagram);
       default:
     }
   }
@@ -98,4 +100,65 @@ void _paintCartel(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintMarketCurve(c, canvas, type: MarketCurveType.dArMrMonopoly);
 
   paintMarketCurve(c, canvas, type: MarketCurveType.mcAtc);
+}
+void _paintKinkedDemand(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+    ) {
+  paintAxis(
+    c,
+    canvas,
+
+    yAxisLabel: DiagramLabel.price.label,
+    xAxisLabel: DiagramLabel.quantity.label,
+  );
+
+  paintText(
+    c,
+    canvas,
+
+    'Kink',
+    Offset(0.70, 0.30),
+    pointerLine: Offset(0.55, 0.30),
+  );
+  paintText(c, canvas, 'Elastic', Offset(0.40, 0.15));
+  paintText(c, canvas, 'Inelastic', Offset(0.80, 0.60));
+  paintDiagramLines(
+    c,
+    canvas,
+
+    startPos: Offset(0.10, 0.15),
+    polylineOffsets: [Offset(0.55, 0.30), Offset(0.75, 0.90)],
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+
+    yAxisStartPos: 0.20,
+    xAxisEndPos: 0.25,
+    showDotAtIntersection: true,
+    yLabel: DiagramLabel.p1.label,
+    xLabel: DiagramLabel.q1.label,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+
+    yAxisStartPos: 0.30,
+    xAxisEndPos: 0.55,
+    showDotAtIntersection: true,
+    yLabel: DiagramLabel.pE.label,
+    xLabel: DiagramLabel.qE.label,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+
+    yAxisStartPos: 0.60,
+    xAxisEndPos: 0.65,
+    showDotAtIntersection: true,
+    yLabel: DiagramLabel.p2.label,
+    xLabel: DiagramLabel.q2.label,
+  );
 }

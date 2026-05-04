@@ -1,15 +1,11 @@
-import 'dart:math';
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_marginal_cost.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
@@ -20,8 +16,8 @@ import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
 
-class MarketPower extends BaseDiagramPainter {
-  MarketPower(super.config, super.diagram);
+class MonopolyDiagram extends BaseDiagramPainter {
+  MonopolyDiagram(super.config, super.diagram);
 
   @override
   void drawDiagram(IDiagramCanvas canvas, Size size) {
@@ -40,16 +36,6 @@ class MarketPower extends BaseDiagramPainter {
       case DiagramEnum.microMonopolyNaturalMarginalCostPricing:
       case DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare:
         return _paintNaturalMonopoly(c, canvas, diagram);
-      case DiagramEnum.microOligopolyKinkedDemandCurve:
-        return _paintKinkedDemand(c, canvas, diagram);
-      case DiagramEnum.microOligopolyCartel:
-        return _paintStandardMonopoly(c, canvas, diagram);
-      case DiagramEnum.microMonopolisticCompetitionLongRun:
-      case DiagramEnum.microMonopolisticCompetitionAbnormalProfit:
-      case DiagramEnum.microMonopolisticCompetitionLoss:
-      case DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift:
-      case DiagramEnum.microMonopolisticCompetitionLossShift:
-        return _paintMonopolisticCompetition(c, canvas, diagram);
       default:
     }
   }
@@ -76,7 +62,7 @@ class MarketPower extends BaseDiagramPainter {
           canvas,
 
           DiagramLabel.consumerSurplus.label,
-          Offset(0.20, 0.05),
+          Offset(0.25, 0.05),
           pointerLine: Offset(0.15, 0.30),
         );
         paintText(
@@ -92,7 +78,7 @@ class MarketPower extends BaseDiagramPainter {
           canvas,
 
           DiagramLabel.producerSurplus.label,
-          Offset(0.55, 0.85),
+          Offset(0.60, 0.85),
           pointerLine: Offset(0.20, 0.70),
         );
         paintShading(c, canvas, ShadeType.consumerSurplus, [
@@ -227,7 +213,7 @@ class MarketPower extends BaseDiagramPainter {
 
     String demandLabel = DiagramLabel.dEqualsAR.label;
     if (diagram == DiagramEnum.microMonopolyWelfare) {
-      demandLabel = DiagramLabel.dEqualsARMB.label;
+      demandLabel = DiagramLabel.dEqualsAR.label;
     }
     paintDiagramLines(
       c,
@@ -506,294 +492,6 @@ class MarketPower extends BaseDiagramPainter {
         xLabel: DiagramLabel.qMC.label,
         showDotAtIntersection: true,
       );
-    }
-  }
-
-  void _paintKinkedDemand(
-    DiagramPainterConfig c,
-    IDiagramCanvas canvas,
-    DiagramEnum diagram,
-  ) {
-    paintAxis(
-      c,
-      canvas,
-
-      yAxisLabel: DiagramLabel.price.label,
-      xAxisLabel: DiagramLabel.quantity.label,
-    );
-
-    paintText(
-      c,
-      canvas,
-
-      'Kink',
-      Offset(0.70, 0.30),
-      pointerLine: Offset(0.55, 0.30),
-    );
-    paintText(c, canvas, 'Elastic', Offset(0.40, 0.15));
-    paintText(c, canvas, 'Inelastic', Offset(0.80, 0.60));
-    paintDiagramLines(
-      c,
-      canvas,
-
-      startPos: Offset(0.10, 0.15),
-      polylineOffsets: [Offset(0.55, 0.30), Offset(0.75, 0.90)],
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-
-      yAxisStartPos: 0.20,
-      xAxisEndPos: 0.25,
-      showDotAtIntersection: true,
-      yLabel: DiagramLabel.p1.label,
-      xLabel: DiagramLabel.q1.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-
-      yAxisStartPos: 0.30,
-      xAxisEndPos: 0.55,
-      showDotAtIntersection: true,
-      yLabel: DiagramLabel.pE.label,
-      xLabel: DiagramLabel.qE.label,
-    );
-    paintDiagramDashedLines(
-      c,
-      canvas,
-
-      yAxisStartPos: 0.60,
-      xAxisEndPos: 0.65,
-      showDotAtIntersection: true,
-      yLabel: DiagramLabel.p2.label,
-      xLabel: DiagramLabel.q2.label,
-    );
-  }
-
-  void _paintMonopolisticCompetition(
-    DiagramPainterConfig c,
-    IDiagramCanvas canvas,
-    DiagramEnum diagram,
-  ) {
-    paintAxis(
-      c,
-      canvas,
-
-      yAxisLabel: DiagramLabel.priceRevenueCosts.label,
-      xAxisLabel: DiagramLabel.quantity.label,
-    );
-
-    paintMarginalCost(c, canvas);
-
-    paintDiagramLines(
-      c,
-      canvas,
-
-      startPos: Offset(0.05, 0.20),
-      bezierPoints: [
-        CustomBezier(control: Offset(0.38, 0.92), endPoint: Offset(0.90, 0.20)),
-      ],
-      label2: DiagramLabel.atc.label,
-      label2Align: LabelAlign.centerTop,
-    );
-
-    if (diagram == DiagramEnum.microMonopolisticCompetitionLongRun ||
-        diagram ==
-            DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift ||
-        diagram == DiagramEnum.microMonopolisticCompetitionLossShift) {
-      if (diagram ==
-          DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift) {
-        paintText(
-          c,
-          canvas,
-
-          'D/AR + MR left\n(and more elastic)\n'
-          'until P=ATC',
-          Offset(0.85, 0.60),
-          type: DiagramTextType.label,
-        );
-        paintLineSegment(
-          c,
-          canvas,
-
-          origin: Offset(0.95, 0.75),
-          strokeWidth: kCurveWidth * 2,
-          angle: pi,
-          color: Colors.red,
-        );
-        paintLineSegment(
-          c,
-          canvas,
-
-          origin: Offset(0.50, 0.75),
-          strokeWidth: kCurveWidth * 2,
-          angle: pi,
-          color: Colors.red,
-        );
-      }
-
-      if (diagram == DiagramEnum.microMonopolisticCompetitionLossShift) {
-        paintText(
-          c,
-          canvas,
-
-          'D/AR & MR shift right\n(also more inelastic)\nuntil P=ATC',
-          Offset(0.85, 0.60),
-        );
-        paintLineSegment(
-          c,
-          canvas,
-
-          origin: Offset(0.60, 0.75),
-          strokeWidth: kCurveWidth * 2,
-          color: Colors.red,
-        );
-        paintLineSegment(
-          c,
-          canvas,
-
-          origin: Offset(0.20, 0.75),
-          strokeWidth: kCurveWidth * 2,
-          color: Colors.red,
-        );
-      }
-
-      paintDiagramLines(
-        c,
-        canvas,
-
-        startPos: Offset(0.02, 0.40),
-        polylineOffsets: [Offset(0.90, 0.80)],
-        label2: DiagramLabel.dEqualsAR.label,
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-
-        startPos: Offset(0.02, 0.40),
-        polylineOffsets: [Offset(0.65, 1.1)],
-        label2: DiagramLabel.mr.label,
-      );
-      paintDot(c, canvas, Offset(0.325, 0.74));
-
-      paintDot(c, canvas, Offset(0.425, 0.585));
-      paintDiagramDashedLines(
-        c,
-        canvas,
-
-        yAxisStartPos: 0.54,
-        xAxisEndPos: 0.325,
-        showDotAtIntersection: true,
-        yLabel: DiagramLabel.p.label,
-        xLabel: DiagramLabel.qProfitMax.label,
-      );
-    }
-    if (diagram == DiagramEnum.microMonopolisticCompetitionAbnormalProfit) {
-      paintText(
-        c,
-        canvas,
-
-        DiagramLabel.abnormalProfit.label,
-        Offset(0.30, 0.15),
-        pointerLine: Offset(0.30, 0.51),
-      );
-      paintShading(c, canvas, ShadeType.abnormalProfit, [
-        Offset(0, 0.49),
-        Offset(0.375, 0.49),
-        Offset(0.375, 0.555),
-        Offset(0, 0.555),
-      ]);
-      paintDiagramLines(
-        c,
-        canvas,
-
-        startPos: Offset(0.02, 0.25),
-        polylineOffsets: [Offset(0.90, 0.85)],
-        label2: DiagramLabel.dEqualsAR.label,
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-
-        startPos: Offset(0.02, 0.25),
-        polylineOffsets: [Offset(0.75, 1.1)],
-        label2: DiagramLabel.mr.label,
-      );
-      paintDiagramDashedLines(
-        c,
-        canvas,
-
-        yAxisStartPos: 0.49,
-        xAxisEndPos: 0.375,
-        showDotAtIntersection: true,
-        yLabel: DiagramLabel.p.label,
-        xLabel: DiagramLabel.qProfitMax.label,
-      );
-      paintDiagramDashedLines(
-        c,
-        canvas,
-
-        yAxisStartPos: 0.555,
-        xAxisEndPos: 0.375,
-        showDotAtIntersection: true,
-        yLabel: DiagramLabel.c.label,
-        xLabel: DiagramLabel.qProfitMax.label,
-      );
-      paintDot(c, canvas, Offset(0.375, 0.665));
-    }
-    if (diagram == DiagramEnum.microMonopolisticCompetitionLoss) {
-      paintText(
-        c,
-        canvas,
-
-        DiagramLabel.loss.label,
-        Offset(0.30, 0.40),
-        pointerLine: Offset(0.25, 0.55),
-      );
-      paintShading(c, canvas, ShadeType.loss, [
-        Offset(0, 0.515),
-        Offset(0.285, 0.515),
-        Offset(0.285, 0.59),
-        Offset(0, 0.59),
-      ]);
-      paintDiagramLines(
-        c,
-        canvas,
-
-        startPos: Offset(0.02, 0.50),
-        polylineOffsets: [Offset(0.90, 0.80)],
-        label2: DiagramLabel.dEqualsAR.label,
-      );
-      paintDiagramLines(
-        c,
-        canvas,
-
-        startPos: Offset(0.02, 0.50),
-        polylineOffsets: [Offset(0.55, 1.1)],
-        label2: DiagramLabel.mr.label,
-      );
-      paintDiagramDashedLines(
-        c,
-        canvas,
-
-        yAxisStartPos: 0.59,
-        xAxisEndPos: 0.285,
-        showDotAtIntersection: true,
-        yLabel: DiagramLabel.p.label,
-        hideXLine: true,
-      );
-      paintDiagramDashedLines(
-        c,
-        canvas,
-
-        yAxisStartPos: 0.515,
-        xAxisEndPos: 0.285,
-        showDotAtIntersection: true,
-        yLabel: DiagramLabel.c.label,
-        xLabel: DiagramLabel.qProfitMax.label,
-      );
-      paintDot(c, canvas, Offset(0.285, 0.80));
     }
   }
 }

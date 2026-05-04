@@ -2,6 +2,7 @@ import 'package:economics_app/home_page/pages/real_world_examples/real_world_exa
 
 import '../../../../../../../diagrams/enums/diagram_enum.dart';
 import '../../../../../../../diagrams/enums/unit_type.dart';
+import '../../../../../../enums/tag.dart';
 import '../../../../../../models/slide.dart';
 import '../../../../../../models/slide_content.dart' show SlideContent;
 import '../../../../../../models/term.dart';
@@ -26,21 +27,18 @@ final explainPEDLowForCommoditiesComparedToManufactured = Slide(
       ],
       data: [
         [
-          'Necessities in consumption (staple foods; rice, grains, fish)',
+          'Necessities in consumption (staple foods; rice, grains, fish);\nEssential inputs for production (e.g. oil, minerals)',
           'Often luxuries (cars, jewelry)',
         ],
         [
-          'Essential inputs for production (e.g. oil, minerals)',
+          'Lack of viable substitutes for primary goods',
           'Many available close substitutes (toys, electronics)',
         ],
         [
           'Tend take small proportion of income (rice, salt)',
           'Tend take bigger proportion of income (cars, computers)',
         ],
-        [
-          'Lack of viable substitutes for primary goods',
-          'Some exceptions: (e.g. specific medicines have PED < 1)',
-        ],
+        ['', 'Some exceptions: (e.g. specific medicines have PED < 1)'],
       ],
     ),
     SlideContent.diagrams([

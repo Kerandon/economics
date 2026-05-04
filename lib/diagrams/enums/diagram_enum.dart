@@ -716,7 +716,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.microCarbonTax =>
         "A tax specifically targeting carbon emissions to correct market failure.",
       DiagramEnum.microTradablePollutionPermitsSupplyDemandDecrease =>
-        "Cap and trade system limiting total pollution quantity.",
+        "The supply of permits is decreased over-time, and demand for permits fall (as firms substitute to cleaner energy sources).",
       DiagramEnum.microCommonPoolResources =>
         "Tragedy of the Commons: Overuse of rival but non-excludable resources.",
       DiagramEnum.microNegativeConsumptionExternality =>
@@ -777,11 +777,11 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.microMonopolyAbnormalProfitAndCosts =>
         "Detailed view of Revenue and Cost boxes for a Monopoly.",
       DiagramEnum.microMonopolyWelfare =>
-        "Deadweight loss under Monopoly compared to Perfect Competition.",
+        "A monopoly restricts output forcing a higher price P > MC leading to welfare loss.",
       DiagramEnum.microMonopolyWelfareAllocativelyEfficient =>
         "Comparison of Price/Output against the Allocatively Efficient point.",
       DiagramEnum.microMonopolyNatural =>
-        "LRAC falls continuously over the relevant range of output.",
+        "AR cuts LRAC while still falling. A single monopoly can supply the entire market at a lower LRAC than multiple firms.",
       DiagramEnum.microMonopolyNaturalUnregulatedWelfare =>
         "High prices and restricted output in an unregulated natural monopoly.",
       DiagramEnum.microMonopolyNaturalPricingComparisons =>
@@ -797,11 +797,11 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.microMonopolisticCompetitionAbnormalProfit =>
         "Abnormal profit: AR>AC at MC=MR",
       DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift =>
-        "Entry of substitutes shifts demand left in the long run.",
+        "In the long-run, entry of substitutes shifts demand left until P is tangent to ATC (P=ATC).",
       DiagramEnum.microMonopolisticCompetitionLoss =>
         "Short-run loss where P < ATC.",
       DiagramEnum.microMonopolisticCompetitionLossShift =>
-        "Exit of firms shifts demand right in the long run.",
+        "In the long-run, exit of firms shifts demand right in the long run until P is tangent to ATC (P=ATC).",
       DiagramEnum.microMonopolisticCompetitionLongRun =>
         "Long-run: P/AR = ATC; but P > MC.",
       DiagramEnum.microOligopolyCartel =>
@@ -854,9 +854,9 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
 
       // Growth
       DiagramEnum.macroClassicalLongTermGrowth =>
-        "LRAS shifting right due to increased quantity/quality of factors.",
+        "LRAS shifting right due showing an increase in potential output.",
       DiagramEnum.macroKeynesianLongTermGrowth =>
-        "Keynesian AS curve shifting right/down representing growth.",
+        "Keynesian AS curve shifting right showing an increase in potential real output.",
 
       // Inflation
       DiagramEnum.macroClassicalDemandPullInflation =>
@@ -888,7 +888,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.macroExpectationsAugmentedPhillipsCurveDeflationaryGap =>
         "Movement along SRPC to lower inflation/higher unemployment.",
       DiagramEnum.macroLRPCFallInNRU =>
-        "LRPC shifting left due to supply-side policies improving labor markets.",
+        "LRPC shifts left showing a decrease in the NRU.",
 
       // Poverty
       DiagramEnum.macroLorenzCurveCalculation =>
@@ -971,11 +971,11 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.globalPPCCapitalInvestment =>
         "Trade-off: Consuming less now to invest in capital for future growth.",
       DiagramEnum.globalPPCEconomicGrowth =>
-        "Outward shift of the PPC representing development and capacity growth.",
+        "Outward shift of the PPC representing increase in potential output.",
       DiagramEnum.globalPPCUnsustainableUseOfNaturalResources =>
         "Inward shift of the PPC due to resource depletion.",
       DiagramEnum.globalPovertyCycle =>
-        "Circular flow showing how low income leads to low savings and investment.",
+        'Poverty cycle transmits poverty from one generation to the next and requires external forces to break it.',
       DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges =>
         'Education and Nudges work to decrease consumer demand.',
 

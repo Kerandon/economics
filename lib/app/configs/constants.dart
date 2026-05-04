@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pdf/pdf.dart';
 
 const kAppName = 'IB Econ Toolkit';
 const kLevel = 'level';
@@ -29,3 +30,7 @@ const kAnimationDuration = 500;
 /// Colors
 const kBackgroundAlphaLight = 10;
 const kHighLightedColor = Colors.red;
+const BASE_DIAGRAM_SIZE = 400.0;
+const double kTextScale = 1.0;
+const PdfColor hlColor = PdfColors.deepOrange900;
+const PdfColor hlBgColor = PdfColors.orange50;

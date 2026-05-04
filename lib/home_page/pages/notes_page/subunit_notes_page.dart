@@ -201,29 +201,7 @@ class SubunitNotesPage extends StatelessWidget {
     }
 
     // --- E. TERMS & GLOSSARY ---
-    if (block.term != null) {
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: RichText(
-            text: TextSpan(
-              style: const TextStyle(
-                color: Colors.black87,
-                fontSize: 18,
-                height: 1.5,
-              ),
-              children: [
-                TextSpan(
-                  text: '${block.term!.term}: ',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                TextSpan(text: block.term!.explanation),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
