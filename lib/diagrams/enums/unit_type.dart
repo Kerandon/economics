@@ -37,7 +37,7 @@ enum Subunit {
     'Role of government in microeconomics',
     UnitType.micro,
   ),
-  marketFailureExternalities(
+  marketFailureExternalitiesCPR(
     '2.8',
     'Market failure externalities and common pool or common access resources',
     UnitType.micro,
@@ -47,17 +47,17 @@ enum Subunit {
     'Market failure public goods',
     UnitType.micro,
   ),
-  marketFailureAsymmetric(
+  marketFailureAsymmetricInformation(
     '2.10',
     'Market failure asymmetric information (HL only)',
     UnitType.micro,
   ),
-  marketFailurePower(
+  marketFailureMarketPower(
     '2.11',
     'Market failure market power (HL only)',
     UnitType.micro,
   ),
-  marketEquity(
+  marketInequity(
     '2.12',
     'The market’s inability to achieve equity (HL only)',
     UnitType.micro,
@@ -184,36 +184,36 @@ enum SyllabusPoint {
   /// UNIT 2.10 — Market Failure & Market Power (HL)
   // Perfect competition
   perfectCompetitionCharacteristics(
-    Subunit.marketFailurePower,
+    Subunit.marketFailureMarketPower,
     'Perfect competition: many firms, free entry, homogeneous products',
     [Skill.a02],
   ),
 
   // Monopoly
   monopoly(
-    Subunit.marketFailurePower,
+    Subunit.marketFailureMarketPower,
     'Monopoly: single or dominant firm, high barriers to entry, no close substitutes, standard and natural monopoly',
     [Skill.a02],
   ),
 
   // Oligopoly
   oligopoly(
-    Subunit.marketFailurePower,
+    Subunit.marketFailureMarketPower,
     'Oligopoly: few large interdependent firms, high barriers to entry, collusive and non-collusive',
     [Skill.a03, Skill.a04],
   ),
   monopolisticCompetition(
-    Subunit.marketFailurePower,
+    Subunit.marketFailureMarketPower,
     'Monopolistic Competition: many relatively small firms with high production differentiation, limited market power and low barriers to entry',
     [Skill.a03, Skill.a04],
   ),
   advantagesAndRisksOfMarketPower(
-    Subunit.marketFailurePower,
+    Subunit.marketFailureMarketPower,
     'Economies of scale, dynamic efficiency, natural monopoly vs. P > MC, under-allocation, higher prices, welfare loss, anti-competitive behavior',
     [Skill.a03],
   ),
   governmentInterventionInResponseToAbuseOfMarketPower(
-    Subunit.marketFailurePower,
+    Subunit.marketFailureMarketPower,
     'Legislation, regulations, government ownership and fines',
     [Skill.a03],
   ),

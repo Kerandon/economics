@@ -67,12 +67,6 @@ final tradeOffInflationAndUnemployment15Mark = Slide(
       DiagramEnum.macroClassicalDeflationaryGapAdjustment,
     ]),
     SlideContent.diagrams([DiagramEnum.macroADASKeynesianSpareCapacity]),
-    SlideContent.realWorldExamples([
-      RealWorldExamples.oilCrisisStagflationUSA1970s,
-      RealWorldExamples.economicBoomOf1990s,
-      RealWorldExamples.globalFinancialCrisis2008,
-      RealWorldExamples.covidPandemic2020,
-      RealWorldExamples.postPandemicInflation2022,
-    ]),
+    SlideContent.realWorldExamples([]),
   ],
 );

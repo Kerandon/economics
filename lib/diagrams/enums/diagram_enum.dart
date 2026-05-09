@@ -48,7 +48,7 @@ enum DiagramEnum {
   microPriceFloor,
   microMinimumWage,
   microMinimumWageWelfare,
-  microNationalMinimumWageInelasticDemandAndSupply,
+  microMinimumWageInelasticDemandAndSupply,
   microAgriculturalPriceFloor,
   microIndirectTax,
   microIndirectTaxInelasticDemand,
@@ -63,7 +63,7 @@ enum DiagramEnum {
   microNegativeProductionExternalityWelfare,
   microNegativeProductionExternalityPigouvianTax,
   microNegativeProductionExternalityRegulations,
-  microCarbonTax,
+  microNegativeProductionCarbonTax,
   microTradablePollutionPermits,
   microTradablePollutionPermitsSupplyDemandDecrease,
   microCommonPoolResources,
@@ -111,7 +111,7 @@ enum DiagramEnum {
   microOligopolyKinkedDemandCurve,
   microMonopolisticCompetitionAbnormalProfit,
   microMonopolisticCompetitionAbnormalProfitShift,
-  microMonopolisticCompetitionLoss,
+  microMonopolisticCompetitionEconomicLoss,
   microMonopolisticCompetitionLossShift,
   microMonopolisticCompetitionLongRun,
 
@@ -315,7 +315,7 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.microPriceFloor => Subunit.roleOfGovernment,
     DiagramEnum.microMinimumWage => Subunit.roleOfGovernment,
     DiagramEnum.microMinimumWageWelfare => Subunit.roleOfGovernment,
-    DiagramEnum.microNationalMinimumWageInelasticDemandAndSupply =>
+    DiagramEnum.microMinimumWageInelasticDemandAndSupply =>
       Subunit.roleOfGovernment,
     DiagramEnum.microAgriculturalPriceFloor => Subunit.roleOfGovernment,
     DiagramEnum.microIndirectTax => Subunit.roleOfGovernment,
@@ -325,111 +325,117 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.microSubsidyInelasticDemand => Subunit.roleOfGovernment,
     DiagramEnum.microSubsidyElasticDemand => Subunit.roleOfGovernment,
     DiagramEnum.microNegativeProductionExternality =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microNegativeProductionExternalityWelfare =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microNegativeConsumptionExternalityWelfare =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microPositiveProductionExternalityWelfare =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microPositiveConsumptionExternalityWelfare =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microNegativeConsumptionExternalityRegulations =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microNegativeProductionExternalityPigouvianTax =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microNegativeProductionExternalityRegulations =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microNegativeProductionExternalityIncludingOveruseOfCPR =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
 
-    DiagramEnum.microCarbonTax => Subunit.marketFailureExternalities,
+    DiagramEnum.microNegativeProductionCarbonTax =>
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microTradablePollutionPermits =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microTradablePollutionPermitsSupplyDemandDecrease =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
 
     DiagramEnum.microNegativeConsumptionExternality =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
 
     DiagramEnum.microPositiveProductionExternality =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
 
     DiagramEnum.microPositiveConsumptionExternality =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microNegativeConsumptionExternalityPigouvianTax =>
-      Subunit.marketFailureExternalities,
-    DiagramEnum.microCommonPoolResources => Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
+    DiagramEnum.microCommonPoolResources =>
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microPositiveConsumptionExternalitySubsidy =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microPositiveConsumptionExternalityEducationAndNudges =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microPositiveConsumptionExternalityGovernmentProvision =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microPositiveProductionExternalitySubsidy =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microPositiveProductionExternalityGovernmentProvision =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
     DiagramEnum.microPositiveConsumptionExternalityRegulations =>
-      Subunit.marketFailureExternalities,
+      Subunit.marketFailureExternalitiesCPR,
 
     /// Public Goods
     DiagramEnum.microPublicGoods => Subunit.marketFailurePublicGoods,
 
     /// Market Power
     DiagramEnum.microPerfectCompetitionFirmLongRun =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
 
     DiagramEnum.microPerfectCompetitionMarketLongRun =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
 
     DiagramEnum.microPerfectCompetitionFirmAbnormalProfitAdjustment =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
 
     DiagramEnum.microPerfectCompetitionMarketAbnormalProfit =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
 
-    DiagramEnum.microPerfectCompetitionFirmLoss => Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionFirmLoss =>
+      Subunit.marketFailureMarketPower,
 
-    DiagramEnum.microPerfectCompetitionMarketLoss => Subunit.marketFailurePower,
+    DiagramEnum.microPerfectCompetitionMarketLoss =>
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microPerfectCompetitionShutdownPoint =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microPerfectCompetitionNormalProfitRevenueCostsCalculation =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microPerfectCompetitionShutdownLossCalculation =>
-      Subunit.marketFailurePower,
-    DiagramEnum.microMonopolyAbnormalProfit => Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
+    DiagramEnum.microMonopolyAbnormalProfit => Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolyWelfareAllocativelyEfficient =>
-      Subunit.marketFailurePower,
-    DiagramEnum.microMonopolyNatural => Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
+    DiagramEnum.microMonopolyNatural => Subunit.marketFailureMarketPower,
     DiagramEnum.microPerfectCompetitionAbnormalProfitRevenueCostsCalculation =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolyNaturalPricingComparisons =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolyNaturalUnregulatedWelfare =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolyNaturalMarginalCostPricing =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare =>
-      Subunit.marketFailurePower,
-    DiagramEnum.microMonopolyWelfare => Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
+    DiagramEnum.microMonopolyWelfare => Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolyAbnormalProfitAndCosts =>
-      Subunit.marketFailurePower,
-    DiagramEnum.microOligopolyKinkedDemandCurve => Subunit.marketFailurePower,
-    DiagramEnum.microOligopolyCartel => Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
+    DiagramEnum.microOligopolyKinkedDemandCurve =>
+      Subunit.marketFailureMarketPower,
+    DiagramEnum.microOligopolyCartel => Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolisticCompetitionAbnormalProfit =>
-      Subunit.marketFailurePower,
-    DiagramEnum.microMonopolisticCompetitionLoss => Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
+    DiagramEnum.microMonopolisticCompetitionEconomicLoss =>
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolisticCompetitionLongRun =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolisticCompetitionLossShift =>
-      Subunit.marketFailurePower,
+      Subunit.marketFailureMarketPower,
 
     ///Macro
     /// Measuring economic activity
@@ -685,7 +691,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "A price floor in the labor market creating unemployment (excess supply of labor).",
       DiagramEnum.microMinimumWageWelfare =>
         "Welfare analysis (deadweight loss) caused by a minimum wage.",
-      DiagramEnum.microNationalMinimumWageInelasticDemandAndSupply =>
+      DiagramEnum.microMinimumWageInelasticDemandAndSupply =>
         "Shows reduced unemployment impact when labor demand/supply are inelastic.",
       DiagramEnum.microAgriculturalPriceFloor =>
         "Government purchasing the surplus to support agricultural prices.",
@@ -713,7 +719,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Using a tax to internalize the externality and shift MPC to MSC.",
       DiagramEnum.microNegativeProductionExternalityRegulations =>
         "Using quotas or regulation to reduce quantity to the social optimum.",
-      DiagramEnum.microCarbonTax =>
+      DiagramEnum.microNegativeProductionCarbonTax =>
         "A tax specifically targeting carbon emissions to correct market failure.",
       DiagramEnum.microTradablePollutionPermitsSupplyDemandDecrease =>
         "The supply of permits is decreased over-time, and demand for permits fall (as firms substitute to cleaner energy sources).",
@@ -798,7 +804,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Abnormal profit: AR>AC at MC=MR",
       DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift =>
         "In the long-run, entry of substitutes shifts demand left until P is tangent to ATC (P=ATC).",
-      DiagramEnum.microMonopolisticCompetitionLoss =>
+      DiagramEnum.microMonopolisticCompetitionEconomicLoss =>
         "Short-run loss where P < ATC.",
       DiagramEnum.microMonopolisticCompetitionLossShift =>
         "In the long-run, exit of firms shifts demand right in the long run until P is tangent to ATC (P=ATC).",

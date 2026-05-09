@@ -5,11 +5,12 @@ import '../../../../../../models/slide.dart';
 import '../../../../../../models/slide_content.dart';
 import '../../../../../../models/term.dart';
 import '../../../../../terms/terms.dart';
+
 final explainImportanceOfYEDToManufacturingServices = Slide(
   subunit: Subunit.elasticityDemand,
   tags: [Tag.hl, Tag.p1a],
   question:
-  'Explain the importance of income elasticity of demand (YED) for the primary, manufacturing and service sectors of the economy when real incomes are rising.',
+      'Explain the importance of income elasticity of demand (YED) for the primary, manufacturing and service sectors of the economy when real incomes are rising.',
   contents: [
     SlideContent.econTerms([
       EconTerm.incomeElasticityOfDemand,

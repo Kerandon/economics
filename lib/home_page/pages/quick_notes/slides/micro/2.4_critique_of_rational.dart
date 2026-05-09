@@ -1,4 +1,3 @@
-import '../../../../../diagrams/enums/diagram_enum.dart';
 import '../../../../../diagrams/enums/unit_type.dart';
 import '../../../../enums/tag.dart';
 import '../../../../models/slide.dart';
@@ -10,8 +9,7 @@ final critiqueOfMaximizing = Slide(
   subunit: Subunit.critiqueBehaviour,
   tags: [Tag.hl],
   contents: [
-    SlideContent.text(
-        '''
+    SlideContent.text('''
   <ul>
     <li><b>Rational Choice Theory:</b> three assumptions:
       <ul>
@@ -27,16 +25,18 @@ final critiqueOfMaximizing = Slide(
       </ul>
     </li>
   </ul>
-  '''
-    ),
+  '''),
     SlideContent.simpleTable(
       title: 'Evaluation of Behavioral-Based Policies',
       headers: ['Advantages', 'Limitations'],
       data: [
-        ['Simple & low cost', 'Ethical concerns / manipulation of choice'],
-        ['Freedom of choice', 'Less transparent than taxes or bans'],
-        ['Better reflects real human behavior', 'Less effective than regulation'],
-        ['complement other policies (e.g. nudges + taxes)', ''],
+        ['Simple / low cost', 'Ethical concerns / manipulation of choice'],
+        ['Freedom of choice', 'Less transparent than taxes  / regulation'],
+        [
+          'Better reflects real human behavior',
+          'Less effective than regulation',
+        ],
+        ['Complement other policies (e.g. nudges support taxes)', ''],
       ],
     ),
     SlideContent.text('''
@@ -50,29 +50,14 @@ final critiqueOfMaximizing = Slide(
 </ul>
       '''),
     SlideContent.econTerms(
-        [
-          EconTerm.boundedRationality,
-          EconTerm.boundedSelfControl,
-          EconTerm.boundedSelfishness,
-          EconTerm.imperfectInformation,
-          EconTerm.choiceArchitecture,
-          EconTerm.nudges,
-          EconTerm.biases,
-          EconTerm.availabilityBias,
-          EconTerm.anchoring,
-          EconTerm.framing,
-          EconTerm.ruleOfThumb,
-          EconTerm.corporateSocialResponsibility,
-          EconTerm.satisficing,
-        ]),
-    SlideContent.realWorldExamples([
-      RealWorldExamples.organDonationOptOut,
-      RealWorldExamples.cafeteriaLayoutNudge,
-      RealWorldExamples.pianoStairs,
-      RealWorldExamples.hiddenCigarettes,
-      RealWorldExamples.patagoniaCSR,
-      RealWorldExamples.unileverCSR,
-    ]),
-
+      EconTerm.values
+          .where((term) => term.subunit == Subunit.critiqueBehaviour)
+          .toList(),
+    ),
+    SlideContent.realWorldExamples(
+      RealWorldExamples.values
+          .where((term) => term.subunit == Subunit.critiqueBehaviour)
+          .toList(),
+    ),
   ],
 );

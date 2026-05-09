@@ -46,16 +46,8 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     DiagramWidget([SupplyDiagram(c, DiagramEnum.microSupplyIncrease)]),
     DiagramWidget([SupplyDiagram(c, DiagramEnum.microSupplyDecrease)]),
     DiagramWidget([SupplyDiagram(c, DiagramEnum.microTotalAndMarginalProduct)]),
-    DiagramWidget(
-      [
-        SupplyDiagram(c, DiagramEnum.microMarginalProduct),
-      ],
-    ),
-    DiagramWidget(
-      [
-        SupplyDiagram(c, DiagramEnum.microMarginalCost),
-      ],
-    ),
+    DiagramWidget([SupplyDiagram(c, DiagramEnum.microMarginalProduct)]),
+    DiagramWidget([SupplyDiagram(c, DiagramEnum.microMarginalCost)]),
 
     /// Equilibrium & Surplus
     DiagramWidget([CompetitiveMarket(c, DiagramEnum.microMarketEquilibrium)]),
@@ -125,7 +117,9 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
         DiagramEnum.microNegativeProductionExternalityRegulations,
       ),
     ]),
-    DiagramWidget([Externalities(c, DiagramEnum.microCarbonTax)]),
+    DiagramWidget([
+      Externalities(c, DiagramEnum.microNegativeProductionCarbonTax),
+    ]),
     DiagramWidget([
       Externalities(c, DiagramEnum.microTradablePollutionPermits),
     ]),
@@ -170,9 +164,6 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     ]),
     DiagramWidget([
       Externalities(c, DiagramEnum.microPositiveConsumptionExternality),
-    ]),
-    DiagramWidget([
-      Externalities(c, DiagramEnum.microPositiveConsumptionExternalitySubsidy),
     ]),
     DiagramWidget([
       Externalities(c, DiagramEnum.microPositiveConsumptionExternalitySubsidy),
@@ -229,11 +220,16 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     /// ============================================================
     /// MONOPOLY & OTHERS (Back to individual elements)
     /// ============================================================
-    DiagramWidget([MonopolyDiagram(c, DiagramEnum.microMonopolyAbnormalProfit)]),
+    DiagramWidget([
+      MonopolyDiagram(c, DiagramEnum.microMonopolyAbnormalProfit),
+    ]),
     DiagramWidget([MonopolyDiagram(c, DiagramEnum.microMonopolyWelfare)]),
     DiagramWidget([MonopolyDiagram(c, DiagramEnum.microMonopolyNatural)]),
     DiagramWidget([
-      MonopolyDiagram(c, DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare),
+      MonopolyDiagram(
+        c,
+        DiagramEnum.microMonopolyNaturalAverageCostPricingWelfare,
+      ),
     ]),
     DiagramWidget([
       MonopolyDiagram(c, DiagramEnum.microMonopolyNaturalMarginalCostPricing),
@@ -249,10 +245,22 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       OligopolyDiagram(c, DiagramEnum.microOligopolyKinkedDemandCurve),
     ]),
     DiagramWidget([
-      MonopolisticCompetitionDiagram(c, DiagramEnum.microMonopolisticCompetitionLongRun),
+      MonopolisticCompetitionDiagram(
+        c,
+        DiagramEnum.microMonopolisticCompetitionLongRun,
+      ),
     ]),
     DiagramWidget([
-      MonopolisticCompetitionDiagram(c, DiagramEnum.microMonopolisticCompetitionAbnormalProfit),
+      MonopolisticCompetitionDiagram(
+        c,
+        DiagramEnum.microMonopolisticCompetitionAbnormalProfit,
+      ),
+    ]),
+    DiagramWidget([
+      MonopolisticCompetitionDiagram(
+        c,
+        DiagramEnum.microMonopolisticCompetitionEconomicLoss,
+      ),
     ]),
     DiagramWidget([
       MonopolisticCompetitionDiagram(

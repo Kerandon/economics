@@ -23,6 +23,7 @@ class TableData {
   final String? title;
   final String? figCaption;
   final List<Tag>? tags;
+  final List<double>? flexColumnWidths; // 🌟 NEW: Custom column sizing
 
   TableData({
     required this.headers,
@@ -30,6 +31,7 @@ class TableData {
     this.title,
     this.figCaption,
     this.tags,
+    this.flexColumnWidths, // 🌟 NEW
   });
 }
 
@@ -45,13 +47,10 @@ class SlideContent {
   // Visuals
   final List<DiagramEnum>? diagramEnums;
   final List<DiagramWidget>? diagramWidgets;
-
-  // 🌟 NEW: Field to hold an optional description for the diagram block
   final String? diagramDescription;
 
   // Custom Widgets (For UI rendering)
   final Widget? widget;
-
   final TableData? tableData;
 
   SlideContent({
@@ -75,7 +74,7 @@ class SlideContent {
     List<RealWorldExamples>? realWorldExamples,
     List<DiagramEnum>? diagramEnums,
     List<DiagramWidget>? diagramWidgets,
-    String? diagramDescription, // 🌟 NEW
+    String? diagramDescription,
     Widget? widget,
     TableData? tableData,
   }) {
@@ -109,7 +108,6 @@ class SlideContent {
   factory SlideContent.realWorldExamples(List<RealWorldExamples> examples) =>
       SlideContent(realWorldExamples: examples);
 
-  // 🌟 UPDATED FACTORY: Now accepts an optional named description parameter
   factory SlideContent.diagrams(
     List<DiagramEnum> diagrams, {
     String? description,
@@ -118,20 +116,22 @@ class SlideContent {
   factory SlideContent.customWidget(Widget widget) =>
       SlideContent(widget: widget);
 
-// 9. SIMPLE TABLE
+  // 9. SIMPLE TABLE
   factory SlideContent.simpleTable({
     required List<String> headers,
     required List<List<String>> data,
     String? title,
     String? figCaption,
-    List<Tag>? tags, // Added tags here
+    List<Tag>? tags,
+    List<double>? flexColumnWidths, // 🌟 NEW
   }) {
     final table = TableData(
       headers: headers,
       data: data,
       title: title,
       figCaption: figCaption,
-      tags: tags, // Passed to TableData
+      tags: tags,
+      flexColumnWidths: flexColumnWidths, // 🌟 NEW
     );
     return SlideContent(
       tableData: table,
@@ -140,7 +140,6 @@ class SlideContent {
         data: data,
         title: title,
         figCaption: figCaption,
-        // tags: tags, // Pass to widget if SimpleTable supports it
       ),
     );
   }

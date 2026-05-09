@@ -202,7 +202,6 @@ class SubunitNotesPage extends StatelessWidget {
 
     // --- E. TERMS & GLOSSARY ---
 
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: widgets,

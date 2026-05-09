@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart' show Size, Axis;
 import 'package:pdf/pdf.dart';
@@ -567,7 +566,6 @@ List<pw.Widget> buildSlidePdfElements({
   // --- CONTENTS LOOP ---
   if (slide.contents != null) {
     for (var block in slide.contents!) {
-
       if (block.econTerms != null && block.econTerms!.isNotEmpty) {
         tryAddHeader('TERMS');
         for (int i = 0; i < block.econTerms!.length; i++) {
@@ -694,73 +692,103 @@ List<pw.Widget> buildSlidePdfElements({
       if (block.realWorldExamples != null &&
           block.realWorldExamples!.isNotEmpty) {
         tryAddHeader('REAL WORLD EXAMPLES');
-        final tableRows = <pw.TableRow>[];
-        for (int i = 0; i < block.realWorldExamples!.length; i++) {
-          final rwe = block.realWorldExamples![i];
-          final isEven = i % 2 == 0;
-          tableRows.add(
-            pw.TableRow(
-              decoration: pw.BoxDecoration(
-                color: isEven ? PdfColors.white : PdfColors.grey100,
+
+        // 1. Iterate over each topic
+        for (final topic in block.realWorldExamples!) {
+          if (topic.examples.isEmpty)
+            continue; // Skip if a topic has no examples
+
+          // 2. Add the Topic Name as a sub-header
+          pageElements.add(
+            pw.Padding(
+              padding: const pw.EdgeInsets.only(top: 6.0, bottom: 4.0),
+              child: pw.Text(
+                topic.topicName,
+                style: pw.TextStyle(
+                  font: boldUnicodeFont,
+                  fontSize: 10,
+                  fontWeight: pw.FontWeight.bold,
+                  color: PdfColors.black,
+                ),
               ),
-              children: [
-                pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(
-                    vertical: 4.0,
-                    horizontal: 6.0,
-                  ),
-                  child: pw.Text(
-                    rwe.example,
-                    style: pw.TextStyle(
-                      font: boldUnicodeFont,
-                      fontSize: 9,
-                      fontWeight: pw.FontWeight.bold,
-                      color: PdfColors.black,
-                    ),
-                  ),
-                ),
-                pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(
-                    vertical: 4.0,
-                    horizontal: 6.0,
-                  ),
-                  child: pw.Text(
-                    stripHtmlIfNeeded(rwe.explanation ?? ''),
-                    style: pw.TextStyle(
-                      font: unicodeFont,
-                      fontSize: 9,
-                      color: PdfColors.grey800,
-                      lineSpacing: 1.2,
-                    ),
-                  ),
-                ),
-              ],
             ),
           );
-        }
 
-        pageElements.add(
-          pw.Container(
-            decoration: pw.BoxDecoration(
-              border: pw.Border.all(color: PdfColors.grey300),
-              borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
-            ),
-            child: pw.Table(
-              columnWidths: const {
-                0: pw.FlexColumnWidth(1.2),
-                1: pw.FlexColumnWidth(2.8),
-              },
-              border: pw.TableBorder(
-                horizontalInside: pw.BorderSide(color: PdfColors.grey200),
-                verticalInside: pw.BorderSide(color: PdfColors.grey200),
+          // 3. Build the table rows for the specific topic's examples
+          final tableRows = <pw.TableRow>[];
+          for (int i = 0; i < topic.examples.length; i++) {
+            final rwe = topic.examples[i];
+            final isEven = i % 2 == 0;
+
+            tableRows.add(
+              pw.TableRow(
+                decoration: pw.BoxDecoration(
+                  color: isEven ? PdfColors.white : PdfColors.grey100,
+                ),
+                children: [
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(
+                      vertical: 4.0,
+                      horizontal: 6.0,
+                    ),
+                    child: pw.Text(
+                      rwe.title, // Updated from rwe.example
+                      style: pw.TextStyle(
+                        font: boldUnicodeFont,
+                        fontSize: 9,
+                        fontWeight: pw.FontWeight.bold,
+                        color: PdfColors.black,
+                      ),
+                    ),
+                  ),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.symmetric(
+                      vertical: 4.0,
+                      horizontal: 6.0,
+                    ),
+                    child: pw.Text(
+                      stripHtmlIfNeeded(
+                        rwe.explanation,
+                      ), // Removed ?? '' since it's non-nullable now
+                      style: pw.TextStyle(
+                        font: unicodeFont,
+                        fontSize: 9,
+                        color: PdfColors.grey800,
+                        lineSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              children: tableRows,
-            ),
-          ),
-        );
-        pageElements.add(pw.SizedBox(height: 6)); // COMPACTED
-      }
+            );
+          }
 
+          // 4. Add the generated table to the PDF
+          pageElements.add(
+            pw.Container(
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(color: PdfColors.grey300),
+                borderRadius: const pw.BorderRadius.all(pw.Radius.circular(4)),
+              ),
+              child: pw.Table(
+                columnWidths: const {
+                  0: pw.FlexColumnWidth(1.2),
+                  1: pw.FlexColumnWidth(2.8),
+                },
+                border: pw.TableBorder(
+                  horizontalInside: pw.BorderSide(color: PdfColors.grey200),
+                  verticalInside: pw.BorderSide(color: PdfColors.grey200),
+                ),
+                children: tableRows,
+              ),
+            ),
+          );
+
+          pageElements.add(
+            pw.SizedBox(height: 6),
+          ); // COMPACTED spacing between topics
+        }
+      }
       if (block.tableData != null) {
         final tableInfo = block.tableData!;
         final cleanHeaders = tableInfo.headers

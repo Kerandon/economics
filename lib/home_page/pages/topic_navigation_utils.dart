@@ -7,6 +7,7 @@ import 'package:economics_app/home_page/pages/topic_enum.dart';
 import 'package:flutter/material.dart';
 
 import 'diagrams_page/diagrams_page.dart';
+
 extension TopicNavigation on Topic {
   Widget get page {
     switch (this) {
@@ -18,7 +19,6 @@ extension TopicNavigation on Topic {
         return const PaperOneQuestionsPage();
       case Topic.quickNotes:
         return const QuickNotesPage();
-
     }
   }
 }

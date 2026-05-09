@@ -556,7 +556,7 @@ and bundled services to make their goods appear differentiated in a highly compe
       </ul>
       '''),
       SlideContent.diagrams([
-        DiagramEnum.microMonopolisticCompetitionLoss,
+        DiagramEnum.microMonopolisticCompetitionEconomicLoss,
         DiagramEnum.microMonopolisticCompetitionLossShift,
       ]),
       SlideContent.text('''
@@ -629,7 +629,7 @@ and bundled services to make their goods appear differentiated in a highly compe
 
 List<Slide> get marketPowerTerms => [
   Slide(
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
     title: kTermsGlossary,
     contents: [
       // SlideContent.customWidget(

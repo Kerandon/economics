@@ -5,22 +5,23 @@ import '../painter_methods/paint_text.dart';
 import 'shade_type.dart';
 import '../../models/custom_bezier.dart';
 import '../painter_constants.dart';
+
 void paintShading(
-    DiagramPainterConfig config,
-    IDiagramCanvas canvas,
-    ShadeType shade,
-    List<dynamic> pointsAndBeziers, {
-      bool striped = true,
-      double stripeSpacing = 30.0,
-      double strokeWidth = 2.0,
-      int alpha = 80,
-      bool invertStripes = false,
-      String? label,
-      Color? labelColor,
-      LabelAlign labelAlign = LabelAlign.center,
-      bool showLabelBackground = true,
-      double labelPadding = 20.0,
-    }) {
+  DiagramPainterConfig config,
+  IDiagramCanvas canvas,
+  ShadeType shade,
+  List<dynamic> pointsAndBeziers, {
+  bool striped = true,
+  double stripeSpacing = 30.0,
+  double strokeWidth = 2.0,
+  int alpha = 80,
+  bool invertStripes = false,
+  String? label,
+  Color? labelColor,
+  LabelAlign labelAlign = LabelAlign.center,
+  bool showLabelBackground = true,
+  double labelPadding = 20.0,
+}) {
   if (pointsAndBeziers.isEmpty) return;
 
   // 🌟 MAGIC CHECK: Detect if we are printing to the PDF
@@ -86,10 +87,12 @@ void paintShading(
     final double maxDim = width + height;
     final stripeColor = color.withAlpha(alpha + 20);
 
-// FIX: Bring the PDF spacing way down so the stripes are tightly packed,
+    // FIX: Bring the PDF spacing way down so the stripes are tightly packed,
     // but keep the stroke ultra-thin so they don't merge into a block again.
     final double spacing = isPdf ? 5.0 : (stripeSpacing * config.averageRatio);
-    final double actualStroke = isPdf ? 0.30 : (strokeWidth * config.averageRatio);
+    final double actualStroke = isPdf
+        ? 0.30
+        : (strokeWidth * config.averageRatio);
 
     for (double i = -maxDim; i < maxDim; i += spacing) {
       Offset p1 = invertStripes ? Offset(0, i + width) : Offset(0, i);
@@ -121,15 +124,51 @@ void paintShading(
     LabelPivot vPivot = LabelPivot.middle;
 
     switch (labelAlign) {
-      case LabelAlign.centerTop: hPivot = LabelPivot.center; vPivot = LabelPivot.bottom; nudge = Offset(0, -gapValue); break;
-      case LabelAlign.centerBottom: hPivot = LabelPivot.center; vPivot = LabelPivot.top; nudge = Offset(0, gapValue); break;
-      case LabelAlign.left: hPivot = LabelPivot.right; vPivot = LabelPivot.middle; nudge = Offset(-gapValue, 0); break;
-      case LabelAlign.right: hPivot = LabelPivot.left; vPivot = LabelPivot.middle; nudge = Offset(gapValue, 0); break;
-      case LabelAlign.topLeft: hPivot = LabelPivot.right; vPivot = LabelPivot.bottom; nudge = Offset(-gapValue, -gapValue); break;
-      case LabelAlign.topRight: hPivot = LabelPivot.left; vPivot = LabelPivot.bottom; nudge = Offset(gapValue, -gapValue); break;
-      case LabelAlign.bottomLeft: hPivot = LabelPivot.right; vPivot = LabelPivot.top; nudge = Offset(-gapValue, gapValue); break;
-      case LabelAlign.bottomRight: hPivot = LabelPivot.left; vPivot = LabelPivot.top; nudge = Offset(gapValue, gapValue); break;
-      case LabelAlign.center: hPivot = LabelPivot.center; vPivot = LabelPivot.middle; nudge = Offset.zero; break;
+      case LabelAlign.centerTop:
+        hPivot = LabelPivot.center;
+        vPivot = LabelPivot.bottom;
+        nudge = Offset(0, -gapValue);
+        break;
+      case LabelAlign.centerBottom:
+        hPivot = LabelPivot.center;
+        vPivot = LabelPivot.top;
+        nudge = Offset(0, gapValue);
+        break;
+      case LabelAlign.left:
+        hPivot = LabelPivot.right;
+        vPivot = LabelPivot.middle;
+        nudge = Offset(-gapValue, 0);
+        break;
+      case LabelAlign.right:
+        hPivot = LabelPivot.left;
+        vPivot = LabelPivot.middle;
+        nudge = Offset(gapValue, 0);
+        break;
+      case LabelAlign.topLeft:
+        hPivot = LabelPivot.right;
+        vPivot = LabelPivot.bottom;
+        nudge = Offset(-gapValue, -gapValue);
+        break;
+      case LabelAlign.topRight:
+        hPivot = LabelPivot.left;
+        vPivot = LabelPivot.bottom;
+        nudge = Offset(gapValue, -gapValue);
+        break;
+      case LabelAlign.bottomLeft:
+        hPivot = LabelPivot.right;
+        vPivot = LabelPivot.top;
+        nudge = Offset(-gapValue, gapValue);
+        break;
+      case LabelAlign.bottomRight:
+        hPivot = LabelPivot.left;
+        vPivot = LabelPivot.top;
+        nudge = Offset(gapValue, gapValue);
+        break;
+      case LabelAlign.center:
+        hPivot = LabelPivot.center;
+        vPivot = LabelPivot.middle;
+        nudge = Offset.zero;
+        break;
     }
 
     paintText(

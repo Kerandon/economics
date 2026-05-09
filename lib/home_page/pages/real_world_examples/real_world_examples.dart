@@ -2,434 +2,632 @@ import '../../../diagrams/enums/unit_type.dart';
 import '../../enums/tag.dart';
 import '../../models/term.dart';
 
+/// Helper class to hold individual example data
+class ExampleDetail {
+  final String title;
+  final String explanation;
+  final List<Tag> tags;
+
+  const ExampleDetail({
+    required this.title,
+    required this.explanation,
+    this.tags = const [],
+  });
+}
+
 enum RealWorldExamples {
   /// 2.4 Critique
-  organDonationOptOut(
-    'Organ Donation (Choice Architecture - Default Choice)',
-    explanation:
-    'Countries with "opt-out" systems have higher donation rates than "opt-in" systems, leveraging the default bias.',
+  critiqueBehaviour(
+    topicName: 'Critique of Economic Behavior',
     subunit: Subunit.critiqueBehaviour,
-    tags: [Tag.hl],
+    examples: [
+      ExampleDetail(
+        title: 'Organ Donation (Choice Architecture: Default Choice)',
+        explanation:
+            'France - automatically enrolled as an organ donor if you die (unless you opt-out).',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'School Cafeteria (Nudges)',
+        explanation:
+            'Healthy food placement nudges students toward better choices.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Tax Collection (Social Norms)',
+        explanation:
+            'The UK government increased on-time tax payments by sending letters stating how many people in the local area had already paid their taxes.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Piano Stairs (Sweden)',
+        explanation:
+            'Piano stairs encourage exercise instead of taking elevator.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Plain Packaging (Australia)',
+        explanation:
+            'Australia bans cigarette branding and mandates graphic images (of real sick people) to nudge people to quit smoking.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Tyson Foods (Choice Architecture: Framing)',
+        explanation: 'Tyson markets beef as "90% Lean" rather than "10% Fat',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Hidden Cigarettes (Australia) - Nudges',
+        explanation:
+            'Australia law - must hide cigarettes (e.g., in a cabinet) in the store (reduce impulse purchases).',
+      ),
+      ExampleDetail(
+        title: 'CSR (Tony\'s Chocolonely - chocolate brand)',
+        explanation:
+            '100% traceable cocoa, living income for farmers, combats child labor, deforestation-free.',
+      ),
+
+      ExampleDetail(
+        title: 'CSR (Ben & Jerry\'s - ice cream brand)',
+        explanation:
+            'Fairtrade ingredients, profit donations for social / climate causes.',
+      ),
+
+      ExampleDetail(
+        title: 'CSR (Patagonia - outdoor clothing brand)',
+        explanation: 'Recycled materials, ethical sourcing, lower emissions.',
+      ),
+    ],
+  ),
+  cSR(
+    topicName: 'Corporate Social Responsibility',
+    subunit: Subunit.critiqueBehaviour,
+    examples: [
+      ExampleDetail(
+        title: 'Hidden Cigarettes (Australia)',
+        explanation: 'Retail display restriction reduces impulse smoking.',
+      ),
+      ExampleDetail(
+        title: 'Patagonia / Unilever CSR',
+        explanation:
+            'Environmental responsibility via sustainable materials and sourcing.',
+      ),
+    ],
   ),
 
-  cafeteriaLayoutNudge(
-    'School Cafeteria',
-    explanation:
-    'Placing healthy foods at eye-level nudges students toward healthier eating without banning junk food.',
-    subunit: Subunit.critiqueBehaviour,
-
-    tags: [Tag.hl],
-  ),
-  pianoStairs(
-    'Piano Stairs (Sweden)',
-    explanation:
-    'A Stockholm subway turned stairs into a working piano, increasing stair usage by 66% by making exercise fun.',
-    subunit: Subunit.critiqueBehaviour,
-    tags: [Tag.hl],
-  ),
-
-  fatFreeFraming(
-    '90% Fat-Free (Framing)',
-    explanation:
-    'Labeling milk "90% fat-free" instead of "10% fat" uses positive framing to make the exact same product seem healthier.',
-    subunit: Subunit.critiqueBehaviour,
-  ),
-
-  hiddenCigarettes(
-    'Hidden Cigarettes (Australia)',
-    explanation:
-    'Requiring stores to hide cigarettes behind cupboard doors adds friction, nudging consumers away from impulse purchases.',
-    subunit: Subunit.critiqueBehaviour,
-  ),
-  patagoniaCSR(
-    'Patagonia: Corporate Social Responsibility (CSR)',
-    explanation:
-    'Uses recycled materials and donates 1% of sales to environmental causes.',
-    subunit: Subunit.critiqueBehaviour,
-  ),
-  unileverCSR(
-    'Unilever: Corporate Social Responsibility (CSR)',
-    explanation:
-    'Focuses on sustainable sourcing and reducing environmental impact.',
-    subunit: Subunit.critiqueBehaviour,
-  ),
   /// PED
-  airlinesPriceDiscrimination(
-    'Airlines (e.g. Singapore Airlines, British Airways): PED and Price Discrimination',
-    explanation:
-        'Use PED to price discriminate; business travellers (inelastic) pay higher last-minute fares, while tourists (elastic) get cheaper advance tickets, increasing total revenue.',
+  pedPriceDiscrimination(
+    topicName: 'PED and Price Discrimination',
     subunit: Subunit.elasticityDemand,
+    examples: [
+      ExampleDetail(
+        title:
+            'PED - Price Discrimination (Airlines, e.g., British Airways, Qantas, etc.)',
+        explanation:
+            'Business travelers pay higher fares (inelastic demand) while leisure tourists get cheaper tickets (elastic demand).',
+      ),
+
+      ExampleDetail(
+        title: 'PED - Price Discrimination - Disneyland Shanghai Tickets',
+        explanation:
+            'Higher prices during holidays/summer (inelastic) and lower prices on weekdays/off-season (elastic).',
+      ),
+
+      ExampleDetail(
+        title: 'New Zealand - Alcohol Excise Tax',
+        explanation:
+            'Inelastic demand enables steady revenue from high excise taxes on beer, wine & spirits.',
+      ),
+      ExampleDetail(
+        title: 'Uber Surge Pricing',
+        explanation:
+            'Prices increase during peak hours/rain (inelastic) and drop during low demand (elastic).',
+      ),
+    ],
   ),
 
-  cigaretteTaxRevenue(
-    'Cigarette Taxes (e.g. UK, Australia): PED and Price Discrimination',
-    explanation:
-        'Governments tax cigarettes with PED < 1, so %∆Qd < %∆P; demand falls slightly while tax revenue remains stable or increases.',
+  /// YED
+  yedSectorStructure(
+    topicName: 'YED and Sector Structure',
     subunit: Subunit.elasticityDemand,
+    examples: [
+      ExampleDetail(
+        title: 'USA Economy - YED tertiary sector dominate',
+        explanation:
+            'Service-dominated economy: almost 77% of GDP in tertiary sector; 1% in primary sector. highly developed.',
+      ),
+      ExampleDetail(
+        title: 'New Zealand Economy - YED highly developed economy',
+        explanation:
+            'Developed country with strong primary sector: 7% from agricultural but still 77% in services (developed)',
+      ),
+      ExampleDetail(
+        title: 'Burundi - YED underdeveloped economic sectors',
+        explanation:
+            'Agriculture-dominated (85% employment is in primary sector), low development.',
+      ),
+      ExampleDetail(
+        title: 'Hong Kong Transition - YED structural change',
+        explanation:
+            'Services rose from 67% of GDP in 1980 - to 93% today, as manufacturing declined sharply.',
+      ),
+    ],
   ),
 
-  disneylandPricing(
-    'Disneyland (e.g. Shanghai, California): PED and Price Discrimination',
-    explanation:
-        'Uses PED-based price discrimination by charging higher peak/weekend prices (more inelastic demand) and lower off-peak prices to increase revenue.',
-    subunit: Subunit.elasticityDemand,
+  /// 2.7 Government Intervention
+  priceFloorMinWageExamples(
+    topicName: 'Price Floor (Min Wage)',
+    subunit: Subunit.roleOfGovernment,
+    examples: [
+      ExampleDetail(
+        title: 'Minimum Wage in California (price floor)',
+        explanation:
+            'In 2024 California set a \$20/hour minimum wage for fast food workers, above equilibrium, risking unemployment.',
+      ),
+      ExampleDetail(
+        title: 'Australia National Minimum Wage (price floor)',
+        explanation:
+            'One of the highest in the world at \$24.95/hour (2025) to support low-skilled workers.',
+      ),
+    ],
+  ),
+  priceFloorAgricultural(
+    topicName: 'Price Floor (Agri)',
+    subunit: Subunit.roleOfGovernment,
+    examples: [
+      ExampleDetail(
+        title: 'Common Agricultural Policy (CAP) in the European Union',
+        explanation:
+            'CAP maintains price floors via subsidies, costing about €55 billion annually and creating surpluses.',
+      ),
+      ExampleDetail(
+        title: 'Minimum Support Price (MSP) in India',
+        explanation:
+            'India has MSP to protect farmer incomes to guarantee a minimum income.',
+      ),
+    ],
+  ),
+  priceCeilingExamples(
+    topicName: 'Price Ceiling',
+    subunit: Subunit.roleOfGovernment,
+    examples: [
+      ExampleDetail(
+        title: 'Rent Control in New York City',
+        explanation:
+            'NYC rent control caps rents for over 1 million apartments, causing shortages and reduced supply of rental housing.',
+      ),
+      ExampleDetail(
+        title: 'Gasoline (Price Ceiling) - Philippines',
+        explanation:
+            'During 2026 oil shock, government capped fuel price hikes to protect consumers, leading to supply issues and panic buying.',
+      ),
+      ExampleDetail(
+        title: 'Insulin (Price Ceiling) in USA',
+        explanation:
+            'The US capped insulin at \$35/month for Medicare patients in 2023.',
+      ),
+    ],
   ),
 
- /// YED
-  usSectorStructure(
-    'USA: YED and Tertiary Sector',
-    explanation:
-    'The US economy is highly service-based: 80% of GDP comes from tertiary sector, ~19% from secondary, and 1% from primary sector. High development, productivity.',
-    subunit: Subunit.elasticityDemand,
-  ),
-  burundiSectorStructure(
-    'Burundi: Very High Primary Sector Dependence',
-    explanation:
-    'Primary sector over 1/3 of GDP and employs 85% of the workforce. Very low industrialisation / development.',
-    subunit: Subunit.elasticityDemand,
-  ),
-  hongKongSectorShift(
-    'Hong Kong: Shift to a Service Economy',
-    explanation:
-    'Hong Kong shifted from manufacturing to services: today tertiary is 90%+ of GDP (50 years ago 60%).',
-    subunit: Subunit.elasticityDemand,
-  ),
-  // Oligopoly examples
+  /// 2.8 Externalities / CPR
+  negativeProductionExternalities(
+    topicName: 'Negative Production Externalities',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+    examples: [
+      ExampleDetail(
+        title: 'Bluefin Tuna Overfishing',
+        explanation:
+            'Pacific stocks declined by 95% due to industrial overfishing.',
+      ),
 
-  oligopolyXbox(
-    'Xbox Game Pass (Bundling)',
-    explanation:
-    'Bundling (Oligopoly): Microsoft bundles hundreds of individual games into a single monthly subscription. This increases overall sales and makes it harder for competing services to attract players.',
-    subunit: Subunit.marketFailurePower,
+      ExampleDetail(
+        title: 'Sweden Carbon Tax',
+        explanation:
+            'Cut emissions around 25% since 1991 while real GDP grew strongly.',
+      ),
+
+      ExampleDetail(
+        title: 'New Zealand Fisheries Quotas (ITQ)',
+        explanation:
+            'Individual Transferable Quotas since 1986 (permits for fishing - caps total limit - market-based).',
+      ),
+
+      ExampleDetail(
+        title: 'EU Emissions Trading System (ETS)',
+        explanation:
+            'Cap-and-trade system reduced emissions by 50% since 2005.',
+      ),
+
+      ExampleDetail(
+        title: 'US Clean Air Act - Tradeable Permits',
+        explanation:
+            'Cap-and-trade for SO₂ under 1990 Amendments reduced power plant emissions by more than 90% since 1990.',
+      ),
+
+      ExampleDetail(
+        title: 'Belgium Coal Phase-out - Regulations',
+        explanation: 'Fully banned coal-fired power generation by 2016.',
+      ),
+    ],
   ),
-  oligopolyBigFourBanks(
-    'Big Four Banks Australia',
-    explanation:
-        'Tacit collusion (oligopoly - interdependence): Firms avoid price wars through price leadership.',
-    subunit: Subunit.marketFailurePower,
+  negativeConsumptionExternalities(
+    topicName: 'Negative Consumption Externalities',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+    examples: [
+      ExampleDetail(
+        title: 'UK Sugar Tax (Soft Drinks Levy)',
+        explanation: 'Sugar content in drinks fell 44% since 2018.',
+      ),
+      ExampleDetail(
+        title: 'Australia Tobacco Tax',
+        explanation: 'Cigarette prices AUD \$40+ per pack; smoking rate ~10%.',
+      ),
+      ExampleDetail(
+        title: 'New Zealand Plastic Bag Ban',
+        explanation: 'Single-use plastic bag use fell >90% since 2019 ban.',
+      ),
+      ExampleDetail(
+        title: 'US Anti-Smoking Campaigns (CDC) - Education Awareness',
+        explanation: 'Smoking prevalence fell from 21% (2005) to 11% (2023).',
+      ),
+      ExampleDetail(
+        title: 'Australia Plain Packaging Law',
+        explanation:
+            'Cannot advertise brand - packets have education such as \'SMOKING CAUSES CANCER\' in big font and pictures of sick people.',
+      ),
+      ExampleDetail(
+        title: 'London Congestion Charge',
+        explanation: 'Traffic entering central London of £18 per day.',
+      ),
+    ],
+  ),
+  positiveProductionExternalities(
+    topicName: 'Positive Production Externalities',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+    examples: [
+      ExampleDetail(
+        title: 'mRNA Vaccines',
+        explanation:
+            'COVID vaccines research in mRNA spillovers into cancer research vaccinations. Over 120 clinical trials for cancers such as breast and prostate.',
+      ),
+      ExampleDetail(
+        title: 'Quantum Computing',
+        explanation:
+            'Billions invested globally (e.g. IBM, Google) with cross-sector spillovers.',
+      ),
+      ExampleDetail(
+        title: 'China Solar Industry',
+        explanation:
+            'Solar panel costs fell 80% since 2010 due to scale economies.',
+      ),
+      ExampleDetail(
+        title: 'High-Speed Rail (China)',
+        explanation:
+            'Network exceeds 40,000 km, boosting regional productivity.',
+      ),
+    ],
+  ),
+  positiveConsumptionExternalities(
+    topicName: 'Positive Consumption Externalities',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+    examples: [
+      ExampleDetail(
+        title: '\'No-Jab No-Pay\' Policy (Australia) - Regulations',
+        explanation: 'Vaccination required to receive childcare subsidies.',
+      ),
+      ExampleDetail(
+        title: 'Vaccination Subsidies (UK)',
+        explanation: 'Free NHS vaccinations for all children.',
+      ),
+      ExampleDetail(
+        title: 'Finland Free Public Education',
+        explanation: 'Near 100% adult literacy rate.',
+      ),
+      ExampleDetail(
+        title: 'Singapore Gym & Sport Subsidies',
+        explanation:
+            'Subsidised gym memberships via ActiveSG promote exercise and high life expectancy (~84 years).',
+      ),
+      ExampleDetail(
+        title: 'Free Childcare (UK 30-hour scheme)',
+        explanation:
+            '30 hours free weekly childcare boosts female labour participation.',
+      ),
+      ExampleDetail(
+        title: 'Compulsory Schooling (China)',
+        explanation: '9 years compulsory education from age 6 to 15.',
+      ),
+      ExampleDetail(
+        title: 'COVID Vaccination App (China)',
+        explanation:
+            'Green Health Code system encouraged high vaccination rates.',
+      ),
+    ],
   ),
 
-  oligopolyBigSuperMarketsAustralia(
-    'Coles & Woolworths',
-    explanation:
-        'Implicit collusion (oligopoly - duopoly): Market power linked to higher grocery prices.',
-    subunit: Subunit.marketFailurePower,
+  /// 2.9 Public Goods
+  publicGoodsDirectProvisionExamples(
+    topicName: 'Public Goods - Direct Provision',
+    subunit: Subunit.marketFailurePublicGoods,
+    examples: [
+      ExampleDetail(
+        title: 'UK NHS',
+        explanation:
+            'Free universal healthcare in UK; budget exceeds £180bn - but long-wait times.',
+      ),
+      ExampleDetail(
+        title: 'Singapore Defence',
+        explanation: 'Publicly funded military.',
+      ),
+    ],
+  ),
+  publicGoodsContractingOutExamples(
+    topicName: 'Public Goods - Contracting Out',
+    subunit: Subunit.marketFailurePublicGoods,
+    examples: [
+      ExampleDetail(
+        title: 'US Defence Contracts (Pentagon procurement)',
+        explanation:
+            'Lockheed Martin supply F-35 programme cost overrun exceeded \$1.7 trillion.',
+      ),
+      ExampleDetail(
+        title: 'NASA / SpaceX',
+        explanation: 'SpaceX helped NASA reduce launch costs.',
+      ),
+    ],
   ),
 
-  oligopolyEVIndustryInChina(
-    'BYD, Tesla, Xiaomi (EVs)',
-    explanation:
-        'Price competition + innovation (oligopoly - dynamic competition): strong R&D and price wars.',
-    subunit: Subunit.marketFailurePower,
+  /// 2.10 Asymmetric information
+  adverseSelectionExamples(
+    topicName: 'Adverse Selection',
+    subunit: Subunit.marketFailureAsymmetricInformation,
+    examples: [
+      ExampleDetail(
+        title: 'Used Cars Market',
+        explanation: 'Information gaps reduce average quality traded.',
+      ),
+      ExampleDetail(
+        title: 'Insurance Market',
+        explanation: 'High-risk individuals dominate market, raising premiums.',
+      ),
+    ],
+  ),
+  moralHazardExamples(
+    topicName: 'Moral Hazard',
+    subunit: Subunit.marketFailureAsymmetricInformation,
+    examples: [
+      ExampleDetail(
+        title: 'Car Insurance',
+        explanation: 'Insured drivers take more risks.',
+      ),
+      ExampleDetail(
+        title: '2008 Financial Crisis',
+        explanation: 'Risky lending encouraged by bailout expectations.',
+      ),
+    ],
   ),
 
-  oligopolyAIIndustry(
-    'Google, OpenAI, DeepSeek',
-    explanation:
-        'R&D-driven competition (oligopoly - tech industry): high dynamic efficiency through innovation.',
-    subunit: Subunit.marketFailurePower,
-    tags: [Tag.hl],
+  /// 2.10 Market Power & Market Structures
+  perfectCompetitionApproximations(
+    topicName: 'Perfect Competition',
+    subunit: Subunit.marketFailureMarketPower,
+    examples: [
+      ExampleDetail(
+        title: 'Wheat Markets',
+        explanation:
+            'Global wheat price set on world markets; millions of farmers act as price takers.',
+      ),
+      ExampleDetail(
+        title: 'Forex Market (Foreign Exchange Market)',
+        explanation:
+            'Over 7.5 trillion US dollars traded daily. Identical good (e.g., a currency USD\$; many buyers/sellers; perfect information on exchange rate).',
+        tags: [Tag.hl],
+      ),
+    ],
   ),
-  marketPowerAmazon(
-    'Amazon (anti-competitive)',
-    explanation:
-    'Predatory pricing: temporarily setting very low prices (even below cost) to drive smaller competitors out of the market, then raising prices once market power is increased.',
-    subunit: Subunit.marketFailurePower,
-    tags: [Tag.hl],
+  monopolisticCompetition(
+    topicName: 'Monopolistic Competition',
+    subunit: Subunit.marketFailureMarketPower,
+    examples: [
+      ExampleDetail(
+        title: 'Melbourne Cafés',
+        explanation:
+            'Over 3000 cafés operate in a highly differentiated local service market.',
+      ),
+      ExampleDetail(
+        title: 'Sydney Hair Salons',
+        explanation:
+            'Thousands of small hair salons compete with low barriers to entry.',
+      ),
+      ExampleDetail(
+        title: 'Shanghai Restaurants',
+        explanation:
+            'Many small/medium restaurants, product differentiation (Chinese, Indian, American cuisine), but lots of close substitutes for consumers and low barriers to enter/exit.',
+      ),
+    ],
   ),
-
-  marketPowerMicrosoft(
-    'Microsoft (anti-competitive)',
-    explanation:
-    'Bundling: combining products (e.g. operating system + browser/software) to reduce consumer choice and make it harder for rival firms to compete.',
-    subunit: Subunit.marketFailurePower,
-    tags: [Tag.hl],
+  oligopoly(
+    topicName: 'Oligopoly Behavior',
+    subunit: Subunit.marketFailureMarketPower,
+    examples: [
+      ExampleDetail(
+        title: 'Australian Banks',
+        explanation:
+            'Top four banks control around 80 percent of lending market share. Interdependent on setting interest rates.',
+      ),
+      ExampleDetail(
+        title: 'Coles and Woolworths',
+        explanation:
+            'Duopoly accounts for around 65 percent of supermarket sales. Accused \'tacit collusion\' avoid price-wars and keep grocery prices high to earn abnormal profits.',
+      ),
+      ExampleDetail(
+        title: 'Chinese EV Market',
+        explanation:
+            'BYD holds over 30 percent of domestic electric vehicle sales. Highly competitive oligopoly with high innovation (dynamic efficiency / non-price competition by nw features)',
+      ),
+      ExampleDetail(
+        title: 'AI Industry',
+        explanation:
+            'Major firms invest over 10 billion US dollars annually in AI research. Incredible dynamic efficiency (innovation)',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Coca-Cola and Pepsi',
+        explanation:
+            'Together hold over 40 percent of global soft drink market share. Very interdependent on pricing.',
+      ),
+      ExampleDetail(
+        title: 'Boeing and Airbus',
+        explanation:
+            'Duopoly controls 90%+ of large commercial aircraft market. Desirable due to massive economies of scale for industry, and regulatory barriers (aircraft highly regulated).',
+      ),
+      ExampleDetail(
+        title: 'OPEC',
+        explanation:
+            'Controls around 80 percent of global proven oil reserves. 1973 oil-embargo caused supply-shock. Restrict output to force high prices. Challenges to maintain oligopoly (different costs, split profits, agreements, political conflicts).',
+        tags: [Tag.hl],
+      ),
+    ],
   ),
-  oligopolyBoeingAirbusDuopoly(
-    'Boeing & Airbus',
-    explanation:
-        'Duopoly (oligopoly - duopoly): high barriers, compete via non-price factors (safety, efficiency).',
-    subunit: Subunit.marketFailurePower,
+  naturalMonopoly(
+    topicName: 'Natural Monopoly',
+    subunit: Subunit.marketFailureMarketPower,
+    examples: [
+      ExampleDetail(
+        title: 'Electricity Grid (China)',
+        explanation: 'Very high fixed infrastructure costs (sunk costs)',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Rail Networks',
+        explanation:
+            'High fixed costs mean one provider can supply at lower average cost. 40,000km of tracks.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Sydney Water (Australia)',
+        explanation:
+            'Single provider for water pipes, treatment plants and sewerage (very high fixed costs)',
+        tags: [Tag.hl],
+      ),
+    ],
   ),
-
-  oligopolyOpecCartel(
-    'OPEC',
-    explanation:
-        'Cartel (oligopoly - cartel): restricts output to increase oil prices.',
-    subunit: Subunit.marketFailurePower,
-    tags: [Tag.hl],
+  abuseOfMonopolyPower(
+    topicName: 'Abuse of Monopoly Power',
+    subunit: Subunit.marketFailureMarketPower,
+    examples: [
+      ExampleDetail(
+        title: 'Google',
+        explanation:
+            'Abused dominance by self-preferencing Google Shopping and Android apps.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Amazon',
+        explanation:
+            'Used marketplace power to copy successful third-party sellers and favour own products.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Meta (Facebook)',
+        explanation:
+            'Acquired Instagram and WhatsApp to eliminate future competition.',
+        tags: [Tag.hl],
+      ),
+    ],
   ),
-
-  // Monopolistic competition examples
-
-  monopolisticCompetitionMelbourneCoffeeShops(
-    'Melbourne Coffee Shops',
-    explanation:
-        'Monopolistic competition: many firms, low barriers, product differentiation.',
-    subunit: Subunit.marketFailurePower,
-  ),
-
-  monopolisticCompetitionSydneyHairSalons(
-    'Sydney Hair Salons',
-    explanation:
-        'Monopolistic competition: differentiated services, easy entry and exit.',
-    subunit: Subunit.marketFailurePower,
-  ),
-
-  monopolisticCompetitionShanghaiRestaurants(
-    'Shanghai Restaurants',
-    explanation:
-        'Monopolistic competition: many firms, strong non-price competition.',
-    subunit: Subunit.marketFailurePower,
-  ),
-  // --- PERFECT COMPETITION (Closest Real-World Approximations) ---
-  wheatFarmers(
-    'Global Wheat or Corn Markets',
-    explanation:
-        'Large number of buyers and sellers dealing with a "Homogeneous Product." Farmers are "Price Takers" based on global exchange prices.',
-    subunit: Subunit.marketFailurePower,
-  ),
-  forexMarket(
-    'Foreign Exchange (USD/AUD)',
-    explanation:
-        'Almost perfect information and a perfectly standardized product. No single buyer or seller can influence the market price.',
-    subunit: Subunit.marketFailurePower,
-    tags: [Tag.hl],
-  ),
-
-  // --- MONOPOLY (Pros & Cons) ---
-  marketPowerPharmaceuticalPatents(
-    'Patented Life-Saving Drugs',
-    explanation:
-        'PRO: High abnormal profits provide the incentive for expensive R&D. CON: Creates "Allocative Inefficiency" (P > MC).',
-    subunit: Subunit.marketFailurePower,
-    tags: [Tag.hl],
-  ),
-
-  // --- NATURAL MONOPOLY ---
-  naturalMonopolyStateGridChina(
-    'State Grid Corporation of China',
-    explanation:
-    'Extremely high fixed "Set-up Costs." It is most efficient for one firm to provide the service to reach "Economies of Scale" and avoid duplicating pipes.',
-    subunit: Subunit.marketFailurePower,
-    tags: [Tag.hl],
-  ),
-  naturalMonopolyChinaRailway(
-    'China State Railway Group',
-    explanation:
-    'Extremely high fixed costs for infrastructure like tracks and stations. It is most efficient for one firm to provide the service to reach "Economies of Scale" and avoid duplicating railway networks.',
-    subunit: Subunit.marketFailurePower,
-    tags: [Tag.hl],
-  ),
-  oilCrisisStagflationUSA1970s(
-    '1973–74 Oil Shock Causes Stagflation in USA',
-    explanation:
-        'OPEC oil embargo: oil prices rose \$3 to ~\$12/barrel. USA high inflation + high unemployment.',
+  macroeconomicShocks(
+    topicName: 'Macroeconomic Objectives and Shocks',
     subunit: Subunit.macroObjectives,
-    tags: [Tag.hl],
+    examples: [
+      ExampleDetail(
+        title: '1973 Oil Shock United States',
+        explanation:
+            'Oil price rose from about 3 dollars to 12 dollars per barrel causing stagflation.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: '2008 Global Financial Crisis',
+        explanation:
+            'Unemployment in the United States rose from about 5 percent to 10 percent.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: '2022 Inflation Surge United States',
+        explanation:
+            'Inflation peaked at 9.1 percent while unemployment remained around 3.5 percent.',
+        tags: [Tag.hl],
+      ),
+    ],
   ),
-
-  economicBoomOf1990s(
-    '1990s USA: Strong real GDP growth and low inflation',
-    explanation:
-        'US real GDP was strong ~4% (late 1990s), unemployment fell to ~4% (2000) while inflation remained low ~3%.',
-    subunit: Subunit.macroObjectives,
-    tags: [Tag.hl],
-  ),
-
-  globalFinancialCrisis2008(
-    '2008–09 Global Financial Crisis',
-    explanation:
-        'US unemployment rose from ~5% (2007) to ~10% (2009) while inflation fell to ~-0.4% (2009).',
-    subunit: Subunit.macroObjectives,
-    tags: [Tag.hl],
-  ),
-
-  covidPandemic2020(
-    '2020 COVID-19 Pandemic',
-    explanation:
-        'US unemployment spiked to ~14.7% (Apr 2020) while inflation initially fell ~0.1%.',
-    subunit: Subunit.macroObjectives,
-    tags: [Tag.hl],
-  ),
-
-  postPandemicInflation2022(
-    '2021–22 Inflation Surge (US/UK)',
-    explanation:
-        'US inflation peaked ~9.1% (2022) with unemployment ~3.5% → Phillips Curve shift, unstable trade-off.',
-    subunit: Subunit.macroObjectives,
-    tags: [Tag.hl],
-  ),
-
-  usFinancialCrisis2008(
-    '2008–14 Global Financial Crisis (US)',
-    explanation:
-        'Fed cut rates to ~0–0.25% and used QE (> \$3 trillion) → lower borrowing costs, boosting C and I, shifting AD right.',
+  monetaryPolicy(
+    topicName: 'Demand Management Monetary Policy',
     subunit: Subunit.demandManagementMonetary,
-    tags: [Tag.hl, Tag.p1b],
+    examples: [
+      ExampleDetail(
+        title: 'US Quantitative Easing 2008 to 2014',
+        explanation:
+            'Federal Reserve expanded balance sheet by over 3 trillion US dollars.',
+        tags: [Tag.hl, Tag.p1b],
+      ),
+      ExampleDetail(
+        title: 'Japan Liquidity Trap',
+        explanation:
+            'Interest rates near zero since the 1990s with weak aggregate demand response.',
+        tags: [Tag.hl, Tag.p1b],
+      ),
+    ],
   ),
-  japanLiquidityTrap1990s(
-    '1990s–Present Liquidity Trap (Japan)',
-    explanation:
-        'Despite 0% interest rates, negative consumer and firm confidence remained.',
-    subunit: Subunit.demandManagementMonetary,
-    tags: [Tag.hl, Tag.p1b],
-  ),
-  eurozoneNegativeRates2014(
-    '2014–19 Negative Interest Rates (Eurozone)',
-    explanation: '',
-    subunit: Subunit.demandManagementMonetary,
-    tags: [Tag.hl, Tag.p1b],
-  ),
-
-  /// Supply-side policies
-
-  // 1. Competition / Market-based reforms
-
-  ukPrivatizationDeregulation1980s(
-    '1980s Deregulation (UK) - Supply-Side Market Based Policies',
-    explanation:
-        'Privatization of state-owned monopolies (British Telecom, Gas, Airways, Steel) and deregulation (reduce waste, increase competition, efficiency).',
+  supplySidePolicies(
+    topicName: 'Supply Side Policies',
     subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
+    examples: [
+      ExampleDetail(
+        title: 'UK Privatisation 1980s',
+        explanation:
+            'Over 50 state owned firms privatised to improve efficiency and competition.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'US Tax Cuts 2017',
+        explanation:
+            'Corporate tax reduced from 35 percent to 21 percent increasing after tax profits.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Singapore SkillsFuture',
+        explanation:
+            'Provides 500 dollar credits per adult for lifelong skills development.',
+        tags: [Tag.hl],
+      ),
+    ],
   ),
-  ukTradeUnionReform1980s(
-    '1980s Trade Union Reforms (UK)',
-    explanation:
-        'Reduced union power increased labour flexibility and reduced wage rigidity.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  chinaReformsPost1978(
-    'Post-1978 Market Reforms (China)',
-    explanation:
-        '1978 Special Economic Zones (China), Shenzhen (average GDP growth 20%pa), to encourage FDI, competition, efficiency, trade liberalization (China economy is 48X bigger 1978-2024).',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  // Added
-  indiaLiberalisation1991(
-    '1991 Economic Liberalisation (India) (market-based deregulation / LMR)',
-    explanation:
-        'Reduced "Licence Raj" (system of state control over economy). Significant deregulation, reduce trade barriers to increased competition and growth.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  // 2. Labour Market Reforms (LMR)
-
-  germanyHartz2000s(
-    '2000s Hartz Reforms (Germany) - LMR',
-    explanation:
-        'Labor-market had excessive rigidities. Reduced unemployment benefits, and increased flexibility (easier to hire/fire), lowering structural unemployment (reducing NRU). Unemployment fall from 11%+ peak in 2005 to under 5% by 2019..',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  // Added
-  spainLabourReform2012(
-    '2012 Labour Market Reform (Spain)',
-    explanation:
-        'Made hiring/firing easier, improving flexibility and reducing unemployment.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  // 3. Incentive-based policies
-
-  // Replaced 2001 with the more recent and impactful 2017 TCJA
-  usTaxCutsAndJobsAct2017(
-    '2017 Tax Cuts and Jobs Act (USA)',
-    explanation:
-        'Slashed the federal corporate tax rate from 35% to 21%, significantly increasing after-tax profits to incentivize capital investment and R&D.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  // Added specific rate reduction stats
-  ukCorporationTaxCuts2010s(
-    '2010–2017 Corporation Tax Cuts (UK)',
-    explanation:
-        'Gradually reduced the main corporate tax rate from 28% to 19%, directly incentivizing domestic firm expansion and attracting foreign direct investment (FDI).',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  // 4. Government intervention (human/physical capital)
-
-  singaporeSkillsFuture2015(
-    '2015 SkillsFuture (Singapore)',
-    explanation:
-        'Provided adult citizens with base \$500 credits for lifelong learning, helping raise the national training participation rate from 35% to roughly 50% to boost long-run human capital and productivity.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  chinaBRI2013(
-    '2013 Belt and Road Initiative (China)',
-    explanation:
-        'Large infrastructure investment improved connectivity and long-run growth.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  usInflationReductionAct2022(
-    '2022 Inflation Reduction Act (USA)',
-    explanation:
-        'Subsidies for clean energy and manufacturing increased investment and LRAS.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [Tag.hl],
-  ),
-
-  // Added
-  southKoreaIndustrialPolicy(
-    '1960s–90s Industrial Policy (South Korea)',
-    explanation:
-        'Targeted subsidies and export promotion developed high-value industries.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [],
-  ),
-
-  germanyApprenticeshipSystem(
-    'Dual Apprenticeship System (Germany)',
-    explanation:
-        'Vocational training system improves skills and reduces structural unemployment.',
-    subunit: Subunit.supplySidePolicies,
-    tags: [],
-  ),
-
-  burundiBarriersToDevelopment(
-    'Burundi (East Africa) – Barriers to Development',
-    explanation:
-        'Burundi is a landlocked ELDC in East Africa facing multiple barriers to development. Around 85% of employment is in agriculture, showing heavy dependence on low-productivity primary sector activity. Limited infrastructure, weak human capital, poor governance, and restricted access to international markets constrain development. Its geography and tropical climate also contribute to disease burdens and low productivity.',
+  barriersToDevelopment(
+    topicName: 'Barriers to Sustainable Development',
     subunit: Subunit.sustainableDevelopment,
-  ),
-  bangladeshBarriersToDevelopment(
-    'Bangladesh (South Asia) – Barriers to Development',
-    explanation:
-        'Bangladesh is a developing country facing several structural barriers to development. A significant share of employment is still in low-productivity agriculture and informal urban work, limiting productivity growth. It also faces vulnerability to climate change (flooding and cyclones), high population density, infrastructure constraints, and uneven access to education and healthcare, despite recent strong export-led growth in garments.',
-    subunit: Subunit.sustainableDevelopment,
-  ),
-  boliviaBarriersToDevelopment(
-    'Bolivia (South America) – Barriers to Development',
-    explanation:
-        'Bolivia is a landlocked developing country in South America facing structural barriers to development. Around 30% of employment is in agriculture, showing continued reliance on lower-productivity primary sector activity. It faces geographic isolation, limited access to international markets, weak infrastructure in rural areas, and regional inequality, despite recent improvements in poverty reduction.',
-    subunit: Subunit.sustainableDevelopment,
+    examples: [
+      ExampleDetail(
+        title: 'Burundi',
+        explanation:
+            'GDP per capita below 300 US dollars with most employment in subsistence agriculture.',
+      ),
+      ExampleDetail(
+        title: 'Bangladesh',
+        explanation:
+            'Over 20 percent of population below poverty line with high climate vulnerability.',
+      ),
+    ],
   );
 
   // --- PROPERTIES ---
-  final String example;
-  final String? explanation;
+  final String topicName;
   final Subunit? subunit;
-  final List<Tag> tags;
+  final List<ExampleDetail> examples;
 
   // --- CONSTRUCTOR ---
-  const RealWorldExamples(
-    this.example, {
-    this.explanation,
+  const RealWorldExamples({
+    required this.topicName,
+    required this.examples,
     this.subunit,
-    this.tags = const [],
   });
 }

@@ -5,7 +5,6 @@ import '../../app/configs/constants.dart';
 
 import '../custom_paint/i_diagram_canvas.dart';
 
-
 class PdfDiagramCanvas implements IDiagramCanvas {
   final PdfGraphics graphics;
   final PdfDocument document;
@@ -16,12 +15,12 @@ class PdfDiagramCanvas implements IDiagramCanvas {
   final double scale;
 
   PdfDiagramCanvas(
-      this.graphics,
-      this.document,
-      this.pageHeight, {
-        required this.pdfFont,
-        required this.scale,
-      });
+    this.graphics,
+    this.document,
+    this.pageHeight, {
+    required this.pdfFont,
+    required this.scale,
+  });
 
   PdfColor _toPdfColor(Color c) {
     return PdfColor.fromInt(c.toARGB32());
@@ -72,11 +71,11 @@ class PdfDiagramCanvas implements IDiagramCanvas {
 
   @override
   void drawRect(
-      Rect rect,
-      Color color, {
-        bool fill = false,
-        double strokeWidth = 1.0,
-      }) {
+    Rect rect,
+    Color color, {
+    bool fill = false,
+    double strokeWidth = 1.0,
+  }) {
     graphics
       ..setStrokeColor(_toPdfColor(color))
       ..setFillColor(_toPdfColor(color))
@@ -100,7 +99,12 @@ class PdfDiagramCanvas implements IDiagramCanvas {
     final double left = rect.left;
     final double right = rect.right;
 
-    void drawCorner(double cx, double cy, double startAngle, double sweepAngle) {
+    void drawCorner(
+      double cx,
+      double cy,
+      double startAngle,
+      double sweepAngle,
+    ) {
       const int steps = 6;
       for (int i = 0; i <= steps; i++) {
         final theta = startAngle + (sweepAngle * (i / steps));
@@ -154,13 +158,7 @@ class PdfDiagramCanvas implements IDiagramCanvas {
       double lineDy = position.dy + (i * (finalFontSize * 1.2));
       double pdfY = _transY(lineDy) - (finalFontSize * 0.8);
 
-      graphics.drawString(
-        pdfFont,
-        finalFontSize,
-        line,
-        position.dx,
-        pdfY,
-      );
+      graphics.drawString(pdfFont, finalFontSize, line, position.dx, pdfY);
     }
 
     graphics.restoreContext();

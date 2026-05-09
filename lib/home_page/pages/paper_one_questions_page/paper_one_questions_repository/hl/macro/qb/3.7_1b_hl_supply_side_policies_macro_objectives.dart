@@ -75,19 +75,6 @@ final rweEvaluateSupplySidePoliciesToIncreaseGrowthLowUnemploymentLowInflation15
 
     SlideContent.diagrams([DiagramEnum.macroLRPCFallInNRU]),
     SlideContent.diagrams([DiagramEnum.macroSupplySidePoliciesLowInflation]),
-    SlideContent.realWorldExamples([
-      RealWorldExamples.chinaReformsPost1978,
-      RealWorldExamples.ukPrivatizationDeregulation1980s,
-      RealWorldExamples.ukTradeUnionReform1980s,
-      RealWorldExamples.postPandemicInflation2022,
-      RealWorldExamples.indiaLiberalisation1991,
-      RealWorldExamples.germanyHartz2000s,
-      RealWorldExamples.spainLabourReform2012,
-      RealWorldExamples.singaporeSkillsFuture2015,
-      RealWorldExamples.chinaBRI2013,
-      RealWorldExamples.usInflationReductionAct2022,
-      RealWorldExamples.southKoreaIndustrialPolicy,
-      RealWorldExamples.germanyApprenticeshipSystem,
-    ]),
+    SlideContent.realWorldExamples([]),
   ],
 );

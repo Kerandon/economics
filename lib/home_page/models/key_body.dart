@@ -1,4 +1,3 @@
-
 import '../enums/tag.dart';
 
 class KeyBody {
@@ -6,9 +5,5 @@ class KeyBody {
   final String content;
   final List<Tag>? tags;
 
-  KeyBody({
-    required this.title,
-    required this.content,
-    this.tags,
-  });
+  KeyBody({required this.title, required this.content, this.tags});
 }

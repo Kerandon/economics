@@ -9,17 +9,25 @@ void paintLegendTable(
   DiagramPainterConfig config, {
   required List<String> headers,
   required List<List<String>> data,
-  // 1. Reduced rowHeight from 14.0 to 12.0 for a tighter look
   double rowHeight = 16.0,
   Color? borderColor,
-  // 2. Reduced padding slightly from 6.0 to 4.0
   double cellPadding = 6.0,
 }) async {
   final primaryColor = config.colorScheme.onSurface;
   final size = config.painterSize;
 
-  // 3. Made fonts slightly smaller (multiplier from 0.65 -> 0.6)
-  final double fontSize = (kFontMedium * config.averageRatio) * 0.9;
+  // 1. DETECT IF PRINTING TO PDF
+  // We use runtimeType so we don't have to import the PDF package into your diagram logic.
+  final bool isPdf = iCanvas.runtimeType.toString() == 'PdfDiagramCanvas';
+
+  // 2. DYNAMIC SIZING (Shrink significantly if PDF)
+  final double finalRowHeight = isPdf ? 9.0 : rowHeight;
+  final double finalCellPadding = isPdf ? 2.0 : cellPadding;
+
+  // Make the font much smaller for the PDF print
+  final double fontSizeMultiplier = isPdf ? 0.45 : 0.9;
+  final double fontSize =
+      (kFontMedium * config.averageRatio) * fontSizeMultiplier;
 
   // Measure Column Widths
   final int numCols = headers.length;
@@ -33,7 +41,7 @@ void paintLegendTable(
       ),
       textDirection: TextDirection.ltr,
     )..layout();
-    return tp.width + (cellPadding * 2);
+    return tp.width + (finalCellPadding * 2);
   }
 
   for (int i = 0; i < numCols; i++) {
@@ -48,8 +56,7 @@ void paintLegendTable(
 
   final double totalWidth = colWidths.reduce((a, b) => a + b);
 
-  // 4. CHANGE: Instead of subtracting height, we start AT the bottom edge
-  // and push down by the offset. This ensures it doesn't overlap the diagram.
+  // Position at the bottom
   final double startX = (size.width - totalWidth) / 2.0;
   double currentY = size.height + -((kAxisIndent * size.height) / 1.2);
 
@@ -57,24 +64,25 @@ void paintLegendTable(
   void drawRow(List<String> rowData, bool isHeader) {
     double x = startX;
 
-    if (isHeader) {
+    // 3. REMOVE HEADER COLORING FOR PDF
+    // It will only draw the shaded background on the screen.
+    if (isHeader && !isPdf) {
       iCanvas.drawRect(
-        Rect.fromLTWH(x, currentY, totalWidth, rowHeight),
+        Rect.fromLTWH(x, currentY, totalWidth, finalRowHeight),
         primaryColor.withOpacity(0.1),
         fill: true,
       );
     }
 
     for (int i = 0; i < numCols; i++) {
-      final rect = Rect.fromLTWH(x, currentY, colWidths[i], rowHeight);
+      final rect = Rect.fromLTWH(x, currentY, colWidths[i], finalRowHeight);
 
-      // Thinner borders (0.5 stroke)
+      // Thinner borders for the PDF so it doesn't look muddy
       iCanvas.drawRect(
         rect,
-        borderColor ??
-            primaryColor.withOpacity(0.3), // Slightly lighter opacity
+        borderColor ?? primaryColor.withOpacity(0.3),
         fill: false,
-        strokeWidth: 0.5,
+        strokeWidth: isPdf ? 0.3 : 0.5,
       );
 
       if (i < rowData.length) {
@@ -89,16 +97,14 @@ void paintLegendTable(
         // Centering the text inside the cell
         final textOffset = Offset(
           rect.left + (rect.width - tp.width) / 2,
-          rect.top +
-              (rowHeight - tp.height) /
-                  2, // Using tp.height for vertical precision
+          rect.top + (finalRowHeight - tp.height) / 2,
         );
 
         iCanvas.drawText(rowData[i], textOffset, fontSize, primaryColor);
       }
       x += colWidths[i];
     }
-    currentY += rowHeight;
+    currentY += finalRowHeight;
   }
 
   // Execute Drawing

@@ -43,7 +43,7 @@ class Externalities extends BaseDiagramPainter {
       case DiagramEnum.microNegativeProductionExternalityRegulations:
         _paintNegativeProduction(c, canvas);
 
-      case DiagramEnum.microCarbonTax:
+      case DiagramEnum.microNegativeProductionCarbonTax:
         _paintCarbonTax(c, canvas);
 
       case DiagramEnum.microTradablePollutionPermits:
@@ -104,18 +104,6 @@ class Externalities extends BaseDiagramPainter {
         : isReg
         ? DiagramLabel.mPCPlusRegulationsEqualsMSC.label
         : DiagramLabel.msc.label;
-
-    String extLabel = isTax
-        ? 'Tax =\nExt. Cost'
-        : isReg
-        ? 'Regulations'
-        : 'External\nCost';
-
-    String desc = isTax
-        ? 'Tax increases MPC to align with MSC - removing external cost. Gov revenue: (Pc-Pp) x Qopt.'
-        : isReg
-        ? 'Gov regulations limiting output shift MPC towards MSC.'
-        : 'Free market: MSC > MPC. Qopt < Qm';
 
     if (isTax) {
       paintDiagramDashedLines(
@@ -199,7 +187,6 @@ class Externalities extends BaseDiagramPainter {
   }
 
   void _paintCarbonTax(DiagramPainterConfig c, IDiagramCanvas canvas) {
-    paintTitle(c, canvas, 'Carbon Tax - Two Step Process');
     final adj = -0.15;
 
     paintMarketCurve(
@@ -263,7 +250,6 @@ class Externalities extends BaseDiagramPainter {
       -pi / 2,
       LineEndStyle.arrow,
       0.32,
-      label: '1',
       labelAlign: LabelAlign.center,
     );
     _paintShift(
@@ -273,13 +259,23 @@ class Externalities extends BaseDiagramPainter {
       -pi / 2,
       LineEndStyle.arrow,
       0.14,
-      label: '2',
       labelAlign: LabelAlign.center,
     );
-    paintDescription(
+    paintText(
       c,
       canvas,
-      '1. initial carbon tax, 2. tax reduces as firms substitute to clean energy.',
+      '1-Initial\nCarbon Tax\n= External Cost',
+      Offset(0.45, 0.05),
+      type: DiagramTextType.label,
+      pointerLine: Offset(0.65, 0.36),
+    );
+    paintText(
+      c,
+      canvas,
+      '2-Carbon Tax\n= External Cost:\nFirms Substitute\nTo Cleaner\nEnergy Sources',
+      Offset(0.95, 0.60),
+      type: DiagramTextType.label,
+      pointerLine: Offset(0.75, 0.36),
     );
   }
 
@@ -380,8 +376,6 @@ class Externalities extends BaseDiagramPainter {
     DiagramPainterConfig c,
     IDiagramCanvas canvas,
   ) {
-    paintTitle(c, canvas, 'Sugary Drinks Market');
-
     bool isTax =
         diagram == DiagramEnum.microNegativeConsumptionExternalityPigouvianTax;
     bool isReg =
@@ -397,14 +391,6 @@ class Externalities extends BaseDiagramPainter {
         : isEdu
         ? DiagramLabel.mPBPlusEducationEqualsMSC.label
         : DiagramLabel.msb.label;
-
-    String desc = isTax
-        ? 'Gov budget gains by (Pc-Pp) x Qopt.'
-        : isReg
-        ? 'Regulations shift MPB towards MSC.'
-        : isEdu
-        ? 'Education and nudges shift MPB towards MSB.'
-        : 'Free market: MSC > MPC. Qopt < Qm';
 
     if (isTax) {
       paintMarketCurve(
@@ -504,15 +490,11 @@ class Externalities extends BaseDiagramPainter {
         pi / 2,
         LineEndStyle.arrowBothEnds,
         0.18,
-        label: 'External\nCost',
       );
     }
-    paintDescription(c, canvas, desc);
   }
 
   void _paintPositiveProduction(DiagramPainterConfig c, IDiagramCanvas canvas) {
-    paintTitle(c, canvas, 'Vaccination Research & Development');
-
     bool isSub =
         diagram == DiagramEnum.microPositiveProductionExternalitySubsidy;
     bool isGov =
@@ -586,11 +568,6 @@ class Externalities extends BaseDiagramPainter {
       pi / 2,
       (isSub || isGov) ? LineEndStyle.arrow : LineEndStyle.arrowBothEnds,
       0.17,
-      label: isSub
-          ? 'Subsidy'
-          : isGov
-          ? 'Provision'
-          : 'External\nBenefit',
       labelAlign: LabelAlign.center,
     );
 
@@ -603,23 +580,12 @@ class Externalities extends BaseDiagramPainter {
         labelAlign: LabelAlign.left,
       );
     }
-    paintDescription(
-      c,
-      canvas,
-      isSub
-          ? 'Price reduces to Pc but producers receive Pc+Subsidy.'
-          : isGov
-          ? 'Total supply = private supply + gov provision.'
-          : 'Free market: MSC < MPC. Qopt > Qm',
-    );
   }
 
   void _paintPositiveConsumption(
     DiagramPainterConfig c,
     IDiagramCanvas canvas,
   ) {
-    paintTitle(c, canvas, 'Health Insurance');
-
     bool isSub =
         diagram == DiagramEnum.microPositiveConsumptionExternalitySubsidy;
     bool isGov =
@@ -650,7 +616,8 @@ class Externalities extends BaseDiagramPainter {
         xAxisEndPos: 0.55,
         yLabel: DiagramLabel.pC.label,
         xLabel: DiagramLabel.qOpt.label,
-        hideXLine: true,
+        hideXLine:
+            diagram != DiagramEnum.microPositiveConsumptionExternalitySubsidy,
       );
       paintMarketCurve(
         c,
@@ -740,16 +707,6 @@ class Externalities extends BaseDiagramPainter {
         labelAlign: LabelAlign.left,
       );
     }
-
-    paintDescription(
-      c,
-      canvas,
-      isSub
-          ? 'Cost to government budget: (Pp-Pc) x Qopt.'
-          : isGov
-          ? 'Gov-run scheme adds to private supply.'
-          : 'Free market: MSB > MPB. Qopt > Qm',
-    );
   }
 
   // --- REUSABLE HELPERS ---
@@ -766,7 +723,6 @@ class Externalities extends BaseDiagramPainter {
       canvas,
       ShadeType.welfareLoss,
       points,
-      label: 'Welfare\nLoss',
       labelAlign: labelAlign ?? LabelAlign.center,
       showLabelBackground: true,
     );

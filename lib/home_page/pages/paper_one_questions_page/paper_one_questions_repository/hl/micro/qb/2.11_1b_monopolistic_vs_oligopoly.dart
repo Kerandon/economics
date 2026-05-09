@@ -9,7 +9,7 @@ import '../../../../../real_world_examples/real_world_examples.dart';
 import '../../../../../terms/terms.dart';
 
 final evaluateMonopolisticVsOligopolyQuestion = Slide(
-  subunit: Subunit.marketFailurePower,
+  subunit: Subunit.marketFailureMarketPower,
   tags: [Tag.hl, Tag.p1b],
   question:
       'Using real-world examples, discuss the view that monopolistic competition is a more desirable market structure than oligopoly.',
@@ -71,16 +71,6 @@ final evaluateMonopolisticVsOligopolyQuestion = Slide(
       DiagramEnum.microOligopolyCartel,
     ]),
     // Real World Examples
-    SlideContent.realWorldExamples([
-      RealWorldExamples.monopolisticCompetitionShanghaiRestaurants,
-      RealWorldExamples.monopolisticCompetitionSydneyHairSalons,
-      RealWorldExamples.monopolisticCompetitionMelbourneCoffeeShops,
-      RealWorldExamples.marketPowerAmazon,
-      RealWorldExamples.oligopolyEVIndustryInChina,
-      RealWorldExamples.oligopolyBigSuperMarketsAustralia,
-      RealWorldExamples.oligopolyBigFourBanks,
-      RealWorldExamples.oligopolyBoeingAirbusDuopoly,
-      RealWorldExamples.oligopolyOpecCartel,
-    ]),
+    SlideContent.realWorldExamples([]),
   ],
 );

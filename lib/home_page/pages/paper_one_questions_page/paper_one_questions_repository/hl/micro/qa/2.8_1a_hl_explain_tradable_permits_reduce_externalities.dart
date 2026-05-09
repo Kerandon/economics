@@ -8,7 +8,7 @@ import '../../../../../../models/term.dart';
 import '../../../../../terms/terms.dart';
 
 final explainTradeablePermitsReduceExternalities10MarkHL = Slide(
-  subunit: Subunit.marketFailurePower,
+  subunit: Subunit.marketFailureMarketPower,
   tags: [Tag.hl, Tag.p1a],
   question:
       'Explain how a system of tradeable permits could be used to reduce externalities caused by high levels of carbon emissions.',

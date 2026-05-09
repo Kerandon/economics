@@ -31,11 +31,7 @@ final useRWEToDiscussEconomicBarriersOnGrowthAndDevelopment15MarkSL = Slide(
         ['Tropical climates and endemic diseases'],
       ],
     ),
-    SlideContent.realWorldExamples([
-      RealWorldExamples.burundiBarriersToDevelopment,
-      RealWorldExamples.boliviaBarriersToDevelopment,
-      RealWorldExamples.bangladeshBarriersToDevelopment,
-    ]),
+    SlideContent.realWorldExamples([]),
     SlideContent.diagrams([
       DiagramEnum.macroClassicalLongTermGrowth,
       DiagramEnum.globalPPCEconomicGrowth,

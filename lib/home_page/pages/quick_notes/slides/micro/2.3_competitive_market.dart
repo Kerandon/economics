@@ -4,17 +4,14 @@ import '../../../../models/slide.dart';
 import '../../../../models/slide_content.dart';
 import '../../../terms/terms.dart';
 
-final competitiveMarketSlide =
-Slide(
+final competitiveMarketSlide = Slide(
   subunit: Subunit.competitiveMarket,
   contents: [
-    SlideContent.text(
-      '''
-      <ul><li>When demand or supply shift it can lead to market disequilibrium (shortages and surpluses).</li></ul>
-      <p>The price mechanism (via price signaling and incentives) will clear shortages and surpluses in a free-market.</p>
-      '''
-
-    ),
+    SlideContent.text('''
+      <ul><li>When demand or supply shift it can lead to market disequilibrium (shortages and surpluses).</li>
+      <li>In a free-market, the price mechanism (via price signaling and incentives) clears shortages and surpluses.</li>
+      </ul>
+      '''),
     SlideContent.diagrams([
       DiagramEnum.microShortage,
       DiagramEnum.microSurplus,
@@ -25,8 +22,8 @@ Slide(
   <li>
     <b>Resource allocation</b>
     <ul>
-      <li><b>Price signals</b></li>
-      <li><b>Incentives</b></li>
+      <li>Price signals</li>
+      <li>Incentives</li>
     </ul>
   </li>
   <li>
@@ -36,22 +33,13 @@ Slide(
 
       '''),
     SlideContent.tip('''
-      <h3>Efficiency Vs. Equity</h3>
-      <ui><li>Allocative efficiency answers the questions of 'what' and 'how' to produce (efficiency) - but it doesn't answer 'for whom to produce for' - this is normative (subjective)</li></ui>
+      <b>Efficiency vs. Equity</b>Allocative efficiency answers the questions of 'what' and 'how' to produce (efficiency) - but it doesn't answer 'for whom to produce for' - this is normative (subjective)
           '''),
-    SlideContent.diagrams([
-      DiagramEnum.microAllocativeEfficiency,
-    ]),
-    SlideContent.econTerms([
-      EconTerm.priceSignals,
-      EconTerm.incentives,
-      EconTerm.priceRationing,
-      EconTerm.nonPriceRationing,
-      EconTerm.consumerSurplus,
-      EconTerm.producerSurplus,
-      EconTerm.allocativeEfficiency,
-
-    ]),
+    SlideContent.diagrams([DiagramEnum.microAllocativeEfficiency]),
+    SlideContent.econTerms(
+      EconTerm.values
+          .where((term) => term.subunit == Subunit.competitiveMarket)
+          .toList(),
+    ),
   ],
-
 );

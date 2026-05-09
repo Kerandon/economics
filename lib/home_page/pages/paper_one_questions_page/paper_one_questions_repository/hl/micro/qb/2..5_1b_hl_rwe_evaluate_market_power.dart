@@ -8,17 +8,20 @@ import '../../../../../real_world_examples/real_world_examples.dart';
 import '../../../../../terms/terms.dart';
 
 final rweEvaluateMarketPowerAlwaysUndesirableMicro1bHL = Slide(
-  subunit: Subunit.marketFailurePower,
+  subunit: Subunit.marketFailureMarketPower,
   tags: [Tag.hl, Tag.p1b],
   question:
-  'Using real-world examples, evaluate the view that the existence of significant market power is always undesirable.',
+      'Using real-world examples, evaluate the view that the existence of significant market power is always undesirable.',
   contents: [
     SlideContent.econTerms([EconTerm.marketPower]),
     SlideContent.simpleTable(
       title: 'Evaluation of Market Power',
       headers: ['Advantages', 'Drawbacks'],
       data: [
-        ['Economies of scale (natural monopoly)', 'Higher prices, lower output'],
+        [
+          'Economies of scale (natural monopoly)',
+          'Higher prices, lower output',
+        ],
         [
           'Dynamic efficiency – abnormal profits fund innovation (e.g. AI, EVs)',
           'Allocative inefficiency (P > MC), causing consumer and welfare loss',
@@ -47,16 +50,6 @@ Overall, significant market power is not always undesirable, but it should be re
       DiagramEnum.microMonopolyWelfare,
       DiagramEnum.microMonopolyNatural,
     ]),
-    SlideContent.realWorldExamples([
-      RealWorldExamples.oligopolyBoeingAirbusDuopoly,
-      RealWorldExamples.oligopolyBigSuperMarketsAustralia,
-      RealWorldExamples.oligopolyAIIndustry,
-      RealWorldExamples.oligopolyEVIndustryInChina,
-      RealWorldExamples.oligopolyOpecCartel,
-      RealWorldExamples.marketPowerAmazon,
-      RealWorldExamples.marketPowerMicrosoft,
-      RealWorldExamples.naturalMonopolyChinaRailway,
-      RealWorldExamples.naturalMonopolyStateGridChina,
-    ]),
+    SlideContent.realWorldExamples([]),
   ],
 );

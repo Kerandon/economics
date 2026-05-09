@@ -7,4 +7,3 @@ class Term {
 
   Term({required this.term, required this.explanation, this.tag});
 }
-

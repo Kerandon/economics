@@ -7,18 +7,18 @@ import '../../../../../../models/term.dart';
 import '../../../../../terms/terms.dart';
 
 final distinguishBetweenPerfectCompetitionAndMonopolisticCompetitionHL10Mark = Slide(
-  subunit: Subunit.marketFailurePower,
+  subunit: Subunit.marketFailureMarketPower,
   tags: [Tag.p1a, Tag.hl],
   question:
       'Distinguish between perfect competition and monopolistic competition.',
   contents: [
-  //   SlideContent.text('''
-  // <p>Perfect competition is characterized by many small, independent firms in a large industry selling a homogeneous product. There is perfect information on profits and technology, perfect factor mobility, and firms have no market power, setting prices at P = MC.</p>
-  // <p>Monopolistic competition is similar because it is also characterized by many relatively small firms; however, an important distinction is that firms have some (limited) market power due to product differentiation from non-price competition (e.g., product features/branding), allowing them to set prices at P > MC.</p>
-  // <p>Monopolistic competition is therefore a more realistic model of many real-world industries, such as city restaurants.</p>
-  // <p>Another similarity is that both markets feature high competition (many substitutes for consumers) and low barriers to entry/exit, meaning firms in both structures can only earn normal profits in the long run (minimum profit to remain in the industry in the long-run).</p>
-  // <p>However, a key difference is that firms in monopolistic competition are neither allocatively efficient (P > MC) nor productively efficient (P ≠ ATCmin) in the long run due to their market power. In contrast, firms in perfect competition are both allocatively and productively efficient in the long run, where P = MC = ATCmin.</p>
-  // '''),
+    //   SlideContent.text('''
+    // <p>Perfect competition is characterized by many small, independent firms in a large industry selling a homogeneous product. There is perfect information on profits and technology, perfect factor mobility, and firms have no market power, setting prices at P = MC.</p>
+    // <p>Monopolistic competition is similar because it is also characterized by many relatively small firms; however, an important distinction is that firms have some (limited) market power due to product differentiation from non-price competition (e.g., product features/branding), allowing them to set prices at P > MC.</p>
+    // <p>Monopolistic competition is therefore a more realistic model of many real-world industries, such as city restaurants.</p>
+    // <p>Another similarity is that both markets feature high competition (many substitutes for consumers) and low barriers to entry/exit, meaning firms in both structures can only earn normal profits in the long run (minimum profit to remain in the industry in the long-run).</p>
+    // <p>However, a key difference is that firms in monopolistic competition are neither allocatively efficient (P > MC) nor productively efficient (P ≠ ATCmin) in the long run due to their market power. In contrast, firms in perfect competition are both allocatively and productively efficient in the long run, where P = MC = ATCmin.</p>
+    // '''),
     SlideContent.simpleTable(
       title: 'Similarities',
       headers: ['Perfect Competition', 'Monopolistic Competition'],

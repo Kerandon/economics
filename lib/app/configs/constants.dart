@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 
+const kCopyRight = 'IB Economics | Keran Donovan | IBEconToolkit.com | 2026';
 const kAppName = 'IB Econ Toolkit';
 const kLevel = 'level';
 const kHL = 'HL';

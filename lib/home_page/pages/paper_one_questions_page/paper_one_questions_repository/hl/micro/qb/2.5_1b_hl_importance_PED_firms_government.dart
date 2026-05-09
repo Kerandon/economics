@@ -39,10 +39,6 @@ final discussImportanceOfInelasticPEDForFirmsAndGovernment = Slide(
       DiagramEnum.microDemandElasticRevenue,
       DiagramEnum.microDemandInelasticRevenue,
     ]),
-    SlideContent.realWorldExamples([
-      RealWorldExamples.cigaretteTaxRevenue,
-      RealWorldExamples.airlinesPriceDiscrimination,
-      RealWorldExamples.disneylandPricing,
-    ]),
+    SlideContent.realWorldExamples([]),
   ],
 );

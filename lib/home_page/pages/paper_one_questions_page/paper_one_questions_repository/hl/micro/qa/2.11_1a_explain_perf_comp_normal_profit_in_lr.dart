@@ -7,8 +7,8 @@ import '../../../../../../models/term.dart';
 import '../../../../../terms/terms.dart';
 
 final explainWhyPerfectCompetitionOnlyEarnNormalProfitInLR = Slide(
-  subunit: Subunit.marketFailurePower,
-  tags: [Tag.hl,Tag.p1a],
+  subunit: Subunit.marketFailureMarketPower,
+  tags: [Tag.hl, Tag.p1a],
   question:
       'Explain why firms in perfect competition can only earn abnormal profits in the short run.',
   contents: [

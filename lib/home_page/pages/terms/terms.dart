@@ -5,65 +5,61 @@ import '../../models/term.dart';
 enum EconTerm {
   /// 2.1 Demand
 
-
   demand(
     termName: 'Demand',
     explanation:
-    'The quantity of a good or service consumers are willing and able to buy at different prices, ceteris paribus.',
+        'The quantity of a good or service consumers are willing and able to buy at different prices, ceteris paribus.',
     subunit: Subunit.demand,
   ),
 
   substitutionEffect(
     termName: 'Substitution Effect',
     explanation:
-    'When a good’s price falls, it becomes relatively cheaper than alternatives, so consumers switch towards it.',
+        'When a good’s price falls, it becomes relatively cheaper than alternatives, so consumers switch towards it.',
     subunit: Subunit.demand,
     tags: [Tag.hl],
-
   ),
 
   incomeEffect(
     termName: 'Income Effect',
     explanation:
-    'When a good’s price falls, real income rises, so consumers can buy more.',
+        'When a good’s price falls, real income rises, so consumers can buy more.',
     subunit: Subunit.demand,
     tags: [Tag.hl],
   ),
 
   marginalUtility(
-      termName: 'Marginal Utility',
-      explanation:
-      'The extra satisfaction gained from consuming one more unit of a good.',
-      subunit: Subunit.demand,
-      tags: [Tag.hl]
+    termName: 'Marginal Utility',
+    explanation:
+        'The extra satisfaction gained from consuming one more unit of a good.',
+    subunit: Subunit.demand,
+    tags: [Tag.hl],
   ),
 
   normalGood(
     termName: 'Normal Good',
-    explanation:
-    'A good for which demand increases as income increases.',
+    explanation: 'A good for which demand increases as income increases.',
     subunit: Subunit.demand,
   ),
 
   inferiorGood(
     termName: 'Inferior Good',
-    explanation:
-    'A good for which demand decreases as income increases.',
+    explanation: 'A good for which demand decreases as income increases.',
     subunit: Subunit.demand,
   ),
 
   lawOfDiminishingMarginalUtility(
     termName: 'Law of Diminishing Marginal Utility',
     explanation:
-    'As more units are consumed, the extra satisfaction from each additional unit decreases.',
+        'As more units are consumed, the extra satisfaction from each additional unit decreases.',
     subunit: Subunit.demand,
-    tags: [Tag.hl]
+    tags: [Tag.hl],
   ),
 
   marketDemand(
     termName: 'Market Demand',
     explanation:
-    'The sum of all individual consumers’ demand for a good at each price.',
+        'The sum of all individual consumers’ demand for a good at each price.',
     subunit: Subunit.demand,
   ),
 
@@ -72,120 +68,116 @@ enum EconTerm {
   supply(
     termName: 'Supply',
     explanation:
-    'The quantity of a good or service producers are willing and able to sell at different prices, ceteris paribus.',
+        'The quantity of a good or service producers are willing and able to sell at different prices, ceteris paribus.',
     subunit: Subunit.supply,
   ),
 
   marketSupply(
     termName: 'Market Supply',
-    explanation:
-    'The sum of all firms’ supply of a good at each price.',
+    explanation: 'The sum of all firms’ supply of a good at each price.',
     subunit: Subunit.supply,
   ),
 
   lawOfDiminishingMarginalReturns(
     termName: 'Law of Diminishing Marginal Returns',
     explanation:
-    'As more of a variable input is added to a fixed input, the extra output from each additional unit eventually falls.',
+        'As more of a variable input is added to a fixed input, the extra output from each additional unit eventually falls.',
     subunit: Subunit.supply,
   ),
-
-
 
   competitiveSupply(
     termName: 'Competitive Supply',
     explanation:
-    'Producing more of one good means producing less of another because they use the same resources (e.g. wheat and corn).',
+        'Producing more of one good means producing less of another because they use the same resources (e.g. wheat and corn).',
     subunit: Subunit.supply,
   ),
 
   jointSupply(
     termName: 'Joint Supply',
     explanation:
-    'Producing more of one good increases the supply of another as a by-product (e.g. beef and leather).',
+        'Producing more of one good increases the supply of another as a by-product (e.g. beef and leather).',
     subunit: Subunit.supply,
   ),
 
   supplyShock(
     termName: 'Supply Shock',
     explanation:
-    'A sudden external event that significantly increases or decreases supply (e.g. bumper harvest / war).',
+        'A sudden external event that significantly increases or decreases supply (e.g. bumper harvest / war).',
     subunit: Subunit.supply,
   ),
   marginalProduct(
-      termName: 'Marginal Product',
-      explanation:
-      'The extra output from one more unit of input. <b>∆TP / ∆Input</b>.',
-      subunit: Subunit.supply,
-      tags: [Tag.hl]
+    termName: 'Marginal Product',
+    explanation:
+        'The extra output from one more unit of input. <b>∆TP / ∆Input</b>.',
+    subunit: Subunit.supply,
+    tags: [Tag.hl],
   ),
 
   marginalCost(
-      termName: 'Marginal Cost',
-      explanation:
-      'The extra cost of producing one more unit. <b>∆TC / ∆Q</b>.',
-      subunit: Subunit.supply,
-      tags: [Tag.hl]
+    termName: 'Marginal Cost',
+    explanation: 'The extra cost of producing one more unit. <b>∆TC / ∆Q</b>.',
+    subunit: Subunit.supply,
+    tags: [Tag.hl],
   ),
 
   /// 2.3 Competitive market
- priceSignals(
+  priceSignals(
     termName: 'Price Signals',
     explanation:
-    'Provide information to producers and consumers about changing market demand and supply which guide resource allocation.',
+        'Provide information to producers and consumers about changing market demand and supply which guide resource allocation.',
     subunit: Subunit.demand,
   ),
 
   incentives(
     termName: 'Incentives',
     explanation:
-    'Motivations created by price changes that encourage consumers and producers to adjust behavior to maximize profit or benefit.',
+        'Motivations created by price changes that encourage consumers and producers to adjust behavior to maximize profit or benefit.',
     subunit: Subunit.demand,
   ),
 
   priceRationing(
     termName: 'Price Rationing',
     explanation:
-    'When scarce goods and services are allocated through the price mechanism. If there is a shortage, the price rises and only those willing and able to pay will obtain the good.',
+        'Scarce goods and services allocated by price mechanism. If there is a shortage, the price rises and only those willing and able to pay will obtain the good.',
     subunit: Subunit.demand,
   ),
   nonPriceRationing(
     termName: 'Non-Price Rationing',
     explanation:
-    'A method of allocating scarce goods and services without using price, such as queues, lotteries, or government allocation.',
+        'Non-price methods to allocate resources: queues, lotteries, or government allocation.',
     subunit: Subunit.demand,
   ),
 
   marginalBenefit(
     termName: 'Marginal Benefit',
     explanation:
-    'The additional benefit or satisfaction gained from consuming one more unit of a good or service.',
+        'The additional benefit or satisfaction gained from consuming one more unit of a good or service.',
     subunit: Subunit.demand,
   ),
 
   consumerSurplus(
     termName: 'Consumer Surplus',
     explanation:
-    'The difference between the maximum price a consumer is willing to pay and the actual price paid.',
+        'Difference between the maximum price a consumer is willing to pay and the actual price paid.',
     subunit: Subunit.demand,
   ),
 
   producerSurplus(
     termName: 'Producer Surplus',
     explanation:
-    'The difference between the price a producer is willing to accept and the actual price received.',
+        'The difference between the price a producer is willing to accept and the actual price received.',
     subunit: Subunit.demand,
   ),
   socialSurplus(
     termName: 'Social Surplus',
     explanation:
-    'The total surplus in an economy, equal to consumer surplus plus producer surplus, representing the net benefit to society from market transactions.',
+        'Total surplus in an economy, sum of consumer surplus and producer surplus.',
     subunit: Subunit.demand,
   ),
   allocativeEfficiency(
     termName: 'Allocative Efficiency',
     explanation:
-    'A situation where resources are allocated to produce the combination of goods most valued by society, where price equals marginal cost.',
+        'Resources allocation maximises social welfare. P = MC (or MSB = MSC for externalities).',
     subunit: Subunit.demand,
   ),
 
@@ -193,20 +185,22 @@ enum EconTerm {
   rationalConsumerChoice(
     termName: 'Rational Consumer Choice',
     explanation:
-    'Assumes consumers are motivated by rational self-interest, have access to perfect information, and aim to maximize their utility based on their budget constraints.',
+        'Consumers are rational / self-interest; perfect information; maximize utility.',
     subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
   biases(
     subunit: Subunit.critiqueBehaviour,
     termName: 'Biases',
-    explanation: 'Heuristics that simplifies decision-making (rule of thumb, anchoring and framing, availability).',
-  tags: [Tag.hl],
+    explanation:
+        'Heuristics that simplifies decision-making (rule of thumb, anchoring, framing, availability).',
+    tags: [Tag.hl],
   ),
   ruleOfThumb(
     subunit: Subunit.critiqueBehaviour,
     termName: 'Rule of Thumb',
-    explanation: 'an informal shortcut that simplifies decision-making (e.g., always buy on sale).',
+    explanation:
+        'Informal shortcut that simplifies decision-making (e.g., always buy on sale).',
     tags: [Tag.hl],
   ),
   anchoring(
@@ -218,19 +212,21 @@ enum EconTerm {
   framing(
     subunit: Subunit.critiqueBehaviour,
     termName: 'Framing',
-    explanation: 'how the presentation of information affects decision making (20% fat-free vs 80% pure fat).',
+    explanation:
+        'how the presentation of information affects decision making (20% fat-free vs 80% pure fat).',
     tags: [Tag.hl],
   ),
   availabilityBias(
     subunit: Subunit.critiqueBehaviour,
     termName: 'Availability Bias',
-    explanation: 'Overestimating the likelihood of recent or vivid events (afraid of air-travel even is safe)',
+    explanation:
+        'Overestimating the likelihood of recent / vivid events (afraid of air-crash even if very low risk)',
     tags: [Tag.hl],
   ),
   boundedRationality(
     termName: 'Bounded Rationality',
     explanation:
-    'Individuals have limited cognitive ability, time, and imperfect information, which restricts fully rational decision-making.',
+        'Consumers limited cognitive ability, time, and imperfect information. This restricts fully rational decision-making.',
     subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
@@ -238,7 +234,7 @@ enum EconTerm {
   boundedSelfControl(
     termName: 'Bounded Self-Control',
     explanation:
-    'The limited ability of individuals to control impulses, which can lead to decisions that reduce long-term utility.',
+        'Limited ability of individuals to control impulses, reducing long-term utility (eat too much chocolate when on a diet due to lack of self-control).',
     subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
@@ -246,7 +242,7 @@ enum EconTerm {
   boundedSelfishness(
     termName: 'Bounded Selfishness',
     explanation:
-    'Individuals may consider the welfare of others when making decisions, rather than acting purely in self-interest.',
+        'Consider the welfare of others when making decisions (altruistic / charity).',
     subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
@@ -254,28 +250,21 @@ enum EconTerm {
   imperfectInformation(
     termName: 'Imperfect Information',
     explanation:
-    'A situation where economic agents do not have full access to all relevant information, leading to less than fully rational decisions.',
-    subunit:  Subunit.critiqueBehaviour,
+        'Do not have full access to all relevant information / too much information to rationally assess.',
+    subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
   choiceArchitecture(
     termName: 'Choice Architecture',
     explanation:
-    'How the presentation of choices to consumers can influence decision making: Default (choice if nothing is chosen); restricted (reduced choices to simplify); and mandated choices (must choose between options)',
-    subunit:  Subunit.critiqueBehaviour,
+        'How choices presented to consumers can influence decision making: 3 types: Default Choice (usual choice if nothing is chosen); Restricted Choice (reduced choice to simplify decision making); and Mandated Choice (must choose between options)',
+    subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
   nudges(
     termName: 'Nudges',
     explanation:
-    'how indirect suggestions can influence the behavior of individuals and groups. E.g., Placing healthy food in more visible spots.',
-    subunit:  Subunit.critiqueBehaviour,
-    tags: [Tag.hl],
-  ),
-  alternativeBusinessObjectives(
-    termName: 'Alternative Business Objectives',
-    explanation:
-    'Objectives other than profit maximisation: CRS, revenue maximization, growth, satisficing.',
+        'Indirect suggestions can influence the behavior of individuals and groups. (Placing healthy food in more visible spots).',
     subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
@@ -283,47 +272,38 @@ enum EconTerm {
   corporateSocialResponsibility(
     termName: 'Corporate Social Responsibility (CSR)',
     explanation:
-    'Firms take responsibility for their social and environmental impacts.',
-    subunit:  Subunit.critiqueBehaviour,
+        'Firms take responsibility for their social and environmental impacts over profit-maximizing.',
+    subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
 
   marketShare(
     termName: 'Market Share',
-    explanation:
-    'The proportion of total industry sales accounted for by a firm, measured as firm sales revenue divided by total industry revenue.',
-    subunit:  Subunit.critiqueBehaviour,
-    tags: [Tag.hl],
-  ),
-
-  growth(
-    termName: 'Growth (Firm)',
-    explanation:
-    'A firm objective to increase output or sales over time, often measured by rising units sold or revenue.',
+    explanation: 'Firm sales revenue / total industry revenue.',
     subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
 
   revenueMaximisation(
     termName: 'Revenue Maximisation',
-    explanation:
-    'A firm objective where total revenue is maximised, occurring where marginal revenue equals zero.',
-    subunit:  Subunit.critiqueBehaviour,
+    explanation: 'TR is maximized, MR = 0.',
+    subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
 
   satisficing(
     termName: 'Satisficing',
     explanation:
-    'A behaviour where firms aim for satisfactory rather than maximum outcomes, often meeting minimum acceptable targets.',
+        'Individuals or firms aim for satisfactory / acceptable outcomes (rather than maximum). Due to conflicting goals, or last bit of utility /  profit requires to much effort.',
     subunit: Subunit.critiqueBehaviour,
     tags: [Tag.hl],
   ),
+
   ///2.5-2.6 Elasticities
   realIncome(
     termName: 'Real Income',
     explanation:
-        'Income adjusted for inflation, showing actual purchasing power.',
+        'Income adjusted for inflation; shows actual purchasing power.',
     subunit: Subunit.elasticityDemand,
   ),
   incomeElasticityOfDemand(
@@ -335,7 +315,7 @@ enum EconTerm {
   luxuries(
     termName: 'Luxuries',
     explanation:
-        'Normal goods that are desirable and prestigious, with <strong>YED > 1</strong>.',
+        'Normal goods that are desirable, with <strong>YED > 1</strong>.',
     subunit: Subunit.elasticityDemand,
   ),
   manufacturedGood(
@@ -353,13 +333,13 @@ enum EconTerm {
   perfectlyPriceElasticDemand(
     termName: 'Perfectly price elastic demand (PED = infinity)',
     explanation:
-        'Consumers are extremely sensitive to price. Any increase in price leads causes demand to fall to zero. e.g., generic goods with perfect substitutes.',
+        'Any increase in price leads causes quantity demanded to fall to zero. e.g., generic goods with perfect substitutes.',
     subunit: Subunit.elasticityDemand,
   ),
   perfectlyPriceInelasticDemand(
     termName: 'Perfectly price inelastic demand (PED = 0)',
     explanation:
-        'Occurs when a change in price has no effect on quantity demanded. E.g., life-saving medicines.',
+        'A change in price has no effect on quantity demanded. E.g., life-saving medicines.',
     subunit: Subunit.elasticityDemand,
   ),
   priceElasticDemand(
@@ -428,29 +408,139 @@ enum EconTerm {
   priceElasticitySupply(
     termName: 'Price Elasticity of Supply (PES)',
     explanation:
-    'Measures how sensitive changes in quantity supply are to changes in the price of a product <b>(PES = %∆Qs / %∆P)</b>',
+        'Measures how sensitive changes in quantity supply are to changes in the price of a product <b>(PES = %∆Qs / %∆P)</b>',
     subunit: Subunit.elasticityDemand,
   ),
+
+  /// 2.7
+  priceControls(
+    termName: 'Price Controls',
+    explanation:
+        'Price floors and price ceilings - results in market-disequilibrium - shortages/surpluses (usually to support low income households or support firms)',
+    subunit: Subunit.roleOfGovernment,
+  ),
+
+  priceCeiling(
+    termName: 'Price Ceiling',
+    explanation:
+        'A maximum legal price set by the government, below the equilibrium price.',
+    subunit: Subunit.roleOfGovernment,
+  ),
+
+  priceFloor(
+    termName: 'Price Floor',
+    explanation:
+        'A minimum legal price set by the government, above the equilibrium price (minimum wage or agricultural price floor).',
+    subunit: Subunit.roleOfGovernment,
+  ),
+
+  minimumWage(
+    termName: 'Minimum Wage',
+    explanation:
+        'A legal price floor in the labor market above market wage to protect low-skilled workers.',
+    subunit: Subunit.roleOfGovernment,
+  ),
+
+  marketDisequilibrium(
+    termName: 'Market Disequilibrium',
+    explanation: 'Qd > Qs or Qs > Qd; shortage or a surplus.',
+    subunit: Subunit.roleOfGovernment,
+  ),
+
+  regulations(
+    termName: 'Regulations (command and control)',
+    explanation: 'Direct government rules or laws / bans.',
+    subunit: Subunit.roleOfGovernment,
+  ),
+
   ///2.8 Externalities
   externalities(
     termName: 'Externalities',
     explanation:
         'Costs or benefits of production/consumption imposed on third parties not reflected in market prices.',
-    subunit: Subunit.marketFailureExternalities,
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  positiveProductionExternality(
+    termName: 'Positive Production Externality',
+    explanation:
+        'External benefit from production to third parties (MSC < MPC).',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  positiveConsumptionExternality(
+    termName: 'Positive Consumption Externality',
+    explanation:
+        'External benefit from consumption to third parties (MSB > MPB).',
+    subunit: Subunit.marketFailureExternalitiesCPR,
   ),
 
   negativeProductionExternality(
     termName: 'Negative Production Externality',
+    explanation: 'External cost from production to third parties (MSC > MPC).',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  negativeConsumptionExternality(
+    termName: 'Negative Consumption Externality',
+    explanation: 'External cost from consumption to third parties (MSB < MPB).',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  meritGoods(
+    termName: 'Merit Goods',
     explanation:
-        'Production imposes external costs on third parties (MSC > MPC).',
-    subunit: Subunit.marketFailureExternalities,
+        'Goods under-consumed by individuals but socially beneficial, often subsidised or provided by government.',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  demeritGoods(
+    termName: 'Demerit Goods',
+    explanation:
+        'Goods over-consumed due to imperfect information, with negative externalities (e.g. tobacco).',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  pigouvianTax(
+    termName: 'Pigouvian Tax',
+    explanation:
+        'Tax equal to external cost to correct negative externalities and align MPC with MSC.',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  commandAndControl(
+    termName: 'Command and Control',
+    explanation:
+        'Government rules limiting or banning activities (e.g. emissions caps, bans).',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  carbonTax(
+    termName: 'Carbon Tax',
+    explanation:
+        'Tax on CO₂ emissions to reduce pollution by increasing cost of carbon-intensive production.',
+    subunit: Subunit.marketFailureExternalitiesCPR,
   ),
 
   tradablePermits(
     termName: 'Tradable Permits',
     explanation:
-        'Market-based policy setting a cap on pollution; firms can buy/sell permits, internalising external costs.',
-    subunit: Subunit.marketFailureExternalities,
+        'Cap-and-trade system where firms buy/sell emission permits within a fixed pollution cap.',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  commonPoolResources(
+    termName: 'Common Pool Resources (CPR)',
+    explanation:
+        'Non-excludable but rival goods prone to overuse and depletion without regulation.',
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+
+  tragedyOfTheCommons(
+    termName: 'Tragedy of the Commons',
+    explanation:
+        'Overuse of a common resource due to self-interest leading to depletion of the resource.',
+    subunit: Subunit.marketFailureExternalitiesCPR,
   ),
 
   ///2.9 Public Goods
@@ -475,19 +565,81 @@ enum EconTerm {
     termName: 'Merit Good',
     explanation:
         'A private good that is socially desirable (external benefits) but is underconsumed.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureExternalitiesCPR,
   ),
+
+  /// 2.9 public good
   publicGood(
     termName: 'Public Good',
     explanation: 'Non-excludable and non-rival. Subject to free-rider problem',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureExternalitiesCPR,
+  ),
+  nonRejectable(
+    termName: 'Non-rejectable',
+    explanation:
+        'Cannot reject the benefit of a public good once provided (e.g., everyone benefits from national defense).',
+    subunit: Subunit.marketFailurePublicGoods,
+  ),
+  contractingOut(
+    termName: 'Contracting Out',
+    explanation:
+        'The government hires private firms to provide public goods on its behalf, usually via competitive tendering.',
+    subunit: Subunit.marketFailurePublicGoods,
+  ),
+
+  costBenefitAnalysis(
+    termName: 'Cost-Benefit Analysis',
+    explanation:
+        'Government estimates social benefits (via surveys, analysis) of supplying a public good, will supply where MSB = MSC.',
+    subunit: Subunit.marketFailurePublicGoods,
+  ),
+
+  /// 2.10 Asymmetric Information
+  informationFailure(
+    termName: 'Information Failure',
+    explanation:
+        'Market failure due to buyers or sellers not having full or accurate information to make rational decisions.',
+    subunit: Subunit.marketFailureAsymmetricInformation,
+  ),
+  asymmetricInformation(
+    termName: 'Asymmetric Information',
+    explanation:
+        'A market failure where one party in an economic transaction possesses more or better information than the other, leading to an inefficient allocation of resources.',
+    subunit: Subunit.marketFailureAsymmetricInformation,
+  ),
+  moralHazard(
+    termName: 'Moral Hazard',
+    explanation:
+        'When one party takes excessive risks because the cost of that risk is borne by another party (often due to insurance, banks make risky investments as expect government bail out).',
+    subunit: Subunit.marketFailureAsymmetricInformation,
+  ),
+
+  adverseSelection(
+    termName: 'Adverse Selection',
+    explanation:
+        'Where an imbalance of information leads to low-quality products or high-risk participants dominating the market (e.g., used cars, health insurance).',
+    subunit: Subunit.marketFailureAsymmetricInformation,
+  ),
+
+  screening(
+    termName: 'Screening',
+    explanation:
+        'Action taken by the less-informed party to gather information and assess risk (e.g., an employer requiring background checks).',
+    subunit: Subunit.marketFailureAsymmetricInformation,
+  ),
+
+  signaling(
+    termName: 'Signaling',
+    explanation:
+        'Action taken by the more-informed party to credibly reveal their hidden information or quality to the other party (e.g., a firm offering a warranty).',
+    subunit: Subunit.marketFailureAsymmetricInformation,
   ),
 
   dynamicEfficiency(
     termName: 'Dynamic Efficiency',
     explanation:
         'Improved long-term efficiency by investment in R&D and innovation (technology).',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
     tags: [Tag.hl],
   ),
   collusion(
@@ -495,82 +647,82 @@ enum EconTerm {
     explanation:
         'Firms in oligopoly coordinate by fixing prices or restricting output to limit competition (act as a monopoly).',
 
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
     tags: [Tag.hl],
   ),
   perfectCompetition(
     termName: 'Perfect Competition',
     explanation:
         'Many small firms with no market power (P=MC) selling a homogeneous product. Perfect information, and perfect factor mobility of labor and capital. No barriers to entry/exit means only normal profit in long-run.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
   ),
   monopolisticCompetition(
     termName: 'Monopolistic Competition',
     explanation:
         'Many small firms, each with some (limited) market power due to product differentiation. Low barriers to entry/exit means only normal profit in long-run.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
   ),
   monopoly(
     termName: 'Monopoly',
     explanation:
         'A single supplier of a good or service. Very high barriers to entry and significant market power P>MC.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
   ),
   naturalMonopoly(
     termName: 'Natural Monopoly',
     explanation:
         'A market where a single firm can supply the entire market demand at a lower average cost than two or more firms due to high fixed costs and massive economies of scale.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
   ),
   marketPower(
     termName: 'Market Power',
     explanation:
         'The ability of a firm to influence the price of a good, set P>MC.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
   ),
   abnormalProfit(
     termName: 'Abnormal Profit',
     explanation: 'TR > TC (explicit and implicit costs).',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
   ),
   normalProfit(
     termName: 'Normal Profit',
     explanation:
         'TR = TC (implicit and explicit costs). Minimum level of profit required to keep a firm in industry in long-run.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
   ),
   shortRunMicro(
     termName: 'Short Run (Micro)',
     explanation:
         'The period of time in which at least one factor of production is fixed.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
   ),
   barriersToEntry(
     termName: 'Barriers to Entry',
     explanation:
         'Factors with prevents entry of new firms into an industry (economies of scale, branding, patents, or legal barriers).',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
     tags: [Tag.hl],
   ),
   nonPriceCompetition(
     termName: 'Non-Price Competition',
     explanation:
         'Competition between firms that focuses on factors other than price, such as product differentiation, advertising, customer service, and brand loyalty.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
     tags: [Tag.hl],
   ),
   oligopoly(
     termName: 'Oligopoly',
     explanation:
         'A market structure dominated by a few large firms with high barriers to entry and mutual interdependence.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
     tags: [Tag.hl],
   ),
   concentrationRatio(
     termName: 'Concentration Ratio',
     explanation:
         'A measure of the percentage of total market share held by the largest firms (e.g., CR4) in an industry.',
-    subunit: Subunit.marketFailurePower,
+    subunit: Subunit.marketFailureMarketPower,
     tags: [Tag.hl],
   ),
 
@@ -581,6 +733,113 @@ enum EconTerm {
     explanation:
         'Total market value of all final goods and services produced by a country in one year.',
     subunit: Subunit.economicActivity,
+  ),
+  windfallTax(
+    termName: 'Windfall Tax',
+    explanation: 'One-off tax on unexpected supernormal profits.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  marginalCostPricing(
+    termName: 'Marginal Cost Pricing',
+    explanation: 'Price set equal to marginal cost (P = MC).',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  averageCostPricing(
+    termName: 'Average Cost Pricing',
+    explanation: 'Price set equal to average cost (P = AC).',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  productiveEfficiency(
+    termName: 'Productive Efficiency',
+    explanation: 'Production at the lowest possible cost (minimum AC).',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  cartel(
+    termName: 'Cartel',
+    explanation: 'Group of firms that collude to fix prices or output.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  informalCollusion(
+    termName: 'Informal Collusion',
+    explanation: 'Firms coordinate behaviour without a formal agreement.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  predatoryPricing(
+    termName: 'Predatory Pricing',
+    explanation: 'Setting very low prices to force competitors out.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  bundlingTying(
+    termName: 'Bundling / Tying',
+    explanation: 'Selling products together or forcing joint purchase.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  antiCompetitivePractices(
+    termName: 'Anti-competitive Practices',
+    explanation: 'Actions that reduce or restrict competition.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  regulatoryCapture(
+    termName: 'Regulatory Capture',
+    explanation: 'Regulators act in the interest of firms, not consumers.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  shutdownPoint(
+    termName: 'Shutdown Point',
+    explanation:
+        'Price equals minimum AVC; below this, firm shuts down in short run.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+  priceWar(
+    termName: 'Price War',
+    explanation: 'Firms repeatedly lower prices to compete for market share.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  gameTheory(
+    termName: 'Game Theory',
+    explanation:
+        'Use of pay-off matrix to show the conflict firms face between cooperation and self-interest.',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+  prisonersDilemma(
+    termName: 'Prisoners Dilemma',
+    explanation:
+        'Players mutually benefit if they cooperate but each has an incentive to secretly cheat. But if both cheat, will both end-up worse off (stuck in Nash Equilibrium)',
+    subunit: Subunit.marketFailureMarketPower,
+    tags: [Tag.hl],
+  ),
+
+  /// 2.11 Equity
+  equity(
+    termName: 'Equity',
+    explanation:
+        'Equity is the concept of fairness in the distribution of income and wealth. It is normative (value-based / subjective).',
+    subunit: Subunit.marketInequity,
+    tags: [Tag.hl],
   ),
 
   /// 3.2 AD-AS

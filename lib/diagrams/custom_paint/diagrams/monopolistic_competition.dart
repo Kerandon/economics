@@ -30,7 +30,7 @@ class MonopolisticCompetitionDiagram extends BaseDiagramPainter {
     switch (diagram) {
       case DiagramEnum.microMonopolisticCompetitionLongRun:
       case DiagramEnum.microMonopolisticCompetitionAbnormalProfit:
-      case DiagramEnum.microMonopolisticCompetitionLoss:
+      case DiagramEnum.microMonopolisticCompetitionEconomicLoss:
       case DiagramEnum.microMonopolisticCompetitionAbnormalProfitShift:
       case DiagramEnum.microMonopolisticCompetitionLossShift:
         return _paintMonopolisticCompetition(c, canvas, diagram);
@@ -38,12 +38,11 @@ class MonopolisticCompetitionDiagram extends BaseDiagramPainter {
     }
   }
 
-
   void _paintMonopolisticCompetition(
-      DiagramPainterConfig c,
-      IDiagramCanvas canvas,
-      DiagramEnum diagram,
-      ) {
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
     paintAxis(
       c,
       canvas,
@@ -77,7 +76,7 @@ class MonopolisticCompetitionDiagram extends BaseDiagramPainter {
           canvas,
 
           'D/AR + MR left\n(and more elastic)\n'
-              'until P=ATC',
+          'until P=ATC',
           Offset(0.85, 0.60),
           type: DiagramTextType.label,
         );
@@ -210,7 +209,7 @@ class MonopolisticCompetitionDiagram extends BaseDiagramPainter {
       );
       paintDot(c, canvas, Offset(0.375, 0.665));
     }
-    if (diagram == DiagramEnum.microMonopolisticCompetitionLoss) {
+    if (diagram == DiagramEnum.microMonopolisticCompetitionEconomicLoss) {
       paintText(
         c,
         canvas,

@@ -247,7 +247,6 @@ class QuestionDetailPage extends StatelessWidget {
 
     // 2. Legacy Single Term
 
-
     // 3. Standard Text / HTML
     if (block.content != null && block.content!.text.isNotEmpty) {
       tryAddHeader('EXPLANATION'); // 🌟 Use tryAddHeader
@@ -298,75 +297,94 @@ class QuestionDetailPage extends StatelessWidget {
         block.realWorldExamples!.isNotEmpty) {
       tryAddHeader('REAL WORLD EXAMPLES');
 
-      widgets.add(
-        Padding(
-          padding: const EdgeInsets.only(bottom: 24.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey.shade300),
-            ),
-            clipBehavior:
-                Clip.antiAlias, // Ensures border radius clips the table corners
-            child: Table(
-              // Controls the ratio of the columns. 1.2 vs 2.8 makes the right column much bigger
-              columnWidths: const {
-                0: FlexColumnWidth(1.2),
-                1: FlexColumnWidth(2.8),
-              },
-              // Adds internal grid lines
-              border: TableBorder(
-                horizontalInside: BorderSide(color: Colors.grey.shade200),
-                verticalInside: BorderSide(color: Colors.grey.shade200),
-              ),
-              children: block.realWorldExamples!.asMap().entries.map((entry) {
-                final int index = entry.key;
-                final rwe = entry.value;
+      // 1. Iterate over each topic
+      for (final topic in block.realWorldExamples!) {
+        if (topic.examples.isEmpty) continue; // Skip if a topic has no examples
 
-                return TableRow(
-                  // Zebra striping for readability
-                  decoration: BoxDecoration(
-                    color: index % 2 == 0
-                        ? Colors.white
-                        : Colors.blueGrey.shade50.withOpacity(0.3),
-                  ),
-                  children: [
-                    // Column 1: Title
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        rwe.example,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                          height: 1.3,
-                        ),
-                      ),
-                    ),
-                    // Column 2: Explanation
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        rwe.explanation ?? '',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey.shade800,
-                          height: 1.5,
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
+        // 2. Add the Topic Name as a sub-header
+        widgets.add(
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12.0, top: 8.0),
+            child: Text(
+              topic.topicName,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
             ),
           ),
-        ),
-      );
+        );
+
+        // 3. Build the styled table for this topic's examples
+        widgets.add(
+          Padding(
+            padding: const EdgeInsets.only(bottom: 24.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              clipBehavior: Clip
+                  .antiAlias, // Ensures border radius clips the table corners
+              child: Table(
+                // Controls the ratio of the columns. 1.2 vs 2.8 makes the right column much bigger
+                columnWidths: const {
+                  0: FlexColumnWidth(1.2),
+                  1: FlexColumnWidth(2.8),
+                },
+                // Adds internal grid lines
+                border: TableBorder(
+                  horizontalInside: BorderSide(color: Colors.grey.shade200),
+                  verticalInside: BorderSide(color: Colors.grey.shade200),
+                ),
+                children: topic.examples.asMap().entries.map((entry) {
+                  final int index = entry.key;
+                  final rwe = entry.value;
+
+                  return TableRow(
+                    // Zebra striping for readability
+                    decoration: BoxDecoration(
+                      color: index % 2 == 0
+                          ? Colors.white
+                          : Colors.blueGrey.shade50.withOpacity(0.3),
+                    ),
+                    children: [
+                      // Column 1: Title
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          rwe.title, // Updated from rwe.example
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            height: 1.3,
+                          ),
+                        ),
+                      ),
+                      // Column 2: Explanation
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          rwe.explanation, // Removed ?? '' since it's non-nullable now
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey.shade800,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        );
+      }
     }
-
     // 8. Evaluation Block
-
 
     // 9. Alerts / Warnings
     if (block.alert != null && block.alert!.text.isNotEmpty) {

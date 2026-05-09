@@ -158,7 +158,8 @@ pw.Widget _buildPdfDiagramCell(
                       pdfFont: unicodeFont.getFont(pdfContext),
                       scale: scale, // ✅ THIS is the correct value
                     );
-                  })
+                  },
+                ),
               ),
             ),
             // Faint grey watermark on EVERY diagram

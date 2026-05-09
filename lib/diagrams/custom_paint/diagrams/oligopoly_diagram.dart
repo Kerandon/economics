@@ -101,11 +101,12 @@ void _paintCartel(DiagramPainterConfig c, IDiagramCanvas canvas) {
 
   paintMarketCurve(c, canvas, type: MarketCurveType.mcAtc);
 }
+
 void _paintKinkedDemand(
-    DiagramPainterConfig c,
-    IDiagramCanvas canvas,
-    DiagramEnum diagram,
-    ) {
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+  DiagramEnum diagram,
+) {
   paintAxis(
     c,
     canvas,

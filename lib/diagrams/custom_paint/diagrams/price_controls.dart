@@ -33,7 +33,7 @@ class PriceControls extends BaseDiagramPainter {
       case DiagramEnum.microMinimumWage:
       case DiagramEnum.microMinimumWageWelfare:
         _paintMinWage(c, canvas, diagram);
-      case DiagramEnum.microNationalMinimumWageInelasticDemandAndSupply:
+      case DiagramEnum.microMinimumWageInelasticDemandAndSupply:
         _paintNMWInelasticDemand(c, canvas);
       case DiagramEnum.microAgriculturalPriceFloor:
         _paintAgriculturalPriceFloor(c, canvas);
