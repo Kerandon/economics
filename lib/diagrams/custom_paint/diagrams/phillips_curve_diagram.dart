@@ -170,7 +170,7 @@ void _paintExpectationsAugmentedPCInflationGap(
     canvas,
     type: MarketCurveType.srpc2,
     horizontalShift: 0.10,
-    verticalShift: -0.14,
+    verticalShift: -0.135,
     lengthAdjustment: length,
     color: Colors.red,
   );
@@ -204,62 +204,62 @@ void _paintExpectationsAugmentedPhillipsCurveDeflationaryGap(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,
 ) {
-  final length = -0.15;
-  paintDiagramDashedLines(
-    c,
-    canvas,
-    yAxisStartPos: 0.85,
-    xAxisEndPos: 0.50,
-    yLabel: '2%',
-    additionalYLabels: ['6%'],
-    additionalYPositions: [0.525],
-    xLabel: DiagramLabel.nRU.label,
-    rightYLabel: 'A',
-    additionalRightYLabels: ['C'],
-  );
-  paintDiagramDashedLines(
-    c,
-    canvas,
-    yAxisStartPos: 0.70,
-    xAxisEndPos: 0.30,
-    yLabel: '4%',
-    xLabel: DiagramLabel.uInf.label,
-    rightYLabel: 'B',
-  );
-  paintMarketCurve(c, canvas, type: MarketCurveType.lrpc);
-  paintMarketCurve(
-    c,
-    canvas,
-    type: MarketCurveType.srpc2,
-    horizontalShift: 0.10,
-    verticalShift: -0.14,
-    lengthAdjustment: length,
-    color: Colors.red,
-  );
-  paintMarketCurve(
-    c,
-    canvas,
-    type: MarketCurveType.srpc1,
-    horizontalShift: -0.05,
-    verticalShift: 0.08,
-    lengthAdjustment: length,
-  );
-  paintLineSegment(
-    c,
-    canvas,
-    origin: Offset(0.68, 0.78),
-
-    angle: pi * -0.22,
-    length: 0.15,
-  );
-  paintLineSegment(
-    c,
-    canvas,
-    origin: Offset(0.22, 0.38),
-
-    angle: pi * -0.22,
-    length: 0.15,
-  );
+  // final length = -0.15;
+  // paintDiagramDashedLines(
+  //   c,
+  //   canvas,
+  //   yAxisStartPos: 0.85,
+  //   xAxisEndPos: 0.50,
+  //   yLabel: '2%',
+  //   additionalYLabels: ['6%'],
+  //   additionalYPositions: [0.525],
+  //   xLabel: DiagramLabel.nRU.label,
+  //   rightYLabel: 'A',
+  //   additionalRightYLabels: ['C'],
+  // );
+  // paintDiagramDashedLines(
+  //   c,
+  //   canvas,
+  //   yAxisStartPos: 0.70,
+  //   xAxisEndPos: 0.30,
+  //   yLabel: '4%',
+  //   xLabel: DiagramLabel.uInf.label,
+  //   rightYLabel: 'B',
+  // );
+  // paintMarketCurve(c, canvas, type: MarketCurveType.lrpc);
+  // paintMarketCurve(
+  //   c,
+  //   canvas,
+  //   type: MarketCurveType.srpc2,
+  //   horizontalShift: 0.10,
+  //   verticalShift: -0.14,
+  //   lengthAdjustment: length,
+  //   color: Colors.red,
+  // );
+  // paintMarketCurve(
+  //   c,
+  //   canvas,
+  //   type: MarketCurveType.srpc1,
+  //   horizontalShift: -0.05,
+  //   verticalShift: 0.08,
+  //   lengthAdjustment: length,
+  // );
+  // paintLineSegment(
+  //   c,
+  //   canvas,
+  //   origin: Offset(0.68, 0.78),
+  //
+  //   angle: pi * -0.22,
+  //   length: 0.15,
+  // );
+  // paintLineSegment(
+  //   c,
+  //   canvas,
+  //   origin: Offset(0.22, 0.38),
+  //
+  //   angle: pi * -0.22,
+  //   length: 0.15,
+  // );
 }
 
 void _paintLRPCFallInNRU(DiagramPainterConfig c, IDiagramCanvas canvas) {

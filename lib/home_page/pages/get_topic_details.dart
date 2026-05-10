@@ -4,14 +4,6 @@ import 'package:flutter/material.dart';
 
 TopicDetails getTopicDetails(Topic topic) {
   switch (topic) {
-    case Topic.notes:
-      return TopicDetails(
-        "IB Notes",
-        "Curated Notes Based On The IB Syllabus",
-        Icons.lightbulb_outline,
-        Colors.blue,
-      );
-
     case Topic.allDiagrams:
       return TopicDetails(
         "Diagram Library",
@@ -32,6 +24,20 @@ TopicDetails getTopicDetails(Topic topic) {
         "Last Minute Revision",
         Icons.note_alt_sharp,
         Colors.orange,
+      );
+    case Topic.terms:
+      return TopicDetails(
+        "Economic Terms",
+        "A glossary of all key terms",
+        Icons.abc_outlined,
+        Colors.purple,
+      );
+    case Topic.realWorldExamples:
+      return TopicDetails(
+        "Real World Examples",
+        "A glossary of real world examples",
+        Icons.local_shipping_outlined,
+        Colors.red,
       );
   }
 }

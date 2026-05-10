@@ -397,8 +397,8 @@ enum EconTerm {
         'The total income a firm receives from selling goods and services. <strong>TR = Price × Quantity</strong>.',
     subunit: Subunit.elasticityDemand,
   ),
-  economicallyLeastDevelopedCountries(
-    termName: 'Economically Least-Developed Countries (ELDCs)',
+  economicallyLessDevelopedCountries(
+    termName: 'Economically Less-Developed Countries (ELDCs)',
     explanation:
         'Low-income countries facing severe barriers to economic development.',
     subunit: Subunit.measuringDevelopment,
@@ -1000,6 +1000,19 @@ enum EconTerm {
         'Policies to increase LRAS and potential output. Market-based and interventionist.',
     subunit: Subunit.supplySidePolicies,
   ),
+  supplySidePoliciesMarketBased(
+    termName: 'Market-Based Supply-Side Policies',
+    explanation:
+        'Policies to promote free market forces to improve efficiency and incentives (e.g., deregulation, privatisation, lower taxes).',
+    subunit: Subunit.supplySidePolicies,
+  ),
+
+  supplySidePoliciesInterventionist(
+    termName: 'Interventionist Supply-Side Policies',
+    explanation:
+        'Government intervention policies to increase productive capacity (e.g., investment in education, infrastructure, subsidies).',
+    subunit: Subunit.supplySidePolicies,
+  ),
 
   /// Global
   /// 3.1 Benefits of Trade
@@ -1022,6 +1035,19 @@ enum EconTerm {
     explanation:
         'The large-scale movement of money and financial assets out of a country due to fear of political instability, poor governance or economic conditions.',
     subunit: Subunit.sustainableDevelopment,
+  ),
+
+  foreignDirectInvestment(
+    termName: 'Foreign Direct Investment (FDI)',
+    explanation:
+        'Long-term investment by a firm from one country into productive assets (e.g. factories, businesses) in another country, involving a lasting interest and some control.',
+    subunit: Subunit.balanceOfPayments,
+  ),
+  multinationalCorporations(
+    termName: 'Multinational Corporations (MNCs)',
+    explanation:
+        'Firms that operate in more than one country, with production or business activities located across different nations.',
+    subunit: Subunit.balanceOfPayments,
   ),
 
   foreignAid(

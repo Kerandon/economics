@@ -16,11 +16,7 @@ final supplyElasticitySlide = Slide(
     SlideContent.simpleTable(
       headers: ['PES Value', 'Responsiveness', 'Example Good'],
       data: [
-        [
-          'PES = 0',
-          'Perfectly Inelastic',
-          'Fresh produce on market day / Stadium seats',
-        ],
+        ['PES = 0', 'Perfectly Inelastic', 'Picasso Painting / Stadium seats'],
         [
           '0 < PES < 1',
           'Inelastic',

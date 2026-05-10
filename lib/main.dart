@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'app/configs/theme_data.dart';
 import 'app/state/app_state.dart';
-import 'home_page/pages/home_page_mobile.dart';
 import 'home_page/pages/home_page_web.dart';
 
 void main() {

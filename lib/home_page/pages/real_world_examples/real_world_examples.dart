@@ -541,9 +541,9 @@ enum RealWorldExamples {
     subunit: Subunit.macroObjectives,
     examples: [
       ExampleDetail(
-        title: '1973 Oil Shock United States',
+        title: '1973 Oil Supply-Shock United States',
         explanation:
-            'Oil price rose from about 3 dollars to 12 dollars per barrel causing stagflation.',
+            'Oil price rose from about 3 dollars to 12 dollars per barrel causing stagflation (high inflation and high unemployment SRPC shifted out).',
         tags: [Tag.hl],
       ),
       ExampleDetail(
@@ -578,26 +578,124 @@ enum RealWorldExamples {
       ),
     ],
   ),
-  supplySidePolicies(
-    topicName: 'Supply Side Policies',
+  supplySideMarketBased(
+    topicName: 'Supply-Side Policies (Market-Based)',
     subunit: Subunit.supplySidePolicies,
     examples: [
       ExampleDetail(
-        title: 'UK Privatisation 1980s',
+        title: 'UK Privatisation (1980s)',
         explanation:
-            'Over 50 state owned firms privatised to improve efficiency and competition.',
-        tags: [Tag.hl],
+            'Over 50 state-owned enterprises (e.g., British Telecom) were privatised, increasing efficiency and competition.',
       ),
       ExampleDetail(
-        title: 'US Tax Cuts 2017',
+        title: 'India Economic Reforms (1991)',
         explanation:
-            'Corporate tax reduced from 35 percent to 21 percent increasing after tax profits.',
-        tags: [Tag.hl],
+            'Dismantled "Licence Raj" (bureaucracy); trade liberalisation raised GDP growth from ~2% to over 6% in the 1990s.',
+      ),
+      ExampleDetail(
+        title: 'China SEZs (Post-1978)',
+        explanation:
+            'SEZs like Shenzhen attracted FDI; GDP growth averaged ~10%, with ~800 million lifted out of poverty.',
+      ),
+      ExampleDetail(
+        title: 'US Airline Deregulation (1978)',
+        explanation:
+            'Removal of price controls increased competition; real airfares fell by ~30%.',
+      ),
+      ExampleDetail(
+        title: 'US Tax Cuts and Jobs Act (2017)',
+        explanation:
+            'Corporate tax cut from 35% to 21%, boosting investment but increasing inequality and deficit.',
+      ),
+      ExampleDetail(
+        title: 'UK Trade Union Reforms (1980s)',
+        explanation:
+            'Reduced union power and strikes, improving labour market flexibility.',
+      ),
+      ExampleDetail(
+        title: 'Germany Hartz Reforms (2003–2005)',
+        explanation:
+            'Labour market reforms (reduced unemployment benefits / easier to hire/fire) cut unemployment from ~11% (2005) to below 5% by 2015.',
+      ),
+    ],
+  ),
+  supplySideInterventionist(
+    topicName: 'Supply-Side Policies (Interventionist)',
+    subunit: Subunit.supplySidePolicies,
+    examples: [
+      ExampleDetail(
+        title: 'US Inflation Reduction Act (2022)',
+        explanation:
+            '\$369 billion invested in clean energy to expand long-run productive capacity.',
+      ),
+      ExampleDetail(
+        title: 'South Korea R&D Investment',
+        explanation:
+            'R&D spending exceeds 4% of GDP, supporting high-tech industry growth.',
+      ),
+      ExampleDetail(
+        title: 'China Belt and Road Initiative (2013–)',
+        explanation:
+            'Over \$1 trillion invested in infrastructure, boosting global trade links.',
+      ),
+      ExampleDetail(
+        title: 'China “Big Fund” (Semiconductors)',
+        explanation:
+            'State-backed fund (since 2014) invested over \$50 billion to develop domestic chip industry and reduce reliance on imports.',
+      ),
+      ExampleDetail(
+        title: 'China EV Subsidies',
+        explanation:
+            'Government subsidies (2009–2022) helped China become the largest EV market, accounting for ~60% of global EV sales by 2023.',
+      ),
+      ExampleDetail(
+        title: 'US Infrastructure Investment (2021)',
+        explanation:
+            '\$1.2 trillion plan; significant time lags before increasing AS.',
       ),
       ExampleDetail(
         title: 'Singapore SkillsFuture',
         explanation:
-            'Provides 500 dollar credits per adult for lifelong skills development.',
+            'Government-funded training credits to improve human capital and productivity.',
+      ),
+      ExampleDetail(
+        title: 'Germany Apprenticeship System',
+        explanation:
+            'Dual education system keeps youth unemployment below ~6%.',
+      ),
+      ExampleDetail(
+        title: 'Post-COVID Inflation (2021–2022)',
+        explanation:
+            'US inflation peaked at ~9% due to AD recovery and supply bottlenecks, highlighting short-run inflation risks of intervention.',
+      ),
+    ],
+  ),
+  foreignDirectInvestmentExamples(
+    topicName: 'FDI – Real World Examples (Costs and Benefits)',
+    subunit: Subunit.sustainableDevelopment,
+    examples: [
+      ExampleDetail(
+        title: 'China – Manufacturing FDI Growth',
+        explanation:
+            'Large inflows of MNC investment increased industrial output, exports and GDP growth.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Vietnam – Samsung Investment',
+        explanation:
+            'FDI created jobs, boosted exports and supported rapid economic development.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Nigeria – Oil Extraction',
+        explanation:
+            'MNCs exploit natural resources, causing environmental damage and limited local benefits.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Bangladesh – Garment Industry',
+        explanation:
+            'Low wages and poor working conditions highlight labour exploitation by MNCs.',
         tags: [Tag.hl],
       ),
     ],

@@ -4,8 +4,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_a
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_title.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
+
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
@@ -29,6 +28,9 @@ class UnemploymentDiagram extends BaseDiagramPainter {
         _paintUnemploymentLaborMarketRigidities(c, canvas);
       case DiagramEnum.macroUnemploymentNationalMinimumWage:
         _paintNMW(c, canvas);
+      case DiagramEnum.macroUnemploymentNationalMinimumWageIncrease:
+      case DiagramEnum.macroUnemploymentNationalMinimumWageReduction:
+        _paintNMWIncreaseDecrease(c, canvas, diagram);
       case DiagramEnum.macroNaturalRateOfUnemployment:
         _paintNaturalRateOfUnemployment(c, canvas);
       case DiagramEnum.macroUnemploymentEfficiencyWages:
@@ -101,19 +103,12 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       angle: pi,
       length: 0.15,
     );
-
-    paintDescription(
-      c,
-      canvas,
-      'Structural Unemployment: Caused by a mismatch of skills (occupational immobility) or location (geographical immobility). Often driven by technological change (capital-labor substitution) or globalization shifting demand away from specific domestic industries.',
-    );
   }
 
   void _paintUnemploymentLaborMarketRigidities(
     DiagramPainterConfig c,
     IDiagramCanvas canvas,
   ) {
-    paintTitle(c, canvas, 'Retail Industry');
     paintAxis(c, canvas, axisType: AxisType.supplyDemand);
 
     paintDiagramDashedLines(
@@ -159,17 +154,10 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       lengthAdjustment: _kCurveMed,
     );
 
-    paintDescription(
-      c,
-      canvas,
-      'Labor Market Rigidities: Heavy regulation or strong trade union power increases production costs. This shifts Supply left (S1->S2), raising prices and lowering output. The drop in output leads to lower "derived demand" for labor.',
-    );
-
     paintLineSegment(c, canvas, origin: const Offset(0.68, 0.30), angle: pi);
   }
 
   void _paintNMW(DiagramPainterConfig c, IDiagramCanvas canvas) {
-    paintTitle(c, canvas, 'Fast-Food Industry');
     paintAxis(c, canvas, axisType: AxisType.laborMarket);
 
     // Equilibrium
@@ -213,6 +201,72 @@ class UnemploymentDiagram extends BaseDiagramPainter {
       length: 0.40,
       label: DiagramLabel.laborSurplus.label,
     );
+  }
+
+  void _paintNMWIncreaseDecrease(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+    DiagramEnum diagram,
+  ) {
+    String minWage1 = DiagramLabel.wMin1.label;
+    String minWage2 = DiagramLabel.wMin2.label;
+    String qD1 = DiagramLabel.qD1.label;
+    String qD2 = DiagramLabel.qD2.label;
+    String qS1 = DiagramLabel.qS1.label;
+    String qs2 = DiagramLabel.qS2.label;
+    double angle = pi / 2;
+    paintAxis(c, canvas, axisType: AxisType.laborMarket);
+    switch (diagram) {
+      case DiagramEnum.macroUnemploymentNationalMinimumWageIncrease:
+        minWage1 = DiagramLabel.wMin2.label;
+        minWage2 = DiagramLabel.wMin1.label;
+        qD1 = DiagramLabel.qD2.label;
+        qD2 = DiagramLabel.qD1.label;
+        qS1 = DiagramLabel.qS2.label;
+        qs2 = DiagramLabel.qS1.label;
+        angle = -pi / 2;
+        break;
+      default:
+    }
+
+    // Minimum Wage Floor
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.20,
+      xAxisEndPos: 0.80,
+      yLabel: minWage1,
+      xLabel: qS1,
+      additionalXPositions: [0.20],
+      additionalXLabels: [qD1],
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.35,
+      xAxisEndPos: 0.65,
+      yLabel: minWage2,
+      xLabel: qs2,
+      additionalXPositions: [0.35],
+      additionalXLabels: [qD2],
+    );
+
+    paintMarketCurve(c, canvas, type: MarketCurveType.dl);
+    paintMarketCurve(c, canvas, type: MarketCurveType.sl);
+
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: const Offset(0, 0.20),
+      polylineOffsets: [const Offset(0.90, 0.20)],
+    );
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: const Offset(0, 0.35),
+      polylineOffsets: [const Offset(0.90, 0.35)],
+    );
+    paintLineSegment(c, canvas, origin: Offset(0.92, 0.27), angle: angle);
   }
 
   void _paintNaturalRateOfUnemployment(

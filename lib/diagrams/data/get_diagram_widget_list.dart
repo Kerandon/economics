@@ -188,7 +188,7 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     ]),
 
     /// Public Goods
-    DiagramWidget([PublicGoods(c, DiagramEnum.microPublicGoods)]),
+    //DiagramWidget([PublicGoods(c, DiagramEnum.microPublicGoods)]),
 
     /// ============================================================
     /// PERFECT COMPETITION PAIRINGS (Displayed Together)
@@ -278,7 +278,8 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
     ]),
 
     ///Biz cycle
-    DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycle)]),
+    /// Fix below
+    // DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycle)]),
     DiagramWidget([BizDiagram(c, DiagramEnum.macroBusinessCycleNRU)]),
     DiagramWidget([
       BizDiagram(c, DiagramEnum.macroBusinessCycleStabilizationPolicies),
@@ -295,8 +296,8 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       ADASDiagram(c, DiagramEnum.macroAggregateDemandInflationTradeOff),
     ]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRAS)]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRASIncrease)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRASCostPushInflation)]),
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroSRASDecrease)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalFullEmployment)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGap)]),
     DiagramWidget([ADASDiagram(c, DiagramEnum.macroClassicalInflationaryGap)]),
@@ -324,7 +325,6 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       ADASDiagram(c, DiagramEnum.macroClassicalDemandPullInflation),
       ADASDiagram(c, DiagramEnum.macroKeynesianDemandPullInflation),
     ]),
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroADASCostPushInflation)]),
 
     /// Unemployment
     DiagramWidget([
@@ -340,9 +340,21 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       UnemploymentDiagram(c, DiagramEnum.macroUnemploymentNationalMinimumWage),
     ]),
     DiagramWidget([
-      UnemploymentDiagram(c, DiagramEnum.macroUnemploymentEfficiencyWages),
+      UnemploymentDiagram(
+        c,
+        DiagramEnum.macroUnemploymentNationalMinimumWageReduction,
+      ),
+    ]),
+    DiagramWidget([
+      UnemploymentDiagram(
+        c,
+        DiagramEnum.macroUnemploymentNationalMinimumWageIncrease,
+      ),
     ]),
 
+    // DiagramWidget([
+    //   UnemploymentDiagram(c, DiagramEnum.macroUnemploymentEfficiencyWages),
+    // ]),
     DiagramWidget([
       UnemploymentDiagram(c, DiagramEnum.macroNaturalRateOfUnemployment),
     ]),
@@ -358,13 +370,14 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
         DiagramEnum.macroExpectationsAugmentedPhillipsCurveInflationaryGap,
       ),
     ]),
-    DiagramWidget([
-      PhillipsCurveDiagram(
-        c,
-        DiagramEnum.macroExpectationsAugmentedPhillipsCurveDeflationaryGap,
-      ),
-      ADASDiagram(c, DiagramEnum.macroClassicalDeflationaryGapAdjustment),
-    ]),
+
+    /// Needs fixing
+    // DiagramWidget([
+    //   PhillipsCurveDiagram(
+    //     c,
+    //     DiagramEnum.macroExpectationsAugmentedPhillipsCurveDeflationaryGap,
+    //   ),
+    // ]),
     DiagramWidget([PhillipsCurveDiagram(c, DiagramEnum.macroLRPCFallInNRU)]),
 
     /// Inequality and Poverty

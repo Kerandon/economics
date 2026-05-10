@@ -132,7 +132,7 @@ enum DiagramEnum {
   macroAggregateDemandInflationTradeOff,
   macroSRAS,
   macroSRASCostPushInflation,
-  macroSRASDecrease,
+  macroSRASIncrease,
   macroClassicalFullEmployment,
   macroClassicalDeflationaryGap,
   macroClassicalInflationaryGap,
@@ -152,12 +152,13 @@ enum DiagramEnum {
   /// Inflation
   macroClassicalDemandPullInflation,
   macroKeynesianDemandPullInflation,
-  macroADASCostPushInflation,
 
   /// Unemployment
   macroUnemploymentStructural,
   macroUnemploymentLaborMarketRigidities,
   macroUnemploymentNationalMinimumWage,
+  macroUnemploymentNationalMinimumWageIncrease,
+  macroUnemploymentNationalMinimumWageReduction,
   macroUnemploymentEfficiencyWages,
   macroNaturalRateOfUnemployment,
 
@@ -458,11 +459,8 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroAggregateDemandDecrease => Subunit.aDAS,
 
     DiagramEnum.macroSRAS => Subunit.aDAS,
-
+    DiagramEnum.macroSRASIncrease => Subunit.aDAS,
     DiagramEnum.macroSRASCostPushInflation => Subunit.aDAS,
-
-    DiagramEnum.macroSRASDecrease => Subunit.aDAS,
-
     DiagramEnum.macroClassicalFullEmployment => Subunit.aDAS,
 
     DiagramEnum.macroClassicalDeflationaryGap => Subunit.aDAS,
@@ -484,7 +482,6 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroKeynesianLongTermGrowth => Subunit.macroObjectives,
 
     /// Inflation
-    DiagramEnum.macroADASCostPushInflation => Subunit.macroObjectives,
     DiagramEnum.macroClassicalDemandPullInflation => Subunit.macroObjectives,
 
     /// Unemployment
@@ -492,6 +489,10 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroUnemploymentLaborMarketRigidities =>
       Subunit.macroObjectives,
     DiagramEnum.macroUnemploymentNationalMinimumWage => Subunit.macroObjectives,
+    DiagramEnum.macroUnemploymentNationalMinimumWageReduction =>
+      Subunit.macroObjectives,
+    DiagramEnum.macroUnemploymentNationalMinimumWageIncrease =>
+      Subunit.macroObjectives,
     DiagramEnum.macroUnemploymentEfficiencyWages => Subunit.macroObjectives,
     DiagramEnum.macroNaturalRateOfUnemployment => Subunit.macroObjectives,
 
@@ -651,10 +652,10 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Perfectly Inelastic Demand (PED = 0)",
 
       DiagramEnum.microDemandInelasticRevenue =>
-        "Inelastic Demand (PED < 1): %∆P > %∆Qd → Total Revenue increases when price increases.",
+        "Inelastic Demand (PED < 1): TR increases when price increases.",
 
       DiagramEnum.microDemandElasticRevenue =>
-        "Elastic Demand (PED > 1): %∆Qd > %∆P → Total Revenue increases when price decreases.",
+        "Elastic Demand (PED > 1): TR increases when price decreases.",
 
       DiagramEnum.microDemandElasticityChange =>
         "PED along a linear demand curve: PED > 1 (top), PED = 1 (midpoint), PED < 1 (bottom).",
@@ -723,6 +724,9 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "A tax specifically targeting carbon emissions to correct market failure.",
       DiagramEnum.microTradablePollutionPermitsSupplyDemandDecrease =>
         "The supply of permits is decreased over-time, and demand for permits fall (as firms substitute to cleaner energy sources).",
+
+      DiagramEnum.microTradablePollutionPermits =>
+        'Supply is perfectly inelastic as set by government.',
       DiagramEnum.microCommonPoolResources =>
         "Tragedy of the Commons: Overuse of rival but non-excludable resources.",
       DiagramEnum.microNegativeConsumptionExternality =>
@@ -823,28 +827,42 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Four-sector model including Government, Financial, and Foreign sectors.",
       DiagramEnum.macroBusinessCycle =>
         "Fluctuations in GDP over time: Boom, Recession, Trough, and Recovery.",
-
+      DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP =>
+        'An increase in Potential GDP is due policies that increase the productive capacity of the economy (supply-side policies)',
+      DiagramEnum.macroBusinessCycleNRU =>
+        'When real GDP = potential GDP there is full employment. Unemployment = NRU only.',
+      DiagramEnum.macroBusinessCycleStabilizationPolicies =>
+        'Progressive taxation reduces the size of an inflationary gap, while unemployment payments reduce the size of a deflationary gap',
       // AD-AS
-      DiagramEnum.macroAggregateDemand => '',
+      DiagramEnum.macroAggregateDemand => 'AD = C + I + G + (X - M)',
 
-      DiagramEnum.macroAggregateDemandIncrease => '',
+      DiagramEnum.macroAggregateDemandIncrease =>
+        'Non-price level factors increase demand: Expansionary fiscal or monetary policies. Increased consumer or business confidence. Depreciation of exchange rate increasing net exports.',
 
-      DiagramEnum.macroAggregateDemandDecrease => '',
+      DiagramEnum.macroAggregateDemandDecrease =>
+        'Non-price level factors decrease demand: Contractionary fiscal or monetary policies. Decreased consumer or business confidence. Appreciation of exchange rate decreasing net exports.',
 
-      DiagramEnum.macroSRAS => '',
+      DiagramEnum.macroSRAS =>
+        'SRAS is upward sloping - in the SHORT-RUN resources prices are inflexible (sticky wages) so firms can maximize profits by increasing quantity supplied.',
 
       DiagramEnum.macroSRASCostPushInflation =>
         'Cost push inflation is shown by a decrease in SRAS leading to a higher price level and lower real GDP.',
 
-      DiagramEnum.macroSRASDecrease => '',
+      DiagramEnum.macroADASKeynesianSpareCapacity =>
+        'Government stimulus spending during a severe-recession has limited impact on price-level due to idle resources / spare capacity. ',
+      DiagramEnum.macroSRPCLRPC =>
+        'SRPC shows a short-run inflation–unemployment trade-off; LRPC shows no long-run trade-off.',
+      DiagramEnum.macroAggregateDemandInflationTradeOff =>
+        'Increases in AD under monetarist/new-classical model show inflation–unemployment trade-off.',
+
       DiagramEnum.macroClassicalFullEmployment =>
-        "Long-run equilibrium where AD intersects SRAS and LRAS at Yfe.",
+        "Long-run equilibrium Ye = Yp at LRAS.",
       DiagramEnum.macroClassicalDeflationaryGap =>
-        "Equilibrium below full employment (Recessionary Gap).",
+        "Ye < Yp (Recessionary Gap).",
       DiagramEnum.macroClassicalInflationaryGap =>
-        "Equilibrium above full employment (Overheating).",
+        "Ye > Yp (Inflationary Gap).",
       DiagramEnum.macroADASKeynesianFullEmployment =>
-        "Equilibrium on the vertical section of the Keynesian AS curve.",
+        "Full employment - Ye = Yp.",
       DiagramEnum.macroKeynesianDeflationaryGap =>
         "Equilibrium on the horizontal or intermediate section of the AS curve.",
       DiagramEnum.macroKeynesianInflationaryGap =>
@@ -854,9 +872,9 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.macroKeynesianContractionaryPolicy =>
         "AD shifting left to control inflation.",
       DiagramEnum.macroClassicalDeflationaryGapAdjustment =>
-        "Self-correction mechanism: Wages fall, SRAS shifts right.",
+        "Self-correction mechanism: A: Ye = Yp. B: AD falls. Ye < Yp (deflationary gap). C. Wages fall SRAS increases. Ye=Yp.",
       DiagramEnum.macroClassicalInflationaryGapAdjustment =>
-        "Self-correction mechanism: Wages rise, SRAS shifts left.",
+        "Self-correction mechanism: A: Ye = Yp. B: AD increase (inflationary gap). Ye > Yp. C. Wages rise SRAS decreases. Ye=Yp.",
 
       // Growth
       DiagramEnum.macroClassicalLongTermGrowth =>
@@ -869,36 +887,42 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Price level rising due to continuous rightward shifts in AD.",
       DiagramEnum.macroKeynesianDemandPullInflation =>
         "Inflation caused by AD shifting right on the intermediate/vertical AS section.",
-      DiagramEnum.macroADASCostPushInflation =>
-        "Stagflation caused by a leftward shift of SRAS (supply shock).",
 
       // Unemployment
       DiagramEnum.macroUnemploymentStructural =>
         "Mismatch of skills or geography causing long-term unemployment.",
       DiagramEnum.macroUnemploymentLaborMarketRigidities =>
-        "Factors preventing wages from clearing the labor market.",
+        "Labor market rigidities increase costs of production for firms.",
       DiagramEnum.macroUnemploymentNationalMinimumWage =>
         "Real wage unemployment caused by a minimum wage above equilibrium.",
       DiagramEnum.macroUnemploymentEfficiencyWages =>
         "Wages kept above equilibrium to boost worker productivity.",
       DiagramEnum.macroNaturalRateOfUnemployment =>
         "When labor market is in equilibrium U = NRU only (Q1-Qe).",
+      DiagramEnum.macroCrowdingOut =>
+        'Increased government spending (increase in G) increases interest rates leading to lower private investment (fall in I).',
+      DiagramEnum.macroSRASIncrease =>
+        'SRAS increases due to lower costs of production, lower business taxes, positive supply-shocks, appreciation of exchange rate making imports cheaper.',
 
+      DiagramEnum.macroUnemploymentNationalMinimumWageReduction =>
+        'Reduction in Min Wage improves labor market flexibility. Efficiency gains but cost is lower wages for low-skilled workers.',
+      DiagramEnum.macroUnemploymentNationalMinimumWageIncrease =>
+        'An increase the national min wage leads to higher income from employed low-skilled workers, but increases structural unemployment.',
       // Phillips Curve
       DiagramEnum.macroSRPC =>
         "SRPC shows trade-off between unemployment and inflation.",
       DiagramEnum.macroSRPCCostPushInflation =>
         "Outward shift in SRPC due to cost-push inflation (can lead to stagflation).",
       DiagramEnum.macroExpectationsAugmentedPhillipsCurveInflationaryGap =>
-        "a: U=NRU, π=πe; b: U<NRU, π>πe (inflationary-gap) labor-market shortages; c: nominal wage costs rise, inflation expectations adjust, return to U=NRU, π=πe.",
+        "a: U=NRU; b: U<NRU (inflationary-gap) labor-market shortages; c: nominal wage costs rise, return to U=NRU.",
       DiagramEnum.macroExpectationsAugmentedPhillipsCurveDeflationaryGap =>
-        "Movement along SRPC to lower inflation/higher unemployment.",
+        "(a) economy is at full employment. (b) In the short-run expansionary policies move economy into an inflationary gap. (c) but workers demand higher wages, decreasing SRAS (outward shift in SRPC) returning to long-run full-employment.",
       DiagramEnum.macroLRPCFallInNRU =>
         "LRPC shifts left showing a decrease in the NRU.",
 
       // Poverty
       DiagramEnum.macroLorenzCurveCalculation =>
-        "Visualizing income inequality; the further from the diagonal, the more unequal.",
+        "The further from the diagonal (45 degree line of perfect equality), the more unequal. Gini Co-efficient is A / (A + B)",
       DiagramEnum.macroLorenzCurveImprovedEquality =>
         "Lorenz curve shifting inward towards the line of perfect equality.",
 
@@ -906,11 +930,11 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.macroMoneyMarket =>
         "Supply and Demand for Money determining the interest rate.",
       DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy =>
-        "Money Supply shifts right, lowering interest rates.",
+        "Expansionary monetary policy: Money Supply shifts right, lowering interest rates and lowering borrowing costs, increasing consumption and investment.",
       DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy =>
-        "Money Supply shifts left, raising interest rates.",
+        "Contractionary monetary policy: Money Supply shifts left, raising interest rates and increasing borrowing costs, decreasing consumption and investment.",
       DiagramEnum.macroKeynesianMultiplier =>
-        "Shows how an initial injection leads to a larger final increase in GDP.",
+        "If Keynesian multiplier is 3 and the government injects \$10m in new spending; total increase in AD is 3 X \$10 = \$30m (\$10m injection + \$20m induced spending).",
       DiagramEnum.macroSupplySidePoliciesLowInflation =>
         "LRAS shifts right allowing growth without inflationary pressure.",
 
@@ -968,9 +992,9 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.globalFixedRateDemandDecreaseReduceSupply =>
         "Using contractionary monetary policy to shift supply and maintain the peg.",
       DiagramEnum.globalJCurveDeficit =>
-        "Marshall-Lerner condition: Depreciation initially worsens trade balance before improving it.",
+        "Marshall-Lerner condition PEDX + PEDM > 1: Depreciation initially worsens trade balance before improving it.",
       DiagramEnum.globalJCurveSurplus =>
-        "Inverse J-Curve effect on a trade surplus.",
+        "Marshall-Lerner condition PEDX + PEDM > 1: Inverse J-Curve effect on a trade surplus. Appreciation first increases trade surplus before decreasing it",
       // Development
       DiagramEnum.globalPPCReallocation =>
         "Moving along the PPC to prioritize merit goods or capital.",
@@ -984,24 +1008,6 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         'Poverty cycle transmits poverty from one generation to the next and requires external forces to break it.',
       DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges =>
         'Education and Nudges work to decrease consumer demand.',
-
-      DiagramEnum.macroBusinessCycleStabilizationPolicies =>
-        'Progressive taxation reduces the size of an inflationary gap, while unemployment payments reduce the size of a deflationary gap',
-      DiagramEnum.macroBusinessCycleIncreaseInPotentialGDP =>
-        'An increase in Potential GDP is due policies that increase the productive capacity of the economy (supply-side policies)',
-      DiagramEnum.macroBusinessCycleNRU =>
-        'When real GDP = potential GDP there is full employment. Unemployment = NRU only.',
-      DiagramEnum.macroADASKeynesianSpareCapacity =>
-        'Government stimulus spending during a severe-recession has limited impact on price-level due to idle resources / spare capacity. ',
-      DiagramEnum.macroSRPCLRPC =>
-        'SRPC shows a short-run inflation–unemployment trade-off; LRPC shows no long-run trade-off.',
-      DiagramEnum.macroAggregateDemandInflationTradeOff =>
-        'Increases in AD under monetarist/new-classical model show inflation–unemployment trade-off.',
-
-      DiagramEnum.microTradablePollutionPermits =>
-        'Supply is perfectly inelastic as set by government.',
-      DiagramEnum.macroCrowdingOut =>
-        'Increased government spending drives up interest rates leading to a fall in (crowding out) private investment.',
     };
   }
 }

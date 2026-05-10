@@ -93,6 +93,7 @@ enum DiagramLabel {
   laborSurplus,
   pf,
   realWageRate,
+  wageRate,
   q,
   qProfitMax,
   quantityOfChocolateBars,
@@ -118,6 +119,8 @@ enum DiagramLabel {
   wE,
   w1,
   wMin,
+  wMin1,
+  wMin2,
   w2,
   wEff,
   pme,
@@ -127,6 +130,10 @@ enum DiagramLabel {
   subsidy,
   qS,
   qD,
+  qS1,
+  qS2,
+  qD1,
+  qD2,
   qSStar,
   qStar,
   qDStar,
@@ -288,6 +295,7 @@ enum DiagramLabel {
   potentialOutput,
   potentialGDP,
   potentialGDP1,
+  potentialGDP2,
   potentialGDPEqualsFullEmployment,
   nRU,
   timeYears,
@@ -333,7 +341,7 @@ enum DiagramLabel {
   i2,
   pL2,
   yF,
-  yEEqualYF,
+  yEEqualYP,
   yP,
   yE,
   cheeseKG,
@@ -396,6 +404,7 @@ enum DiagramLabel {
   pedGreaterThanOne,
   pedEqualToOne,
   pedLessThanOne,
+  jCurve,
 }
 
 extension MicroLabelExtension on DiagramLabel {
@@ -586,7 +595,7 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.aD1 => 'AD1',
       DiagramLabel.aD2 => 'AD2',
       DiagramLabel.aD3 => 'AD3',
-      DiagramLabel.interestRate => 'Interest Rate',
+      DiagramLabel.interestRate => 'Interest\nRate',
       DiagramLabel.quantityOfMoney => 'Quantity of Money',
       DiagramLabel.sM => 'Sm',
       DiagramLabel.dM => 'Dm',
@@ -829,7 +838,7 @@ extension MicroLabelExtension on DiagramLabel {
 
       DiagramLabel.aS2 => 'AS2',
 
-      DiagramLabel.yEEqualYF => 'Ye=Yf',
+      DiagramLabel.yEEqualYP => 'Ye=Yp',
 
       DiagramLabel.w1 => 'W1',
 
@@ -905,6 +914,24 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.priceOfPermits => 'Price\nof\nPermits',
 
       DiagramLabel.quantityOfPermits => 'Quantity of Permits',
+
+      DiagramLabel.potentialGDP2 => 'Potential GDP 2',
+
+      DiagramLabel.wageRate => 'Wage\nRate',
+
+      DiagramLabel.wMin1 => 'Wmin1',
+
+      DiagramLabel.wMin2 => 'Wmin2',
+
+      DiagramLabel.qS1 => 'QS1',
+
+      DiagramLabel.qS2 => 'QS2',
+
+      DiagramLabel.qD1 => 'QD1',
+
+      DiagramLabel.qD2 => 'QD2',
+
+      DiagramLabel.jCurve => 'J-Curve',
     };
   }
 }

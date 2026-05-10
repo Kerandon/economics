@@ -28,24 +28,26 @@ class ADASDiagram extends BaseDiagramPainter {
     );
 
     switch (diagram) {
-      case DiagramEnum.macroAggregateDemandInflationTradeOff:
-        _paintADTradeOff(c, canvas);
-      case DiagramEnum.macroSRASCostPushInflation:
-        _paintSRASCostPushInflation(c, canvas);
-      case DiagramEnum.macroSupplySidePoliciesLowInflation:
-        _paintSupplySideLowInflation(c, canvas);
-
       case DiagramEnum.macroAggregateDemand:
+        _paintAD(c, canvas);
       case DiagramEnum.macroAggregateDemandIncrease:
       case DiagramEnum.macroAggregateDemandDecrease:
+        _paintADIncreaseDecrease(c, canvas, diagram);
+      case DiagramEnum.macroAggregateDemandInflationTradeOff:
+        _paintADTradeOff(c, canvas);
       case DiagramEnum.macroSRAS:
+        _paintSRAS(c, canvas, diagram);
+      case DiagramEnum.macroSRASCostPushInflation:
+      case DiagramEnum.macroSRASIncrease:
+        _paintSRASIncreaseDecrease(c, canvas, diagram);
+      case DiagramEnum.macroSupplySidePoliciesLowInflation:
+        _paintSupplySideLowInflation(c, canvas);
       case DiagramEnum.macroClassicalFullEmployment:
       case DiagramEnum.macroClassicalDeflationaryGap:
       case DiagramEnum.macroClassicalInflationaryGap:
       case DiagramEnum.macroClassicalDeflationaryGapAdjustment:
       case DiagramEnum.macroClassicalLongTermGrowth:
       case DiagramEnum.macroClassicalDemandPullInflation:
-      case DiagramEnum.macroADASCostPushInflation:
         _paintClassicalADAS(c, canvas, diagram);
       case DiagramEnum.macroClassicalInflationaryGapAdjustment:
         _paintInflationaryGapAdjustment(c, canvas);
@@ -67,6 +69,80 @@ class ADASDiagram extends BaseDiagramPainter {
         break;
     }
   }
+}
+
+void _paintAD(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  paintMarketCurve(c, canvas, type: MarketCurveType.ad);
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.40,
+    xAxisEndPos: 0.40,
+    yLabel: DiagramLabel.pL1.label,
+    xLabel: DiagramLabel.y1.label,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.60,
+    xAxisEndPos: 0.60,
+    yLabel: DiagramLabel.pL2.label,
+    xLabel: DiagramLabel.y2.label,
+  );
+}
+
+void _paintADIncreaseDecrease(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+  DiagramEnum diagram,
+) {
+  String xLab1 = DiagramLabel.y1.label,
+      xLab2 = DiagramLabel.y2.label,
+      adLab1 = DiagramLabel.aD2.label,
+      adLab2 = DiagramLabel.aD1.label;
+  double arrowAngle = 0.0;
+
+  switch (diagram) {
+    case DiagramEnum.macroAggregateDemandDecrease:
+      xLab1 = DiagramLabel.y2.label; // Start at the right
+      xLab2 = DiagramLabel.y1.label; // Move to the left
+      adLab1 = DiagramLabel.aD1.label;
+      adLab2 = DiagramLabel.aD2.label;
+      arrowAngle = pi;
+      break;
+    default:
+  }
+
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.50,
+    xAxisEndPos: 0.35,
+    // Align with first curve
+    yLabel: DiagramLabel.pL.label,
+    xLabel: xLab1,
+    additionalXPositions: [0.65],
+    // Align with second curve
+    additionalXLabels: [xLab2],
+  );
+
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad1,
+    label: adLab1,
+    horizontalShift: 0.15,
+  );
+
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.ad2,
+    label: adLab2,
+    horizontalShift: -0.15,
+  );
+
+  paintLineSegment(c, canvas, origin: Offset(0.30, 0.30), angle: arrowAngle);
 }
 
 void _paintADTradeOff(DiagramPainterConfig c, IDiagramCanvas canvas) {
@@ -123,15 +199,16 @@ void _paintADTradeOff(DiagramPainterConfig c, IDiagramCanvas canvas) {
   );
 }
 
-void _paintSRASCostPushInflation(
+void _paintSRAS(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,
+  DiagramEnum diagram,
 ) {
   paintDiagramDashedLines(
     c,
     canvas,
-    yAxisStartPos: 0.55,
-    xAxisEndPos: 0.55,
+    yAxisStartPos: 0.60,
+    xAxisEndPos: 0.40,
     yLabel: DiagramLabel.pL1.label,
     xLabel: DiagramLabel.y1.label,
   );
@@ -139,21 +216,65 @@ void _paintSRASCostPushInflation(
     c,
     canvas,
     yAxisStartPos: 0.40,
-    xAxisEndPos: 0.40,
+    xAxisEndPos: 0.60,
     yLabel: DiagramLabel.pL2.label,
     xLabel: DiagramLabel.y2.label,
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.sras);
+}
+
+void _paintSRASIncreaseDecrease(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas,
+  DiagramEnum diagram,
+) {
+  MarketCurveType curve1 = MarketCurveType.sras2;
+  MarketCurveType curve2 = MarketCurveType.sras1;
+  String pl1 = DiagramLabel.pL2.label;
+  String pl2 = DiagramLabel.pL1.label;
+  String y1 = DiagramLabel.y2.label;
+  String y2 = DiagramLabel.y1.label;
+  double angle = 0.0;
+  switch (diagram) {
+    case DiagramEnum.macroSRASCostPushInflation:
+      pl1 = DiagramLabel.pL1.label;
+      pl2 = DiagramLabel.pL2.label;
+      y1 = DiagramLabel.y1.label;
+      y2 = DiagramLabel.y2.label;
+      angle = -pi;
+      curve1 = MarketCurveType.sras1;
+      curve2 = MarketCurveType.sras2;
+      break;
+    default:
+  }
+
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.55,
+    xAxisEndPos: 0.55,
+    yLabel: pl1,
+    xLabel: y1,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.40,
+    xAxisEndPos: 0.40,
+    yLabel: pl2,
+    xLabel: y2,
   );
   paintMarketCurve(
     c,
     canvas,
-    type: MarketCurveType.sras1,
+    type: curve1,
     horizontalShift: 0.05,
     verticalShift: 0.05,
   );
   paintMarketCurve(
     c,
     canvas,
-    type: MarketCurveType.sras2,
+    type: curve2,
     horizontalShift: -0.10,
     verticalShift: -0.10,
   );
@@ -162,8 +283,8 @@ void _paintSRASCostPushInflation(
     c,
     canvas,
     origin: Offset(0.65, 0.30),
-    angle: -pi,
-    length: 0.15,
+    angle: angle,
+    length: 0.12,
   );
 }
 
@@ -173,23 +294,8 @@ void _paintClassicalADAS(
   DiagramEnum diagram,
 ) {
   switch (diagram) {
-    case DiagramEnum.macroAggregateDemand:
-      paintMarketCurve(c, canvas, type: MarketCurveType.ad);
-    case DiagramEnum.macroAggregateDemandIncrease:
-      paintMarketCurve(
-        c,
-        canvas,
-        type: MarketCurveType.ad,
-        horizontalShift: -0.10,
-      );
-      paintMarketCurve(
-        c,
-        canvas,
-        type: MarketCurveType.ad,
-        horizontalShift: 0.10,
-      );
     case DiagramEnum.macroClassicalFullEmployment:
-      _paintLRAS(c, canvas);
+      _paintLRAS(c, canvas, label: DiagramLabel.yEEqualYP.label);
       paintMarketCurve(c, canvas, type: MarketCurveType.ad);
       paintMarketCurve(c, canvas, type: MarketCurveType.sras);
       paintDiagramDashedLines(
@@ -227,7 +333,7 @@ void _paintClassicalADAS(
         xAxisEndPos: 0.35,
         showDotAtIntersection: true,
         yLabel: DiagramLabel.pL.label,
-        xLabel: DiagramLabel.pLe.label,
+        xLabel: DiagramLabel.yE.label,
       );
       break;
 
@@ -253,7 +359,7 @@ void _paintClassicalADAS(
         yAxisStartPos: 0.525,
         xAxisEndPos: 0.675,
         yLabel: DiagramLabel.pL.label,
-        xLabel: DiagramLabel.pLe.label,
+        xLabel: DiagramLabel.yE.label,
         showDotAtIntersection: true,
       );
       break;
@@ -310,7 +416,7 @@ void _paintClassicalADAS(
         yAxisStartPos: 0.55,
         xAxisEndPos: 0.35,
         yLabel: DiagramLabel.pL2.label,
-        xLabel: DiagramLabel.yDef.label,
+        xLabel: DiagramLabel.yE.label,
         rightYLabel: 'B',
       );
       paintLineSegment(
@@ -319,15 +425,8 @@ void _paintClassicalADAS(
         origin: Offset(0.28, 0.32),
         length: 0.15,
         angle: pi,
-        label: '1',
       );
-      paintLineSegment(
-        c,
-        canvas,
-        origin: Offset(0.25, 0.78),
-        length: 0.15,
-        label: '2',
-      );
+      paintLineSegment(c, canvas, origin: Offset(0.25, 0.78), length: 0.15);
 
       break;
 
@@ -429,54 +528,6 @@ void _paintClassicalADAS(
       );
       paintLineSegment(c, canvas, origin: Offset(0.49, 0.50), length: 0.15);
       break;
-
-    case DiagramEnum.macroADASCostPushInflation:
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.60,
-        xAxisEndPos: 0.60,
-        yLabel: DiagramLabel.pL1.label,
-        xLabel: DiagramLabel.y1.label,
-      );
-      paintDiagramDashedLines(
-        c,
-        canvas,
-        yAxisStartPos: 0.425,
-        xAxisEndPos: 0.425,
-        yLabel: DiagramLabel.pL2.label,
-        xLabel: DiagramLabel.y2.label,
-      );
-      paintMarketCurve(
-        c,
-        canvas,
-        type: MarketCurveType.ad,
-        lengthAdjustment: 0.10,
-      );
-      paintMarketCurve(
-        c,
-        canvas,
-        type: MarketCurveType.sras1,
-        horizontalShift: 0.15,
-        verticalShift: 0.05,
-      );
-      paintMarketCurve(
-        c,
-        canvas,
-        type: MarketCurveType.sras2,
-        horizontalShift: -0.10,
-        verticalShift: -0.05,
-      );
-      paintLineSegment(
-        c,
-        canvas,
-        origin: Offset(0.70, 0.32),
-        angle: pi,
-        length: 0.15,
-      );
-
-      break;
-
     case DiagramEnum.macroClassicalDemandPullInflation:
       paintDiagramDashedLines(
         c,
@@ -529,7 +580,6 @@ void _paintClassicalADAS(
       break;
 
     default:
-      break;
   }
 }
 
@@ -585,7 +635,7 @@ void _paintInflationaryGapAdjustment(
     xAxisEndPos: 0.625,
     yLabel: DiagramLabel.pL2.label,
     rightYLabel: DiagramLabel.b.label,
-    xLabel: 'Ye>Yp',
+    xLabel: DiagramLabel.yE.label,
   );
   paintLineSegment(c, canvas, origin: Offset(0.65, 0.75), length: 0.11);
   paintLineSegment(
@@ -597,7 +647,11 @@ void _paintInflationaryGapAdjustment(
   );
 }
 
-void _paintLRAS(DiagramPainterConfig c, IDiagramCanvas canvas) {
+void _paintLRAS(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas, {
+  String? label,
+}) {
   paintMarketCurve(c, canvas, type: MarketCurveType.lras);
   paintDiagramDashedLines(
     c,
@@ -606,7 +660,7 @@ void _paintLRAS(DiagramPainterConfig c, IDiagramCanvas canvas) {
     xAxisEndPos: 0.50,
     hideXLine: true,
     hideYLine: true,
-    xLabel: DiagramLabel.yP.label,
+    xLabel: label ?? DiagramLabel.yP.label,
   );
 }
 
@@ -620,17 +674,17 @@ void _paintKeynesianADAS(
       paintMarketCurve(
         c,
         canvas,
-        type: MarketCurveType.ad,
-        lengthAdjustment: 0.15,
+        type: MarketCurveType.keynesianAD,
+        horizontalShift: 0.30,
       );
       paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.735,
-        xAxisEndPos: 0.74,
-        yLabel: DiagramLabel.pP.label,
-        xLabel: DiagramLabel.yP.label,
+        yAxisStartPos: 0.64,
+        xAxisEndPos: 0.73,
+        hideYLine: true,
+        xLabel: DiagramLabel.yEEqualYP.label,
         showDotAtIntersection: true,
       );
       break;
@@ -639,10 +693,10 @@ void _paintKeynesianADAS(
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.80,
-        xAxisEndPos: 0.45,
-        yLabel: DiagramLabel.pLDef.label,
-        xLabel: DiagramLabel.yDef.label,
+        yAxisStartPos: 0.70,
+        xAxisEndPos: 0.38,
+        yLabel: DiagramLabel.pLe.label,
+        xLabel: DiagramLabel.yE.label,
         showDotAtIntersection: true,
       );
       paintMarketCurve(
@@ -662,62 +716,43 @@ void _paintKeynesianADAS(
       paintMarketCurve(
         c,
         canvas,
-        type: MarketCurveType.ad,
-        label: DiagramLabel.aD1.label,
-        horizontalShift: -0.20,
-        lengthAdjustment: 0,
+        type: MarketCurveType.keynesianAD1,
+        horizontalShift: -0.10,
       );
       paintMarketCurve(
         c,
         canvas,
-        type: MarketCurveType.ad,
+        type: MarketCurveType.keynesianAD2,
         label: DiagramLabel.aD2.label,
-        horizontalShift: 0.12,
-        lengthAdjustment: 0,
+        horizontalShift: 0.30,
       );
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.795,
-        xAxisEndPos: 0.44,
+        yAxisStartPos: 0.70,
+        xAxisEndPos: 0.35,
         showDotAtIntersection: true,
-        yLabel: DiagramLabel.pL1.label,
         xLabel: DiagramLabel.y1.label,
+        yLabel: DiagramLabel.pL1.label,
       );
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.745,
+        yAxisStartPos: 0.64,
         xAxisEndPos: 0.73,
         showDotAtIntersection: true,
-        yLabel: DiagramLabel.pL2.label,
         xLabel: DiagramLabel.y2.label,
+        yLabel: DiagramLabel.pL2.label,
       );
-      paintLineSegment(c, canvas, origin: Offset(0.42, 0.50), length: 0.20);
+      paintLineSegment(c, canvas, origin: Offset(0.48, 0.50), length: 0.20);
       break;
 
     case DiagramEnum.macroKeynesianContractionaryPolicy:
       paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
-      paintMarketCurve(
-        c,
-        canvas,
-        type: MarketCurveType.ad,
-        label: DiagramLabel.aD1.label,
-        horizontalShift: 0.26,
-        lengthAdjustment: 0,
-      );
-      paintMarketCurve(
-        c,
-        canvas,
-        type: MarketCurveType.ad,
-        label: DiagramLabel.aD2.label,
-        horizontalShift: 0.06,
-        lengthAdjustment: 0,
-      );
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.62,
+        yAxisStartPos: 0.40,
         xAxisEndPos: 0.80,
         showDotAtIntersection: true,
         yLabel: DiagramLabel.pL1.label,
@@ -726,16 +761,29 @@ void _paintKeynesianADAS(
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.77,
-        xAxisEndPos: 0.69,
+        yAxisStartPos: 0.68,
+        xAxisEndPos: 0.65,
         showDotAtIntersection: true,
         yLabel: DiagramLabel.pL2.label,
         xLabel: DiagramLabel.y2.label,
       );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.keynesianAD1,
+        horizontalShift: 0.40,
+        verticalShift: -0.15,
+      );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.keynesianAD2,
+        horizontalShift: 0.20,
+      );
       paintLineSegment(
         c,
         canvas,
-        origin: Offset(0.64, 0.50),
+        origin: Offset(0.65, 0.35),
         length: 0.12,
         angle: pi,
       );
@@ -747,8 +795,8 @@ void _paintKeynesianADAS(
         canvas,
         yAxisStartPos: 0.46,
         xAxisEndPos: 0.80,
-        yLabel: DiagramLabel.plInF.label,
-        xLabel: DiagramLabel.yInf.label,
+        yLabel: DiagramLabel.pLe.label,
+        xLabel: DiagramLabel.yE.label,
         showDotAtIntersection: true,
       );
       paintMarketCurve(
@@ -768,32 +816,26 @@ void _paintKeynesianADAS(
       paintMarketCurve(
         c,
         canvas,
-        type: MarketCurveType.ad,
-        label: DiagramLabel.aD1.label,
-        horizontalShift: -0.25,
-        lengthAdjustment: 0,
+        type: MarketCurveType.keynesianAD1,
+        horizontalShift: -0.20,
       );
       paintMarketCurve(
         c,
         canvas,
-        type: MarketCurveType.ad,
-        label: DiagramLabel.aD2.label,
-        horizontalShift: -0.10,
-        lengthAdjustment: 0,
+        type: MarketCurveType.keynesianAD2,
+        horizontalShift: 0,
       );
       paintMarketCurve(
         c,
         canvas,
-        type: MarketCurveType.ad,
-        label: DiagramLabel.aD3.label,
-        horizontalShift: 0.08,
-        lengthAdjustment: 0,
+        type: MarketCurveType.keynesianAD3,
+        horizontalShift: 0.30,
       );
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.795,
-        xAxisEndPos: 0.39,
+        yAxisStartPos: 0.70,
+        xAxisEndPos: 0.25,
         showDotAtIntersection: true,
         hideYLine: true,
         xLabel: DiagramLabel.y1.label,
@@ -801,8 +843,8 @@ void _paintKeynesianADAS(
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.795,
-        xAxisEndPos: 0.54,
+        yAxisStartPos: 0.70,
+        xAxisEndPos: 0.45,
         showDotAtIntersection: true,
         hideYLine: true,
         xLabel: DiagramLabel.y2.label,
@@ -810,16 +852,28 @@ void _paintKeynesianADAS(
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.76,
-        xAxisEndPos: 0.70,
+        yAxisStartPos: 0.65,
+        xAxisEndPos: 0.73,
         showDotAtIntersection: true,
         hideYLine: true,
         xLabel: DiagramLabel.y3.label,
       );
-      paintLineSegment(c, canvas, origin: Offset(0.29, 0.50), length: 0.08);
-      paintLineSegment(c, canvas, origin: Offset(0.46, 0.50), length: 0.12);
-      paintText(c, canvas, '\$10m', Offset(0.27, 0.45));
-      paintText(c, canvas, '\$15m', Offset(0.420, 0.45));
+      paintLineSegment(c, canvas, origin: Offset(0.20, 0.30), length: 0.08);
+      paintLineSegment(c, canvas, origin: Offset(0.45, 0.30), length: 0.12);
+      paintText(
+        c,
+        canvas,
+        '\$10m',
+        Offset(0.20, 0.25),
+        type: DiagramTextType.label,
+      );
+      paintText(
+        c,
+        canvas,
+        '\$20m',
+        Offset(0.45, 0.25),
+        type: DiagramTextType.label,
+      );
       break;
 
     case DiagramEnum.macroKeynesianLongTermGrowth:
@@ -856,7 +910,7 @@ void _paintKeynesianADAS(
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.50,
+        yAxisStartPos: 0.49,
         xAxisEndPos: 0.80,
         yLabel: DiagramLabel.pL3.label,
         xLabel: DiagramLabel.y3.label,
@@ -864,9 +918,9 @@ void _paintKeynesianADAS(
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.80,
-        xAxisEndPos: 0.60,
-        yLabel: 'PL1,2',
+        yAxisStartPos: 0.70,
+        xAxisEndPos: 0.55,
+        yLabel: 'PL1&2',
         xLabel: DiagramLabel.y2.label,
         additionalXLabels: [DiagramLabel.y1.label],
         additionalXPositions: [0.35],
@@ -914,9 +968,9 @@ void _paintKeynesianSpareCapacity(
   paintDiagramDashedLines(
     c,
     canvas,
-    yAxisStartPos: 0.80,
-    xAxisEndPos: 0.33,
-    additionalXPositions: [0.58],
+    yAxisStartPos: 0.70,
+    xAxisEndPos: 0.30,
+    additionalXPositions: [0.55],
     yLabel: DiagramLabel.pL.label,
     xLabel: DiagramLabel.y1.label,
     additionalXLabels: [DiagramLabel.y2.label],
@@ -981,5 +1035,56 @@ void _paintSupplySideLowInflation(
 }
 
 void _paintCrowdingOut(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.70,
+    xAxisEndPos: 0.35,
+    xLabel: DiagramLabel.y1.label,
+    additionalXPositions: [0.50],
+    additionalXLabels: [DiagramLabel.y3.label],
+    hideXLine: true,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.63,
+    xAxisEndPos: 0.73,
+    xLabel: DiagramLabel.y2.label,
+    hideYLine: true,
+  );
   paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.keynesianAD1,
+    horizontalShift: -0.10,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.keynesianAD2,
+    horizontalShift: 0.30,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.keynesianAD2,
+    horizontalShift: 0.05,
+  );
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.48, 0.50),
+    length: 0.30,
+    label: 'G',
+  );
+  paintLineSegment(
+    c,
+    canvas,
+    origin: Offset(0.50, 0.30),
+    length: 0.15,
+    angle: -pi,
+    label: 'I',
+  );
 }

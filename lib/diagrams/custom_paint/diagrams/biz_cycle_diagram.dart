@@ -42,16 +42,6 @@ class BizDiagram extends BaseDiagramPainter {
         _paintBusinessCycleStabilization(c, canvas);
       default:
     }
-    paintDiagramLines(
-      c,
-      canvas,
-      startPos: Offset(0.0, 0.70),
-      polylineOffsets: [Offset(0.92, 0.40)],
-      label2: 'Potential GDP\nUnemployment = NRU\n(Full Employment)',
-      label2Align: LabelAlign.right,
-      color: c.colorScheme.onSurface,
-      curveStyle: CurveStyle.dotted,
-    );
   }
 }
 
@@ -141,10 +131,7 @@ void _paintBusinessCycleStandard(
     DiagramLabel.inflationaryGap.label,
     Offset(0.20, 0.40),
     pointerLine: Offset(0.20, 0.55),
-    style: TextStyle(
-      color: c.colorScheme.onSurface,
-      fontWeight: FontWeight.bold,
-    ),
+    type: DiagramTextType.label,
     shape: DiagramShape.none,
   );
 
@@ -154,10 +141,7 @@ void _paintBusinessCycleStandard(
     DiagramLabel.deflationaryGap.label,
     Offset(0.55, 0.75),
     pointerLine: Offset(0.55, 0.56),
-    style: TextStyle(
-      color: c.colorScheme.onSurface,
-      fontWeight: FontWeight.bold,
-    ),
+    type: DiagramTextType.label,
     shape: DiagramShape.none,
   );
   paintLegendTable(
@@ -174,6 +158,7 @@ void _paintBusinessCycleStandard(
 }
 
 void _paintBusinessCycleNRU(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  _paintTrendLine(c, canvas);
   // --- 2. SHADING ---
   // A. Inflationary Gap (The P
   paintDiagramLines(
@@ -209,6 +194,7 @@ void _paintBusinessCycleNRU(DiagramPainterConfig c, IDiagramCanvas canvas) {
     strokeWidth: 3.0,
     label2: DiagramLabel.realGDP.label,
     label2Align: LabelAlign.centerTop,
+    textType: DiagramTextType.label,
   );
 
   // Gap Labels (Removed hardcoded colors, moved closer to gaps)
@@ -216,7 +202,7 @@ void _paintBusinessCycleNRU(DiagramPainterConfig c, IDiagramCanvas canvas) {
     c,
     canvas,
     'Inflationary Gap\n'
-    'Unemployment < NRU',
+    'U < NRU',
     Offset(0.25, 0.38),
     pointerLine: Offset(0.15, 0.47),
     type: DiagramTextType.label,
@@ -226,8 +212,8 @@ void _paintBusinessCycleNRU(DiagramPainterConfig c, IDiagramCanvas canvas) {
   paintText(
     c,
     canvas,
-    'Deflationary Gap / Recessionary Gap\n'
-    'Unemployment > NRU',
+    'Deflationary Gap\n'
+    'U > NRU',
     Offset(0.50, 0.90),
     pointerLine: Offset(0.40, 0.815),
     type: DiagramTextType.label,
@@ -239,6 +225,7 @@ void _paintBusinessCycleStabilization(
   DiagramPainterConfig c,
   IDiagramCanvas canvas,
 ) {
+  _paintTrendLine(c, canvas, label: DiagramLabel.potentialGDP.label);
   // Unchanged first curve
   paintDiagramLines(
     c,
@@ -253,6 +240,7 @@ void _paintBusinessCycleStabilization(
     color: c.colorScheme.primary,
     label2: DiagramLabel.realGDP.label,
     label2Align: LabelAlign.right,
+    textType: DiagramTextType.label,
   );
 
   // Stabilized curve
@@ -271,6 +259,7 @@ void _paintBusinessCycleStabilization(
     label2: 'Real GDP1',
     label2Align: LabelAlign.right,
     curveStyle: CurveStyle.dashed,
+    textType: DiagramTextType.label,
   );
 }
 
@@ -282,11 +271,39 @@ void _paintBusinessCycleIncreasePotentialGDP(
     c,
     canvas,
     startPos: Offset(0.0, 0.70),
-    polylineOffsets: [Offset(0.90, 0.20)],
+    polylineOffsets: [Offset(0.90, 0.40)],
     label2: DiagramLabel.potentialGDP1.label,
     label2Align: LabelAlign.right,
     color: c.colorScheme.onSurface,
     curveStyle: CurveStyle.dotted,
   );
-  paintLineSegment(c, canvas, origin: Offset(0.90, 0.32), angle: -pi / 2);
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.0, 0.70),
+    polylineOffsets: [Offset(0.90, 0.20)],
+    label2: DiagramLabel.potentialGDP2.label,
+    label2Align: LabelAlign.right,
+    color: c.colorScheme.onSurface,
+    curveStyle: CurveStyle.dotted,
+  );
+  paintLineSegment(c, canvas, origin: Offset(0.90, 0.31), angle: -pi / 2);
+}
+
+void _paintTrendLine(
+  DiagramPainterConfig c,
+  IDiagramCanvas canvas, {
+  String? label,
+}) {
+  paintDiagramLines(
+    c,
+    canvas,
+    startPos: Offset(0.0, 0.70),
+    polylineOffsets: [Offset(1.09, 0.38)],
+    label2: label ?? 'Potential GDP\nU = NRU\n(Full Employment)',
+    label2Align: LabelAlign.right,
+    color: c.colorScheme.onSurface,
+    curveStyle: CurveStyle.dotted,
+    textType: DiagramTextType.label,
+  );
 }

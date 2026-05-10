@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart'
+    show paintText;
 import 'package:flutter/material.dart';
 
 import '../../enums/diagram_enum.dart';
@@ -14,7 +16,7 @@ import '../painter_methods/axis/paint_axis.dart';
 import '../painter_methods/diagram_lines/paint_diagram_lines.dart';
 import '../painter_methods/paint_diagram_dash_lines.dart';
 import '../painter_methods/paint_dot.dart';
-import '../painter_methods/paint_text.dart' show paintText;
+import '../painter_methods/paint_text.dart' show paintText, DiagramTextType;
 import '../painter_methods/shortcut_methods/paint_market_curve.dart';
 import '../shade/paint_shading.dart';
 import '../shade/shade_type.dart';
@@ -107,7 +109,7 @@ class Elasticities extends BaseDiagramPainter {
 
   // --- DEMAND METHODS ---
 
-  void _paintInelasticDemand(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  void _paintElasticDemand(DiagramPainterConfig c, IDiagramCanvas canvas) {
     paintMarketCurve(
       c,
       canvas,
@@ -124,12 +126,44 @@ class Elasticities extends BaseDiagramPainter {
       q2: 0.74,
     );
 
-    if (diagram == DiagramEnum.microDemandInelasticRevenue) {
+    if (diagram == DiagramEnum.microDemandElasticRevenue) {
       _paintRevenueShading(c, canvas, q1: 0.36, q2: 0.74, p1: 0.45, p2: 0.60);
+      paintText(
+        c,
+        canvas,
+        DiagramLabel.lostRevenue.label,
+        const Offset(0.15, 0.75),
+        pointerLine: const Offset(0.15, 0.50),
+        type: DiagramTextType.label,
+      );
+      paintText(
+        c,
+        canvas,
+        DiagramLabel.gainedRevenue.label,
+        const Offset(0.90, 0.90),
+        pointerLine: const Offset(0.53, 0.90),
+        type: DiagramTextType.label,
+      );
     }
   }
 
-  void _paintElasticDemand(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  void _paintInelasticDemand(DiagramPainterConfig c, IDiagramCanvas canvas) {
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.gainedRevenue.label,
+      const Offset(0.20, 0.35),
+      pointerLine: const Offset(0.20, 0.50),
+      type: DiagramTextType.label,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.lostRevenue.label,
+      const Offset(0.30, 0.80),
+      pointerLine: const Offset(0.50, 0.80),
+      type: DiagramTextType.label,
+    );
     paintMarketCurve(
       c,
       canvas,
@@ -140,14 +174,22 @@ class Elasticities extends BaseDiagramPainter {
     _paintStandardDashedLines(
       c,
       canvas,
-      p1: 0.45,
-      q1: 0.475,
-      p2: 0.60,
-      q2: 0.54,
+      p1: 0.60,
+      q1: 0.54,
+      p2: 0.45,
+      q2: 0.475,
     );
 
-    if (diagram == DiagramEnum.microDemandElasticRevenue) {
-      _paintRevenueShading(c, canvas, q1: 0.475, q2: 0.54, p1: 0.45, p2: 0.60);
+    if (diagram == DiagramEnum.microDemandInelasticRevenue) {
+      _paintRevenueShading(
+        c,
+        canvas,
+        q1: 0.475,
+        q2: 0.54,
+        p1: 0.45,
+        p2: 0.60,
+        flipRevenue: true,
+      );
     }
   }
 
@@ -487,6 +529,7 @@ class Elasticities extends BaseDiagramPainter {
       DiagramLabel.gainedRevenue.label,
       const Offset(0.20, 0.25),
       pointerLine: const Offset(0.20, 0.40),
+      type: DiagramTextType.label,
     );
     paintText(
       c,
@@ -494,8 +537,17 @@ class Elasticities extends BaseDiagramPainter {
       DiagramLabel.lostRevenue.label,
       const Offset(0.70, 0.80),
       pointerLine: const Offset(0.53, 0.80),
+      type: DiagramTextType.label,
     );
-    _paintRevenueShading(c, canvas, q1: 0.45, q2: 0.55, p1: 0.35, p2: 0.65);
+    _paintRevenueShading(
+      c,
+      canvas,
+      q1: 0.45,
+      q2: 0.55,
+      p1: 0.35,
+      p2: 0.65,
+      flipRevenue: true,
+    );
     paintMarketCurve(
       c,
       canvas,
@@ -579,18 +631,19 @@ class Elasticities extends BaseDiagramPainter {
     required double q2,
     required double p1,
     required double p2,
+    bool flipRevenue = false,
   }) {
-    paintShading(c, canvas, ShadeType.gainedRevenue, [
-      Offset(0, p1),
-      Offset(q1, p1),
-      Offset(q1, p2),
-      Offset(0, p2),
-    ]);
-    paintShading(c, canvas, ShadeType.lostRevenue, [
-      Offset(q1, p2),
-      Offset(q2, p2),
-      Offset(q2, 1.0),
-      Offset(q1, 1.0),
-    ]);
+    paintShading(
+      c,
+      canvas,
+      flipRevenue ? ShadeType.gainedRevenue : ShadeType.lostRevenue,
+      [Offset(0, p1), Offset(q1, p1), Offset(q1, p2), Offset(0, p2)],
+    );
+    paintShading(
+      c,
+      canvas,
+      flipRevenue ? ShadeType.lostRevenue : ShadeType.gainedRevenue,
+      [Offset(q1, p2), Offset(q2, p2), Offset(q2, 1.0), Offset(q1, 1.0)],
+    );
   }
 }

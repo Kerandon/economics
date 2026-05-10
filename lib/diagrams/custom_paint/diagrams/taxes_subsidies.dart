@@ -65,7 +65,13 @@ class TaxesSubsidies extends BaseDiagramPainter {
       angle: -pi / 2,
       length: 0.18,
     );
-    paintText(c, canvas, DiagramLabel.tax.label, const Offset(0.66, 0.32));
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.tax.label,
+      const Offset(0.66, 0.32),
+      type: DiagramTextType.label,
+    );
 
     // Surplus Area Labels
     final labels = {
@@ -222,6 +228,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       DiagramLabel.consumerBurden.label,
       const Offset(0.20, 0.35),
       pointerLine: const Offset(0.20, 0.45),
+      type: DiagramTextType.label,
     );
     paintText(
       c,
@@ -229,6 +236,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       DiagramLabel.producerBurden.label,
       const Offset(0.72, 0.61),
       pointerLine: const Offset(0.40, 0.61),
+      type: DiagramTextType.label,
     );
   }
 
@@ -256,7 +264,13 @@ class TaxesSubsidies extends BaseDiagramPainter {
       angle: pi / 2,
       length: 0.18,
     );
-    paintText(c, canvas, DiagramLabel.subsidy.label, const Offset(0.78, 0.20));
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.subsidy.label,
+      const Offset(0.78, 0.20),
+      type: DiagramTextType.label,
+    );
 
     paintMarketCurve(c, canvas, type: MarketCurveType.demand);
     paintMarketCurve(
@@ -394,6 +408,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       DiagramLabel.producerGain.label,
       const Offset(0.20, 0.25),
       pointerLine: const Offset(0.20, 0.35),
+      type: DiagramTextType.label,
     );
     paintText(
       c,
@@ -401,6 +416,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       DiagramLabel.consumerGain.label,
       const Offset(0.78, 0.50),
       pointerLine: const Offset(0.40, 0.50),
+      type: DiagramTextType.label,
     );
 
     paintDiagramDashedLines(
@@ -572,6 +588,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       c,
       canvas,
       DiagramLabel.producerGain.label,
+      type: DiagramTextType.label,
       const Offset(0.30, 0.20),
       pointerLine: const Offset(0.30, 0.30),
     );
@@ -581,6 +598,7 @@ class TaxesSubsidies extends BaseDiagramPainter {
       DiagramLabel.consumerGain.label,
       const Offset(0.80, 0.49),
       pointerLine: const Offset(0.55, 0.49),
+      type: DiagramTextType.label,
     );
   }
 }

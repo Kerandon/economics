@@ -46,6 +46,7 @@ void paintDiagramLines(
   double circleRadius = 10,
   CurveStyle curveStyle = CurveStyle.standard,
   bool normalizeToDiagramArea = true,
+  DiagramTextType textType = DiagramTextType.axisLabels,
 }) {
   // --- 1. CONFIG & MATH ---
   final double widthAndHeight = config.painterSize.width;
@@ -262,6 +263,7 @@ void paintDiagramLines(
       mainColor,
       false,
       labelPadding,
+      textType: textType,
     );
   }
 
@@ -275,6 +277,7 @@ void paintDiagramLines(
       mainColor,
       false,
       labelPadding,
+      textType: textType,
     );
   }
 
@@ -308,8 +311,9 @@ void _paintDiagramLabel(
   LabelAlign align,
   Color color,
   bool normalize,
-  double padding,
-) {
+  double padding, {
+  DiagramTextType textType = DiagramTextType.axisNames,
+}) {
   LabelPivot horizontal = LabelPivot.center;
   LabelPivot vertical = LabelPivot.middle;
 
@@ -372,6 +376,6 @@ void _paintDiagramLabel(
     horizontalPivot: horizontal,
     verticalPivot: vertical,
     normalize: normalize,
-    type: DiagramTextType.axisNames,
+    type: textType,
   );
 }

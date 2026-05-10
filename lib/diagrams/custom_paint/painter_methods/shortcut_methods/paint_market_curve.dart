@@ -216,6 +216,15 @@ void paintMarketCurve(
       baseEnd = const Offset(0.80, 0.80);
       break;
 
+    // Steeper AD (~30 degrees more than standard 45 deg), slightly lower, and 20% longer
+    case MarketCurveType.keynesianAD:
+    case MarketCurveType.keynesianAD1:
+    case MarketCurveType.keynesianAD2:
+    case MarketCurveType.keynesianAD3:
+      baseStart = const Offset(0.28, 0.19);
+      baseEnd = const Offset(0.52, 0.91);
+      break;
+
     case MarketCurveType.perfectlyInelasticSupply:
     case MarketCurveType.lras:
     case MarketCurveType.lras1:
@@ -229,13 +238,16 @@ void paintMarketCurve(
       break;
 
     case MarketCurveType.keynesianAS:
-      baseStart = Offset(0.10, 0.80);
+      // CHANGED: baseStart Y from 0.80 to 0.65
+      baseStart = Offset(0.10, 0.70);
       baseEnd = Offset(keynesianAS, 0.10);
       beziers = [
-        CustomBezier(endPoint: Offset(keynesianAS - 0.30, 0.80)),
+        // CHANGED: Y from 0.80 to 0.65
+        CustomBezier(endPoint: Offset(keynesianAS - 0.30, 0.70)),
         CustomBezier(
-          control: Offset(keynesianAS, 0.80),
-          endPoint: Offset(keynesianAS, 0.60),
+          // CHANGED: control Y from 0.80 to 0.65, endPoint Y from 0.60 to 0.45
+          control: Offset(keynesianAS, 0.70),
+          endPoint: Offset(keynesianAS, 0.45),
         ),
         CustomBezier(endPoint: Offset(keynesianAS, 0.10)),
       ];
@@ -351,15 +363,19 @@ void paintMarketCurve(
         finalLabel2 = "S";
         break;
       case MarketCurveType.ad:
+      case MarketCurveType.keynesianAD:
         finalLabel2 = "AD";
         break;
       case MarketCurveType.ad1:
+      case MarketCurveType.keynesianAD1:
         finalLabel2 = "AD1";
         break;
       case MarketCurveType.ad2:
+      case MarketCurveType.keynesianAD2:
         finalLabel2 = "AD2";
         break;
       case MarketCurveType.ad3:
+      case MarketCurveType.keynesianAD3:
         finalLabel2 = "AD3";
         break;
       case MarketCurveType.sras:

@@ -138,13 +138,6 @@ void _paintUSDAppreciates(DiagramPainterConfig c, IDiagramCanvas canvas) {
     // You might want to rotate this if your API supports it,
     // otherwise this is a flat line indicating "Right Shift"
   );
-
-  // 6. Description
-  paintDescription(
-    c,
-    canvas,
-    'Relatively high U.S. interest rates attract inward portfolio investment from Europe. This drives up demand for the USD, raising its price from €0.90 to €1.15.',
-  );
 }
 
 void _paintEuroDepreciates(DiagramPainterConfig c, IDiagramCanvas canvas) {
@@ -213,14 +206,6 @@ void _paintEuroDepreciates(DiagramPainterConfig c, IDiagramCanvas canvas) {
   // 5. Directional Arrow (Indicating Supply Shift Right)
   // Originating near S1, pointing towards S2
   paintLineSegment(c, canvas, origin: Offset(0.68, 0.35), length: 0.12);
-
-  // 6. Description
-  // Updated text to match the specific labels 1.11 and 0.87
-  paintDescription(
-    c,
-    canvas,
-    'USD appreciation mirrors Euro depreciation. Investors increase the supply of Euros to buy USD, driving the price down. The rate is the reciprocal: falling from \$1.11 (1/0.90) to \$0.87 (1/1.15).',
-  );
 }
 
 void _paintFloatingChange(
@@ -389,9 +374,6 @@ void _paintFloatingChange(
   if (arrowOrigin != Offset.zero) {
     paintLineSegment(c, canvas, origin: arrowOrigin, angle: arrowAngle);
   }
-
-  // 8. Paint Description
-  paintDescription(c, canvas, desc);
 }
 
 void _paintManagedRate(DiagramPainterConfig c, IDiagramCanvas canvas) {
@@ -506,13 +488,6 @@ void _paintManagedRate(DiagramPainterConfig c, IDiagramCanvas canvas) {
     yLabel: DiagramLabel.eR3.label,
     hideXLine: true,
   );
-
-  // 6. Description
-  paintDescription(
-    c,
-    canvas,
-    'The Central Bank allows the currency to float within and upper and lower band (limit). If the exchange rate hits these limits, the Central Bank intervenes by buying or selling currency to keep the rate within the target range.',
-  );
 }
 
 void _paintFixedRate(
@@ -550,8 +525,6 @@ void _paintFixedRate(
   // 3. Scenario Logic
   switch (diagram) {
     case DiagramEnum.globalFixedRateDemandDecreaseBuyCurrency:
-      description =
-          '1. A fall in demand leads to downward pressure on currency value. 2. The central bank intervenes by increasing demand: using foreign reserves to buy surplus currency; and/or raise interest rates to increase inward hot money flows.';
 
       // Arrow 1: Demand Shifts Left
       paintLineSegment(
@@ -583,8 +556,6 @@ void _paintFixedRate(
       break;
 
     case DiagramEnum.globalFixedRateDemandIncreaseSellCurrency:
-      description =
-          '1. An increase in demand puts upward pressure on the currency value. 2. Central bank sells domestic currency (buying foreign currency) increasing supply.';
 
       // Logic Swap: Demand Increased.
       // The "Right" curve is now D2 (New), "Left" is D1 (Old).
@@ -626,8 +597,6 @@ void _paintFixedRate(
       break;
 
     case DiagramEnum.globalFixedRateDemandDecreaseReduceSupply:
-      description =
-          '1. A fall in demand leads to downward pressure on currency. 2. A central bank can reduce supply to maintain a fixed rate by imposing tariffs and capital controls (prevents capital flight).';
 
       // Specifically label the Base supply S1, as we add S2
       s1Label = DiagramLabel.s1.label;
@@ -684,8 +653,6 @@ void _paintFixedRate(
     yAxisLabel: DiagramLabel.uSDPerHKD.label,
     xAxisLabel: DiagramLabel.quantityOfHKD.label,
   );
-
-  paintDescription(c, canvas, description);
 
   // 5. Paint Base Curves
   // Right Curve (D1 usually, or D2 in increase case)

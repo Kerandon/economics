@@ -27,7 +27,7 @@ extension AxisTypeData on AxisType {
       case AxisType.supplyDemand:
         return DiagramLabel.p.label;
       case AxisType.laborMarket:
-        return DiagramLabel.realWageRate.label;
+        return DiagramLabel.wageRate.label;
       case AxisType.priceRevenueCosts:
         return DiagramLabel.priceRevenueCosts.label;
       case AxisType.macroADAS:

@@ -97,7 +97,7 @@ void paintJCurveAxes(
   paintText(
     config,
     canvas,
-    'Surplus\n(X > M)',
+    'Trade\nSurplus\n(X > M)',
     Offset(yIndent, 0.15),
     horizontalPivot: LabelPivot.right,
     normalize: true,
@@ -108,7 +108,7 @@ void paintJCurveAxes(
   paintText(
     config,
     canvas,
-    'Balance\n(X = M)',
+    'Trade\nBalance\n(X = M)',
     Offset(yIndent, 0.50),
     horizontalPivot: LabelPivot.right,
     style: regionLabelStyle,
@@ -118,7 +118,7 @@ void paintJCurveAxes(
   paintText(
     config,
     canvas,
-    'Deficit\n(X < M)',
+    'Trade\nDeficit\n(X < M)',
     Offset(yIndent, 0.85),
     horizontalPivot: LabelPivot.right,
     style: regionLabelStyle,

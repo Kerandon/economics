@@ -60,12 +60,6 @@ class ComparativeAdvantageDiagram extends BaseDiagramPainter {
       label: 'Germany',
       color: Colors.blue,
     );
-
-    paintDescription(
-      c,
-      canvas,
-      '''Parallel PPCs indicate same opportunity costs. Neither country has a Comparative Advantage. No benefit to trade''',
-    );
   }
 
   // --- Existing Diagrams (Refactored) ---
@@ -130,6 +124,7 @@ class ComparativeAdvantageDiagram extends BaseDiagramPainter {
       middleLabel: label,
       middleLabelAlign: LabelAlign.right,
       color: color,
+      textType: DiagramTextType.label,
     );
     paintDiagramDashedLines(
       c,

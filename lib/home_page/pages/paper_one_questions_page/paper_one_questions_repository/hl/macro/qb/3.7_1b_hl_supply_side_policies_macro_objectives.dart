@@ -15,37 +15,36 @@ final rweEvaluateSupplySidePoliciesToIncreaseGrowthLowUnemploymentLowInflation15
       'Using real-world examples, evaluate the view that the most effective way to increase economic growth, reduce unemployment and maintain a low rate of inflation is by using supply-side policies.',
   contents: [
     SlideContent.econTerms([
-      EconTerm.foreignAid,
-      EconTerm.economicallyLessDevelopedCountry,
+      EconTerm.economicGrowth,
+      EconTerm.supplySidePolicies,
+      EconTerm.supplySidePoliciesMarketBased,
+      EconTerm.supplySidePoliciesInterventionist,
     ]),
 
     SlideContent.simpleTable(
-      title: 'Foreign Aid',
+      title: 'Market-Based Supply-Side Policies',
       headers: ['Benefits', 'Limitations'],
       data: [
+        ['Improved resource allocation and efficiency', 'Time lags'],
         [
-          'Improved resource allocation / efficiency\n(e.g., UK Privatisation 1980s, India 1991)',
-          'Time Lags',
+          'Increased competition and export competitiveness',
+          'Negative effects on equity / higher income inequality',
         ],
         [
-          'Increased competition increases export competitiveness\n(e.g., China post-1978 SEZs)',
-          'Negative effects on equity / higher income inequality\n(e.g., US 2017 Tax Cuts)',
-        ],
-        [
-          'Reduce inflationary pressures in the long-term\n(e.g., US Airline Deregulation 1978)',
-          'Negative externalities\n(e.g., environmental costs of deregulation)',
+          'Reduced inflationary pressures in the long term',
+          'Negative externalities',
         ],
         [
           'No direct cost to government debt',
-          'Vested interests resist\n(e.g., UK Trade Union strikes 1980s)',
+          'Vested interests may resist reforms',
         ],
         [
           '', // Blank to balance the row
-          'Foreign MNCs replace infant industry / exploit local resources',
+          'Foreign MNCs may replace infant industries / exploit local resources',
         ],
         [
-          'Reduce NRU by improving labor-market flexibility\n(e.g., Germany Hartz Reforms, Spain 2012)',
-          'Less protection / job security for lower-skilled workers\n(e.g., Spain 2012 temporary contracts)',
+          'Reduced NRU through improved labour market flexibility',
+          'Less protection / job security for lower-skilled workers',
         ],
       ],
     ),
@@ -55,26 +54,33 @@ final rweEvaluateSupplySidePoliciesToIncreaseGrowthLowUnemploymentLowInflation15
       headers: ['Strengths', 'Limitations'],
       data: [
         [
-          'Targeted support for strategic/high-value industries\n(e.g., US Inflation Reduction Act, S. Korea R&D)',
-          'Time lags to see capacity increase\n(e.g., US Infrastructure Law delays)',
+          'Targeted support for strategic / high-value industries',
+          'Time lags to increase productive capacity',
         ],
         [
-          'Directly create employment in short-term\n(e.g., China Belt and Road 2013)',
-          'Increased government debt / opportunity cost\n(e.g., US deficit spending)',
+          'Direct job creation in the short run',
+          'Increased government debt / opportunity cost',
         ],
         [
-          'Lower inflationary pressures in long-term',
-          'Higher inflation in short-run due to AD shift\n(e.g., Post-pandemic inflation 2022)',
+          'Reduced inflationary pressures in the long term',
+          'Higher inflation in the short run due to AD increase',
         ],
         [
-          'Improve equity and human capital\n(e.g., Singapore SkillsFuture, Germany Apprenticeships)',
+          'Improved equity and human capital',
           '', // Blank to balance the row
         ],
       ],
     ),
 
     SlideContent.diagrams([DiagramEnum.macroLRPCFallInNRU]),
-    SlideContent.diagrams([DiagramEnum.macroSupplySidePoliciesLowInflation]),
-    SlideContent.realWorldExamples([]),
+    SlideContent.diagrams([
+      DiagramEnum.macroSupplySidePoliciesLowInflation,
+      DiagramEnum.globalPPCEconomicGrowth,
+    ]),
+    SlideContent.realWorldExamples(
+      RealWorldExamples.values
+          .where((term) => term.subunit == Subunit.supplySidePolicies)
+          .toList(),
+    ),
   ],
 );
