@@ -1,16 +1,8 @@
-import '../../../../diagrams/enums/unit_type.dart';
-import '../../../enums/tag.dart';
+import 'package:economics_app/home_page/pages/quick_notes/slides/macro/3.1_economic_activity.dart';
+import 'package:economics_app/home_page/pages/quick_notes/slides/macro/3.5_demand_side_monetary.dart';
 import '../../../models/slide.dart';
-import '../../../models/term.dart';
 
 final List<Slide> macroSlides = [
-  Slide(
-    subunit: Subunit.macroObjectives,
-    tags: [Tag.sl, Tag.hl],
-    question: 'How does expansionary fiscal policy close a deflationary gap?',
-    contents: [
-      // ... your slide contents here ...
-    ],
-  ),
-  // ... more macro slides ...
+  economicActivitySlide,
+  demandSideMonetarySlide,
 ];

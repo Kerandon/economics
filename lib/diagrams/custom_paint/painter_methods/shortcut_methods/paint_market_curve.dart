@@ -400,7 +400,7 @@ void paintMarketCurve(
         finalLabel2 = "AS";
         break;
       case MarketCurveType.moneySupply:
-        finalLabel2 = "MS";
+        finalLabel2 = "Ms";
         break;
       case MarketCurveType.lrpc:
         finalLabel2 = "LRPC";

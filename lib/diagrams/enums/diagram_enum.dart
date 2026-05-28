@@ -101,6 +101,7 @@ enum DiagramEnum {
   microMonopolyAbnormalProfitAndCosts,
   microMonopolyWelfare,
   microMonopolyWelfareAllocativelyEfficient,
+  microMonopolyIncomeRedistribution,
   microMonopolyNatural,
   microMonopolyNaturalUnregulatedWelfare,
   microMonopolyNaturalPricingComparisons,
@@ -171,8 +172,13 @@ enum DiagramEnum {
   macroLRPCFallInNRU,
 
   /// Poverty and Inequality
-  macroLorenzCurveCalculation,
-  macroLorenzCurveImprovedEquality,
+  macroLorenzCurveGiniCalculation,
+  macroLorenzCurveImprovedIncomeEquality,
+  macroLorenzCurveDecreasedIncomeEquality,
+
+  /// loanable funds
+  macroLoanableFundsIncrease,
+  macroLoanableFundsFisherEffect,
 
   /// Demand and Supply-Side
   macroMoneyMarket,
@@ -437,6 +443,8 @@ extension DiagramBundleEnumUnit on DiagramEnum {
       Subunit.marketFailureMarketPower,
     DiagramEnum.microMonopolisticCompetitionLossShift =>
       Subunit.marketFailureMarketPower,
+    DiagramEnum.microMonopolyIncomeRedistribution =>
+      Subunit.marketFailureMarketPower,
 
     ///Macro
     /// Measuring economic activity
@@ -507,10 +515,16 @@ extension DiagramBundleEnumUnit on DiagramEnum {
     DiagramEnum.macroLRPCFallInNRU => Subunit.macroObjectives,
 
     /// Poverty and Inequality
-    DiagramEnum.macroLorenzCurveCalculation => Subunit.inequalityPoverty,
-    DiagramEnum.macroLorenzCurveImprovedEquality => Subunit.inequalityPoverty,
+    DiagramEnum.macroLorenzCurveGiniCalculation => Subunit.inequalityPoverty,
+    DiagramEnum.macroLorenzCurveImprovedIncomeEquality =>
+      Subunit.inequalityPoverty,
+    DiagramEnum.macroLorenzCurveDecreasedIncomeEquality =>
+      Subunit.inequalityPoverty,
 
     /// Demand-side & Supply-side
+    DiagramEnum.macroLoanableFundsIncrease => Subunit.demandManagementFiscal,
+    DiagramEnum.macroLoanableFundsFisherEffect =>
+      Subunit.demandManagementFiscal,
     DiagramEnum.macroCrowdingOut => Subunit.demandManagementFiscal,
     DiagramEnum.macroKeynesianDemandPullInflation => Subunit.macroObjectives,
     DiagramEnum.macroKeynesianMultiplier => Subunit.demandManagementFiscal,
@@ -921,9 +935,9 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "LRPC shifts left showing a decrease in the NRU.",
 
       // Poverty
-      DiagramEnum.macroLorenzCurveCalculation =>
+      DiagramEnum.macroLorenzCurveGiniCalculation =>
         "The further from the diagonal (45 degree line of perfect equality), the more unequal. Gini Co-efficient is A / (A + B)",
-      DiagramEnum.macroLorenzCurveImprovedEquality =>
+      DiagramEnum.macroLorenzCurveImprovedIncomeEquality =>
         "Lorenz curve shifting inward towards the line of perfect equality.",
 
       // Policies
@@ -1008,6 +1022,12 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         'Poverty cycle transmits poverty from one generation to the next and requires external forces to break it.',
       DiagramEnum.microNegativeConsumptionExternalityEducationAndNudges =>
         'Education and Nudges work to decrease consumer demand.',
+      DiagramEnum.macroLorenzCurveDecreasedIncomeEquality =>
+        'Policies such as supply-side market based policies - lower progressive taxation, labor-market reforms (lower minimum wage, less worker protection regulations), less government spending on transfer payments and less subsidies for / provision of merit goods can increase income inequality.',
+      DiagramEnum.microMonopolyIncomeRedistribution =>
+        'Firms with market power transfer consumer surplus to producer surplus.',
+      DiagramEnum.macroLoanableFundsIncrease => '',
+      DiagramEnum.macroLoanableFundsFisherEffect => '',
     };
   }
 }

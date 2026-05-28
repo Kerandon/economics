@@ -1,13 +1,9 @@
 import 'dart:math';
-import 'dart:ui';
-
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
 import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
@@ -16,7 +12,6 @@ import 'package:flutter/material.dart';
 import '../../models/base_painter_painter.dart';
 import '../../models/diagram_painter_config.dart';
 import '../i_diagram_canvas.dart';
-import '../painter_methods/paint_text.dart';
 
 class PPCDiagram extends BaseDiagramPainter {
   PPCDiagram(super.config, super.diagram);
@@ -45,8 +40,8 @@ void _paintPPCGlobal(
     paintAxis(
       c,
       canvas,
-      yAxisLabel: 'Military Goods',
-      xAxisLabel: 'Merit Goods',
+      yAxisLabel: 'Military\nGoods',
+      xAxisLabel: 'Merit\nGoods',
     );
     paintDiagramLines(
       c,
@@ -60,7 +55,7 @@ void _paintPPCGlobal(
       c,
       canvas,
       yAxisStartPos: 0.40,
-      xAxisEndPos: 0.50,
+      xAxisEndPos: 0.495,
       showDotAtIntersection: true,
       yLabel: DiagramLabel.q1.label,
       xLabel: DiagramLabel.q1.label,
@@ -70,12 +65,19 @@ void _paintPPCGlobal(
       c,
       canvas,
       yAxisStartPos: 0.60,
-      xAxisEndPos: 0.67,
+      xAxisEndPos: 0.665,
       showDotAtIntersection: true,
       yLabel: DiagramLabel.q2.label,
       xLabel: DiagramLabel.q2.label,
 
       rightYLabel: 'Y',
+    );
+    paintLineSegment(
+      c,
+      canvas,
+      origin: Offset(0.64, 0.48),
+      angle: pi * 0.30,
+      length: 0.10,
     );
   }
   if (diagram == DiagramEnum.globalPPCEconomicGrowth) {

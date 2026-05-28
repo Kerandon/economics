@@ -50,6 +50,9 @@ Overall, significant market power is not always undesirable, but it should be re
       DiagramEnum.microMonopolyWelfare,
       DiagramEnum.microMonopolyNatural,
     ]),
-    SlideContent.realWorldExamples([]),
+    SlideContent.realWorldExamples([
+      RealWorldExamples.abuseOfMonopolyPower,
+      RealWorldExamples.oligopoly,
+    ]),
   ],
 );

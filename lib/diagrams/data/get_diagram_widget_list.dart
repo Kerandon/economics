@@ -224,6 +224,9 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
       MonopolyDiagram(c, DiagramEnum.microMonopolyAbnormalProfit),
     ]),
     DiagramWidget([MonopolyDiagram(c, DiagramEnum.microMonopolyWelfare)]),
+    DiagramWidget([
+      MonopolyDiagram(c, DiagramEnum.microMonopolyIncomeRedistribution),
+    ]),
     DiagramWidget([MonopolyDiagram(c, DiagramEnum.microMonopolyNatural)]),
     DiagramWidget([
       MonopolyDiagram(
@@ -382,10 +385,16 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
 
     /// Inequality and Poverty
     DiagramWidget([
-      LorenzCurveDiagram(c, DiagramEnum.macroLorenzCurveCalculation),
+      LorenzCurveDiagram(c, DiagramEnum.macroLorenzCurveGiniCalculation),
     ]),
     DiagramWidget([
-      LorenzCurveDiagram(c, DiagramEnum.macroLorenzCurveImprovedEquality),
+      LorenzCurveDiagram(c, DiagramEnum.macroLorenzCurveImprovedIncomeEquality),
+    ]),
+    DiagramWidget([
+      LorenzCurveDiagram(
+        c,
+        DiagramEnum.macroLorenzCurveDecreasedIncomeEquality,
+      ),
     ]),
 
     /// Money market

@@ -37,6 +37,15 @@ class LorenzCurveDiagram extends BaseDiagramPainter {
       canvas,
       startPos: Offset(0, 1),
       polylineOffsets: [Offset(1, 0)],
+      curveStyle: CurveStyle.dashed,
+    );
+    paintText(
+      c,
+      canvas,
+      'Perfect Income Equality',
+      Offset(0.42, 0.50),
+      angle: pi * -0.25,
+      type: DiagramTextType.label,
     );
     paintDiagramLines(
       c,
@@ -46,12 +55,17 @@ class LorenzCurveDiagram extends BaseDiagramPainter {
         CustomBezier(control: Offset(1.0, 0.90), endPoint: Offset(1, 0)),
       ],
     );
-    if (diagram == DiagramEnum.macroLorenzCurveCalculation) {
+    if (diagram == DiagramEnum.macroLorenzCurveGiniCalculation) {
       paintText(c, canvas, 'A', Offset(0.60, 0.60));
       paintText(c, canvas, 'B', Offset(0.80, 0.80));
       paintText(c, canvas, 'Gini Coefficient = A / (A + B)', Offset(0.50, 1.3));
     }
-    if (diagram == DiagramEnum.macroLorenzCurveImprovedEquality) {
+    double arrowAngle = pi * 1.2;
+    if (diagram == DiagramEnum.macroLorenzCurveDecreasedIncomeEquality) {
+      arrowAngle = pi * 0.25;
+    }
+    if (diagram == DiagramEnum.macroLorenzCurveImprovedIncomeEquality ||
+        diagram == DiagramEnum.macroLorenzCurveDecreasedIncomeEquality) {
       paintDiagramLines(
         c,
         canvas,
@@ -60,7 +74,12 @@ class LorenzCurveDiagram extends BaseDiagramPainter {
           CustomBezier(control: Offset(0.95, 0.50), endPoint: Offset(1, 0)),
         ],
       );
-      paintLineSegment(c, canvas, origin: Offset(0.65, 0.68), angle: pi * 1.2);
+      paintLineSegment(
+        c,
+        canvas,
+        origin: Offset(0.65, 0.68),
+        angle: arrowAngle,
+      );
     }
   }
 }

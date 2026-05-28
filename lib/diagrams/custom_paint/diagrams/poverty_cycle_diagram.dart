@@ -1,8 +1,6 @@
 import 'dart:ui';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_description.dart';
-import 'package:economics_app/diagrams/enums/diagram_labels.dart';
 import 'package:economics_app/diagrams/models/custom_bezier.dart';
 import '../../models/base_painter_painter.dart';
 import '../i_diagram_canvas.dart';

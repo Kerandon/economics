@@ -67,6 +67,8 @@ final useRWEEvaluateMonetaryPolicyReduceInflationaryGap1bHL = Slide(
     SlideContent.diagrams([
       DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy,
     ]),
-    SlideContent.realWorldExamples([]),
+    SlideContent.realWorldExamples([
+      RealWorldExamples.monetaryPolicyRealWorldExamples,
+    ]),
   ],
 );

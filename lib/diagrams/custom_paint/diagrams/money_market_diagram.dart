@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
-import 'package:economics_app/diagrams/custom_paint/painter_methods/diagram_lines/paint_diagram_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_line_segment.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
@@ -24,7 +22,7 @@ class MoneyMarketDiagram extends BaseDiagramPainter {
     paintAxis(
       c,
       canvas,
-      yAxisLabel: DiagramLabel.interestRate.label,
+      yAxisLabel: DiagramLabel.nominalInterestRate.label,
       xAxisLabel: DiagramLabel.quantityOfMoney.label,
     );
 

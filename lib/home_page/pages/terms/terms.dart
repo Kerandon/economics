@@ -950,11 +950,123 @@ enum EconTerm {
   ),
 
   /// Monetary Policy
+  moneyMarket(
+    termName: 'Money Market',
+    explanation:
+        'A market where the supply and demand for money determines the equilibrium interest rate.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  expansionaryMonetaryPolicy(
+    termName: 'Expansionary Monetary Policy',
+    explanation:
+        'Central bank policies that increases money supply to lower interest rates to correct a deflationary/recessionary-gap.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  contractionaryMonetaryPolicy(
+    termName: 'Contractionary Monetary Policy',
+    explanation:
+        'Central bank policies that reduces money supply to raise interest rates to correct an inflationary-gap.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  equilibriumInterestRate(
+    termName: 'Equilibrium Interest Rate',
+    explanation:
+        'When MD = MS. The target rate of the central bank. The base rate of all interest rates in the economy',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  OMO(
+    termName: 'Open Market Operations (OMO)',
+    explanation:
+        'Central bank buying or selling government bonds to change money supply.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  MLR(
+    termName: 'Minimum Lending Rate (MLR)',
+    explanation:
+        'The rate at which commercial banks can borrow from the central bank when they face liquidity problems (lender of last resort).',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  MRR(
+    termName: 'Minimum Reserve Requirement (MRR)',
+    explanation:
+        'The fraction (%) of deposits banks must hold as required reserves.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  QE(
+    termName: 'Quantitative Easing (QE)',
+    explanation:
+        'Large scale purchase of bonds and other financial assets by the central bank to inject liquidity into the economy during a financial crisis.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  quantitativeTightening(
+    termName: 'Quantitative Tightening',
+    explanation:
+        'Reverse of QE: Central bank selling assets or letting them mature to reduce money supply.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  fractionalReserveBanking(
+    termName: 'Fractional Reserve Banking',
+    explanation:
+        'A system where banks keep a fraction of deposits as reserves and lend out the rest, thereby creating new money (credit creation).',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  money(
+    termName: 'Money',
+    explanation:
+        'Widely accepted as a medium of exchange, store of value, and unit of account.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  moneySupply(
+    termName: 'Money Supply',
+    explanation:
+        'Total amount of money circulating in an economy at a given time. Commonly MS = C + D (Money Supply = Currency + Deposits).',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  inflationTargeting(
+    termName: 'Inflation Targeting',
+    explanation:
+        'Monetary policy framework where the central bank aims to keep inflation around a set target.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  anchoredInflationExpectations(
+    termName: 'Anchored Inflation Expectations',
+    explanation:
+        'When the public expects inflation to remain low and stable, helping central bank maintain price stability (preventing wage-price spirals).',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  monetaryPolicyTransmissionMechanism(
+    termName: 'Monetary Policy Transmission Mechanism',
+    explanation:
+        'The process by which changes in interest rates affect consumption, investment, and net exports.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
+  fiatMoney(
+    termName: 'Fiat Money',
+    explanation:
+        'Money that has value because the government declares it legal tender, not because of intrinsic value.',
+    subunit: Subunit.demandManagementMonetary,
+  ),
+
   monetaryPolicy(
     termName: 'Monetary Policy',
     explanation:
         'Central bank policy on interest rates and money supply to achieve macroeconomic goals.',
-    subunit: Subunit.macroObjectives,
+    subunit: Subunit.demandManagementMonetary,
     tags: [],
   ),
   openMarketOperations(

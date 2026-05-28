@@ -6,6 +6,7 @@ import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagra
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_dot.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_text.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_marginal_cost.dart';
+import 'package:economics_app/diagrams/custom_paint/painter_methods/shortcut_methods/paint_market_curve.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/paint_shading.dart';
 import 'package:economics_app/diagrams/custom_paint/shade/shade_type.dart';
 import 'package:economics_app/diagrams/enums/diagram_enum.dart';
@@ -36,6 +37,8 @@ class MonopolyDiagram extends BaseDiagramPainter {
       case DiagramEnum.microMonopolyNaturalMarginalCostPricing:
       case DiagramEnum.microMonopolyNaturalMarginalCostPricingWelfare:
         return _paintNaturalMonopoly(c, canvas, diagram);
+      case DiagramEnum.microMonopolyIncomeRedistribution:
+        return _paintMonopolyIncomeRedistribution(c, canvas);
       default:
     }
   }
@@ -493,5 +496,94 @@ class MonopolyDiagram extends BaseDiagramPainter {
         showDotAtIntersection: true,
       );
     }
+  }
+
+  void _paintMonopolyIncomeRedistribution(
+    DiagramPainterConfig c,
+    IDiagramCanvas canvas,
+  ) {
+    paintAxis(c, canvas, axisType: AxisType.priceRevenueCosts);
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.32,
+      xAxisEndPos: 0.30,
+      yLabel: 'P(P>MC)',
+      xLabel: 'Q\n(mc=mr)',
+    );
+    paintDiagramDashedLines(
+      c,
+      canvas,
+      yAxisStartPos: 0.47,
+      xAxisEndPos: 0.45,
+      yLabel: 'P(P=MC)',
+      hideXLine: true,
+    );
+    paintMarketCurve(c, canvas, type: MarketCurveType.dArMonopoly);
+    paintMarketCurve(c, canvas, type: MarketCurveType.mrMonopoly);
+    paintDiagramLines(
+      c,
+      canvas,
+      startPos: Offset(0.05, 0.90),
+      polylineOffsets: [Offset(0.80, 0.10)],
+      label2: DiagramLabel.mc.label,
+      label2Align: LabelAlign.centerTop,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.a.label,
+      Offset(0.07, 0.25),
+      type: DiagramTextType.label,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.b.label,
+      Offset(0.19, 0.25),
+      type: DiagramTextType.label,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.c.label,
+      Offset(0.07, 0.40),
+      type: DiagramTextType.label,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.d.label,
+      Offset(0.24, 0.40),
+      type: DiagramTextType.label,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.e.label,
+      Offset(0.34, 0.42),
+      type: DiagramTextType.label,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.f.label,
+      Offset(0.07, 0.52),
+      type: DiagramTextType.label,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.g.label,
+      Offset(0.28, 0.52),
+      type: DiagramTextType.label,
+    );
+    paintText(
+      c,
+      canvas,
+      DiagramLabel.h.label,
+      Offset(0.34, 0.52),
+      type: DiagramTextType.label,
+    );
   }
 }

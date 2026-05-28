@@ -64,9 +64,11 @@ final tradeOffInflationAndUnemployment15Mark = Slide(
     ]),
     SlideContent.diagrams([
       DiagramEnum.macroExpectationsAugmentedPhillipsCurveInflationaryGap,
-      DiagramEnum.macroClassicalDeflationaryGapAdjustment,
+      DiagramEnum.macroClassicalInflationaryGapAdjustment,
     ]),
     SlideContent.diagrams([DiagramEnum.macroADASKeynesianSpareCapacity]),
-    SlideContent.realWorldExamples([]),
+    SlideContent.realWorldExamples([
+      RealWorldExamples.tradeOffInflationUnemployment,
+    ]),
   ],
 );

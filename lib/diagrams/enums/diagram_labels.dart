@@ -279,6 +279,8 @@ enum DiagramLabel {
   deflationaryGap,
   inflationaryGap,
   interestRate,
+  nominalInterestRate,
+  realInterestRate,
   quantityOfMoney,
   sM,
   dM,
@@ -932,6 +934,10 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.qD2 => 'QD2',
 
       DiagramLabel.jCurve => 'J-Curve',
+
+      DiagramLabel.nominalInterestRate => 'Nominal\nInterest\nRate',
+
+      DiagramLabel.realInterestRate => 'Real\nInterest\nRate',
     };
   }
 }

@@ -71,6 +71,9 @@ final evaluateMonopolisticVsOligopolyQuestion = Slide(
       DiagramEnum.microOligopolyCartel,
     ]),
     // Real World Examples
-    SlideContent.realWorldExamples([]),
+    SlideContent.realWorldExamples([
+      RealWorldExamples.oligopoly,
+      RealWorldExamples.monopolisticCompetition,
+    ]),
   ],
 );

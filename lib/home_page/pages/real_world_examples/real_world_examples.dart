@@ -700,6 +700,78 @@ enum RealWorldExamples {
       ),
     ],
   ),
+  tradeOffInflationUnemployment(
+    topicName: 'Trade-Off Between Inflation and Unemployment',
+    subunit: Subunit.macroObjectives,
+    examples: [
+      ExampleDetail(
+        title: 'US – COVID-19 Pandemic (Short Run Trade-Off)',
+        explanation:
+            'Lockdowns: U >10%, low inflation (~1%). Reopening: U <5%, inflation ~9% due to strong AD and supply shortages.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: '1973 Oil Crisis – Stagflation (Breakdown)',
+        explanation:
+            'High inflation and high unemployment due to cost-push inflation from rising oil prices.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: '1990s US – Internet Boom',
+        explanation:
+            'Low inflation and low unemployment due to productivity gains.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Post-COVID US – Long Run',
+        explanation:
+            'Unemployment near natural rate; inflation ~3.3% showing no long-run trade-off as expectations adjust.',
+        tags: [Tag.hl],
+      ),
+    ],
+  ),
+  monetaryPolicyRealWorldExamples(
+    topicName: 'Monetary Policy Examples & Limitations',
+    subunit: Subunit.demandManagementMonetary,
+    examples: [
+      ExampleDetail(
+        title: 'UK 2022–2023 (Contractionary)',
+        explanation:
+        'With inflation above 10%, the Bank of England sold government bonds (gilts) to reduce money supply and raise interest rates. This helped bring inflation down but also increased borrowing costs, reduced consumption and investment, and contributed to a mild recession in 2023.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'New Zealand 2020–2021 (Expansionary)',
+        explanation:
+        'During COVID-19, the Reserve Bank of New Zealand bought around NZD 100bn of government bonds under LSAP, lowering long-term interest rates. This encouraged borrowing and spending, supporting aggregate demand and preventing a deeper recession.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'USA 2020–2021 (Expansionary)',
+        explanation:
+        'The Federal Reserve purchased over 1.7 trillion dollars in bonds during COVID-19, lowering long-term interest rates and supporting consumption and investment. However, strong demand recovery later contributed to inflation rising above 7%.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Japan 2013–Present (Expansionary)',
+        explanation:
+        'Under Abenomics, the Bank of Japan used large-scale QE to keep interest rates near zero in order to fight persistent low inflation. This supported asset prices and demand but had limited success in sustainably raising inflation to target.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'USA Post-2008 (Liquidity Trap)',
+        explanation:
+        'After the Global Financial Crisis, interest rates were cut to near zero but borrowing and spending remained weak. Banks held excess reserves and households increased saving, limiting the effectiveness of monetary policy despite QE.',
+        tags: [Tag.hl],
+      ),
+      ExampleDetail(
+        title: 'Japan 1990s (Liquidity Trap)',
+        explanation:
+        'After the asset bubble burst, weak confidence and high debt levels led households and firms to reduce borrowing and increase saving. Even very low interest rates had little effect, resulting in prolonged stagnation and deflation.',
+        tags: [Tag.hl],
+      ),
+    ],
+  ),
   barriersToDevelopment(
     topicName: 'Barriers to Sustainable Development',
     subunit: Subunit.sustainableDevelopment,
