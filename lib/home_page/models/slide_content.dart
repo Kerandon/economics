@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:economics_app/home_page/models/example.dart';
 import 'package:economics_app/home_page/models/tip.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +47,7 @@ class SlideContent {
   final List<DiagramEnum>? diagramEnums;
   final List<DiagramWidget>? diagramWidgets;
   final String? diagramDescription;
+  final List<Tag>? diagramTags; // 🌟 NEW: Added to hold tags for diagrams
 
   // Custom Widgets (For UI rendering)
   final Widget? widget;
@@ -62,6 +62,7 @@ class SlideContent {
     this.diagramEnums,
     this.diagramWidgets,
     this.diagramDescription,
+    this.diagramTags, // 🌟 NEW
     this.widget,
     this.tableData,
   });
@@ -75,6 +76,7 @@ class SlideContent {
     List<DiagramEnum>? diagramEnums,
     List<DiagramWidget>? diagramWidgets,
     String? diagramDescription,
+    List<Tag>? diagramTags, // 🌟 NEW
     Widget? widget,
     TableData? tableData,
   }) {
@@ -87,6 +89,7 @@ class SlideContent {
       diagramWidgets: diagramWidgets ?? this.diagramWidgets,
       diagramEnums: diagramEnums ?? this.diagramEnums,
       diagramDescription: diagramDescription ?? this.diagramDescription,
+      diagramTags: diagramTags ?? this.diagramTags, // 🌟 NEW
       widget: widget ?? this.widget,
       tableData: tableData ?? this.tableData,
     );
@@ -108,10 +111,16 @@ class SlideContent {
   factory SlideContent.realWorldExamples(List<RealWorldExamples> examples) =>
       SlideContent(realWorldExamples: examples);
 
+  // 🌟 NEW: Updated to accept an optional list of tags
   factory SlideContent.diagrams(
     List<DiagramEnum> diagrams, {
     String? description,
-  }) => SlideContent(diagramEnums: diagrams, diagramDescription: description);
+    List<Tag>? tags,
+  }) => SlideContent(
+    diagramEnums: diagrams,
+    diagramDescription: description,
+    diagramTags: tags,
+  );
 
   factory SlideContent.customWidget(Widget widget) =>
       SlideContent(widget: widget);

@@ -226,21 +226,39 @@ void _paintBusinessCycleStabilization(
   IDiagramCanvas canvas,
 ) {
   _paintTrendLine(c, canvas, label: DiagramLabel.potentialGDP.label);
-  // Unchanged first curve
+
   paintDiagramLines(
     c,
     canvas,
     startPos: Offset(0.0, 0.80),
     bezierPoints: [
-      CustomBezier(control: Offset(0.15, 0.25), endPoint: Offset(0.30, 0.60)),
-      CustomBezier(control: Offset(0.45, 0.85), endPoint: Offset(0.55, 0.55)),
-      CustomBezier(control: Offset(0.70, 0.15), endPoint: Offset(0.85, 0.40)),
-      CustomBezier(control: Offset(0.95, 0.55), endPoint: Offset(1.0, 0.55)),
+      CustomBezier(control: Offset(0.15, 0.00), endPoint: Offset(0.30, 0.60)),
+      CustomBezier(control: Offset(0.45, 1.15), endPoint: Offset(0.55, 0.55)),
+      CustomBezier(control: Offset(0.70, 0.05), endPoint: Offset(0.85, 0.40)),
+      CustomBezier(control: Offset(0.95, 0.75), endPoint: Offset(1.0, 0.55)),
     ],
     color: c.colorScheme.primary,
     label2: DiagramLabel.realGDP.label,
     label2Align: LabelAlign.right,
     textType: DiagramTextType.label,
+  );
+  paintLineSegment(c, canvas, origin: Offset(0.18, 0.45), angle: pi / 2);
+  paintText(
+    c,
+    canvas,
+    'Progressive\nTaxation',
+    Offset(0.40, 0.40),
+    type: DiagramTextType.label,
+    pointerLine: Offset(0.18, 0.40),
+  );
+  paintLineSegment(c, canvas, origin: Offset(0.44, 0.75), angle: -pi / 2);
+  paintText(
+    c,
+    canvas,
+    'Unemployment\nPayments',
+    Offset(0.70, 0.80),
+    type: DiagramTextType.label,
+    pointerLine: Offset(0.44, 0.80),
   );
 
   // Stabilized curve
@@ -256,7 +274,7 @@ void _paintBusinessCycleStabilization(
     ],
     color: c.colorScheme.secondary,
     // Swapped Colors.red for a theme color
-    label2: 'Real GDP1',
+    label2: 'Real GDP + Stabl. Policies',
     label2Align: LabelAlign.right,
     curveStyle: CurveStyle.dashed,
     textType: DiagramTextType.label,

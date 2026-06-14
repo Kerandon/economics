@@ -565,15 +565,57 @@ enum RealWorldExamples {
     subunit: Subunit.demandManagementMonetary,
     examples: [
       ExampleDetail(
-        title: 'US Quantitative Easing 2008 to 2014',
+        title: 'Japan Quantitative Easing 2013–2020s',
         explanation:
-            'Federal Reserve expanded balance sheet by over 3 trillion US dollars.',
+            'The Bank of Japan used prolonged quantitative easing and near-zero interest rates to increase aggregate demand, but inflation and economic growth remained weak due to low consumer spending and inflation expectations.',
         tags: [Tag.hl, Tag.p1b],
       ),
       ExampleDetail(
-        title: 'Japan Liquidity Trap',
+        title: 'United States Expansionary Monetary Policy 2020',
         explanation:
-            'Interest rates near zero since the 1990s with weak aggregate demand response.',
+            'The Federal Reserve reduced interest rates to near zero and implemented over 4 trillion US dollars of quantitative easing to support aggregate demand during the COVID-19 recession.',
+        tags: [Tag.hl, Tag.p1b],
+      ),
+      ExampleDetail(
+        title: 'Eurozone Expansionary Monetary Policy 2020',
+        explanation:
+            'The European Central Bank maintained near-zero and negative interest rates while expanding quantitative easing, but high uncertainty limited the increase in aggregate demand.',
+        tags: [Tag.hl, Tag.p1b],
+      ),
+      ExampleDetail(
+        title: 'United States Contractionary Monetary Policy 2022–2023',
+        explanation:
+            'The Federal Reserve increased interest rates rapidly to reduce demand-pull inflation by decreasing consumption, investment, and aggregate demand.',
+        tags: [Tag.hl, Tag.p1b],
+      ),
+    ],
+  ),
+  fiscalPolicy(
+    topicName: 'Demand Management Fiscal Policy',
+    subunit: Subunit.demandManagementFiscal,
+    examples: [
+      ExampleDetail(
+        title: 'United States CARES Act 2020',
+        explanation:
+            'A 2.3 trillion US dollar expansionary fiscal policy package that included cash transfers to households, enhanced unemployment benefits, and support for businesses to increase aggregate demand during the COVID-19 recession.',
+        tags: [Tag.hl, Tag.p1b],
+      ),
+      ExampleDetail(
+        title: 'United States American Rescue Plan 2021',
+        explanation:
+            'A 1.9 trillion US dollar fiscal stimulus package that increased transfer payments, supported state governments, and boosted consumption and aggregate demand during the economic recovery.',
+        tags: [Tag.hl, Tag.p1b],
+      ),
+      ExampleDetail(
+        title: 'Singapore Fiscal Stimulus 2020',
+        explanation:
+            'Large-scale government spending, wage subsidies, and business support helped limit unemployment and support aggregate demand during the COVID-19 recession.',
+        tags: [Tag.hl, Tag.p1b],
+      ),
+      ExampleDetail(
+        title: 'China Fiscal Stimulus 2008–2009',
+        explanation:
+            'China implemented a 4 trillion yuan expansionary fiscal stimulus focused on infrastructure, housing, and transport projects to increase aggregate demand and support economic growth during the Global Financial Crisis.',
         tags: [Tag.hl, Tag.p1b],
       ),
     ],
@@ -737,37 +779,37 @@ enum RealWorldExamples {
       ExampleDetail(
         title: 'UK 2022–2023 (Contractionary)',
         explanation:
-        'With inflation above 10%, the Bank of England sold government bonds (gilts) to reduce money supply and raise interest rates. This helped bring inflation down but also increased borrowing costs, reduced consumption and investment, and contributed to a mild recession in 2023.',
+            'With inflation above 10%, the Bank of England sold government bonds (gilts) to reduce money supply and raise interest rates. This helped bring inflation down but also increased borrowing costs, reduced consumption and investment, and contributed to a mild recession in 2023.',
         tags: [Tag.hl],
       ),
       ExampleDetail(
         title: 'New Zealand 2020–2021 (Expansionary)',
         explanation:
-        'During COVID-19, the Reserve Bank of New Zealand bought around NZD 100bn of government bonds under LSAP, lowering long-term interest rates. This encouraged borrowing and spending, supporting aggregate demand and preventing a deeper recession.',
+            'During COVID-19, the Reserve Bank of New Zealand bought around NZD 100bn of government bonds under LSAP, lowering long-term interest rates. This encouraged borrowing and spending, supporting aggregate demand and preventing a deeper recession.',
         tags: [Tag.hl],
       ),
       ExampleDetail(
         title: 'USA 2020–2021 (Expansionary)',
         explanation:
-        'The Federal Reserve purchased over 1.7 trillion dollars in bonds during COVID-19, lowering long-term interest rates and supporting consumption and investment. However, strong demand recovery later contributed to inflation rising above 7%.',
+            'The Federal Reserve purchased over 1.7 trillion dollars in bonds during COVID-19, lowering long-term interest rates and supporting consumption and investment. However, strong demand recovery later contributed to inflation rising above 7%.',
         tags: [Tag.hl],
       ),
       ExampleDetail(
         title: 'Japan 2013–Present (Expansionary)',
         explanation:
-        'Under Abenomics, the Bank of Japan used large-scale QE to keep interest rates near zero in order to fight persistent low inflation. This supported asset prices and demand but had limited success in sustainably raising inflation to target.',
+            'Under Abenomics, the Bank of Japan used large-scale QE to keep interest rates near zero in order to fight persistent low inflation. This supported asset prices and demand but had limited success in sustainably raising inflation to target.',
         tags: [Tag.hl],
       ),
       ExampleDetail(
         title: 'USA Post-2008 (Liquidity Trap)',
         explanation:
-        'After the Global Financial Crisis, interest rates were cut to near zero but borrowing and spending remained weak. Banks held excess reserves and households increased saving, limiting the effectiveness of monetary policy despite QE.',
+            'After the Global Financial Crisis, interest rates were cut to near zero but borrowing and spending remained weak. Banks held excess reserves and households increased saving, limiting the effectiveness of monetary policy despite QE.',
         tags: [Tag.hl],
       ),
       ExampleDetail(
         title: 'Japan 1990s (Liquidity Trap)',
         explanation:
-        'After the asset bubble burst, weak confidence and high debt levels led households and firms to reduce borrowing and increase saving. Even very low interest rates had little effect, resulting in prolonged stagnation and deflation.',
+            'After the asset bubble burst, weak confidence and high debt levels led households and firms to reduce borrowing and increase saving. Even very low interest rates had little effect, resulting in prolonged stagnation and deflation.',
         tags: [Tag.hl],
       ),
     ],

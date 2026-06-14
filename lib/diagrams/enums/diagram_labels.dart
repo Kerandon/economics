@@ -282,6 +282,7 @@ enum DiagramLabel {
   nominalInterestRate,
   realInterestRate,
   quantityOfMoney,
+  quantityOfLoanableFunds,
   sM,
   dM,
   sM1,
@@ -938,6 +939,8 @@ extension MicroLabelExtension on DiagramLabel {
       DiagramLabel.nominalInterestRate => 'Nominal\nInterest\nRate',
 
       DiagramLabel.realInterestRate => 'Real\nInterest\nRate',
+
+      DiagramLabel.quantityOfLoanableFunds => 'Quantity of Loanable Funds',
     };
   }
 }

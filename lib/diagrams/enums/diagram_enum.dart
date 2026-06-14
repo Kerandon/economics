@@ -141,6 +141,7 @@ enum DiagramEnum {
   macroADASKeynesianSpareCapacity,
   macroKeynesianDeflationaryGap,
   macroKeynesianInflationaryGap,
+  macroKeynesianExpansionaryPolicyDeepRecession,
   macroKeynesianExpansionaryPolicy,
   macroKeynesianContractionaryPolicy,
   macroClassicalDeflationaryGapAdjustment,
@@ -176,17 +177,16 @@ enum DiagramEnum {
   macroLorenzCurveImprovedIncomeEquality,
   macroLorenzCurveDecreasedIncomeEquality,
 
-  /// loanable funds
-  macroLoanableFundsIncrease,
-  macroLoanableFundsFisherEffect,
-
   /// Demand and Supply-Side
   macroMoneyMarket,
   macroMoneyMarketExpansionaryMonetaryPolicy,
   macroMoneyMarketContractionaryMonetaryPolicy,
   macroKeynesianMultiplier,
-  macroCrowdingOut,
+  macroCrowdingOutADAS,
   macroSupplySidePoliciesLowInflation,
+  macroLoanableFundsDemandIncrease,
+  macroLoanableFundsSupplyDecrease,
+  macroLoanableFundsFisherEffect,
 
   ///Global*****************************************
 
@@ -503,6 +503,10 @@ extension DiagramBundleEnumUnit on DiagramEnum {
       Subunit.macroObjectives,
     DiagramEnum.macroUnemploymentEfficiencyWages => Subunit.macroObjectives,
     DiagramEnum.macroNaturalRateOfUnemployment => Subunit.macroObjectives,
+    DiagramEnum.macroKeynesianExpansionaryPolicy =>
+      Subunit.demandManagementFiscal,
+    DiagramEnum.macroKeynesianExpansionaryPolicyDeepRecession =>
+      Subunit.demandManagementFiscal,
 
     ///Philips Curve
     DiagramEnum.macroSRPC => Subunit.macroObjectives,
@@ -522,18 +526,20 @@ extension DiagramBundleEnumUnit on DiagramEnum {
       Subunit.inequalityPoverty,
 
     /// Demand-side & Supply-side
-    DiagramEnum.macroLoanableFundsIncrease => Subunit.demandManagementFiscal,
+    DiagramEnum.macroLoanableFundsDemandIncrease =>
+      Subunit.demandManagementFiscal,
+    DiagramEnum.macroLoanableFundsSupplyDecrease =>
+      Subunit.demandManagementFiscal,
     DiagramEnum.macroLoanableFundsFisherEffect =>
       Subunit.demandManagementFiscal,
-    DiagramEnum.macroCrowdingOut => Subunit.demandManagementFiscal,
+    DiagramEnum.macroCrowdingOutADAS => Subunit.demandManagementFiscal,
     DiagramEnum.macroKeynesianDemandPullInflation => Subunit.macroObjectives,
     DiagramEnum.macroKeynesianMultiplier => Subunit.demandManagementFiscal,
     DiagramEnum.macroMoneyMarket => Subunit.demandManagementMonetary,
     DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy =>
       Subunit.demandManagementMonetary,
+
     DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy =>
-      Subunit.demandManagementMonetary,
-    DiagramEnum.macroKeynesianExpansionaryPolicy =>
       Subunit.demandManagementMonetary,
     DiagramEnum.macroKeynesianContractionaryPolicy =>
       Subunit.demandManagementMonetary,
@@ -881,7 +887,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Equilibrium on the horizontal or intermediate section of the AS curve.",
       DiagramEnum.macroKeynesianInflationaryGap =>
         "AD shifts purely inflationary on the vertical AS section.",
-      DiagramEnum.macroKeynesianExpansionaryPolicy =>
+      DiagramEnum.macroKeynesianExpansionaryPolicyDeepRecession =>
         "AD shifting right to close a deflationary gap.",
       DiagramEnum.macroKeynesianContractionaryPolicy =>
         "AD shifting left to control inflation.",
@@ -913,7 +919,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         "Wages kept above equilibrium to boost worker productivity.",
       DiagramEnum.macroNaturalRateOfUnemployment =>
         "When labor market is in equilibrium U = NRU only (Q1-Qe).",
-      DiagramEnum.macroCrowdingOut =>
+      DiagramEnum.macroCrowdingOutADAS =>
         'Increased government spending (increase in G) increases interest rates leading to lower private investment (fall in I).',
       DiagramEnum.macroSRASIncrease =>
         'SRAS increases due to lower costs of production, lower business taxes, positive supply-shocks, appreciation of exchange rate making imports cheaper.',
@@ -948,7 +954,7 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
       DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy =>
         "Contractionary monetary policy: Money Supply shifts left, raising interest rates and increasing borrowing costs, decreasing consumption and investment.",
       DiagramEnum.macroKeynesianMultiplier =>
-        "If Keynesian multiplier is 3 and the government injects \$10m in new spending; total increase in AD is 3 X \$10 = \$30m (\$10m injection + \$20m induced spending).",
+        "80 (∆Real GDP) / 30 (spending injection) = 2.67 (k)",
       DiagramEnum.macroSupplySidePoliciesLowInflation =>
         "LRAS shifts right allowing growth without inflationary pressure.",
 
@@ -1026,8 +1032,10 @@ extension DiagramDescriptionEnumExtension on DiagramEnum {
         'Policies such as supply-side market based policies - lower progressive taxation, labor-market reforms (lower minimum wage, less worker protection regulations), less government spending on transfer payments and less subsidies for / provision of merit goods can increase income inequality.',
       DiagramEnum.microMonopolyIncomeRedistribution =>
         'Firms with market power transfer consumer surplus to producer surplus.',
-      DiagramEnum.macroLoanableFundsIncrease => '',
+      DiagramEnum.macroLoanableFundsDemandIncrease => '',
       DiagramEnum.macroLoanableFundsFisherEffect => '',
+      DiagramEnum.macroKeynesianExpansionaryPolicy => '',
+      DiagramEnum.macroLoanableFundsSupplyDecrease => '',
     };
   }
 }

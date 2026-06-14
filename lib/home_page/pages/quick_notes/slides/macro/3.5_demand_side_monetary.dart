@@ -19,8 +19,7 @@ final demandSideMonetarySlide = Slide(
     <li>External balance.</li>
   </ul>
 '''),
-    SlideContent.text(
-      '''
+    SlideContent.text('''
       <h2>Inflation Targeting</h2>
       <ul>
      <li>NZ first implemented in 1990 explicit target of 0-2%.</li>
@@ -28,8 +27,7 @@ final demandSideMonetarySlide = Slide(
      <li>Pros: anchored inflation expectations, price stability, clear accountability.</li>
      <li>Limitations: cost unemployment to anchor expectations, not deal with structural issues.</li>
      </ul>
-      '''
-    ),
+      '''),
 
     SlideContent.text('''
 <h2>Central Bank</h2>
@@ -63,28 +61,31 @@ final demandSideMonetarySlide = Slide(
     ),
     SlideContent.text('''
 <h2>Money Supply</h2>
+
+<p>Money Supply = Currency in circulation + Bank deposits (MS = C + D)</p>
+<h3>Functions of money</h3>
 <ul>
-<li>Money Supply = Currency (Cash) + Deposits (MS = C + D)</li>
-<li>While fractional reserve banking can expand the money supply through lending, the central bank ultimately controls the money supply.</li>
+<li>Medium of Exchange</li>
+<li>Unit of Account</li>
+<li>Store of Value</li>
 </ul>
 
 <h2>Nominal and Real Interest Rate</h2>
 <ul>
-<li>The interest rate is the <b>cost of borrowing</b> and the <b>reward for saving</b>.</li>
-<li>Nominal interest rate (i) = real interest rate (r) + inflation (π), not adjusted for inflation.</li>
-<li>Real interest rate (r) = nominal interest rate (i) − inflation (π): the real cost of borrowing and real reward for saving.</li>
+<li><b>Interest rate</b>: <b>cost of borrowing</b> or <b>reward for saving</b>.</li>
+<li>Real interest rate (r) = nominal interest rate (i) − inflation (π)</li>
 <li>If the nominal interest rate is 5% and inflation is 3%, the real interest rate is 2% (r = 5 − 3).</li>
-<li>If the real interest rate is 1% and inflation is 3%, the nominal interest rate is 4% (i = 1 + 3).</li>
-<li>The money market uses nominal interest rates because central banks target a nominal policy rate (equilibrium interest rate).</li>
+<li>Central banks target a nominal interest rate (the money market is a short-term market).</li>
 </ul>
 '''),
     SlideContent.text(
       tags: [Tag.hl],
       '''
   <h2>Fractional Reserve Banking</h2>
+'<p>Creates new money in the economy through credit creation when banks lend a portion of deposits.</p>'
   <ul>
     <li>Commercial Banks hold a percentage of deposits as <b>required reserves</b>; <b>excess reserves</b> are loaned out, creating new money.</li>
-    <li>New loans deposited into the banking system are lent out again, multiplying the money supply.</li>
+   '<li>A new loan can be deposited back in the banking system. Banks can again lend a % of this new deposit (money multiplier effect).</li>'
     <li><b>Money Multiplier</b> = 1 / Minimum Reserve Requirement (MRR).</li>
     <li><b>Example (Deposit \$1000, MRR 20%):</b>
       <ul>
@@ -148,31 +149,19 @@ final demandSideMonetarySlide = Slide(
 
     SlideContent.diagrams(
       description:
-      'The money market determines the equilibrium interest rate. Money supply is perfectly inelastic as it is set by the central bank. Money demand is downward sloping because money is held for liquidity (transactions and safety) but earns no interest. As interest rates rise, the opportunity cost of holding money increases since funds could earn returns in bonds or savings accounts.',
+          'The money market determines the equilibrium interest rate. Money supply is perfectly inelastic as it is set by the central bank. Money demand is downward sloping because money is held for liquidity (transactions and safety) but earns no interest. As interest rates rise, the opportunity cost of holding money increases since funds could earn returns in bonds or savings accounts.',
       [DiagramEnum.macroMoneyMarket],
     ),
     SlideContent.diagrams(description: 'Expansionary Monetary Policy', [
       DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy,
-      DiagramEnum.macroKeynesianExpansionaryPolicy,
+      DiagramEnum.macroKeynesianExpansionaryPolicyDeepRecession,
     ]),
     SlideContent.diagrams(description: 'Contractionary Monetary Policy', [
       DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy,
       DiagramEnum.macroKeynesianContractionaryPolicy,
     ]),
-    SlideContent.text('''
-<h2>How Monetary Policy Works (Transmission Mechanism)</h2>
-<ul>
-  <li>Central bank identifies an inflationary / deflationary gap.</li>
-  <li>Central bank buys / sells government bonds (OMO).</li>
-  <li>Bank reserves change.</li>
-  <li>Money supply changes, affecting interest rates.</li>
-  <li>Changes in borrowing costs influence consumption and investment.</li>
-  <li>Changes in asset prices affect consumption (wealth effect).</li>
-  <li>Capital flows shift, affecting exchange rate and net exports.</li>
-</ul>
-'''),
     SlideContent.simpleTable(
-      title: 'Transmission Mechanism of Monetary Policy - Four Channels',
+      title: 'Transmission Mechanism of Monetary Policy',
       headers: [
         'Interest Rate Channel',
         'Wealth Channel',
@@ -181,33 +170,52 @@ final demandSideMonetarySlide = Slide(
       ],
       data: [
         [
-          'Lower rates decreases borrowing costs, increasing C & I.',
-          'Lower rates increases demand for assets, asset prices rise increasing (wealth effect).',
-          'Lower rates mean less loan payments increasing disposable income/profits.',
-          'Lower rates mean less financial capital inflow, exchange rate depreciates, NX increases. However, can be offset if inflation rises.',
+          'Lower interest rates reduce borrowing costs, increasing consumption (C) and investment (I).',
+          'Asset prices rise, increasing household wealth and encouraging spending (wealth effect).',
+          'Lower interest rates reduce debt-servicing costs, increasing disposable income and profits.',
+          'Lower interest rates reduce capital inflows, causing currency depreciation and increasing net exports (NX).',
+        ],
+      ],
+    ),
+    SlideContent.simpleTable(
+      title: 'Monetary Policy Impact on Net Exports',
+      headers: [
+        'Expansionary Monetary Policy',
+        'Contractionary Monetary Policy',
+      ],
+      data: [
+        ['Interest rates fall', 'Interest rates rise'],
+        [
+          'Financial capital outflows, currency depreciation, NX increase',
+          'Financial capital inflows, currency appreciation, NX falls',
+        ],
+        [
+          'But…risk of high inflation can cause loss of international competitiveness',
+          '', // Empty string to balance the row
         ],
       ],
     ),
     SlideContent.text('''
-  <h2>Liquidity Trap</h2>
-  <ul>
-  <li>A liquidity trap can occur after a financial crisis or prolonged recession.</li>
-  <li>Monetary policy becomes less effective because: interest rates are already near zero, banks are unwilling to lend due to weak confidence, households and firms prefer saving to spending, and there is a risk of a deflationary price spiral.</li>
+<h2>Liquidity Trap</h2>
 
-  <li><b>Deflationary Price Spiral</b></li>
-  <ul>
-    <li>Falling prices reduce consumer spending as people delay purchases expecting lower future prices.</li>
-    <li>Lower demand forces firms to cut prices further and reduce output.</li>
-    <li>Wages may fall, reducing income and reinforcing lower consumption.</li>
-    <li>This creates a self-reinforcing cycle of falling prices and falling demand.</li>
+<ul>
+  <li>Often follows a financial crisis. Monetary policy less effective:</li>
+    <ul>
+      <li>Interest rates already close to zero.</li>
+      <li>Banks reluctant to lend due to weak confidence.</li>
+      <li>Households and firms prefer saving to spending and investment.</li>
+      <li>Risk of a deflationary price spiral.</li>
     </ul>
+  </li>
+
+  <li><b>Deflationary Price Spiral</b>
+    <ul>
+      <li><b>Deferred consumption</b> - expectation of lower prices</li>
+      <li>Reduced AD forces firms to cut prices.</li>
     </ul>
-<h3>Real World Examples</h3>
-    <li>Japan 1990s–2010s – prolonged liquidity trap with near zero interest rates, persistent deflation, and weak monetary transmission despite quantitative easing.</li>
-    <li>United States 2008–2015 – post financial crisis liquidity trap, Federal Reserve used zero interest rates and large scale quantitative easing to stabilise demand.</li>
-    <li>Eurozone 2013–2016 – low inflation and weak recovery led the European Central Bank to adopt negative interest rates and asset purchase programmes.</li>
-  </ul>
-  '''),
+  </li>
+</ul>
+'''),
     SlideContent.simpleTable(
       title: 'Evaluation of Monetary Policy',
       headers: ['Strengths', 'Limitations'],

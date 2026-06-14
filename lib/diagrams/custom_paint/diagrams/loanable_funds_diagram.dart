@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:economics_app/diagrams/custom_paint/painter_constants.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/axis/paint_axis.dart';
 import 'package:economics_app/diagrams/custom_paint/painter_methods/paint_diagram_dash_lines.dart';
@@ -18,18 +19,14 @@ class LoanableFundsDiagram extends BaseDiagramPainter {
   void drawDiagram(IDiagramCanvas canvas, Size size) {
     final c = config.copyWith(painterSize: size);
 
-    // Draw Axes (Nominal Interest Rate vs Quantity of Money)
-    paintAxis(
-      c,
-      canvas,
-      yAxisLabel: DiagramLabel.interestRate.label,
-      xAxisLabel: DiagramLabel.quantityOfMoney.label,
-    );
-
     switch (diagram) {
-      case DiagramEnum.macroMoneyMarket:
+      case DiagramEnum.macroLoanableFundsDemandIncrease:
         _paintIncrease(c, canvas);
         break;
+      case DiagramEnum.macroLoanableFundsSupplyDecrease:
+        _paintDecrease(c, canvas);
+      case DiagramEnum.macroLoanableFundsFisherEffect:
+        _paintFisherEffect(c, canvas);
       default:
         // Fallback or empty
         break;
@@ -39,5 +36,128 @@ class LoanableFundsDiagram extends BaseDiagramPainter {
 
 // 1. STANDARD MONEY MARKET (Equilibrium)
 void _paintIncrease(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  paintAxis(axisType: AxisType.loanableFunds, c, canvas);
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.55,
+    xAxisEndPos: 0.45,
+    yLabel: DiagramLabel.i1.label,
+    hideXLine: true,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.40,
+    xAxisEndPos: 0.60,
+    yLabel: DiagramLabel.i2.label,
+    hideXLine: true,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.loanableFundsDemand1,
+    horizontalShift: -0.05,
+    verticalShift: 0.05,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.loanableFundsDemand2,
+    horizontalShift: 0.10,
+    verticalShift: -0.10,
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.loanableFundsSupply);
   // Draw Curves
+}
+
+void _paintDecrease(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  paintAxis(axisType: AxisType.loanableFunds, c, canvas);
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.55,
+    xAxisEndPos: 0.55,
+    yLabel: DiagramLabel.i1.label,
+    hideXLine: true,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.40,
+    xAxisEndPos: 0.40,
+    yLabel: DiagramLabel.i2.label,
+    hideXLine: true,
+  );
+  paintMarketCurve(c, canvas, type: MarketCurveType.loanableFundsDemand);
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.loanableFundsSupply1,
+    horizontalShift: 0.05,
+    verticalShift: 0.05,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.loanableFundsSupply2,
+    horizontalShift: -0.10,
+    verticalShift: -0.10,
+  );
+  // Draw Curves
+}
+
+void _paintFisherEffect(DiagramPainterConfig c, IDiagramCanvas canvas) {
+  paintAxis(
+    axisType: AxisType.loanableFunds,
+    c,
+    canvas,
+    yAxisLabel: DiagramLabel.nominalInterestRate.label,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.60,
+    xAxisEndPos: 0.50,
+    yLabel: '3%',
+    hideXLine: true,
+  );
+  paintDiagramDashedLines(
+    c,
+    canvas,
+    yAxisStartPos: 0.30,
+    xAxisEndPos: 0.50,
+    yLabel: '5%',
+    hideXLine: true,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.loanableFundsDemand1,
+    horizontalShift: -0.05,
+    verticalShift: 0.05,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.loanableFundsDemand2,
+    horizontalShift: 0.10,
+    verticalShift: -0.10,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.loanableFundsSupply1,
+    horizontalShift: 0.05,
+    verticalShift: 0.05,
+  );
+  paintMarketCurve(
+    c,
+    canvas,
+    type: MarketCurveType.loanableFundsSupply2,
+    horizontalShift: -0.10,
+    verticalShift: -0.10,
+  );
+  paintLineSegment(c, canvas, origin: Offset(0.72, 0.70));
+  paintLineSegment(c, canvas, origin: Offset(0.70, 0.25), angle: pi);
 }

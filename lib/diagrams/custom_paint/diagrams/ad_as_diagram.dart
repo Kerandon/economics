@@ -55,6 +55,7 @@ class ADASDiagram extends BaseDiagramPainter {
       case DiagramEnum.macroKeynesianInflationaryGap:
       case DiagramEnum.macroKeynesianDeflationaryGap:
       case DiagramEnum.macroKeynesianExpansionaryPolicy:
+      case DiagramEnum.macroKeynesianExpansionaryPolicyDeepRecession:
       case DiagramEnum.macroKeynesianContractionaryPolicy:
       case DiagramEnum.macroKeynesianMultiplier:
       case DiagramEnum.macroKeynesianLongTermGrowth:
@@ -62,7 +63,7 @@ class ADASDiagram extends BaseDiagramPainter {
         _paintKeynesianADAS(c, canvas, diagram);
       case DiagramEnum.macroADASKeynesianSpareCapacity:
         _paintKeynesianSpareCapacity(c, canvas, diagram);
-      case DiagramEnum.macroCrowdingOut:
+      case DiagramEnum.macroCrowdingOutADAS:
         _paintCrowdingOut(c, canvas);
         break;
       default:
@@ -710,14 +711,47 @@ void _paintKeynesianADAS(
       );
       paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
       break;
-
     case DiagramEnum.macroKeynesianExpansionaryPolicy:
       paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
       paintMarketCurve(
         c,
         canvas,
         type: MarketCurveType.keynesianAD1,
-        horizontalShift: -0.10,
+        horizontalShift: 0.05,
+      );
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.keynesianAD2,
+        label: DiagramLabel.aD2.label,
+        horizontalShift: 0.30,
+      );
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.70,
+        xAxisEndPos: 0.50,
+        showDotAtIntersection: true,
+        xLabel: DiagramLabel.y1.label,
+        yLabel: DiagramLabel.pL1.label,
+      );
+      paintDiagramDashedLines(
+        c,
+        canvas,
+        yAxisStartPos: 0.64,
+        xAxisEndPos: 0.73,
+        showDotAtIntersection: true,
+        xLabel: DiagramLabel.y2.label,
+        yLabel: DiagramLabel.pL2.label,
+      );
+      paintLineSegment(c, canvas, origin: Offset(0.55, 0.50), length: 0.15);
+    case DiagramEnum.macroKeynesianExpansionaryPolicyDeepRecession:
+      paintMarketCurve(c, canvas, type: MarketCurveType.keynesianAS);
+      paintMarketCurve(
+        c,
+        canvas,
+        type: MarketCurveType.keynesianAD1,
+        horizontalShift: -0.15,
       );
       paintMarketCurve(
         c,
@@ -823,13 +857,13 @@ void _paintKeynesianADAS(
         c,
         canvas,
         type: MarketCurveType.keynesianAD2,
-        horizontalShift: 0,
+        horizontalShift: -0.05,
       );
       paintMarketCurve(
         c,
         canvas,
         type: MarketCurveType.keynesianAD3,
-        horizontalShift: 0.30,
+        horizontalShift: 0.15,
       );
       paintDiagramDashedLines(
         c,
@@ -838,40 +872,49 @@ void _paintKeynesianADAS(
         xAxisEndPos: 0.25,
         showDotAtIntersection: true,
         hideYLine: true,
-        xLabel: DiagramLabel.y1.label,
+        xLabel: '\$100m',
       );
       paintDiagramDashedLines(
         c,
         canvas,
         yAxisStartPos: 0.70,
-        xAxisEndPos: 0.45,
+        xAxisEndPos: 0.40,
         showDotAtIntersection: true,
         hideYLine: true,
-        xLabel: DiagramLabel.y2.label,
+        xLabel: '\$130m',
       );
       paintDiagramDashedLines(
         c,
         canvas,
-        yAxisStartPos: 0.65,
-        xAxisEndPos: 0.73,
+        yAxisStartPos: 0.70,
+        xAxisEndPos: 0.59,
         showDotAtIntersection: true,
         hideYLine: true,
-        xLabel: DiagramLabel.y3.label,
+        xLabel: '\$180m',
       );
-      paintLineSegment(c, canvas, origin: Offset(0.20, 0.30), length: 0.08);
-      paintLineSegment(c, canvas, origin: Offset(0.45, 0.30), length: 0.12);
       paintText(
         c,
         canvas,
-        '\$10m',
-        Offset(0.20, 0.25),
+        '∆Real GDP\n\$80m',
+        Offset(0.25, 0.08),
+        type: DiagramTextType.label,
+      );
+      paintLineSegment(c, canvas, origin: Offset(0.25, 0.15), length: 0.32);
+      paintLineSegment(c, canvas, origin: Offset(0.19, 0.32), length: 0.08);
+      paintLineSegment(c, canvas, origin: Offset(0.36, 0.32), length: 0.12);
+
+      paintText(
+        c,
+        canvas,
+        'Aut\n\$30m',
+        Offset(0.18, 0.25),
         type: DiagramTextType.label,
       );
       paintText(
         c,
         canvas,
-        '\$20m',
-        Offset(0.45, 0.25),
+        'Ind\n\$50m',
+        Offset(0.35, 0.25),
         type: DiagramTextType.label,
       );
       break;

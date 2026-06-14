@@ -42,6 +42,12 @@ const kDotRadius = 4.0;
 enum CurveStyle { standard, dashed, dotted, bold }
 
 enum MarketCurveType {
+  loanableFundsDemand,
+  loanableFundsDemand1,
+  loanableFundsDemand2,
+  loanableFundsSupply,
+  loanableFundsSupply1,
+  loanableFundsSupply2,
   demand,
   supply,
   perfectlyInelasticSupply,

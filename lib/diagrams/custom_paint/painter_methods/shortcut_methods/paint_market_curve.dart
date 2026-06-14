@@ -142,7 +142,7 @@ void paintMarketCurve(
       baseEnd = const Offset(0.50, 1.10);
       break;
 
-    // --- DOWNWARD SLOPING (Linear) ---
+    // --- DOWNWARD SLOPING (Linear - Full Length) ---
     case MarketCurveType.demand:
     case MarketCurveType.moneyDemand:
     case MarketCurveType.demandDomestic:
@@ -174,7 +174,7 @@ void paintMarketCurve(
       ];
       break;
 
-    // --- UPWARD SLOPING (Supply-like) ---
+    // --- UPWARD SLOPING (Supply-like - Full Length) ---
     case MarketCurveType.supply:
     case MarketCurveType.s1:
     case MarketCurveType.s2:
@@ -201,17 +201,25 @@ void paintMarketCurve(
       baseEnd = const Offset(0.90, 0.10);
       break;
 
+    // --- UPWARD SLOPING (Shorter - SRAS & Loanable Funds Supply) ---
     case MarketCurveType.sras:
     case MarketCurveType.sras1:
     case MarketCurveType.sras2:
+    case MarketCurveType.loanableFundsSupply: // 🌟 MOVED HERE
+    case MarketCurveType.loanableFundsSupply1: // 🌟 MOVED HERE
+    case MarketCurveType.loanableFundsSupply2: // 🌟 MOVED HERE
       baseStart = const Offset(0.20, 0.80);
       baseEnd = const Offset(0.80, 0.20);
       break;
 
+    // --- DOWNWARD SLOPING (Shorter - AD & Loanable Funds Demand) ---
     case MarketCurveType.ad:
     case MarketCurveType.ad1:
     case MarketCurveType.ad2:
     case MarketCurveType.ad3:
+    case MarketCurveType.loanableFundsDemand: // 🌟 MOVED HERE
+    case MarketCurveType.loanableFundsDemand1: // 🌟 MOVED HERE
+    case MarketCurveType.loanableFundsDemand2: // 🌟 MOVED HERE
       baseStart = const Offset(0.20, 0.20);
       baseEnd = const Offset(0.80, 0.80);
       break;
@@ -238,14 +246,11 @@ void paintMarketCurve(
       break;
 
     case MarketCurveType.keynesianAS:
-      // CHANGED: baseStart Y from 0.80 to 0.65
       baseStart = Offset(0.10, 0.70);
       baseEnd = Offset(keynesianAS, 0.10);
       beziers = [
-        // CHANGED: Y from 0.80 to 0.65
         CustomBezier(endPoint: Offset(keynesianAS - 0.30, 0.70)),
         CustomBezier(
-          // CHANGED: control Y from 0.80 to 0.65, endPoint Y from 0.60 to 0.45
           control: Offset(keynesianAS, 0.70),
           endPoint: Offset(keynesianAS, 0.45),
         ),
@@ -435,6 +440,24 @@ void paintMarketCurve(
       case MarketCurveType.supplyUSD:
         finalLabel2 = r'Sof$';
         break;
+      case MarketCurveType.loanableFundsDemand:
+        finalLabel2 = "Dlf";
+        break;
+      case MarketCurveType.loanableFundsDemand1:
+        finalLabel2 = "Dlf1";
+        break;
+      case MarketCurveType.loanableFundsDemand2:
+        finalLabel2 = "Dlf2";
+        break;
+      case MarketCurveType.loanableFundsSupply:
+        finalLabel2 = "Slf";
+        break;
+      case MarketCurveType.loanableFundsSupply1:
+        finalLabel2 = "Slf1";
+        break;
+      case MarketCurveType.loanableFundsSupply2:
+        finalLabel2 = "Slf2";
+        break;
       case MarketCurveType.dl:
         finalLabel2 = "DL";
         break;
@@ -534,7 +557,6 @@ void paintMarketCurve(
   // 4. DRAW (Only happens for non-combo base types)
   if (type != MarketCurveType.mcAtc && type != MarketCurveType.dArMrMonopoly) {
     if (beziers != null) {
-      // ✨ NEW: Check if this is an SRPC curve
       bool isSrpc =
           type == MarketCurveType.srpc ||
           type == MarketCurveType.srpc1 ||
@@ -547,7 +569,6 @@ void paintMarketCurve(
         bezierPoints: beziers,
         label1: finalLabel1,
         label2: finalLabel2,
-        // ✨ FIXED: Shift alignment to 'right' just for SRPC
         label2Align: isSrpc ? LabelAlign.right : LabelAlign.centerTop,
         curveStyle: curveStyle,
         color: color,

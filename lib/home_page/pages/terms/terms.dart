@@ -924,13 +924,6 @@ enum EconTerm {
     tags: [],
   ),
 
-  budgetDeficit(
-    termName: 'Budget Deficit',
-    explanation:
-        'Government expenditure exceeds tax revenue (G > T) for one year',
-    subunit: Subunit.macroObjectives,
-    tags: [],
-  ),
   debtToGDPRatio(
     termName: 'Debt-to-GDP Ratio',
     explanation: '(Total Debt / GDP) × 100.',
@@ -953,19 +946,19 @@ enum EconTerm {
   moneyMarket(
     termName: 'Money Market',
     explanation:
-        'A market where the supply and demand for money determines the equilibrium interest rate.',
+        'A market where the supply and demand for money determines the equilibrium nominal interest rate.',
     subunit: Subunit.demandManagementMonetary,
   ),
 
   expansionaryMonetaryPolicy(
-    termName: 'Expansionary Monetary Policy',
+    termName: 'Expansionary Monetary Policy (loose monetary policy)',
     explanation:
         'Central bank policies that increases money supply to lower interest rates to correct a deflationary/recessionary-gap.',
     subunit: Subunit.demandManagementMonetary,
   ),
 
   contractionaryMonetaryPolicy(
-    termName: 'Contractionary Monetary Policy',
+    termName: 'Contractionary Monetary Policy (tight monetary policy)',
     explanation:
         'Central bank policies that reduces money supply to raise interest rates to correct an inflationary-gap.',
     subunit: Subunit.demandManagementMonetary,
@@ -1037,21 +1030,21 @@ enum EconTerm {
   inflationTargeting(
     termName: 'Inflation Targeting',
     explanation:
-        'Monetary policy framework where the central bank aims to keep inflation around a set target.',
+        'Central bank uses monetary policy tools to target a desired inflation rate (usually around 2%).',
     subunit: Subunit.demandManagementMonetary,
   ),
 
   anchoredInflationExpectations(
     termName: 'Anchored Inflation Expectations',
     explanation:
-        'When the public expects inflation to remain low and stable, helping central bank maintain price stability (preventing wage-price spirals).',
+        'When the public (households, firms, investors) expect inflation to remain low and stable, helping central bank maintain price stability.',
     subunit: Subunit.demandManagementMonetary,
   ),
 
   monetaryPolicyTransmissionMechanism(
     termName: 'Monetary Policy Transmission Mechanism',
     explanation:
-        'The process by which changes in interest rates affect consumption, investment, and net exports.',
+        'The process by which changes in interest rates affect consumption, investment, and net exports over-time.',
     subunit: Subunit.demandManagementMonetary,
   ),
 
@@ -1072,7 +1065,7 @@ enum EconTerm {
   openMarketOperations(
     termName: 'Open Market Operations (OMO)',
     explanation:
-        'Central bank buys and sells government securities (bonds) from commercial banks to influence the money supply and interest rates.',
+        'Central bank buys and sells government securities (bonds) in the open market to influence the money supply and interest rates.',
     subunit: Subunit.macroObjectives,
     tags: [],
   ),
@@ -1100,9 +1093,101 @@ enum EconTerm {
   liquidityTrap(
     termName: 'Liquidity Trap',
     explanation:
-        'Monetary policy ineffective when already low interest rates, increases in money supply fail to stimulate aggregate demand (low AD: very low consumer/business confidence, high unemployment, firm bankruptcies, high real debt burden).',
+        'Monetary policy ineffective when already low interest rates, increases in money supply fail to stimulate aggregate demand (low consumer/business confidence, bankruptcies, banks unwilling to lend, high real debt burden).',
     subunit: Subunit.demandManagementMonetary,
     tags: [],
+  ),
+
+  /// 3.6 Fiscal
+  fiscalPolicy(
+    termName: 'Ricardian Equivalence',
+    explanation:
+        'The theory that households increase saving when government borrowing rises because they expect higher future taxes.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+
+  fiscalDrag(
+    termName: 'Fiscal Drag',
+    explanation:
+        'An automatic stabilizer where rising incomes push taxpayers into higher tax brackets, reducing growth in disposable income and aggregate demand.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+
+  crowdingIn(
+    termName: 'Crowding In',
+    explanation:
+        'When government spending increases private sector investment by raising demand, confidence, and expected profits.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  budgetDeficit(
+    termName: 'Budget Deficit',
+    explanation: 'T < G over one year.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  budgetSurplus(
+    termName: 'Budget Surplus',
+    explanation: 'T > G over one year.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  currentExpenditure(
+    termName: 'Current Expenditure',
+    explanation:
+        'Government spending on day-to-day activities such as wages, public services, and maintenance.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  capitalExpenditure(
+    termName: 'Capital Expenditure',
+    explanation:
+        'Government spending on long-term investment such as infrastructure, schools, and hospitals.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  keynesianSpendingMultiplier(
+    termName: 'Keynesian Spending Multiplier',
+    explanation:
+        'The process where an initial injection of government spending leads to a larger final increase in real GDP through successive rounds of spending.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  marginalPropensityToConsume(
+    termName: 'Marginal Propensity to Consume',
+    explanation:
+        'The proportion of additional income that is spent on domestic goods and services.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  taxMultiplier(
+    termName: 'Tax Multiplier',
+    explanation:
+        'The change in real GDP resulting from a change in taxes, smaller in magnitude than the government spending multiplier.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  expansionaryFiscalPolicy(
+    termName: 'Expansionary Fiscal Policy',
+    explanation:
+        'Government policy that increases aggregate demand through higher government spending or lower taxes.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  contractionaryFiscalPolicy(
+    termName: 'Contractionary Fiscal Policy',
+    explanation:
+        'Government policy that reduces aggregate demand through lower government spending or higher taxes.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  automaticStabilizers(
+    termName: 'Automatic Stabilizers',
+    explanation:
+        'Built-in fiscal mechanisms such as taxes and welfare payments that reduce fluctuations in the business cycle without deliberate government intervention.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  corporationTax(
+    termName: 'Corporation Tax',
+    explanation:
+        'A tax on firm profits that can reduce investment by lowering after-tax returns.',
+    subunit: Subunit.demandManagementFiscal,
+  ),
+  resourceCrowdingOut(
+    termName: 'Resource Crowding Out',
+    explanation:
+        'When government demand for scarce resources increases input prices and reduces availability for the private sector.',
+    subunit: Subunit.demandManagementFiscal,
   ),
 
   /// 3.7 Supply-Side

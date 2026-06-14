@@ -5,6 +5,7 @@ import 'package:economics_app/diagrams/custom_paint/diagrams/comparative_advanta
 import 'package:economics_app/diagrams/custom_paint/diagrams/competitive_market.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/exchange_rate_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/j_curve_diagram.dart';
+import 'package:economics_app/diagrams/custom_paint/diagrams/loanable_funds_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/lorenz_curve_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/monopoly_diagram.dart';
 import 'package:economics_app/diagrams/custom_paint/diagrams/money_market_diagram.dart';
@@ -399,26 +400,40 @@ List<DiagramWidget> getDiagramWidgetsListNEW(DiagramPainterConfig c) {
 
     /// Money market
     DiagramWidget([MoneyMarketDiagram(c, DiagramEnum.macroMoneyMarket)]),
-
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianMultiplier)]),
-
     DiagramWidget([
       MoneyMarketDiagram(
         c,
         DiagramEnum.macroMoneyMarketExpansionaryMonetaryPolicy,
       ),
-      ADASDiagram(c, DiagramEnum.macroKeynesianExpansionaryPolicy),
     ]),
     DiagramWidget([
       MoneyMarketDiagram(
         c,
         DiagramEnum.macroMoneyMarketContractionaryMonetaryPolicy,
       ),
+    ]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroKeynesianMultiplier)]),
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroKeynesianExpansionaryPolicy),
+    ]),
+    DiagramWidget([
+      ADASDiagram(c, DiagramEnum.macroKeynesianExpansionaryPolicyDeepRecession),
+    ]),
+    DiagramWidget([
       ADASDiagram(c, DiagramEnum.macroKeynesianContractionaryPolicy),
     ]),
 
     /// 3.6 Demand-side fiscal
-    DiagramWidget([ADASDiagram(c, DiagramEnum.macroCrowdingOut)]),
+    DiagramWidget([
+      LoanableFundsDiagram(c, DiagramEnum.macroLoanableFundsDemandIncrease),
+    ]),
+    DiagramWidget([
+      LoanableFundsDiagram(c, DiagramEnum.macroLoanableFundsSupplyDecrease),
+    ]),
+    DiagramWidget([
+      LoanableFundsDiagram(c, DiagramEnum.macroLoanableFundsFisherEffect),
+    ]),
+    DiagramWidget([ADASDiagram(c, DiagramEnum.macroCrowdingOutADAS)]),
 
     /// 3.7 Supply-Side
     DiagramWidget([

@@ -61,7 +61,7 @@ final explainImportanceOfSustainableDebt10Mark = Slide(
         ['', 'Exchange rate risk (external debt)'],
       ],
     ),
-    SlideContent.diagrams([DiagramEnum.macroCrowdingOut]),
+    SlideContent.diagrams([DiagramEnum.macroCrowdingOutADAS]),
     SlideContent.diagrams([DiagramEnum.macroClassicalLongTermGrowth]),
   ],
 );

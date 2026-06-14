@@ -17,13 +17,16 @@ enum AxisType {
   macroADAS,
   jCurve,
   macroPPC,
-  phillipsCurve, // Added new type
+  phillipsCurve,
+  loanableFunds, // Added new type
 }
 
 // THE HELPER: Extends functionality without changing the object structure
 extension AxisTypeData on AxisType {
   String get yLabel {
     switch (this) {
+      case AxisType.loanableFunds:
+        return DiagramLabel.realInterestRate.label;
       case AxisType.supplyDemand:
         return DiagramLabel.p.label;
       case AxisType.laborMarket:
@@ -44,6 +47,8 @@ extension AxisTypeData on AxisType {
 
   String get xLabel {
     switch (this) {
+      case AxisType.loanableFunds:
+        return DiagramLabel.quantityOfLoanableFunds.label;
       case AxisType.supplyDemand:
         return DiagramLabel.q.label;
       case AxisType.laborMarket:
